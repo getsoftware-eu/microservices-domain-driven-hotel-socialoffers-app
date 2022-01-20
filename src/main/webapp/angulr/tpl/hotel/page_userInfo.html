@@ -1,0 +1,146 @@
+<div ng-controller="ProfileController" ng-init="
+app.hideFooter = false;
+app.header.showTab = false;
+app.header.showBackArrow = true;
+app.rootSettings.darkBg = true;
+">
+
+    <div class="panel panel-default">
+        <div class="panel-heading" ngCloak>
+            <div class="clearfix">
+                <a href class="pull-left thumb-md avatar b-3x m-r">
+                    <img ng-src="{{localState.userData.avatarUrl}}" alt="...">
+                    <i class="on md b-white right customerOnlineStatus" ng-show="hotelNotification.notificationObj.hotelOnlineGuestIds[app.header.chatPartnerId]"></i>
+                    <i class="offline md b-white right customerOnlineStatus" ng-hide="hotelNotification.notificationObj.hotelOnlineGuestIds[app.header.chatPartnerId]"></i>
+
+                </a>
+                <div class="clear">
+                    <div class="h3 m-t-xs m-b-xs">
+                        {{localState.userData.firstName}} {{localState.userData.lastName}}
+                        <!--<i class="fa fa-circle text-success text-xs m-t-sm" ng-show="hotelNotification.notificationObjhotelOnlineGuestIds[localState.userData.id]"></i>-->
+                        <!--<i class="fa fa-circle text-offline text-xs m-t-sm" ng-hide="hotelNotification.notificationObjhotelOnlineGuestIds[localState.userData.id]"></i>-->
+                    </div>
+                    <small class="text-muted">{{localState.userData.status}}</small>
+                </div>
+            </div>
+        </div>
+
+        <div class="wrapper-md">
+            <div class="panel panel-default">
+                 
+
+                <div class="panel-body">
+
+                    <div class="form-group" ng-hide="!localState.userData.firstName">
+                        <label class="col-xs-6 control-label">{{'profile.firstName' | translate}}:</label>
+                        <div class="col-xs-6">
+                            {{localState.userData.firstName}}
+                        </div>
+                    </div>
+                    
+                    <div class="line line-dashed b-b line-lg pull-in" ng-hide="!localState.userData.lastName"></div>
+
+                    <div class="form-group" ng-hide="!localState.userData.lastName">
+                        <label class="col-xs-6 control-label">{{'profile.lastName' | translate}}:</label>
+                        <div class="col-xs-6">
+                            {{localState.userData.lastName}}
+                        </div>
+                    </div>
+                    
+                    <div class="line line-dashed b-b line-lg pull-in" ng-hide="!localState.userData.hotelName"></div>
+
+                    <div class="form-group" ng-show="localState.userData.checkedIn">
+                        <label class="col-xs-6 control-label">{{'system.hotel' | translate}}:</label>
+                        <div class="col-xs-6" ng-show="localState.userData.hotelId != hotelState.profileData.hotelId">
+                            <a style="text-decoration: underline;" ui-sref="app.hotelList({filterCity: localState.userData.hotelCity, filterHotelId: localState.userData.hotelId})">
+                                {{localState.userData.hotelName}}, {{localState.userData.hotelCity}}
+                            </a>
+                        </div>
+                        <div class="col-xs-6" ng-show="localState.userData.hotelId == hotelState.profileData.hotelId">
+                            <a style="text-decoration: underline;" ui-sref="app.hotel">
+                                {{localState.userData.hotelName}}, {{localState.userData.hotelCity}}
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="line line-dashed b-b line-lg pull-in" ng-hide="!localState.userData.city"></div>
+
+                    <div class="form-group" ng-hide="!localState.userData.city">
+                        <label class="col-xs-6 control-label">{{'profile.city' | translate}}:</label>
+                        <div class="col-xs-6">
+                            {{localState.userData.city}}
+                        </div>
+                    </div>
+                    
+                    <div class="line line-dashed b-b line-lg pull-in" ng-hide="!localState.userData.originalCity"></div>
+
+                    <div class="form-group" ng-hide="!localState.userData.originalCity">
+                        <label class="col-xs-6 control-label">{{'profile.originalCity' | translate}}:</label>
+                        <div class="col-xs-6">
+                            {{localState.userData.originalCity}}
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in" ng-hide="!localState.userData.company"></div>
+
+                    <div class="form-group" ng-hide="!localState.userData.company">
+                        <label class="col-xs-6 control-label">{{'profile.company' | translate}}:</label>
+                        <div class="col-xs-6">
+                            {{localState.userData.company}}
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in" ng-hide="!localState.userData.jobTitle"></div>
+
+                    <div class="form-group" ng-hide="!localState.userData.jobTitle">
+                        <label class="col-xs-6 control-label">{{'profile.jobTitle' | translate}}:</label>
+                        <div class="col-xs-6">
+                            {{localState.userData.jobTitle}}
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in" ng-hide="!localState.userData.jobDescriptor"></div>
+
+                    <div class="form-group" ng-hide="!localState.userData.jobDescriptor">
+                        <label class="col-xs-6 control-label">{{'profile.jobDescriptor' | translate}}:</label>
+                        <div class="col-xs-6">
+                            {{localState.userData.jobDescriptor}}
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in" ng-show="localState.userData.languages && localState.userData.languages.length>0"></div>
+
+                    <div class="form-group" ng-show="localState.userData.languages && localState.userData.languages.length>0">
+                        <label class="col-xs-6 control-label">{{'profile.language' | translate}}:</label>
+                        <div class="col-xs-6">
+                            <span ng-repeat="nextLanguage in localState.userData.languages"><img
+                                    class="language-flag" src="angulr/icons/flags/{{nextLanguage}}.png"
+                                    alt="{{nextLanguage}}" style="margin: 3px;"/></span>
+                        </div>
+                    </div>
+                     
+                    
+             
+             
+                     
+            <!--<a class="list-group-item profileInputContainer" href ng-hide="!localState.userData.languages">-->
+                <!--&lt;!&ndash;<span class="badge bg-success">25</span>&ndash;&gt;-->
+                <!--&lt;!&ndash;<i class="fa fa-comment fa-fw text-muted"></i>&ndash;&gt;-->
+                <!--<div class="profileInputLabel">{{'language' | translate}}:</div>-->
+                 <!-- -->
+                <!--<span ng-repeat="language in localState.userData.languages"><img-->
+                        <!--class="language-flag" src="angulr/icons/flags/{{language}}.png"-->
+                        <!--alt="{{language}}" style="margin: 3px;"/></span>-->
+            <!--</a>-->
+            <!--<a class="list-group-item profileInputContainer" href ng-hide="!localState.userData.interests">-->
+                <!--&lt;!&ndash;<span class="badge bg-success">25</span>&ndash;&gt;-->
+                <!--&lt;!&ndash;<i class="fa fa-comment fa-fw text-muted"></i>&ndash;&gt;-->
+                <!--<div class="profileInputLabel">{{'interests' | translate}}:</div> -->
+                <!-- -->
+                <!--<span ng-repeat="interest in localState.userData.interests">{{interest}}<span ng-show=" ! $last ">,</span>-->
+									<!--</span>-->
+            <!--</a>            -->
+           
+            
+        </div>
+        </div>
+        </div>
+    </div>
+    
+</div>

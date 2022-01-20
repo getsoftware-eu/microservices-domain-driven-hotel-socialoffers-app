@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
+	<servlet>
+        <servlet-name>SpringServlet</servlet-name>
+        <!--EUGEN: declraring root application context place-->
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextClass</param-name>
+            <param-value>org.springframework.web.context.support.AnnotationConfigWebApplicationContext</param-value>
+        </init-param>
+        <init-param>
+            <!--EUGEN: ApplicationContext.xml with java replacing!!!!-->
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                de.hotelico.config.AppConfig, de.hotelico.config.WebAppConfig, de.hotelico.config.WebSocketAppConfig, de.hotelico.config.SocialConfig, de.hotelico.config.MailConfig, de.hotelico.config.Wro4jConfig 
+            </param-value>
+        </init-param>
+        <async-supported>true</async-supported>
+        
+    </servlet>
+ 
+    <servlet-mapping>
+        <servlet-name>SpringServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+
+    <session-config>
+        <session-timeout>10000</session-timeout>
+    </session-config>
+
+    <!--<filter>-->
+        <!--<filter-name>WebResourceOptimizer</filter-name>-->
+        <!--<filter-class>ro.isdc.wro.http.WroFilter</filter-class>-->
+    <!--</filter>-->
+    
+    <!--<filter>-->
+        <!--<filter-name>WebResourceOptimizer</filter-name>-->
+        <!--<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>targetBeanName</param-name>-->
+            <!--<param-value>wroFilter</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>targetFilterLifecycle</param-name>-->
+            <!--<param-value>true</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
+    
+    
+    <!--<filter-mapping>-->
+        <!--<filter-name>WebResourceOptimizer</filter-name>-->
+        <!--<url-pattern>/wro/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
+    
+    <!--<filter>-->
+        <!--<filter-name>WebResourceOptimizer</filter-name>-->
+        <!--<filter-class>ro.isdc.wro.http.WroFilter</filter-class>-->
+        <!--<init-param>-->
+            <!--<param-name>targetBeanName</param-name>-->
+            <!--<param-value>wroFilter</param-value>-->
+        <!--</init-param>-->
+        <!--<init-param>-->
+            <!--<param-name>targetFilterLifecycle</param-name>-->
+            <!--<param-value>true</param-value>-->
+        <!--</init-param>-->
+    <!--</filter>-->
+
+    <!--<filter-mapping>-->
+        <!--<filter-name>WebResourceOptimizer</filter-name>-->
+        <!--<url-pattern>/wro/*</url-pattern>-->
+    <!--</filter-mapping>-->
+
+    <filter>
+        <filter-name>shallowEtagHeaderFilter</filter-name>
+        <filter-class>org.springframework.web.filter.ShallowEtagHeaderFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+    <filter-mapping>
+        <filter-name>shallowEtagHeaderFilter</filter-name>
+        <url-pattern>/angulr/*</url-pattern>
+        <url-pattern>/img/*</url-pattern>
+        <url-pattern>/libs/*</url-pattern>
+        <url-pattern>/727/*</url-pattern>
+    </filter-mapping>
+
+
+    <filter>
+        <filter-name>UrlRewriteFilter</filter-name>
+        <filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+        <async-supported>true</async-supported>
+    </filter>
+    <filter-mapping>
+        <filter-name>UrlRewriteFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+
+    <!--SSL!!!!-->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>my-secure-app</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+    
+</web-app>

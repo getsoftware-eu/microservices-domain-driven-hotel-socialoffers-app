@@ -1,0 +1,46 @@
+<div id="minPaddingPage" ng-controller="HotelController" class="bg-light lter b-b wrapper-md" ng-init="
+app.hideFooter = false;
+app.header.showTab = false;
+app.header.showBackArrow = false;
+app.rootSettings.darkBg = true;
+">
+
+  <div class="wrapper-md" style="padding-top: 0;" >
+    
+    <div class="row">
+      
+      <div>
+        <!--ng-class="::{'col-sm-9': !isSmartDevice}">-->
+
+        <div data-ng-include=" 'angulr/tpl/hotel/blocks/showAlertBlock.html' " />
+        <!--<button id="sendButton" class="button-primary" ng-click="send()">Send me a push notification</button>-->
+
+        <!-- START HOTEL -->
+        
+        <div id="hotelPart" ng-show="hotelState.profileData.checkedIn" ng-controller="hotelCtrl">
+
+            <!--<div data-ng-include=" 'angulr/tpl/hotel/blocks/fullCheckinRequest.html' " />-->
+
+            <!-- START HOTEL accordion -->
+  
+          <!--<div class="staffContent" ng-if="(hotelState.profileData.hotelStaff  && hotelState.profileData.hotelId==showHotel.id|| hotelState.profileData.admin)">-->
+              <!--<div data-ng-include=" 'angulr/tpl/hotel/blocks/editHotelAccardion.html' " />-->
+          <!--</div>-->
+          <button ng-click="openModal('editHotel', showHotel.id)" style="margin-bottom: 15px;"  class="btn btn-lg btn-block btn-blue">'{{showHotel.name}}' {{'system.edit' | translate }}</button>
+
+          <!-- / END hotel accordion -->
+          <b>{{::'system.editPreview' | translate}}:</b>
+
+          <div data-ng-include=" 'angulr/tpl/hotel/blocks/showHotelBlock.html' " />
+
+        </div>
+        
+        <!-- END HOTEL -->
+        
+      </div>
+      
+    </div>
+    
+  </div>
+  
+</div>

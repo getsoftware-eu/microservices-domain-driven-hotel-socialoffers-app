@@ -1,0 +1,60 @@
+<div class="modal-body wrapper-lg" stop-event="touchend" ng-controller="EditHotelContr" ng-init="unlockModal();">
+  
+   <a ng-click="cancel()" style="position: absolute; top:0; right:5px;"><i class="fa fa-times"/></a>
+    
+    <div data-ng-include=" 'angulr/tpl/hotel/blocks/showAlertBlock.html' " />
+
+    <div class="myFlex" ng-style="!isSmartDevice && {'flex-direction':'row', '-webkit-flex-direction': 'row'} || isSmartDevice && {'flex-direction':'column', '-webkit-flex-direction': 'column'}" ng-controller="hotelCtrl">  
+    
+      <!--<div class="row">-->
+      <div style="min-width: 50%;" >
+        
+          <!--<div class="col-sm-6 b-r">-->
+          <div class="b-r">
+              
+              <!--<div style="display: flex;  display: -webkit-flex;display: -moz-flex;display: -ms-flexbox;justify-content: center; text-align: center;">-->
+                <!--{{:: 'page.checkin.youNeedLogin'| translate}}:-->
+              <!--</div>-->
+        
+        
+              <span  ng-if="!((hotelState.profileData.hotelStaff && hotelState.profileData.hotelId==showHotel.id) || hotelState.profileData.admin || hotelState.tempCreationHotel && hotelState.tempCreationHotel.creationTime==showHotel.creationTime)">You are not a staff for the Hotel {{showHotel.name}}!</span>
+        
+              <div ng-if="((hotelState.profileData.hotelStaff && hotelState.profileData.hotelId==showHotel.id) || hotelState.profileData.admin || hotelState.tempCreationHotel && hotelState.tempCreationHotel.creationTime==showHotel.creationTime)">
+    
+                  <!--START HOTEL Edit-->
+        
+                  <div class="hotelEditElt"  >
+                      
+                      <!--<div ng-if="editActivityId=='new'" data-ng-include=" 'angulr/tpl/hotel/blocks/addActivityAccardion.html' " />-->
+                      
+                      <div data-ng-include=" 'angulr/tpl/hotel/blocks/editHotelAccardion.html' " />
+                      
+                  </div>
+                  
+              </div>
+    
+              <!-- END HOTEL Edit -->
+    
+          </div>
+          
+          
+      </div>
+          
+      <!--<div class="b-r">-->
+      <div style="min-width: 48%; margin-left: 10px;">
+            
+          <!-- Start hotel view --->
+          <div ng-show="showHotel.id>0 || showHotel.id<0">
+    
+             <b ng-show="hotelState.profileData.hotelStaff || hotelState.profileData.admin">{{::'system.editPreview' | translate}}:</b>
+
+              <div data-ng-include=" 'angulr/tpl/hotel/blocks/showHotelBlock.html' " />
+
+          </div>
+        
+          <!-- END hotel view --->
+    
+      </div>  
+        
+   </div>
+</div>

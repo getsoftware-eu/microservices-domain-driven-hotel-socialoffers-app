@@ -1,0 +1,29 @@
+http://habrahabr.ru/post/134453/
+
+https://knowledge.geotrust.com/support/knowledge-base/index?page=content&id=AR897
+
+---------------------------------
+BASE (SERVER )TRUSTORE
+>keytool -genkey -alias hotelico -keyalg RSA -keystore hotelicostore -keysize 2048
+---------------------------------
+Step 2: Generate a CSR
+
+1. The CSR is then created using the following command:
+
+GENERATE CSR (CERTIFICATE SIGNING REQUEST)
+keytool -certreq -keyalg RSA -alias <your_alias_name> -file certreq.csr -keystore <your_keystore_filename>
+ 
+  
+2. Create a copy of the keystore file. Having a back-up file of the keystore at this point can help resolve installation issues that can occur when importing the certificate into the original keystore file.
+ 
+3. To copy and paste the file certreq.csr into the enrollment form, open the file in a text editor that does not add extra characters (Notepad or Vi are recommended).
+
+------------------------------- THAN MY LOCAL TOMCAT ------------------------------------------------
+CLIENT STORE
+>keytool -genkey -alias client -keyalg RSA -keystore hotelicoclientstore -storetype PKCS12 -keysize 2048
+
+EXPORT "client" CERT from ClientStore
+>keytool -export -alias client -keyalg RSA -keystore hotelicoclientstore -storetype PKCS12 -file clientcert 
+
+IMPORT CLIENT-GENERATED CERTIFICATE IN LOCAL TRUST-STORE
+keytool -import -alias client -keyalg RSA -keystore hotelicotruststore -storetype JKS -file clientcert

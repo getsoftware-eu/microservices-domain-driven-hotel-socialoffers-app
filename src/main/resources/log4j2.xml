@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration monitorInterval="60">
+    <Properties>
+        <Property name="path">logs</Property>
+    </Properties>
+    <Appenders>
+        <Console name="console-appender" target="SYSTEM_OUT">
+            <PatternLayout>
+                <pattern>
+                    [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+                </pattern>>
+            </PatternLayout>
+        </Console>
+        <File name="logbook-appender" fileName="${path}/logbook_log.log" >
+            <PatternLayout>
+                <pattern>
+                    [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+                </pattern>
+            </PatternLayout>
+        </File>
+        <File name="app-appender" fileName="${path}/app_log.log" >
+            <PatternLayout>
+                <pattern>
+                    [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+                </pattern>
+            </PatternLayout>
+        </File>
+        <File name="springboot-appender" fileName="${path}/springboot_log.log" >
+            <PatternLayout>
+                <pattern>
+                    [%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+                </pattern>
+            </PatternLayout>
+        </File>
+        <!--<SystemdJournal name="app-journal" logStacktrace="true" logSource="false" />-->
+        <!--<SystemdJournal name="springboot-journal" logStacktrace="true" logSource="false" />-->
+        <!--<SystemdJournal name="logbook-journal" logStacktrace="true" logSource="false" />-->
+    </Appenders>
+    <Loggers>
+        <Logger name="org.springframework.web" level="info" additivity="false">
+            <AppenderRef ref="springboot-appender"/>
+            <AppenderRef ref="console-appender"/>
+        </Logger>
+        <Logger name="http.wire-log" level="trace" additivity="false">
+            <AppenderRef ref="logbook-appender"/>
+        </Logger>
+        <Logger name="de.betterbits.smsbridge" level="info" additivity="false">
+            <AppenderRef ref="app-appender"/>
+        </Logger>
+        <Root level="error">
+            <AppenderRef ref="console-appender"/>
+        </Root>
+    </Loggers>
+</Configuration>

@@ -1,0 +1,200 @@
+<div class="row" ng-show="isSmartDevice">
+  <div class="col-sm-2 hidden-xs">
+
+  </div>
+  <div class="col-sm-8">
+    <div class="w-xl w-auto-xs center-block">
+      <div class="btn-group btn-group-justified text-center text-sm">
+        
+        
+        
+        <div class="btn-group" ng-show="app.header.tabIndex==0">
+          <div  ui-sref-active="active" class="leftMenuHotel">
+
+            <a class="wrapper-xs block menuBottomItem" ng-click="clickLoading('app.hotelList', 'fh')" id="fh" class="bottomMenuLink leftMenuHotel ignoreUiSref">
+              <!--<i class="fa fa-weibo bottomIcon"></i><br>-->
+              <!--<img src="angulr/img/build/menu/bottom/hotel-inactive.png" class="bottomMenuIcon"><br>-->
+
+              <!--<div class="menuBottomItem">-->
+              <!--<b class="badge bg-orange pull-right" style="position: absolute; right:2px; top:0;" ng-show="hotelNotification.notificationObjhotelUnreadActivitiesNumber">{{hotelNotification.notificationObjhotelUnreadActivitiesNumber}}</b>-->
+
+              <div class="menuIconLeft iconHotel menuIconBottom"/>
+              <span class="text-sm bottomMenuLabel" translate="system.hotelList">Hotels</span>
+              <!--</div>-->
+
+            </a>
+            <a ui-sref="app.hotelList" style="display: none;"></a>
+
+          </div>
+        </div>
+        
+        <div class="btn-group" ng-show="app.header.tabIndex==0">
+          <div  ui-sref-active="active" class="leftMenuHotel">
+
+            <a class="wrapper-xs block menuBottomItem" ng-click="clickLoading('app.activityList', 'f0')" id="f0" class="bottomMenuLink leftMenuHotel ignoreUiSref">
+              <!--<i class="fa fa-weibo bottomIcon" style="font-size: 30px;margin-bottom: -5px;"></i>-->
+
+              <!--<img src="angulr/img/build/menu/bottom/hotel-inactive.png" class="bottomMenuIcon"><br>-->
+
+              <!--<div class="menuBottomItem">-->
+              <!--<b class="badge bg-orange pull-right" style="position: absolute; right:2px; top:0;" ng-show="hotelNotification.notificationObjhotelUnreadActivitiesNumber">{{hotelNotification.notificationObjhotelUnreadActivitiesNumber}}</b>-->
+
+              <!--<div class="menuIconLeft iconHotel menuIconBottom"/>-->
+              <div class="menuIconLeft iconActivity menuIconBottom"/>
+
+              <span class="text-sm bottomMenuLabel" translate="system.activities">Activities</span>
+              <!--</div>-->
+
+            </a>
+            <a ui-sref="app.activityList" style="display: none;"></a>
+
+          </div>
+        </div>
+        
+        <div class="btn-group" ng-show="app.header.tabIndex==1 && hotelState.profileData.checkedIn && hotelState.profileData.logged">
+          <div  ui-sref-active="active" class="leftMenuHotel">
+
+              <a class="wrapper-xs block menuBottomItem" ng-click="clickLoading('app.hotel', 'f1')" id="f1" ui-sref="app.hotel"  class="bottomMenuLink leftMenuHotel ignoreUiSref">
+                  <!--<i class="fa fa-weibo bottomIcon"></i><br>-->
+                  <!--<img src="angulr/img/build/menu/bottom/hotel-inactive.png" class="bottomMenuIcon"><br>-->
+                
+                  <!--<div class="menuBottomItem">-->
+                    <b class="badge bg-orange pull-right" style="position: absolute; right:2px; top:0;" ng-show="hotelNotification.notificationObj.hotelUnreadActivitiesNumber">{{hotelNotification.notificationObj.hotelUnreadActivitiesNumber}}</b>
+
+                    <div class="menuIconLeft iconActivity menuIconBottom"/>
+                    <span class="text-sm bottomMenuLabel" translate="system.activities">Hotel</span>
+                  <!--</div>-->
+      
+              </a>
+              <a ui-sref="app.hotel" style="display: none;"></a>
+
+          </div>
+        </div>
+        
+        <div class="btn-group" ng-show="app.header.tabIndex==1 && hotelState.profileData.checkedIn && !hotelState.profileData.logged">
+          <div  ui-sref-active="active" class="leftMenuHotel">
+
+              <a class="wrapper-xs block menuBottomItem" ng-click="clickLoading('app.hotel', 'f21')" id="f21" ui-sref="app.hotel"  class="bottomMenuLink leftMenuHotel ignoreUiSref">
+                  <!--<i class="fa fa-weibo bottomIcon"></i><br>-->
+                  <!--<img src="angulr/img/build/menu/bottom/hotel-inactive.png" class="bottomMenuIcon"><br>-->
+                
+                  <!--<div class="menuBottomItem">-->
+                    <b class="badge bg-orange pull-right" style="position: absolute; right:2px; top:0;" ng-show="hotelNotification.notificationObj.hotelUnreadActivitiesNumber">{{hotelNotification.notificationObj.hotelUnreadActivitiesNumber}}</b>
+
+                    <div class="menuIconLeft iconActivity menuIconBottom"/>
+                    <span class="text-sm bottomMenuLabel" translate="system.activities">HotelPreview</span>
+                  <!--</div>-->
+      
+              </a>
+              <a ui-sref="app.hotelPreview" style="display: none;"></a>
+
+          </div>
+        </div>
+        
+        <div class="btn-group">
+          <div  ui-sref-active="active" class="leftMenuHotel">
+
+            <a class="wrapper-xs block menuBottomItem" ng-click="clickLoading('app.chatList', 'f2', null, {hotelScope: hotelState.profileData.checkedIn && app.header.tabIndex==1})"  id="f2"  class="bottomMenuLink ignoreUiSref">
+              <b class="badge bg-orange pull-right" style="position: absolute; right:6px; top:0;" ng-show="hotelNotification.notificationObj.unreadChatsCounter">{{hotelNotification.notificationObj.unreadChatsCounter}}</b>
+              <!--<i class="fa fa-comments-o bottomIcon"></i><br>-->
+              <!--<img src="angulr/img/build/menu/bottom/chat-inactive.png" class="bottomMenuIcon"><br>-->
+              <div class="menuIconLeft iconChat menuIconBottom"/>
+  
+              <span class="text-sm bottomMenuLabel" translate="system.contacts" ng-show="app.header.tabIndex==0">Contacts</span>
+              <span class="text-sm bottomMenuLabel" translate="system.guests" ng-show="app.header.tabIndex==1">Guests</span>
+            </a>
+            <a ui-sref="app.chatList" style="display: none;"></a>
+
+          </div>
+        </div>
+        
+        
+        <div class="btn-group" ng-show="app.header.tabIndex==1 && hotelState.profileData.checkedIn">
+          <div  ui-sref-active="active" class="leftMenuHotel">
+
+            <a class="wrapper-xs block menuBottomItem" ng-click="clickLoading('app.wall', 'f3')" id="f3" class="bottomMenuLink ignoreUiSref">
+              <!--<i class="fa fa-comment-o  bottomIcon"></i><br>-->
+              <!--<img src="angulr/img/build/menu/bottom/wall-inactive.png" class="bottomMenuIcon"><br>-->
+             
+              <b class="badge bg-orange pull-right" style="position: absolute; right:2px; top:0;" ng-show="hotelNotification.notificationObj.hotelUnreadWallNumber">{{hotelNotification.notificationObj.hotelUnreadWallNumber}}</b>
+
+
+              <div class="menuIconLeft iconWall menuIconBottom"/>
+  
+              <span class="text-sm bottomMenuLabel" translate="system.wall">Wallpost</span>
+            </a>
+            <a ui-sref="app.wall" style="display: none;"></a>
+
+          </div> 
+        </div>
+        
+        <div class="btn-group">
+          <div  ui-sref-active="active" class="leftMenuHotel">
+
+            <a class="wrapper-xs block menuBottomItem" ng-click="clickLoading('app.me', 'f4')"   id="f4" class="bottomMenuLink ignoreUiSref">
+              <!--<i class="fa icon-user fa-fw  bottomIcon"></i><br>-->
+              <!--<img src="angulr/img/build/menu/bottom/me-inactive.png" class="bottomMenuIcon"><br>-->
+              <div class="menuIconLeft iconMe menuIconBottom"/>
+  
+              <span class="text-sm bottomMenuLabel">
+                <span class="badge bg-dark" style="margin-top: -2px;" ng-show="hotelState.profileData.guestAccount">Guest</span>
+                <span ng-hide="hotelState.profileData.guestAccount" translate="system.profile">Me</span>
+              </span>
+            </a>
+            <a ui-sref="app.me" style="display: none;"></a>
+
+          </div>
+        </div>
+        
+        <div class="btn-group" ng-show="app.header.tabIndex==1 && hotelState.profileData.checkedIn && !hotelState.profileData.hotelStaff">  
+          
+          <a class="wrapper-xs block menuBottomItem" ng-click="checkinService.resetCheckin();" id="f5"  class="bottomMenuLink">
+            <!--<i class="fa fa-sign-out  bottomIcon"></i><br>-->
+            <!--<img src="angulr/img/build/menu/bottom/checkout-inactive.png" class="bottomMenuIcon"><br>-->
+            <div class="menuIconLeft iconCheckout menuIconBottom"/>
+
+            <span class="text-sm bottomMenuLabel" translate="system.checkout">Checkout</span>
+          </a>
+        </div> 
+        
+        <div class="btn-group" ng-show="!hotelState.profileData.logged && app.header.tabIndex==0">  
+          
+          <a class="wrapper-xs block menuBottomItem" ui-sref="access.login" id="f7"  class="bottomMenuLink ignoreUiSref">
+            <!--<i class="fa fa-sign-out  bottomIcon"></i><br>-->
+            <!--<img src="angulr/img/build/menu/bottom/checkout-inactive.png" class="bottomMenuIcon"><br>-->
+            <div class="menuIconLeft iconCheckout menuIconBottom"/>
+
+            <span class="text-sm bottomMenuLabel" translate="system.login">Login</span>
+          </a>
+        </div>
+          
+          <div class="btn-group" ng-show="hotelState.profileData.logged && (hotelState.profileData.hotelStaff || app.header.tabIndex==0)">  
+          
+          <a class="wrapper-xs block menuBottomItem" ng-click="loginService.resetLogin();" id="f77"  class="bottomMenuLink">
+            <!--<i class="fa fa-sign-out  bottomIcon"></i><br>-->
+            <!--<img src="angulr/img/build/menu/bottom/checkout-inactive.png" class="bottomMenuIcon"><br>-->
+            <div class="menuIconLeft iconCheckout menuIconBottom"/>
+
+            <span class="text-sm bottomMenuLabel" translate="system.logout">Logout</span>
+          </a>
+        </div>
+        
+        <div class="btn-group" ng-show="app.header.tabIndex==1 && !hotelState.profileData.checkedIn && (!hotelState.profileData.hotelStaff)">
+          <div  ui-sref-active="active" class="leftMenuHotel">
+            <a class="wrapper-xs block menuBottomItem" ng-click="clickLoading(null, 'f6')" id="f6" ui-sref="app.checkin"  class="bottomMenuLink">
+              <!--<i class="fa fa-sign-out  bottomIcon"></i><br>-->
+              <!--<img src="angulr/img/build/menu/bottom/checkout-inactive.png" class="bottomMenuIcon"><br>-->
+              <div class="menuIconLeft iconCheckout menuIconBottom"/>
+  
+              <span class="text-sm bottomMenuLabel" translate="system.checkin">Checkin</span>
+            </a>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-2 hidden-xs">
+
+  </div>
+</div>

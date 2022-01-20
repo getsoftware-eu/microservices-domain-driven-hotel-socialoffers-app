@@ -1,0 +1,152 @@
+<div class="panel b-a panel-default image-box-shadow activityBlock" ng-if="showDeal.active && showDeal.timeValid && (showDeal.dealStatus!='REJECTED')">
+
+    <div style="margin-top: -1px;"  ng-show="!localState.staffView">
+
+        <div ng-if="showDeal.lastMinute && showDeal.pictureUrl" class="bottom text-white" style="padding: 5px;text-align: left; margin-bottom: -25px;height: 25px;z-index: 9;position: relative;padding-left: 0px;" >
+            <span class="label bg-danger lastMinuteDeal">Last Minute</span>
+        </div>
+        <div ng-if="localState.showDealHotelLink  && showDeal.pictureUrl" class="bottom text-white" style="padding: 5px;text-align: right;margin-bottom: -25px;height: 25px;z-index: 9;position: relative;" >
+            <!--ng-show="!localState.selectedFilterHotel"-->
+            <div class="hotelInfoOpacity" ng-show="showDeal.pictureUrl">
+                <a class="text-muted clear text-ellipsis" style="color: white;" ui-sref="app.hotelList({filterCity: showDeal.hotelCity, filterHotelId: showDeal.hotelId})">
+                    <span style="text-decoration: underline; /*font-weight: bold;*/"> <!-- ng-show="!localState.selectedFilterHotel.id" -->
+                        {{::showDeal.hotelName}}
+                    </span> 
+                    <span ng-show="!localState.selectedCityHotel.id">, {{::showDeal.hotelCity}}</span>
+                </a>
+                <div style="display: flex; display: -webkit-flex;display: -moz-flex;display: -ms-flexbox;justify-content: flex-end; font-size: 13px; color: #fff;">
+                    <div class="customersLinkInHotel" ng-show="showDeal.hotelCustomerNumber>0"> 
+                        <a class="clear text-ellipsis" ng-click="clickLoading('app.chatList', null, null, {filterCity: showDeal.hotelCity, filterHotelId: showDeal.hotelId})">  
+                            <span style="margin-left: 5px; text-decoration: underline;">
+                                {{showDeal.hotelCustomerNumber}} guest<span ng-show="showDeal.hotelCustomerNumber>1">s</span>
+                            </span> 
+                            in Hotel 
+                        </a>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+
+        <div class="item m-l-n-xxs m-r-n-xxs">
+            <a >
+                <img ng-src="{{showDeal.pictureUrl}}" ng-show="showDeal.pictureUrl" class="img-full img-activity">
+            </a>
+        </div>
+    </div>
+    
+    <!--<a class="text-lt" style="font-weight: bold; margin-left: 10px;" ng-show="!showDeal.timeValid && showDeal.dealStatus!='rejected'">-->
+        <!--<span style="color:red;">(not active now: {{showDeal.validFromString}} - {{showDeal.validToString}})</span>-->
+    <!--</a>-->
+    
+    <!--<a class="text-lt" style="font-weight: bold; margin-left: 10px;" ng-show="showDeal.lastMinute">-->
+        <!--<span class="countdown_deal" id="countdown_deal_{{showDeal.activityId}}_{{showDeal.id}}"></span>-->
+    <!--</a>-->
+    
+    <div layout="row" style="overflow: hidden; justify-content: space-between; -webkit-justify-content: space-between; -moz-justify-content: space-between;-ms-justify-content: space-between;  margin-top: 8px; margin-right: 3px; margin-left: 10px; font-size: 22px;">
+
+        <div ng-style="::isSmartDevice? {'width': activityDealDescrWidth} : {'width':'395px'}">
+            <span class="text-lt" style="font-weight: bold;" ng-click="onDealClick(showDeal.id)">{{showDeal.title}}</span>
+            <small class="text-muted clear text-ellipsis myEllipsis"><span>{{showDeal.shortDescription}}</span></small>
+            <span style="color: red; font-size: 14px;" ng-if="hotelState.profileData.hotelId>0 && hotelState.profileData.hotelId!=showDeal.hotelId">Not in your hotel!</span>
+            <span class="countdown_deal" ng-if="showDeal.dealStatus=='ACCEPTED'" id="countdown_deal_{{showDeal.activityId}}_{{showDeal.id}}"></span>
+        </div>
+
+        <div layout="column" style="text-align: right;flex-shrink: 0;flex-basis: 85px;" ng-if="showDeal.dealStatus=='ACCEPTED' || showDeal.dealStatus=='EXECUTED' || showDeal.dealStatus=='CLOSED'">
+
+            <div ng-show="showDeal.dealStatus=='ACCEPTED'">
+                
+                <div ng-show="localState.staffView">
+                    <input type="text" style="width: 85px; height: 28px;font-size: 16px;" ng-model="showDeal.tablePosition" placeholder="Table pos.">
+
+                    <button style="width: 85px; margin-top: 0px;" class="btn btn-vsm btn-info" ng-click="submitDealAction(showDeal, 'execute')" ng-show="localState.staffView">{{::'system.accept' | translate}}</button></a>
+                </div>
+                 
+                <div>
+                    <button style="width: 85px; margin-top: 0px;" class="btn btn-vsm btn-danger" ng-click="submitDealAction(showDeal, 'rejectDeal')">{{::'system.reject' | translate}}</button>
+                </div>
+                
+            </div>
+            
+            <div ng-show="localState.staffView && showDeal.dealStatus=='EXECUTED'" style=" width: 85px;text-align: left;">
+
+                <span style="font-size: 17px;">{{showDeal.tablePosition}} {{::'system.bill' | translate}}:</span>
+
+                <div style="white-space: nowrap;">
+                    <input type="text" style="width: 60px; height: 28px;font-size: 16px;" ng-model="showDeal.totalMoney" money precision="2" placeholder="{{::'system.bill' | translate}}">
+                    <i class="fa fa-eur menu-euro" style="margin-left: 5px; margin-right: 5px; font-size: 16px;"></i>
+                </div>
+
+                <button style="width: 85px; margin-top: 0px;" class="btn btn-vsm btn-info" ng-click="submitDealAction(showDeal, 'close')" ng-show="localState.staffView">{{::'system.close' | translate}}</button></a>
+
+            </div>
+            
+            
+            <div ng-show="!localState.staffView">
+                <button style="width: 85px; margin-top: 0px; " class="btn btn-vsm btn-info" ng-click="submitDealAction(showDeal, 'inviteActivity')">{{::'page.activities.invite' | translate}}</button></a>
+            </div>           
+            
+        </div>
+        
+    </div>
+    
+    <div class="hotelDescrElt" ng-show="!localState.staffView">
+
+        <!--<div ng-show="showDeal.dealStatus" style="color: green; font-weight: bold; text-align: left;margin-left: 1px;margin-bottom: -47px;margin-top: 16px; padding: 3px;">-->
+            <!--{{showDeal.dealStatus}}-->
+        <!--</div>-->
+        <div style="text-align: right;margin-right: 1px;margin-bottom: -47px;margin-top: 16px; padding: 3px;">
+
+            <a facebook-feed-share class="facebookShare"
+               data-url='{{HOST}}{{HOST_SUFFIX}}#/app/activityList//{{showDeal.hotelId}}/{{showDeal.id}}'
+               data-shares='shares',
+               data-description="{{showDeal.shortDescription}}"
+               data-picture="{{HOST}}{{showDeal.pictureUrl}}"
+               data-name="{{showDeal.name}}"
+               data-caption="caption"
+            >
+                {{ shares }}
+            </a>
+
+        </div>
+        
+        <accordion close-others="oneAtATime" ng-show="showDeal.description">
+
+            <accordion-group is-open="accordionStatus.openActivities[showDeal.id]" is-disabled="false">
+
+                <accordion-heading>
+                    <!--<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': accordionStatus.infoHotelOpen, 'fa-angle-right': !accordionStatus.infoHotelOpen}"></i>-->
+                    <div class="text-center">
+                        <!--<i class="glyphicon glyphicon-align-justify"></i> Offer Description-->
+                        <button style="margin: 0;" class="btn m-b-xs w-xs btn-orangeBorder btn-rounded" ng-click="openDeal(showDeal.initId)"><span ng-show="localState.openActivities[showDeal.initId]">Hide</span><span ng-hide="localState.openActivities[showDeal.initId]">Open</span></button>
+                    </div>
+                   
+                </accordion-heading>
+
+                <div ng-bind-html="showDeal.description" style="word-wrap: break-word;"></div>
+
+                <hr>
+               
+
+            </accordion-group>
+        </accordion>
+    </div>
+    
+    
+    <div style="text-align: center;">
+        <h2 style="margin: 0;">
+            
+            <span ng-show="localState.staffView || showDeal.dealStatus == 'EXECUTED'" class="status-{{showDeal.dealStatus}}" style="text-transform: capitalize;">{{showDeal.dealStatus}}. </span>
+            <div ng-show="showDeal.dealStatus != 'CLOSED'" style="display: inline;">
+                <span ng-hide="localState.staffView">You personal activation</span> code:
+                <span style="text-transform: capitalize;">{{showDeal.dealCode}}</span>
+            </div>
+           
+        </h2>
+    </div>
+    
+    <div ng-show="showDeal.dealStatus != 'ACCEPTED' && showDeal.dealStatus != 'EXECUTED' && showDeal.dealStatus != 'CLOSED'">
+        <button type="submit" class="btn btn-lg btn-orange btn-block btn-addon" ng-click="submitDealAction(showDeal, 'acceptDeal')"><i class="fa fa-sign-in"></i>ACCEPT DEAL</button>
+    </div>
+
+</div>

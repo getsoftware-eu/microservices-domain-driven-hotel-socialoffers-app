@@ -1,0 +1,93 @@
+<!-- START HOTEL DESCR --->
+<div class="panel b-a panel-default image-box-shadow" ng-show="((previewMenu.id>0 || previewMenu.id<0))">
+    
+    <div layout="row" style="font-size: 25px;">
+        
+        <div layout="column" ng-click="openModal('editMenuOrder', previewMenu.initId)" style="margin: 5px;">
+            <!--<img ng-src="{{previewMenu.previewPictureUrl}}" ng-show="previewMenu.previewPictureUrl" style="width: 100px;">-->
+            <i class="fa fa-hospital-o" style="margin-bottom: 10px;" ng-show="previewMenu.orderInRoom"></i>
+            <i class="fa fa-cutlery"></i>
+        </div>
+        
+        <div style="flex-grow: 1; margin-left: 3px;" layout="column">
+            <div style="flex-grow: 1;" layout="column" >
+                <!--<div layout="row" >-->
+                    <!--<span class="text-lt" style="font-weight: bold;" >{{previewMenu.name}}</span>-->
+                    <!---->
+                <!--</div>-->
+                
+                <div layout="column" style="margin-left:5px; font-size: 20px;font-size: 17px;min-height: 52px;">
+                 
+                    <div class="myFlex mySpaceBetween">
+                        <div style="flex-grow: 1;" ng-click="openModal('editMenuOrder', previewMenu.initId)">
+                            <a class="text-lt" >
+                                {{previewMenu.timeString}}
+                            </a>
+                        </div>
+                        
+                        <div ng-show="previewMenu.orderStatus=='ACCEPTED'">
+                            <label ng-show="previewMenu.orderInRoom" class="text-orange">{{::'system.room' | translate}}:</label>                            
+                            <input type="text" style="width: 100px; height: 28px; font-size: 16px;" ng-model="previewMenu.orderLocation" placeholder="Table Pos." ng-disabled="previewMenu.orderInRoom">
+                        </div> 
+                        
+                        <div ng-show="previewMenu.orderStatus=='EXECUTED'" style="width: 100px;text-align: left;">
+                            <label ng-show="previewMenu.orderInRoom" class="text-orange">{{::'system.room' | translate}}</label>    
+                            <span>{{previewMenu.orderLocation}} {{::'system.bill' | translate}}:</span>
+                        </div>
+                       
+                    </div>
+                    
+                    <div class="myFlex mySpaceBetween">
+                        <div style="flex-grow: 1;" ng-click="openModal('editMenuOrder', previewMenu.initId)">
+                            <a class="text-lt"  ng-show="previewMenu.itemAmount>0">
+                                {{previewMenu.itemAmount}} items
+                            </a>
+
+                            <a class="text-lt" ng-show="previewMenu.totalPrice>0">
+                                ({{ previewMenu.totalPrice | currency:"":2}} <i class="fa fa-eur menu-euro"></i>)
+                            </a>
+                        </div>
+                        
+                        <div>
+                            <button style="width: 100px; margin-top: 0px;" class="btn btn-vsm btn-info" ng-click="orderMenuAction(previewMenu, 'executeMenu')" ng-show="localState.staffView && previewMenu.orderStatus=='ACCEPTED'">{{::'system.accept' | translate}}</button></a>
+                        </div>
+                        <div ng-show="localState.staffView && previewMenu.orderStatus=='EXECUTED'">
+                            <input type="text" style="width: 80px; height: 28px;font-size: 16px;" ng-model="previewMenu.totalMoney" money precision="2" placeholder="Amount"><i class="fa fa-eur menu-euro" style="margin-left: 5px; margin-right: 5px;"></i>
+                        </div>
+                        <!--<div>-->
+                            <!--<button style="width: 85px; margin-top: 0px;" class="btn btn-vsm btn-danger" ng-click="orderMenuAction(previewMenu, 'rejectMenu')" ng-show="previewMenu.orderStatus =='accepted'">Reject</button></a>-->
+                        <!--</div>-->
+                    </div>
+                   
+                    <div class="myFlex mySpaceBetween">
+                        <div style="flex-grow: 1;" ng-click="openModal('editMenuOrder', previewMenu.initId)">
+                            <a class="text-lt" ng-show="previewMenu.orderCode" style="text-transform: capitalize;">
+                                {{previewMenu.orderCode}}
+                            </a>
+
+                            <a class="text-lt status-{{previewMenu.orderStatus}}" ng-show="previewMenu.orderStatus">
+                                {{previewMenu.orderStatus}}
+                            </a>
+                        </div>
+                        
+                        <div>
+                            <button style="width: 100px; margin-top: 0px;" class="btn btn-vsm btn-danger" ng-click="orderMenuAction(previewMenu, 'rejectMenu')" ng-show="previewMenu.orderStatus =='ACCEPTED'">{{::'system.reject' | translate}}</button></a>
+                        </div>
+                        <div>
+                            <button style="width: 100px; margin-top: 0px;" class="btn btn-vsm btn-info" ng-click="orderMenuAction(previewMenu, 'closeMenu')" ng-show="localState.staffView && previewMenu.orderStatus=='EXECUTED'">{{::'system.close' | translate}}</button></a>
+                        </div>
+                    </div>
+                   
+                </div> 
+               
+             </div>
+            
+        
+        </div>
+        <!--<div layout="column" class="myCenter" ng-click="openModal('editMenuOrder', previewMenu.id)">-->
+            <!--<i class="fa fa-angle-right" style="padding:5px; color: #888; font-size: 24px;"></i>-->
+        <!--</div>-->
+   </div>
+    
+
+</div>

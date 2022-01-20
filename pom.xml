@@ -1,0 +1,596 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>eu.getsoftware</groupId>
+	<artifactId>ROOT</artifactId>
+	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>social-hotel-interactions</name>
+	<url>http://getSoftware.eu</url>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<!--<version>2.0.0.RC1</version>-->
+		<version>2.0.5.RELEASE</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<!--<spring.version>4.0.2.RELEASE</spring.version>-->
+		<spring-security-crypto.version>4.0.1.RELEASE</spring-security-crypto.version>
+		<!--<jackson.version>2.4.1</jackson.version>-->
+		<aspectj.version>1.7.4</aspectj.version>
+		<hibernate.version>5.0.12.Final</hibernate.version>
+		<!--<mysql.connector.version>5.1.31</mysql.connector.version>-->
+		<joda-time.version>2.3</joda-time.version>
+		<jetty-version>8.1.16.v20140903</jetty-version>
+		<kotlin.version>1.2.51</kotlin.version>
+		<kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<!-- disable tomcat dependency in order to use another one (undertow) -->
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+			<!--Exclude the built-in Logback dependency. This is necessary as Spring Boot will pick and use Logback if present in the classpath.-->
+			<exclusions>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-classic</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-undertow</artifactId>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-cache -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-cache</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		
+		<!-- exclude tomcat-jdbc, Spring Boot will use HikariCP automatically  -->
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>2.6.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<!--<version>${mysql.connector.version}</version>-->
+			<!--<scope>runtime</scope>-->
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+
+		<!--<dependency>-->
+			<!--<groupId>net.sf.dozer</groupId>-->
+			<!--<artifactId>dozer</artifactId>-->
+			<!--<version>5.5.1</version>-->
+		<!--</dependency>-->
+
+		<dependency>
+			<groupId>org.modelmapper</groupId>
+			<artifactId>modelmapper</artifactId>
+			<version>1.1.3</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-annotations</artifactId>
+			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<!--<version>2.4.1.1</version>-->
+		</dependency>
+
+		<dependency>
+			<groupId>javax.websocket</groupId>
+			<artifactId>javax.websocket-api</artifactId>
+			<version>1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>3.1.0</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>jstl</artifactId>
+			<version>1.2</version>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-envers -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-envers</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
+		<!--&lt;!&ndash; MySQL &ndash;&gt;-->
+		<!--<dependency>-->
+			<!--<groupId>mysql</groupId>-->
+			<!--<artifactId>mysql-connector-java</artifactId>-->
+			<!--&lt;!&ndash;<version>${mysql.version}</version>&ndash;&gt;-->
+		<!--</dependency>-->
+
+		<!-- Joda-Time -->
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+			<version>${joda-time.version}</version>
+		</dependency>
+
+		<!-- To map JodaTime with database type -->
+		<dependency>
+			<groupId>org.jadira.usertype</groupId>
+			<artifactId>usertype.core</artifactId>
+			<version>3.0.0.CR1</version>
+		</dependency>
+        
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.2</version>
+		</dependency>
+        
+        <!--// #### START SPRING SOCIAL V 1-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.social</groupId>-->
+            <!--<artifactId>spring-social-linkedin</artifactId>-->
+            <!--<version>1.0.1.RELEASE</version>-->
+        <!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.social</groupId>-->
+			<!--<artifactId>spring-social-web</artifactId>-->
+			<!--<version>1.0.3.RELEASE</version>-->
+		<!--</dependency>-->
+	
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.social</groupId>-->
+			<!--<artifactId>spring-social-facebook</artifactId>-->
+			<!--<version>1.1.1.RELEASE</version>-->
+		<!--</dependency>-->
+
+		<!--<dependency>-->
+			<!--<groupId>org.springframework.social</groupId>-->
+			<!--<artifactId>spring-social-facebook-web</artifactId>-->
+			<!--<version>1.1.1.RELEASE</version>-->
+		<!--</dependency>-->
+
+        <!-- for OAuth 2.0 -->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.security.oauth</groupId>-->
+            <!--<artifactId>spring-security-oauth2</artifactId>-->
+            <!--<version>2.0.7.RELEASE</version>-->
+        <!--</dependency>-->
+
+        
+        
+        <!--// #### END SPRING SOCIAL V 1-->
+        
+        
+        <!--// #### START SPRING SOCIAL V 2-->
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.social</groupId>-->
+            <!--<artifactId>spring-social</artifactId>-->
+            <!--<version>1.1.4.RELEASE</version>-->
+        <!--</dependency>-->
+        
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-web</artifactId>
+            <version>1.1.4.RELEASE</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-facebook</artifactId>
+            <version>2.0.3.RELEASE</version>
+        </dependency>
+       
+        <dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-facebook-web</artifactId>
+            <version>2.0.3.RELEASE</version>
+        </dependency>
+
+        
+        <!-- for OAuth 2.0 -->
+        <dependency>
+            <groupId>org.springframework.security.oauth</groupId>
+            <artifactId>spring-security-oauth2</artifactId>
+            <version>2.0.8.RELEASE</version>
+        </dependency>
+
+        <!--// #### END SPRING SOCIAL V 2-->
+
+        <dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-crypto</artifactId>
+			<version>${spring-security-crypto.version}</version>
+		</dependency>
+        
+
+		<!--@crossOrigin ???-->
+		<dependency>
+			<groupId>com.thetransactioncompany</groupId>
+			<artifactId>cors-filter</artifactId>
+			<version>2.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3.1</version> <!-- makesure correct version here -->
+		</dependency>
+		<!-- CHat -->
+		
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.12</version>
+		</dependency>
+
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>4.0.1.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-joda</artifactId>
+			<version>2.4.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ro.isdc.wro4j</groupId>
+			<artifactId>wro4j-core</artifactId>
+			<version>1.7.6</version>
+		</dependency>
+		
+		<!-- cache list without nulls -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>16.0</version>
+		</dependency>
+
+		<!-- url rewrite filter in web.xml -->
+		<dependency>
+			<groupId>org.tuckey</groupId>
+			<artifactId>urlrewritefilter</artifactId>
+			<version>4.0.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javaxt</groupId>
+			<artifactId>javaxt-core</artifactId>
+			<version>1.6.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.jetbrains.kotlin</groupId>
+			<artifactId>kotlin-stdlib-jdk8</artifactId>
+			<version>${kotlin.version}</version>
+		</dependency>
+		
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>${project.basedir}/src/main/resources</directory>
+			</resource>
+			<resource>
+				<directory>${project.build.directory}/generated-resources</directory>
+			</resource>
+		</resources>
+		<!--<plugins>-->
+		<!--&lt;!&ndash;<plugin>&ndash;&gt;-->
+		<!--&lt;!&ndash;<groupId>org.springframework.boot</groupId>&ndash;&gt;-->
+		<!--&lt;!&ndash;<artifactId>spring-boot-maven-plugin</artifactId>&ndash;&gt;-->
+		<!--&lt;!&ndash;</plugin>&ndash;&gt;-->
+		<!-- -->
+		<!--</plugins>-->
+		<!--</build>-->
+		<!-- -->
+		<!-- -->
+		<!--<build>-->
+		<finalName>test35</finalName>
+
+		<plugins>
+			<!-- Compilation -->
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<path>/${project.build.finalName}</path>
+					<update>true</update>
+					<!--<url>http://h2457130.stratoserver.net:8080/manager/text</url>-->
+					<url>http://localhost:8080/manager/text</url>
+					<username>tomcat</username>
+					<password>frankfurt_2015</password>
+				</configuration>
+			</plugin>
+
+			<!--make war with maven-->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<packagingExcludes>node_modules/**, grunt/**, img/**</packagingExcludes>
+				</configuration>
+			</plugin>
+
+			<!-- Run the application using "mvn jetty:run" -->
+			<!-- Goals: jetty:run -->
+			<!-- Profile: jetty9 -->
+			<!-- VM arguments: -XX:MaxPermSize=512M -Xmx1g" -->
+			<!--<plugin>-->
+				<!--<groupId>org.eclipse.jetty</groupId>-->
+				<!--<artifactId>jetty-maven-plugin</artifactId>-->
+				<!--&lt;!&ndash; to update plugin to the higher version the atmosphere framework -->
+					<!--should be updated first: https://github.com/Atmosphere/atmosphere/issues/1433 &ndash;&gt;-->
+				<!--<version>9.2.5.v20141112</version>-->
+				<!--<configuration>-->
+					<!--<scanIntervalSeconds>0</scanIntervalSeconds>-->
+					<!--&lt;!&ndash;<webAppConfig>&ndash;&gt;-->
+					<!--&lt;!&ndash;<contextPath>/ROOT</contextPath>&ndash;&gt;-->
+					<!--&lt;!&ndash;</webAppConfig>&ndash;&gt;-->
+					<!--&lt;!&ndash;<webApp>&ndash;&gt;-->
+					<!--&lt;!&ndash;<contextPath>/</contextPath>&ndash;&gt;-->
+					<!--&lt;!&ndash;<war>${basedir}/target/ROOT.war</war>&ndash;&gt;-->
+					<!--&lt;!&ndash;</webApp>&ndash;&gt;-->
+					<!--&lt;!&ndash;<webAppSourceDirectory>${basedir}/target/ROOT</webAppSourceDirectory>&ndash;&gt;-->
+					<!--&lt;!&ndash;<webAppConfig>&ndash;&gt;-->
+					<!--&lt;!&ndash;<resourceBases>&ndash;&gt;-->
+					<!--&lt;!&ndash;&lt;!&ndash;<resourceBase>${project.basedir}/src/main/webapp</resourceBase>&ndash;&gt;&ndash;&gt;-->
+					<!--&lt;!&ndash;<resourceBase>${project.basedir}/target/ROOT</resourceBase>&ndash;&gt;-->
+					<!--&lt;!&ndash;&lt;!&ndash;<resourceBase>${basedir}/target/ROOT</resourceBase>&ndash;&gt;&ndash;&gt;-->
+					<!--&lt;!&ndash;</resourceBases>&ndash;&gt;-->
+					<!--&lt;!&ndash;</webAppConfig>&ndash;&gt;-->
+					<!--<stopKey>stop</stopKey>-->
+					<!--<stopPort>9999</stopPort>-->
+					<!--<systemProperties>-->
+						<!--<systemProperty>-->
+							<!--<name>hotel.execution-mode</name>-->
+							<!--<value>development</value>-->
+							<!--&lt;!&ndash; websockets dont work with default 8080 port in windows &ndash;&gt;-->
+							<!--<name>jetty.port</name>-->
+							<!--<value>8086</value>-->
+						<!--</systemProperty>-->
+					<!--</systemProperties>-->
+				<!--</configuration>-->
+			<!--</plugin>-->
+
+			<plugin>
+				<artifactId>kotlin-maven-plugin</artifactId>
+				<groupId>org.jetbrains.kotlin</groupId>
+				<version>${kotlin.version}</version>
+
+				<configuration>
+					<compilerPlugins>
+						<!-- Or "spring" for the Spring support -->
+						<!--<plugin>all-open</plugin>-->
+						<plugin>spring</plugin>
+					</compilerPlugins>
+
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>compile</id>
+						<goals> <goal>compile</goal> </goals>
+						<configuration>
+							<sourceDirs>
+								<sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
+								<sourceDir>${project.basedir}/src/main/java</sourceDir>
+							</sourceDirs>
+						</configuration>
+					</execution>
+					<execution>
+						<id>test-compile</id>
+						<goals> <goal>test-compile</goal> </goals>
+						<configuration>
+							<sourceDirs>
+								<sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
+								<sourceDir>${project.basedir}/src/test/java</sourceDir>
+							</sourceDirs>
+						</configuration>
+					</execution>
+				</executions>
+
+				<dependencies>
+					<dependency>
+						<groupId>org.jetbrains.kotlin</groupId>
+						<artifactId>kotlin-maven-allopen</artifactId>
+						<version>${kotlin.version}</version>
+					</dependency>
+				</dependencies>
+
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.5</version>
+				<configuration>
+					<excludeDefaultDirectories>true</excludeDefaultDirectories>
+					<retryOnError>true</retryOnError>
+					<filesets>
+						<fileset>
+							<directory>target</directory>
+							<includes>
+								<include>**/*</include>
+							</includes>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+			<!-- Frontend Plugin -->
+			<plugin>
+				<groupId>com.github.eirslett</groupId>
+				<artifactId>frontend-maven-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<!--<execution>
+                        &lt;!&ndash; optional: you don't really need execution ids, but it looks nice
+                                        in your build log. &ndash;&gt;
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-npm</goal>
+                        </goals>
+                        &lt;!&ndash; optional: default phase is "generate-resources" &ndash;&gt;
+                        <phase>package</phase>
+                    </execution>
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            &lt;!&ndash; optional: The default argument is actually "install", so unless you
+                                            need to run some other npm command, you can remove this whole <configuration>
+                                            section. &ndash;&gt;
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm-build-for-production</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>package</phase>
+                        <configuration>
+                            <arguments>run build:prod</arguments>
+                        </configuration>
+                    </execution>-->
+				</executions>
+				<configuration>
+					<nodeVersion>v8.1.2</nodeVersion>
+					<npmVersion>5.2.0</npmVersion>
+					<workingDirectory>src/main/frontend</workingDirectory>
+				</configuration>
+			</plugin>
+			<!-- /Frontend Plugin -->
+		</plugins>
+	</build>
+	
+	<repositories>
+		<repository>
+			<id>org.springframework.maven.milestone</id>
+			<name>Spring Maven Milestone Repository</name>
+			<url>https://repo.spring.io/milestone</url>
+		</repository>
+		<repository>
+			<id>central</id>
+			<url>https://repo1.maven.org/maven2/</url>
+		</repository>
+		<!--<repository>-->
+			<!--<id>org.jspresso.framework</id>-->
+			<!--<url>https://repository.jspresso.org/maven2/</url>-->
+		<!--</repository>-->
+		<repository>
+			<id>jaspersoft-third-party</id>
+			<url>https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/</url>
+		</repository>
+	</repositories>
+	<description>This application demonstrates how you can write real time applications using Spring 4 and AngularJS.</description>
+</project>

@@ -1,0 +1,158 @@
+<div class="hbox hbox-auto-xs" ng-controller="EditActivityContr" ng-init="
+  app.settings.asideFixed = true;
+  app.settings.asideDock = false;
+  app.settings.container = false;
+  app.hideAside = false;
+  app.hideFooter = false;
+    app.header.showTab = false;
+    app.header.showBackArrow = true;
+    app.rootSettings.darkBg = true;
+    ">
+    
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">{{'page.activities.editTitle' | translate }} <span ng-show="showActivity">: {{showActivity.title}}</span></h1>
+</div>
+<div class="wrapper-md">
+  <div class="row">
+    <div style="padding: 5px;">
+        <!--class="col-sm-9">-->
+
+        <div data-ng-include=" 'angulr/tpl/hotel/blocks/showAlertBlock.html' " />
+        
+        <span  ng-if="!((hotelState.profileData.hotelStaff && hotelState.profileData.hotelId==showActivity.hotelId) || hotelState.profileData.admin)">You are not a staff for the Hotel {{showActivity.hotelName}}!</span>
+        
+        <div data-ng-controller="activityCtrl">
+
+            <div class="hotelEditElt" ng-if="((hotelState.profileData.hotelStaff && hotelState.profileData.hotelId==showActivity.hotelId) || hotelState.profileData.admin)" ng-show="showActivity.initId">
+                 
+                <accordion close-others="oneAtATime">
+                    <accordion-group is-open="accordionStatus.openEditActivities[showActivity.initId]" is-disabled="accordionStatus.isFirstDisabled" class="b-info">
+                    <accordion-heading>
+                    <i class="fa fa-edit"></i>  &nbsp; {{'page.activities.editActivity' | translate }} <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': accordionStatus.openEditActivities[showActivity.initId], 'fa-angle-right': !accordionStatus.openEditActivities[showActivity.initId]}"></i>
+                    </accordion-heading>
+                        <!--<accordion-heading>-->
+                            <!--&lt;!&ndash;<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': accordionStatus.infoHotelOpen, 'fa-angle-right': !accordionStatus.infoHotelOpen}"></i>&ndash;&gt;-->
+                            <!--<div class="text-center">-->
+                            <!--&lt;!&ndash;<i class="glyphicon glyphicon-align-justify"></i> Offer Description&ndash;&gt;-->
+                            <!--<button style="margin: 0;" class="btn m-b-xs w-xs btn-orangeBorder btn-rounded" ng-click="openEditActivity(showActivity.initId)"><span ng-show="accordionStatus.openEditActivities[showActivity.initId]">Cancel</span><span ng-hide="accordionStatus.openEditActivities[showActivity.initId]">Edit</span></button>-->
+            <!-- -->
+                            <!--</div>-->
+                            <!--&lt;!&ndash;<i class="fa fa-pencil-square-o"></i> &nbsp; {{::'page.hotel.updateHotelInfo' | translate }} &ndash;&gt;-->
+                        <!--</accordion-heading>-->
+        
+                        <form class="m-b-none ng-pristine ng-valid" ng-submit="submitActivityChange(showActivity)" name="activityForm">
+        
+                        <div class="form-group">
+                        <label>{{'page.activities.activityTitle' | translate}}</label>
+                        <input type="text" class="form-control" ng-model="showActivity.title" placeholder="{{'page.activities.activityTitle' | translate}}" required>
+        
+                        </div>
+        
+        
+                        <div class="form-group" id="img{{showActivity.initId}}">
+                        <label>{{::'page.activities.activityLogo' | translate}}</label>
+        
+                        <input ng-model="newActivityFile" ngf-fix-orientation="true"
+                        onchange="angular.element(this).scope().newFile_changed(this, 'activity')"
+                        type="file" accept="image/*" />
+                        <!--<input type="button" ng-click="uploadFilesX()">-->
+                        </div>
+        
+        
+                        <div class="form-group">
+                        <label>{{'page.activities.activityShortDescription' | translate}}</label>
+                        <textarea class="form-control" rows="5" ng-model="showActivity.shortDescription" placeholder="{{'page.activities.activityShortDescription' | translate}}" required></textarea>
+                        </div>
+                        <div class="form-group">
+                        <label>{{'page.activities.activityDescription' | translate}}</label>
+                        <div text-angular ng-model="showActivity.description" class="btn-groups"  ta-toolbar="[
+                        ['bold', 'italics', 'underline', 'strikeThrough', 'ul', 'ol', 'redo', 'undo', 'clear'],
+                        ['justifyLeft', 'justifyCenter', 'justifyRight', 'indent', 'outdent'],
+                        ['html', 'insertImage','insertLink', 'insertVideo', 'wordcount', 'charcount']
+                        ]" required></div>
+                        <!--<textarea class="form-control" rows="5" ng-model="newactivity.description" placeholder="{{'page.activities.activityDescription' | translate}}"></textarea>-->
+                        </div>
+                        <div class="form-group">
+                        <label>{{'page.activities.validFrom' | translate}}</label>
+        
+                        <div class="input-group"  ng-controller="DatepickerCheckinCtrl">
+                        <input type="text" placeholder="DD.MM.YYYY"  class="form-control" datepicker-popup="{{format}}" ng-model="showActivity.validFrom" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" required/>
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                        </div>
+        
+                        </div>
+                        <div class="form-group">
+                        <label>{{'page.activities.validTo' | translate}}</label>
+                        <div class="input-group"  ng-controller="DatepickerCheckinCtrl">
+                        <input type="text" placeholder="DD.MM.YYYY"  class="form-control" datepicker-popup="{{format}}" ng-model="showActivity.validTo" is-open="opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" required/>
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                        </div>
+                        </div>
+                        <div class="form-group">
+                        <button type="submit" class="btn btn-success" ng-disabled="(showActivity.shortDescription.length > localState.maxActivityShortDescription) || showActivity.shortDescription.length == 0">{{'page.activities.editActivity' | translate }}</button>
+                         
+                        <button style="width: 110px;" class="btn btn-danger" ng-click="removeActivity(showActivity.initId)"><i class="fa fa-trash-o"></i>{{::'system.remove' | translate}}</button>
+        
+                        </div>
+                        </form>
+                    </accordion-group>
+                </accordion>
+            </div>
+
+            <div ng-show="localState.showActivityId && showActivity.initId">
+
+                <b>{{::'system.editPreview' | translate}}:</b>
+
+                <div class="panel panel-default">
+                    <div class="b-a panel-default" style="min-height: 150px;">
+
+                        <div>
+                            <div class="item m-l-n-xxs m-r-n-xxs">
+                                <a ui-sref="app.editActivity({activityId:nextActivity.initId})">
+                                    <img ng-src="{{showActivity.pictureUrl}}" ng-show="showActivity.pictureUrl" class="img-full">
+                                </a>
+                            </div>
+                        </div>
+
+                        <div style="display: flex; display: -webkit-flex;display: -moz-flex;display: -ms-flexbox; justify-content: space-between; margin: 10px; font-size: 22px;">
+                            <a ui-sref="app.editActivity({activityId:nextActivity.initId})" class="text-lt" style="font-weight: bold;">
+                                {{showActivity.title}}
+                            </a>
+                        </div>
+
+                        <div style="margin-left: 10px;margin-right: 10px;word-wrap: break-word;">
+                            <small class="text-muted clear text-ellipsis emphasize" >{{showActivity.shortDescription}}</small>
+
+                        </div>
+
+                        <div  style="margin: 10px;word-wrap: break-word;">
+
+
+                            <div ng-bind-html="showActivity.description"></div>
+
+                            <hr>
+                            <!--<span>{{'page.activities.customerCounter' | translate}}: {{showActivity.customerCounter}}</span>-->
+
+                            <div style="margin-top: 5px;" ng-show="(hotelState.profileData.hotelStaff || hotelState.profileData.admin)">
+                                <button style="width: 110px;" class="btn m-b-xs btn-sm btn-info btn-addon" ng-click="accordionStatus.openEditActivities[showActivity.initId]=true;"><i class="fa fa-edit"></i>{{'system.edit' | translate}}</button>
+                                <br/>
+                                <button style="width: 110px;" class="btn m-b-xs btn-sm btn-danger btn-addon" ng-click="removeActivity(showActivity.initId)"><i class="fa fa-trash-o"></i>{{'system.remove' | translate}}</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+            
+    </div>
+    
+  </div>
+</div>
+</div>

@@ -1,0 +1,14 @@
+<urlrewrite>
+    <rule>
+        <name>Domain Name Check</name>
+        <condition name="host">www.hotelico.de</condition>
+        <from>^(.*)$</from>
+        <to type="redirect">http://hotelico.de$1</to>
+    </rule>
+    <!--<rule>-->
+        <!--<name>Domain Name Check2</name>-->
+        <!--<condition name="host">www.localhost</condition>-->
+        <!--<from>^(.*)$</from>-->
+        <!--<to type="redirect">http://sss.localhost$1</to>-->
+    <!--</rule>-->
+</urlrewrite>

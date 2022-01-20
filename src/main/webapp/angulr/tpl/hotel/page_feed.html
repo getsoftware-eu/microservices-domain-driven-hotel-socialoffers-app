@@ -1,0 +1,47 @@
+<!--<div class="bg-light lter b-b wrapper-md" ng-init="-->
+<!--app.hideFooter = true;-->
+<!--app.header.showTab = false;-->
+<!--app.header.showBackArrow = true;-->
+<!--app.rootSettings.darkBg = true;-->
+<!--" ng-if="hotelState.profileData.hotelStaff || hotelState.profileData.admin">-->
+  <!--&lt;!&ndash;<h1 class="m-n font-thin h3"></h1>&ndash;&gt;-->
+    <!--<div class="bg-light lter b-b wrapper-md">-->
+        <!--<h1 class="m-n font-thin h3">{{hotelState.profileData.hotelName}} Feed</h1>-->
+    <!--</div>-->
+<!--<div class="wrapper-md" ng-controller="FeedController">-->
+  <!--<div class="row">-->
+
+      <!--<div data-ng-include=" 'angulr/tpl/hotel/blocks/showAlertBlock.html' " />-->
+
+
+      <!--<div ng-show="successMsg" style="display: flex;justify-content: center; margin-bottom: 10px;">-->
+            <!--<a ui-sref="app.hotel" class="btn btn-sm btn-success">{{'page.feedback.tohotel' | translate }}</a>-->
+        <!--</div>-->
+        <!---->
+        <!--<div class="panel panel-default">-->
+            <!--<div class="panel-body" id="feedBody">-->
+
+                <!--&lt;!&ndash;<div style="display: flex;">&ndash;&gt;-->
+                    <!--<label>{{localState.selectedFeedCustomers.length}} {{'page.feed.receivers' | translate }}:</label>-->
+
+                    <!--<div isteven-multi-select id="feedCustomers" input-model="localState.availableFeedCustomers" output-model="localState.selectedFeedCustomers" button-label="icon name" item-label="icon name" tick-property="ticked" max-height="320px" search-property="name" output-properties="name id" orientation="horizontal" helper-elements="all none filter"></div>-->
+
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!---->
+                  <!--<label>{{'page.feed.textLabel' | translate }}:</label>-->
+                    <!---->
+                  <!--<br>-->
+                    <!---->
+                  <!--&lt;!&ndash;<div text-angular ng-model="localState.feedText" ta-toolbar="[]" class="btn-groups"></div>&ndash;&gt;-->
+                <!--<textarea  stop-event="touchend" ng-model="localState.feedText"   style="width:100%;" class="focusModal" ></textarea>-->
+
+                  <!--<button type="submit" class="btn btn-lg btn-orange btn-block" ng-click="submitFeed();"  ng-disabled="!localState.feedText && localState.selectedFeedCustomers.length>0" >{{'page.feed.button' | translate }}</button>-->
+
+            <!---->
+            <!--</div>-->
+ <!---->
+      <!--</div>-->
+    <!---->
+  <!--</div>-->
+  <!--</div>-->
+<!--</div>-->

@@ -1,0 +1,186 @@
+<div class="myCenter" ng-show="($state.current.name == 'app.activityList' && (localState.initFilterActivityId==showActivity.id || localState.initFilterActivityId==showActivity.initId) && (!showActivity.timeValid || !showActivity.active || showActivity.hidden) && !hotelState.profileData.hotelStaff && !hotelState.profileData.admin)">
+    <b>'{{showActivity.title}}'</b>&nbsp;<span class="text-orange"> is not active now...</span>
+</div>
+
+<div class="panel b-a panel-default image-box-shadow activityBlock activityDescrElt" ng-class="{'lastMinuteBorder': showActivity.lastMinute}" ng-show="::(showActivity.timeValid && showActivity.active && !showActivity.hidden || hotelState.profileData.hotelStaff || hotelState.profileData.admin)">
+
+    <div style="margin-top: -1px; border-bottom-width: 0;" ng-class="{'lastMinuteBorder': showActivity.lastMinute}">
+
+        <div ng-if="showActivity.lastMinute && showActivity.pictureUrl" class="bottom text-white" style="padding: 5px;text-align: left; margin-bottom: -25px;height: 25px;z-index: 9;position: relative;padding-left: 0px;" >
+            <span class="label bg-danger lastMinuteDeal">Last Minute</span>
+        </div>
+        <div ng-if="showActivity.pictureUrl && (localState.showActivityHotelLink || hotelState.isHotelStaffOrAdmin)" class="bottom text-white" style="padding: 5px;text-align: right; margin-bottom: -25px;height: 25px;z-index: 9;position: relative;" >
+            <!--ng-show="!localState.selectedFilterHotel"-->
+            <div class="hotelInfoOpacity" ng-show="showActivity.pictureUrl">
+               
+                <div ng-if="localState.showActivityHotelLink">
+                    <a class="text-muted clear text-ellipsis" style="color: white;" ui-sref="app.hotelList({filterCity: showActivity.hotelCity, filterHotelId: showActivity.hotelId})">
+                    <span style="text-decoration: underline; /*font-weight: bold;*/"> <!-- ng-show="!localState.selectedFilterHotel.id" -->
+                        {{::showActivity.hotelName}}
+                    </span>
+                        <span ng-show="!localState.selectedCityHotel.id">, {{::showActivity.hotelCity}}</span>
+                    </a>
+                    <div class="myFlex" style="justify-content: flex-end; -webkit-justify-content: flex-end; -moz-justify-content: flex-end; -ms-justify-content: flex-end; font-size: 13px; color: #fff;">
+                        <div class="customersLinkInHotel" ng-show="showActivity.hotelCustomerNumber>0">
+                            <a class="clear text-ellipsis" ng-click="clickLoading('app.chatList', null, null, {filterCity: showActivity.hotelCity, filterHotelId: showActivity.hotelId})">  
+                            <span style="margin-left: 5px; text-decoration: underline;">
+                                {{showActivity.hotelCustomerNumber}} guest<span ng-show="showActivity.hotelCustomerNumber>1">s</span>
+                            </span>
+                                in Hotel
+                            </a>
+                        </div>
+                        <div class="activitiesLinkInHotel" ng-show="localState.initFilterActivityId && showActivity.otherActivityNumber>0">
+                            <a class="clear text-ellipsis" ng-click="clickLoading('app.activityList', null, null, {filterCity: showActivity.hotelCity, filterHotelId: showActivity.hotelId})">
+                                <span style="margin-left: 5px; text-decoration: underline;">{{showActivity.otherActivityNumber}} other deals</span>
+                                in Hotel
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+               <div layout="column" style="font-size: 25px;" ng-if="(hotelState.profileData.hotelStaff && hotelState.profileData.hotelId==showActivity.hotelId || hotelState.profileData.admin) && $state.current.name=='app.hotel'">
+                   <div ng-click="submitActivityAction(showActivity, 'order_step_top')"><i class="fa fa-arrow-circle-up"></i></div>
+                   <div ng-click="submitActivityAction(showActivity, 'order_step_bottom')"><i class="fa fa-arrow-circle-down"></i></div>
+               </div>
+                
+            </div>
+        </div>
+
+        <div class="item m-l-n-xxs m-r-n-xxs">
+            <a >
+                <img ng-src="{{showActivity.pictureUrl}}" ng-show="showActivity.pictureUrl" class="img-full img-activity">
+            </a>
+        </div>
+    </div>
+
+    <div layout="row" ng-if="(hotelState.profileData.hotelStaff && hotelState.profileData.hotelId==showActivity.hotelId || hotelState.profileData.admin)">
+        <button style="margin-top: 0px;" class="btn btn-block btn-sm btn-info btn-addon" ng-click="editActivityId? submitActivityChange(showActivity) : openModal('editActivity', showActivity.initId)"><i class="fa fa-edit"></i>{{::'system.edit' | translate}}</button>
+        <button style="margin-top: 0px;" class="btn btn-block btn-sm btn-danger btn-addon" ng-click="removeActivity(showActivity.initId)"><i class="fa fa-trash-o"></i> {{::'system.remove' | translate}}</button>
+    </div>
+    
+    <a class="text-lt" style="font-weight: bold; margin-left: 10px;" ng-show="!showActivity.timeValid">
+        <span style="color:red;">(not active now: {{showActivity.validFromString}} - {{showActivity.validToString}})</span>
+    </a>
+    
+    <div layout="row" style="overflow: hidden;justify-content: space-between; -webkit-justify-content: space-between; -moz-justify-content: space-between;-ms-justify-content: space-between;  margin-top: 8px; margin-right: 3px; margin-left: 10px; font-size: 22px;">
+
+        <div ng-style="::isSmartDevice? {'width': activityDescrWidth} : {'width':'395px'}">
+            <span class="text-lt" style="font-weight: bold;" ng-click="onActivityClick(showActivity.initId)">{{showActivity.title}}</span>
+            <small class="text-muted clear text-ellipsis myEllipsis"><span>{{showActivity.shortDescription}}</span></small>
+        </div>
+
+        <div layout="column" style="text-align: right;flex-shrink: 0;flex-basis: 100px;" ng-show="showActivity.dealAllowed">
+
+            <!--<div>-->
+                <!--<button style="width: 100px; margin-top: 0px;" class="btn btn-vsm btn-info" ng-click="submitDealAction(showActivity, 'newDeal')" ng-hide="showActivity.validDealId">{{::'page.activities.subscribe' | translate}}</button></a>-->
+                <!--<button style="width: 100px; margin-top: 0px;" class="btn btn-vsm btn-info" ng-click="submitDealAction(showActivity, 'editDeal')" ng-show="showActivity.validDealId">{{::'page.activities.viewCode' | translate}}</button></a>-->
+            <!--</div>-->
+            
+            <div>
+                <button style="width: 100px; margin-top: 0px; " class="btn btn-vsm btn-info" ng-click="submitDealAction(showActivity, 'inviteActivity')">
+                    <i class="fa fa-rss" style="margin-right: 1px;margin-left: -1px;font-size: 14px;display: initial;"></i>
+                    <span ng-hide="hotelState.isHotelStaffOrAdmin">{{::'page.activities.invite' | translate}}</span>
+                    <span ng-show="hotelState.isHotelStaffOrAdmin">Send to guests</span>
+                </button>
+            </div>
+
+            <div style="height: 23px;margin-top: 3px;">
+                <a facebook-feed-share class="facebookShare"
+                   data-url='{{HOST}}{{HOST_SUFFIX}}#/app/activities/{{showActivity.id}}'
+                   data-shares='shares',
+                   data-description="Example text"
+                   data-picture="{{HOST}}{{showActivity.pictureUrl}}"
+                   data-name="{{showActivity.name}}"
+                   data-caption="caption"
+                   data-description="{{showActivity.shortDescription}}"
+                >
+                    {{ shares }}
+                </a>
+            </div>
+            
+        </div>
+        
+    </div>
+
+    <!--<div class="customersLinkInHotel" ng-show="(showActivity.likeNumber>0)">-->
+        <!--<a class="text-muted clear text-ellipsis"> {{showActivity.likeNumber}} interested </a>-->
+    <!--</div>-->
+
+   
+        <!--<a ui-sref="app.editActivity({activityId:showActivity.activityId})" class="text-lt" style="font-weight: bold;">-->
+        <!--&lt;!&ndash;<button class="btn m-b-xs w-xs btn-orangeBorder btn-rounded">Open</button>&ndash;&gt;-->
+        <!--</a>-->
+    <!--</div>-->
+    
+    <div class="hotelDescrElt " >
+
+        <!--<div style="text-align: right;margin-right: 1px;margin-bottom: -47px;margin-top: 16px; padding: 3px;">-->
+
+            <!--<a facebook-feed-share class="facebookShare"-->
+               <!--data-url='{{HOST}}{{HOST_SUFFIX}}#/app/activities/{{showActivity.id}}'-->
+               <!--data-shares='shares',-->
+               <!--data-description="Example text"-->
+               <!--data-picture="{{HOST}}{{showActivity.pictureUrl}}"-->
+               <!--data-name="{{showActivity.name}}"-->
+               <!--data-caption="caption"-->
+               <!--data-description="{{showActivity.shortDescription}}"-->
+                    <!--&gt;-->
+                <!--{{ shares }}-->
+            <!--</a>-->
+
+        <!--</div>-->
+        
+        <accordion close-others="oneAtATime" ng-show="showActivity.description">
+
+            <accordion-group is-open="accordionStatus.openActivities[showActivity.initId]" is-disabled="false">
+
+                <accordion-heading>
+                    <!--<i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': accordionStatus.infoHotelOpen, 'fa-angle-right': !accordionStatus.infoHotelOpen}"></i>-->
+                    <div>
+                        <!--<i class="glyphicon glyphicon-align-justify"></i> Offer Description-->
+                        <a style="margin: 0; /*text-decoration: underline;*/ margin-left: 8px;" ng-click="openActivity(showActivity.initId)">
+                            <span ng-show="accordionStatus.openActivities[showActivity.initId]">Hide Details</span>
+                            <span ng-hide="accordionStatus.openActivities[showActivity.initId]">Show Details</span>
+                        </a>
+                        <i class="fa fa-angle-right" ng-class="{'fa-angle-down': accordionStatus.openActivities[showActivity.initId], 'fa-angle-right': !accordionStatus.openActivities[showActivity.initId]}" style="color: #333;"></i>
+                    </div>
+                   
+                </accordion-heading>
+
+                <div ng-bind-html="showActivity.description" style="word-wrap: break-word;"></div>
+
+                
+            </accordion-group>
+        </accordion>
+        
+    </div>
+
+    <!--<hr>-->
+
+    <div ng-hide="hotelState.isHotelStaffOrAdmin" class="myCenter" style="border-color: #edf1f2; background-color: #f6f8f8;">
+        <div style="width: 50%; margin-top: 10px; margin-bottom: 5px;">
+            <button type="submit" class="btn btn-sm btn-info btn-block btn-addon btn-deal" ng-click="submitDealAction(showActivity, 'newDeal')" ng-hide="showActivity.validDealId"><i class="fa fa-percent"></i>{{::'page.activities.subscribe' | translate}}</button>
+            <button type="submit" class="btn btn-sm btn-info btn-block btn-addon btn-deal" ng-click="submitDealAction(showActivity, 'editDeal')" ng-show="showActivity.validDealId"><i class="fa fa-percent"></i>{{::'page.activities.viewCode' | translate}}</button>
+        </div>
+
+        
+        
+   </div>
+    <!--<div style="text-align: right;margin-top: -25px;margin-right: 5px;">-->
+
+        <!--<a facebook-feed-share class="facebookShare"-->
+           <!--data-url='{{HOST}}{{HOST_SUFFIX}}#/app/activities/{{showActivity.id}}'-->
+           <!--data-shares='shares',-->
+           <!--data-description="Example text"-->
+           <!--data-picture="{{HOST}}{{showActivity.pictureUrl}}"-->
+           <!--data-name="{{showActivity.name}}"-->
+           <!--data-caption="caption"-->
+           <!--data-description="{{showActivity.shortDescription}}"-->
+        <!--&gt;-->
+            <!--{{ shares }}-->
+        <!--</a>-->
+
+    <!--</div>-->
+
+
+</div>

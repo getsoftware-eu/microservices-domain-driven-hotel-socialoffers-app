@@ -1,0 +1,68 @@
+<div class="bg-light lter b-b wrapper-md" ng-init="
+app.hideFooter = true;
+app.header.showTab = false;
+app.header.showBackArrow = true;
+app.rootSettings.darkBg = true;
+" stop-event="touchend" ng-init="unlockModal();">
+  <!--<h1 class="m-n font-thin h3"></h1>-->
+    <div class="bg-light lter b-b wrapper-md">
+        <h1 class="m-n font-thin h3">Send Hotel Wellcome-Mail</h1>
+    </div>
+<div class="wrapper-md" ng-controller="MailListCtrl">
+  
+    <div class="row">
+
+      <div data-ng-include=" 'angulr/tpl/hotel/blocks/showAlertBlock.html' " />
+
+
+      <div ng-show="successMsg" class="myCenter" style="margin-bottom: 10px;">
+            <a ui-sref="app.hotel" class="btn btn-sm btn-success">{{'page.feedback.tohotel' | translate }}</a>
+        </div>
+        
+      <!--<div class="panel b-a" >-->
+
+
+        <div class="panel panel-default" >
+            <!--ng-show="isHotelStaffOrAdmin"-->
+            <div class="panel-body">
+
+                    <br>
+                     <div>
+                         <label>Sender Name</label><br/>
+                         <input type="text" class="form-control" placeholder="Optional {{::'profile.firstName' | translate}}"  ng-model="localState.fromName">
+
+                         <label>Sender E-mail</label><br/>
+                         <input type="text" class="form-control" placeholder="Optional {{::'profile.email' | translate}}"  ng-model="localState.fromMail">
+
+                         <label>Betreff</label><br/>
+                         <input type="text" class="form-control" placeholder="Optional Betreff"  ng-model="localState.customSubject">
+
+                     </div>
+                    <br>
+                  <!--<div text-angular ng-model="localState.feedbackText" ta-toolbar="[]" class="btn-groups"></div>-->
+
+                
+                <!--<div ng-if="::!isSmartDevice">-->
+                    <!--<label>{{'page.mailList.header' | translate }}:</label><br/>-->
+                    <!--<tags-input ng-model="localState.mailList" add-on-space="true" placeholder="Add an Email" class="focusModal" allowed-tags-pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"></tags-input>-->
+                <!--</div>-->
+                
+                <div>
+                    <label>Add comma-separated list of emails (for example: max@test.de, tom@test.de):</label><br/>
+                    <textarea ng-model="localState.mailListString"  placeholder="Add Email List" class="focusModal" style="width: 100%;"></textarea>
+                </div>
+
+                <!--<textarea  s
+                top-event="touchend" ng-model="localState.mailContent"   style="width:100%;" class="focusModal" placeholder="Mail Content"></textarea>-->
+
+                <!--<div text-angular ng-model="localState.mailContent" class="btn-groups" placeholder="Mail Content"  ta-toolbar="[['bold', 'italics', 'underline', 'ul', 'ol', 'redo', 'undo', 'clear']]" ></div>-->
+
+                <button type="submit" class="btn btn-lg btn-orange btn-block" ng-click="submitMailList();"  ng-disabled="!localState.mailList && !localState.mailListString" style="margin-top: 10px;">{{'page.mailList.button' | translate }}</button>
+
+              </div>
+ 
+      </div>
+    
+  </div>
+  </div>
+</div>

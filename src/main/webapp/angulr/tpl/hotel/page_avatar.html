@@ -1,0 +1,80 @@
+
+<div class="wrapper-md" ng-controller="ImageCropCtrl"  ng-init="
+app.hideFooter = true;
+app.header.showTab = false;
+app.header.showBackArrow = true;
+app.rootSettings.darkBg = true;
+" style="min-height: 500px;">
+
+    <div class="bg-light lter b-b myFlex" style="margin-bottom: 5px;padding-bottom: 5px;">
+        <h1 class="m-n font-thin h3">Avatar Image</h1>
+
+        <div ng-show="cropper.sourceImage && cropper.croppedImage && !localState.loading" class="myFlex mySpaceBetween" style="margin-left: 15px;">
+
+            <!--<button ng-click="initCrop = true">Crop</button>-->
+            <!--<div style="margin-top: 5px;">-->
+            <button  ng-click="uploadAvatar()" class="btn-orange btn-sm">{{::'system.save' | translate}} Avatar</button>
+            <!--<br/>-->
+            <!--<button ng-click="clear()">Clear</button>-->
+            <!--</div>-->
+
+            <!--<button ng-click="clear()" style="margin-left: 10px;">{{::'system.cancel' | translate}}</button>-->
+
+        </div>
+    </div>
+   
+
+    <div ng-show="!cropper.sourceImage">
+        <br/>
+        <!--<input type="file" name="fileInput" id="fileInput" onchange="angular.element(this).scope().fileChanged(event)" />-->
+        <input type="file" accept="image/*" img-cropper-fileread image="cropper.sourceImage"/>
+
+    </div>
+
+    <div ng-show="cropper.sourceImage && !localState.loading" style="overflow: hidden;">
+        <div>
+            <canvas width="325" height="300" id="canvas" image-cropper image="cropper.sourceImage" cropped-image="cropper.croppedImage" crop-width="200" crop-height="200" min-width="50" min-height="50" keep-aspect="true" crop-area-bounds="bounds"></canvas>
+        </div>
+    </div>
+
+    <div ng-show="cropper.sourceImage && cropper.croppedImage && !localState.loading" class="myFlex mySpaceBetween" style="width: 325px;">
+         
+        <!--<button ng-click="initCrop = true">Crop</button>-->
+        <!--<div style="margin-top: 5px;">-->
+            <!--<button  ng-click="uploadAvatar()" class="btn-orange">{{::'system.save' | translate}} Avatar</button>-->
+            <!--<br/>-->
+            <!--<button ng-click="clear()">Clear</button>-->
+        <!--</div>-->
+
+        <button ng-click="clear()" style="/*margin-left: 10px;*/width: 325px;">{{::'system.cancel' | translate}}</button>
+
+    </div>
+
+    <div ng-show="localState.loading">
+
+        <h2 ng-show="localState.loading && !localState.loadComplete">{{::'page.avatar.loading' | translate}}</h2>
+        <h2 ng-show="localState.loadComplete">{{::'page.avatar.loadComplete' | translate}}:</h2>
+
+        <!--<div>Cropped Image (Left: {{bounds.left}} Right: {{bounds.right}} Top: {{bounds.top}} Bottom: {{bounds.bottom}})</div>-->
+        <div ng-show="cropper.croppedImage!=null">
+            <img ng-src="{{cropper.croppedImage}}" />
+        </div>
+        
+        <button ng-click="goBack()" style="margin-top: 10px;">{{::'system.back' | translate}}</button>
+
+        <!--<p>The data-result-blob property is a Blob object, which is necessary in some upload libraries like <a href="https://github.com/nervgh/angular-file-upload" target="_blank">Angular File Upload</a></p>-->
+        <!--<p>Image using the data uri:</p>-->
+        <!--<img ng-src="{{result}}"></img>-->
+        <!--<p>The Base64 String used in the image above:</p>-->
+        <!--<textarea class="result-datauri">{{ result }}</textarea>-->
+        <!--<div style="margin-top: 5px;">-->
+            <!--<button ng-show="resultBlob" ng-click="uploadAvatar()" class="btn-orange">Set Avatar</button>-->
+            <!--&lt;!&ndash;<br/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<button ng-click="clear()">Clear</button>&ndash;&gt;-->
+        <!--</div>-->
+        
+
+
+    </div>
+    
+</div>

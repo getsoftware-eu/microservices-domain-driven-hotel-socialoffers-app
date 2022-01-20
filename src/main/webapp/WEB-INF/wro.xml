@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<groups xmlns="http://www.isdc.ro/wro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.isdc.ro/wro wro.xsd">
+    <!-- CSS resources -->
+    <group name="bundledCss_v22">
+
+        <css>/libs/bootstrap/dist/css/bootstrap.css</css>
+        <css>/libs/animate.css/animate.css</css>
+        <css>/libs/components-font-awesome/css/font-awesome.min.css</css>
+        <css>/libs/simple-line-icons/css/simple-line-icons.css</css>
+
+        <css>/libs/angular-xeditable/dist/css/xeditable.css</css>
+
+        <css>/libs/angular-material/angular-material.css</css>
+        <css>/angulr/css/material-design-icons.css</css>
+        <css>/angulr/css/md.css</css>
+
+        <css>/libs/isteven-angular-multiselect/isteven-multi-select.css</css>
+        <css>/angulr/css/font.css</css>
+        <css>/angulr/css/chat.css</css>
+        <css>/angulr/css/whiteApp.css</css>
+
+        <css>/angulr/css/app.css</css>
+        <css>/angulr/css/eugen.css</css>
+        <css>/angulr/css/bootstrap-social.css</css>
+
+    </group>
+
+    <!-- JS resources -->
+    <group name="bundledJs_v22">
+
+
+        <!-- jQuery -->
+        <js>/libs/jquery/dist/jquery.min.js</js>
+
+        <!-- Angular -->
+        <js>/libs/angular/angular.js</js>
+
+        <js>/libs/angular-route/angular-route.js</js>
+
+
+        <js>/libs/angular-animate/angular-animate.js</js>
+        <js>/libs/angular-cookies/angular-cookies.js</js>
+        <js>/libs/angular-resource/angular-resource.js</js>
+        <!--<js>/libs/angular-sanitize/angular-sanitize.js</js>-->
+        <js>/libs/angular-touch/angular-touch.js</js>
+
+        <js>/libs/angular-ui-router/release/angular-ui-router.js</js>
+        <js>/libs/ngstorage/ngStorage.js</js>
+        <js>/libs/angular-ui-utils/ui-utils.js</js>
+
+        <!-- bootstrap -->
+        <js>/libs/angular-bootstrap/ui-bootstrap-tpls.js</js>
+        <!-- lazyload -->
+        <js>/libs/oclazyload/dist/ocLazyLoad.js</js>
+        <!-- translate -->
+        <js>/libs/angular-translate/angular-translate.js</js>
+        <js>/libs/angular-translate-loader-static-files/angular-translate-loader-static-files.js</js>
+        <js>/libs/angular-translate-storage-cookie/angular-translate-storage-cookie.js</js>
+        <js>/libs/angular-translate-storage-local/angular-translate-storage-local.js</js>
+
+        <js>/libs/angular-material/angular-material.js</js>
+        <js>/libs/angular-aria/angular-aria.js</js>
+
+        <!-- App -->
+        <js>/angulr/js/app.js</js>
+        <js>/angulr/js/config.js</js>
+        <js>/angulr/js/config.lazyload.js</js>
+        <js>/angulr/js/config.router.js</js>
+        <js>/angulr/js/main.js</js>
+
+        <js>/angulr/js/services/ui-load.js</js>
+
+
+
+        <js>/angulr/js/lib/timer-worker.js</js>
+        <js>/angulr/js/lib/fastclick.js</js>
+
+
+        <js>/angulr/js/controllers/hotel/editActivity.js</js>
+        <js>/angulr/js/controllers/hotel/chat.js</js>
+        <js>/angulr/js/controllers/hotel/checkin.js</js>
+        <js>/angulr/js/controllers/hotel/fileUpload.js</js>
+        <js>/angulr/js/controllers/hotel/forgotpwd.js</js>
+        <js>/angulr/js/controllers/hotel/hotel.js</js>
+
+        <js>/angulr/js/controllers/hotel/blocks/hotelCtrl.js</js>
+        <js>/angulr/js/controllers/hotel/blocks/activityCtrl.js</js>
+        <js>/angulr/js/controllers/hotel/blocks/filterHotelCity.js</js>
+
+        <js>/angulr/js/controllers/hotel/language.js</js>
+        <js>/angulr/js/controllers/hotel/login.js</js>
+        <js>/angulr/js/controllers/hotel/modalImageCrop.js</js>
+        <!--<js>/angulr/js/controllers/hotel/passwordReset.js</js>-->
+        <js>/angulr/js/controllers/hotel/profile.js</js>
+        <js>/angulr/js/controllers/hotel/register.js</js>
+        <js>/angulr/js/controllers/hotel/wall.js</js>
+        <js>/angulr/js/controllers/hotel/werbung.js</js>
+
+
+
+        <js>/angulr/js/filters/fromNow.js</js>
+        <!--<js>/angulr/js/directives/dropZone.js</js>-->
+        <!--<js>/angulr/js/directives/setnganimate.js</js>-->
+        <js>/angulr/js/directives/loginSubmit.js</js>
+        <js>/angulr/js/directives/ng-img-crop.js</js>
+
+        <js>/angulr/js/directives/insertNotification.js</js>
+        <js>/angulr/js/directives/ui-butterbar.js</js>
+        <js>/angulr/js/directives/ui-focus.js</js>
+        <js>/angulr/js/directives/ui-fullscreen.js</js>
+        <js>/angulr/js/directives/ui-jq.js</js>
+        <js>/angulr/js/directives/ui-module.js</js>
+        <js>/angulr/js/directives/ui-nav.js</js>
+        <js>/angulr/js/directives/ui-scroll.js</js>
+        <js>/angulr/js/directives/scroll-to-bottom.js</js>
+        <js>/angulr/js/directives/ui-shift.js</js>
+        <js>/angulr/js/directives/ui-toggleclass.js</js>
+        <js>/angulr/js/controllers/bootstrap.js</js>
+        <!-- Lazy loading -->
+
+        <!--<%&#45;&#45;textAngular input&#45;&#45;%>-->
+        <js>/libs/textAngular/dist/textAngular-sanitize.min.js</js>
+        <js>/libs/textAngular/dist/textAngular.min.js</js>
+        <js>/libs/angular-ui-sref-fastclick/angular-ui-sref-fastclick.js</js>
+
+        <!--<%&#45;&#45;xeditable datapicker&#45;&#45;%>-->
+        <js>/libs/angular-xeditable/dist/js/xeditable.min.js</js>
+
+        <!--<%&#45;&#45;language multiselect&#45;&#45;%>-->
+        <js>/libs/isteven-angular-multiselect/isteven-multi-select.js</js>
+
+        <!--<js>/libs/jquery.easy-pie-chart/dist/jquery.easypiechart.fill.js</js>-->
+
+        <!--<js>/angulr/js/lib/logService.js</js>-->
+        <!--<js>/angulr/js/lib/shared.js</js>-->
+        <!--<js>/angulr/js/lib/dropzone.js</js>-->
+
+        <!--<%&#45;&#45;<js>/angulr/js/lib/checkInClient.js</js>&#45;&#45;%>-->
+        <!--<%&#45;&#45;<js>/angulr/js/lib/loginClient.js</js>&#45;&#45;%>-->
+        <!--<js>/angulr/js/lib/stateClient.js</js>-->
+        <!--<%&#45;&#45;<js>/angulr/js/lib/peopleClient.js</js>&#45;&#45;%>-->
+        <!--<%&#45;&#45;<js>/angulr/js/lib/userClient.js</js>&#45;&#45;%>-->
+        <!--<%&#45;&#45;<js>/angulr/js/lib/chatClient.js</js>&#45;&#45;%>-->
+
+
+        <!-- DTO -->
+        <js>/angulr/js/services/customerDtoService.js</js>
+        <js>/angulr/js/services/activityDtoService.js</js>
+        <!--<js>/angulr/js/services/checkinCustomerService.js</js>-->
+        <!--<js>/angulr/js/services/serverCommunicatorService.js</js>-->
+        <!--<%&#45;&#45;<js>/angulr/js/services/registerCustomerService.js</js>&#45;&#45;%>-->
+        <!--<%&#45;&#45;<js>/angulr/js/services/userDtoService.js</js>&#45;&#45;%>-->
+
+        <!-- chat -->
+        <js>/angulr/js/services/chatService.js</js>
+        <js>/angulr/js/services/wallService.js</js>
+        <js>/angulr/js/services/fileUploadService.js</js>
+        <js>/angulr/js/services/hotelDtoService.js</js>
+        <!--<js>/angulr/js/services/loginCustomerService.js</js>-->
+        <js>/angulr/js/services/sessionCustomerService.js</js>
+        <js>/angulr/js/services/logoutCustomerService.js</js>
+        <js>/angulr/js/services/hotelState.js</js>
+        <js>/angulr/js/services/hotelService.js</js>
+        <js>/angulr/js/services/hotelLoginService.js</js>
+        <js>/angulr/js/services/hotelCheckinService.js</js>
+        <js>/angulr/js/services/hotelNotification.js</js>
+        <js>/angulr/js/services/notificationService.js</js>
+
+
+        <js>/libs/sockjs/sockjs.min.js</js>
+        <js>/libs/stomp-websocket/lib/stomp.min.js</js>
+        <js>/libs/angular/angular.min.js</js>
+        <js>/libs/lodash/lodash.min.js</js>
+        <js>/angulr/js/lib/fastclick.js</js>
+
+        <js>/libs/ng-file-upload/ng-file-upload.min.js</js>
+        <js>/angulr/js/build/template_cache.js</js>
+        <!--<%&#45;&#45;<script src="libs/ng-file-upload/angular-file-upload.min.js</js>&#45;&#45;%>-->
+
+        <!-- pages -->
+        <js>/angulr/js/controllers/hotel/language.js</js>
+        <js>/angulr/js/controllers/hotel/login.js</js>
+        <js>/angulr/js/controllers/hotel/register.js</js>
+        <js>/angulr/js/controllers/hotel/checkIn.js</js>
+        <js>/angulr/js/controllers/hotel/profile.js</js>
+        <js>/angulr/js/controllers/hotel/hotel.js</js>
+        <js>/angulr/js/controllers/hotel/hotelList.js</js>
+        <js>/angulr/js/controllers/hotel/chat.js</js>
+        <js>/angulr/js/controllers/hotel/chatList.js</js>
+        <js>/angulr/js/controllers/hotel/datumPicker.js</js>
+        <js>/angulr/js/controllers/hotel/werbung.js</js>
+        <js>/angulr/js/controllers/hotel/forgotpwd.js</js>
+        <js>/angulr/js/controllers/hotel/wall.js</js>
+        <js>/angulr/js/controllers/hotel/fileUpload.js</js>
+    </group>
+</groups>       

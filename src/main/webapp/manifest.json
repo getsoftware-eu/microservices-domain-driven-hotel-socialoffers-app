@@ -1,0 +1,12 @@
+{
+  "name": "Hotelico Push Notifications",
+  "short_name": "Hotelico",
+  "icons": [{
+    "src": "images/icon-192x192.png",
+    "sizes": "192x192",
+    "type": "image/png"
+  }],
+  "start_url": "#/app/hotel",
+  "display": "standalone",
+  "gcm_sender_id": "54330172098"
+}

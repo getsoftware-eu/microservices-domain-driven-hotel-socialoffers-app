@@ -1,0 +1,272 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Anmelden</h1>
+</div>
+<div class="wrapper-md" ng-controller="RegisterController" ng-init="
+app.hideFooter = true;
+app.header.showTab = false;
+app.header.showBackArrow = true;
+app.rootSettings.darkBg = true;
+">
+
+<!--<form editable-form name="form" class="form-horizontal" > &lt;!&ndash;method="get">&ndash;&gt;-->
+    <div data-ng-include=" 'angulr/tpl/hotel/blocks/showAlertBlock.html' " />
+    
+    <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+            Personal Information
+        </div>
+
+        <div class="panel-body">
+            
+            
+            <div class="form-group">
+                <label class="col-sm-2 control-label"></label>
+                <div class="col-sm-10">
+                    <label class="i-checks">
+                        <input type="radio" value="m" ng-model="localState.profile.sex"><i></i> Herr &nbsp;
+                    </label>
+                    <label class="i-checks">
+                        <input type="radio" value="w" ng-model="localState.profile.sex"><i></i> Frau
+                    </label>
+                </div>
+            </div>
+
+            <!--<div class="line line-dashed b-b line-lg pull-in"></div>-->
+
+            <div class="form-group">
+            <label class="col-sm-2 control-label">{{'firstName' | translate}}<span class="requiredField">*</span></label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="{{'firstName' | translate}}"  ng-model="localState.profile.firstName" required>
+            </div>
+            </div>
+            
+            <!--<div class="line line-dashed b-b line-lg pull-in"></div>-->
+
+            <div class="form-group">
+            <label class="col-sm-2 control-label">{{'lastName' | translate}}<span class="requiredField">*</span></label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" placeholder="{{'lastName' | translate}}" ng-model="localState.profile.lastName" required>
+            </div>
+            </div>
+            
+            
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            
+            <div class="form-group">
+                <!--<form editable-form>-->
+                <label class="col-sm-2 control-label">Geburtstag</label>
+                <div class="col-sm-10">
+                       
+                    <a editable-date="localState.registerBirthday">{{ getRegisterBirthdayString() || 'system.selectDate' | translate }}</a>
+
+                </div>
+                <!--</form>-->
+            </div>
+            
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'language' | translate}}<span class="requiredField">*</span></label>
+                <div class="col-sm-10">
+                    <div isteven-multi-select  style="margin-left: -15px;" id="selectLanguages" class="col-xs-10" input-model="localState.languages" output-model="localState.profile.languages" button-label="icon" item-label="icon name" tick-property="ticked" max-labels="5" max-height="320px" search-property="name" output-properties="name" helper-elements="filter"></div>
+                </div>
+            </div>
+            
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'profile.city' | translate}}</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="{{'profile.city' | translate}}"  ng-model="localState.profile.city">
+                </div>
+            </div>
+            
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'profile.originalCity' | translate}}</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="{{'profile.originalCity' | translate}}"  ng-model="localState.profile.originalCity">
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- #### arbeit --->
+
+    <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+            {{'profile.section.aboutYourJob' | translate}}
+        </div>
+
+        <div class="panel-body">
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'jobTitle' | translate}}</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="{{'jobTitle' | translate}}" ng-model="localState.profile.jobTitle">
+                    <span class="help-block m-b-none">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+                </div>
+            </div>
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'jobDescriptor' | translate}}</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="{{'jobDescriptor' | translate}}" ng-model="localState.profile.jobDescriptor">
+                    <span class="help-block m-b-none">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+                </div>
+            </div>
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">{{'company' | translate}}</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="{{'company' | translate}}" ng-model="localState.profile.company">
+                    <span class="help-block m-b-none">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+                </div>
+            </div>
+        </div>
+    </div> 
+    
+    <!-- #### lopgin --->
+
+    <div class="panel panel-default">
+        <div class="panel-heading font-bold">
+            {{'profile.section.loginData' | translate}}
+        </div>
+
+        <div class="panel-body">
+
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Email<span class="requiredField">*</span></label>
+                <div class="col-sm-10">
+                    <input type="email" class="form-control" placeholder="{{'email' | translate}}"  ng-model="localState.profile.email" required>
+                </div>
+            </div>
+
+            <div class="line line-dashed b-b line-lg pull-in"></div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Password<span class="requiredField">*</span></label>
+                <div class="col-sm-10">
+                    <div class="m-b">
+                        <input type="password" name="password" class="form-control" id="inputPassword" ng-model="localState.profile.password" placeholder="{{'password' | translate}}">
+                    </div>
+                    <div class="m-b">
+                        <input type="password" name="password" class="form-control" id="inputConfirmPassword" ng-model="localState.profile.confirmPassword" placeholder="{{'confirmPassword' | translate}}">
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="container w-xxl w-auto-xs ng-scope">
+    
+        <div class="checkbox m-b-md m-t-none">
+            <label class="i-checks">
+                <input type="checkbox" ng-model="localState.agree" required><i></i> {{'page.register.agree' | translate}} <a href>{{'page.register.termsAndConditions' | translate}}</a>
+            </label>
+        </div>
+        <br/>
+
+        <div data-ng-include=" 'angulr/tpl/hotel/blocks/showAlertBlock.html' " />
+
+
+        <!--<button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="signup()" ng-disabled='form.$invalid'><span translate="hotel.login.CREATEACCOUNT">Create an account</span></button>-->
+        <button type="submit" class="btn btn-lg btn-orange btn-block" ng-click="submitRegister()"  ng-disabled="!localState.profile.firstName || !localState.profile.lastName || !localState.profile.email || !localState.agree" >{{'page.register.doRegister' | translate }}</button>
+        <div class="line line-dashed"></div>
+        <p class="text-center"><small>{{'page.register.alreadyHaveAccount' | translate}}</small></p>
+        <a ui-sref="access.login" class="btn btn-lg btn-default btn-block">{{'page.login.doLogin' | translate }}</a>
+    </div>
+<!--</form>-->
+</div>
+
+
+<!--TODO EUGEN: NGMATERIAL-->
+<!--<h4>Inputs</h4>-->
+<!--<div class="panel card wrapper" ng-controller="MDInputCtrl">-->
+    <!--<div class="row">-->
+        <!--<md-input-container class="md-primary col-sm-6">-->
+            <!--<label>Title</label>-->
+            <!--<input ng-model="user.title">-->
+        <!--</md-input-container>-->
+        <!--<md-input-container class="col-sm-6">-->
+            <!--<label>Email</label>-->
+            <!--<input ng-model="user.email" type="email">-->
+        <!--</md-input-container>-->
+    <!--</div>-->
+    <!--<form name="userForm">-->
+
+        <!--<md-input-container flex>-->
+            <!--<label>Company (Disabled)</label>-->
+            <!--<input ng-model="user.company" disabled>-->
+        <!--</md-input-container>-->
+
+        <!--<div layout layout-sm="column">-->
+            <!--<md-input-container flex>-->
+                <!--<label>First Name</label>-->
+                <!--<input ng-model="user.firstName">-->
+            <!--</md-input-container>-->
+            <!--<md-input-container flex>-->
+                <!--<label>Last Name</label>-->
+                <!--<input ng-model="theMax">-->
+            <!--</md-input-container>-->
+        <!--</div>-->
+
+        <!--<md-input-container flex>-->
+            <!--<label>Address</label>-->
+            <!--<input ng-model="user.address">-->
+        <!--</md-input-container>-->
+
+        <!--<div layout layout-sm="column">-->
+            <!--<md-input-container flex>-->
+                <!--<label>City</label>-->
+                <!--<input ng-model="user.city">-->
+            <!--</md-input-container>-->
+            <!--<md-input-container flex>-->
+                <!--<label>State</label>-->
+                <!--<input ng-model="user.state">-->
+            <!--</md-input-container>-->
+            <!--<md-input-container flex>-->
+                <!--<label>Postal Code</label>-->
+                <!--<input ng-model="user.postalCode">-->
+            <!--</md-input-container>-->
+        <!--</div>-->
+
+        <!--<md-input-container flex>-->
+            <!--<label>Biography</label>-->
+            <!--<textarea ng-model="user.biography" columns="1" md-maxlength="150"></textarea>-->
+        <!--</md-input-container>-->
+    <!--</form>-->
+    <!--<h5>Errors</h5>-->
+    <!--<form name="projectForm">-->
+        <!--<md-input-container>-->
+            <!--<label>Description</label>-->
+            <!--<input md-maxlength="30" required name="description" ng-model="project.description">-->
+            <!--<div ng-messages="projectForm.description.$error">-->
+                <!--<div ng-message="required">This is required.</div>-->
+                <!--<div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>-->
+            <!--</div>-->
+        <!--</md-input-container>-->
+        <!--<md-input-container>-->
+            <!--<label>Client Name</label>-->
+            <!--<input required name="clientName" ng-model="project.clientName">-->
+            <!--<div ng-messages="projectForm.clientName.$error">-->
+                <!--<div ng-message="required">This is required.</div>-->
+            <!--</div>-->
+        <!--</md-input-container>-->
+        <!--<md-input-container>-->
+            <!--<label>Hourly Rate (USD)</label>-->
+            <!--<input required type="number" step="any" name="rate" ng-model="project.rate" min="800" max="4999" required>-->
+            <!--<div ng-messages="projectForm.rate.$error">-->
+                <!--<div ng-message="required">You've got to charge something! You can't just <b>give away</b> a Missile Defense System.</div>-->
+                <!--<div ng-message="min">You should charge at least $800 an hour. This job is a big deal... if you mess up, everyone dies!</div>-->
+                <!--<div ng-message="max">$5,000 an hour? That's a little ridiculous. I doubt event Bill Clinton could afford that.</div>-->
+            <!--</div>-->
+        <!--</md-input-container>-->
+    <!--</form>-->
+<!--</div>-->

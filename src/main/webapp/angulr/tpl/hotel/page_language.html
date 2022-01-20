@@ -1,0 +1,34 @@
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">{{'system.language' | translate}}</h1>
+</div>
+<div class="wrapper-md" ng-init="
+app.hideFooter = true;
+app.header.showTab = false;
+app.header.showBackArrow = true;
+app.rootSettings.darkBg = true;
+">
+
+    <!--{{'page.language.chooseLanguage' | translate }}: -->
+    <!--<a editable-select="app.rootSettings.prefferedLanguage" e-ng-options="s.value as s.text for s in languages">-->
+        <!--{{ app.rootSettings.prefferedLanguage }}-->
+    <!--</a>-->
+
+    <!--<ui-select ng-model="page.language.chooseLanguage" theme="bootstrap">-->
+        <!--<ui-select-match placeholder="Select a language in the list...">{{$select.selected.name}}</ui-select-match>-->
+        <!--<ui-select-choices repeat="item in people | filter: $select.search">-->
+            <!--<div ng-bind-html="item.name | highlight: $select.search"></div>-->
+            <!--<small ng-bind-html="item.email | highlight: $select.search"></small>-->
+        <!--</ui-select-choices>-->
+    <!--</ui-select>-->
+
+    <!--<select ng-model="localState.selectedLanguageKey" name="selectLang" ng-change="submitLanguageChange()" class="form-control m-b">-->
+        <!--<option default value="" disabled>{{'page.language.chooseLanguage' | translate }}</option>        -->
+        <!--<option value="en">English</option>-->
+        <!--<option value="de">Deutsch</option>-->
+        <!--&lt;!&ndash;<option value="ru">Russian</option>&ndash;&gt;-->
+    <!--</select>-->
+
+    <div isteven-multi-select id="selectSystemLanguagesFull" input-model="localState.availableSystemLanguages" output-model="localState.selectSystemLanguage" button-label="icon name" item-label="icon name" tick-property="ticked" max-labels="5" max-height="320px" search-property="name" output-properties="name" helper-elements="filter" selection-mode="single"></div>
+
+
+</div>

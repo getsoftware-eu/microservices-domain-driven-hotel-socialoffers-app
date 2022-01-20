@@ -1,0 +1,65 @@
+<div class="ulHorizontal">
+    
+    <ul class="horizontal myFlex" ng-style="::!isSmartDevice && {'padding-left': '18px'}">
+        <li ui-sref-active="active" class="leftMenuHotel subTab" ng-show="!hotelState.profileData.checkedIn">
+            <a ui-sref="app.activityList" class="menuALeft">
+        
+                <span class="menuLabelLeftLabel label bg-info subTab" translate="tab.allActivities">All Activities</span>
+            </a>
+        </li>
+        
+        <li ui-sref-active="active" class="leftMenuHotel subTab" ng-show="hotelState.profileData.logged && hotelState.profileData.checkedIn">
+            <a ui-sref="app.hotel" class="menuALeft">
+                <b class="badge bg-orange pull-right" ng-show="hotelNotification.notificationObj.hotelUnreadActivitiesNumber && hotelState.profileData.id>0">{{hotelNotification.notificationObj.hotelUnreadActivitiesNumber}}</b>
+                <span class="menuLabelLeftLabel label bg-info subTab" translate="system.hotelActivities">Hotel Deals</span>
+            </a>
+        </li>
+        
+        <li ui-sref-active="active" class="leftMenuHotel subTab" ng-show="hotelState.profileData.hotelStaff || hotelState.profileData.admin">
+            <a ui-sref="app.dealList({staffScope:true})" class="menuALeft">
+        
+                <span class="menuLabelLeftLabel label bg-info subTab">
+                    <span>Ordered Deals</span>                
+                    <!--<span ng-show="hotelNotification.notificationObj.myDealsNumber>0">-->
+                        <!--({{hotelNotification.notificationObj.myDealsNumber}})-->
+                    <!--</span>-->
+                </span>
+            </a>
+        </li>
+        
+    <li ui-sref-active="active" class="leftMenuHotel subTab" ng-show="!hotelState.profileData.logged && hotelState.profileData.checkedIn && !hotelState.profileData.hotelStaff">
+            <a ui-sref="app.hotelPreview" class="menuALeft">
+                <b class="badge bg-orange pull-right" ng-show="hotelNotification.notificationObj.hotelUnreadActivitiesNumber && hotelState.profileData.id>0">{{hotelNotification.notificationObj.hotelUnreadActivitiesNumber}}</b>
+                <span class="menuLabelLeftLabel label bg-info subTab" translate="system.hotelActivities">Hotel Activities</span>
+            </a>
+        </li>
+        
+        <li ui-sref-active="active" class="leftMenuHotel subTab" ng-show="!hotelState.profileData.hotelStaff">
+            <a ui-sref="app.dealList({staffScope:false})" class="menuALeft">
+                
+                <span class="menuLabelLeftLabel label bg-info subTab">
+                    <span translate="tab.myDeals">My Deals</span>                
+                    <span ng-show="hotelNotification.notificationObj.myDealsNumber>0">
+                        ({{hotelNotification.notificationObj.myDealsNumber}})
+                    </span>
+                </span>
+
+            </a>
+        </li>
+   
+        <li ui-sref-active="active" class="leftMenuHotel subTab" ng-show="hotelState.profileData.checkedIn || hotelState.currentMenuOrder">
+            <a ui-sref="app.menuList({filterCity: hotelState.profileData.hotelCity, filterHotelId: hotelState.profileData.hotelId} )" class="menuALeft">
+        
+                <!--<b class="badge bg-info pull-right" ng-show="hotelNotification.notificationObj.myDealsNumber>0">{{hotelNotification.notificationObj.myDealsNumber}}</b>-->
+                <!--<i class="fa fa-cutlery"></i>-->
+
+                <span class="menuLabelLeftLabel label bg-info subTab">
+                    <i class="fa fa-cutlery"></i>
+                    <span translate="system.menu">Menu</span>
+                </span>
+            </a>
+        </li>
+
+    </ul>
+    
+</div>

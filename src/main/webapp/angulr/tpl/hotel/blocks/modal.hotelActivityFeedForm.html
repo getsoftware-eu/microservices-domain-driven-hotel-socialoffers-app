@@ -1,0 +1,138 @@
+<div class="modal-body wrapper-lg loginBody feedBody" stop-event="touchend" ng-controller="FeedController"
+     ng-init="initLogin();unlockModal();">
+
+    <a ng-click="cancel()" style="position: absolute; top:0; right:5px;"><i class="fa fa-times"/></a>
+
+    <div class="row">
+        <div>
+
+            <div data-ng-include=" 'angulr/tpl/hotel/blocks/showAlertBlock.html' " />
+
+
+            <div ng-show="successMsg" style="display: flex;justify-content: center; margin-bottom: 10px;">
+                <a ui-sref="app.hotel" class="btn btn-sm btn-success">{{'page.feedback.tohotel' | translate }}</a>
+            </div>
+
+                <div class="wrapper text-center" style="padding: 0px; font-size: 15px;">
+                    <div ng-show="localState.customerView">
+                        <span style="font-weight: bold;">{{::'page.feed.inviteTitle' | translate }}</span>
+                        <br/>
+                        <span class="orange-text">{{::'page.feed.inviteDescription' | translate }}</span>
+                    </div>
+                    <span ng-hide="localState.customerView">{{::'page.feed.staffTitle' | translate }}</span>
+                    <!--<br/>-->
+                    <span ng-show="localState.inviteSend">{{::'page.feed.title' | translate }}</span>
+                </div>
+
+                <div id="hotelPart" ng-controller="hotelCtrl">
+
+                    <div class="line b-b line-lg" style="margin-left: 15px;margin-right: 15px;"></div>
+
+                    <div layout="row" style="margin: 15px;">
+
+                        <div ng-show="!localState.customerView && localState.inviteActivity">
+                            
+                            <div class="radio" layout="row">
+                                <label class="i-checks">
+                                    <input type="radio" name="activity" data-ng-value="true" ng-model="localState.inviteToActivity" ng-disabled="localState.inviteActivityId" checked>
+                                    <i></i>
+                                    {{::'page.feed.inviteToActivity' | translate }}
+                                </label>
+                            </div>
+                            
+                            <div class="radio">
+                                <label class="i-checks">
+                                    <input type="radio" name="message" data-ng-value="false" ng-model="localState.inviteToActivity" ng-disabled="localState.inviteActivityId">
+                                    <i></i>
+                                    {{::'page.feed.customMessage' | translate }}
+                                </label>
+                            </div>
+                            
+                            <div class="line b-b line-lg" style="margin-left: 15px;margin-right: 15px;"></div>
+
+                        </div>
+                    </div>
+
+
+                    <!--########################-->
+
+
+                    <!--<div class="panel panel-default">-->
+                        <!--<div class="panel-body" id="feedBody">-->
+
+                        <div style="margin: 15px;">
+                            <label>{{localState.selectedFeedCustomers.length}} {{'page.feed.receivers' | translate }}:</label>
+
+                            <div isteven-multi-select id="feedCustomers" input-model="localState.availableFeedCustomers" output-model="localState.selectedFeedCustomers" button-label="icon name" item-label="icon name" tick-property="ticked" max-height="320px" search-property="name" output-properties="name id" orientation="horizontal" helper-elements="all none filter" selection-mode="{{localState.selectionMode}}"></div>
+
+                            <div class="form-group" ng-if="!localState.customerView && localState.inviteActivity">
+                                <!--<label class="control-label" style="white-space: nowrap;color:red;">{{::'page.activities.notificateCreation' | translate}}: </label>-->
+                                <div class="">
+                                    <div class="btn-group">
+                                        <div class="checkbox">
+                                            <label class="i-checks">
+                                                <input type="checkbox" ng-model="localState.sendToAllNotLoggedInHotel"><i></i> Send to all not logged in Hotel <b>({{hotelState.currentHotel.anonymeGuestNumber}} guests)</b>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            
+                            
+                        </div>
+
+                             
+                        <!--</div>-->
+
+                    <!--</div>-->
+
+                    <!--########################-->
+
+                    <div class="panel panel-default">
+                        <div class="panel-body" id="feedBody">
+                            
+                        <div ng-if="localState.inviteToActivity" style=" margin: 15px;">
+                            <label>{{'page.feed.inviteActivityPreview' | translate }}:</label>
+    
+                            <br>
+    
+                            <blockquote>
+    
+                                <!--<div ui-sref="app.activityList({filterHotelId: nextMessage.specialContent.hotelId, filterActivityId: nextMessage.specialContent.activityId})" style="min-height: 37px;">-->
+                                <div style="min-height: 37px;">
+                                    <a class="pull-left thumb-sm avatar">
+                                        <img src="{{localState.inviteActivity.previewPictureUrl}}" class="img-circle" alt="...">
+                                    </a>
+                                    <a style="margin-left: 5px;">{{localState.inviteActivity.title}}</a>
+                                </div>
+    
+                            </blockquote>
+                        </div>
+    
+                        <div  ng-class="{'container w-xxl w-auto-xs': isSmartDevice, 'myFlex mySpaceBetween': !isSmartDevice }" style="margin: 10px;" ng-hide="localState.feedSend">
+                            
+                            <div ng-if="::isSmartDevice">
+                                <input type="text"  stop-event="touchend"  class="focusModal" ng-model="localState.feedText" class="btn-groups"  placeholder="{{::'page.feed.optionalFeedMessage' | translate }}">
+                            </div>
+                            
+                            <div ng-if="::!isSmartDevice" style="flex-grow: 1;margin: 10px;">
+                                <textarea  stop-event="touchend" ng-model="localState.feedText"  placeholder="{{::'page.feed.optionalFeedMessage' | translate }}" style="width:100%;" class="focusModal" ></textarea>                        
+                            </div>
+                        
+                            <div style="margin-top: 10px;">
+                                <!--<button class="btn btn-lg btn-blue btn-block btn-addon" ng-click="activityInviteAction(localState.inviteActivity, 'inviteActivity')"><i class="fa fa-cutlery"></i>{{::'page.feed.submitFeed' | translate }}</button>-->
+                                <button type="submit" class="btn btn-lg btn-orange btn-block" ng-click="submitFeed();"  ng-disabled="(!localState.inviteToActivity && !localState.feedText) || (localState.selectedFeedCustomers.length==0 && !localState.sendToAllNotLoggedInHotel)" >{{'page.feed.button' | translate }}</button>
+    
+                            </div>
+                            
+                        </div>
+                    </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

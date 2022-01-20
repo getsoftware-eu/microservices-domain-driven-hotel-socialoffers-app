@@ -1,0 +1,99 @@
+<div data-ng-include=" 'angulr/tpl/hotel/blocks/dealSubTabBlock.html' " style="display: flex;"/>
+
+<div id="minPaddingPage" ng-controller="HotelPreviewController" class="bg-light lter wrapper-md" ng-init="
+app.hideFooter = false;
+app.header.showTab = true;
+app.header.tabIndex = 0;
+app.header.showBackArrow = true;
+app.rootSettings.darkBg = true;
+localState.showActivityHotelLink = false;
+" style="">
+  <!--<h1 class="m-n font-thin h3"></h1>-->
+
+    <div data-ng-include=" 'angulr/tpl/hotel/blocks/notLoggedInfoBlock.html' " />
+    
+    <!--<div data-ng-include=" 'angulr/tpl/hotel/blocks/pushRequest.html' " />-->
+    
+
+    <div class="wrapper-md" style="padding-top: 0;">
+    <div class="row">
+      <!--<div class="col-sm-9">-->
+      <div>
+        <!--ng-class="::{'col-sm-9': !isSmartDevice}">-->
+
+        <div data-ng-include=" 'angulr/tpl/hotel/blocks/showAlertBlock.html' " />
+        
+        <div class="wrapper text-center" style="padding-top: 0px; display: none;">
+
+          <div  style="text-align: left;">
+
+            {{::'page.hotel.activityFilterLabel' | translate}}:
+            <div data-ng-include=" 'angulr/tpl/hotel/blocks/selectHotelCityBlock.html' " />
+
+          </div>
+
+          <hr/>
+          
+          <span class="hotelicoHeader" ng-show="localState.filterActivities.length>0">
+              <span class="orange-text">{{::'page.hotel.activities' | translate}}</span> 
+              <span ng-show="localState.selectedFilterHotel"> in {{localState.selectedFilterHotel.name}}</span>
+              <span ng-show="!localState.selectedFilterHotel && localState.selectedCityHotel"> in {{localState.selectedCityHotel.city}}</span>
+              :
+          </span>
+        </div>
+        
+        <!-- Show Hotel -->
+        
+        <div id="hotelPart" ng-show="hotelState.profileData.checkedIn" ng-controller="hotelCtrl">
+
+          <!--&lt;!&ndash; START HOTEL accordion &ndash;&gt;-->
+
+          <!--<div class="staffContent" ng-if="(hotelState.profileData.hotelStaff  && hotelState.profileData.hotelId==showHotel.id|| hotelState.profileData.admin)">-->
+            <!--<div data-ng-include=" 'angulr/tpl/hotel/blocks/editHotelAccardion.html' " />-->
+          <!--</div>-->
+
+          <!--&lt;!&ndash; / END hotel accordion &ndash;&gt;-->
+
+          <!--<div data-ng-include=" 'angulr/tpl/hotel/blocks/showHotelBlock.html' " />-->
+
+          <div data-ng-include=" 'angulr/tpl/hotel/blocks/fullCheckinRequest.html' " />
+          
+        </div>
+
+        <!-- ACTIVITES START -->
+
+
+        <!-- LIST ALL ACTIVITIES -->
+        <div id="activityPart" ng-controller="activityCtrl">
+
+          <div ng-show="localState.filterActivities.length>0" style="text-align: center;" class="hotelicoHeader orange-text myCenter">
+            {{::'page.hotel.actualActivities' | translate}} 
+            <!--in {{::showHotel.name}}-->
+            <!--:-->
+            <a name="activitiesAnchor"/>
+          </div>
+          
+          <div class="list-group list-group-lg list-group-sp m-t">
+            <div ng-repeat="showActivity in localState.filterActivities | orderBy: '-orderIndex':true  track by showActivity.initId">
+
+              <div data-ng-include=" 'angulr/tpl/hotel/blocks/showActivityBlock.html' " />
+
+            </div>
+
+            <!--<div class="nothingFoundMsg" ng-show="localState.noActivityFound">{{::'page.activities.noActivityFound' | translate}}</div>-->
+
+            <div ng-show="localState.activitiesLoaded && localState.filterActivities.length==0" style="text-align: center;" class="myCenter">
+              {{::'page.hotel.noActualActivities' | translate}} in {{::showHotel.name}}
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- END ACTIVITES START -->
+        
+      </div>
+
+    </div>
+  </div>
+</div>

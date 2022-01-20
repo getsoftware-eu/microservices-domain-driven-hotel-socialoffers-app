@@ -1,0 +1,183 @@
+<div data-ng-include=" 'angulr/tpl/hotel/blocks/dealSubTabBlock.html' " style="display: flex;"/>
+
+<div id="minPaddingPage" ng-controller="ActivityListController" class="bg-light lter wrapper-md" ng-init="
+app.hideFooter = false;
+app.header.showTab = true;
+app.header.tabIndex = 0;
+app.header.showBackArrow = true;
+app.rootSettings.darkBg = true;
+hotelState.checkHeaderTab();
+">
+  <!--<h1 class="m-n font-thin h3"></h1>-->
+  
+  <div class="wrapper-md" style="padding-top: 0;">
+  <div class="row">
+    <!--<div class="col-sm-9">-->
+    <div>
+      <!--ng-class="::{'col-sm-9': !isSmartDevice}">-->
+
+      <div data-ng-include=" 'angulr/tpl/hotel/blocks/showAlertBlock.html' " />
+
+    <div class="wrapper text-center" style="padding-top: 0px;">
+      
+      <div ng-controller="activityCtrl">
+        
+        <div ng-if="$stateParams.filterHotelId && (hotelState.profileData.id==0 || !hotelState.profileData.firstName || !hotelState.profileData.logged)">
+          <a style="text-decoration: underline;" ng-click="unsubscribeHotelActivityNotifications($stateParams.filterHotelId)">Unsubscribe Hotel Notifications?</a>
+        </div>
+
+        <div ng-if="$stateParams.filterHotelId && (hotelState.profileData.id>0 && hotelState.profileData.firstName  && hotelState.profileData.logged && hotelState.profileData.allowHotelNotification)">
+          <a style="text-decoration: underline;" ng-click="unsubscribeHotelActivityNotifications($stateParams.filterHotelId, hotelState.profileData.id)">Unsubscribe Hotel Notifications?</a>
+        </div>
+        
+      </div>
+        
+      <div class="m-t-sm"  style="text-align: left;">
+        
+        <!--<div style="white-space: pre-line;">{{::'page.hotel.activityFilterLabel' | translate}}:</div>-->
+        <div data-ng-include=" 'angulr/tpl/hotel/blocks/selectHotelCityBlock.html' " />
+        
+      </div>
+      
+      <hr style="margin: 0;"/>
+      
+      <span class="hotelicoHeader" ng-show="localState.filterActivities.length>0">
+          {{::'page.hotel.activities' | translate}} 
+          <span ng-show="localState.selectedFilterHotel"> in {{localState.selectedFilterHotel.name}}</span>
+          <span ng-show="!localState.selectedFilterHotel && localState.selectedCityHotel"> in {{localState.selectedCityHotel.city}}</span>
+          <!--:-->
+      </span>
+      
+    </div>
+
+      <!-- ACTIVITES START -->
+      
+
+      <!-- LIST ALL ACTIVITIES -->
+      <div id="activityPart" ng-controller="activityCtrl">
+
+        <div class="list-group list-group-lg list-group-sp">
+          <div ng-repeat="showActivity in localState.filterActivities | orderBy: 'validTo'  track by showActivity.initId">
+  
+            <div data-ng-include=" 'angulr/tpl/hotel/blocks/showActivityBlock.html' " />
+  
+          </div>
+
+          <div class="nothingFoundMsg" ng-show="localState.noActivityFound">{{::'page.activities.noActivityFound' | translate}}</div>
+          <div class="nothingFoundMsg" ng-show="localState.activitiesLoading">{{::'system.loading' | translate}}...</div>
+            
+        </div>
+        
+      </div>
+
+      <!-- END ACTIVITES START -->
+      
+      
+    </div>
+    
+    <!--<hr>-->
+    <!-- -->
+    <!--<div class="col-sm-3">-->
+
+      <!--<h5 class="font-bold">{{::'page.hotel.hotelGuests' | translate}} ({{::hotelCustomers.length}})</h5>-->
+
+
+      <!--<div class="list-group list-group-lg list-group-sp">-->
+
+        <!--&lt;!&ndash;<div ng-repeat="nextCustomer in hotelStaffCustomers | orderBy: 'checkinFrom' as filtered_result track by nextCustomer.id">&ndash;&gt;-->
+
+          <!--&lt;!&ndash;<div ng-show="nextCustomer.hotelStaff">&ndash;&gt;-->
+
+            <!--<li class="list-group-item" >-->
+              <!--<a ui-sref="app.user({userId: staffCustomer.id})" class="thumb-sm m-r avatar" style="    margin-left: -10px;">-->
+                <!--<img src="{{::getProfileImageUrl(staffCustomer.id)}}" class="r r-2x">-->
+                <!--<i class="on md b-white right customerOnlineStatus"></i>-->
+                <!--&lt;!&ndash;<i class="on md b-white right customerOnlineStatus" ng-show="hotelNotification.notificationObjhotelOnlineGuestIds[nextCustomer.id]"></i>&ndash;&gt;-->
+                <!--&lt;!&ndash;<i class="offline md b-white right customerOnlineStatus" ng-hide="hotelNotification.notificationObjhotelOnlineGuestIds[nextCustomer.id]"></i>&ndash;&gt;-->
+              <!--</a>-->
+            <!-- -->
+            <!--<span class="pull-right label inline" style="margin-top: 10px;position: absolute;right: 16px;bottom: 21px;">     -->
+              <!--&lt;!&ndash;target=".app-aside-right"&ndash;&gt;-->
+              <!--<a ui-sref="app.chat({receiverId: staffCustomer.id})" class="text-muted" ui-toggle-class="show" >-->
+                <!--<i style="color: #1c2b36; font-size: 20px;" class="fa fa-comments-o pull-right text-sm"></i>-->
+                <!--<span style="margin-top: 2px;" class="badge bg-success" ng-show="hotelNotification.notificationObjunreadChatProSenderCount[staffCustomer.id]">-->
+                  <!--+{{hotelNotification.notificationObjunreadChatProSenderCount[staffCustomer.id]}}-->
+                <!--</span>-->
+              <!--</a>-->
+            <!--</span>-->
+              <!--<small class="text-muted clear text-ellipsis customerLastSeen" ng-show="hotelNotification.notificationObjlastSeenOnlineHotelGuests[staffCustomer.id]">last seen {{hotelNotification.notificationObjlastSeenOnlineHotelGuests[staffCustomer.id]}}</small>-->
+
+              <!--<a class="hotelCustomerName" ui-sref="app.user({userId: staffCustomer.id})">{{staffCustomer.firstName}} {{staffCustomer.lastName}} -->
+                <!--&lt;!&ndash;<span ng-show="nextCustomer.age && !nextCustomer.hotelStaff">({{nextCustomer.age}})</span>&ndash;&gt;-->
+                <!--&lt;!&ndash;<span ng-hide="!nextCustomer.jobTitle || nextCustomer.hotelStaff">({{nextCustomer.jobTitle}})</span>&ndash;&gt;-->
+                <!--&lt;!&ndash;<span class="label bg-primary inline" ng-show="nextCustomer.hotelStaff">Hotel Staff</span>&ndash;&gt;-->
+
+              <!--</a>-->
+              <!--<small class="clear text-ellipsis hotelCustomerJob">-->
+                <!--&lt;!&ndash;{{nextCustomer.status}}&ndash;&gt;-->
+                <!--&lt;!&ndash;<span ng-hide="!nextCustomer.jobTitle || nextCustomer.hotelStaff">{{nextCustomer.jobTitle}}</span>&ndash;&gt;-->
+                <!--&lt;!&ndash;<span ng-hide="!nextCustomer.company || nextCustomer.hotelStaff"><span style="margin-left: -3px;" ng-hide="!nextCustomer.jobTitle">, </span>{{nextCustomer.company}}</span>&ndash;&gt;-->
+                <!--<span class="label bg-orange hotelStaff inline" style="position: relative;top:-3px;margin-left: 0px;">{{'system.hotelStaff' | translate}}</span>-->
+              <!--</small>-->
+
+            <!--</li>-->
+            <!--&lt;!&ndash;<a href class="text-muted" style="position: absolute; bottom: 58px; right: 11px;" ui-toggle-class="show" target=".app-aside-right"><i class="fa fa-comment-o pull-right text-sm"></i></a>&ndash;&gt;-->
+
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!-- -->
+        <!--<div ng-repeat="nextCustomer in hotelCustomers | orderBy: 'checkinFrom' as filtered_result track by nextCustomer.id">-->
+          <!-- -->
+          <!--&lt;!&ndash;<div ng-show="nextCustomer.id!=profileId && !nextCustomer.hotelStaff">&ndash;&gt;-->
+
+          <!--<li class="list-group-item" >-->
+            <!--<a ui-sref="app.user({userId: nextCustomer.id})" class="thumb-sm m-r avatar" style="    margin-left: -10px;">-->
+              <!--<img src="{{getProfileImageUrl(nextCustomer.id)}}" class="r r-2x">-->
+              <!--<i class="on md b-white right customerOnlineStatus" ng-show="hotelNotification.notificationObjhotelOnlineGuestIds[nextCustomer.id]"></i>-->
+              <!--<i class="offline md b-white right customerOnlineStatus" ng-hide="hotelNotification.notificationObjhotelOnlineGuestIds[nextCustomer.id]"></i>-->
+            <!--</a>-->
+            <!-- -->
+            <!--<span class="pull-right label inline" style="margin-top: 10px;position: absolute;right: 16px;bottom: 21px;">     -->
+              <!--&lt;!&ndash;target=".app-aside-right"&ndash;&gt;-->
+              <!--<a ui-sref="app.chat({receiverId: nextCustomer.id})" class="text-muted" ui-toggle-class="show" >-->
+                <!--<i style="color: #1c2b36; font-size: 20px;" class="fa fa-comments-o pull-right text-sm"></i>-->
+                <!--<span style="margin-top: 2px;" class="badge bg-success" ng-show="hotelNotification.notificationObjunreadChatProSenderCount[nextCustomer.id]">-->
+                  <!--+{{hotelNotification.notificationObjunreadChatProSenderCount[nextCustomer.id]}}-->
+                <!--</span>-->
+              <!--</a>-->
+            <!--</span>-->
+            <!--<small class="text-muted clear text-ellipsis customerLastSeen" ng-show="hotelNotification.notificationObjlastSeenOnlineHotelGuests[nextCustomer.id]">last seen {{hotelNotification.notificationObjlastSeenOnlineHotelGuests[nextCustomer.id]}}</small>-->
+
+            <!--<a class="hotelCustomerName" ui-sref="app.user({userId: nextCustomer.id})">{{nextCustomer.firstName}} {{nextCustomer.lastName}} -->
+              <!--&lt;!&ndash;<span ng-hide="!nextCustomer.jobTitle || nextCustomer.hotelStaff">({{nextCustomer.jobTitle}})</span>&ndash;&gt;-->
+              <!--&lt;!&ndash;<span class="label bg-primary inline" ng-show="nextCustomer.hotelStaff">Hotel Staff</span>&ndash;&gt;-->
+
+            <!--</a>-->
+            <!--<small class="clear text-ellipsis hotelCustomerJob">-->
+              <!--&lt;!&ndash;{{nextCustomer.status}}&ndash;&gt;-->
+              <!--<span ng-hide="!nextCustomer.jobTitle">{{nextCustomer.jobTitle}}</span>-->
+              <!--<span ng-hide="!nextCustomer.company"><span style="margin-left: -3px;" ng-hide="!nextCustomer.jobTitle">, </span>{{nextCustomer.company}}</span>-->
+              <!--&lt;!&ndash;<span class="label bg-primary inline" ng-show="nextCustomer.hotelStaff">{{'system.hotelStaff' | translate}}</span>&ndash;&gt;-->
+            <!--</small>-->
+
+          <!--</li>-->
+          <!--&lt;!&ndash;<a href class="text-muted" style="position: absolute; bottom: 58px; right: 11px;" ui-toggle-class="show" target=".app-aside-right"><i class="fa fa-comment-o pull-right text-sm"></i></a>&ndash;&gt;-->
+
+          <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--</div>-->
+         <!-- -->
+      <!--</div>-->
+      <!-- -->
+    <!--</div>-->
+
+    <div ng-if="!hotelState.profileData.checkedIn" class=" text-center app-footer navbar navbar-fixed-bottom bg-light lt b-t" ng-style=" ::(isSmartDevice && {'margin': '5px', 'position': 'fixed', 'margin-top': '8px', 'margin-bottom': '2px'}) || (!isSmartDevice && { 'position': 'initial', 'margin-top': '8px', 'margin-left': '0', 'background-color': 'transparent'})" style="background-color: #fff;">
+      <!--ng-hide="(localState.selectedFilterHotel || localState.selectedHotelCode || localState.hotelcodeFocus)" >-->
+      <button ui-sref="app.checkin" class="btn btn-lg btn-block  btn-blue">
+        <!--{{'page.checkin.demoCheckin' | translate }}-->
+        Back to Hotel-Selection
+      </button>
+    </div>
+
+  </div>
+</div>
+</div>

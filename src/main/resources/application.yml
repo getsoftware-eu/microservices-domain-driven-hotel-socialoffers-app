@@ -1,0 +1,123 @@
+spring:
+  profiles.active: development
+  datasource:
+    # HikariCP
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    hikari.idle-timeout: 10000
+  jpa:
+    generate-ddl: true
+    show-sql: false
+    hibernate:
+          ddl-auto: update
+          naming.implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+  http: #http: boot1 | #servlet: boot2
+    multipart:
+      location: ${java.io.tmpdir}
+      max-file-size: 512MB # Max file size.
+      max-request-size: 512MB # Max request size.
+  messages.basename: i18n/messages # Configure MessageSource to lookup any validation/error message in internationalized property files
+  social:
+    facebook:
+      appId: 383626641847356
+      appSecret: f492cdd7e0d9aee36ce8446c5caa440d
+    linkedIn:
+      clientId: 77rxbh8n0ta2fc
+      clientSecret: aW3L9r9racGYIV5I
+  cache:
+    cache-names: userCache, propertyCache
+    caffeine:
+      spec: maximumSize=500, expireAfterAccess=300s
+  mail:
+    host: smtp.gmail.com #smtp.strato.de
+    port: 587
+    username: eugen.wi83@gmail.com #sergej.neustadt@hotelico.de
+    password: FaRsHuLeGe
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+entitymanager:
+  packagesToScan: de.betterbits.smsbridge.model      
+security:
+  basic.enabled: false #eugen: not in spring boot 2.x      
+#liquibase.change-log: classpath:/db/changelog/db.changelog-master.xml #boot2: liquibase.change-log: classpath:/db/changelog/db.changelog-master.xml
+server:
+  error:
+    whitelabel.enabled: false
+
+      
+---
+
+spring:
+  profiles: development
+  datasource:
+    url: jdbc:mysql://localhost:3306/hotelico_dev
+    username: root
+    #password: frankfurt_2015
+  jpa:
+    show-sql: true
+  thymeleaf:
+    cache: false
+
+logging:
+  level.org.springframework.security: INFO
+  level.org.springframework.boot.actuate.audit.listener.AuditListener: DEBUG
+
+keycloak:
+  enabled: false
+  #config.file: classpath:static/backend-keycloak.json
+  realm: Betterbits
+  auth-server-url: http://keycloakintern.getSoftware.eu:8080/auth
+  #credentials.secret: 5251920c-edb0-4d51-8ddb-48cb9a0136b4
+
+server:
+  port: 8088
+
+---
+
+spring:
+  profiles: testing
+  datasource:
+    url: jdbc:mysql://localhost:3306/hotelico_test
+    username: root
+    password:  
+
+keycloak:
+  enabled: false
+  #config.file: classpath:static/backend-keycloak.json
+  realm: Betterbits
+  auth-server-url: http://keycloakintern.getSoftware.eu:8080/auth
+  #credentials.secret: 5251920c-edb0-4d51-8ddb-48cb9a0136b4
+
+server:
+  port: 8084
+
+---
+
+spring:
+  profiles: production
+  datasource:
+    url: #EXTERNALIZED
+    username: hotelico
+    password: frankfurt_2015
+
+keycloak:
+  enabled: false
+  #config.file: classpath:static/backend-keycloak.json
+  realm: Betterbits
+  auth-server-url:
+  #credentials.secret: 5251920c-edb0-4d51-8ddb-48cb9a0136b4
+
+server:
+  port: 8080
+  
+        
+#jdbc.driverClassName = com.mysql.jdbc.Driver
+#jdbc.url = jdbc:mysql://localhost:3306/hotel
+#jdbc.username = root
+#hibernate.dialect = org.hibernate.dialect.MySQLDialect
+#hibernate.show_sql = false
+#hibernate.format_sql = false
+
