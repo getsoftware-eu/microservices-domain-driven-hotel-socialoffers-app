@@ -13,9 +13,7 @@ import de.hotelico.service.CacheService;
  */
 public class ActiveCustomerPinger
 {
-
   private SimpMessagingTemplate template;
-//  private ActiveUserService activeUserService;
   private CacheService cacheService;
 
   public ActiveCustomerPinger(SimpMessagingTemplate template, CacheService cacheService) {

@@ -46,9 +46,6 @@ public class CustomerHotelCheckin implements java.io.Serializable {
 	@Column(name = "validTo", nullable = false, length = 10)
 	private Date validTo;
 	
-//	@Column(name = "createdBy", nullable = false, length = 10)
-//	private String createdBy;
-
 	public CustomerHotelCheckin() {
 	}
 
@@ -66,11 +63,6 @@ public class CustomerHotelCheckin implements java.io.Serializable {
 		return getPk().getCustomer();
 	}
 	
-//	@Transient
-//	public Integer getCustomerId() {
-//		return getPk().getCustomer().getId();
-//	}
-
 	public void setCustomer(Customer customer) {
 		getPk().setCustomer(customer);
 	}
@@ -89,10 +81,6 @@ public class CustomerHotelCheckin implements java.io.Serializable {
 	{
 		this.staffCheckin = staffCheckin;
 	}
-	//	@Transient
-//	public Integer getHotelId() {
-//		return getPk().getHotel().getId();
-//	}
 
 	public void setHotel(Hotel category) {
 		getPk().setHotel(category);
@@ -115,14 +103,6 @@ public class CustomerHotelCheckin implements java.io.Serializable {
 	public void setValidTo(Date validTo) {
 		this.validTo = validTo;
 	}
-
-//	public String getCreatedBy() {
-//		return this.createdBy;
-//	}
-//
-//	public void setCreatedBy(String createdBy) {
-//		this.createdBy = createdBy;
-//	}
 
 	public boolean isActive()
 	{

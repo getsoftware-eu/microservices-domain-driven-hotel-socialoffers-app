@@ -88,14 +88,8 @@ public interface CheckinRepository extends JpaRepository<CustomerHotelCheckin, L
 	
 	public final static String FIND_LAST_CHECKIN_BY_HOTEL_QUERY = "SELECT max(c.validFrom) " +
 			"FROM CustomerHotelCheckin c " +
-//			"WHERE c.active = true " +
-//			"AND c.fullCheckin = true " +
 			"WHERE c.pk.customer.id = :customerId " +
-			"AND c.pk.hotel.id = :hotelId " 
-//			+
-//			"AND c.validFrom <= :checkDate " +
-//			"AND c.validTo >= :checkDate "
-			;	
+			"AND c.pk.hotel.id = :hotelId ";	
 	
 	public final static String IS_ACTIVE_FULL_CHECKIN_FOR_CUSTOMER_BY_HOTEL_QUERY = "SELECT count(c)>0 " +
 			"FROM CustomerHotelCheckin c " +
@@ -121,7 +115,6 @@ public interface CheckinRepository extends JpaRepository<CustomerHotelCheckin, L
 	public final static String COUNT_NOT_STAFF_ACTIVE_BY_HOTEL_QUERY = "SELECT count(c) " +
 			"FROM CustomerHotelCheckin c " +
 			"WHERE c.active = true " +
-//			"AND c.fullCheckin = true " +
 			"AND c.pk.customer.hotelStaff = false " +
 			"AND c.pk.hotel.id = :hotelId " +
 			"AND c.validFrom <= :checkDate " +
@@ -135,12 +128,6 @@ public interface CheckinRepository extends JpaRepository<CustomerHotelCheckin, L
 			"AND c.pk.hotel.id = :hotelId " +
 			"AND c.validFrom <= :checkDate " +
 			"AND c.validTo >= :checkDate ";
-	
-	
-//	public final static String COUNT_ONLINE_BY_HOTEL_QUERY = "SELECT count(c.) " +
-//			"FROM CustomerHotelCheckin c " +
-//			"WHERE c.active = true " +
-//			"AND c.pk.hotel.id = :hotelId";
 
 	/**
 	 * Find customer active checkIn.
@@ -170,12 +157,6 @@ public interface CheckinRepository extends JpaRepository<CustomerHotelCheckin, L
 	
 	@Query(COUNT_NOT_STAFF_FULL_CHECKIN_ACTIVE_BY_HOTEL_QUERY)
 	public Integer getFullCheckinCountExcludingStaffByHotelId(@Param("hotelId") Long hotelId, @Param("checkDate") Date checkDate);
-	
-//	/**
-//	 * Find customer active checkIn.
-//	 */
-//	@Query(COUNT_ONLINE_BY_HOTEL_QUERY)
-//	public Integer getOnlineCountByHotelId(@Param("hotelId") Long hotelId);	
 	
 	/**
 	 * Find customers active checkIn by hotel.

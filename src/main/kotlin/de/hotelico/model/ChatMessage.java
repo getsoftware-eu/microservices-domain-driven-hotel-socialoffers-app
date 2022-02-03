@@ -1,6 +1,9 @@
 package de.hotelico.model;
 
 import de.hotelico.utils.HibernateUtils;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +17,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
 @Entity
+@Getter @Setter
 @Table(name = "chat_message")
 public class ChatMessage implements Serializable
 {
@@ -21,7 +25,8 @@ public class ChatMessage implements Serializable
   private static final long serialVersionUID = -5478152926665631989L;
   
   @Id
-  @GeneratedValue(strategy= GenerationType.IDENTITY)
+  @Setter(AccessLevel.PROTECTED)
+  @GeneratedValue(strategy=GenerationType.IDENTITY)
   private long id;
 
   @Column(name = "active", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_TRUE)
@@ -56,7 +61,6 @@ public class ChatMessage implements Serializable
   public ChatMessage() 
   {
     this.timestamp = new Timestamp(new Date().getTime());
-
   }
   
   public ChatMessage(String message, Customer sender, Customer receiver) {
@@ -67,107 +71,7 @@ public class ChatMessage implements Serializable
     this.sender = sender;
     this.receiver = receiver;
   }
-
-  public long getId()
-  {
-    return id;
-  }
-
-  public String getMessage()
-  {
-    return message;
-  }
-
-  public void setSeenByReceiver(boolean seenByReceiver)
-  {
-    this.seenByReceiver = seenByReceiver;
-  }
-
-  public boolean isSeenByReceiver()
-  {
-    return seenByReceiver;
-  }
-
-  public long getInitId()
-  {
-    return initId;
-  }
-
-  public Timestamp getTimestamp()
-  {
-    return timestamp;
-  }
-
-  public Customer getSender()
-  {
-    return sender;
-  }
-
-  public Customer getReceiver()
-  {
-    return receiver;
-  }
-
-  public void setMessage(String message)
-  {
-    this.message = message;
-  }
-
-  public void setInitId(long initId)
-  {
-    this.initId = initId;
-  }
-
-  public void setTimestamp(Timestamp timestamp)
-  {
-    this.timestamp = timestamp;
-  }
-
-  public void setSender(Customer sender)
-  {
-    this.sender = sender;
-  }
-
-  public void setReceiver(Customer receiver)
-  {
-    this.receiver = receiver;
-  }
-
-  public static long getSerialVersionUID()
-  {
-    return serialVersionUID;
-  }
-
-  public void setActive(boolean active)
-  {
-    this.active = active;
-  }
-
-  public boolean isActive()
-  {
-    return active;
-  }
-	
-	public boolean isDelieveredToReceiver()
-	{
-		return delieveredToReceiver;
-	}
-	
-	public void setDelieveredToReceiver(boolean delieveredToReceiver)
-	{
-		this.delieveredToReceiver = delieveredToReceiver;
-	}
-
-  public String getSpecialChatContent()
-  {
-    return specialChatContent;
-  }
-
-  public void setSpecialChatContent(String specialChatContent)
-  {
-    this.specialChatContent = specialChatContent;
-  }
-
+  
   @Override
   public boolean equals(Object o)
   {
@@ -186,23 +90,12 @@ public class ChatMessage implements Serializable
     {
       return false;
     }
-//    if (active != that.active)
-//    {
-//      return false;
-//    }
-   
-//    if (message != null ? !message.equals(that.message) : that.message != null)
-//    {
-//      return false;
-//    }
+
     if (that.initId != this.initId)
     {
       return false;
     }
-//    if (timestamp != null ? !timestamp.equals(that.timestamp) : that.timestamp != null)
-//    {
-//      return false;
-//    }
+
     if (sender != null ? !sender.equals(that.sender) : that.sender != null)
     {
       return false;
@@ -211,18 +104,12 @@ public class ChatMessage implements Serializable
 
   }
 
-  public void setId(int id)
-  {
-//    this.id = id;
-  }
-
   @Override
   public int hashCode()
   {
     int result = (int)id;
     result = 31 * result + (active ? 1 : 0);
     result = 31 * result + (message != null ? message.hashCode() : 0);
-//    result = 31 * result + (initId != null ? initId.hashCode() : 0);
     result = 31 * result + (timestamp != null ? timestamp.hashCode() : 0);
     result = 31 * result + (sender != null ? sender.hashCode() : 0);
     result = 31 * result + (seenByReceiver ? 1 : 0);

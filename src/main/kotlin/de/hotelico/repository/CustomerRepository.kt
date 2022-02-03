@@ -18,41 +18,12 @@ interface CustomerRepository: JpaRepository<Customer, Long> {
 	
 	companion object {
 		
- 
-//		const val FIND_BY_EMAIL_QUERY = "SELECT u " +
-//				"FROM Customer u " +
-//				"WHERE u.email = :email";
-		
-//		const val FIND_BY_LINKEDIN_ID_QUERY = "SELECT u " +
-//				"FROM Customer u " +
-//				"WHERE u.linkedInId = :linkedInId";
-		
-//		const val FIND_BY_FACEBOOK_ID_QUERY = "SELECT u " +
-//				"FROM Customer u " +
-//				"WHERE u.facebookId = :facebookId";
-		
-//		const val FIND_ALL_ACTIVE = "SELECT c " +
-//				"FROM Customer c " +
-//				"WHERE c.active = TRUE";
-		
-//		const val FIND_ALL_LOGGED = "SELECT c " +
-//				"FROM Customer c " +
-//				"WHERE c.active = TRUE "+
-//				"AND c.logged = TRUE";
-		
-		
 		const val FIND_ALL_ONLINE = "SELECT c " +
 				"FROM Customer c " +
 				"WHERE c.active = TRUE "+
 				"AND c.logged = TRUE "+
 				"AND c.lastSeenOnline > :checkDate "
 	
-	//	const val FIND_LIKED_ACTIVITIES_NUMBER = "SELECT c.likedActivities " +
-	//			"FROM Customer c " +
-	//			"WHERE c.active = TRUE "+
-	//			"AND c.logged = TRUE "+
-	//			"AND c.id = :customerId ";
-		
 		const val FIND_CUSTOMER_CITIES = "SELECT DISTINCT c.city " +
 				"FROM Customer c " +
 				"WHERE c.active = TRUE " +
@@ -96,9 +67,6 @@ interface CustomerRepository: JpaRepository<Customer, Long> {
 
 //	@Query(FIND_BY_ID_LIST)
 	fun findByIdIn(ids: List<Long>): List<Customer>
-	
-//	@Query(FIND_SEEN_ACTIVITIES_NUMBER)
-//	public Integer getSeenActivitiesNumber(@Param("customerId") int customerId);
 	
 	fun findByHotelStaffAndActive(hotelStaff: Boolean = true, active: Boolean = true): List<String>
 

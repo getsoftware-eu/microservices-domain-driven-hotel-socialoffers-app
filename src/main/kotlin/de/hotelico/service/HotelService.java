@@ -43,7 +43,6 @@ public interface HotelService
     
     @Transactional
     HotelActivityDto updateHotelActivity(HotelActivityDto hotelActivityDto);
-    
 
     @Transactional
     WallPostDto updateWallPost(WallPostDto wallPostDto);    
@@ -95,21 +94,12 @@ public interface HotelService
 	@Transactional 
     HotelActivityDto addActivityAction(long customerId, long activityId, String action);
 
-    //    @Transactional
-//    void deleteWallPost(WallPostDto wallPostDto);
     String getGpsCity(Point2D.Double latLonPoint);
 
     double getDistanceKmToHotel(Point2D.Double from, Hotel to);
 	
 	@Transactional
 	List<CustomerDealDto> getDealsByActivityOrHotelId(long customerId, long hotelId, long activityId, boolean onlyDealsOfRequester, boolean closed);
-	
-//	/**
-//	 * get filterStatusList of closed or active deals
-//	 * @param closed
-//	 * @return
-//	 */
-//	List<String> getFilterStatusList(boolean closed);
 	
 	@Transactional ResponseDTO deleteDeal(long customerId, long activityId, long dealId);
 	

@@ -15,11 +15,15 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 
 import de.hotelico.utils.HibernateUtils;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Created by Eugen on 16.07.2015.
  */
 @Entity
+@Getter @Setter
 @Table(name = "menu_item")
 public class MenuItem implements Serializable
 {
@@ -27,6 +31,7 @@ public class MenuItem implements Serializable
 	private static final long serialVersionUID = -3552760230944489778L;
 	
 	@Id
+	@Setter(AccessLevel.PROTECTED)
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
 	
@@ -105,172 +110,5 @@ public class MenuItem implements Serializable
 	public long getId()
 	{
 		return id;
-	}
-	
-	public long getConsistencyId()
-	{
-		return consistencyId;
-	}
-	
-	public boolean isActive()
-	{
-		return active;
-	}
-	
-	public Hotel getHotel()
-	{
-		return hotel;
-	}
-	
-	 
-	
-	public Timestamp getTimestamp()
-	{
-		return timestamp;
-	}
-	
-	public String getTitle()
-	{
-		return title;
-	}
-	
-	public String getShortDescription()
-	{
-		return shortDescription;
-	}
-	
-	public String getDescription()
-	{
-		return description;
-	}
-	
-	public String getPictureUrl()
-	{
-		return pictureUrl;
-	}
-	
-	public double getPrice()
-	{
-		return price;
-	}
-	
-	public void setConsistencyId(long consistencyId)
-	{
-		this.consistencyId = consistencyId;
-	}
-	
-	public void setActive(boolean active)
-	{
-		this.active = active;
-	}
-	
-	public void setHotel(Hotel hotel)
-	{
-		this.hotel = hotel;
-	}
-	
-	public void setTimestamp(Timestamp timestamp)
-	{
-		this.timestamp = timestamp;
-	}
-	
-	public void setTitle(String title)
-	{
-		this.title = title;
-	}
-	
-	public void setShortDescription(String shortDescription)
-	{
-		this.shortDescription = shortDescription;
-	}
-	
-	public void setDescription(String description)
-	{
-		this.description = description;
-	}
-	
-	public void setPictureUrl(String pictureUrl)
-	{
-		this.pictureUrl = pictureUrl;
-	}
-	
-	public void setPrice(double price)
-	{
-		this.price = price;
-	}
-	
-	public int getAmount()
-	{
-		return amount;
-	}
-	
-	public void setAmount(int amount)
-	{
-		this.amount = amount;
-	}
-	
-	public void setId(int id)
-	{
-      //		this.id = id;
-	}
-	
-	public MenuOrder getMenuOrder()
-	{
-		return menuOrder;
-	}
-	
-	public void setMenuOrder(MenuOrder menuOrder)
-	{
-		this.menuOrder = menuOrder;
-	}
-	
-	public Customer getCreator()
-	{
-		return creator;
-	}
-	
-	public void setCreator(Customer creator)
-	{
-		this.creator = creator;
-	}
-	
-	public int getCafeId()
-	{
-		return cafeId;
-	}
-	
-	public void setCafeId(int cafeId)
-	{
-		this.cafeId = cafeId;
-	}
-
-	public long getInitId()
-	{
-		return initId;
-	}
-
-	public void setInitId(long initId)
-	{
-		this.initId = initId;
-	}
-
-	public int getOrderIndex()
-	{
-		return orderIndex;
-	}
-
-	public void setOrderIndex(int orderIndex)
-	{
-		this.orderIndex = orderIndex;
-	}
-	
-	public boolean isDelimiter()
-	{
-		return delimiter;
-	}
-	
-	public void setDelimiter(boolean delimiter)
-	{
-		this.delimiter = delimiter;
 	}
 }

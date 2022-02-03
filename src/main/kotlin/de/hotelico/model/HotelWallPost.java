@@ -1,6 +1,9 @@
 package de.hotelico.model;
 
 import de.hotelico.utils.HibernateUtils;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,14 +23,14 @@ import java.util.Date;
  * Created by Eugen on 16.07.2015.
  */
 @Entity
+@Getter @Setter
 @Table(name = "hotel_wallpost")
 public class HotelWallPost implements Serializable
 {
-
-
 	private static final long serialVersionUID = -5478152926665631989L;
 
 	@Id
+	@Setter(AccessLevel.PROTECTED)
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
 
@@ -75,116 +78,10 @@ public class HotelWallPost implements Serializable
 		this.sender = sender;
 		this.hotel = hotel;
 	}
-	
 
 	public long getId()
 	{
 		return id;
-	}
-
-	public String getMessage()
-	{
-		return message;
-	}
-
-	public long getInitId()
-	{
-		return initId;
-	}
-
-	public Timestamp getTimestamp()
-	{
-		return timestamp;
-	}
-
-	public Customer getSender()
-	{
-		return sender;
-	}
-
-	public Hotel getHotel()
-	{
-		return hotel;
-	}
-
-	public void setMessage(String message)
-	{
-		this.message = message;
-	}
-
-	public void setInitId(long initId)
-	{
-		this.initId = initId;
-	}
-
-	public void setTimestamp(Timestamp timestamp)
-	{
-		this.timestamp = timestamp;
-	}
-
-	public void setSender(Customer sender)
-	{
-		this.sender = sender;
-	}
-
-//	public void setReceiver(Hotel hotel)
-//	{
-//		this.hotel = hotel;
-//	}
-
-	public void setId(int id)
-	{
-//		this.id = id;
-	}
-
-	public static long getSerialVersionUID()
-	{
-		return serialVersionUID;
-	}
-
-	public void setActive(boolean active)
-	{
-		this.active = active;
-	}
-
-	public boolean isActive()
-	{
-		return active;
-	}
-
-	public void setValidUntil(Date validUntil)
-	{
-		this.validUntil = validUntil;
-	}
-
-	public void setHotel(Hotel hotel)
-	{
-		this.hotel = hotel;
-	}
-
-	public Date getValidUntil()
-	{
-		return validUntil;
-	}
-
-	public Integer getReplyOnWallPostId()
-	{
-		return replyOnWallPostId;
-	}
-
-	public void setReplyOnWallPostId(Integer replyOnWallPostId)
-	{
-		this.replyOnWallPostId = replyOnWallPostId;
-	}
-	
-	public String getSpecialWallContent()
-	{
-		return specialWallContent;
-	}
-	
-	public void setSpecialWallContent(String specialType)
-	{
-		this.specialWallContent = specialType;
 	}
 }
 

@@ -17,24 +17,6 @@ import java.util.List;
  */
 public interface FileUploadService
 {
-//	// Retrieve file
-//	@Transactional
-//	FileUpload findByFilename(String filename) ;
-//
-//	// Upload the file
-//	@Transactional
-//	void uploadFile(FileUpload doc) ;
-
-
-	//	/**
-	//	 * 
-	//	 * @param fileUploadable
-	//	 * @param serverFilesPath
-	//	 * @param uploadFile
-	//	 * @return path for added file
-	//	 */
-	//	public Path addFile(final IFileUploadable fileUploadable, final String serverFilesPath, final UploadedFile uploadFile);
-
 	/**
 	 * 
 	 * @param fileUploadable
@@ -97,19 +79,7 @@ public interface FileUploadService
 	 * @return
 	 */
 	public boolean deleteAllFiles(final IFileUploadable fileUploadable, final String serverFilesPath);
-
-
-	//	/**
-	//	 * Upload files and create dirs
-	//	 * 
-	//	 * @param uploadFile
-	//	 * @param folderName
-	//	 * @return file name without Umlaute
-	//	 */
-	//	public String uploadFile(UploadedFile uploadFile, String folderName);
-	//	
-
-
+	
 	/**
 	 * It creates a link for a folder from sourceFilesHolder to targetFilesHolder
 	 *

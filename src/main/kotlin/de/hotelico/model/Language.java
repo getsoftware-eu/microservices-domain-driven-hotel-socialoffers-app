@@ -11,10 +11,15 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Created by Eugen on 16.07.2015.
  */
 @Entity
+@Getter @Setter
 @Table(name = "language")
 public class Language  implements Serializable
 {
@@ -22,13 +27,14 @@ public class Language  implements Serializable
 	private static final long serialVersionUID = 5215301020730273485L;
 	
 	@Id
+	@Setter(AccessLevel.PROTECTED)
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
 
 	@Column(name = "descriptionShort", nullable = false, length = 10)
 	private String descriptionShort;
 
-	@Column(name = "descriptionLong", nullable = true)
+	@Column(name = "descriptionLong")
 	private String descriptionLong;
 
 	//eugen: mappedBy entity.field on this Entity!
@@ -43,40 +49,5 @@ public class Language  implements Serializable
 	public long getId()
 	{
 		return id;
-	}
-
-	public String getDescriptionShort()
-	{
-		return descriptionShort;
-	}
-
-	public String getDescriptionLong()
-	{
-		return descriptionLong;
-	}
-
-	public Set<Customer> getCustomers()
-	{
-		return customers;
-	}
-
-	public void setDescriptionShort(String descriptionShort)
-	{
-		this.descriptionShort = descriptionShort;
-	}
-
-	public void setDescriptionLong(String descriptionLong)
-	{
-		this.descriptionLong = descriptionLong;
-	}
-
-	public void setCustomers(Set<Customer> customers)
-	{
-		this.customers = customers;
-	}
-
-	public void setId(int id)
-	{
-//		this.id = id;
 	}
 }

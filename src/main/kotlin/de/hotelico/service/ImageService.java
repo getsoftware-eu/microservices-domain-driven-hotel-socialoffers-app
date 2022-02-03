@@ -13,5 +13,4 @@ public interface ImageService
 	boolean saveAvatar(InputStream imageInputStream, File emptyFileToWrite, String imageType);
 	
 	boolean savePreview(InputStream imageInputStream, File emptyFileToWrite, String imageType);
-
 }

@@ -9,12 +9,15 @@ import de.hotelico.model.CustomerDeal;
 import de.hotelico.model.Hotel;
 import de.hotelico.model.HotelActivity;
 import de.hotelico.model.HotelWallPost;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * <br/>
  * Created by e.fanshil
  * At 19.10.2015 17:19
  */
+@Getter
 public enum DealStatus
 {
 	ACCEPTED("ACCEPTED", 1),
@@ -25,29 +28,9 @@ public enum DealStatus
 	private String name;
 	private int value;
 	
-	private DealStatus(String name, int value)
+	DealStatus(String name, int value)
 	{
 		this.name = name;
-		this.value = value;
-	}
-	
-	public String getName()
-	{
-		return name;
-	}
-	
-	public int getValue()
-	{
-		return value;
-	}
-	
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-	
-	public void setValue(int value)
-	{
 		this.value = value;
 	}
 	
@@ -57,7 +40,7 @@ public enum DealStatus
 		{
 			for (DealStatus nextEvent : DealStatus.values())
 			{
-				if (nextEvent.getName().equalsIgnoreCase(name))
+				if (nextEvent.name.equalsIgnoreCase(name))
 				{
 					return nextEvent;
 				}
@@ -81,8 +64,7 @@ public enum DealStatus
 		return filterDealStatusList;
 	}
 	
-//	private String getPrefix()
-//	{
-//		return ControllerUtils.isEmptyString(ControllerUtils.HOST_SUFFIX)? "/" : "/" + ControllerUtils.HOST_SUFFIX;
-//	}
+	
+	
+ 
 }

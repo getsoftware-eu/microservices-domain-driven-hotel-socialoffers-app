@@ -10,25 +10,10 @@ interface HotelRepository: JpaRepository<Hotel, Long> {
 
 	companion object {
 		
-		//	const val FIND_BY_HOTEL_CODE_QUERY = "SELECT h " +
-		//			"FROM Hotel h " +
-		//			"WHERE h.active = true "+	
-		//			"AND h.currentHotelAccessCode = :hotelCode ";	
-		
-		//	const val FIND_ACTIVE_NOT_VIRTUAL_HOTELS_QUERY = "SELECT h " +
-		//			"FROM Hotel h " +
-		//			"WHERE h.active = true "+	
-		//			"AND h.virtual = false ";	
-
 		const val FIND_ACTIVITY_NUMBER_BY_HOTEL_QUERY = "SELECT (h.hotelActivities.size ) " +
 		"FROM Hotel h " +
 		"WHERE h.active = TRUE "+
 		"AND h.id = :hotelId ";
-
-		//	const val String FIND_VIRTUAL_HOTEL_QUERY = "SELECT (h) " +
-		//			"FROM Hotel h " +
-		//			"WHERE h.active = TRUE "+
-		//			"AND h.virtual = TRUE ";
 
 		const val FIND_VIRTUAL_HOTEL_ID_QUERY = "SELECT (h.id) " +
 		"FROM Hotel h " +
@@ -39,11 +24,6 @@ interface HotelRepository: JpaRepository<Hotel, Long> {
 		"FROM Hotel h " +
 		"WHERE h.active = TRUE "+
 		"AND h.currentHotelAccessCode = 'demo' ";
-
-		//	const val FIND_HOTEL_BY_MAIL_QUERY = "SELECT h " +
-		//			"FROM Hotel h " +
-		//			"WHERE h.active = TRUE "+
-		//			"AND h.email = :hotelEmail ";
 
 		const val FIND_ACTIVE_GPS_HOTELS_QUERY = "SELECT h " +
 		"FROM Hotel h " +
@@ -57,11 +37,6 @@ interface HotelRepository: JpaRepository<Hotel, Long> {
 		"FROM Hotel h " +
 		"WHERE h.active = TRUE "+
 		"AND h.virtual = TRUE ";
-
-		//const val FIND_HOTEL_BY_CREATION_TIME_QUERY = "SELECT h " +
-		//			"FROM Hotel h " +
-		//			"WHERE h.active = TRUE "+
-		//			"AND h.creationTime = :creationTime ";
 	}
 	
 	/**
@@ -72,9 +47,6 @@ interface HotelRepository: JpaRepository<Hotel, Long> {
 	
 	@Query(FIND_ACTIVITY_NUMBER_BY_HOTEL_QUERY)
 	fun getActivityCounter(@Param("hotelId") hotelId: Int): Int
-	
-//	@Query(FIND_VIRTUAL_HOTEL_QUERY)
-//	public Hotel getVirtualHotel();
 	
 	@Query(FIND_VIRTUAL_HOTEL_ID_QUERY)
 	fun getVirtualHotelId(): Int

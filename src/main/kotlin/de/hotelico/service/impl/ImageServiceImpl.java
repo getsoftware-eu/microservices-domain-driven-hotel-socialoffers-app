@@ -48,7 +48,6 @@ public class ImageServiceImpl implements ImageService
 				res = ImageUtils.IMAGE_UNKNOWN;
 				break;
 			}
-			
 		}
 		
 		return res;
@@ -60,8 +59,7 @@ public class ImageServiceImpl implements ImageService
 		
 		BufferedImage resizedImage = ImageUtils.resizeAndCropImage(imageInputStream, imageTypeValue, logoMaxWidth, logoMaxHeight, LOGO);
 
-//		if(imageTypeValue==ImageUtils.IMAGE_JPEG)
-			ImageUtils.saveCompressedImage(resizedImage, emptyFileToWrite, imageTypeValue);
+		ImageUtils.saveCompressedImage(resizedImage, emptyFileToWrite, imageTypeValue);
 		
 		return true;
 	}
@@ -72,9 +70,7 @@ public class ImageServiceImpl implements ImageService
 
 		BufferedImage resizedImage = ImageUtils.resizeAndCropImage(imageInputStream, imageTypeValue, avatarMaxWidth, avatarMaxHeight, AVATAR);
 		
-		
-//		if(imageTypeValue==ImageUtils.IMAGE_JPEG)
-			ImageUtils.saveCompressedImage(resizedImage, emptyFileToWrite, imageTypeValue);
+		ImageUtils.saveCompressedImage(resizedImage, emptyFileToWrite, imageTypeValue);
 
 		return true;
 	}
@@ -85,9 +81,7 @@ public class ImageServiceImpl implements ImageService
 
 		BufferedImage resizedImage = ImageUtils.resizeAndCropImage(imageInputStream, imageTypeValue, previewMaxWidth, previewMaxHeight, PREVIEW);
 		
-		
-//		if(imageTypeValue==ImageUtils.IMAGE_JPEG)
-			ImageUtils.saveCompressedImage(resizedImage, emptyFileToWrite, imageTypeValue);
+		ImageUtils.saveCompressedImage(resizedImage, emptyFileToWrite, imageTypeValue);
 
 		return true;
 	}

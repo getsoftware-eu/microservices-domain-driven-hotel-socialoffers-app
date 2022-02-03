@@ -11,16 +11,23 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Created by Eugen on 16.07.2015.
  */
 @Entity
+@Getter @Setter
 @Table(name = "interest_customer")
 public class InterestCustomer implements Serializable
 {
 
 	private static final long serialVersionUID = -1994783091983352486L;
+	
 	@Id
+	@Setter(AccessLevel.PROTECTED)
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
 
@@ -45,50 +52,5 @@ public class InterestCustomer implements Serializable
 	public long getId()
 	{
 		return id;
-	}
-
-	public String getName()
-	{
-		return name;
-	}
-
-	public String getDescription()
-	{
-		return description;
-	}
-
-	public String getInterestArea()
-	{
-		return interestArea;
-	}
-
-	public Set<Customer> getCustomers()
-	{
-		return customers;
-	}
-
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-
-	public void setDescription(String description)
-	{
-		this.description = description;
-	}
-
-	public void setInterestArea(String interestArea)
-	{
-		this.interestArea = interestArea;
-	}
-
-	public void setCustomers(Set<Customer> customers)
-	{
-		this.customers = customers;
-	}
-
-	public void setId(int id)
-	{
-//		this.id = id;
 	}
 }

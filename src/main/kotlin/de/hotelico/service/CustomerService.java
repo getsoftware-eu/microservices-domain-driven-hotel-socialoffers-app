@@ -70,8 +70,6 @@ public interface CustomerService
     CustomerDTO convertCustomerToDto(Customer customer, boolean fullSerialization, CustomerHotelCheckin validCheckin);
     CustomerDTO convertMyCustomerToFullDto(Customer customer);
 		
-//	CustomerDto convertCustomerToDto(Customer customer, int hotelId, boolean fullSerialization);
-    
     @Transactional CustomerDTO serializeCustomerHotelInfo(CustomerDTO dto, long hotelId, boolean fullSerialization, CustomerHotelCheckin validCheckin);
     
     @Transactional CustomerDTO synchronizeCustomerToDto(CustomerDTO customerDto);
@@ -81,9 +79,6 @@ public interface CustomerService
     
     @Transactional
     void setCustomerPing(long sessionCustomerId);
-
-    //    @Transactional
-//    CustomerDto addUnreadInfo(CustomerDto out);
 
     String getCustomerAvatarUrl(Customer customer);
 

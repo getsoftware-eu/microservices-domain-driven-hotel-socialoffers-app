@@ -1,9 +1,5 @@
 package de.hotelico.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailSender;
-import org.springframework.mail.SimpleMailMessage;
-
 import de.hotelico.model.Customer;
 
 /**

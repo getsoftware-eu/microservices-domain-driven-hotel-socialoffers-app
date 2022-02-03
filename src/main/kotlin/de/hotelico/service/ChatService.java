@@ -41,7 +41,6 @@ public interface ChatService
     void markChatRead(long customerId, long senderId, long maxSeenChatMessageId);
     
     @Transactional
-//    @Deprecated
     Set<CustomerDTO> getNotHotelChatPartners(long customerId, String city, long hotelId);    
     
     @Transactional
@@ -49,7 +48,4 @@ public interface ChatService
     
     @Transactional
     Set<CustomerDTO> getAllNotChatPartners(long customerId, String city, long hotelId, int pageNumber);
-
-    //    @Transactional
-//    List<ChatMessageDto> getUnreadMessagesByCustomerId(int customerId);
 }

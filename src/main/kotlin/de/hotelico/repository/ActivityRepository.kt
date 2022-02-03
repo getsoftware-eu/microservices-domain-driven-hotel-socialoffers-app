@@ -15,16 +15,12 @@ interface ActivityRepository: JpaRepository<HotelActivity, Long> {
 		const val FIND_ALL_BY_HOTEL_QUERY = "SELECT a " +
 		"FROM HotelActivity a " +
 		"WHERE a.hotel.id = :hotelId " +
-//			"AND a.validTo > :checkDate "+
-//			"AND a.validFrom <= :checkDate "+
 		"AND a.active = TRUE "
 		;
 
 		const val COUNT_ALL_BY_HOTEL_QUERY = "SELECT count(a) " +
 		"FROM HotelActivity a " +
 		"WHERE a.hotel.id = :hotelId " +
-//			"AND a.validTo > :checkDate "+
-//			"AND a.validFrom <= :checkDate "+
 		"AND a.active = TRUE "
 		;
 
@@ -50,16 +46,9 @@ interface ActivityRepository: JpaRepository<HotelActivity, Long> {
 		"AND a.sender.id = :creatorId "+
 		"AND a.active = TRUE";
 
-//	const val FIND_BY_ACTIVITY_ID_QUERY = "SELECT a " +
-//			"FROM HotelActivity a " +
-//			"WHERE a.initId = :initId "+
-//			"AND a.active = TRUE";
-
 		const val FIND_ALL_ACTIVE_QUERY = "SELECT a " +
 		"FROM HotelActivity a " +
 		"WHERE a.active = TRUE " +
-//			"AND a.validTo > :checkDate " +
-//			"AND a.validFrom <= :checkDate " +
 		"AND a.hotel.active = TRUE ";
 
 		const val FIND_ALL_TIME_VALID_ACTIVE_QUERY = "SELECT a " +

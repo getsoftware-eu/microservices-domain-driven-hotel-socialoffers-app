@@ -64,17 +64,6 @@ public interface ChatRepository extends JpaRepository<ChatMessage, Long> {
 				") "+
 				"AND m.sender.active = TRUE AND m.receiver.active = TRUE ";
 	
-//	public final static String FIND_LAST_MESSAGE_FOR_PARTNER_BY_CUSTOMER_ID = "SELECT m " +
-//			"FROM ChatMessage m " +
-//			"WHERE m.id = (select max(mm.id) from ChatMessage mm where "+
-//				"mm.active = true " +
-//				"AND ( " +
-//				"(mm.sender.id = :customerId AND mm.receiver.id = :partnerId) " +
-//				" OR " +
-//				"(mm.receiver.id = :customerId AND mm.sender.id = :partnerId) " +
-//				") "+
-//			")";
-	
 	public final static String FIND_NOT_READ_MESSAGE_COUNTER_BY_RECEIVER_IDS = "SELECT count(m) " +
 			"FROM ChatMessage m " +
 			"WHERE m.active = true AND m.seenByReceiver = false " +
@@ -93,7 +82,6 @@ public interface ChatRepository extends JpaRepository<ChatMessage, Long> {
 			"WHERE m.active = true AND m.seenByReceiver = false " +
 			"AND m.receiver.id = :customerId " +
 			"AND m.sender.id = :senderId ";
-//			+"AND m.sender.active = TRUE ";
 	
 	public final static String FIND_NOT_READ_CHATS_BY_CUSTOMER_ID = "SELECT count(distinct m.sender) " +
 			"FROM ChatMessage m " +
@@ -133,10 +121,7 @@ public interface ChatRepository extends JpaRepository<ChatMessage, Long> {
 	
 	@Query(FIND_CHAT_RECEIVER_BY_CUSTOMER_ID)
 	public List<Customer> getChatReceiversByCustomerId(@Param("customerId") Long customerId);
-		
-//	@Query(FIND_NOT_CHAT_PARTNERS_BY_CUSTOMER_ID)
-//	public List<Customer> getNotChatPartnersByCustomerId(@Param("customerId") Long customerId);
-	
+
 	@Query(FIND_NOT_READ_MESSAGE_COUNTER_BY_RECEIVER_IDS)
 	public Integer getNotReadMessageCountBySenderId(@Param("customerId") Long customerId, @Param("senderId") Integer senderId);
 	
@@ -157,6 +142,4 @@ public interface ChatRepository extends JpaRepository<ChatMessage, Long> {
 	
 	@Query(EXIST_MESSAGE_BY_MESSAGE_ID)
 	boolean existMessageWithInitId(@Param("initId") Long initId);
-
-//	Page<Customer> findNotChatPartnersByPage(PageRequest request, @Param("customerId") Long customerId);
 }

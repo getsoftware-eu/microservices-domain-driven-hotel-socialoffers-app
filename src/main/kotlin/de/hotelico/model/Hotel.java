@@ -2,6 +2,10 @@ package de.hotelico.model;
 
 import de.hotelico.service.IFileUploadable;
 import de.hotelico.utils.HibernateUtils;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.hibernate.annotations.Type;
 
 import javax.persistence.Column;
@@ -17,6 +21,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Getter @Setter
 @Table(name = "hotel")
 public class Hotel implements Serializable, IFileUploadable
 {
@@ -33,8 +38,8 @@ public class Hotel implements Serializable, IFileUploadable
 	public static final double LOWER_BOUND_LATITUDE = -90d;
 	
     @Id
+    @Setter(AccessLevel.PROTECTED)
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    //Eugen: NEVER MAKE setId !!!!!!!!!!
     private long id;
     
     @Column(name = "rating", nullable = true)
@@ -152,233 +157,10 @@ public class Hotel implements Serializable, IFileUploadable
     public long getId() {
         return id;
     }
-
-//    public void setId(int id) {
-//        this.id = id;
-//    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public static long getSerialVersionUID()
-    {
-        return serialVersionUID;
-    }
-
-    public String getCity()
-    {
-        return city;
-    }
-
-    public void setId(int id)
-    {
-//        this.id = id;
-    }
-
-    public String getPostalCode()
-    {
-        return postalCode;
-    }
-
-    public String getStreet()
-    {
-        return street;
-    }
-
-    public String getHouse()
-    {
-        return house;
-    }
-
-    public String getPhone()
-    {
-        return phone;
-    }
-
-    public String getFax()
-    {
-        return fax;
-    }
-
-    public String getEmail()
-    {
-        return email;
-    }
-
-    public String getCurrentHotelAccessCode()
-    {
-        return currentHotelAccessCode;
-    }
-
-    public String getPictureUrl()
-    {
-        return pictureUrl;
-    }
-
-    public void setCity(String city)
-    {
-        this.city = city;
-    }
-
-    public void setPostalCode(String postalCode)
-    {
-        this.postalCode = postalCode;
-    }
-
-    public void setStreet(String street)
-    {
-        this.street = street;
-    }
-
-    public void setHouse(String house)
-    {
-        this.house = house;
-    }
-
-    public void setPhone(String phone)
-    {
-        this.phone = phone;
-    }
-
-    public void setFax(String fax)
-    {
-        this.fax = fax;
-    }
-
-    public void setEmail(String eMail)
-    {
-        this.email = eMail;
-    }
-
-    public void setCurrentHotelAccessCode(String currentHotelAccessCode)
-    {
-        this.currentHotelAccessCode = currentHotelAccessCode;
-    }
-
-    public void setPictureUrl(String pictureUrl)
-    {
-        this.pictureUrl = pictureUrl;
-    }
-
-    public void setActive(boolean active)
-    {
-        this.active = active;
-    }
-
-    public void setHotelActivities(Set<HotelActivity> hotelActivities)
-    {
-        this.hotelActivities = hotelActivities;
-    }
-
-    public boolean isActive()
-    {
-        return active;
-    }
-
-    public Set<HotelActivity> getHotelActivities()
-    {
-        return hotelActivities;
-    }
-    //##################### 1:n:1 ###################################
-
-    public Set<CustomerHotelCheckin> getCustomerHotelHistories() {
-        return this.customerHotelHistories;
-    }
-
-    public void setCustomerHotelHistories(Set<CustomerHotelCheckin> customerHotelHistories) {
-        this.customerHotelHistories = customerHotelHistories;
-    }
-
-    public Set<HotelWallPost> getHotelWallPosts()
-    {
-        return hotelWallPosts;
-    }
-
-    public void setWebsite(String website)
-    {
-        this.website = website;
-    }
-
-    public void setMapLink(String mapLink)
-    {
-        this.mapLink = mapLink;
-    }
-
-    public String getWebsite()
-    {
-        return website;
-    }
-
-    public String getMapLink()
-    {
-        return mapLink;
-    }
-
-    public Integer getRating()
-    {
-        return rating;
-    }
-
-    public long getCreationTime()
-    {
-        return creationTime;
-    }
-
-    public void setCreationTime(long creationTime)
-    {
-        this.creationTime = creationTime;
-    }
-
-    public void setRating(Integer rating)
-    {
-        this.rating = rating;
-    }
-
-    public void setHotelWallPosts(Set<HotelWallPost> hotelWallPosts)
-    {
-        this.hotelWallPosts = hotelWallPosts;
-    }
-
-    //    public Set<WallPost> getWallPosts() {
-//        return this.wallPosts;
-//    }
-//
-//    public void setWallPosts(Set<WallPost> wallPosts) {
-//        this.wallPosts = wallPosts;
-//    }
-
-    public String getInfo()
-    {
-        return info;
-    }
-
-    public void setInfo(String info)
-    {
-        this.info = info;
-    }
-    // #############################################################################
-
+    
     @Override
     public String getPlainFilePath(final int upperOrderId)
     {
-        //        if (getId() < upperOrderId)
-        //        {
-        //            return String.valueOf(getId());
-        //        }
-
         return "hotel/" + getId() + "";
     }
 
@@ -387,89 +169,4 @@ public class Hotel implements Serializable, IFileUploadable
     {
         this.mediaUploaded = mediaUploaded;
     }
-
-    public long getConsistencyId()
-    {
-        return consistencyId;
-    }
-
-    public void setConsistencyId(long consistencyId)
-    {
-        this.consistencyId = consistencyId;
-    }
-
-    public boolean isMediaUploaded()
-    {
-        return mediaUploaded;
-    }
-
-    public boolean isVirtual()
-    {
-        return virtual;
-    }
-
-    public void setVirtual(boolean virtual)
-    {
-        this.virtual = virtual;
-    }
-	
-	public double getLatitude()
-	{
-		return latitude;
-	}
-	
-	public double getLongitude()
-	{
-		return longitude;
-	}
-	
-	public void setLatitude(double latitude)
-	{
-		this.latitude = latitude;
-	}
-	
-	public void setLongitude(double longitude)
-	{
-		this.longitude = longitude;
-	}
-
-    public String getPreviewPictureUrl()
-    {
-        return previewPictureUrl;
-    }
-
-    public void setPreviewPictureUrl(String previewPictureUrl)
-    {
-        this.previewPictureUrl = previewPictureUrl;
-    }
-
-    public String getGuestPushIds()
-    {
-        return guestPushIds;
-    }
-
-    public void setGuestPushIds(String guestPushIds)
-    {
-        this.guestPushIds = guestPushIds;
-    }
-
-    public String getWellcomeMessage()
-    {
-        return wellcomeMessage;
-    }
-
-    public void setWellcomeMessage(String wellcomeMessage)
-    {
-        this.wellcomeMessage = wellcomeMessage;
-    }
-	
-	public String getUnsubscribeNotificationPushIds()
-	{
-		return unsubscribeNotificationPushIds;
-	}
-	
-	public void setUnsubscribeNotificationPushIds(String unsubscribeNotificationPushIds)
-	{
-		this.unsubscribeNotificationPushIds = unsubscribeNotificationPushIds;
-	}
 }

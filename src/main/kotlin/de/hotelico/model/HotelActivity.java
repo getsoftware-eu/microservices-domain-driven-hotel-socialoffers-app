@@ -2,6 +2,10 @@ package de.hotelico.model;
 
 import de.hotelico.service.IFileUploadable;
 import de.hotelico.utils.HibernateUtils;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
 import org.hibernate.annotations.Type;
 
 import javax.persistence.CascadeType;
@@ -26,6 +30,7 @@ import java.util.Set;
  * Created by Eugen on 16.07.2015.
  */
 @Entity
+@Getter @Setter
 @Table(name = "hotel_activity")
 public class HotelActivity implements Serializable, IFileUploadable
 {
@@ -33,7 +38,8 @@ public class HotelActivity implements Serializable, IFileUploadable
 	private static final long serialVersionUID = -3552760230942289778L;
 	
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	@Setter(AccessLevel.PROTECTED)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 
 	/**
@@ -119,8 +125,11 @@ public class HotelActivity implements Serializable, IFileUploadable
 	private boolean lastMinute = false;
 	
 	@Column(name = "dealDaysDuration", nullable = false, columnDefinition = "int default 1")
-	private int dealDaysDuration = 1;	
+	private int dealDaysDuration = 1;
 	
+	/**
+	 * 0: no Deal number Limit
+	 */
 	@Column(name = "limitDealNumber", nullable = false, columnDefinition = "int default 1")
 	private int limitDealNumber = 1;
 	
@@ -134,120 +143,9 @@ public class HotelActivity implements Serializable, IFileUploadable
 		return id;
 	}
 
-	public boolean isActive()
-	{
-		return active;
-	}
-
-	public Hotel getHotel()
-	{
-		return hotel;
-	}
-
-	public void setActive(boolean active)
-	{
-		this.active = active;
-	}
-
-	public void setHotel(Hotel hotel)
-	{
-		this.hotel = hotel;
-	}
-
-	public Date getValidFrom()
-	{
-		return validFrom;
-	}
-
-	public Date getValidTo()
-	{
-		return validTo;
-	}
-
-	public String getTitle()
-	{
-		return title;
-	}
-
-	public String getShortDescription()
-	{
-		return shortDescription;
-	}
-	
-
-	public Long getInitId()
-	{
-		return initId;
-	}
-
-	public String getDescription()
-	{
-		return description;
-	}
-
-	public void setPictureUrl(String pictureUrl)
-	{
-		this.pictureUrl = pictureUrl;
-	}
-
-	public String getPictureUrl()
-	{
-		return pictureUrl;
-	}
-
-	public boolean isThirdPartyActivity()
-	{
-		return thirdPartyActivity;
-	}
-
-	public void setValidFrom(Date validFrom)
-	{
-		this.validFrom = validFrom;
-	}
-
-	public void setValidTo(Date validTo)
-	{
-		this.validTo = validTo;
-	}
-
-	public void setTitle(String title)
-	{
-		this.title = title;
-	}
-
-	public void setShortDescription(String shortDescription)
-	{
-		this.shortDescription = shortDescription;
-	}
-
-	public void setDescription(String description)
-	{
-		this.description = description;
-	}
-
-	public void setThirdPartyActivity(boolean thirdPartyActivity)
-	{
-		this.thirdPartyActivity = thirdPartyActivity;
-	}
-
-	public Customer getSender()
-	{
-		return sender;
-	}
-
-	public void setSender(Customer sender)
-	{
-		this.sender = sender;
-	}
-
 	@Override
 	public String getPlainFilePath(final int upperOrderId)
 	{
-		//        if (getId() < upperOrderId)
-		//        {
-		//            return String.valueOf(getId());
-		//        }
-
 		return "activity/" + getId() + "";
 	}
 
@@ -256,139 +154,5 @@ public class HotelActivity implements Serializable, IFileUploadable
 	{
 		this.mediaUploaded = mediaUploaded;
 	}
-
-	public long getConsistencyId()
-	{
-		return consistencyId;
-	}
-
-	public void setConsistencyId(long consistencyId)
-	{
-		this.consistencyId = consistencyId;
-	}
-
-	public boolean isMediaUploaded()
-	{
-		return mediaUploaded;
-	}
-
-	public void setLikedCustomers(Set<Customer> likedCustomers)
-	{
-		this.likedCustomers = likedCustomers;
-	}
-
-	public Set<Customer> getLikedCustomers()
-	{
-		return likedCustomers;
-	}
 	
-	public Set<Customer> getSubscribeCustomers()
-	{
-		return subscribeCustomers;
-	}
-	
-	public void setSubscribeCustomers(Set<Customer> subscribeCustomers)
-	{
-		this.subscribeCustomers = subscribeCustomers;
-	}
-
-	public int getDealDaysDuration()
-	{
-		return dealDaysDuration;
-	}
-
-	public void setId(int id)
-	{
-//		this.id = id;
-	}
-	
-	/**
-	 * 0: no Deal number Limit
-	 * @return
-	 */
-	public int getLimitDealNumber()
-	{
-		return limitDealNumber;
-	}
-	
-	
-	public boolean isDealAllowed()
-	{
-		return dealAllowed;
-	}
-	
-	public void setDealAllowed(boolean dealAllowed)
-	{
-		this.dealAllowed = dealAllowed;
-	}
-	
-	public void setDealDaysDuration(int dealDaysDuration)
-	{
-		this.dealDaysDuration = dealDaysDuration;
-	}
-	
-	/**
-	 * 0: no Deal number Limit
-	 * @return
-	 */
-	public void setLimitDealNumber(int limitDealNumber)
-	{
-		this.limitDealNumber = limitDealNumber;
-	}
-	
-	public boolean isLastMinute()
-	{
-		return lastMinute;
-	}
-	
-	public void setLastMinute(boolean lastMinute)
-	{
-		this.lastMinute = lastMinute;
-	}
-	
-	public String getPreviewPictureUrl()
-	{
-		return previewPictureUrl;
-	}
-	
-	public void setPreviewPictureUrl(String previewPictureUrl)
-	{
-		this.previewPictureUrl = previewPictureUrl;
-	}
-	
-	public String getActivityArea()
-	{
-		return activityArea;
-	}
-	
-	public void setActivityArea(String activityArea)
-	{
-		this.activityArea = activityArea;
-	}
-
-	public boolean isHidden()
-	{
-		return hidden;
-	}
-
-	public void setHidden(boolean showActivity)
-	{
-		this.hidden = showActivity;
-	}
-
-	public void setInitId(long initId)
-	{
-		this.initId = initId;
-	}
-	
-	
-	public int getOrderIndex()
-	{
-		return orderIndex;
-	}
-	
-	public void setOrderIndex(int orderIndex)
-	{
-		this.orderIndex = orderIndex;
-	}
 }

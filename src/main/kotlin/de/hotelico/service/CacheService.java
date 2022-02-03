@@ -5,6 +5,7 @@ import java.awt.geom.Point2D.Double;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import de.hotelico.dto.CustomerDTO;
 import de.hotelico.dto.CustomerNotificationDto;
@@ -41,14 +42,7 @@ public interface CacheService
 	 * @return NULL if OFFLINE!
 	 */
 	@Transactional
-	Date getLastCustomerOnlineTime(long customerId);
-
-	//	/**
-	//	 * set a new lastOnlineSeenTime
-	//	 * @param customerId
-	//	 */
-	//	@Transactional
-	//	void updateLastOnlineTime(int customerId);
+	Optional<Date> getLastCustomerOnlineTime(long customerId);
 
 	/**
 	 * get still online customerList. DB QUERY!!!
@@ -123,4 +117,5 @@ public interface CacheService
 	
 	Point2D.Double getGuestGpsPosition(long requesterId);
 	
+	static final int ONLINE_DELAY_MINUTES = 25;
 }

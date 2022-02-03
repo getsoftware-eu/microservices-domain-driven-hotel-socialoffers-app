@@ -7,8 +7,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
+
+import javax.annotation.PostConstruct;
 
 import de.hotelico.dto.CustomerDTO;
 import de.hotelico.dto.CustomerNotificationDto;
@@ -55,17 +59,8 @@ public class CacheServiceImpl implements CacheService
 	@Autowired
 	private CustomerRepository customerRepository;
 	
-//	public static class CacheServiceHolder {
-//		public static final de.hotelico.service.CacheService HOLDER_INSTANCE = new CacheServiceImpl();
-//	}
-//
-//	public static de.hotelico.service.CacheService getInstance() {
-//		return CacheServiceHolder.HOLDER_INSTANCE;
-//	}
-	
 	private Map<Long, Date> lastCustomerOnlineMap = new HashMap<>();
 	private Map<Long, Long> currentConsistencyIdsMap = new HashMap<>();
-//	private Map<Integer, List<ChatMessage>> unreadChatsForCustomerMap = new HashMap<>();
 	
 	private Map<Long, Map<Long, List<ChatMessage>>> unreadChatsForReceiverFromSendersMap = new HashMap<>();
 	
@@ -88,10 +83,11 @@ public class CacheServiceImpl implements CacheService
 	 */
 	private HashMap<Long, Point2D.Double> guestToGpsPointMap = new HashMap<>();
 	
-	//	@Autowired
-//	private HotelServiceImpl hotelService;	
-	
-
+	@PostConstruct
+	public void init() {
+		unreadChatsForReceiverFromSendersMap = new HashMap<>();
+		lastMessageBetweenCustomersMap = new HashMap<>();
+	}
 	
 	@Override
 	public long getInitHotelId()
@@ -101,30 +97,13 @@ public class CacheServiceImpl implements CacheService
 			return 0;	
 		}
 		
-		if(virtualHotelId>0)
-		{
-			return virtualHotelId;
-		}
-		else {
-			virtualHotelId = getRepositoryVirtualHotelId();
-		}
-		
-		return virtualHotelId;
+		return virtualHotelId>0 ? virtualHotelId: getRepositoryVirtualHotelId();
 	}
 	
 	@Override
 	public long getDemoHotelId()
 	{
-		
-		if(demoHotelId>0)
-		{
-			return demoHotelId;
-		}
-		else {
-			demoHotelId = getRepositoryDemoHotelId();
-		}
-		
-		return demoHotelId;
+		return demoHotelId>0? demoHotelId: getRepositoryDemoHotelId();
 	}
 
 	private int getRepositoryVirtualHotelId()
@@ -132,7 +111,6 @@ public class CacheServiceImpl implements CacheService
 		Integer virtualHotelId = hotelRepository.getVirtualHotelId();
 
 		return  virtualHotelId==null? 0 : virtualHotelId;
-
 	}
 	
 	private int getRepositoryDemoHotelId()
@@ -144,13 +122,12 @@ public class CacheServiceImpl implements CacheService
 	}
 	
 	@Override
-	public Date getLastCustomerOnlineTime(long customerId)
+	public Optional<Date> getLastCustomerOnlineTime(long customerId)
 	{
-		if(lastCustomerOnlineMap.containsKey(customerId))
+		Optional<Date> lastCustomerOnlineTime = lastCustomerOnlineMap.entrySet().stream().filter(e -> e.getKey() == customerId).map(Entry::getValue).findFirst();
+				
+ 		if(!lastCustomerOnlineTime.isPresent())
 		{
-			return lastCustomerOnlineMap.get(customerId);
-		}
-		else {
 			Customer customer = customerService.getEntityById(customerId);
 			
 			if(customer==null || !customer.isLogged())
@@ -165,18 +142,15 @@ public class CacheServiceImpl implements CacheService
 				lastCustomerOnlineMap.put(customerId, lastSeenOnline);
 			}
 			
-			return lastSeenOnline;
+			return Optional.of(lastSeenOnline);
 		}
+		
+		return lastCustomerOnlineTime;
 	}
 	
 	@Override
 	public void updateCustomerConsistencyId(long customerId, long consustencyId)
 	{
-		if(currentConsistencyIdsMap==null)
-		{
-			currentConsistencyIdsMap =  new HashMap<>();
-		}
-		
 		currentConsistencyIdsMap.put(customerId, consustencyId);
 	}
 	
@@ -231,9 +205,7 @@ public class CacheServiceImpl implements CacheService
 				{
 					resultList.add(nextOnlineIn24hCustomer);
 				}
-				
 			}
-			
 		}
 		else {
 			
@@ -253,40 +225,27 @@ public class CacheServiceImpl implements CacheService
 			}
 		}
 		
-		
 		return resultList;
 	}
 	
 	@Override
 	public void checkCustomerOffline(long offlineId)	
 	{
-		if(lastCustomerOnlineMap==null)
+		if(lastCustomerOnlineMap.containsKey(offlineId))
 		{
-			lastCustomerOnlineMap = new HashMap<>();
+			lastCustomerOnlineMap.remove(offlineId);
 		}
-		
-		lastCustomerOnlineMap.remove(offlineId);
 	}
 	
 	@Override
 	public void checkCustomerOnline(long onlineId)	
 	{
-		if(lastCustomerOnlineMap==null)
-		{
-			lastCustomerOnlineMap = new HashMap<>();
-		}
-
 		updateLastOnlineTime(onlineId);
 	}
 	
 	@Override
 	public long getCustomerConsistencyId(long customerId)
 	{
-		if(currentConsistencyIdsMap==null)
-		{
-			currentConsistencyIdsMap =  new HashMap<>();
-		}
-		
 		if(currentConsistencyIdsMap.containsKey(customerId))
 		{
 			return currentConsistencyIdsMap.get(customerId);
@@ -308,30 +267,20 @@ public class CacheServiceImpl implements CacheService
 	@Override
 	public void markChatRead(long receiverId, long senderId)
 	{
-		if(unreadChatsForReceiverFromSendersMap==null)
-		{
-			unreadChatsForReceiverFromSendersMap = new HashMap<Long, Map<Long, List<ChatMessage>>>();
-		}
-		
-		Map<Long, List<ChatMessage>> unreadForeReceiver = unreadChatsForReceiverFromSendersMap.get(receiverId);
+		Object unreadForReceiver = unreadChatsForReceiverFromSendersMap.entrySet().stream().filter(e -> e.getKey() == receiverId).map(Entry::getValue).findFirst();
 		
 		//empty all unread messages for this sender!
 		//remove empty Lists from Map!!! sonst unread chat!!!
 
-		if(unreadForeReceiver!=null)
+		if(unreadForReceiver!=null)
 		{
-			unreadForeReceiver.remove(senderId);
+			unreadChatsForReceiverFromSendersMap.get(receiverId).remove(senderId);
 		}
 	}
 	
 	@Override
 	public void markMessageRead(ChatMessage readMessage)
 	{
-		if(unreadChatsForReceiverFromSendersMap==null)
-		{
-			unreadChatsForReceiverFromSendersMap = new HashMap<Long, Map<Long, List<ChatMessage>>>();
-		}
-		
 		Map<Long, List<ChatMessage>> unreadForeReceiver = unreadChatsForReceiverFromSendersMap.get(readMessage.getReceiver().getId());
 
 		if(unreadForeReceiver==null)
@@ -381,15 +330,6 @@ public class CacheServiceImpl implements CacheService
 	@Override
 	public void updateUnreadMessagesToCustomer(ChatMessage newUnreadMessage)
 	{
-//		if(unreadChatsForCustomerMap==null)
-//		{
-//			unreadChatsForCustomerMap = new HashMap<Integer, List<ChatMessage>>();
-//		}
-		if(unreadChatsForReceiverFromSendersMap==null)
-		{
-			unreadChatsForReceiverFromSendersMap = new HashMap<Long, Map<Long, List<ChatMessage>>>();
-		}
-		
 		//If there is no unreadMessages for this receiver, create it from DB
 		long receiverId = newUnreadMessage.getReceiver().getId();
 		if(!unreadChatsForReceiverFromSendersMap.containsKey(receiverId))
@@ -421,16 +361,6 @@ public class CacheServiceImpl implements CacheService
 	@Override
 	public Map<Long, List<ChatMessage>> getCustomerUnreadChatsBySenders(long receiverId)
 	{
-//		if(unreadChatsForCustomerMap==null)
-//		{
-//			unreadChatsForCustomerMap = new HashMap<Integer, List<ChatMessage>>();
-//		}
-//		
-		if(unreadChatsForReceiverFromSendersMap==null)
-		{
-			unreadChatsForReceiverFromSendersMap = new HashMap<Long, Map<Long, List<ChatMessage>>>();
-		}
-		
 		//set from DB is not exists
 		if(!unreadChatsForReceiverFromSendersMap.containsKey(receiverId))
 		{
@@ -495,24 +425,16 @@ public class CacheServiceImpl implements CacheService
 					resultList.add(nextCustomerId);
 				}
 			}
-			
-//			if(!nowOnlineCustomerIdx.isEmpty())
-//			{
-//				resultList.addAll(customerRepository.getByIdIn(nowOnlineCustomerIdx));
-//			}
 		}
-		
 		
 		return resultList;
 	}
 	
 	private boolean isNowStillOnline(long customerId)
 	{
-		Date lastOnline = getLastCustomerOnlineTime(customerId);
+		Optional<Date> lastOnline = getLastCustomerOnlineTime(customerId);
 		
-		boolean isNowStillOnline = lastOnline!=null && lastOnline.after(new DateTime().minusMinutes(25).toDate());
-		
-		return isNowStillOnline;
+		return lastOnline.isPresent() && lastOnline.get().after(new DateTime().minusMinutes(ONLINE_DELAY_MINUTES).toDate());
 	}
 	
 	@Override
@@ -523,10 +445,6 @@ public class CacheServiceImpl implements CacheService
 		
 		long fromMin = senderId < receiverId? senderId : receiverId;
 		long toMax = senderId > receiverId? senderId : receiverId;
-		
-		if(lastMessageBetweenCustomersMap==null){
-			lastMessageBetweenCustomersMap =  new HashMap<>();
-		}
 		
 		Map<Long, ChatMessage> newLastMsgMap = lastMessageBetweenCustomersMap.get(fromMin);
 				
@@ -543,11 +461,6 @@ public class CacheServiceImpl implements CacheService
 	@Override
 	public void addWaitingSocialDto(String sessionState, CustomerDTO socialCustomer)
 	{
-		if(waitingSocialCustomers==null)
-		{
-			waitingSocialCustomers =  new HashMap<>();
-		}
-		
 		waitingSocialCustomers.put(sessionState, socialCustomer);
 	}
 
@@ -608,17 +521,11 @@ public class CacheServiceImpl implements CacheService
 		long diffMinutes = diff / (60 * 1000) % 60;
 		
 		return diffMinutes >= ControllerUtils.NOTIFICATION_MIN_DELAY_MINUTES;
-		
 	}
 
 	@Override
 	public long getCustomerHotelId(long customerId)
 	{
-		if(customersToHotelIdMap == null)
-		{
-			customersToHotelIdMap = new HashMap<>();
-		}
-
 		if(!customersToHotelIdMap.containsKey(customerId))
 		{
 			customersToHotelIdMap.put(customerId, checkinRepository.getCustomerHotelId(customerId, new Date()));
@@ -631,33 +538,18 @@ public class CacheServiceImpl implements CacheService
 	@Override
 	public void updateCustomerHotelId(long customerId, long hotelId)
 	{
-		if(customersToHotelIdMap == null)
-		{
-			customersToHotelIdMap = new HashMap<>();
-		}
-
 		customersToHotelIdMap.put(customerId, hotelId);
 	}
 	
 	@Override
 	public void addGuestGpsPosition(long requesterId, Double latLonPoint)
 	{
-		if(guestToGpsPointMap == null)
-		{
-			guestToGpsPointMap = new HashMap<>();
-		}
-		
 		guestToGpsPointMap.put(requesterId, latLonPoint);
 	}
 	
 	@Override
 	public Point2D.Double getGuestGpsPosition(long requesterId)
 	{
-		if(guestToGpsPointMap == null)
-		{
-			guestToGpsPointMap = new HashMap<>();
-		}
-		
 		return guestToGpsPointMap.get(requesterId);
 	}
 	
@@ -669,10 +561,6 @@ public class CacheServiceImpl implements CacheService
 
 		long fromMin = senderId < receiverId? senderId : receiverId;
 		long toMax = senderId > receiverId? senderId : receiverId;
-
-		if(lastMessageBetweenCustomersMap==null){
-			lastMessageBetweenCustomersMap =  new HashMap<>();
-		}
 
 		Map<Long, ChatMessage> newLastMsgMap = lastMessageBetweenCustomersMap.get(fromMin);
 
@@ -694,10 +582,6 @@ public class CacheServiceImpl implements CacheService
 		
 		long fromMin = senderId < receiverId? senderId : receiverId;
 		long toMax = senderId > receiverId? senderId : receiverId;
-
-		if(lastMessageBetweenCustomersMap==null){
-			lastMessageBetweenCustomersMap =  new HashMap<>();
-		}
 
 		Map<Long, ChatMessage> lastMsgMap = lastMessageBetweenCustomersMap.get(fromMin);
 		
@@ -758,6 +642,5 @@ public class CacheServiceImpl implements CacheService
 		private long lastAccess() {
 			return lastAccess.get();
 		}
-		
 	}
 }

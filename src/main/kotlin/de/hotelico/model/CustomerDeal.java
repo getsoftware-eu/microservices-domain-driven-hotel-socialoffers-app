@@ -20,8 +20,12 @@ import org.joda.time.DateTime;
 
 import de.hotelico.utils.DealStatus;
 import de.hotelico.utils.HibernateUtils;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
+@Getter @Setter @NoArgsConstructor
 @Table(name = "customer_activity_deal")
 @AssociationOverrides({
 		@AssociationOverride(name = "pk.customer",
@@ -56,11 +60,11 @@ public class CustomerDeal implements java.io.Serializable {
 	private DealStatus status;
 
 	@Column(name = "consistencyId", columnDefinition = "BIGINT(20) DEFAULT 0")
-	private long consistencyId;
+	private long consistencyId = new Date().getTime();
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "validFrom", nullable = false, length = 10)
-	private Date validFrom;
+	private Date validFrom = new Date();
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "validTo", nullable = false, length = 10)
@@ -72,7 +76,7 @@ public class CustomerDeal implements java.io.Serializable {
 	public CustomerDeal(Customer customer, HotelActivity activity, long initId) {
 		this(customer, activity);
 		
-		setInitId(initId);
+		this.initId = initId;
 	}
 	
 	public CustomerDeal(Customer customer, HotelActivity activity) {
@@ -82,17 +86,11 @@ public class CustomerDeal implements java.io.Serializable {
 		setCustomer(customer);
 		setActivity(activity);
 		generateCode();
-		setValidFrom(new Date());
 
 		int validDays = activity.getDealDaysDuration()>0 ? activity.getDealDaysDuration() : 1;
-		
-		setValidTo(new DateTime().plusDays(validDays).withHourOfDay(4).toDate());
-
-		setInitId(ThreadLocalRandom.current().nextInt(1, 999999));
-		setConsistencyId(new Date().getTime());
+		this.validTo = new DateTime().plusDays(validDays).withHourOfDay(4).toDate();
+		this.initId = ThreadLocalRandom.current().nextInt(1, 999999);
 	}
-
-	
 	
 	@EmbeddedId
 	public CustomerDealId getPk() {
@@ -121,34 +119,6 @@ public class CustomerDeal implements java.io.Serializable {
 		getPk().setActivity(activity);
 	}
 
-
-	public Date getValidFrom() {
-		return this.validFrom;
-	}
-	
-
-	public Date getValidTo() {
-		return this.validTo;
-	}
-
-	public void setValidFrom(Date validFrom) {
-		this.validFrom = validFrom;
-	}	
-	
-	public void setValidTo(Date validTo) {
-		this.validTo = validTo;
-	}
-
-	public boolean isActive()
-	{
-		return active;
-	}
-
-	public void setActive(boolean active)
-	{
-		this.active = active;
-	}
-
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
@@ -164,11 +134,6 @@ public class CustomerDeal implements java.io.Serializable {
 		return true;
 	}
 
-	public static long getSerialVersionUID()
-	{
-		return serialVersionUID;
-	}
-
 	public int hashCode() {
 		return (getPk() != null ? getPk().hashCode() : 0);
 	}
@@ -176,77 +141,11 @@ public class CustomerDeal implements java.io.Serializable {
 	public void generateCode()
 	{
 		this.dealCode = String.valueOf(ThreadLocalRandom.current().nextInt(1, 999999));
-		
 	}
 
 	public String getDealCode()
 	{
 		return dealCode;
-	}
-
-	public long getInitId()
-	{
-		return initId;
-	}
-
-	public long getConsistencyId()
-	{
-		return consistencyId;
-	}
-
-	public void setDealCode(String dealCode)
-	{
-		this.dealCode = dealCode;
-	}
-
-	public void setInitId(long initId)
-	{
-		this.initId = initId;
-	}
-
-	public void setConsistencyId(long consistencyId)
-	{
-		this.consistencyId = consistencyId;
-	}
-
-	public long getGuestCustomerId()
-	{
-		return guestCustomerId;
-	}
-
-	public void setGuestCustomerId(long guestCustomerId)
-	{
-		this.guestCustomerId = guestCustomerId;
-	}
-
-	public DealStatus getStatus()
-	{
-		return status;
-	}
-
-	public void setStatus(DealStatus dealStatus)
-	{
-		this.status = dealStatus;
-	}
-
-	public String getTablePosition()
-	{
-		return tablePosition;
-	}
-
-	public void setTablePosition(String tablePosition)
-	{
-		this.tablePosition = tablePosition;
-	}
-
-	public Double getTotalMoney()
-	{
-		return totalMoney;
-	}
-
-	public void setTotalMoney(Double totalMoney)
-	{
-		this.totalMoney = totalMoney;
 	}
 
 }
