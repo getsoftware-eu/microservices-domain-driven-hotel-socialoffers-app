@@ -1,0 +1,10 @@
+#its my own optionFlag, for @Values in @Config class :)
+rabbitmq:
+  exchanges: #names of rabbitmq exchanges. Topic exchange?
+    internal: internal.exchange #default direct exchange of rabbit? 
+  queue: #which queues do we use?
+    notification: notification.queue #only one: notification queue
+  routing-keys: #binding rule to a queue? we have only notification-queue
+    internal-notification: internal.notification.routing-key #its a binding-rule to 'notification' queue
+    
+    

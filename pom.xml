@@ -12,6 +12,9 @@
 		<module>eureka-server</module>
 		<module>menu</module>
 		<module>hotel-client</module>
+        <module>apigw</module>
+		<module>amqp</module>
+		<module>notification</module>
 	</modules>
 	
 	<name>social-hotel-interactions</name>
