@@ -1,11 +1,9 @@
 package eu.getsoftware.hotelico.hotel.model;
 
-import eu.getsoftware.hotelico.hotel.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotel.service.IFileUploadable;
-import eu.getsoftware.hotelico.hotel.utils.HibernateUtils;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -19,12 +17,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.hibernate.annotations.DynamicUpdate;
+
+import eu.getsoftware.hotelico.hotel.service.IFileUploadable;
+import eu.getsoftware.hotelico.hotel.utils.HibernateUtils;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Getter @Setter
@@ -205,6 +205,12 @@ public class Customer implements Serializable, IFileUploadable
     
     public Customer() {
         super();
+    } 
+    
+    public Customer(String _firstName, String _lastName) {
+        this();
+        this.firstName = _firstName;
+        this.lastName = _lastName;
     }
 
     public long getId(){ return this.id; }

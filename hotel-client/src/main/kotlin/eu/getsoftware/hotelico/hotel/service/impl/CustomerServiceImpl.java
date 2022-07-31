@@ -1,37 +1,5 @@
 package eu.getsoftware.hotelico.hotel.service.impl;
 
-import eu.getsoftware.hotelico.hotel.service.ChatService;
-import eu.getsoftware.hotelico.hotel.model.ChatMessage;
-import eu.getsoftware.hotelico.hotel.model.Customer;
-import eu.getsoftware.hotelico.hotel.dto.CustomerDTO;
-import eu.getsoftware.hotelico.hotel.model.CustomerDeal;
-import eu.getsoftware.hotelico.hotel.model.CustomerHotelCheckin;
-import eu.getsoftware.hotelico.hotel.model.Hotel;
-import eu.getsoftware.hotelico.hotel.model.Language;
-import eu.getsoftware.hotelico.hotel.repository.ChatRepository;
-import eu.getsoftware.hotelico.hotel.repository.CheckinRepository;
-import eu.getsoftware.hotelico.hotel.repository.CustomerRepository;
-import eu.getsoftware.hotelico.hotel.repository.DealRepository;
-import eu.getsoftware.hotelico.hotel.repository.HotelRepository;
-import eu.getsoftware.hotelico.hotel.repository.LanguageRepository;
-import eu.getsoftware.hotelico.hotel.service.CacheService;
-import eu.getsoftware.hotelico.hotel.service.CheckinService;
-import eu.getsoftware.hotelico.hotel.service.CustomerService;
-import eu.getsoftware.hotelico.hotel.service.HotelService;
-import eu.getsoftware.hotelico.hotel.service.LoginHotelicoService;
-import eu.getsoftware.hotelico.hotel.service.MailService;
-import eu.getsoftware.hotelico.hotel.service.NotificationService;
-import eu.getsoftware.hotelico.hotel.utils.ControllerUtils;
-import eu.getsoftware.hotelico.hotel.utils.HotelEvent;
-
-
-import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.sql.Timestamp;
@@ -44,6 +12,37 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import eu.getsoftware.hotelico.hotel.dto.CustomerDTO;
+import eu.getsoftware.hotelico.hotel.model.ChatMessage;
+import eu.getsoftware.hotelico.hotel.model.Customer;
+import eu.getsoftware.hotelico.hotel.model.CustomerDeal;
+import eu.getsoftware.hotelico.hotel.model.CustomerHotelCheckin;
+import eu.getsoftware.hotelico.hotel.model.Hotel;
+import eu.getsoftware.hotelico.hotel.model.Language;
+import eu.getsoftware.hotelico.hotel.repository.ChatRepository;
+import eu.getsoftware.hotelico.hotel.repository.CheckinRepository;
+import eu.getsoftware.hotelico.hotel.repository.CustomerRepository;
+import eu.getsoftware.hotelico.hotel.repository.DealRepository;
+import eu.getsoftware.hotelico.hotel.repository.HotelRepository;
+import eu.getsoftware.hotelico.hotel.repository.LanguageRepository;
+import eu.getsoftware.hotelico.hotel.service.CacheService;
+import eu.getsoftware.hotelico.hotel.service.ChatService;
+import eu.getsoftware.hotelico.hotel.service.CheckinService;
+import eu.getsoftware.hotelico.hotel.service.CustomerService;
+import eu.getsoftware.hotelico.hotel.service.HotelService;
+import eu.getsoftware.hotelico.hotel.service.LoginHotelicoService;
+import eu.getsoftware.hotelico.hotel.service.MailService;
+import eu.getsoftware.hotelico.hotel.service.NotificationService;
+import eu.getsoftware.hotelico.hotel.utils.ControllerUtils;
+import eu.getsoftware.hotelico.hotel.utils.HotelEvent;
 
 @Service
 public class CustomerServiceImpl implements CustomerService
@@ -1038,9 +1037,7 @@ public class CustomerServiceImpl implements CustomerService
                 
         if(anonymes.isEmpty())
         {
-            anonym = new Customer();
-            anonym.setFirstName("[anonym]");
-            anonym.setLastName("[anonym]");
+            anonym = new Customer("[anonym]", "[anonym]");
             anonym.setEmail("[anonym]");
             customerRepository.saveAndFlush(anonym);
         }

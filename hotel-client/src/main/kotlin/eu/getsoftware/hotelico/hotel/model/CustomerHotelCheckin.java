@@ -1,7 +1,5 @@
 package eu.getsoftware.hotelico.hotel.model;
 
-import eu.getsoftware.hotelico.hotel.utils.HibernateUtils;
-
 import java.util.Date;
 
 import javax.persistence.AssociationOverride;
@@ -15,7 +13,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import eu.getsoftware.hotelico.hotel.utils.HibernateUtils;
+import lombok.Data;
 
+
+@Data
 @Entity
 @Table(name = "customer_hotel_checkin")
 @AssociationOverrides({

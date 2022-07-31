@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.sql.Timestamp;
 
-interface CustomerRepository: JpaRepository<eu.getsoftware.hotelico.hotel.model.Customer, Long> {
+public interface CustomerRepository: JpaRepository<eu.getsoftware.hotelico.hotel.model.Customer, Long> {
 	
 	companion object {
 		

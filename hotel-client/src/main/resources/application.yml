@@ -70,9 +70,9 @@ eureka:
 spring:
   profiles: development
   datasource:
-    password: postgres
-    url: jdbc:postgresql://localhost:5432/hotel
+    url: jdbc:postgresql://localhost:5434/hotel
     username: postgres
+    password: postgres
   jpa:
     show-sql: true
   thymeleaf:
@@ -97,9 +97,9 @@ server:
 spring:
   profiles: testing
   datasource:
-    password: postgres
-    url: jdbc:postgresql://localhost:5432/customer
+    url: jdbc:postgresql://localhost:5434/customer
     username: postgres
+    password: postgres
 keycloak:
   enabled: false
   #config.file: classpath:static/backend-keycloak.json
