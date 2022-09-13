@@ -7,11 +7,10 @@
 	<version>0.0.1-SNAPSHOT</version>
 	
 	<modules>
-		<module>chat</module>
         <module>clients</module>
 		<module>eureka-server</module>
-		<module>menu</module>
 		<module>hotel-client</module>
+		<module>hotel-menu</module>
         <module>apigw</module>
 		<module>amqp</module>
 		<module>notification</module>
@@ -30,6 +29,14 @@
 		<spring.boot.maven.plugin.version>2.5.7</spring.boot.maven.plugin.version>
 		<spring.boot.dependencies.version>2.5.7</spring.boot.dependencies.version>
 		<spring.cloud-version>2020.0.3</spring.cloud-version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		
+		<image>eugenfff/${project.artifactId}:${project.version}</image>
+<!--		eugen example for sub modules-->
+<!--			<artifactId>notification</artifactId>-->
+<!--			<version>0.0.1-SNAPSHOT</version>-->
+	
 	</properties>
 	
 	<dependencyManagement>
@@ -65,8 +72,24 @@
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
 	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>build-all-docker-images</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>com.google.cloud.tools</groupId>
+						<artifactId>jib-maven-plugin</artifactId>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+	
 	
 	<build>
+	 
 		<resources>
 			<resource>
 				<directory>${project.basedir}/src/main/resources</directory>
@@ -86,32 +109,81 @@
 		<!-- -->
 		<!-- -->
 		<!--<build>-->
-		<finalName>test35</finalName>
-
+		<pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>${spring.boot.maven.plugin.version}</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>repackage</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>com.google.cloud.tools</groupId>
+					<artifactId>jib-maven-plugin</artifactId>
+					<version>3.1.4</version>
+					<configuration>
+						<from>
+							<image>eclipse-temurin:17@sha256:2b47a8ea946ce1e5365a1562414ed576e378b7b670cadff3fb98ebecf2890cdc</image>
+							<platforms>
+								<platform>
+									<architecture>arm64</architecture>
+									<os>linux</os>
+								</platform>
+								<platform>
+									<architecture>amd64</architecture>
+									<os>linux</os>
+								</platform>
+							</platforms>
+						</from>
+						<to>
+							<tags>
+								<tag>latest</tag>
+							</tags>
+						</to>
+					</configuration>
+					<executions>
+						<execution>
+							<phase>package</phase>
+							<goals>
+								<goal>build</goal>
+							</goals>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 		<plugins>
 			<!-- Compilation -->
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
-				<configuration>
-					<source>17</source>
-					<target>17</target>
-				</configuration>
-			</plugin>
+			<!--  Eugen #SUB modules have these plugins automaticly, they dont have to write this plugin in sub POM!! -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.8.0</version>
+					<configuration>
+						<source>17</source>
+						<target>17</target>
+					</configuration>
+				</plugin>
 
-			<plugin>
-				<groupId>org.apache.tomcat.maven</groupId>
-				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.2</version>
-				<configuration>
-					<path>/${project.build.finalName}</path>
-					<update>true</update>
-					<!--<url>http://h2457130.stratoserver.net:8080/manager/text</url>-->
-					<url>http://localhost:8080/manager/text</url>
-					<username>tomcat</username>
-					<password>frankfurt_2015</password>
-				</configuration>
-			</plugin>
+<!--			<plugin>-->
+<!--				<groupId>org.apache.tomcat.maven</groupId>-->
+<!--				<artifactId>tomcat7-maven-plugin</artifactId>-->
+<!--				<version>2.2</version>-->
+<!--				<configuration>-->
+<!--					<path>/${project.build.finalName}</path>-->
+<!--					<update>true</update>-->
+<!--					&lt;!&ndash;<url>http://h2457130.stratoserver.net:8080/manager/text</url>&ndash;&gt;-->
+<!--					<url>http://localhost:8080/manager/text</url>-->
+<!--					<username>tomcat</username>-->
+<!--					<password>frankfurt_2015</password>-->
+<!--				</configuration>-->
+<!--			</plugin>-->
 
 			<!--make war with maven-->
 			<plugin>
@@ -164,52 +236,7 @@
 				<!--</configuration>-->
 			<!--</plugin>-->
 
-			<plugin>
-				<artifactId>kotlin-maven-plugin</artifactId>
-				<groupId>org.jetbrains.kotlin</groupId>
-				<version>${kotlin.version}</version>
-
-				<configuration>
-					<compilerPlugins>
-						<!-- Or "spring" for the Spring support -->
-						<!--<plugin>all-open</plugin>-->
-						<plugin>spring</plugin>
-					</compilerPlugins>
-
-				</configuration>
-
-				<executions>
-					<execution>
-						<id>compile</id>
-						<goals> <goal>compile</goal> </goals>
-						<configuration>
-							<sourceDirs>
-								<sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
-								<sourceDir>${project.basedir}/src/main/java</sourceDir>
-							</sourceDirs>
-						</configuration>
-					</execution>
-					<execution>
-						<id>test-compile</id>
-						<goals> <goal>test-compile</goal> </goals>
-						<configuration>
-							<sourceDirs>
-								<sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
-								<sourceDir>${project.basedir}/src/test/java</sourceDir>
-							</sourceDirs>
-						</configuration>
-					</execution>
-				</executions>
-
-				<dependencies>
-					<dependency>
-						<groupId>org.jetbrains.kotlin</groupId>
-						<artifactId>kotlin-maven-allopen</artifactId>
-						<version>${kotlin.version}</version>
-					</dependency>
-				</dependencies>
-
-			</plugin>
+			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-clean-plugin</artifactId>
