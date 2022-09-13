@@ -6,7 +6,10 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@FeignClient("chat")
+@FeignClient(
+        name ="chat"
+//        , notification = "${clients.chat.url}" # in case of k8s services naming
+)
 public interface ChatClient
 {
 
