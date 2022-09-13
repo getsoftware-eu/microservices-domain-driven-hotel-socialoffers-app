@@ -15,7 +15,7 @@ spec:
     path: /mnt/data
 ---
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: PersistentVolumeClaim #reference extern volume inside of pod. Claim = требовать
 metadata:
   name: postgres-pc-volume-claim
   labels:

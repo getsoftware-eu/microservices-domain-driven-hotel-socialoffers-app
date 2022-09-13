@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: notification
+  labels:
+    app: notification
+spec:
+  replicas: 1 #achtung
+  template:
+    metadata:
+      name: notification
+      labels:
+        app: notification
+    spec:
+      containers:
+        - name: notification
+          image: getsoftware-eu/notification:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8083 #why this port, if application starts on development port 8082??
+              # like in docker-compose, all apps running in one invoronment on different extern ports, and local port is always 8080
+              # the entrance hotel-app has the port 80 and other microservices use other ports
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kube #//application-kube.properties will be seleced
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: notification
