@@ -2,7 +2,7 @@ spring:
   application:
     name: api-gateway
   zipkin:
-    base-url: http://localhost:9411 # container_name: zipkin-server in docker.compose
+    base-url: http://hotel_zipkin:9411 # container_name: zipkin-server in docker.compose
   cloud:
     gateway:
       routes: 
@@ -20,7 +20,7 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka # container_name: eureka-server in docker.compose
+      defaultZone: http://hotel-eureka-server:8761/eureka # container_name: eureka-server in docker.compose
                   # connecting containers on common docker network='spring'
     fetch-registry: true
     register-with-eureka: true
