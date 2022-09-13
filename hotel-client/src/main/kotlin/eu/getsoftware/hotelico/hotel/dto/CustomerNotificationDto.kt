@@ -1,8 +1,6 @@
 package eu.getsoftware.hotelico.hotel.dto;
 
-import java.util.Map;
-
-import eu.getsoftware.hotelico.hotel.utils.HotelEvent;
+import java.util.Map
 
 /**
  * Created by Eugen on 30.07.2015.
@@ -56,11 +54,11 @@ class CustomerNotificationDto
     /**
      * last message time from every sender to customer
      */
-    var lastMessageTimesToMe: Map<Long, String>? = null
+    var lastMessageTimesToMe: MutableMap<Long, String>? = null
 
-    var lastMessageSeenByCustomer: Map<Long, Boolean>? = null
+    var lastMessageSeenByCustomer: MutableMap<Long, Boolean>? = null
 
-    var lastMessageDelieveredToCustomer: Map<Long, Boolean>? = null
+    var lastMessageDelieveredToCustomer: MutableMap<Long, Boolean>? = null
 
     /**
      * currentNumber of wall posts

@@ -1,12 +1,9 @@
 package eu.getsoftware.hotelico.hotel.repository;
 
-import eu.getsoftware.hotelico.hotel.model.HotelActivity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
-import java.util.Date;
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
+import java.util.*
 
 interface ActivityRepository: JpaRepository<eu.getsoftware.hotelico.hotel.model.HotelActivity, Long> {
 
@@ -64,7 +61,7 @@ interface ActivityRepository: JpaRepository<eu.getsoftware.hotelico.hotel.model.
 	 * Find activity by hotel.
 	 */
 	@Query(FIND_ALL_BY_HOTEL_QUERY)
-	fun getAllTimesByHotelId(@Param("hotelId") hotelId: Long): List<eu.getsoftware.hotelico.hotel.model.HotelActivity>		
+	fun getAllTimesByHotelId(@Param("hotelId") hotelId: Long): MutableList<eu.getsoftware.hotelico.hotel.model.HotelActivity>		
 	
 	/**
 	 * count activities by hotel.
@@ -76,7 +73,7 @@ interface ActivityRepository: JpaRepository<eu.getsoftware.hotelico.hotel.model.
 	 * Find activity by hotel.
 	 */
 	@Query(FIND_TIME_VALID_BY_HOTEL_QUERY)
-	fun getTimeValidByHotelId(@Param("hotelId") hotelId: Long, @Param("checkDate") checkDate: Date): List<eu.getsoftware.hotelico.hotel.model.HotelActivity>	
+	fun getTimeValidByHotelId(@Param("hotelId") hotelId: Long, @Param("checkDate") checkDate: Date): MutableList<eu.getsoftware.hotelico.hotel.model.HotelActivity>	
 	
 	/**
 	 * Find activity by hotel.
@@ -88,14 +85,14 @@ interface ActivityRepository: JpaRepository<eu.getsoftware.hotelico.hotel.model.
 	 * Find activity by creator and hotel.
 	 */
 	@Query(FIND_BY_CREATOR_AND_HOTEL_QUERY)
-	fun getByCreatorAndHotelId(@Param("creatorId") creatorId: Long, @Param("hotelId") hotelId: Long): List<eu.getsoftware.hotelico.hotel.model.HotelActivity>
+	fun getByCreatorAndHotelId(@Param("creatorId") creatorId: Long, @Param("hotelId") hotelId: Long): MutableList<eu.getsoftware.hotelico.hotel.model.HotelActivity>
 	
 	//@Query(FIND_BY_ACTIVITY_ID_QUERY)
-	fun findByInitIdAndActive(initId: Long, active: Boolean = true): List<eu.getsoftware.hotelico.hotel.model.HotelActivity>
+	fun findByInitIdAndActive(initId: Long, active: Boolean = true): MutableList<eu.getsoftware.hotelico.hotel.model.HotelActivity>
 	
 	@Query(FIND_ALL_ACTIVE_QUERY)
-	fun findAllTimesActive(): List<eu.getsoftware.hotelico.hotel.model.HotelActivity>	
+	fun findAllTimesActive(): MutableList<eu.getsoftware.hotelico.hotel.model.HotelActivity>	
 	
 	@Query(FIND_ALL_TIME_VALID_ACTIVE_QUERY)
-	fun findTimeValidActive(@Param("checkDate") checkDate: Date): List<eu.getsoftware.hotelico.hotel.model.HotelActivity>
+	fun findTimeValidActive(@Param("checkDate") checkDate: Date): MutableList<eu.getsoftware.hotelico.hotel.model.HotelActivity>
 }

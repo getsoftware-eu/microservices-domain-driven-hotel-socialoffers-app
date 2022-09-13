@@ -1,11 +1,9 @@
 package eu.getsoftware.hotelico.hotel.dto;
 
-import eu.getsoftware.hotelico.hotel.utils.ControllerUtils;
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
-
-import java.util.Date;
+import java.util.*
 
 class CustomerDTO : BasicDTO
 {

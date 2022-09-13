@@ -51,6 +51,8 @@ spring:
           starttls.enable: true
   main: #eugen kastil, delete it
     allow-bean-definition-overriding: true
+  application:
+    name: hotel-client
 #entitymanager:
 #  packagesToScan: de.betterbits.smsbridge.model      
 security:
@@ -71,7 +73,7 @@ spring:
   profiles: development
   datasource:
     url: jdbc:postgresql://localhost:5434/hotel
-    username: postgres
+    username: eu_user
     password: postgres
   jpa:
     show-sql: true
