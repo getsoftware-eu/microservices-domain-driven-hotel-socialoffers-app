@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.ampq;
+package eu.getsoftware.hotelico.amqp;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
