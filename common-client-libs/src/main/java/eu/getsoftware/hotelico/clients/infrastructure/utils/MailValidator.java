@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.infrastructure.hotel.utils;
+package eu.getsoftware.hotelico.clients.infrastructure.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

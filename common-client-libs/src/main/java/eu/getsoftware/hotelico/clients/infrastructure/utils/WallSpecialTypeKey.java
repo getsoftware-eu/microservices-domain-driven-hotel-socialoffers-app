@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.infrastructure.hotel.utils;//package de.hotelico.utils;
+package eu.getsoftware.hotelico.clients.infrastructure.utils;//package de.hotelico.utils;
 //
 ///**
 // * <br/>

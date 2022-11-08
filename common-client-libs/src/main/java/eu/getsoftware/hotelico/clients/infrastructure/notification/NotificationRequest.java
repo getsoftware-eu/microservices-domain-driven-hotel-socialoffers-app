@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.notification;
+package eu.getsoftware.hotelico.clients.infrastructure.notification;
 
 public record NotificationRequest(
         Integer toCustomerId,

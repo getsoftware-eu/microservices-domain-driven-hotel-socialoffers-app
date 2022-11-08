@@ -1,10 +1,8 @@
-package eu.getsoftware.hotelico.hotel.clients.chat;
+package eu.getsoftware.hotelico.clients.infrastructure.chat.dto;
 
-import eu.getsoftware.hotelico.hotel.clients.chat.utils.ChatUtils;
 import java.sql.Timestamp;
-import java.util.*;
 
-record ChatMsgDTO(
+public record ChatMsgDTO(
 		Long initId,
 	    String message,
 	    Long senderId,

@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.infrastructure.hotel.exception;//package de.hotelico.exception;
+package eu.getsoftware.hotelico.clients.infrastructure.exception;//package de.hotelico.exception;
 ////eugen2022
 //import org.springframework.stereotype.Component;
 //

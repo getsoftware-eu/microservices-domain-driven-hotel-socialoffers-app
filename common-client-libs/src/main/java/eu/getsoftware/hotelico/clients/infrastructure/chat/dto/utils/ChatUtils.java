@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.clients.chat.utils;
+package eu.getsoftware.hotelico.clients.infrastructure.chat.dto.utils;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;

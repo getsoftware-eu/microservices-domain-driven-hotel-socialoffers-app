@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.infrastructure.hotel.exception
+package eu.getsoftware.hotelico.clients.infrastructure.exception
 
 /**
  *

@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.infrastructure.hotel.utils;
+package eu.getsoftware.hotelico.clients.infrastructure.utils;
 
 import java.nio.file.Path;
 import java.sql.Timestamp;
@@ -6,8 +6,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
-
-import eu.getsoftware.hotelico.hotel.model.CustomerEntity;
 
 /**
  * Created by Eugen on 14.07.2015.
@@ -95,11 +93,6 @@ public class ControllerUtils
 	public static String getTimeFormatted(Timestamp timeStamp)
 	{
 		return timeStamp!=null? getTimeFormatted(new Date(timeStamp.getTime())) : "";
-	}
-	
-	public static boolean isCustomerOnline(CustomerEntity customerEntity)
-	{
-		return customerEntity !=null && (customerEntity.isHotelStaff() || customerEntity.getLastSeenOnline()!=null && customerEntity.getLastSeenOnline().after(convertToDate(LocalDateTime.now().minusMinutes(25))));
 	}
 	
 	public static Date convertToDate(LocalDateTime localDateTime)

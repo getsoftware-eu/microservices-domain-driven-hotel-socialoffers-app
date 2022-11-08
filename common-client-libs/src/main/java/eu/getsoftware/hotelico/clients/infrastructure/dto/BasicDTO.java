@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.clients.chat;
+package eu.getsoftware.hotelico.clients.infrastructure.dto;
 
 import java.io.Serializable;
 
