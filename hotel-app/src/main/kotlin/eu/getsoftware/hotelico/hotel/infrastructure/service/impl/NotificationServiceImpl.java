@@ -23,26 +23,26 @@ import org.springframework.web.client.RestTemplate;
 
 import eu.getsoftware.hotelico.chat.domain.ChatMessage;
 import eu.getsoftware.hotelico.chat.infrastructure.dto.ChatMessageDTO;
+import eu.getsoftware.hotelico.chat.service.ChatService;
+import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.domain.HotelActivity;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
+import eu.getsoftware.hotelico.deal.infrastructure.utils.DealStatus;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDto;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDto;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDto;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.ChatRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.CheckinRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.CacheService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.ChatService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.MailService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.MenuService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;
-import eu.getsoftware.hotelico.infrastructure.utils.ControllerUtils;
-import eu.getsoftware.hotelico.infrastructure.utils.DealStatus;
 import eu.getsoftware.hotelico.menu.infrastructure.dto.MenuOrderDTO;
+import eu.getsoftware.hotelico.menu.infrastructure.service.MenuService;
 
 /**
  * <br/>
@@ -60,7 +60,7 @@ public class NotificationServiceImpl implements NotificationService
 	private MenuService menuService;	
 	
 	@Autowired
-	private CacheService cacheService;
+	private LastMessagesService lastMessagesService;
 	
 	@Autowired
 	private CustomerService customerService;	
@@ -93,7 +93,7 @@ public class NotificationServiceImpl implements NotificationService
 			return;
 		}
 		
-		List<Long> allOnlineCustomerIds = cacheService.getOnlineCustomerIds();
+		List<Long> allOnlineCustomerIds = lastMessagesService.getOnlineCustomerIds();
 		
 		if(HotelEvent.EVENT_LOGO_CUSTOMER_CHANGE_MESSAGE.equals(event) && !allOnlineCustomerIds.contains(dto.getId()))
 		{
@@ -139,7 +139,7 @@ public class NotificationServiceImpl implements NotificationService
 		
 		///###########   CHECK ALL ONLINE //////////////
 		
-		List<Long> allOnlineCustomersIds = cacheService.getOnlineCustomerIds();
+		List<Long> allOnlineCustomersIds = lastMessagesService.getOnlineCustomerIds();
 		
 		Set<Long> onlineGuests = new HashSet<>();
 		
@@ -158,7 +158,7 @@ public class NotificationServiceImpl implements NotificationService
 		{
 			//Eugen: short notification only about online users! only if it has changes!!!
 			
-			CustomerNotificationDto previousNotification = cacheService.getLastFullNotification(receiverId);
+			CustomerNotificationDto previousNotification = lastMessagesService.getLastFullNotification(receiverId);
 			
 			boolean onlineListIsEqual = previousNotification!=null && Arrays.equals(previousNotification.getHotelOnlineGuestIds(), nextNotification.getHotelOnlineGuestIds());
 			
@@ -246,7 +246,7 @@ public class NotificationServiceImpl implements NotificationService
 		{
 			//######################## 3. ONLY UNREAD CHAT INFO
 			
-			Map<Long, List<ChatMessage>> unreadChatsBySenders = cacheService.getCustomerUnreadChatsBySenders(receiverId);
+			Map<Long, List<ChatMessage>> unreadChatsBySenders = lastMessagesService.getCustomerUnreadChatsBySenders(receiverId);
 			
 			Map<Long, Integer> unreadChatBySenderCounter = new HashMap<>();
 			
@@ -322,7 +322,7 @@ public class NotificationServiceImpl implements NotificationService
 				//TODO eugen: iterate over all chatPartners auto in query
 				//TODO Eugen: cashingService
 				//            ChatMessage nextLastMessage = chatRepository.getLastMessageByCustomerAndReceiverIds(nextChatCustomer.getId(), receiverId);
-				ChatMessage nextLastMessage = cacheService.getLastMessageBetweenCustomers(nextChatCustomerRootEntity.getId(), receiverId);
+				ChatMessage nextLastMessage = lastMessagesService.getLastMessageBetweenCustomers(nextChatCustomerRootEntity.getId(), receiverId);
 				//Integer chatPartnerId = nextLastMessage.getSender().getId()==sessionCustomer.getId()? nextLastMessage.getReceiver().getId(): nextLastMessage.getSender().getId();
 				if (nextLastMessage != null)
 				{
@@ -355,7 +355,7 @@ public class NotificationServiceImpl implements NotificationService
 			////////////////////////////////
 		}
 		
-		cacheService.setLastFullNotification(receiverId, nextNotification);
+		lastMessagesService.setLastFullNotification(receiverId, nextNotification);
 		
 		return nextNotification;
 	}
@@ -376,7 +376,7 @@ public class NotificationServiceImpl implements NotificationService
 		if(event.getPushUrl()!=null)
 		{
 			receiverNotification.setPushCustomerEvent("Hotelico.de", event.getPushTitle(), event.getPushUrl(), event.getPushIcon(), "");
-			cacheService.setLastPushNotifiation(receiverId, receiverNotification);
+			lastMessagesService.setLastPushNotifiation(receiverId, receiverNotification);
 			sendPushRequest(receiverId);
 		}
 		
@@ -411,7 +411,7 @@ public class NotificationServiceImpl implements NotificationService
 				
 				CustomerRootEntity nextFeedCustomerRootEntity = customerRepository.getOne(nextId);
 				
-				if(nextFeedCustomerRootEntity !=null && nextFeedCustomerRootEntity.getCustomerPreferences().isAllowHotelNotification())
+				if(nextFeedCustomerRootEntity !=null && nextFeedCustomerRootEntity.getEntityAggregate().isAllowHotelNotification())
 				{
 					ChatMessageDTO feedChatMessage = new ChatMessageDTO();
 					
@@ -524,7 +524,7 @@ public class NotificationServiceImpl implements NotificationService
 				String pushUrlPostfix = String.valueOf(senderId);
 				
 				receiverNotification.setPushCustomerEvent(event.getPushTitle() + " from " + sender.getFirstName(), message, event.getPushUrl()+pushUrlPostfix, event.getPushIcon(), senderId+"");
-				cacheService.setLastPushNotifiation(receiverId, receiverNotification);
+				lastMessagesService.setLastPushNotifiation(receiverId, receiverNotification);
 				sendPushRequest(receiverId);
 			}
 			
@@ -545,7 +545,7 @@ public class NotificationServiceImpl implements NotificationService
 				String pushUrlPostfix = "//" + activity.getHotelRootEntity().getId() + "/" + activity.getId();
 
 				receiverNotification.setPushCustomerEvent(event.getPushTitle(), message, event.getPushUrl()+pushUrlPostfix, event.getPushIcon(), activity.getSender().getId()+"");
-				cacheService.setLastPushNotifiation(receiverId, receiverNotification);
+				lastMessagesService.setLastPushNotifiation(receiverId, receiverNotification);
 				sendPushRequest(receiverId);
 			}		
 		}
@@ -556,7 +556,7 @@ public class NotificationServiceImpl implements NotificationService
 	@Override
 	public CustomerNotificationDto getLastNotification(long customerId, boolean pushRequest)
 	{
-		CustomerNotificationDto dto = cacheService.getLastPushNotifiation(customerId);
+		CustomerNotificationDto dto = lastMessagesService.getLastPushNotifiation(customerId);
 		
 		if(customerId<=0 || dto==null)
 		{
@@ -678,7 +678,7 @@ public class NotificationServiceImpl implements NotificationService
 				CustomerNotificationDto receiverNotification = new CustomerNotificationDto();
 
 				receiverNotification.setPushCustomerEvent(eventActivityNewLastMinute.getPushTitle(), notificationMessage, eventActivityNewLastMinute.getPushUrl()+pushUrlPostfix, eventActivityNewLastMinute.getPushIcon(), hotelActivity.getSender().getId()+"");
-				cacheService.setLastPushNotifiation((int)nextGuestId, receiverNotification);
+				lastMessagesService.setLastPushNotifiation((int)nextGuestId, receiverNotification);
 				this.sendPush(pushId);
 			}
 		}

@@ -23,9 +23,9 @@ import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.web.SignInAdapter;
 import org.springframework.web.context.request.NativeWebRequest;
 
+import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotel.infrastructure.social.SecurityContext;
 import eu.getsoftware.hotelico.hotel.infrastructure.social.UserCookieGenerator;
-import eu.getsoftware.hotelico.hotel.model.CustomerEntity;
 
 /**
  * Signs the user in by setting the currentUser property on the {@link SecurityContext}.
@@ -39,7 +39,7 @@ public final class SimpleSignInAdapter implements SignInAdapter {
 	private final UserCookieGenerator userCookieGenerator = new UserCookieGenerator();
 
 	public String signIn(String userId, Connection<?> connection, NativeWebRequest request) {
-		SecurityContext.setCurrentCustomer((new CustomerEntity()));
+		SecurityContext.setCurrentCustomer((new CustomerRootEntity()));
 		userCookieGenerator.addCookie(userId, request.getNativeResponse(HttpServletResponse.class));
 		return null;
 	}

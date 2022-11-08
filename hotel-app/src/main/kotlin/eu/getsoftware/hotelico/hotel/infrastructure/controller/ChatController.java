@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import eu.getsoftware.hotelico.chat.infrastructure.dto.ChatMessageDTO;
+import eu.getsoftware.hotelico.chat.service.ChatService;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.ChatService;
 
 @Controller
 @RequestMapping("/chat")

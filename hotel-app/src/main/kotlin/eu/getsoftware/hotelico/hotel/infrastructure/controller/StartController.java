@@ -6,9 +6,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import eu.getsoftware.hotelico.hotel.infrastructure.service.CacheService;
+import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
-import eu.getsoftware.hotelico.infrastructure.utils.ControllerUtils;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 
 /**
  * RESTful webservice
@@ -23,7 +23,7 @@ public class StartController  extends BasicController
     private HotelService hotelService;    
     
     @Autowired
-    private CacheService cacheService;
+    private LastMessagesService lastMessagesService;
     
     /**
      * start.jsp view file
@@ -31,11 +31,11 @@ public class StartController  extends BasicController
     @RequestMapping(method = RequestMethod.GET)
     public String viewUsers(ModelMap model) {
 
-        model.addAttribute("virtualHotelId", cacheService.getInitHotelId());
+        model.addAttribute("virtualHotelId", lastMessagesService.getInitHotelId());
         model.addAttribute("host", ControllerUtils.HOST);
         model.addAttribute("hostSuffix", ControllerUtils.HOST_SUFFIX);
         
-        model.addAttribute("demoHotelId", cacheService.getDemoHotelId());
+        model.addAttribute("demoHotelId", lastMessagesService.getDemoHotelId());
         model.addAttribute("demoHotelCode", ControllerUtils.HOTEL_DEMO_CODE);
         
         return "start";

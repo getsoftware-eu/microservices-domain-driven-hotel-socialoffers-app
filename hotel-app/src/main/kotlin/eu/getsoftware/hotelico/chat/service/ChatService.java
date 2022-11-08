@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.infrastructure.service;
+package eu.getsoftware.hotelico.chat.service;
 
 import java.util.Date;
 import java.util.List;

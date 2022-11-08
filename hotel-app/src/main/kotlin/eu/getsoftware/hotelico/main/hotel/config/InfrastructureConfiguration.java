@@ -14,8 +14,8 @@ import org.springframework.core.type.filter.TypeFilter;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
-@EnableJpaRepositories(basePackages = { "eu.getsoftware.hotelico.infrastructure.hotel.repository" })
-@EntityScan(basePackages = {"eu.getsoftware.hotelico.infrastructure.model"})
+@EnableJpaRepositories(basePackages = { "eu.getsoftware.hotelico" }) //TODO Eugen: all domains as array?
+@EntityScan(basePackages = {"eu.getsoftware.hotelico"}) //TODO Eugen: all domains as array?
 public class InfrastructureConfiguration
 {
 	@Bean
@@ -28,7 +28,7 @@ public class InfrastructureConfiguration
 	void genericApplicationContext(BeanDefinitionRegistry beanRegistry) {
 		ClassPathBeanDefinitionScanner beanDefinitionScanner = new ClassPathBeanDefinitionScanner(beanRegistry);
 		beanDefinitionScanner.addIncludeFilter(removeModelAndEntitiesFilter());
-		beanDefinitionScanner.scan("eu.getsoftware.hotelico");
+		beanDefinitionScanner.scan("eu.getsoftware.hotelico"); //TODO Eugen: all domains as array?
 	}
 	
 	static TypeFilter removeModelAndEntitiesFilter() {

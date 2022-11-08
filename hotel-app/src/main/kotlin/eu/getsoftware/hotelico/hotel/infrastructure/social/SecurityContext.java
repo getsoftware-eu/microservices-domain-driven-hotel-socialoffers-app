@@ -15,7 +15,7 @@
  */
 package eu.getsoftware.hotelico.hotel.infrastructure.social;
 
-import eu.getsoftware.hotelico.hotel.model.CustomerEntity;
+import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 
 /**
  * Simple SecurityContext that stores the currently signed-in connection in a thread local.
@@ -23,17 +23,17 @@ import eu.getsoftware.hotelico.hotel.model.CustomerEntity;
  */
 public final class SecurityContext {
 
-	private static final ThreadLocal<CustomerEntity> currentCustomer = new ThreadLocal<CustomerEntity>();
+	private static final ThreadLocal<CustomerRootEntity> currentCustomer = new ThreadLocal<CustomerRootEntity>();
 
-	public static CustomerEntity getCurrentCustomer() {
-		CustomerEntity user = currentCustomer.get();
+	public static CustomerRootEntity getCurrentCustomer() {
+		CustomerRootEntity user = currentCustomer.get();
 		if (user == null) {
 			throw new IllegalStateException("No user is currently signed in");
 		}
 		return user;
 	}
 
-	public static void setCurrentCustomer(CustomerEntity user) {
+	public static void setCurrentCustomer(CustomerRootEntity user) {
 		currentCustomer.set(user);
 	}
 

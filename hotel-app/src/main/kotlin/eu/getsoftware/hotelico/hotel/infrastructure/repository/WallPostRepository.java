@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotel.domain.HotelWallPost;
-import eu.getsoftware.hotelico.hotel.model.CustomerEntity;
 
 public interface WallPostRepository extends JpaRepository<HotelWallPost, Long> {
 
@@ -38,7 +38,7 @@ public interface WallPostRepository extends JpaRepository<HotelWallPost, Long> {
 	public List<HotelWallPost> getByHotelId(@Param("hotelId") Long hotelId, @Param("checkDate") Date checkDate);
 
 	@Query(FIND_PARTICIPANTS_BY_HOTEL_QUERY)
-	public List<CustomerEntity> getParticipantsByHotelId(@Param("hotelId") Long hotelId, @Param("checkDate") Date checkDate);
+	public List<CustomerRootEntity> getParticipantsByHotelId(@Param("hotelId") Long hotelId, @Param("checkDate") Date checkDate);
 	
 	@Query(FIND_MESSAGE_BY_INIT_ID)
 	List<HotelWallPost> getMessageByInitId(@Param("initId") Long initId);

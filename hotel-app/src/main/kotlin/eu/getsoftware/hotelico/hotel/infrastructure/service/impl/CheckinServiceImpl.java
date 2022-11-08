@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotel.infrastructure.service.impl;
 
-import static eu.getsoftware.hotelico.infrastructure.utils.ControllerUtils.convertToLocalDateTime;
+import static eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils.convertToLocalDateTime;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import eu.getsoftware.hotelico.chat.domain.ChatMessage;
+import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
+import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
@@ -23,13 +25,11 @@ import eu.getsoftware.hotelico.hotel.infrastructure.repository.ChatRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.HotelRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.WallPostRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.CacheService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.CheckinService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;
-import eu.getsoftware.hotelico.hotel.model.CustomerEntity;
-import eu.getsoftware.hotelico.infrastructure.utils.ControllerUtils;
 
 /**
  * <br/>
@@ -43,7 +43,7 @@ public class CheckinServiceImpl implements CheckinService
 	private CustomerService customerService;		
 	
 	@Autowired
-	private CacheService cacheService;	
+	private LastMessagesService lastMessagesService;	
 			
 	@Autowired
 	private HotelService hotelService;	
@@ -69,7 +69,7 @@ public class CheckinServiceImpl implements CheckinService
 	@Override
 	public CustomerDTO updateCheckin(CustomerDTO customerDto) {
 		
-		CustomerEntity customerEntity = customerDto.getId()>0 ? customerRepository.getOne(customerDto.getId()) : null;
+		CustomerRootEntity customerEntity = customerDto.getId()>0 ? customerRepository.getOne(customerDto.getId()) : null;
 		
 		customerDto = setCustomerCheckin(customerDto, customerEntity);
 		
@@ -77,7 +77,7 @@ public class CheckinServiceImpl implements CheckinService
 	}
 	
 	@Override
-	public CustomerDTO setCustomerCheckin(CustomerDTO customerDto, CustomerEntity customerEntity)
+	public CustomerDTO setCustomerCheckin(CustomerDTO customerDto, CustomerRootEntity customerEntity)
 	{
 		HotelRootEntity hotelRootEntity = null;
 		
@@ -85,7 +85,7 @@ public class CheckinServiceImpl implements CheckinService
 		{
 			customerDto.setErrorResponse("");
 			
-			long virtualHotelId = cacheService.getInitHotelId();
+			long virtualHotelId = lastMessagesService.getInitHotelId();
 			
 			String virtualHotelCode = ControllerUtils.ALLOW_INIT_VIRTUAL_HOTEL ? hotelRepository.getVirtualHotelCode() : null;
 			
@@ -148,7 +148,7 @@ public class CheckinServiceImpl implements CheckinService
 					//sent wellcome message to new fullCheckin customers
 					if(!customerEntity.isHotelStaff() && !customerEntity.isAdmin())
 					{
-						CustomerEntity staffSender = this.getStaffbyHotelId(hotelRootEntity.getId());
+						CustomerRootEntity staffSender = this.getStaffbyHotelId(hotelRootEntity.getId());
 						
 						if (staffSender!=null)
 						{
@@ -165,7 +165,7 @@ public class CheckinServiceImpl implements CheckinService
 								String wellcomeMsg = "Hi, welcome to our Hotel! Please write me, if you need something";
 								String wellcomeGuestMsg = "Hi, welcome to thr guest view of our Hotel! Please get the hotel-code at the reception - without the hotel-code, you are not listed as a hotel guest, and you can not view the customers in the wall... ";
 								
-								if("de".equalsIgnoreCase(customerEntity.getPrefferedLanguage()))
+								if("de".equalsIgnoreCase(customerEntity.getEntityAggregate().getPrefferedLanguage()))
 								{
 									wellcomeMsg = "Hallo, herzlich willkommen im Hotel! Bitte schreiben Sie mir, wenn Sie etwas brauchen";
 									wellcomeGuestMsg = "Hallo, herzlich willkommen im Hotel Gast-Zugang! Bitte bekommen Sie den Zugang-Kode an der Rezeption. Ohne Hotel-Kode sind ihre Aktivitäten in Hotel beschränkt";
@@ -225,7 +225,7 @@ public class CheckinServiceImpl implements CheckinService
 				long consistencyId = new Date().getTime();
 				customerEntity.setConsistencyId(consistencyId);
 				
-				cacheService.updateCustomerConsistencyId(customerEntity.getId(), consistencyId);
+				lastMessagesService.updateCustomerConsistencyId(customerEntity.getId(), consistencyId);
 				
 				customerDto = customerService.convertCustomerToDto(customerRepository.saveAndFlush(customerEntity), true, nowGoodCheckin);
 				
@@ -250,7 +250,7 @@ public class CheckinServiceImpl implements CheckinService
 				
 				long consistencyId = new Date().getTime();
 				customerEntity.setConsistencyId(consistencyId);
-				cacheService.updateCustomerConsistencyId(customerEntity.getId(), consistencyId);
+				lastMessagesService.updateCustomerConsistencyId(customerEntity.getId(), consistencyId);
 				
 				customerDto = customerService.convertMyCustomerToFullDto(customerRepository.saveAndFlush(customerEntity));
 				
@@ -273,7 +273,7 @@ public class CheckinServiceImpl implements CheckinService
 			}
 			
 			//Eugen: every time update customer current hotelId!!!
-			cacheService.updateCustomerHotelId(customerDto.getId(), customerDto.getHotelId());
+			lastMessagesService.updateCustomerHotelId(customerDto.getId(), customerDto.getHotelId());
 			
 			
 			
@@ -285,13 +285,13 @@ public class CheckinServiceImpl implements CheckinService
 	}
 	
 	@Override
-	public CustomerEntity getStaffbyHotelId(long hotelId)
+	public CustomerRootEntity getStaffbyHotelId(long hotelId)
 	{
-		CustomerEntity staff = null;
+		CustomerRootEntity staff = null;
 	 
-		List<CustomerEntity> hotelStaffs = checkinRepository.getStaffByHotelId(hotelId);
+		List<CustomerRootEntity> hotelStaffs = checkinRepository.getStaffByHotelId(hotelId);
 
-		Iterator<CustomerEntity> staffIterator = hotelStaffs.iterator();
+		Iterator<CustomerRootEntity> staffIterator = hotelStaffs.iterator();
 		
 		if (staffIterator.hasNext())
 		{
@@ -340,11 +340,11 @@ public class CheckinServiceImpl implements CheckinService
 		
 		if(validCheckin!=null) // if checkin exists and valid
 		{
-			CustomerEntity checkinCustomerEntity = validCheckin.getCustomer();
+			CustomerRootEntity checkinCustomerRootEntity = validCheckin.getCustomer();
 			
 			//TODO Eugen: cannot set logged automaticly
 			//SETTING NEW CHECKIN
-			checkinCustomerEntity.setActive(true);
+			checkinCustomerRootEntity.setActive(true);
 			
 			dto.setFullCheckin(validCheckin.isFullCheckin());
 			
@@ -356,7 +356,7 @@ public class CheckinServiceImpl implements CheckinService
 		
 		if(validCheckin==null)
 		{
-			long initHotelId = cacheService.getInitHotelId();
+			long initHotelId = lastMessagesService.getInitHotelId();
 			
 			if(initHotelId>0)
 			{

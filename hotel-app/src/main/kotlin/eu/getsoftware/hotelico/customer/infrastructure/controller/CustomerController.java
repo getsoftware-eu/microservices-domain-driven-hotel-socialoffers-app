@@ -28,8 +28,8 @@ import eu.getsoftware.hotelico.hotel.infrastructure.aspects.NotifyClients;
 import eu.getsoftware.hotelico.hotel.infrastructure.controller.BasicController;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDto;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.CacheService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.CheckinService;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.LoginHotelicoService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
 import eu.getsoftware.hotelico.infrastructure.utils.ControllerUtils;
@@ -50,7 +50,7 @@ public class CustomerController extends BasicController
     private NotificationService notificationService;     
 	
     @Autowired
-    private CacheService cacheService;    
+    private LastMessagesService lastMessagesService;    
 	
     @Autowired
     private LoginHotelicoService loginService;
@@ -209,7 +209,7 @@ public class CustomerController extends BasicController
 
 		if(out!=null)
 		{
-			cacheService.setLastFullNotification(out.getId(), null);
+			lastMessagesService.setLastFullNotification(out.getId(), null);
 		}
 		
         httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, out);
@@ -231,7 +231,7 @@ public class CustomerController extends BasicController
         if(out!=null)
         {
             out = loginService.checkBeforeLoginProperties(loginCustomer, out);
-			cacheService.setLastFullNotification(out.getId(), null);
+			lastMessagesService.setLastFullNotification(out.getId(), null);
 		}
        
         
@@ -269,13 +269,13 @@ public class CustomerController extends BasicController
         if(sessionCustomer!=null && sessionCustomer.getId()>0 && sessionCustomer.getFirstName()==null)
         {
             CustomerDTO out = customerService.getById(sessionCustomer.getId(), sessionCustomer.getId());
-			cacheService.setLastFullNotification(out.getId(), null);
+			lastMessagesService.setLastFullNotification(out.getId(), null);
 			httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, out);
         }
         else if(sessionCustomer!=null && sessionCustomer.getId()>0)
         {
             CustomerDTO out = customerService.synchronizeCustomerToDto(sessionCustomer);
-			cacheService.setLastFullNotification(out.getId(), null);
+			lastMessagesService.setLastFullNotification(out.getId(), null);
 			httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, out);
 
             return out;
@@ -301,7 +301,7 @@ public class CustomerController extends BasicController
         if(sessionCustomer!=null && sessionCustomer.getId()>0 && sessionCustomer.getFirstName()==null)
         {
             CustomerDTO out = customerService.getById(sessionCustomer.getId(), sessionCustomer.getId());
-			cacheService.setLastFullNotification(out.getId(), null);
+			lastMessagesService.setLastFullNotification(out.getId(), null);
 			httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, out);
         }
         else 
@@ -309,8 +309,8 @@ public class CustomerController extends BasicController
         {
             //TODO EUGEN? CHECK HIER SYNCHRONOSATION??? UPDATE consistencyId ?????
             sessionCustomer.setLogged(true);
-            cacheService.checkCustomerOnline(sessionCustomer.getId());
-			cacheService.setLastFullNotification(sessionCustomer.getId(), null);
+            lastMessagesService.checkCustomerOnline(sessionCustomer.getId());
+			lastMessagesService.setLastFullNotification(sessionCustomer.getId(), null);
 			httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, sessionCustomer);
 
         }
@@ -368,7 +368,7 @@ public class CustomerController extends BasicController
         {
             loginService.logoutCustomer(customerDto);
             httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, customerDto);
-            cacheService.setLastFullNotification(customerDto.getId(), null);
+            lastMessagesService.setLastFullNotification(customerDto.getId(), null);
 
             customerDto = null;
             status.setComplete();

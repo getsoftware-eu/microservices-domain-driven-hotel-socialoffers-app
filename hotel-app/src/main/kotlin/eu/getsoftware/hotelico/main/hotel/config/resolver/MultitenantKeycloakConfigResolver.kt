@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.main.hotel.config.resolver
 
-import eu.getsoftware.hotelico.infrastructure.utils.ControllerUtils.FILTER_PATH_MULTITENANT
-import eu.getsoftware.hotelico.infrastructure.utils.ControllerUtils.PARAM_DEFAULT_REALM
+import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils.FILTER_PATH_MULTITENANT
+import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils.PARAM_DEFAULT_REALM
 import org.keycloak.adapters.KeycloakDeployment
 import org.keycloak.adapters.KeycloakDeploymentBuilder
 import org.keycloak.adapters.spi.HttpFacade

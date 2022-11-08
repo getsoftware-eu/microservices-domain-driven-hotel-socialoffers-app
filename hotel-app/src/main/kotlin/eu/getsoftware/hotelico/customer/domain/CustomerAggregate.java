@@ -93,6 +93,15 @@ public class CustomerAggregate
 		customerRootEntity.getCustomerGPSPosition().setLongitude(longitude);
 	}
 	
+	public double getLatitude()
+	{
+		return customerRootEntity.getCustomerGPSPosition().getLatitude();
+	}
+	
+	public double getLongitude()
+	{
+		return customerRootEntity.getCustomerGPSPosition().getLongitude();
+	}
 	public void setHideCheckinPopup(boolean hideCheckinPopup)
 	{
 		customerPreferences.setHideCheckinPopup(hideCheckinPopup);
@@ -101,5 +110,15 @@ public class CustomerAggregate
 	public Object getCity()
 	{
 		return customerDetails.getCity();
+	}
+	
+	public String getPrefferedLanguage()
+	{
+		return customerPreferences.getPrefferedLanguage();
+	}
+	
+	public boolean isAllowHotelNotification()
+	{
+		return customerPreferences.isAllowHotelNotification();
 	}
 }

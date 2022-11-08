@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotel.infrastructure.service.impl;
 
-import static eu.getsoftware.hotelico.infrastructure.utils.ControllerUtils.convertToDate;
-import static eu.getsoftware.hotelico.infrastructure.utils.ControllerUtils.convertToLocalDateTime;
+import static eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils.convertToDate;
+import static eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils.convertToLocalDateTime;
 
 import java.awt.geom.Point2D.Double;
 import java.time.LocalDateTime;
@@ -26,6 +26,8 @@ import com.google.common.cache.LoadingCache;
 import com.google.common.collect.Sets;
 
 import eu.getsoftware.hotelico.chat.domain.ChatMessage;
+import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
+import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
@@ -33,9 +35,7 @@ import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDto;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.ChatRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.HotelRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.CacheService;
-import eu.getsoftware.hotelico.hotel.model.CustomerEntity;
-import eu.getsoftware.hotelico.infrastructure.utils.ControllerUtils;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 
 /**
  * <br/>
@@ -43,7 +43,7 @@ import eu.getsoftware.hotelico.infrastructure.utils.ControllerUtils;
  * At 16.10.2015 11:17
  */
 @Service
-public class CacheServiceImpl implements CacheService
+public class LastMessagesServiceImpl implements LastMessagesService
 {
 	@Autowired
 	private CustomerService customerService;	
@@ -119,7 +119,6 @@ public class CacheServiceImpl implements CacheService
 		Integer demoHotelId = hotelRepository.getDemoHotelId();
 
 		return  demoHotelId==null? 0 : demoHotelId;
-
 	}
 	
 	@Override
@@ -129,7 +128,7 @@ public class CacheServiceImpl implements CacheService
 				
  		if(!lastCustomerOnlineTime.isPresent())
 		{
-			CustomerEntity customerEntity = customerService.getEntityById(customerId);
+			CustomerRootEntity customerEntity = customerService.getEntityById(customerId);
 			
 			if(customerEntity ==null || !customerEntity.isLogged())
 			{
@@ -158,26 +157,26 @@ public class CacheServiceImpl implements CacheService
 //	@Override
 	private void updateLastOnlineTime(long customerId)
 	{
-		boolean updateCustomerEntity = true;
+		boolean updateCustomerRootEntity = true;
 		
 		if(lastCustomerOnlineMap.keySet().contains(customerId))
 		{
-			updateCustomerEntity = false;
+			updateCustomerRootEntity = false;
 			
 			Date lastDate = lastCustomerOnlineMap.get(customerId);
 			
 			//if it was online yesterday
 			if(convertToLocalDateTime(lastDate).getDayOfYear()!= LocalDateTime.now().getDayOfYear())
 			{
-				updateCustomerEntity = true;
+				updateCustomerRootEntity = true;
 			}
 			
 			lastCustomerOnlineMap.put(customerId, new Date());
 		}
 		
-		if(updateCustomerEntity)
+		if(updateCustomerRootEntity)
 		{
-			CustomerEntity customerEntity = customerService.getEntityById(customerId);
+			CustomerRootEntity customerEntity = customerService.getEntityById(customerId);
 			
 			if(customerEntity !=null)
 			{
@@ -188,23 +187,23 @@ public class CacheServiceImpl implements CacheService
 	}
 	
 	@Override
-	public List<CustomerEntity> getOnlineCustomers()
+	public List<CustomerRootEntity> getOnlineCustomers()
 	{
-		List<CustomerEntity> resultList = new ArrayList<>();
+		List<CustomerRootEntity> resultList = new ArrayList<>();
 		
 		Set<Long> customerIds = lastCustomerOnlineMap.keySet();
 		
 		if(customerIds.isEmpty())
 		{
-			List<CustomerEntity> onlinein24HCustomerEntities =  customerService.getAllIn24hOnline();
+			List<CustomerRootEntity> onlinein24HCustomerEntities =  customerService.getAllIn24hOnline();
 			
-			for (CustomerEntity nextOnlineIn24HCustomerEntity : onlinein24HCustomerEntities)
+			for (CustomerRootEntity nextOnlineIn24HCustomerRootEntity : onlinein24HCustomerEntities)
 			{
-				lastCustomerOnlineMap.put(nextOnlineIn24HCustomerEntity.getId(), nextOnlineIn24HCustomerEntity.getLastSeenOnline());
+				lastCustomerOnlineMap.put(nextOnlineIn24HCustomerRootEntity.getId(), nextOnlineIn24HCustomerRootEntity.getLastSeenOnline());
 				
-				if(isNowStillOnline(nextOnlineIn24HCustomerEntity.getId()))
+				if(isNowStillOnline(nextOnlineIn24HCustomerRootEntity.getId()))
 				{
-					resultList.add(nextOnlineIn24HCustomerEntity);
+					resultList.add(nextOnlineIn24HCustomerRootEntity);
 				}
 			}
 		}
@@ -252,7 +251,7 @@ public class CacheServiceImpl implements CacheService
 			return currentConsistencyIdsMap.get(customerId);
 		}
 		
-		CustomerEntity customerEntity = customerRepository.getOne(customerId);
+		CustomerRootEntity customerEntity = customerRepository.getOne(customerId);
 		
 		long newConsistencyId = customerEntity !=null? customerEntity.getConsistencyId(): -1;
 
@@ -405,15 +404,15 @@ public class CacheServiceImpl implements CacheService
 		
 		if(customerIds.isEmpty())
 		{
-			List<CustomerEntity> onlinein24HCustomerEntities =  customerService.getAllIn24hOnline();
+			List<CustomerRootEntity> onlinein24HCustomerEntities =  customerService.getAllIn24hOnline();
 			
-			for (CustomerEntity nextOnlineIn24HCustomerEntity : onlinein24HCustomerEntities)
+			for (CustomerRootEntity nextOnlineIn24HCustomerRootEntity : onlinein24HCustomerEntities)
 			{
-				lastCustomerOnlineMap.put(nextOnlineIn24HCustomerEntity.getId(), nextOnlineIn24HCustomerEntity.getLastSeenOnline());
+				lastCustomerOnlineMap.put(nextOnlineIn24HCustomerRootEntity.getId(), nextOnlineIn24HCustomerRootEntity.getLastSeenOnline());
 				
-				if(isNowStillOnline(nextOnlineIn24HCustomerEntity.getId()))
+				if(isNowStillOnline(nextOnlineIn24HCustomerRootEntity.getId()))
 				{
-					resultList.add(nextOnlineIn24HCustomerEntity.getId());
+					resultList.add(nextOnlineIn24HCustomerRootEntity.getId());
 				}
 			}
 		}

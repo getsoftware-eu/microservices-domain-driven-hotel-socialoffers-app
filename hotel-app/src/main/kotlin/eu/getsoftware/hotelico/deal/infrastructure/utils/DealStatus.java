@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.deal.infrastructure.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-import eu.getsoftware.hotelico.infrastructure.utils.ObjectUtils;
+import eu.getsoftware.hotelico.clients.infrastructure.utils.ObjectUtils;
 import lombok.Getter;
 
 /**

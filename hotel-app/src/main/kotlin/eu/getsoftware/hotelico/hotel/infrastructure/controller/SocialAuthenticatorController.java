@@ -31,12 +31,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.view.RedirectView;
 
+import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.CacheService;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.LoginHotelicoService;
-import eu.getsoftware.hotelico.infrastructure.utils.ControllerUtils;
 
 	/**
 	 * Created by Eugen on 08.07.2015.
@@ -57,7 +57,7 @@ public class SocialAuthenticatorController extends BasicController
 	private CustomerService customerService;
 
 	@Autowired
-	private CacheService cacheService;
+	private LastMessagesService lastMessagesService;
 	
 	@Autowired
 	private LoginHotelicoService loginService;
@@ -162,7 +162,7 @@ public class SocialAuthenticatorController extends BasicController
 	@RequestMapping(value ="/login/auth/{socialType}/{loginId}", method = RequestMethod.POST)
 	public @ResponseBody CustomerDTO postSocialAuthentication(@RequestBody /*@ModelAttribute(ControllerUtils.SESSION_CUSTOMER)*/ CustomerDTO sessionCustomer, @PathVariable String socialType, @PathVariable String loginId, HttpSession session)
 	{
-		cacheService.addWaitingSocialDto(loginId, sessionCustomer);
+		lastMessagesService.addWaitingSocialDto(loginId, sessionCustomer);
 
 		return sessionCustomer;
 	}
@@ -380,7 +380,7 @@ public class SocialAuthenticatorController extends BasicController
 
 		//########## social cache ################
 		
-		CustomerDTO tempfoundCacheSocialCustomer = cacheService.getWaitingSocialCustomer(state);
+		CustomerDTO tempfoundCacheSocialCustomer = lastMessagesService.getWaitingSocialCustomer(state);
 		
 		if(foundFacebookCustomer==null && tempfoundCacheSocialCustomer!=null)
 		{
@@ -479,7 +479,7 @@ public class SocialAuthenticatorController extends BasicController
 		if(foundFacebookCustomer!=null)
 		{
 			foundFacebookCustomer.setLogged(true);
-			cacheService.checkCustomerOnline(foundFacebookCustomer.getId());
+			lastMessagesService.checkCustomerOnline(foundFacebookCustomer.getId());
 
 			//			customerService.getEntityById(foundFacebookCustomer.getId());
 			//			customerRepository.saveAndFlush(foundFacebookCustomer);

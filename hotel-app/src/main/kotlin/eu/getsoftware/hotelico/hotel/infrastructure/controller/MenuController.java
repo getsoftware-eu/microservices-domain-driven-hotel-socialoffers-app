@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.MenuService;
 import eu.getsoftware.hotelico.menu.infrastructure.dto.MenuItemDto;
 import eu.getsoftware.hotelico.menu.infrastructure.dto.MenuOrderDTO;
+import eu.getsoftware.hotelico.menu.infrastructure.service.MenuService;
 
 @Controller
 @RequestMapping("/menu")

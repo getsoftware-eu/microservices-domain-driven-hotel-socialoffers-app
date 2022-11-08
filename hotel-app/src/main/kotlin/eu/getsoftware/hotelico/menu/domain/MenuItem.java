@@ -14,6 +14,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
+import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.domain.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 import lombok.AccessLevel;
@@ -71,7 +72,7 @@ public class MenuItem implements Serializable
 
 	@ManyToOne
 	@JoinColumn(name="creator")
-	private CustomerEntity creator;
+	private CustomerRootEntity creator;
 	
 	@Column
 	private Timestamp timestamp;

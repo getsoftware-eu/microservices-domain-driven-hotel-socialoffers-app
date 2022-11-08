@@ -6,6 +6,9 @@ import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import eu.getsoftware.hotelico.clients.infrastructure.exception.HotelException;
+import eu.getsoftware.hotelico.clients.infrastructure.utils.ReorderAction;
+import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.domain.HotelActivity;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.deal.domain.CustomerDeal;
@@ -16,9 +19,6 @@ import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDto;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDto;
-import eu.getsoftware.hotelico.hotel.model.CustomerEntity;
-import eu.getsoftware.hotelico.infrastructure.hotel.exception.HotelException;
-import eu.getsoftware.hotelico.infrastructure.utils.ReorderAction;
 
 public interface HotelService
 {
@@ -63,7 +63,7 @@ public interface HotelService
     List<HotelActivityDto> getHotelActivitiesByHotelId(long requesterId, long hotelId);
 
     @Transactional
-    HotelActivityDto convertActivityToDto(HotelActivity hotelActivity, CustomerEntity requester);
+    HotelActivityDto convertActivityToDto(HotelActivity hotelActivity, CustomerRootEntity requester);
 
     @Transactional
     List<HotelActivityDto> getHotelActivitiesBySenderAndHotelId(long senderId, long hotelId);

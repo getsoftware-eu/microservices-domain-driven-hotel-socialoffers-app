@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import eu.getsoftware.hotelico.chat.domain.ChatMessage;
+import eu.getsoftware.hotelico.chat.service.impl.ChatService;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.domain.CustomerAggregate;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
@@ -38,10 +39,9 @@ import eu.getsoftware.hotelico.hotel.infrastructure.repository.CheckinRepository
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.DealRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.HotelRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.LanguageRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.CacheService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.ChatService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.CheckinService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.LoginHotelicoService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.MailService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
@@ -66,7 +66,7 @@ public class CustomerServiceImpl implements CustomerService
     private CustomerRepository customerRepository;
 	
 	@Autowired
-	private CacheService cacheService;
+	private LastMessagesService lastMessagesService;
 	
 	@Autowired
     private ChatService chatService;		
@@ -113,7 +113,7 @@ public class CustomerServiceImpl implements CustomerService
 
     @Override
     public long getCustomerHotelId(long customerId){
-        return cacheService.getCustomerHotelId(customerId);
+        return lastMessagesService.getCustomerHotelId(customerId);
     }
     
     @Override
@@ -171,7 +171,7 @@ public class CustomerServiceImpl implements CustomerService
        
         customerEntity = customerRepository.saveAndFlush(customerEntity);
     
-        long initHotelId = cacheService.getInitHotelId();
+        long initHotelId = lastMessagesService.getInitHotelId();
 
         if(customerDto.getHotelId()!=null && customerDto.getHotelId()>0)
         {
@@ -248,7 +248,7 @@ public class CustomerServiceImpl implements CustomerService
 
         //TODO eugen: get Languages from linkedIn
         
-        long virtualHotelId = cacheService.getInitHotelId();
+        long virtualHotelId = lastMessagesService.getInitHotelId();
         
         CustomerDTO dto = convertCustomerToDto(customerRepository.saveAndFlush(customerEntity), virtualHotelId);
 
@@ -275,7 +275,7 @@ public class CustomerServiceImpl implements CustomerService
 //        CustomerDto dto = modelMapper.map(customerRepository.saveAndFlush(customer), CustomerDto.class);
 //        dto = fillDtoFromCustomer(customer, dto);
         
-        long virtualHotelId = cacheService.getInitHotelId();
+        long virtualHotelId = lastMessagesService.getInitHotelId();
         
         CustomerDTO dto = convertCustomerToDto(customerRepository.saveAndFlush(customerEntity), virtualHotelId);
 
@@ -302,7 +302,7 @@ public class CustomerServiceImpl implements CustomerService
         
         long dtoConsistencyId = dto.getCustomerConsistencyId();
         
-        long customerDbConsistencyId = cacheService.getCustomerConsistencyId(dto.getId());
+        long customerDbConsistencyId = lastMessagesService.getCustomerConsistencyId(dto.getId());
         
         //TODO Eugen: ONLY DTO UPDate hier
         if(customerDbConsistencyId > dtoConsistencyId)
@@ -482,7 +482,7 @@ public class CustomerServiceImpl implements CustomerService
             long consistencyId = new Date().getTime();
             customerEntity.setConsistencyId(consistencyId);
 
-            cacheService.updateCustomerConsistencyId(customerEntity.getId(), consistencyId);
+            lastMessagesService.updateCustomerConsistencyId(customerEntity.getId(), consistencyId);
             
             customerRepository.saveAndFlush(customerEntity);
         }
@@ -731,7 +731,7 @@ public class CustomerServiceImpl implements CustomerService
         }
 
 
-        long virtualCodeId = cacheService.getInitHotelId();
+        long virtualCodeId = lastMessagesService.getInitHotelId();
         
         if(dto.getHotelId()!= null && dto.getHotelId()>0 && dto.getHotelId() != virtualCodeId)
         {
@@ -792,9 +792,9 @@ public class CustomerServiceImpl implements CustomerService
         //TODO EUGEN: java memory o
         if(sessionCustomerId>0)
 		{
-			boolean isReadyForNextNotification = cacheService.isNotificationDelayReady(sessionCustomerId);
+			boolean isReadyForNextNotification = lastMessagesService.isNotificationDelayReady(sessionCustomerId);
 			
-			cacheService.checkCustomerOnline(sessionCustomerId);
+			lastMessagesService.checkCustomerOnline(sessionCustomerId);
 			
 			//TODO EUGEN: always response on ping? or only if something changes?
 			if(isReadyForNextNotification)

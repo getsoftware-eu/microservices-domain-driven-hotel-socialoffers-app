@@ -21,6 +21,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicUpdate;
 
 import eu.getsoftware.hotelico.domain.utils.HibernateUtils;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.IFileUploadable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -33,7 +34,7 @@ import lombok.Setter;
 @Getter @Setter
 @Table(name = "customer")
 @DynamicUpdate
-public class CustomerRootEntity implements Serializable
+public class CustomerRootEntity implements Serializable, IFileUploadable
 {
     @Id
     @Setter(AccessLevel.PROTECTED)

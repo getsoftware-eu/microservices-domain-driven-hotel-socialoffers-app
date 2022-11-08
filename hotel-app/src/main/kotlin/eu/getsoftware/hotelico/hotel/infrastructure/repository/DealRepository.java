@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import eu.getsoftware.hotelico.deal.domain.CustomerDeal;
-import eu.getsoftware.hotelico.infrastructure.utils.DealStatus;
+import eu.getsoftware.hotelico.deal.infrastructure.utils.DealStatus;
 
 public interface DealRepository extends JpaRepository<CustomerDeal, Long> {
 

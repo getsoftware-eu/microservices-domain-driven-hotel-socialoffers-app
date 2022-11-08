@@ -22,14 +22,14 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.infrastructure.utils.MailValidator;
+import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDto;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.MailService;
-import eu.getsoftware.hotelico.hotel.model.CustomerEntity;
-import eu.getsoftware.hotelico.infrastructure.utils.ControllerUtils;
-import eu.getsoftware.hotelico.infrastructure.utils.MailValidator;
 
 /**
  * Created by Eugen on 31.07.2015.
@@ -184,7 +184,7 @@ public class MailServiceImpl implements MailService
 	}
 	
 	@Override
-	public String getWellcomeMailBody(CustomerEntity customerEntity)
+	public String getWellcomeMailBody(CustomerRootEntity customerEntity)
 	{
 		String mailContent = "";
 		String mailHotelicoContent = "";

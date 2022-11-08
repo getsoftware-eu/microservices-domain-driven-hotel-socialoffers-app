@@ -21,9 +21,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
+import eu.getsoftware.hotelico.deal.infrastructure.utils.DealStatus;
 import eu.getsoftware.hotelico.domain.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
-import eu.getsoftware.hotelico.infrastructure.utils.DealStatus;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,7 +36,6 @@ import lombok.Setter;
 @Table(name = "menu_order")
 public class MenuOrder implements Serializable
 {
-
 	private static final long serialVersionUID = -3552760230944489778L;
 	
 	@Id
@@ -109,17 +108,6 @@ public class MenuOrder implements Serializable
 	@Temporal(TemporalType.DATE)
 	@Column(name = "validTo", nullable = true, length = 10)
 	private Date validTo = new Date();
-	
-//	MenuOrder(Customer sender)
-//	{
-//		setSender(sender);
-//
-//		generateCode();
-//
-//		setInitId(ThreadLocalRandom.current().nextInt(1, 999999));
-//		setConsistencyId(new Date().getTime());
-//
-//	}
 	
 	public static long getSerialVersionUID()
 	{

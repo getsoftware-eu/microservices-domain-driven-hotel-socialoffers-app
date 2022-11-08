@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import eu.getsoftware.hotelico.hotel.infrastructure.service.CacheService;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 
 /**
  *  * http://www.theotherian.com/2014/03/spring-boot-websockets-stomp-chat.html?m=1
@@ -13,16 +13,16 @@ import eu.getsoftware.hotelico.hotel.infrastructure.service.CacheService;
 public class ActiveCustomerPinger
 {
   private SimpMessagingTemplate template;
-  private CacheService cacheService;
+  private LastMessagesService lastMessagesService;
 
-  public ActiveCustomerPinger(SimpMessagingTemplate template, CacheService cacheService) {
+  public ActiveCustomerPinger(SimpMessagingTemplate template, LastMessagesService lastMessagesService) {
     this.template = template;
-    this.cacheService = cacheService;
+    this.lastMessagesService = lastMessagesService;
   }
   
   @Scheduled(fixedDelay = 2000)
   public void pingUsers() {
-    List<Long> activeUsers = cacheService.getOnlineCustomerIds();
+    List<Long> activeUsers = lastMessagesService.getOnlineCustomerIds();
     template.convertAndSend("/topic/active", activeUsers);
   }
 

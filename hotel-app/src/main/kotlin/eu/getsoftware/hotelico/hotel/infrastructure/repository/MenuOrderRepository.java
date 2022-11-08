@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import eu.getsoftware.hotelico.infrastructure.utils.DealStatus;
+import eu.getsoftware.hotelico.deal.infrastructure.utils.DealStatus;
 import eu.getsoftware.hotelico.menu.domain.MenuOrder;
 
 public interface MenuOrderRepository extends JpaRepository<MenuOrder, Long> {

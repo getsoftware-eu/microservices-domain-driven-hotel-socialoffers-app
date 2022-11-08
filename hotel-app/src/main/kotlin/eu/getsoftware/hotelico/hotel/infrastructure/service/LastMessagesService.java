@@ -9,16 +9,16 @@ import java.util.Optional;
 import org.springframework.transaction.annotation.Transactional;
 
 import eu.getsoftware.hotelico.chat.domain.ChatMessage;
+import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDto;
-import eu.getsoftware.hotelico.hotel.model.CustomerEntity;
 
 /**
  * <br/>
  * Created by e.fanshil
  * At 16.10.2015 11:17
  */
-public interface CacheService
+public interface LastMessagesService
 {
 	/**
 	 * get cashed id of virtual hotel
@@ -49,7 +49,7 @@ public interface CacheService
 	 * @return
 	 */
 	@Transactional
-	List<CustomerEntity> getOnlineCustomers();
+	List<CustomerRootEntity> getOnlineCustomers();
 
 	@Transactional
 	List<Long> getOnlineCustomerIds();

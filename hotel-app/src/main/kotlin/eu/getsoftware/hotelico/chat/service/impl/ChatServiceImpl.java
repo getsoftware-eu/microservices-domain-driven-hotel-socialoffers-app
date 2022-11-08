@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.infrastructure.service.impl;
+package eu.getsoftware.hotelico.chat.service.impl;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -18,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import eu.getsoftware.hotelico.chat.domain.ChatMessage;
 import eu.getsoftware.hotelico.chat.infrastructure.dto.ChatMessageDTO;
+import eu.getsoftware.hotelico.chat.service.ChatService;
+import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.domain.HotelActivity;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
@@ -26,12 +28,10 @@ import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
 import eu.getsoftware.hotelico.hotel.domain.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.ChatRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.CheckinRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.CacheService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.ChatService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;
-import eu.getsoftware.hotelico.infrastructure.utils.ControllerUtils;
 
 /**
  * Created by Eugen on 16.07.2015.
@@ -43,7 +43,7 @@ public class ChatServiceImpl implements ChatService
 	private CustomerService customerService;		
 	
 	@Autowired
-	private CacheService cacheService;		
+	private LastMessagesService lastMessagesService;		
 	
 	@Autowired
 	private NotificationService notificationService;	
@@ -160,8 +160,8 @@ public class ChatServiceImpl implements ChatService
 		
 		chatRepository.saveAndFlush(newMessage);
 		
-		cacheService.setLastMessageBetweenCustomers(newMessage);
-		cacheService.updateUnreadMessagesToCustomer(newMessage);
+		lastMessagesService.setLastMessageBetweenCustomers(newMessage);
+		lastMessagesService.updateUnreadMessagesToCustomer(newMessage);
 	
 		chatMessageDto = fillDtoFromMessage(chatMessageDto, newMessage);
 		
@@ -300,8 +300,8 @@ public class ChatServiceImpl implements ChatService
 				//Notificate Sender about SEEN message
 				simpMessagingTemplate.convertAndSend(ControllerUtils.SOCKET_CHAT_TOPIC + message.getSender().getId() + "", convertMessageToDto(message));
 
-				cacheService.markMessageRead(message);
-				cacheService.markLastMessageBetweenCustomers(message);
+				lastMessagesService.markMessageRead(message);
+				lastMessagesService.markLastMessageBetweenCustomers(message);
 			}
 		}
 		
@@ -331,13 +331,13 @@ public class ChatServiceImpl implements ChatService
 
 		if(latestUnreadMessage!=null)
 		{
-			cacheService.markLastMessageBetweenCustomers(latestUnreadMessage);
+			lastMessagesService.markLastMessageBetweenCustomers(latestUnreadMessage);
 
 			//Notificate Sender about last SEEN message
 			simpMessagingTemplate.convertAndSend(ControllerUtils.SOCKET_CHAT_TOPIC + latestUnreadMessage.getSender().getId() + "", convertMessageToDto(latestUnreadMessage));
 		}
 
-		cacheService.markChatRead(customerId, senderId);
+		lastMessagesService.markChatRead(customerId, senderId);
 
 	}
 	
@@ -352,7 +352,7 @@ public class ChatServiceImpl implements ChatService
 		{
 			long customerHotelId = customerService.getCustomerHotelId(requesterId);
 			
-			long virtualHotelId = cacheService.getInitHotelId();
+			long virtualHotelId = lastMessagesService.getInitHotelId();
 			
 			boolean customerIsInHotel = customerHotelId>0 && customerHotelId!=virtualHotelId;
 			

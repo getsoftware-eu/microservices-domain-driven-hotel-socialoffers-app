@@ -17,7 +17,7 @@ import org.springframework.web.servlet.mvc.WebContentInterceptor;
 import eu.getsoftware.hotelico.customer.infrastructure.interceptor.CustomerInterceptor;
 
 @Configuration
-@ComponentScan(basePackages = { "eu.getsoftware.hotelico.infrastructure.hotel.controller" })
+@ComponentScan(basePackages = { "eu.getsoftware.hotelico" }) //TODO Eugen: all domains as array?
 public class WebAppConfig implements WebMvcConfigurer
 {
         //adds four view controllers.

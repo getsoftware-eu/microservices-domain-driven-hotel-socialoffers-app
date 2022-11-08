@@ -27,6 +27,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.infrastructure.utils.FileUtils;
+import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.domain.HotelActivity;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
@@ -35,16 +38,13 @@ import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDto;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.ActivityRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.HotelRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.CacheService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.FileUploadService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.IFileUploadable;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.ImageService;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;
-import eu.getsoftware.hotelico.hotel.model.CustomerEntity;
-import eu.getsoftware.hotelico.infrastructure.utils.ControllerUtils;
-import eu.getsoftware.hotelico.infrastructure.utils.FileUtils;
 
 /**
  * Created by Eugen on 22.08.2015.
@@ -72,7 +72,7 @@ public class FileUploadServiceImpl implements FileUploadService
 	private CustomerService customerService;	
 	
 	@Autowired
-	private CacheService cacheService;
+	private LastMessagesService lastMessagesService;
 	
 	@Autowired
 	private ImageService imageService;
@@ -505,7 +505,7 @@ public class FileUploadServiceImpl implements FileUploadService
 //				String model = sendInfo[2];
 //				Integer modelId = Integer.parseInt(sendInfo[3]);
 	
-				CustomerEntity sender = customerRepository.getOne(senderId);
+				CustomerRootEntity sender = customerRepository.getOne(senderId);
 	
 				//Eugen: only creation of a new Hotel is allowed without login!!!
 				if (sender == null && !(model.equalsIgnoreCase("hotel") && modelId>9999))
@@ -539,7 +539,7 @@ public class FileUploadServiceImpl implements FileUploadService
 							long newConsistencyId = new Date().getTime();
 							
 							sender.setConsistencyId(newConsistencyId);
-							cacheService.updateCustomerConsistencyId(sender.getId(), newConsistencyId);
+							lastMessagesService.updateCustomerConsistencyId(sender.getId(), newConsistencyId);
 						}
 						customerRepository.saveAndFlush(sender);
 						notificationService.notificateAboutEntityEvent(customerService.convertCustomerToDto(sender, 0), HotelEvent.EVENT_LOGO_CUSTOMER_CHANGE_MESSAGE, sender.getPictureUrl(), sender.getId());
@@ -644,7 +644,7 @@ public class FileUploadServiceImpl implements FileUploadService
 			case "customer":
 			{
 				
-				CustomerEntity customerEntity = customerRepository.getOne(entityId);
+				CustomerRootEntity customerEntity = customerRepository.getOne(entityId);
 				
 				pictureUrl = customerEntity.getPictureUrl();
 				

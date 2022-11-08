@@ -23,9 +23,9 @@ import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDto;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDto;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.CacheService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.FileUploadService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 import io.micrometer.core.annotation.Timed;
 
 @Timed("sensorMap.controller") //eugen: profiler
@@ -38,7 +38,7 @@ public class HotelController extends BasicController
     private HotelService hotelService;
     
     @Autowired
-    private CacheService cacheService;
+    private LastMessagesService lastMessagesService;
     
     @Autowired
     private FileUploadService fileUploadService;
@@ -172,7 +172,7 @@ public class HotelController extends BasicController
 
         Point2D.Double latLonPoint = new Point2D.Double(latPoint , lonPoint);
 
-        cacheService.addGuestGpsPosition(requesterId, latLonPoint);
+        lastMessagesService.addGuestGpsPosition(requesterId, latLonPoint);
         
         String gpsCity = hotelService.getGpsCity(latLonPoint);
 

@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.infrastructure.service.impl;
+package eu.getsoftware.hotelico.menu.infrastructure.service.impl;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -13,24 +13,24 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
+import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
+import eu.getsoftware.hotelico.deal.infrastructure.utils.DealStatus;
 import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.HotelRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.MenuItemRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.MenuOrderRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.CacheService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.CheckinService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.MenuService;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;
-import eu.getsoftware.hotelico.hotel.model.CustomerEntity;
-import eu.getsoftware.hotelico.infrastructure.utils.ControllerUtils;
-import eu.getsoftware.hotelico.infrastructure.utils.DealStatus;
 import eu.getsoftware.hotelico.menu.domain.MenuItem;
 import eu.getsoftware.hotelico.menu.domain.MenuOrder;
 import eu.getsoftware.hotelico.menu.infrastructure.dto.MenuItemDto;
 import eu.getsoftware.hotelico.menu.infrastructure.dto.MenuOrderDTO;
+import eu.getsoftware.hotelico.menu.infrastructure.service.MenuService;
 
 /**
  * <br/>
@@ -44,7 +44,7 @@ public class MenuServiceImpl implements MenuService
 	private CustomerService customerService;		
 	
 	@Autowired
-	private CacheService cacheService;		
+	private LastMessagesService lastMessagesService;		
 	
 	@Autowired
 	private CheckinService checkinService;	
@@ -75,7 +75,7 @@ public class MenuServiceImpl implements MenuService
 		
 		long customerId = ControllerUtils.getTryEntityId(requesterId);
 		
-		CustomerEntity customerEntity = customerRepository.getOne(customerId);
+		CustomerRootEntity customerEntity = customerRepository.getOne(customerId);
 
 		List<MenuOrder> menus = new ArrayList<>();
 		
@@ -98,7 +98,7 @@ public class MenuServiceImpl implements MenuService
 				menus = menuOrderRepository.getMenuByInitId(orderId);
 			}
 		}
-		else if(customerEntity !=null && (customerEntity.isAdmin() || customerEntity.isHotelStaff() && hotelId==cacheService.getCustomerHotelId(customerId)))
+		else if(customerEntity !=null && (customerEntity.isAdmin() || customerEntity.isHotelStaff() && hotelId== lastMessagesService.getCustomerHotelId(customerId)))
 		{
 			menus = menuOrderRepository.getActiveByHotelId(hotelId, filterStatusList, filterDateFrom, filterDateTo);
 		}
@@ -122,11 +122,11 @@ public class MenuServiceImpl implements MenuService
 	{
 		long customerId = ControllerUtils.getTryEntityId(requesterId);
 		
-		CustomerEntity customerEntity = customerId>0? customerRepository.getOne(customerId) : null;
+		CustomerRootEntity customerEntity = customerId>0? customerRepository.getOne(customerId) : null;
 
 		List<MenuOrder> waitingMenusToRoom = new ArrayList<>();
 		
-		if(customerEntity !=null && (customerEntity.isAdmin() || customerEntity.isHotelStaff() && hotelId == cacheService.getCustomerHotelId(customerId)))
+		if(customerEntity !=null && (customerEntity.isAdmin() || customerEntity.isHotelStaff() && hotelId == lastMessagesService.getCustomerHotelId(customerId)))
 		{
 			List<DealStatus> statusList =  new ArrayList<>();
 			//ONLY ACCEPTED
@@ -275,7 +275,7 @@ public class MenuServiceImpl implements MenuService
 		
 		long customerId = ControllerUtils.getTryEntityId(requesterId);
 		
-		CustomerEntity customerEntity = customerRepository.getOne(customerId);
+		CustomerRootEntity customerEntity = customerRepository.getOne(customerId);
 		
 		if(customerEntity !=null && (customerEntity.isAdmin() || customerEntity.isHotelStaff()))
 		{
@@ -392,7 +392,7 @@ public class MenuServiceImpl implements MenuService
 		
 		if(menuItem.getCreator()==null)
 		{
-			CustomerEntity sender = customerRepository.getOne(dto.getSenderId());
+			CustomerRootEntity sender = customerRepository.getOne(dto.getSenderId());
 			menuItem.setCreator(sender);
 		}
 		
@@ -434,7 +434,7 @@ public class MenuServiceImpl implements MenuService
 			menuOrder.setHotelRootEntity(hotelRootEntity);
 		}
 		
-		CustomerEntity sender = customerRepository.getOne(menuOrderDto.getSenderId());
+		CustomerRootEntity sender = customerRepository.getOne(menuOrderDto.getSenderId());
 		if(sender!=null)
 		{
 			menuOrder.setSender(sender);
@@ -536,7 +536,7 @@ public class MenuServiceImpl implements MenuService
 		{
 			//TODO Eugen: notificate STAFF about menu??? if orderedToRoom
 			
-			CustomerEntity staff = checkinService.getStaffbyHotelId(menuOrderDto.getHotelId());
+			CustomerRootEntity staff = checkinService.getStaffbyHotelId(menuOrderDto.getHotelId());
 			
 			//Notificate STAFF about deal action!!!
 			if(staff != null)

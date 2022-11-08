@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.main.hotel.config
 
-import eu.getsoftware.hotelico.infrastructure.utils.ControllerUtils.FILTER_PATH_MULTITENANT
+import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils.FILTER_PATH_MULTITENANT
+import eu.getsoftware.hotelico.main.hotel.config.resolver.MultitenantKeycloakConfigResolver
 import org.keycloak.adapters.KeycloakConfigResolver
 import org.keycloak.adapters.springsecurity.KeycloakSecurityComponents
 import org.keycloak.adapters.springsecurity.authentication.KeycloakLogoutHandler

@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
-import eu.getsoftware.hotelico.hotel.infrastructure.service.CacheService;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.impl.ActiveCustomerPinger;
 
 /**
@@ -36,8 +36,8 @@ public class HeartBeatConfigurer implements SchedulingConfigurer
 	 */
 	@Bean
 	@Inject
-	public ActiveCustomerPinger activeUserPinger(SimpMessagingTemplate template, CacheService cacheService) {
-		return new ActiveCustomerPinger(template, cacheService);
+	public ActiveCustomerPinger activeUserPinger(SimpMessagingTemplate template, LastMessagesService lastMessagesService) {
+		return new ActiveCustomerPinger(template, lastMessagesService);
 	}
 	
 	@Override
