@@ -1,0 +1,49 @@
+<div id="minPaddingPage" class="bg-light lter wrapper-md" ng-controller="HotelListController" ng-init="
+app.hideFooter = false;
+app.header.showTab = true;
+app.header.tabIndex = 0;
+app.header.showBackArrow = true;
+app.rootSettings.darkBg = true;
+">
+  
+  <div class="wrapper-md">
+    <div class="row">
+      <div>
+        <!--ng-class="::{'col-sm-9': !isSmartDevice}">-->
+
+        <div data-ng-include=" 'angulr/tpl/hotel/blocks/showAlertBlock.html' " />
+
+        <div class="wrapper text-center" style="padding-top: 0px;">
+
+          <div style="text-align: left; margin-top: 10px;">
+
+            <!--<div style="white-space: pre-line;">{{::'page.hotel.hotelFilterLabel' | translate}}:</div>-->
+            <div data-ng-include=" 'angulr/tpl/hotel/blocks/selectHotelCityBlock.html' " />
+
+          </div>
+
+          <hr/>
+          <span class="hotelicoHeader" ng-show="localState.filterHotels.length>0 && localState.selectedCityHotel">
+              <span ng-show="localState.selectedFilterHotel">{{::'page.hotel.activityList' | translate}}  in {{localState.selectedFilterHotel.name}}</span>
+              <span ng-show="!localState.selectedFilterHotel && localState.selectedCityHotel">{{::'page.hotel.hotelRootEntities' | translate}}  in {{localState.selectedCityHotel.city}}</span>
+            :
+          </span>
+        </div>
+
+        <div id="hotelPart" ng-controller="hotelCtrl">
+          
+          <div ng-repeat="(key, showHotel) in localState.filterHotels | orderBy: 'id':true  track by showHotel.id" >
+  
+            <div data-ng-include=" 'angulr/tpl/hotel/blocks/showHotelPreviewBlock.html' " />
+  
+          </div>
+
+          <div class="nothingFoundMsg" ng-show="localState.noHotelFound">{{::'page.hotel.noHotelFound' | translate}}</div>
+
+
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>

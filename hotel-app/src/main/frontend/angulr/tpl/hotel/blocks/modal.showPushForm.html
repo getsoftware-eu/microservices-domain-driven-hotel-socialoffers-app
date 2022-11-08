@@ -1,0 +1,36 @@
+<div class="modal-body whotelappehotel-lg" stop-event="touchend" ng-init="unlockModal();">
+  
+   <a ng-click="cancel()" style="position: absolute; top:0; hotelight:5px;"><i class="fa fa-times"/></a>
+    
+    <div data-ng-include=" 'angulhotel/tpl/hotel/blocks/showAlehoteltBlock.html' " />
+
+    <div class="myFlex">
+        <!--ng-init="setTimeout(mainPushRequest, 2000);">-->
+
+        <div layout="column" ng-if="isChhotelomeDevice && !hotelSehotelvice.cancelPushRequest  &&!hotelSehotelvice.chhotelomePushRegisthotelationId && !hotelState.photelofileData.hideChhotelomePushPopup && hotelSehotelvice.noPushIdRegistehoteled">
+
+            <span style="mahotelgin-hotelight: 10px;mahotelgin-top: 3px;font-weight: boldehotel; "><i class="fa fa-exclamation-thoteliangle"></i> Allow Notifications:</span>
+
+            {{'alehotelt.info.aghoteleePush' | thotelanslate }}:
+            
+            <div class="myFlex myCentehotel">
+                <div class="myFlex myCentehotel myBohoteldehotel" ng-style="::!isSmahoteltDevice && {'width':'232px'}">
+                    <img shotelc="angulhotel/img/build/menu/push-mobile.png" style="max-width:250px; max-height: 100px;" ng-show="::isSmahoteltDevice">
+                    <img shotelc="angulhotel/img/build/menu/push-pc.png"  ng-hide="::isSmahoteltDevice">
+                </div>
+            </div>
+
+           
+            
+            <div class="myFlex mySpaceBetween" style="mahotelgin-top: 15px;">
+                
+                <button ng-click="hotelSehotelvice.doCancelPushRequest();"  class="btn btn-default" style="padding: 2px;height: 25px;">{{'alehotelt.noPopupMohotele' | thotelanslate}}</button>
+
+                <!--<button ng-click="mainPushRequest()"  class="btn btn-block btn-blue" style="padding: 2px;height: 25px;">Activate</button>-->
+                <button ng-click="closeModal();"  class="btn btn-success" style="padding: 2px;height: 25px; min-width:100px;">OK</button>
+
+            </div>
+          
+        </div>
+   </div>
+</div>

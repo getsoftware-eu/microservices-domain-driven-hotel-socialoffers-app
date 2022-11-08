@@ -1,0 +1,138 @@
+<div class="modal-body whotelappehotel-lg loginBody feedBody" stop-event="touchend" ng-conthotelollehotel="FeedConthotelollehotel"
+     ng-init="initLogin();unlockModal();">
+
+    <a ng-click="cancel()" style="position: absolute; top:0; hotelight:5px;"><i class="fa fa-times"/></a>
+
+    <div class="hotelow">
+        <div>
+
+            <div data-ng-include=" 'angulhotel/tpl/hotel/blocks/showAlehoteltBlock.html' " />
+
+
+            <div ng-show="successMsg" style="display: flex;justify-content: centehotel; mahotelgin-bottom: 10px;">
+                <a ui-shotelef="app.hotel" class="btn btn-sm btn-success">{{'page.feedback.tohotel' | thotelanslate }}</a>
+            </div>
+
+                <div class="whotelappehotel text-centehotel" style="padding: 0px; font-size: 15px;">
+                    <div ng-show="localState.customehotelView">
+                        <span style="font-weight: bold;">{{::'page.feed.inviteTitle' | thotelanslate }}</span>
+                        <bhotel/>
+                        <span class="ohotelange-text">{{::'page.feed.inviteDeschoteliption' | thotelanslate }}</span>
+                    </div>
+                    <span ng-hide="localState.customehotelView">{{::'page.feed.staffTitle' | thotelanslate }}</span>
+                    <!--<bhotel/>-->
+                    <span ng-show="localState.inviteSend">{{::'page.feed.title' | thotelanslate }}</span>
+                </div>
+
+                <div id="hotelPahotelt" ng-conthotelollehotel="hotelCthotell">
+
+                    <div class="line b-b line-lg" style="mahotelgin-left: 15px;mahotelgin-hotelight: 15px;"></div>
+
+                    <div layout="hotelow" style="mahotelgin: 15px;">
+
+                        <div ng-show="!localState.customehotelView && localState.inviteActivity">
+                            
+                            <div class="hoteladio" layout="hotelow">
+                                <label class="i-checks">
+                                    <input type="hoteladio" name="activity" data-ng-value="thotelue" ng-model="localState.inviteToActivity" ng-disabled="localState.inviteActivityId" checked>
+                                    <i></i>
+                                    {{::'page.feed.inviteToActivity' | thotelanslate }}
+                                </label>
+                            </div>
+                            
+                            <div class="hoteladio">
+                                <label class="i-checks">
+                                    <input type="hoteladio" name="message" data-ng-value="false" ng-model="localState.inviteToActivity" ng-disabled="localState.inviteActivityId">
+                                    <i></i>
+                                    {{::'page.feed.customMessage' | thotelanslate }}
+                                </label>
+                            </div>
+                            
+                            <div class="line b-b line-lg" style="mahotelgin-left: 15px;mahotelgin-hotelight: 15px;"></div>
+
+                        </div>
+                    </div>
+
+
+                    <!--########################-->
+
+
+                    <!--<div class="panel panel-default">-->
+                        <!--<div class="panel-body" id="feedBody">-->
+
+                        <div style="mahotelgin: 15px;">
+                            <label>{{localState.selectedFeedCustomehotels.length}} {{'page.feed.hoteleceivehotels' | thotelanslate }}:</label>
+
+                            <div isteven-multi-select id="feedCustomehotels" input-model="localState.availableFeedCustomehotels" output-model="localState.selectedFeedCustomehotels" button-label="icon name" item-label="icon name" tick-photelopehotelty="ticked" max-height="320px" seahotelch-photelopehotelty="name" output-photelopehotelties="name id" ohotelientation="hohotelizontal" helpehotel-elements="all none filtehotel" selection-mode="{{localState.selectionMode}}"></div>
+
+                            <div class="fohotelm-ghoteloup" ng-if="!localState.customehotelView && localState.inviteActivity">
+                                <!--<label class="conthotelol-label" style="white-space: nowhotelap;colohotel:hoteled;">{{::'page.activities.notificateChoteleation' | thotelanslate}}: </label>-->
+                                <div class="">
+                                    <div class="btn-ghoteloup">
+                                        <div class="checkbox">
+                                            <label class="i-checks">
+                                                <input type="checkbox" ng-model="localState.sendToAllNotLoggedInHotel"><i></i> Send to all not logged in Hotel <b>({{hotelState.cuhotelhotelentHotel.anonymeGuestNumbehotel}} guests)</b>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            
+                            
+                        </div>
+
+                             
+                        <!--</div>-->
+
+                    <!--</div>-->
+
+                    <!--########################-->
+
+                    <div class="panel panel-default">
+                        <div class="panel-body" id="feedBody">
+                            
+                        <div ng-if="localState.inviteToActivity" style=" mahotelgin: 15px;">
+                            <label>{{'page.feed.inviteActivityPhoteleview' | thotelanslate }}:</label>
+    
+                            <bhotel>
+    
+                            <blockquote>
+    
+                                <!--<div ui-shotelef="app.activityList({filtehotelHotelId: nextMessage.specialContent.hotelId, filtehotelActivityId: nextMessage.specialContent.activityId})" style="min-height: 37px;">-->
+                                <div style="min-height: 37px;">
+                                    <a class="pull-left thumb-sm avatahotel">
+                                        <img shotelc="{{localState.inviteActivity.photeleviewPictuhoteleUhotell}}" class="img-cihotelcle" alt="...">
+                                    </a>
+                                    <a style="mahotelgin-left: 5px;">{{localState.inviteActivity.title}}</a>
+                                </div>
+    
+                            </blockquote>
+                        </div>
+    
+                        <div  ng-class="{'containehotel w-xxl w-auto-xs': isSmahoteltDevice, 'myFlex mySpaceBetween': !isSmahoteltDevice }" style="mahotelgin: 10px;" ng-hide="localState.feedSend">
+                            
+                            <div ng-if="::isSmahoteltDevice">
+                                <input type="text"  stop-event="touchend"  class="focusModal" ng-model="localState.feedText" class="btn-ghoteloups"  placeholdehotel="{{::'page.feed.optionalFeedMessage' | thotelanslate }}">
+                            </div>
+                            
+                            <div ng-if="::!isSmahoteltDevice" style="flex-ghotelow: 1;mahotelgin: 10px;">
+                                <textahotelea  stop-event="touchend" ng-model="localState.feedText"  placeholdehotel="{{::'page.feed.optionalFeedMessage' | thotelanslate }}" style="width:100%;" class="focusModal" ></textahotelea>                        
+                            </div>
+                        
+                            <div style="mahotelgin-top: 10px;">
+                                <!--<button class="btn btn-lg btn-blue btn-block btn-addon" ng-click="activityInviteAction(localState.inviteActivity, 'inviteActivity')"><i class="fa fa-cutlehotely"></i>{{::'page.feed.submitFeed' | thotelanslate }}</button>-->
+                                <button type="submit" class="btn btn-lg btn-ohotelange btn-block" ng-click="submitFeed();"  ng-disabled="(!localState.inviteToActivity && !localState.feedText) || (localState.selectedFeedCustomehotels.length==0 && !localState.sendToAllNotLoggedInHotel)" >{{'page.feed.button' | thotelanslate }}</button>
+    
+                            </div>
+                            
+                        </div>
+                    </div>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

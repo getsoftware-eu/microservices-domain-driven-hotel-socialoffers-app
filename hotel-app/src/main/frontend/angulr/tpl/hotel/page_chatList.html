@@ -1,0 +1,287 @@
+<div style="height: 100%;" ng-controller="ChatListContr" class="hbox hbox-auto-xs" ng-init="
+app.hideFooter = false;
+app.header.showTab = true;
+app.header.showBackArrow = true;
+app.header.tabIndex = 1;
+app.rootSettings.darkBg = true;
+">
+
+    <div data-ng-include=" 'angulr/tpl/hotel/blocks/notLoggedInfoBlock.html' " style="margin: 5px;"/>
+
+
+    <!-- Eugen: tabIndex set from js -->
+    <div class="row" ng-show="!localState.showChatDiv">
+       
+        <div class="col-md-6" ng-style="::!isSmartDevice && {'min-width': '590px', 'width': '100%'}">
+       
+            <div class="panel no-border">
+
+                <!-- CHAT FILTER SELECTOR --->
+                
+                <div class="wrapper b-t b-light" ng-show="!localState.hotelScope" style="border-top: 0px;">
+
+                    <!--{{'page.chat.citySelect' | translate}}:                 -->
+                    <img src="angulr/icons/loader.gif" ng-show="localState.showCityLoading">
+                    <select ng-change="onChangeCustomerCitySelector();" class="form-control ng-pristine ng-valid ng-touched" ng-model="localState.selectedCustomerCity" id="customerCity" ng-options="customerRootEntity as customerRootEntity.city for customerRootEntity in localState.customerCitiesArray | unique:'city'" placeholder=" {{'page.chat.customerCityManualSelect' | translate}}">
+                        <option value="" disabled selected> {{'page.chat.citySelect' | translate}}</option>
+                        <!--<option value="" > {{::'page.checkin.allCityChoosed' | translate}}</option>-->
+                    </select>
+                    
+                    <span ng-show="localState.selectedCustomerCity && localState.filteredHotelsNOTEmpty">Hotels in {{localState.selectedCustomerCity.city}}:</span>
+                    <img src="angulr/icons/loader.gif" ng-show="localState.showCityHotelLoading && localState.filteredHotelsNOTEmpty">
+                    <select ng-change="onChangeFilterHotelSelector();" ng-show="localState.selectedCustomerCity && localState.filteredHotelsNOTEmpty" class="form-control ng-pristine ng-valid ng-touched" ng-model="localState.selectedFilterHotel" id="hotel" ng-options="hotel as hotel.name for hotel in localState.hotelsFilteredByCityArray" placeholder=" {{::'page.checkin.hotelManualSelect' | translate}}">
+                        <!--<option value="" disabled selected>Hotels in {{selectedCustomerCity.city}}</option>-->
+                        <option value=""> {{::'page.checkin.allHotelsChoosed' | translate}}</option>
+                    </select>
+
+
+                </div>
+                
+                <!-- CUSTOMERS IN HOTEL AND STAFF --->
+                <div class="myCenter m-t">
+                    <span ng-show="localState.dataLoaded && (localState.hotelScope && hotelState.hotelCustomers.length==0 && localState.filteredHotelCustomers.length==0)">{{::'page.chat.noHotelContactFound' | translate }}</span>
+                    <span ng-show="!localState.dataLoaded">Loading...</span>
+                </div>
+
+                <div ng-show="localState.hotelScope && hotelState.hotelCustomers.length>0"> 
+                    
+                    <div class="panel-heading wrapper b-b b-light">
+                        <h4 class="font-thin m-t-none m-b-none text-muted" ng-show="hotelState.profileData.checkedIn"><!--{{::currentHotel.name}}--> {{::'page.chat.chatListHeader' | translate}}:</h4>
+                    </div>
+                    
+                    <ul class="list-group list-group-lg m-b-none" ng-repeat="(key, staffCustomer) in localState.filterHotelStaffCustomers | orderBy: 'lastMessageTimeToMe':true  track by staffCustomer.id" >
+
+                        <li class="list-group-item chatListCol">
+                            <a href ui-sref="app.chat({receiverId: staffCustomer.id})" style="display: flex; display: -webkit-flex;display: -moz-flex;display: -ms-flexbox;">
+                                <div ng-click="clickLoading('app.chat', null, null, {receiverId: staffCustomer.id})" style="cursor: pointer;">
+                                    <a href ui-sref="app.user({userId: staffCustomer.id})" class="avatar thumb-sm m-r">
+                                       
+                                        <img ng-src="angulr/img/build/avatar/staff.png" class="r r-2x">
+                                        <i class="on md b-white right customerOnlineStatus"></i>
+                                        
+                                    </a>
+                                    <!--<a ui-sref="app.chat({receiverId: staffCustomer.id})" ng-class="hotelNotification.notificationObj.unreadChatProSenderCount[staffCustomer.id]? ' unreadMessageTime text-muted chatMessageTime': 'text-muted chatMessageTime' ">-->
+                                    <a ng-click="clickLoading('app.chat', null, null, {receiverId: staffCustomer.id})" ng-class="hotelNotification.notificationObj.unreadChatProSenderCount[staffCustomer.id]? ' unreadMessageTime text-muted chatMessageTime': 'text-muted chatMessageTime' ">
+                                        {{hotelNotification.notificationObj.lastMessageTimesToMe[staffCustomer.id]}}
+                                    </a>
+                                    <!--<a ui-sref="app.chat({receiverId: staffCustomer.id})" ng-class="hotelNotification.notificationObj.unreadChatProSenderCount[staffCustomer.id]? ' unreadMessageTime text-muted chatMessageArrow': 'text-muted chatMessageArrow' " ui-toggle-class="show">-->
+                                    <a ng-click="clickLoading('app.chat', null, null, {receiverId: staffCustomer.id})" ng-class="hotelNotification.notificationObj.unreadChatProSenderCount[staffCustomer.id]? ' unreadMessageTime text-muted chatMessageArrow': 'text-muted chatMessageArrow' " ui-toggle-class="show">
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                    <!--<a ui-sref="app.chat({receiverId: staffCustomer.id})" class="text-muted unreadMessagesCounter" ui-toggle-class="show">-->
+                                    <a ng-click="clickLoading('app.chat', null, null, {receiverId: staffCustomer.id})" class="text-muted unreadMessagesCounter" ui-toggle-class="show">
+                                         <span style="margin-left: 4px;" class="badge bg-success" ng-show="hotelNotification.notificationObj.unreadChatProSenderCount[staffCustomer.id]">
+                                          +{{hotelNotification.notificationObj.unreadChatProSenderCount[staffCustomer.id]}}
+                                        </span>
+                                    </a>
+                                   
+                                    <div class="chatUserInfo">
+    
+                                        <small class="text-muted clear text-ellipsis lastMessageFrom">
+                                            <!-- eugen: ng-class="unreadChatProSenderCount[nextCustomerEntity.id]? 'unreadChatMessage':''" -->
+                                            <a class="lastMessageFromText" ui-sref="app.chat({receiverId: staffCustomer.id})">
+                                                <div ng-show="hotelNotification.notificationObj.lastMessageSeenByCustomer[staffCustomer.id]" style="margin-left: 2px;margin-top: -3px;"><img src="angulr/img/build/chat/seenByReceiver.png"/></div>
+                                                <div ng-show="!hotelNotification.notificationObj.lastMessageSeenByCustomer[staffCustomer.id] && hotelNotification.notificationObj.lastMessageDelieveredToCustomer[staffCustomer.id]" style="margin-left: 2px;margin-top: -3px;"><img src="angulr/img/build/chat/delieveredToReceiver.png"/></div>
+                                                
+                                                <!--<div ng-show="!hotelNotification.notificationObj.lastMessageSeenByCustomer[staffCustomer.id] && !hotelNotification.notificationObj.lastMessageDelieveredToCustomer[staffCustomer.id]" style="margin-left: 2px;margin-top: -3px;"><img src="angulr/img/build/chat/delieveredToServer.png"/></div>-->
+                                                
+                                                {{hotelNotification.notificationObj.lastMessagesToMe[staffCustomer.id]}}
+                                            </a>
+                                        </small>
+        
+                                        <!--<a href ui-sref="app.chat({receiverId: staffCustomer.id})" class="chatListCustomerName">-->
+                                        <a href ng-click="clickLoading('app.chat', null, null, {receiverId: staffCustomer.id})" class="chatListCustomerName">
+                                            {{hotelState.currentHotel.name}}
+                                            <span class="label bg-orange hotelStaff inline">{{::'system.hotelStaff' | translate}}</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    
+                    <ul class="list-group list-group-lg m-b-none" ng-repeat="(key, nextCustomerEntity) in localState.filteredHotelCustomers | orderBy: 'lastMessageTimeToMe':true track by nextCustomerEntity.id" >
+                    
+                        <li class="list-group-item chatListCol">
+                            <a href ui-sref="app.chat({receiverId: nextCustomerEntity.id})" style="display: flex; display: -webkit-flex;display: -moz-flex;display: -ms-flexbox;">
+                                <div ng-click="clickLoading('app.chat', null, null, {receiverId: nextCustomerEntity.id})" style="cursor: pointer;">
+                                    <a href ui-sref="app.user({userId: nextCustomerEntity.id})" class="avatar thumb-sm m-r">
+                                        <!--<img src="{{::getProfileImageUrl(nextCustomerEntity.id)}}" class="r r-2x">-->
+                                        <img ng-src="{{nextCustomerEntity.avatarUrl}}" class="r r-2x">
+                                        <i class="on md b-white right customerOnlineStatus" ng-show="hotelNotification.notificationObj.hotelOnlineGuestIds[nextCustomerEntity.id]"></i>
+                                        <i class="offline md b-white right customerOnlineStatus" ng-hide="hotelNotification.notificationObj.hotelOnlineGuestIds[nextCustomerEntity.id]"></i>
+                                    </a>
+                                    <!--<a ui-sref="app.chat({receiverId: nextCustomerEntity.id})" ng-class="hotelNotification.notificationObj.unreadChatProSenderCount[nextCustomerEntity.id]? ' unreadMessageTime text-muted chatMessageTime': 'text-muted chatMessageTime' ">-->
+                                    <a ng-click="clickLoading('app.chat', null, null, {receiverId: nextCustomerEntity.id})" ng-class="hotelNotification.notificationObj.unreadChatProSenderCount[nextCustomerEntity.id]? ' unreadMessageTime text-muted chatMessageTime': 'text-muted chatMessageTime' ">
+                                        {{hotelNotification.notificationObj.lastMessageTimesToMe[nextCustomerEntity.id]}}
+                                    </a>
+                                    <!--<a ui-sref="app.chat({receiverId: nextCustomerEntity.id})" ng-class="hotelNotification.notificationObj.unreadChatProSenderCount[nextCustomerEntity.id]? ' unreadMessageTime text-muted chatMessageArrow': 'text-muted chatMessageArrow' " ui-toggle-class="show">-->
+                                    <a ng-click="clickLoading('app.chat', null, null, {receiverId: nextCustomerEntity.id})" ng-class="hotelNotification.notificationObj.unreadChatProSenderCount[nextCustomerEntity.id]? ' unreadMessageTime text-muted chatMessageArrow': 'text-muted chatMessageArrow' " ui-toggle-class="show">
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                    <!--<a ui-sref="app.chat({receiverId: nextCustomerEntity.id})" class="text-muted unreadMessagesCounter" ui-toggle-class="show">-->
+                                    <a ng-click="clickLoading('app.chat', null, null, {receiverId: nextCustomerEntity.id})" class="text-muted unreadMessagesCounter" ui-toggle-class="show">
+                                         <span style="margin-left: 4px;" class="badge bg-success" ng-show="hotelNotification.notificationObj.unreadChatProSenderCount[nextCustomerEntity.id]">
+                                          +{{hotelNotification.notificationObj.unreadChatProSenderCount[nextCustomerEntity.id]}}
+                                        </span>
+                                    </a>
+                                    
+                                    <div class="chatUserInfo">
+
+                                        <small class="text-muted clear text-ellipsis lastMessageFrom">
+                                            <!-- eugen: ng-class="unreadChatProSenderCount[nextCustomerEntity.id]? 'unreadChatMessage':''" -->
+                                            <!--<a ui-sref="app.chat({receiverId: nextCustomerEntity.id})" class="text-ellipsis lastChatMessagesToMe">-->
+                                            <a ng-click="clickLoading('app.chat', null, null, {receiverId: nextCustomerEntity.id})" class="text-ellipsis lastChatMessagesToMe">
+                                                <div ng-show="hotelNotification.notificationObj.lastMessageSeenByCustomer[nextCustomerEntity.id]" style="margin-left: 2px;margin-top: -2px;"><img src="angulr/img/build/chat/seenByReceiver.png"/></div>
+                                                <div ng-show="!hotelNotification.notificationObj.lastMessageSeenByCustomer[nextCustomerEntity.id] && hotelNotification.notificationObj.lastMessageDelieveredToCustomer[nextCustomerEntity.id]" style="margin-left: 2px;margin-top: -2px;"><img src="angulr/img/build/chat/delieveredToReceiver.png"/></div>
+                                                
+                                                <!--<div ng-show="hotelNotification.notificationObj.lastMessagesToMe[nextCustomerEntity.id] && !hotelNotification.notificationObj.lastMessageSeenByCustomer[nextCustomerEntity.id] && !hotelNotification.notificationObj.lastMessageDelieveredToCustomer[nextCustomerEntity.id]" style="margin-left: 2px;margin-top: -2px;"><img src="angulr/img/build/chat/delieveredToServer.png"/></div>-->
+                                                
+                                                {{hotelNotification.notificationObj.lastMessagesToMe[nextCustomerEntity.id]}}
+                                            </a>  
+                                        </small>
+            
+                                        <!--<a href ui-sref="app.chat({receiverId: nextCustomerEntity.id})" class="chatListCustomerName">-->
+                                        <a href ng-click="clickLoading('app.chat', null, null, {receiverId: nextCustomerEntity.id})" class="chatListCustomerName">
+                                            {{nextCustomerEntity.firstName}} <span ng-class="hotelState.profileData.logged && hotelState.profileData.fullCheckin? '' : 'diffuseText' ">{{nextCustomerEntity.lastName}}</span>
+                                        </a>
+                                   </div>
+                                </div>
+                            </a>
+                        </li>
+                        
+                    </ul>
+                    
+                </div>
+                
+                <!-- (OUTER) CONTACTS THAT ARE NOT IN HOTEL -->
+
+                <div ng-show="localState.hotelScope && localState.filteredOutOfHotelContactCustomers.length>0">
+                    <div class="panel-heading wrapper b-b b-light">
+                        <h4 class="font-thin m-t-none m-b-none text-muted" ng-show="hotelScope && localState.filteredOutOfHotelContactCustomers.length>0">{{::'page.chat.notHotelPartners' | translate }}</h4>
+                        <h4 class="font-thin m-t-none m-b-none text-muted" ng-show="!hotelScope">{{::'page.chat.allYourChatPartners' | translate }}</h4>
+                    </div>
+
+                    <span ng-show="localState.filteredOutOfHotelContactCustomers.length==0">{{::'page.chat.noPartnerFound' | translate }}</span>
+                    
+                    <ul class="list-group list-group-lg m-b-none" ng-repeat="(key, nextCustomerEntity) in localState.filteredOutOfHotelContactCustomers | orderBy: 'lastMessageTimeToMe':true  track by nextCustomerEntity.id" >
+    
+                        <li class="list-group-item chatListCol">
+                            <a href ui-sref="app.chat({receiverId: nextCustomerEntity.id})">
+                                <div ng-click="clickLoading('app.chat', null, null, {receiverId: nextCustomerEntity.id})" style="cursor: pointer;">
+                                    <a href ui-sref="app.user({userId: nextCustomerEntity.id})" class="avatar thumb-sm m-r">
+                                    <!--<a href ng-click="clickLoading('app.user', null, null, {userId: nextCustomerEntity.id})" class="avatar thumb-sm m-r">-->
+                                        <!--<img src="{{getProfileImageUrl(nextCustomerEntity.id)}}" class="r r-2x">-->
+                                        <img ng-src="{{nextCustomerEntity.avatarUrl}}" class="r r-2x">
+                                        <i class="on md b-white right customerOnlineStatus" ng-show="hotelNotification.notificationObj.hotelOnlineGuestIds[nextCustomerEntity.id]"></i>
+                                        <i class="offline md b-white right customerOnlineStatus" ng-hide="hotelNotification.notificationObj.hotelOnlineGuestIds[nextCustomerEntity.id]"></i>
+                                    </a>
+                                    <a ui-sref="app.chat({receiverId: nextCustomerEntity.id})" ng-class="hotelNotification.notificationObj.unreadChatProSenderCount[nextCustomerEntity.id]? ' unreadMessageTime text-muted chatMessageTime': 'text-muted chatMessageTime' ">
+                                    <!--<a ng-click="clickLoading('app.chat', null, null, {receiverId: nextCustomerEntity.id})" ng-class="hotelNotification.notificationObj.unreadChatProSenderCount[nextCustomerEntity.id]? ' unreadMessageTime text-muted chatMessageTime': 'text-muted chatMessageTime' ">-->
+                                        {{hotelNotification.notificationObj.lastMessageTimesToMe[nextCustomerEntity.id]}}
+                                    </a>
+                                    <a ui-sref="app.chat({receiverId: nextCustomerEntity.id})" ng-class="hotelNotification.notificationObj.unreadChatProSenderCount[nextCustomerEntity.id]? ' unreadMessageTime text-muted chatMessageArrow': 'text-muted chatMessageArrow' " ui-toggle-class="show">
+                                    <!--<a ng-click="clickLoading('app.chat', null, null, {receiverId: nextCustomerEntity.id})" ng-class="hotelNotification.notificationObj.unreadChatProSenderCount[nextCustomerEntity.id]? ' unreadMessageTime text-muted chatMessageArrow': 'text-muted chatMessageArrow' " ui-toggle-class="show">-->
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                    <a ui-sref="app.chat({receiverId: nextCustomerEntity.id})" class="text-muted unreadMessagesCounter" ui-toggle-class="show">
+                                    <!--<a ng-click="clickLoading('app.chat', null, null, {receiverId: nextCustomerEntity.id})" class="text-muted unreadMessagesCounter" ui-toggle-class="show">-->
+                                             <span style="margin-left: 4px;" class="badge bg-success" ng-show="hotelNotification.notificationObj.unreadChatProSenderCount[nextCustomerEntity.id]">
+                                              +{{hotelNotification.notificationObj.unreadChatProSenderCount[nextCustomerEntity.id]}}
+                                            </span>
+                                    </a>
+                                    
+                                    <div class="chatUserInfo">
+
+                                        <small class="text-muted clear text-ellipsis lastMessageFrom">
+                                            <!-- eugen: ng-class="unreadChatProSenderCount[nextCustomerEntity.id]? 'unreadChatMessage':''" -->
+                                            <a ui-sref="app.chat({receiverId: nextCustomerEntity.id})" class="lastChatMessagesToMe text-ellipsis">
+                                                <div ng-show="hotelNotification.notificationObj.lastMessageSeenByCustomer[nextCustomerEntity.id]" style="margin-left: 2px;margin-top: -2px;"><img src="angulr/img/build/chat/seenByReceiver.png"/></div>
+                                                <div ng-show="!hotelNotification.notificationObj.lastMessageSeenByCustomer[nextCustomerEntity.id] && hotelNotification.notificationObj.lastMessageDelieveredToCustomer[nextCustomerEntity.id]" style="margin-left: 2px;margin-top: -2px;"><img src="angulr/img/build/chat/delieveredToReceiver.png"/></div>
+                                                
+                                                <!--<div ng-show="hotelNotification.notificationObj.lastMessagesToMe[nextCustomerEntity.id] && !hotelNotification.notificationObj.lastMessageSeenByCustomer[nextCustomerEntity.id] && !hotelNotification.notificationObj.lastMessageDelieveredToCustomer[nextCustomerEntity.id]" style="margin-left: 2px;margin-top: -2px;"><img src="angulr/img/build/chat/delieveredToServer.png"/></div>-->
+                                                {{hotelNotification.notificationObj.lastMessagesToMe[nextCustomerEntity.id]}}
+                                            </a>
+                                        </small>
+                
+                                        <a href ui-sref="app.chat({receiverId: nextCustomerEntity.id})" class="chatListCustomerName">
+                                            {{nextCustomerEntity.firstName}} {{nextCustomerEntity.lastName}}
+                                        </a>
+                                 </div>
+                                </div>
+                            </a>
+                        </li>
+                            
+                    </ul>
+                </div>
+
+                <!-- (ALL) CONTACTS [IGNORE HOTEL] -->
+                
+                <div ng-show="!localState.hotelScope">
+
+                    <div class="panel-heading wrapper b-b b-light">
+                        <!--<h4 class="font-thin m-t-none m-b-none text-muted" ng-show="app.header.tabIndex==1 && localState.filteredAllContactCustomers.length>0">{{::'page.chat.notHotelPartners' | translate }}</h4>-->
+                        <h4 class="font-thin m-t-none m-b-none text-muted" style="border-bottom: 0;" ng-show="!hotelScope">{{::'page.chat.allYourChatPartners' | translate }}</h4>
+                    </div>
+
+                    <div class="nothingFoundMsg" ng-show="localState.dataLoaded && (localState.noContactFound || localState.filteredAllContactCustomers.length==0)">{{::'page.chat.noPartnerFound' | translate}}<span ng-hide="hotelState.profileData.checkedIn"><br>{{::'page.chat.tryCheckin' | translate}}</span></div>
+                    <div class="nothingFoundMsg" ng-show="!localState.dataLoaded">Loading...</div>
+
+                    <ul class="list-group list-group-lg m-b-none" ng-repeat="(key, nextCustomerEntity) in localState.filteredAllContactCustomers | orderBy: 'lastMessageTimeToMe':true track by nextCustomerEntity.id" >
+
+                        <div data-ng-include=" 'angulr/tpl/hotel/blocks/chatListCustomer.html' " />
+
+                    </ul>
+                    
+                    
+                </div>
+                
+                <!-- OTHER VIP Contacts in system-->
+                
+                <div class="vipCustomers" ng-show="!localState.hotelScope">
+
+                    <accordion close-others="oneAtATime">
+
+                        <accordion-group is-open="accordionStatus.chatVipOpen" is-disabled="accordionStatus.isChatVipDisabled" ng-click="loadVipChat();">
+
+                            <accordion-heading >
+                                <div class="headerAccordion" ng-click="switchVipCustomers();">
+                                    <i class="pull-right fa fa-angle-right" ng-class="{'fa-angle-down': accordionStatus.chatVipOpen, 'fa-angle-right': !accordionStatus.chatVipOpen}"></i>
+                                    <!--<div class="panel-heading wrapper b-b b-light">-->
+                                    <h4 class="font-thin m-t-none m-b-none text-muted" style="color: #f1592a;">
+                                        {{::'page.chat.allChatCustomers' | translate }}
+                                        <span ng-show="accordionStatus.chatVipOpen && localState.filterCity!='-1' && (!localState.filterHotelId || localState.filterHotelId=='-1' || localState.filterHotelId==-1)">in {{localState.filterCity}}</span>
+                                        <span ng-show="accordionStatus.chatVipOpen && (localState.filterHotelId && localState.filterHotelId!='-1' && localState.filterHotelId!=-1 && localState.selectedFilterHotel)">in {{localState.selectedFilterHotel.name}}</span>
+                                        <img src="angulr/icons/loader.gif" ng-show="localState.showAllCustomersLoading && accordionStatus.chatVipOpen"></h4>
+                                    <!--</div>-->
+                                </div>
+                            </accordion-heading>
+
+                            <ul class="list-group list-group-lg m-b-none" ng-repeat="(key, nextCustomerEntity) in localState.filteredOtherCustomers | orderBy: 'city':false  track by nextCustomerEntity.id" >
+
+                                <div data-ng-include=" 'angulr/tpl/hotel/blocks/chatListCustomer.html' " />
+
+                            </ul>
+                            
+                            <div ng-show="localState.filteredOtherCustomers.length>=25" style="width: 100%;" class="myCenter">
+                                <a href="#"  ng-click="loadMoreVip();"><b>more...</b></a>
+
+                            </div>
+
+                            <div class="nothingFoundMsg" ng-show="localState.noOtherContactFound">{{::'page.chat.noOuterContactsFound' | translate}}</div>
+
+
+                        </accordion-group>
+                    </accordion>
+                    
+                </div>
+               
+            </div>
+            
+        </div>
+        
+    </div>
+    
+</div>
