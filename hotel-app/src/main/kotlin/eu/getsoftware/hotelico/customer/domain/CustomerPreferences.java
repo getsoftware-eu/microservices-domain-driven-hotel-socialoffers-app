@@ -34,6 +34,9 @@ class CustomerPreferences
 	@Column(name = "hideChromePushPopup", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
 	private boolean hideChromePushPopup = false;
 	
+	@Column(name = "setAllowHotelNotification", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
+	private boolean setAllowHotelNotification = false;
+	
 	@Column
 	private String prefferedLanguage;
 	

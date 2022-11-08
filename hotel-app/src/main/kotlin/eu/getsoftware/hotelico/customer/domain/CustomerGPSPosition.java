@@ -1,9 +1,26 @@
 package eu.getsoftware.hotelico.customer.domain;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+
+@Entity
+@Getter @Setter
+@Table(name = "customer_gps_position")
 class CustomerGPSPosition
 {
+	@Id
+	@Setter(AccessLevel.PROTECTED)
+	@GeneratedValue(strategy= GenerationType.IDENTITY)
+	private long id;
+	
 	/**
 	 * -180
 	 */
@@ -31,7 +48,7 @@ class CustomerGPSPosition
 	//	@Validate("min=0, max=180")
 	private double longitude = LOWER_BOUND_LONGITUDE;
 	
-	CustomerGPSPosition()
+	public CustomerGPSPosition()
 	{
 		super();
 	}

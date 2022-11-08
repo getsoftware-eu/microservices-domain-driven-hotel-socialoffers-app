@@ -7,10 +7,10 @@
 	<version>0.0.1-SNAPSHOT</version>
 	
 	<modules>
-        <module>clients</module>
+        <module>common-client-libs</module>
 		<module>eureka-server</module>
-		<module>hotel-client</module>
-		<module>hotel-menu</module>
+		<module>hotel-app</module>
+		<module>hotel-plugin-menu</module>
         <module>apigw</module>
 		<module>amqp</module>
 		<module>notification</module>
@@ -115,6 +115,11 @@
 					<groupId>org.springframework.boot</groupId>
 					<artifactId>spring-boot-maven-plugin</artifactId>
 					<version>${spring.boot.maven.plugin.version}</version>
+<!--					<configuration>--> <!--Need hier config layers or parent.pom???-->
+<!--						<layers>-->
+<!--							<enabled>true</enabled>-->
+<!--						</layers>-->
+<!--					</configuration>-->
 					<executions>
 						<execution>
 							<goals>

@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.menu;
+package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.main;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

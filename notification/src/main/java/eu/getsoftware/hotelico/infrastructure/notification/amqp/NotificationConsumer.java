@@ -1,10 +1,10 @@
-package eu.getsoftware.hotelico.notification.amqp;
+package eu.getsoftware.hotelico.infrastructure.notification.amqp;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-import eu.getsoftware.hotelico.notification.NotificationRequest;
-import eu.getsoftware.hotelico.notification.NotificationService;
+import eu.getsoftware.hotelico.clients.infrastructure.notification.NotificationRequest;
+import eu.getsoftware.hotelico.infrastructure.notification.NotificationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

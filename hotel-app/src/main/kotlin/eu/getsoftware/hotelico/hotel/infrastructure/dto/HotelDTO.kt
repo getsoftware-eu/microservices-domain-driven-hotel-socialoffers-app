@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.hotel.infrastructure.dto;
 
-import eu.getsoftware.hotelico.infrastructure.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.infrastructure.dto.BasicDTO
+import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils
 
 public class HotelDTO: BasicDTO
 {

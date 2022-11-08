@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.notification;
+package eu.getsoftware.hotelico.infrastructure.notification;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

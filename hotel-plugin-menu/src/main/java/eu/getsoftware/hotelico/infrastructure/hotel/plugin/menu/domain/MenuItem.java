@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.domain.menu;
+package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.domain;
 
 import java.io.Serializable;
 import java.sql.Timestamp;

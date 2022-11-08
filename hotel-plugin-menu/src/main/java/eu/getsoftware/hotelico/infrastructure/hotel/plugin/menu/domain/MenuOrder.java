@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.domain.menu;
+package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.domain;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -20,10 +20,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import eu.getsoftware.hotelico.domain.customer.CustomerRootEntity;
 import eu.getsoftware.hotelico.domain.hotel.HotelRootEntity;
 import eu.getsoftware.hotelico.domain.utils.HibernateUtils;
-import eu.getsoftware.hotelico.infrastructure.hotel.utils.DealStatus;
+import eu.getsoftware.hotelico.hotel.utils.DealStatus;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -66,7 +65,7 @@ public class MenuOrder implements Serializable
 
 	@ManyToOne
 	@JoinColumn(name="senderId")
-	private CustomerRootEntity sender;
+	private CustomerEntity sender;
 	
 	@Column
 	private Timestamp timestamp = new Timestamp(new Date().getTime());	

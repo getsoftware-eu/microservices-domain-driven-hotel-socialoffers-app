@@ -241,5 +241,5 @@ public class CustomerRootEntity implements Serializable
     {
         return new CustomerAggregate(this);
     }
-    
+	
 }

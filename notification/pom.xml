@@ -57,8 +57,9 @@
         </dependency>
         <dependency>
             <groupId>eu.getsoftware.hotelico</groupId>
-            <artifactId>clients</artifactId>
+            <artifactId>common-client-libs</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     

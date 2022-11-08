@@ -1,9 +1,10 @@
-package eu.getsoftware.hotelico.notification;
+package eu.getsoftware.hotelico.infrastructure.notification;
 
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Service;
 
+import eu.getsoftware.hotelico.clients.infrastructure.notification.NotificationRequest;
 import lombok.AllArgsConstructor;
 
 @Service

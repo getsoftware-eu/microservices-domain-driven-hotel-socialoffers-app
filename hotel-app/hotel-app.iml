@@ -3,6 +3,10 @@
   <component name="AutoImportedSourceRoots">
     <option name="directories">
       <list>
+        <option value="C:\work\GetSoftw\social-hotel-interactions\hotel-app/src/main/java" />
+        <option value="C:\work\GetSoftw\social-hotel-interactions\hotel-app/src/main/kotlin" />
+        <option value="C:\work\GetSoftw\social-hotel-interactions\hotel-app/src/test/java" />
+        <option value="C:\work\GetSoftw\social-hotel-interactions\hotel-app/src/test/kotlin" />
         <option value="C:\work\GetSoftw\social-hotel-interactions\hotel-client/src/main/java" />
         <option value="C:\work\GetSoftw\social-hotel-interactions\hotel-client/src/main/kotlin" />
         <option value="C:\work\GetSoftw\social-hotel-interactions\hotel-client/src/test/java" />

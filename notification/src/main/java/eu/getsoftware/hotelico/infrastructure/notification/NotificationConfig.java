@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.notification;
+package eu.getsoftware.hotelico.infrastructure.notification;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;

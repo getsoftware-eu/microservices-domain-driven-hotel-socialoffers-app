@@ -1,5 +1,7 @@
 package eu.getsoftware.hotelico.customer.infrastructure.service.impl;
 
+import static eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils.convertToDate;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.sql.Timestamp;
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import eu.getsoftware.hotelico.chat.domain.ChatMessage;
+import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.domain.CustomerAggregate;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.domain.Language;
@@ -43,7 +46,6 @@ import eu.getsoftware.hotelico.hotel.infrastructure.service.LoginHotelicoService
 import eu.getsoftware.hotelico.hotel.infrastructure.service.MailService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;
-import eu.getsoftware.hotelico.infrastructure.utils.ControllerUtils;
 
 @Service
 public class CustomerServiceImpl implements CustomerService
@@ -178,7 +180,7 @@ public class CustomerServiceImpl implements CustomerService
             if(hotelRootEntity !=null && customerDto.getHotelStaff())
             {
                 customerDto.setCheckinFrom(new Date());
-                customerDto.setCheckinTo(ControllerUtils.convertToDate(LocalDateTime.now().plusYears(10)));
+                customerDto.setCheckinTo(convertToDate(LocalDateTime.now().plusYears(10)));
                 checkinService.setCustomerCheckin(customerDto, customerEntity);
 
                 if (customerDto.getEmail() != null)
@@ -242,7 +244,7 @@ public class CustomerServiceImpl implements CustomerService
         CustomerRootEntity customerEntity = modelMapper.map(customerDto, CustomerRootEntity.class);
         customerEntity.setLinkedInId(linkedInId);
         customerEntity.setLogged(true);
-        customerEntity.setProfileImageUrl(customerDto.getProfileImageUrl());
+        customerEntity.getEntityAggregate().setProfileImageUrl(customerDto.getProfileImageUrl());
 
         //TODO eugen: get Languages from linkedIn
         
@@ -266,7 +268,7 @@ public class CustomerServiceImpl implements CustomerService
     public CustomerDTO addFacebookCustomer(CustomerDTO customerDto, String facebookId){
         CustomerRootEntity customerEntity = modelMapper.map(customerDto, CustomerRootEntity.class);
         customerEntity.setFacebookId(facebookId);
-        customerEntity.setProfileImageUrl(customerDto.getProfileImageUrl());
+        customerEntity.getEntityAggregate().setProfileImageUrl(customerDto.getProfileImageUrl());
         
         //TODO eugen: get Languages from linkedIn
         
@@ -309,7 +311,7 @@ public class CustomerServiceImpl implements CustomerService
             
             if(customerEntity ==null)
             {
-                dto.setId(-1);
+                dto.setId(-1L);
                 return dto;
             }
             
@@ -682,7 +684,7 @@ public class CustomerServiceImpl implements CustomerService
         //				return $scope.hotelState.profileData.avatarUrl;
         //			}
         //		}
-        String currentPictureUrl = ControllerUtils.isEmptyString(customerEntity.getPictureUrl()) ? customerEntity.getProfileImageUrl() : customerEntity.getPictureUrl();
+        String currentPictureUrl = ControllerUtils.isEmptyString(customerEntity.getPictureUrl()) ? customerEntity.getEntityAggregate().getProfileImageUrl() : customerEntity.getPictureUrl();
         //		if(!isShowAvatar() && userId && $rootScope.allCustomersById && $rootScope.allCustomersById[userId] && $rootScope.allCustomersById[userId].avatarUrl.length>0 && $rootScope.allCustomersById[userId].showAvatar)
         if(customerEntity.isShowAvatar() && !ControllerUtils.isEmptyString(currentPictureUrl))
 		{
@@ -897,7 +899,7 @@ public class CustomerServiceImpl implements CustomerService
         
         for (CustomerRootEntity nextCustomerRootEntity : allCustomerEntities)
         {
-            if(nextCustomerRootEntity.isActive() && (nextCustomerRootEntity.getCity()!=null && nextCustomerRootEntity.getCity().equals(city) || city==null && nextCustomerRootEntity.getCity()==null))
+            if(nextCustomerRootEntity.isActive() && (nextCustomerRootEntity.getEntityAggregate().getCity()!=null && nextCustomerRootEntity.getEntityAggregate().getCity().equals(city) || city==null && nextCustomerRootEntity.getEntityAggregate().getCity()==null))
             {
                 //TODO Eugen: create global convert method to dto...
                 long hotelId = getCustomerHotelId(nextCustomerRootEntity.getId());
@@ -945,7 +947,7 @@ public class CustomerServiceImpl implements CustomerService
             CustomerRootEntity nextCustomerRootEntity = nextCheckin.getCustomer();
 
             //eugen: filter guest accounts not active more than 1 day
-            if(nextCustomerRootEntity.isGuestAccount() && nextCustomerRootEntity.getLastSeenOnline()!=null && nextCustomerRootEntity.getLastSeenOnline().before(ControllerUtils.convertToDate(LocalDateTime.now().minusDays(ControllerUtils.AWAY_GUEST_DAYS_TIMEOUT))))
+            if(nextCustomerRootEntity.isGuestAccount() && nextCustomerRootEntity.getLastSeenOnline()!=null && nextCustomerRootEntity.getLastSeenOnline().before(convertToDate(LocalDateTime.now().minusDays(ControllerUtils.AWAY_GUEST_DAYS_TIMEOUT))))
             {
                 if(ControllerUtils.SET_AWAY_GUEST_INACTIVE)
                 {

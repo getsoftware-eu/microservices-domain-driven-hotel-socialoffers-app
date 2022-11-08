@@ -2,10 +2,15 @@ package eu.getsoftware.hotelico.clients.infrastructure.dto;
 
 import java.io.Serializable;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 /**
  * Created by Eugen on 08.02.2016.
  */
-abstract class BasicDTO implements Serializable
+@Getter
+@NoArgsConstructor
+public abstract class BasicDTO implements Serializable
 {
 	Long id = 0L;
 	
@@ -15,11 +20,17 @@ abstract class BasicDTO implements Serializable
 	
 	String dtoType = this.getClass().getSimpleName().toLowerCase();
 	
-	BasicDTO(){
-		
-	};
-	
 	BasicDTO(Long initId) {
         this.initId = initId;
     }
+	
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
+	
+	public void setInitId(Long initId)
+	{
+		this.initId = initId;
+	}
 }

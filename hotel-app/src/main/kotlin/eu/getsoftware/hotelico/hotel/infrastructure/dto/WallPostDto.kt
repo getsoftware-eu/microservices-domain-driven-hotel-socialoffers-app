@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.hotel.infrastructure.dto;
 
+import eu.getsoftware.hotelico.clients.infrastructure.dto.BasicDTO
 import java.sql.Timestamp
 import java.util.*
 

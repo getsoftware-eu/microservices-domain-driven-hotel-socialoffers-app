@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import eu.getsoftware.hotelico.clients.infrastructure.exception.HotelException;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.aspects.NotifyClients;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDto;
@@ -25,7 +26,6 @@ import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDto;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.CacheService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.FileUploadService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
-import eu.getsoftware.hotelico.infrastructure.hotel.exception.HotelException;
 import io.micrometer.core.annotation.Timed;
 
 @Timed("sensorMap.controller") //eugen: profiler
