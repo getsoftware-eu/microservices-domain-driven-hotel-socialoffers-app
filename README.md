@@ -1,4 +1,4 @@
-# Domain-driven Design - Java implementation
+# Domain-driven Design - my Java implementation
 
 "Clean" (Layered) Architecture is another way to provide for <b>separation of concerns</b>, <b>encapsulation</b> and <b>decoupling</b>, by grouping code units by their domain and functional role within the application.
 
@@ -14,7 +14,6 @@
 
 #### Special offers on guests
 … hotels can send attractive special offers on guests smartphones on demand. Guests can see & book meals or other spa services directly via smartphone from any place. On smartphone guests can communicate with the hotel and other guests to have more fun at their hotel stay.
-![Special offers on guests](/docs/img/appPreview.png)
 ![Special offers on guests](/docs/img/appDealAccept.png)
 
 ### Hotel guests socializing
