@@ -14,9 +14,12 @@
 
 #### Special offers on guests
 … hotels can send attractive special offers on guests smartphones on demand. Guests can see & book meals or other spa services directly via smartphone from any place. On smartphone guests can communicate with the hotel and other guests to have more fun at their hotel stay.
+![Special offers on guests](/docs/img/appPreview.png)
+![Special offers on guests](/docs/img/appDealAccept.png)
 
-### Hotel guests sotializing
+### Hotel guests socializing
 Guests can get to know other guests in the hotel. And earn bonus points for hotel offers at the same time
+![Special offers on guests](/docs/img/appInfo.jpg)
 
 
 
