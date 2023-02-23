@@ -2,6 +2,24 @@
 
 "Clean" (Layered) Architecture is another way to provide for <b>separation of concerns</b>, <b>encapsulation</b> and <b>decoupling</b>, by grouping code units by their domain and functional role within the application.
 
-## Refactoring an old 'Hotel-interaction' project, trying to encapsulate domain-data (with Domain-driven Design and Onion Architecture).
+### It's a refactoring of an old 'Hotel-interaction' project: trying to encapsulate domain-data (with Domain-driven Design and Onion Architecture).
 
-![cross the architectonic boundaries](/docs/img/diagramm1.png)
+![Agregates is only one entry to domain entities](/docs/img/diagramm1.png)
+
+## Hotel interaction Application
+### 'MAKING GUESTS & HOTELS HAPPY'
+
+![Application intro](/docs/img/app3.png)
+
+
+#### Special offers on guests
+… hotels can send attractive special offers on guests smartphones on demand. Guests can see & book meals or other spa services directly via smartphone from any place. On smartphone guests can communicate with the hotel and other guests to have more fun at their hotel stay.
+
+### Hotel guests sotializing
+Guests can get to know other guests in the hotel. And earn bonus points for hotel offers at the same time
+
+
+
+### Onion "Clean" Architecture with java
+Based on my another Github project:
+https://github.com/getsoftware-eu/my-onion-clean-architecture
