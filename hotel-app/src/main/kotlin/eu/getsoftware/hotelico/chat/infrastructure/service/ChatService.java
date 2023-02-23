@@ -42,12 +42,9 @@ public interface ChatService
     @Transactional
     void markChatRead(long customerId, long senderId, long maxSeenChatMessageId);
     
-    @Transactional
     Set<CustomerDTO> getNotHotelChatPartners(long customerId, String city, long hotelId);    
     
-    @Transactional
     Set<CustomerDTO> getAllContactChatPartners(long customerId, String city, long hotelId);
     
-    @Transactional
     Set<CustomerDTO> getAllNotChatPartners(long customerId, String city, long hotelId, int pageNumber);
 }

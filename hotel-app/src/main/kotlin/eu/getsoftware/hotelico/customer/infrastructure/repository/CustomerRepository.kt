@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.sql.Timestamp;
 
-public interface CustomerRepository: JpaRepository<CustomerRootEntity, Long> {
+interface CustomerRepository: JpaRepository<CustomerRootEntity, Long> {
 	
 	companion object {
 		

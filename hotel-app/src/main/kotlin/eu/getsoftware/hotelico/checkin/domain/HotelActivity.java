@@ -74,11 +74,11 @@ public class HotelActivity implements Serializable, IFileUploadable
 	private CustomerRootEntity sender;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "validFrom", nullable = true, length = 10)
+	@Column(name = "validFrom", length = 10)
 	private Date validFrom;
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "validTo", nullable = true, length = 10)
+	@Column(name = "validTo", length = 10)
 	private Date validTo;
 	
 	@Column
@@ -97,10 +97,10 @@ public class HotelActivity implements Serializable, IFileUploadable
 	@Column
 	private boolean thirdPartyActivity;
 
-	@Column(name = "pictureUrl", nullable = true, length = 250)
+	@Column(name = "pictureUrl", length = 250)
 	private String pictureUrl;	
 	
-	@Column(name = "previewPictureUrl", nullable = true, length = 250)
+	@Column(name = "previewPictureUrl", length = 250)
 	private String previewPictureUrl;
 	
 	@Column(name = "mediaUploaded", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)

@@ -12,6 +12,7 @@ import java.util.Set;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
@@ -28,7 +29,7 @@ import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;
 import eu.getsoftware.hotelico.menu.domain.MenuItem;
 import eu.getsoftware.hotelico.menu.domain.MenuOrder;
-import eu.getsoftware.hotelico.menu.infrastructure.dto.MenuItemDto;
+import eu.getsoftware.hotelico.menu.infrastructure.dto.MenuItemDTO;
 import eu.getsoftware.hotelico.menu.infrastructure.dto.MenuOrderDTO;
 import eu.getsoftware.hotelico.menu.infrastructure.service.MenuService;
 
@@ -66,7 +67,6 @@ public class MenuServiceImpl implements MenuService
 
 	@Autowired
 	private ModelMapper modelMapper;
-	
 	
 	@Override
 	public List<MenuOrderDTO> getActiveMenusByCustomerId(long requesterId, long hotelId, long cafeId, long orderId, boolean closed)
@@ -144,6 +144,7 @@ public class MenuServiceImpl implements MenuService
 		return dtoList;
 	}
 	
+	@Transactional
 	@Override
 	public MenuOrderDTO addMenuAction(long requesterId, long initMenuOrderId, String action)
 	{
@@ -152,7 +153,7 @@ public class MenuServiceImpl implements MenuService
 		List<MenuOrder> menuOrders = menuOrderRepository.getMenuByInitId(initMenuOrderId);
 		
 		MenuOrder menuOrder = null;
-
+		
 		if(menuOrders.isEmpty())
 		{
 			menuOrder = menuOrderRepository.getOne(initMenuOrderId);
@@ -168,8 +169,6 @@ public class MenuServiceImpl implements MenuService
 	
 	private MenuOrderDTO convertMenuOrderToDto(MenuOrder menuOrder)
 	{
-		//TODO Eugen:
-		
 		if(menuOrder == null)
 		{
 			return null;
@@ -203,7 +202,7 @@ public class MenuServiceImpl implements MenuService
 		
 //		dto.getTotalMoney(menuOrder.get);
 		
-		MenuItemDto[] dtoItems = new MenuItemDto[menuOrder.getMenuItems().size()];
+		MenuItemDTO[] dtoItems = new MenuItemDTO[menuOrder.getMenuItems().size()];
 		
 //		if(menuOrder.getMenuItems().size()>0)
 //		{
@@ -223,13 +222,11 @@ public class MenuServiceImpl implements MenuService
 		
 		
 		return dto;
-	}	
+	}
 	
-	private MenuItemDto convertMenuItemToDto(MenuItem menuItem)
+	private MenuItemDTO convertMenuItemToDto(MenuItem menuItem)
 	{
-		//TODO Eugen:
-		
-		MenuItemDto dto = modelMapper.map(menuItem, MenuItemDto.class);
+		MenuItemDTO dto = modelMapper.map(menuItem, MenuItemDTO.class);
 
 		dto.setHotelId(menuItem.getHotelRootEntity().getId());
 		dto.setSenderId(menuItem.getCreator().getId());
@@ -241,6 +238,7 @@ public class MenuServiceImpl implements MenuService
 		return dto;
 	}
 	
+	@Transactional
 	@Override
 	public MenuOrderDTO deleteMenuOrder(long requesterId, long initMenuOrderId)
 	{
@@ -267,19 +265,18 @@ public class MenuServiceImpl implements MenuService
 		}
 		
 		return null;
-	}	
+	}
 	
+	@Transactional
 	@Override
-	public MenuItemDto deleteMenuItem(long requesterId, long menuItemId)
+	public MenuItemDTO deleteMenuItem(long requesterId, long menuItemId)
 	{
-		
 		long customerId = ControllerUtils.getTryEntityId(requesterId);
 		
 		CustomerRootEntity customerEntity = customerRepository.getOne(customerId);
 		
 		if(customerEntity !=null && (customerEntity.isAdmin() || customerEntity.isHotelStaff()))
 		{
-
 			List<MenuItem> menuItems = menuItemRepository.getByInitId(menuItemId);
 			
 			MenuItem menuItem = null;
@@ -302,8 +299,9 @@ public class MenuServiceImpl implements MenuService
 		return null;
 	}
 	
+	@Transactional
 	@Override
-	public MenuItemDto addUpdateMenuItem(long customerId, long hotelId, long cafeId, long itemId, MenuItemDto menuItemDto)
+	public MenuItemDTO addUpdateMenuItem(long customerId, long hotelId, long cafeId, long itemId, MenuItemDTO menuItemDto)
 	{
 		List<MenuItem> menuItems = menuItemRepository.getByInitId(itemId);
 
@@ -327,9 +325,9 @@ public class MenuServiceImpl implements MenuService
 	}
 
 	@Override
-	public List<MenuItemDto> getReorderedMenuItems(long customerId, long hotelId, long cafeId, String reorder)
+	public List<MenuItemDTO> getReorderedMenuItems(long customerId, long hotelId, long cafeId, String reorder)
 	{
-		List<MenuItemDto> resultList = new ArrayList<>();
+		List<MenuItemDTO> resultList = new ArrayList<>();
 		
 		if(ControllerUtils.isEmptyString(reorder))
 		{
@@ -366,7 +364,7 @@ public class MenuServiceImpl implements MenuService
 		return resultList;
 	}
 
-	private MenuItem fillMenuItemFromDto(MenuItem menuItem, MenuItemDto dto)
+	private MenuItem fillMenuItemFromDto(MenuItem menuItem, MenuItemDTO dto)
 	{
 		if(menuItem==null || dto == null)
 		{
@@ -399,6 +397,7 @@ public class MenuServiceImpl implements MenuService
 		return menuItem;
 	}
 	
+	@Transactional
 	@Override
 	public MenuOrderDTO addUpdateMenu(long customerId, long initMenuOrderId, MenuOrderDTO menuOrderDto)
 	{
@@ -462,11 +461,7 @@ public class MenuServiceImpl implements MenuService
 		if(clientOrderStatus!=null)
 		{
 			//TODO Eugen: ignore rewrite menu
-			if(DealStatus.ACCEPTED.equals(clientOrderStatus) && DealStatus.EXECUTED.equals(menuOrder.getStatus()) || DealStatus.CLOSED.equals(menuOrder.getStatus()))
-			{
-				;
-			}
-			else 
+			if(!(DealStatus.ACCEPTED.equals(clientOrderStatus) && DealStatus.EXECUTED.equals(menuOrder.getStatus()) || DealStatus.CLOSED.equals(menuOrder.getStatus())))
 			{
 				menuOrder.setStatus(clientOrderStatus);
 			}
@@ -505,7 +500,7 @@ public class MenuServiceImpl implements MenuService
 			
 			for (int i = 0; i <menuOrderDto.getMenuItems().length ; i++)
 			{
-				MenuItemDto nextMenuItem = menuOrderDto.getMenuItems()[i];
+				MenuItemDTO nextMenuItem = menuOrderDto.getMenuItems()[i];
 				
 				if(nextMenuItem.getAmount()>0)
 				{
@@ -517,8 +512,6 @@ public class MenuServiceImpl implements MenuService
 					}
 				
 					entityItem.setMenuOrder(menuOrder);
-					//TODO fill entity from dto????
-					//TODO Persist item????
 					
 					menuItemRepository.saveAndFlush(entityItem);
 
@@ -551,11 +544,11 @@ public class MenuServiceImpl implements MenuService
 	}
 	
 	@Override
-	public List<MenuItemDto> getMenuItemsByHotelId(long customerId, long hotelId, long cafeId)
+	public List<MenuItemDTO> getMenuItemsByHotelId(long customerId, long hotelId, long cafeId)
 	{
 		List<MenuItem> menuItems = menuItemRepository.getMenuItemsByHotelOrCafeId(hotelId, cafeId);
 		
-		List<MenuItemDto> dtoList = new ArrayList<>();
+		List<MenuItemDTO> dtoList = new ArrayList<>();
 		
 		for (MenuItem nextItem: menuItems)
 		{

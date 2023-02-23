@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
-import eu.getsoftware.hotelico.menu.infrastructure.dto.MenuItemDto;
+import eu.getsoftware.hotelico.menu.infrastructure.dto.MenuItemDTO;
 import eu.getsoftware.hotelico.menu.infrastructure.dto.MenuOrderDTO;
 import eu.getsoftware.hotelico.menu.infrastructure.service.MenuService;
 
@@ -45,13 +45,13 @@ public class MenuController extends BasicController
 		
 	@RequestMapping(value = "/item/customer/{customerId}/hotelId/{hotelId}/cafeId/{cafeId}/menuItemId/{menuItemId}", method = RequestMethod.GET)
 	public @ResponseBody
-	List<MenuItemDto> getHotelMenuItems(@PathVariable long customerId, @PathVariable long hotelId, @PathVariable long cafeId, @PathVariable int menuItemId) {
+	List<MenuItemDTO> getHotelMenuItems(@PathVariable long customerId, @PathVariable long hotelId, @PathVariable long cafeId, @PathVariable int menuItemId) {
 		return menuService.getMenuItemsByHotelId(customerId, hotelId, cafeId);
 	}
 	
 	@RequestMapping(value = "/item/customer/{customerId}/hotelId/{hotelId}/cafeId/{cafeId}/reorder/{reorder}", method = RequestMethod.GET)
 	public @ResponseBody
-	List<MenuItemDto> getReorderMenuItems(@PathVariable long customerId, @PathVariable long hotelId, @PathVariable long cafeId, @PathVariable String reorder) {
+	List<MenuItemDTO> getReorderMenuItems(@PathVariable long customerId, @PathVariable long hotelId, @PathVariable long cafeId, @PathVariable String reorder) {
 		return menuService.getReorderedMenuItems(customerId, hotelId, cafeId, reorder);
 	}
 	
@@ -72,7 +72,7 @@ public class MenuController extends BasicController
 	
 	@RequestMapping(value = "/item/customer/{customerId}/hotelId/{hotelId}/cafeId/{cafeId}/menuItemId/{menuItemId}", method = RequestMethod.DELETE)
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public @ResponseBody MenuItemDto deleteMenuItem(@PathVariable long customerId, @PathVariable long hotelId, @PathVariable long cafeId, @PathVariable int menuItemId) {
+  public @ResponseBody MenuItemDTO deleteMenuItem(@PathVariable long customerId, @PathVariable long hotelId, @PathVariable long cafeId, @PathVariable int menuItemId) {
     
     return  menuService.deleteMenuItem(customerId, menuItemId);
   }
@@ -87,10 +87,10 @@ public class MenuController extends BasicController
 	
   @RequestMapping(value = "/item/customer/{customerId}/hotelId/{hotelId}/cafeId/{cafeId}/menuItemId/{itemId}", method = RequestMethod.POST)//, headers ="Accept:*/*")
   public @ResponseBody
-  MenuItemDto addUpdateMenuItem(@PathVariable long customerId, @PathVariable long hotelId, @PathVariable long cafeId, @PathVariable int itemId, @RequestBody MenuItemDto menuItemDto) {
+  MenuItemDTO addUpdateMenuItem(@PathVariable long customerId, @PathVariable long hotelId, @PathVariable long cafeId, @PathVariable int itemId, @RequestBody MenuItemDTO menuItemDto) {
 
 //    activityDto.setInitId(activityId);
-	  MenuItemDto out = menuService.addUpdateMenuItem(customerId, hotelId, cafeId, itemId, menuItemDto);
+	  MenuItemDTO out = menuService.addUpdateMenuItem(customerId, hotelId, cafeId, itemId, menuItemDto);
     
 	  return out;
   }

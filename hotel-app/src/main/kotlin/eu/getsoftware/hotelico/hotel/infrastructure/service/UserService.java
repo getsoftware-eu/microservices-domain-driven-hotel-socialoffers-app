@@ -2,8 +2,10 @@ package eu.getsoftware.hotelico.hotel.infrastructure.service;
 
 import java.util.List;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.transaction.annotation.Transactional;
 
+import eu.getsoftware.hotelico.customer.domain.User;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.UserDto;
 
 public interface UserService
@@ -16,10 +18,8 @@ public interface UserService
     @Transactional
     UserDto updateUser(UserDto userDto);
 
-    @Transactional
     UserDto getById(int userId);
 
-    @Transactional
     List<UserDto> getByHotelId(int userId);
 
     @Transactional
@@ -28,6 +28,8 @@ public interface UserService
     @Transactional
     void deleteUser(UserDto userDto);
     
-    @Transactional
     boolean isEmailExists(String email);
+    
+    @NotNull 
+    User getByUserName(@NotNull String username);
 }

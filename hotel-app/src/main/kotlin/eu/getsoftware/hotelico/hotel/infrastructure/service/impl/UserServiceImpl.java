@@ -13,6 +13,7 @@ import com.thoughtworks.xstream.mapper.Mapper;
 
 import eu.getsoftware.hotelico.customer.domain.User;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.UserDto;
+import eu.getsoftware.hotelico.hotel.infrastructure.repository.UserDtoRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 @CacheConfig(cacheNames = {"userCache"})
 public class UserServiceImpl implements UserService
 {
-    
     @Autowired
     private UserDtoRepository userDtoRepository; 
     
@@ -43,8 +43,6 @@ public class UserServiceImpl implements UserService
         return out;
     }
 
-    //TODO eugen: Transactional????
-    @Override
     public List<UserDto> getByHotelId(int hotelId) {
         List<User> dtoList = userDtoRepository.findByHotelId(hotelId);
         List<UserDto> out = new ArrayList<UserDto>();
@@ -62,7 +60,6 @@ public class UserServiceImpl implements UserService
         return mapper.map(userDtoRepository.saveAndFlush(dto), UserDto.class);
     }
 
-    @Transactional
     @Override
     public UserDto checkLogin(String email, String password){
         User dto = userDtoRepository.findByEMail(email);
@@ -79,14 +76,14 @@ public class UserServiceImpl implements UserService
     @Transactional
     @Override
     public UserDto updateUser(UserDto userDto) {
-        User dto = userDtoRepository.getOne(userDto.getId());
+        User dto = userDtoRepository.getOne(userDto.id);
         if(dto!=null)
         {
-            dto.setHotelId(userDto.getHotelId());
-            dto.setFirstName(userDto.getFirstName());
-            dto.setLastName(userDto.getLastName());
-            dto.setCompany(userDto.getCompany());
-            dto.setEmail(userDto.getEmail());
+//            dto.setHotelId(userDto.getHotelId());
+//            dto.setFirstName(userDto.getFirstName());
+//            dto.setLastName(userDto.getLastName());
+//            dto.setCompany(userDto.getCompany());
+//            dto.setEmail(userDto.getEmail());
         }
         return mapper.map(userDtoRepository.saveAndFlush(dto), UserDto.class);
     }
@@ -97,7 +94,6 @@ public class UserServiceImpl implements UserService
         userDtoRepository.delete(userDto.getId());
     }
 
-    @Transactional
     @Override
     public boolean isEmailExists(String email)
     {
@@ -114,8 +110,8 @@ public class UserServiceImpl implements UserService
 		{
 			return null;
 		}
-		
-		 findByUserName = userRepository.findByUserNameAndEnabled(username);
+        
+        List<User> findByUserName = userDtoRepository.findByUserName(username);
 		
 		if(findByUserName.size > 1)
 		{

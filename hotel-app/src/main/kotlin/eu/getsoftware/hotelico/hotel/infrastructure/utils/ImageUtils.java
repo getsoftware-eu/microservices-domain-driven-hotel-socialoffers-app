@@ -102,15 +102,15 @@ public class ImageUtils
 //		return null;
 //	}
 
-	/**
-	 * Resizes an image
-	 *
-	 * @param imageInputStream The image name to resize. imageInputStream
-	 * @param type int
-	 * @param maxWidth The image's max width
-	 * @param maxHeight The image's max height
-	 * @return A resized <code>BufferedImage</code>
-	 */
+//	/**
+//	 * Resizes an image
+//	 *
+//	 * @param imageInputStream The image name to resize. imageInputStream
+//	 * @param type int
+//	 * @param maxWidth The image's max width
+//	 * @param maxHeight The image's max height
+//	 * @return A resized <code>BufferedImage</code>
+//	 */
 //	public static BufferedImage simpleResizeImage(InputStream imageInputStream, int type, int maxWidth, int maxHeight)
 //	{
 //		try {
@@ -125,19 +125,19 @@ public class ImageUtils
 //		return null;
 //	}
 	
-	/**
-	 * Resizes an image.
-	 *
-	 * @param image
-	 *            The image to resize
-	 * @param maxWidth
-	 *            The image's max width
-	 * @param maxHeight
-	 *            The image's max height
-	 * @return A resized <code>BufferedImage</code>
-	 * @param type
-	 *            int
-	 */
+//	/**
+//	 * Resizes an image.
+//	 *
+//	 * @param image
+//	 *            The image to resize
+//	 * @param maxWidth
+//	 *            The image's max width
+//	 * @param maxHeight
+//	 *            The image's max height
+//	 * @return A resized <code>BufferedImage</code>
+//	 * @param type
+//	 *            int
+//	 */
 //	public static BufferedImage simpleResizeImage(BufferedImage image, int type, int maxWidth, int maxHeight)
 //	{
 //		Dimension largestDimension = new Dimension(maxWidth, maxHeight);
@@ -239,7 +239,6 @@ public class ImageUtils
 	 * Compress and save an image to the disk. Currently this method only supports JPEG images.
 	 *
 	 * @param image The image to save
-	 * @param toFileName The filename to use
 	 * @param type The image type. Use <code>ImageUtils.IMAGE_JPEG</code> to save as JPEG images,
 	 * or <code>ImageUtils.IMAGE_PNG</code> to save as PNG.
 	 */

@@ -43,7 +43,7 @@ class MenuOrderDTO: BasicDTO
 
     private var timeString: String? = null
 
-    var menuItems = arrayOfNulls<MenuItemDto>(0)
+    var menuItems = arrayOfNulls<MenuItemDTO>(0)
 
     constructor(): super()
     

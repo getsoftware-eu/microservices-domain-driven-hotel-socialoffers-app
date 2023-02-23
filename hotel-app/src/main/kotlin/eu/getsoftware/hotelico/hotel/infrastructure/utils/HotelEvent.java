@@ -98,9 +98,4 @@ public enum HotelEvent
 //		logger.error("Es konnte kein Enum.WoPriority für value='" + value + "' gefunden werden.");
 		return null;
 	}
-	
-//	private String getPrefix()
-//	{
-//		return ControllerUtils.isEmptyString(ControllerUtils.HOST_SUFFIX)? "/" : "/" + ControllerUtils.HOST_SUFFIX;
-//	}
 }

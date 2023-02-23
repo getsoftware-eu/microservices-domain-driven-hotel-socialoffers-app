@@ -454,11 +454,6 @@ public class ChatServiceImpl implements ChatService
 				{
 					continue;
 				}
-
-				if(nextPartner.isHotelStaff())
-				{
-					int f = 6;
-				}
 				
 //				if(!chatPartnerIsInSameHotel)
 				{
@@ -517,7 +512,7 @@ public class ChatServiceImpl implements ChatService
 			chatPartners.addAll(chatRepository.getChatSendersByCustomerId(customerId));
 			chatPartners.addAll(chatRepository.getChatReceiversByCustomerId(customerId));
 			
-			List<CustomerRootEntity> allCustomerEntities = new ArrayList<>();
+			List<CustomerRootEntity> allCustomerEntities;
 			
 			if(filterHotelId>0)
 			{
