@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,10 +21,15 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.DynamicUpdate;
 
+import eu.getsoftware.hotelico.checkin.domain.HotelActivity;
 import eu.getsoftware.hotelico.domain.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.IFileUploadable;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 
 /**
@@ -31,7 +37,10 @@ import lombok.Setter;
  * main data, will be fetched with every query
  */
 @Entity
-@Getter @Setter
+@Getter @Setter(value = AccessLevel.PACKAGE)
+@Builder(toBuilder = true)
+@AllArgsConstructor(access = AccessLevel.PACKAGE)
+@NoArgsConstructor
 @Table(name = "customer")
 @DynamicUpdate
 public class CustomerRootEntity implements Serializable, IFileUploadable
@@ -41,6 +50,9 @@ public class CustomerRootEntity implements Serializable, IFileUploadable
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "customer_id_generator")
     @SequenceGenerator(name="customer_id_generator", sequenceName = "customer_id_seq")
     private long id;
+    
+    @Column(columnDefinition = "BINARY(16)")
+    private UUID customerUUID;
     
     @Column(name = "active", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_TRUE)
     private boolean active = true;
@@ -57,9 +69,11 @@ public class CustomerRootEntity implements Serializable, IFileUploadable
     @Column(name = "userNameHotelico")
     private String userNameHotelico;
     
+    @NonNull
     @Column(name = "firstName")
     private String firstName;
     
+    @NonNull
     @Column(name = "lastName")
     private String lastName;
     
@@ -155,19 +169,9 @@ public class CustomerRootEntity implements Serializable, IFileUploadable
     
 	@Column(name = "points", columnDefinition="Decimal(10,2) default '0.00'")
 	private double points = 0.0;
-
+    
     //####################################################
     
-    public CustomerRootEntity() {
-        super();
-    } 
-    
-    public CustomerRootEntity(String _firstName, String _lastName) {
-        this();
-        this.firstName = _firstName;
-        this.lastName = _lastName;
-    }
-
     public long getId(){ return this.id; }
     
     public void updateLastSeenOnline()

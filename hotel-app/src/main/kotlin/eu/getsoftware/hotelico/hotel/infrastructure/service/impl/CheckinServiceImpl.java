@@ -13,12 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import eu.getsoftware.hotelico.chat.domain.ChatMessage;
+import eu.getsoftware.hotelico.checkin.domain.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
-import eu.getsoftware.hotelico.hotel.domain.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDto;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.ChatRepository;
@@ -81,7 +81,7 @@ public class CheckinServiceImpl implements CheckinService
 	{
 		HotelRootEntity hotelRootEntity = null;
 		
-		if(customerEntity !=null)
+		if(customerEntity != null)
 		{
 			customerDto.setErrorResponse("");
 			
@@ -223,7 +223,7 @@ public class CheckinServiceImpl implements CheckinService
 				}
 				
 				long consistencyId = new Date().getTime();
-				customerEntity.setConsistencyId(consistencyId);
+				customerEntity.getEntityAggregate().setConsistencyId(consistencyId);
 				
 				lastMessagesService.updateCustomerConsistencyId(customerEntity.getId(), consistencyId);
 				
@@ -249,7 +249,7 @@ public class CheckinServiceImpl implements CheckinService
 				Long wantedHotelId = customerDto.getHotelId();
 				
 				long consistencyId = new Date().getTime();
-				customerEntity.setConsistencyId(consistencyId);
+				customerEntity.getEntityAggregate().setConsistencyId(consistencyId);
 				lastMessagesService.updateCustomerConsistencyId(customerEntity.getId(), consistencyId);
 				
 				customerDto = customerService.convertMyCustomerToFullDto(customerRepository.saveAndFlush(customerEntity));
@@ -343,15 +343,17 @@ public class CheckinServiceImpl implements CheckinService
 			CustomerRootEntity checkinCustomerRootEntity = validCheckin.getCustomer();
 			
 			//TODO Eugen: cannot set logged automaticly
+			//TODO Eugen: checkinCustomerRootEntity.setActive(true)? update entity?
 			//SETTING NEW CHECKIN
-			checkinCustomerRootEntity.setActive(true);
+			//checkinCustomerRootEntity.setActive(true);
+			dto.setActive(true);
 			
 			dto.setFullCheckin(validCheckin.isFullCheckin());
 			
 			dto.setCheckinFrom(validCheckin.getValidFrom());
 			dto.setCheckinTo(validCheckin.getValidTo());
 			
-			dto = customerService.fillDtoWithHotelInfo(dto, validCheckin.getHotel(), validCheckin);
+			dto = customerService.fillDtoWithHotelInfo(dto, validCheckin);
 		}
 		
 		if(validCheckin==null)

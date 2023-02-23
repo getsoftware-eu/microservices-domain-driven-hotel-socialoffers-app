@@ -5,10 +5,9 @@ import java.util.Set;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import eu.getsoftware.hotelico.checkin.domain.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
-import eu.getsoftware.hotelico.hotel.domain.CustomerHotelCheckin;
-import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 
 public interface CustomerService
 {
@@ -27,7 +26,7 @@ public interface CustomerService
     @Transactional
     Set<CustomerDTO> getByHotelId(long customerId, long hotelId, boolean addStaff);
 	
-	CustomerDTO fillDtoWithHotelInfo(CustomerDTO dto, HotelRootEntity outHotelRootEntity, CustomerHotelCheckin validCheckin);
+	CustomerDTO fillDtoWithHotelInfo(CustomerDTO dto, CustomerHotelCheckin validCheckin);
 	
 	/**
      * Set this dto info personally to me

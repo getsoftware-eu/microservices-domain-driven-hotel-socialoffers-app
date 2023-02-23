@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.customer.domain;
+package eu.getsoftware.hotelico.checkin.domain;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -21,6 +21,7 @@ import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.Type;
 
+import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.domain.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.IFileUploadable;

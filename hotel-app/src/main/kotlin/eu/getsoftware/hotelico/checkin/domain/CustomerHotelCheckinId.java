@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.domain;
+package eu.getsoftware.hotelico.checkin.domain;
 
 /**
  * Created by Eugen on 16.07.2015.
@@ -12,6 +12,7 @@ import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 
 @Embeddable
 class CustomerHotelCheckinId implements java.io.Serializable {

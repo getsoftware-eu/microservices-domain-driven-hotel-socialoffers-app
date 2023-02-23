@@ -2,6 +2,7 @@ package eu.getsoftware.hotelico.customer.domain;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -13,7 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import eu.getsoftware.hotelico.hotel.domain.CustomerHotelCheckin;
+import eu.getsoftware.hotelico.checkin.domain.CustomerHotelCheckin;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,7 +47,9 @@ public class CustomerDetails
 	@Column
 	private String jobDescriptor;
 	@Column
-	private String profileImageUrl;
+	private String profileImageUrl;	
+	@Column
+	private String profileImageLink; // S3 key
 	
 	@OneToMany(/*fetch = FetchType.LAZY,*/ mappedBy = "pk.customer", cascade= CascadeType.ALL)
 	private Set<CustomerHotelCheckin> customerHotelHistories = new HashSet<CustomerHotelCheckin>(0);
@@ -54,5 +57,15 @@ public class CustomerDetails
 	public CustomerDetails()
 	{
 		super();
+	}
+	
+	public Optional<String> getProfileImageLink()
+	{
+		return Optional.ofNullable(profileImageLink);
+	}
+	
+	public void setProfileImageLink(String profileImageLink)
+	{
+		this.profileImageLink = profileImageLink;
 	}
 }

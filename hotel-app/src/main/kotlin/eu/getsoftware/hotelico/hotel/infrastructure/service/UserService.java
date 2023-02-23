@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.UserDto;
+import eu.getsoftware.hotelico.customer.infrastructure.dto.UserDto;
 
 public interface UserService
 {

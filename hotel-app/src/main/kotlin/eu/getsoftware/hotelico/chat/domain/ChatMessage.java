@@ -3,6 +3,7 @@ package eu.getsoftware.hotelico.chat.domain;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +24,6 @@ import lombok.Setter;
 @Table(name = "chat_message")
 public class ChatMessage implements Serializable
 {
-
   private static final long serialVersionUID = -5478152926665631989L;
   
   @Id
@@ -41,7 +41,7 @@ public class ChatMessage implements Serializable
   private long initId;
 
   @Column
-  private Timestamp timestamp = new Timestamp(new Date().getTime());
+  private Timestamp timestamp;
 
   @ManyToOne
   @JoinColumn(name="senderId")
@@ -98,11 +98,11 @@ public class ChatMessage implements Serializable
       return false;
     }
 
-    if (sender != null ? !sender.equals(that.sender) : that.sender != null)
+    if (!Objects.equals(sender, that.sender))
     {
       return false;
     }
-    return !(receiver != null ? !receiver.equals(that.receiver) : that.receiver != null);
+    return !(!Objects.equals(receiver, that.receiver));
 
   }
 
@@ -112,10 +112,10 @@ public class ChatMessage implements Serializable
     int result = (int)id;
     result = 31 * result + (active ? 1 : 0);
     result = 31 * result + (message != null ? message.hashCode() : 0);
-    result = 31 * result + (timestamp != null ? timestamp.hashCode() : 0);
     result = 31 * result + (sender != null ? sender.hashCode() : 0);
-    result = 31 * result + (seenByReceiver ? 1 : 0);
     result = 31 * result + (receiver != null ? receiver.hashCode() : 0);
+    result = 31 * result + (timestamp != null ? timestamp.hashCode() : 0);
+    result = 31 * result + (seenByReceiver ? 1 : 0);
     return result;
   }
 }

@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.infrastructure.dto;
+package eu.getsoftware.hotelico.customer.infrastructure.dto;
 
 /**
  * for serialisation to JSON!

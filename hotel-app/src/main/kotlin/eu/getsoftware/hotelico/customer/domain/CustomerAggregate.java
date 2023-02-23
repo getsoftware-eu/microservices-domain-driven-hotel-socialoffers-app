@@ -1,25 +1,87 @@
 package eu.getsoftware.hotelico.customer.domain;
 
 import java.util.Date;
+import java.util.Optional;
+
+import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity.CustomerRootEntityBuilder;
 
 /**
- * Aggregate for sub Entities
+ * Aggregate for sub Entities: Any internal structural change will be not visible outside!
+ * 
+ * all setters for customerRootEntity, outside via aggregate: not direct jpa-entity setter logik!!!
+ * and all setters and getters for hidden sub-classes
  */
 public class CustomerAggregate
 {
-	CustomerRootEntity customerRootEntity;
-	CustomerDetails customerDetails;
-	CustomerPreferences customerPreferences;
+	private final CustomerRootEntityBuilder customerBuilder;
+	private final CustomerRootEntity customerRootEntity;
+	private final CustomerDetails customerDetails;
+	private final CustomerPreferences customerPreferences;
 	
 	public CustomerAggregate(CustomerRootEntity customerRootEntity){
 		this.customerRootEntity = customerRootEntity;
+		this.customerBuilder = customerRootEntity.toBuilder();
 		this.customerDetails = customerRootEntity.getCustomerDetails();
 		this.customerPreferences = customerRootEntity.getCustomerPreferences();
 	}
 	
+	// SETTERS for customerPreferences
+	
 	public void setHideChromePushPopup(boolean hideChromePushPopup)
 	{
 		customerPreferences.setHideChromePushPopup(hideChromePushPopup);
+	}
+	
+	public void setPrefferedLanguage(String prefferedLanguage)
+	{
+		customerPreferences.setPrefferedLanguage(prefferedLanguage);
+	}
+	
+	public void setHideWallPopup(boolean hideWallPopup)
+	{
+		customerPreferences.setHideWallPopup(hideWallPopup);
+	}
+	
+	public void setAllowHotelNotification(boolean allowHotelNotification)
+	{
+		customerPreferences.setAllowHotelNotification(allowHotelNotification);
+	}
+	
+	public void setHideHotelListPopup(boolean hideHotelListPopup)
+	{
+		customerPreferences.setHideHotelListPopup(hideHotelListPopup);
+	}
+	
+	public void setHideCheckinPopup(boolean hideCheckinPopup)
+	{
+		customerPreferences.setHideCheckinPopup(hideCheckinPopup);
+	}
+	
+	public String getPrefferedLanguage()
+	{
+		return customerPreferences.getPrefferedLanguage();
+	}
+	
+	public boolean isAllowHotelNotification()
+	{
+		return customerPreferences.isAllowHotelNotification();
+	}
+	
+	// SETTERS for customerDetails
+	
+	public String getCity()
+	{
+		return customerDetails.getCity();
+	}
+	
+	public Optional<String> getProfileImageLink()
+	{
+		return customerDetails.getProfileImageLink();
+	}
+	
+	public void setProfileImageLink(String link)
+	{
+		customerDetails.setProfileImageLink(link);
 	}
 	
 	public void setBirthday(Date birthdayDate)
@@ -42,17 +104,6 @@ public class CustomerAggregate
 		customerDetails.setCompany(company);
 	}
 	
-	public void setPrefferedLanguage(String prefferedLanguage)
-	{
-		customerPreferences.setPrefferedLanguage(prefferedLanguage);
-	}
-	
-	public void setHideWallPopup(boolean hideWallPopup)
-	{
-		customerPreferences.setHideWallPopup(hideWallPopup);
-		
-	}
-	
 	public void setJobTitle(String jobTitle)
 	{
 		customerDetails.setJobTitle(jobTitle);
@@ -68,19 +119,25 @@ public class CustomerAggregate
 		customerDetails.setJobDescriptor(jobDescriptor);
 	}
 	
-	public void setAllowHotelNotification(boolean allowHotelNotification)
-	{
-		customerPreferences.setAllowHotelNotification(allowHotelNotification);
-	}
-	
-	public void setHideHotelListPopup(boolean hideHotelListPopup)
-	{
-		customerPreferences.setHideHotelListPopup(hideHotelListPopup);
-	}
-	
 	public String getProfileImageUrl()
 	{
 		return customerDetails.getProfileImageUrl();
+	}
+	
+	// SETTERS for customerRootEntity
+	
+	public void setConsistencyId(long consistencyId)
+	{
+		customerRootEntity.setConsistencyId(consistencyId);
+	}
+	
+	public long getId()
+	{
+		return customerRootEntity.getId();
+	}
+	
+	public CustomerRootEntity getCustomerEntity(){
+		return customerRootEntity;
 	}
 	
 	public void setLatitude(double latitude)
@@ -93,32 +150,83 @@ public class CustomerAggregate
 		customerRootEntity.getCustomerGPSPosition().setLongitude(longitude);
 	}
 	
-	public double getLatitude()
+	public void setHotelStaff(boolean b)
 	{
-		return customerRootEntity.getCustomerGPSPosition().getLatitude();
+		customerRootEntity.setHotelStaff(b);
 	}
 	
-	public double getLongitude()
+	public void setLogged(boolean b)
 	{
-		return customerRootEntity.getCustomerGPSPosition().getLongitude();
-	}
-	public void setHideCheckinPopup(boolean hideCheckinPopup)
-	{
-		customerPreferences.setHideCheckinPopup(hideCheckinPopup);
+		customerRootEntity.setLogged(b);
 	}
 	
-	public Object getCity()
+	public void setPasswordValue(String password)
 	{
-		return customerDetails.getCity();
+		customerRootEntity.setPasswordValue(password);
 	}
 	
-	public String getPrefferedLanguage()
+	public void setPasswordHash(long passwordHash)
 	{
-		return customerPreferences.getPrefferedLanguage();
+		customerRootEntity.setPasswordHash(passwordHash);
 	}
 	
-	public boolean isAllowHotelNotification()
+	public void setGuestAccount(boolean b)
 	{
-		return customerPreferences.isAllowHotelNotification();
+		customerRootEntity.setGuestAccount(b);
+	}
+	
+	public void setActive(boolean b) 
+	{
+		customerRootEntity.setActive(b);
+	}
+	
+	public void setFirstName(String firstName)
+	{
+		customerRootEntity.setFirstName(firstName);
+	}
+	
+	public void setLastName(String lastName)
+	{		
+		customerRootEntity.setLastName(lastName);
+	}
+	
+	public void setStatus(String status)
+	{
+		customerRootEntity.setStatus(status);
+	}
+	
+	public void setSex(String sex)
+	{
+		customerRootEntity.setSex(sex);
+	}
+	
+	public void setShowAvatar(boolean showAvatar)
+	{
+		customerRootEntity.setShowAvatar(showAvatar);
+	}
+	
+	public void setShowInGuestList(boolean showInGuestList)
+	{
+		customerRootEntity.setShowInGuestList(showInGuestList);
+	}
+	
+	public void setEmail(String email)
+	{
+		customerRootEntity.setEmail(email);
+	}
+	
+	public void setLinkedInId(String linkedInId)
+	{
+		customerRootEntity.setLinkedInId(linkedInId);
+	}
+	
+	public void setFacebookId(String facebookId)
+	{
+		customerRootEntity.setFacebookId(facebookId);
+	}
+	
+	public void setPushRegistrationId(String s)
+	{
+		customerRootEntity.setPushRegistrationId(s);
 	}
 }

@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.domain;
+package eu.getsoftware.hotelico.checkin.domain;
 
 import java.util.Date;
 
@@ -15,6 +15,7 @@ import javax.persistence.Transient;
 
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.domain.utils.HibernateUtils;
+import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 import lombok.Data;
 
 
@@ -61,11 +62,6 @@ public class CustomerHotelCheckin implements java.io.Serializable {
 	public void setPk(CustomerHotelCheckinId pk) {
 		this.pk = pk;
 	}
-
-	@Transient
-	public CustomerRootEntity getCustomer() {
-		return getPk().getCustomer();
-	}
 	
 	public void setCustomer(CustomerRootEntity customerEntity) {
 		getPk().setCustomer(customerEntity);
@@ -75,7 +71,12 @@ public class CustomerHotelCheckin implements java.io.Serializable {
 	public HotelRootEntity getHotel() {
 		return getPk().getHotel();
 	}
-
+	
+	@Transient
+	public CustomerRootEntity getCustomer() {
+		return getPk().getCustomer();
+	}
+	
 	public boolean isStaffCheckin()
 	{
 		return staffCheckin;
@@ -90,12 +91,10 @@ public class CustomerHotelCheckin implements java.io.Serializable {
 		getPk().setHotel(category);
 	}
 
-
 	public Date getValidFrom() {
 		return this.validFrom;
 	}
 	
-
 	public Date getValidTo() {
 		return this.validTo;
 	}
@@ -118,21 +117,6 @@ public class CustomerHotelCheckin implements java.io.Serializable {
 		this.active = active;
 	}
 
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-
-		CustomerHotelCheckin that = (CustomerHotelCheckin) o;
-
-		if (getPk() != null ? !getPk().equals(that.getPk())
-							: that.getPk() != null)
-			return false;
-
-		return true;
-	}
-
 	public static long getSerialVersionUID()
 	{
 		return serialVersionUID;
@@ -150,5 +134,20 @@ public class CustomerHotelCheckin implements java.io.Serializable {
 	public void setFullCheckin(boolean fullCheckin)
 	{
 		this.fullCheckin = fullCheckin;
+	}
+	
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		
+		CustomerHotelCheckin that = (CustomerHotelCheckin) o;
+		
+		if (getPk() != null ? !getPk().equals(that.getPk())
+				: that.getPk() != null)
+			return false;
+		
+		return true;
 	}
 }

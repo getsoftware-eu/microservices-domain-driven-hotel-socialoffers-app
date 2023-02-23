@@ -4,6 +4,7 @@ package eu.getsoftware.hotelico.main.hotel;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication(scanBasePackages = {"eu.getsoftware.hotelico"})
 //@EnableEurekaClient
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 //PropertySources( //in case of K8s
 //  @PropertySource("classpath:clients-${spring.profiles.active}.properties") //use client-default.properties or client-k8s.properties für feign client properties!
 //})
+@EnableCaching
 public class MainApplication
 {
 	public static void main(String[] args)

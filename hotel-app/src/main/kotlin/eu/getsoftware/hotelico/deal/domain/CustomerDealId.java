@@ -7,8 +7,8 @@ package eu.getsoftware.hotelico.deal.domain;
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
 
+import eu.getsoftware.hotelico.checkin.domain.HotelActivity;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
-import eu.getsoftware.hotelico.customer.domain.HotelActivity;
 
 @Embeddable
 class CustomerDealId implements java.io.Serializable {

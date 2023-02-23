@@ -2,9 +2,9 @@ package eu.getsoftware.hotelico.hotel.infrastructure.service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import eu.getsoftware.hotelico.checkin.domain.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
-import eu.getsoftware.hotelico.hotel.domain.CustomerHotelCheckin;
 
 /**
  * <br/>

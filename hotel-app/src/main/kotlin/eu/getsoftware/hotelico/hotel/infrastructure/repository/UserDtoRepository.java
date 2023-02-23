@@ -1,5 +1,6 @@
-package eu.getsoftware.hotelico.hotel.infrastructure.repository;//package de.hotelico.repository;
-//
+//package eu.getsoftware.hotelico.hotel.infrastructure.repository;//package de.hotelico.repository;
+////
+//import eu.getsoftware.hotelico.customer.domain.User;
 //import eu.getsoftware.hotelico.model.Customer;
 //import eu.getsoftware.hotelico.model.User;
 //import org.springframework.data.jpa.repository.JpaRepository;

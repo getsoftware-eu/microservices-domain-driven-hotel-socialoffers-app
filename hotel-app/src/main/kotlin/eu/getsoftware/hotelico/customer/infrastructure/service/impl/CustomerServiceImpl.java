@@ -23,7 +23,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import eu.getsoftware.hotelico.chat.domain.ChatMessage;
-import eu.getsoftware.hotelico.chat.service.impl.ChatService;
+import eu.getsoftware.hotelico.chat.infrastructure.service.ChatService;
+import eu.getsoftware.hotelico.checkin.domain.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.domain.CustomerAggregate;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
@@ -32,7 +33,6 @@ import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
 import eu.getsoftware.hotelico.deal.domain.CustomerDeal;
-import eu.getsoftware.hotelico.hotel.domain.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.ChatRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.CheckinRepository;
@@ -188,7 +188,7 @@ public class CustomerServiceImpl implements CustomerService
                     mailService.sendMail(customerDto.getEmail(), "HoteliCo staff registration", "You have now a staff account for '" + hotelRootEntity.getName() + "' hotel in Hotelico. Your password is: '" + customerDto.getPassword() + "'. \nYour HoteliCo team.", null);
                 }
                 
-                customerEntity.setHotelStaff(true);
+                customerEntity.getEntityAggregate().setHotelStaff(true);
                 customerEntity = customerRepository.saveAndFlush(customerEntity);
 
                 initHotelId = hotelRootEntity.getId();
@@ -202,9 +202,12 @@ public class CustomerServiceImpl implements CustomerService
         }
         
         long passwordHash = loginService.getCryptoHash(customerEntity, password);
-        customerEntity.setPasswordHash(passwordHash);
-        customerEntity.setPasswordValue(password);
-        customerEntity.setLogged(true);
+    
+        CustomerAggregate aggregate = customerEntity.getEntityAggregate();
+    
+        aggregate.setPasswordHash(passwordHash);
+        aggregate.setPasswordValue(password);
+        aggregate.setLogged(true);
         //customer.updateLastSeenOnline();
         
         
@@ -240,11 +243,13 @@ public class CustomerServiceImpl implements CustomerService
     @Override
     public CustomerDTO addLinkedInCustomer(CustomerDTO customerDto, String linkedInId){
         
-       
         CustomerRootEntity customerEntity = modelMapper.map(customerDto, CustomerRootEntity.class);
-        customerEntity.setLinkedInId(linkedInId);
-        customerEntity.setLogged(true);
-        customerEntity.getEntityAggregate().setProfileImageUrl(customerDto.getProfileImageUrl());
+    
+        CustomerAggregate aggregate = customerEntity.getEntityAggregate();
+    
+        aggregate.setLinkedInId(linkedInId);
+        aggregate.setLogged(true);
+        aggregate.setProfileImageUrl(customerDto.getProfileImageUrl());
 
         //TODO eugen: get Languages from linkedIn
         
@@ -267,7 +272,7 @@ public class CustomerServiceImpl implements CustomerService
     @Override
     public CustomerDTO addFacebookCustomer(CustomerDTO customerDto, String facebookId){
         CustomerRootEntity customerEntity = modelMapper.map(customerDto, CustomerRootEntity.class);
-        customerEntity.setFacebookId(facebookId);
+        customerEntity.getEntityAggregate().setFacebookId(facebookId);
         customerEntity.getEntityAggregate().setProfileImageUrl(customerDto.getProfileImageUrl());
         
         //TODO eugen: get Languages from linkedIn
@@ -367,7 +372,7 @@ public class CustomerServiceImpl implements CustomerService
            
            if(customerEntity !=null && customerDto.getSystemMessages().containsKey(ControllerUtils.PUSH_CHROME_ID))
            {
-               customerEntity.setPushRegistrationId(customerDto.getSystemMessages().get(ControllerUtils.PUSH_CHROME_ID));
+               customerEntity.getEntityAggregate().setPushRegistrationId(customerDto.getSystemMessages().get(ControllerUtils.PUSH_CHROME_ID));
            }
 		   
 		   if(customerEntity !=null && customerDto.getSystemMessages().containsKey("latitude") && customerDto.getSystemMessages().containsKey("longitude"))
@@ -422,17 +427,17 @@ public class CustomerServiceImpl implements CustomerService
             customerAggregate.setOriginalCity(customerDto.getOriginalCity());
             customerAggregate.setJobTitle(customerDto.getJobTitle());
             customerAggregate.setJobDescriptor(customerDto.getJobDescriptor());
-            customerEntity.setFirstName(customerDto.getFirstName());
-            customerEntity.setLastName(customerDto.getLastName());
-            customerEntity.setStatus(customerDto.getStatus());
-            customerEntity.setSex(customerDto.getSex());
-            customerEntity.setShowAvatar(customerDto.getShowAvatar());
+            customerAggregate.setFirstName(customerDto.getFirstName());
+            customerAggregate.setLastName(customerDto.getLastName());
+            customerAggregate.setStatus(customerDto.getStatus());
+            customerAggregate.setSex(customerDto.getSex());
+            customerAggregate.setShowAvatar(customerDto.getShowAvatar());
             customerAggregate.setAllowHotelNotification(customerDto.getAllowHotelNotification());
-            customerEntity.setShowInGuestList(customerDto.getShowInGuestList());
+            customerAggregate.setShowInGuestList(customerDto.getShowInGuestList());
             
             if(customerDto.getEmail()!=null)
             {
-                customerEntity.setEmail(customerDto.getEmail());
+                customerAggregate.setEmail(customerDto.getEmail());
             }
     
             customerAggregate.setCompany(customerDto.getCompany());
@@ -464,23 +469,23 @@ public class CustomerServiceImpl implements CustomerService
 			
             if(updatorId == customerEntity.getId())
             {
-                customerEntity.setLogged(true);
+                customerAggregate.setLogged(true);
             }
             
             if(customerDto.getPassword()!=null && !customerDto.getPassword().isEmpty() && customerDto.getPassword().length()>5)
             {
                 long passwordHash = loginService.getCryptoHash(customerEntity, customerDto.getPassword());
-                customerEntity.setPasswordHash(passwordHash);
-                customerEntity.setPasswordValue(customerDto.getPassword());
+                customerAggregate.setPasswordHash(passwordHash);
+                customerAggregate.setPasswordValue(customerDto.getPassword());
             }
 
             if(customerEntity.isGuestAccount() && customerEntity.getEmail()!=null && customerEntity.getLastName()!=null && customerEntity.getPasswordHash()!=null)
             {
-                customerEntity.setGuestAccount(false);
+                customerAggregate.setGuestAccount(false);
             }
             
             long consistencyId = new Date().getTime();
-            customerEntity.setConsistencyId(consistencyId);
+            customerAggregate.setConsistencyId(consistencyId);
 
             lastMessagesService.updateCustomerConsistencyId(customerEntity.getId(), consistencyId);
             
@@ -738,7 +743,7 @@ public class CustomerServiceImpl implements CustomerService
             HotelRootEntity outHotelRootEntity = validCheckin!=null? validCheckin.getHotel() : hotelRepository.getOne(dto.getHotelId());
             if(outHotelRootEntity !=null && !outHotelRootEntity.isVirtual())
             {
-                dto = fillDtoWithHotelInfo(dto, outHotelRootEntity, validCheckin);
+                dto = fillDtoWithHotelInfo(dto, validCheckin);
             }
         }
         
@@ -746,10 +751,11 @@ public class CustomerServiceImpl implements CustomerService
     }
 
 	@Override
-    public CustomerDTO fillDtoWithHotelInfo(CustomerDTO dto, HotelRootEntity outHotelRootEntity, CustomerHotelCheckin validCheckin)
+    public CustomerDTO fillDtoWithHotelInfo(CustomerDTO dto, CustomerHotelCheckin validCheckin)
     {
-        if(outHotelRootEntity !=null && dto!=null)
+        if(validCheckin.getHotel() !=null && dto!=null)
         {
+            HotelRootEntity outHotelRootEntity = validCheckin.getHotel();
             dto.setHotelId(outHotelRootEntity.getId());
             dto.setHotelName(outHotelRootEntity.getName());
             dto.setHotelCity(outHotelRootEntity.getCity());
@@ -951,7 +957,7 @@ public class CustomerServiceImpl implements CustomerService
             {
                 if(ControllerUtils.SET_AWAY_GUEST_INACTIVE)
                 {
-                    nextCustomerRootEntity.setActive(false);
+                    nextCustomerRootEntity.getEntityAggregate().setActive(false);
                 }
 
                 if(ControllerUtils.SET_AWAY_GUEST_CHECKOUT)
@@ -1050,8 +1056,10 @@ public class CustomerServiceImpl implements CustomerService
                 
         if(anonymes.isEmpty())
         {
-            anonym = new CustomerRootEntity("[anonym]", "[anonym]");
-            anonym.setEmail("[anonym]");
+            anonym = new CustomerRootEntity();
+            anonym.getEntityAggregate().setFirstName("[anonym]");
+            anonym.getEntityAggregate().setLastName("[anonym]");
+            anonym.getEntityAggregate().setEmail("[anonym]");
             customerRepository.saveAndFlush(anonym);
         }
         else {

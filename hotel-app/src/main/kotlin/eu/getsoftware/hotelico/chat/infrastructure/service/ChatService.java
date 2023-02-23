@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.chat.service;
+package eu.getsoftware.hotelico.chat.infrastructure.service;
 
 import java.util.Date;
 import java.util.List;
@@ -12,25 +12,26 @@ import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 
 public interface ChatService
 {
-    @Transactional
     List<ChatMessage> getChatMessages();
     
-    @Transactional ChatMessageDTO convertMessageToDto(ChatMessage nextMessage);
+    ChatMessageDTO convertMessageToDto(ChatMessage nextMessage);
 
-    @Transactional ChatMessageDTO addUpdateChatMessage(ChatMessageDTO chatMessageDto);    
+    @Transactional 
+    ChatMessageDTO addUpdateChatMessage(ChatMessageDTO chatMessageDto);    
     
-    @Transactional ChatMessageDTO addChatMessage(ChatMessageDTO chatMessageDto);
+    @Transactional 
+    ChatMessageDTO addChatMessage(ChatMessageDTO chatMessageDto);
     
     @Transactional
     List<ChatMessageDTO> getMessagesByCustomerId(long customerId, long receiverId);   
     
-    @Transactional ChatMessageDTO getChatMessageById(long chatMessageId);    
+    ChatMessageDTO getChatMessageById(long chatMessageId);    
     
-    @Transactional ChatMessageDTO getChatMessageBySender(long senderId);    
+    ChatMessageDTO getChatMessageBySender(long senderId);    
     
-    @Transactional ChatMessageDTO getChatMessageByReceiver(long receiverId);    
+    ChatMessageDTO getChatMessageByReceiver(long receiverId);    
     
-    @Transactional ChatMessageDTO getChatMessageByDateRange(Date startDate, Date endDate);
+    ChatMessageDTO getChatMessageByDateRange(Date startDate, Date endDate);
 
     @Transactional
     void deleteChatMessage(ChatMessageDTO chatMessageDto);

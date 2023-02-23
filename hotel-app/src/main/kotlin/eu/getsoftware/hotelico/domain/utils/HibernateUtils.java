@@ -35,6 +35,8 @@ public class HibernateUtils
 		public static final String FLOAT_DEFAULT_0 = "FLOAT DEFAULT 0";
 
 		public static final String FLOAT_10_DEFAULT_0 = "FLOAT(10) DEFAULT 0";
+		
+		public static final String LONG_20_DEFAULT_0 = "BIGINT(20) DEFAULT 0";
 
 		public static final String FLOAT_2_6_DEFAULT_0 = "FLOAT(2,6) DEFAULT 0";
 

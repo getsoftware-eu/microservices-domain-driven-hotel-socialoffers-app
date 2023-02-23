@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.chat.service.impl;
+package eu.getsoftware.hotelico.chat.infrastructure.service.impl;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.lang.NotImplementedException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,14 +19,14 @@ import org.springframework.stereotype.Service;
 
 import eu.getsoftware.hotelico.chat.domain.ChatMessage;
 import eu.getsoftware.hotelico.chat.infrastructure.dto.ChatMessageDTO;
-import eu.getsoftware.hotelico.chat.service.ChatService;
+import eu.getsoftware.hotelico.chat.infrastructure.service.ChatService;
+import eu.getsoftware.hotelico.checkin.domain.CustomerHotelCheckin;
+import eu.getsoftware.hotelico.checkin.domain.HotelActivity;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
-import eu.getsoftware.hotelico.customer.domain.HotelActivity;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
-import eu.getsoftware.hotelico.hotel.domain.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.ChatRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
@@ -69,7 +70,7 @@ public class ChatServiceImpl implements ChatService
 	@Override
 	public List<ChatMessage> getChatMessages()
 	{
-		return null;
+		throw new NotImplementedException();
 	}
 	
 	@Override
@@ -96,7 +97,7 @@ public class ChatServiceImpl implements ChatService
 	@Override
 	public ChatMessageDTO convertMessageToDto(ChatMessage nextMessage)
 	{
-		ChatMessageDTO nextDto = nextMessage!=null? modelMapper.map(nextMessage, ChatMessageDTO.class) : null;
+		ChatMessageDTO nextDto = nextMessage!=null ? modelMapper.map(nextMessage, ChatMessageDTO.class) : null;
 		
 		nextDto = fillDtoFromMessage(nextDto, nextMessage);
 		
@@ -248,31 +249,31 @@ public class ChatServiceImpl implements ChatService
 	@Override
 	public ChatMessageDTO getChatMessageById(long chatMessageId)
 	{
-		return null;
+		throw new NotImplementedException();
 	}
 
 	@Override
 	public ChatMessageDTO getChatMessageBySender(long senderId)
 	{
-		return null;
+		throw new NotImplementedException();
 	}
 
 	@Override
 	public ChatMessageDTO getChatMessageByReceiver(long receiverId)
 	{
-		return null;
+		throw new NotImplementedException();
 	}
 
 	@Override
 	public ChatMessageDTO getChatMessageByDateRange(Date startDate, Date endDate)
 	{
-		return null;
+		throw new NotImplementedException();
 	}
 
 	@Override
 	public void deleteChatMessage(ChatMessageDTO chatMessageDto)
 	{
-
+		throw new NotImplementedException();
 	}
 
 	@Override
@@ -397,8 +398,7 @@ public class ChatServiceImpl implements ChatService
 					boolean isPartnerInMyHotelWithFullCheckin = customerHotelId>0 && customerHotelId==chatPartnerDto.getHotelId() && checkinRepository.isFullCheckinForCustomerByHotelId(chatPartnerDto.getId(), chatPartnerDto.getHotelId(), new Date());
 
 					chatPartnerDto.setInMyHotel(isPartnerInMyHotelWithFullCheckin);
-
-
+					
 					//TODO eugen: fill dto!!!
 					if (nextLastMessage != null)
 					{
