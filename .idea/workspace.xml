@@ -4,39 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="-REFACTOR: docs content">
-      <change beforePath="$PROJECT_DIR$/Social-Hotel-Interactions.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TODO.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/arc42.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/arc42.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/chat.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/src/main/java/eu/getsoftware/hotelico/hotel/chat/ChatApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/src/main/java/eu/getsoftware/hotelico/hotel/chat/WebSocketAppConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/src/main/java/eu/getsoftware/hotelico/hotel/chat/dto/BasicDTO.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/src/main/java/eu/getsoftware/hotelico/hotel/chat/dto/ChatCustomerDTO.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/src/main/java/eu/getsoftware/hotelico/hotel/chat/model/ChatCustomerEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/src/main/java/eu/getsoftware/hotelico/hotel/chat/model/ChatMsgEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/src/main/java/eu/getsoftware/hotelico/hotel/chat/service/ChatService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/src/main/java/eu/getsoftware/hotelico/hotel/chat/service/ChatServiceImpl.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/src/main/java/eu/getsoftware/hotelico/hotel/chat/utils/ChatUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/src/main/java/eu/getsoftware/hotelico/hotel/chat/utils/HibernateUtils.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/src/main/resources/TODO.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/src/main/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/chat/src/main/resources/banner.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-client/src/main/frontend/angulr/css/app.min.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-client/src/main/frontend/angulr/js/build/app.min.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-client/src/main/frontend/angulr/js/build/app.src.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-client/src/main/frontend/angulr/tpl/hotel/blocks/chatListCustomer.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-client/src/main/frontend/angulr/tpl/hotel/blocks/modal.editMenuOrderForm.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-client/src/main/frontend/angulr/tpl/hotel/blocks/modal.hotelActivityFeedForm.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-client/src/main/frontend/angulr/tpl/hotel/blocks/modal.hotelCodeForm.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-client/src/main/frontend/angulr/tpl/hotel/blocks/modal.showPushForm.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-client/src/main/frontend/angulr/tpl/hotel/blocks/showActivityBlock.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-client/src/main/kotlin/eu/getsoftware/hotelico/infrastructure/hotel/dto/BasicDTO.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotelico.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/menu/menu.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/spring-live-updates.iml" beforeDir="false" />
-    </list>
+    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="-REFACTOR: structure" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -359,7 +327,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655288692722</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="-REFACTOR: structure">
+      <created>1677181452725</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1677181452725</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -385,7 +360,8 @@
     <MESSAGE value="-CHG: Microservice refactoring (hotel microservice)" />
     <MESSAGE value="-CHG: Microservice refactoring (maven submodule architecture)" />
     <MESSAGE value="-CHG: Microservice refactoring (hotel submodul)" />
-    <option name="LAST_COMMIT_MESSAGE" value="-CHG: Microservice refactoring (hotel submodul)" />
+    <MESSAGE value="-REFACTOR: structure" />
+    <option name="LAST_COMMIT_MESSAGE" value="-REFACTOR: structure" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>
