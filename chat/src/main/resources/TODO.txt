@@ -1,8 +1,0 @@
-- CustomerEntity: copy from central microservice or use a shorten version of central entity?
- -- naming? ChatCustomerEntity? View from Chat-service needs?
-- Utils methods: copy all Utils methods or create central jar?
- -- Open Fegin?: only REST api or other classes import to other microservices
-- WebSocketAppConfig: all websockets to this microservice? Or central NotificationService?
-- IService and ServiceImp - together in one dir? Or Interface in another package?
-- DTO: as data class or better changebale setters??
- -- open feign?: or it only for rest api?
