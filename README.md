@@ -2,7 +2,7 @@
 
 "Clean" (Layered) Architecture is another way to provide for <b>separation of concerns</b>, <b>encapsulation</b> and <b>decoupling</b>, by grouping code units by their domain and functional role within the application.
 
-### It's a refactoring of an old 'Hotel-interaction' project: trying to encapsulate domain-data (with Domain-driven Design and Onion Architecture).
+### It's a refactoring of the old 'Hotel-interaction' project: an attempt to encapsulate domain-data (with Domain-driven Design and Onion Architecture).
 
 ![Agregates is only one entry to domain entities](/docs/img/diagramm1.png)
 
