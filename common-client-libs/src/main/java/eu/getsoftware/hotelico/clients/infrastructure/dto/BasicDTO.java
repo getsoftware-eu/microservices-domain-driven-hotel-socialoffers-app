@@ -20,7 +20,7 @@ public abstract class BasicDTO implements Serializable
 	
 	String dtoType = this.getClass().getSimpleName().toLowerCase();
 	
-	BasicDTO(Long initId) {
+	protected BasicDTO(Long initId) {
         this.initId = initId;
     }
 	
@@ -32,5 +32,10 @@ public abstract class BasicDTO implements Serializable
 	public void setInitId(Long initId)
 	{
 		this.initId = initId;
+	}
+	
+	public void setActive(boolean active)
+	{
+		this.active = active;
 	}
 }

@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.domain.utils;
+package eu.getsoftware.hotelico.clients.infrastructure.utils;
 
 /**
  * Created by Eugen on 16.07.2015.
@@ -41,6 +41,8 @@ public class HibernateUtils
 		public static final String FLOAT_2_6_DEFAULT_0 = "FLOAT(2,6) DEFAULT 0";
 
 		public static final String MEDIUMINT_UNSIGNED_DEFAULT_0 = "MEDIUMINT UNSIGNED DEFAULT 0";
+		
+		public static final String PRICE_DEFAULT_0 = "Decimal(6,2) default '0.00'";
 
 	}
 	

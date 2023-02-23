@@ -14,15 +14,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import eu.getsoftware.hotelico.domain.hotel.HotelRootEntity;
-import eu.getsoftware.hotelico.domain.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotel.utils.DealStatus;
+import eu.getsoftware.hotelico.clients.infrastructure.utils.DealStatus;
+import eu.getsoftware.hotelico.clients.infrastructure.utils.HibernateUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,22 +33,31 @@ import lombok.Setter;
 @Table(name = "menu_order")
 public class MenuOrder implements Serializable
 {
-
 	private static final long serialVersionUID = -3552760230944489778L;
 	
 	@Id
 	@Setter(AccessLevel.PROTECTED)
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
-
-	@Column(name = "initId", columnDefinition = "BIGINT(20) DEFAULT 0")
+	
+	//Eugen: not RootEntity, but its id
+	//	@ManyToOne
+	@JoinColumn(name="hotelId")
+	private long hotelRootEntityId;
+	
+	//Eugen: not RootEntity, but its id
+	//	@ManyToOne
+	@JoinColumn(name="senderId")
+	private long senderId;
+	
+	@Column(name = "initId", columnDefinition = HibernateUtils.ColumnDefinition.LONG_20_DEFAULT_0)
 	private long initId;
 	
 	/**
 	 * messageId -> creationTime
 	 * consistencyId -> last update time
 	 */
-	@Column(name = "consistencyId", columnDefinition = "BIGINT(20) DEFAULT 0")
+	@Column(name = "consistencyId", columnDefinition = HibernateUtils.ColumnDefinition.LONG_20_DEFAULT_0)
 	private long consistencyId;
 
 	@Column(name = "active", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_TRUE)
@@ -58,14 +65,6 @@ public class MenuOrder implements Serializable
 	
 	@Column(name = "orderInRoom", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
 	private boolean orderInRoom = true;
-	
-	@ManyToOne
-	@JoinColumn(name="hotelId")
-	private HotelRootEntity hotelRootEntity;
-
-	@ManyToOne
-	@JoinColumn(name="senderId")
-	private CustomerEntity sender;
 	
 	@Column
 	private Timestamp timestamp = new Timestamp(new Date().getTime());	
@@ -88,13 +87,13 @@ public class MenuOrder implements Serializable
 	@Column
 	private String orderLocation;
 	
-	@Column(name = "totalPrice", columnDefinition = "Decimal(6,2) default '0.00'")
+	@Column(name = "totalPrice", columnDefinition = HibernateUtils.ColumnDefinition.PRICE_DEFAULT_0)
 	private Double totalPrice;	
 	
-	@Column(name = "totalMoney", columnDefinition = "Decimal(6,2) default '0.00'")
+	@Column(name = "totalMoney", columnDefinition = HibernateUtils.ColumnDefinition.PRICE_DEFAULT_0)
 	private Double totalMoney;
 
-	@Column(name = "guestCustomerId", columnDefinition = "BIGINT(20) DEFAULT 0")
+	@Column(name = "guestCustomerId", columnDefinition = HibernateUtils.ColumnDefinition.LONG_20_DEFAULT_0)
 	private long guestCustomerId;
 	
 	//eugen: mappedBy entity!
@@ -102,23 +101,12 @@ public class MenuOrder implements Serializable
 	private Set<MenuItem> menuItems = new HashSet<>();
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "validFrom", nullable = true, length = 10)
+	@Column(name = "validFrom", length = 10)
 	private Date validFrom = new Date();
 
 	@Temporal(TemporalType.DATE)
-	@Column(name = "validTo", nullable = true, length = 10)
+	@Column(name = "validTo", length = 10)
 	private Date validTo = new Date();
-	
-//	MenuOrder(Customer sender)
-//	{
-//		setSender(sender);
-//
-//		generateCode();
-//
-//		setInitId(ThreadLocalRandom.current().nextInt(1, 999999));
-//		setConsistencyId(new Date().getTime());
-//
-//	}
 	
 	public static long getSerialVersionUID()
 	{

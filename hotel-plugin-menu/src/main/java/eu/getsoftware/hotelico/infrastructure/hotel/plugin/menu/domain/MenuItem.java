@@ -14,8 +14,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
-import eu.getsoftware.hotelico.domain.hotel.HotelRootEntity;
-import eu.getsoftware.hotelico.domain.utils.HibernateUtils;
+import eu.getsoftware.hotelico.clients.infrastructure.utils.HibernateUtils;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,13 +27,22 @@ import lombok.Setter;
 @Table(name = "menu_item")
 public class MenuItem implements Serializable
 {
-
 	private static final long serialVersionUID = -3552760230944489778L;
 	
 	@Id
 	@Setter(AccessLevel.PROTECTED)
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
+	
+	//EUGEN: not RootEntity, but its id
+	//	@ManyToOne
+	@JoinColumn(name="hotelId")
+	private long hotelRootEntityId;
+	
+	//EUGEN: not RootEntity, but its id
+	//	@ManyToOne
+	@JoinColumn(name="creatorId")
+	private long creatorId;
 	
 	@Column
 	private int cafeId;	
@@ -50,13 +58,13 @@ public class MenuItem implements Serializable
 	 * messageId -> creationTime
 	 * consistencyId -> last update time
 	 */
-	@Column(name = "consistencyId", columnDefinition = "BIGINT(20) DEFAULT 0")
+	@Column(name = "consistencyId", columnDefinition = HibernateUtils.ColumnDefinition.LONG_20_DEFAULT_0)
 	private long consistencyId;		
 	
-	@Column(name = "initId", columnDefinition = "BIGINT(20) DEFAULT 0")
+	@Column(name = "initId", columnDefinition = HibernateUtils.ColumnDefinition.LONG_20_DEFAULT_0)
 	private long initId;	
 	
-	@Column(name = "amount", columnDefinition = "int(11) DEFAULT 0")
+	@Column(name = "amount", columnDefinition = HibernateUtils.ColumnDefinition.INT_11_DEFAULT_0)
 	private int amount;
 
 	@Column(name = "active", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_TRUE)
@@ -64,14 +72,6 @@ public class MenuItem implements Serializable
 	
 	@Column(name = "delimiter", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
 	private boolean delimiter = false;
-	
-	@ManyToOne
-	@JoinColumn(name="hotelId")
-	private HotelRootEntity hotelRootEntity;
-
-	@ManyToOne
-	@JoinColumn(name="creator")
-	private CustomerEntity creator;
 	
 	@Column
 	private Timestamp timestamp;
@@ -97,10 +97,10 @@ public class MenuItem implements Serializable
 	@Type(type = "text")
 	private String description;	
 	
-	@Column(name = "pictureUrl", nullable = true, length = 250)
+	@Column(name = "pictureUrl", length = 250)
 	private String pictureUrl;	
 	
-	@Column(name = "price", columnDefinition="Decimal(10,2) default '0.00'")
+	@Column(name = "price", columnDefinition= HibernateUtils.ColumnDefinition.PRICE_DEFAULT_0)
 	private double price = 0.0;
 	
 	public static long getSerialVersionUID()
