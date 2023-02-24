@@ -1,4 +1,4 @@
-# Domain-driven Design - my Java implementation
+# My vision of a Domain-driven Design and Clean Architecture implementation with microservices and K8s
 
 "Clean" (Layered) Architecture is another way to provide for <b>separation of concerns</b>, <b>encapsulation</b> and <b>decoupling</b>, by grouping code units by their domain and functional role within the application.
 
@@ -6,7 +6,7 @@
 
 ![Agregates is only one entry to domain entities](/docs/img/diagramm1.png)
 
-## Hotel interaction Application
+## About 'Hotel interaction Application'
 ### 'MAKING GUESTS & HOTELS HAPPY'
 
 ![Application intro](/docs/img/app3.png)
