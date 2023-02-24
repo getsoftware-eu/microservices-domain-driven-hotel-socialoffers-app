@@ -5,6 +5,7 @@
 ### It's a refactoring of the old 'Hotel-interaction' project: an attempt to encapsulate domain-data (with Domain-driven Design and Onion Architecture).
 
 ![Agregates is only one entry to domain entities](/docs/img/diagramm1.png)
+![Aggregate root](/docs/img/ddd.webp)
 
 ## About 'Hotel interaction Application'
 ### 'MAKING GUESTS & HOTELS HAPPY'
