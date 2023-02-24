@@ -7,6 +7,9 @@
 ![Agregates is only one entry to domain entities](/docs/img/diagramm1.png)
 ![Aggregate root](/docs/img/ddd.webp)
 
+For simplicity, jpa-entities will be handled as domain-entities directly at the Domain-Layer, but actually they should be separated from domain-entities and be used only in infrastructure layer (with jpa repository).
+Then they would not depend on each other, but this would require a double declaration of all fields.
+
 ## About 'Hotel interaction Application'
 ### 'MAKING GUESTS & HOTELS HAPPY'
 
@@ -23,6 +26,6 @@ Guests can get to know other guests in the hotel. And earn bonus points for hote
 
 
 
-### Onion "Clean" Architecture with java
+### "Clean" (Onion) Architecture with java
 Based on my another Github project:
 https://github.com/getsoftware-eu/my-onion-clean-architecture
