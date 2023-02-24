@@ -5,10 +5,11 @@
 ### It's a refactoring of the old 'Hotel-interaction' project: an attempt to encapsulate domain-data (with Domain-driven Design and Onion Architecture).
 
 ![Agregates is only one entry to domain entities](/docs/img/diagramm1.png)
-![Aggregate root](/docs/img/ddd.webp)
 
-For simplicity, jpa-entities will be handled as domain-entities directly at the Domain-Layer, but actually they should be separated from domain-entities and be used only in infrastructure layer (with jpa repository).
-Then they would not depend on each other, but this would require a double declaration of all fields.
+For simplicity, Jpa-entities will be handled as Domain-entities directly at the Domain-Layer, but actually in clean-architecture Jpa-Entities should be separated from Domain-entities and should be used only in Infrastructure-Layer (with jpa repository).
+Then they would not depend on each other, but this would require a double declaration of same entity-fields in different layers.
+
+![Aggregate root](/docs/img/ddd.webp)
 
 ## About 'Hotel interaction Application'
 ### 'MAKING GUESTS & HOTELS HAPPY'
