@@ -2,11 +2,11 @@
 
 "Clean" (Layered) Architecture is another way to provide for <b>separation of concerns</b>, <b>encapsulation</b> and <b>decoupling</b>, by grouping code units by their domain and functional role within the application.
 
-### It's a refactoring of the old 'Hotel-interaction' project: an attempt to encapsulate domain-data (with Domain-driven Design and Onion Architecture).
+### It's a refactoring of the old 'Hotel-interaction' project: an attempt to encapsulate domain-data (with Domain-driven Design and Clean Architecture).
 
 ![Agregates is only one entry to domain entities](/docs/img/diagramm1.png)
 
-For simplicity, Jpa-entities will be handled as Domain-entities directly at the Domain-Layer, but actually in clean-architecture Jpa-Entities should be separated from Domain-entities and should be used only in Infrastructure-Layer (with jpa repository).
+For simplicity, <b>Jpa-entities</b> will be handled as <b>Domain-entities</b> directly at the <b>Domain-Layer</b>, but actually in Clean-architecture Jpa-Entities should be separated from Domain-entities and should be used only in <b>Infrastructure-Layer</b> (with Jpa Repository).
 Then they would not depend on each other, but this would require a double declaration of same entity-fields in different layers.
 
 ![Aggregate root](/docs/img/ddd.webp)
