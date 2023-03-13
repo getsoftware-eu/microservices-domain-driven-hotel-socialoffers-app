@@ -1,4 +1,4 @@
-# My vision of a Domain-driven Design and Clean Architecture implementation with microservices and K8s
+# My vision of a Domain-driven Design and Clean Architecture implementation with microservices and AWS
 
 "Clean" (Layered) Architecture is another way to provide for <b>separation of concerns</b>, <b>encapsulation</b> and <b>decoupling</b>, by grouping code units by their domain and functional role within the application.
 
