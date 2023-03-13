@@ -25,8 +25,9 @@ Then they would not depend on each other, but this would require a double declar
 Guests can get to know other guests in the hotel. And earn bonus points for hotel offers at the same time
 ![Special offers on guests](/docs/img/appInfo.jpg)
 
-
+### TODO: starting building AWS Architecture (first attempt) 
 ![AWS](/docs/img/aws.drawio.png)
+
 ### "Clean" (Onion) Architecture with java
 Based on my another Github project:
 https://github.com/getsoftware-eu/my-onion-clean-architecture
