@@ -8,12 +8,12 @@ package eu.getsoftware.hotelico.clients.infrastructure.exception;
  * 
  * Common Dashboard Exception
  */
-public class HotelException extends Exception {
+public class BasicHotelException extends Exception {
 	
 	String message;
 	String reponseMessage;
 		
-	public HotelException(String message)
+	public BasicHotelException(String message)
 	{
 		super(message);
 		this.message = message;
