@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import eu.getsoftware.hotelico.clients.infrastructure.exception.HotelException;
+import eu.getsoftware.hotelico.clients.infrastructure.exception.BasicHotelException;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.aspects.NotifyClients;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDTO;
@@ -92,7 +92,7 @@ public class HotelController extends BasicController
     } 
     
     @RequestMapping(value = "/customer/{customerId}/hotel/city/{city}", method = RequestMethod.GET)
-    public List<HotelDTO> getHotelCities(@PathVariable long customerId, @PathVariable String city, final HttpServletResponse response) throws HotelException
+    public List<HotelDTO> getHotelCities(@PathVariable long customerId, @PathVariable String city, final HttpServletResponse response) throws BasicHotelException
     {
         return hotelService.getHotelsByCity(customerId, city);
     }  

@@ -58,7 +58,7 @@ public class CustomerController extends BasicController
     //INIT Session values
     @ModelAttribute(ControllerUtils.SESSION_CUSTOMER)
     public CustomerDTO initSessionCustomer(HttpSession httpSession) {
-        return httpSession.getAttribute(ControllerUtils.SESSION_CUSTOMER)!=null? (CustomerDTO) httpSession.getAttribute(ControllerUtils.SESSION_CUSTOMER) : new CustomerDTO(); // populates form for the first time if its null
+        return httpSession.getAttribute(ControllerUtils.SESSION_CUSTOMER)!=null? (CustomerDTO) httpSession.getAttribute(ControllerUtils.SESSION_CUSTOMER) : new CustomerDTO(0); // populates form for the first time if its null
     }
     
     @RequestMapping(method = RequestMethod.GET)
@@ -92,7 +92,7 @@ public class CustomerController extends BasicController
     
     // @NotifyClients
     @RequestMapping(value = "/customers/{id}/requesterId/{requesterId}", method = RequestMethod.PUT)
-    public @ResponseBody CustomerDTO update(@PathVariable int id, @PathVariable int requesterId, @RequestBody CustomerDTO dto, HttpSession httpSession) {
+    public @ResponseBody CustomerDTO update(@PathVariable long id, @PathVariable int requesterId, @RequestBody CustomerDTO dto, HttpSession httpSession) {
         dto.setId(id);
         CustomerDTO out = customerService.updateCustomer(dto, requesterId);
         
@@ -113,7 +113,7 @@ public class CustomerController extends BasicController
         }
         catch (Exception e)
         {
-            out = new CustomerDTO();
+            out = new CustomerDTO(id);
             out.setErrorResponse("Connection error:" + e.getMessage());
         }
         return out;
@@ -130,7 +130,7 @@ public class CustomerController extends BasicController
         }
         catch (Exception e)
         {
-            out = new CustomerDTO();
+            out = new CustomerDTO(0);
             out.setErrorResponse("Connection error:" + e.getMessage());
         }
         return out;
@@ -156,7 +156,7 @@ public class CustomerController extends BasicController
             out = customerService.addCustomer(customerDto, customerDto.getPassword());
         }catch (Exception e)
         {
-            out = new CustomerDTO();
+            out = new CustomerDTO(0);
             out.setErrorResponse("Connection error: " + e.getMessage());
         }
         //set in session
@@ -169,8 +169,8 @@ public class CustomerController extends BasicController
     @NotifyClients
     @RequestMapping(value = "/customers/{id}/requesterId/{requesterId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id, @PathVariable int requesterId, HttpSession httpSession) {
-        CustomerDTO task = new CustomerDTO();
+    public void delete(@PathVariable long id, @PathVariable int requesterId, HttpSession httpSession) {
+        CustomerDTO task = new CustomerDTO(id);
         task.setId(id);
         customerService.deleteCustomer(task);
 
@@ -394,7 +394,7 @@ public class CustomerController extends BasicController
         //        sessionCustomer = out;
         //        //        response.addCookie(new Cookie(ControllerUtils.SESSION_CUSTOMER_ID, out.getId() + ""));
 
-        CustomerDTO test = new CustomerDTO();
+        CustomerDTO test = new CustomerDTO(0);
 
         if(response.isError())
         {

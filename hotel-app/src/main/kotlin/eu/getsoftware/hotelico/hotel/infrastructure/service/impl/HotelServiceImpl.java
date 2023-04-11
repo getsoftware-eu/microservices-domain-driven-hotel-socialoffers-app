@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import eu.getsoftware.hotelico.checkin.domain.HotelActivity;
-import eu.getsoftware.hotelico.clients.infrastructure.exception.HotelException;
+import eu.getsoftware.hotelico.clients.infrastructure.exception.BasicHotelException;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ReorderAction;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
@@ -134,7 +134,7 @@ public class HotelServiceImpl implements HotelService
         return out;
     }
     
-    public List<HotelDTO> getHotelsByCity(long requesterId, String filterCity) throws HotelException
+    public List<HotelDTO> getHotelsByCity(long requesterId, String filterCity) throws BasicHotelException
     {
         //TODO Eugen: Query by unique filterCity!!!
         List<HotelRootEntity> list = hotelRepository.findByVirtualAndActive(false, true);
@@ -148,7 +148,7 @@ public class HotelServiceImpl implements HotelService
 
         if(!requesterOptional.isPresent())
         {
-            throw new HotelException("Customer not found with id=" + requesterId);	
+            throw new BasicHotelException("Customer not found with id=" + requesterId);	
         }
         
         List<HotelDTO> out = new ArrayList<HotelDTO>();

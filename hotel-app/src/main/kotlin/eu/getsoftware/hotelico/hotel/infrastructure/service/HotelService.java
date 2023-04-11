@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.transaction.annotation.Transactional;
 
 import eu.getsoftware.hotelico.checkin.domain.HotelActivity;
-import eu.getsoftware.hotelico.clients.infrastructure.exception.HotelException;
+import eu.getsoftware.hotelico.clients.infrastructure.exception.BasicHotelException;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ReorderAction;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
@@ -29,7 +29,7 @@ public interface HotelService
     List<HotelDTO> getHotelCities(long requesterId); 
     
     @Transactional
-    List<HotelDTO> getHotelsByCity(long customerId, String city) throws HotelException;
+    List<HotelDTO> getHotelsByCity(long customerId, String city) throws BasicHotelException;
 
     @Transactional HotelDTO addHotel(HotelDTO hotelDto);    
     
