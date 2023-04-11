@@ -4,7 +4,7 @@ import eu.getsoftware.hotelico.clients.infrastructure.dto.BasicDTO
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils
 import java.util.*
 
-data class CustomerDealDto(val initId: Long): BasicDTO(initId)
+data class CustomerDealDTO(val initId: Long): BasicDTO(initId)
 {
     /**
      * owner activity

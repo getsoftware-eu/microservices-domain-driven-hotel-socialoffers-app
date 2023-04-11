@@ -31,7 +31,7 @@ import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
 import eu.getsoftware.hotelico.deal.domain.CustomerDeal;
-import eu.getsoftware.hotelico.deal.infrastructure.dto.CustomerDealDto;
+import eu.getsoftware.hotelico.deal.infrastructure.dto.CustomerDealDTO;
 import eu.getsoftware.hotelico.deal.infrastructure.utils.DealStatus;
 import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 import eu.getsoftware.hotelico.hotel.domain.HotelWallPost;
@@ -408,13 +408,13 @@ public class HotelServiceImpl implements HotelService
     }
 	
 	@Override
-	public List<CustomerDealDto> getDealsByActivityOrHotelId(long customerId, long hotelId, long activityId, boolean onlyDealsOfRequester, boolean closed)
+	public List<CustomerDealDTO> getDealsByActivityOrHotelId(long customerId, long hotelId, long activityId, boolean onlyDealsOfRequester, boolean closed)
 	{
 		
 		//TODO Eugen: get closed deals or Menu!!!!!
 		
 		List<CustomerDeal> resultList = new ArrayList<>();
-		List<CustomerDealDto> dtoList = new ArrayList<>();
+		List<CustomerDealDTO> dtoList = new ArrayList<>();
 		
 		//Eugen: if Customer is staff or admin, will become all deals!!! 
         
@@ -476,7 +476,7 @@ public class HotelServiceImpl implements HotelService
 		
 		for (CustomerDeal nextDeal: resultList)
 		{
-			CustomerDealDto nextDto = convertDealToDto(nextDeal);
+			CustomerDealDTO nextDto = convertDealToDto(nextDeal);
 			
 			dtoList.add(nextDto);
 		}
@@ -484,9 +484,9 @@ public class HotelServiceImpl implements HotelService
 		return dtoList;
 	}
 	
-	private CustomerDealDto convertDealToDto(CustomerDeal deal)
+	private CustomerDealDTO convertDealToDto(CustomerDeal deal)
 	{
-        CustomerDealDto dto = modelMapper.map(deal, CustomerDealDto.class);
+        CustomerDealDTO dto = modelMapper.map(deal, CustomerDealDTO.class);
 		
 		HotelActivity dealActivity = deal.getActivity();
 		
@@ -543,7 +543,7 @@ public class HotelServiceImpl implements HotelService
 	}
 	
 	@Override
-	public CustomerDealDto addUpdateDeal(long guestCustomerId, long activityId, CustomerDealDto dealDto)
+	public CustomerDealDTO addUpdateDeal(long guestCustomerId, long activityId, CustomerDealDTO dealDto)
 	{
         CustomerDeal  deal  = getDealByIdOrInitId(dealDto.getId(), dealDto.getInitId());
 		
@@ -567,14 +567,14 @@ public class HotelServiceImpl implements HotelService
 //        return null;
 	}
 	
-	private CustomerDeal updateDealFromDto(CustomerDeal deal, CustomerDealDto activityDealDto)
+	private CustomerDeal updateDealFromDto(CustomerDeal deal, CustomerDealDTO activityDealDto)
 	{
 		//TODO Eugen: updatee dbObject from client DTO
 		return null;
 	}
 	
 	@Override
-	public CustomerDealDto addDealAction(long customerId, long activityId, long givenId, String dealAction, String tablePosition, double totalMoney)
+	public CustomerDealDTO addDealAction(long customerId, long activityId, long givenId, String dealAction, String tablePosition, double totalMoney)
 	{
         long customerEntityId = ControllerUtils.getTryEntityId(customerId);
         
@@ -587,7 +587,7 @@ public class HotelServiceImpl implements HotelService
 		
 		HotelActivity activity = getActivityByIdOrInitId((int)activityId, activityId);
 		
-        CustomerDealDto resultDealDto = null;
+        CustomerDealDTO resultDealDto = null;
         
 		switch (dealAction)
 		{

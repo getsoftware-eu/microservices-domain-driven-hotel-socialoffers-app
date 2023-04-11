@@ -12,7 +12,7 @@ import eu.getsoftware.hotelico.clients.infrastructure.utils.ReorderAction;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.deal.domain.CustomerDeal;
-import eu.getsoftware.hotelico.deal.infrastructure.dto.CustomerDealDto;
+import eu.getsoftware.hotelico.deal.infrastructure.dto.CustomerDealDTO;
 import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 import eu.getsoftware.hotelico.hotel.domain.HotelWallPost;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDTO;
@@ -99,15 +99,15 @@ public interface HotelService
     double getDistanceKmToHotel(Point2D.Double from, HotelRootEntity to);
 	
 	@Transactional
-	List<CustomerDealDto> getDealsByActivityOrHotelId(long customerId, long hotelId, long activityId, boolean onlyDealsOfRequester, boolean closed);
+	List<CustomerDealDTO> getDealsByActivityOrHotelId(long customerId, long hotelId, long activityId, boolean onlyDealsOfRequester, boolean closed);
 	
 	@Transactional ResponseDTO deleteDeal(long customerId, long activityId, long dealId);
 	
 	@Transactional
-    CustomerDealDto addUpdateDeal(long guestCustomerId, long activityId, CustomerDealDto activityDealDto);
+    CustomerDealDTO addUpdateDeal(long guestCustomerId, long activityId, CustomerDealDTO activityDealDto);
 	
 	@Transactional
-    CustomerDealDto addDealAction(long guestCustomerId, long activityId, long givenId, String action, String tablePosition, double totalMoney);
+    CustomerDealDTO addDealAction(long guestCustomerId, long activityId, long givenId, String action, String tablePosition, double totalMoney);
 	
 	@Transactional
 	int getCustomerDealCounter(long customerId, long guestId);

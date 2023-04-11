@@ -15,6 +15,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.joda.time.DateTime;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -887,7 +888,7 @@ public class CustomerServiceImpl implements CustomerService
         
         for (String nextCity: citiesList)
         {
-            CustomerDTO dto = new CustomerDTO();
+            CustomerDTO dto = new CustomerDTO(new DateTime().getMillis());
             dto.setCity(nextCity);
             resultCustomerList.add(dto);
         }

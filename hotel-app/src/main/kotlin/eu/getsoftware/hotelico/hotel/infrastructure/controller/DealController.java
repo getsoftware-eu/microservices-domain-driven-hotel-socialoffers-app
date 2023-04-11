@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import eu.getsoftware.hotelico.deal.infrastructure.dto.CustomerDealDto;
+import eu.getsoftware.hotelico.deal.infrastructure.dto.CustomerDealDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.aspects.NotifyClients;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
@@ -47,14 +47,14 @@ public class DealController extends BasicController
 
   @RequestMapping(value = "/deals/customer/{customerId}/activity/{activityId}/hotel/{hotelId}/limitByRequester/{onlyRequesterDeals}/showClosed/{showClosed}", method = RequestMethod.GET)
   public @ResponseBody
-  List<CustomerDealDto> getDeals(@PathVariable long customerId, @PathVariable int activityId, @PathVariable long hotelId, @PathVariable boolean onlyRequesterDeals, @PathVariable boolean showClosed) {
+  List<CustomerDealDTO> getDeals(@PathVariable long customerId, @PathVariable int activityId, @PathVariable long hotelId, @PathVariable boolean onlyRequesterDeals, @PathVariable boolean showClosed) {
     //TODO Eugen: socket ConnectException: Connection timed out: connect
     return hotelService.getDealsByActivityOrHotelId(customerId, hotelId, activityId, onlyRequesterDeals, showClosed);
   }
   
   @RequestMapping(value = "/action/{action}/customer/{customerId}/activityId/{activityId}/dealId/{dealId}/tablePosition/{tablePosition}/totalMoney/{totalMoney}", method = RequestMethod.GET)
   public @ResponseBody
-  CustomerDealDto addDealAction(@PathVariable String action, @PathVariable long customerId, @PathVariable long activityId, @PathVariable long dealId, @PathVariable String tablePosition, @PathVariable double totalMoney) {
+  CustomerDealDTO addDealAction(@PathVariable String action, @PathVariable long customerId, @PathVariable long activityId, @PathVariable long dealId, @PathVariable String tablePosition, @PathVariable double totalMoney) {
     return hotelService.addDealAction(customerId, activityId, dealId, action, tablePosition, totalMoney);
   }
 	
@@ -69,10 +69,10 @@ public class DealController extends BasicController
 
   @RequestMapping(value = "/customer/{customerId}/activityId/{activityId}/deal/{dealId}", method = RequestMethod.POST)//, headers ="Accept:*/*")
   public @ResponseBody
-  CustomerDealDto addUpdateDeal(@PathVariable long guestCustomerId, @PathVariable long activityId, @PathVariable long dealId, @RequestBody CustomerDealDto dealDto) {
+  CustomerDealDTO addUpdateDeal(@PathVariable long guestCustomerId, @PathVariable long activityId, @PathVariable long dealId, @RequestBody CustomerDealDTO dealDto) {
 
 //    activityDto.setInitId(activityId);
-	  CustomerDealDto out = hotelService.addUpdateDeal(guestCustomerId,activityId,dealDto);
+	  CustomerDealDTO out = hotelService.addUpdateDeal(guestCustomerId,activityId,dealDto);
     return out;
   }
 
