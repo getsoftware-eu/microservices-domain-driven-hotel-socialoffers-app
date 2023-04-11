@@ -229,4 +229,14 @@ public class CustomerAggregate
 	{
 		customerRootEntity.setPushRegistrationId(s);
 	}
+	
+	public double getLatitude()
+	{
+		return customerRootEntity.getCustomerGPSPosition().getLatitude();
+	}
+	
+	public double getLongitude()
+	{
+		return customerRootEntity.getCustomerGPSPosition().getLongitude();
+	}
 }

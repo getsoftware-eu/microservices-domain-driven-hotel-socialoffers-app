@@ -18,9 +18,9 @@ import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import eu.getsoftware.hotelico.checkin.domain.HotelActivity;
+import eu.getsoftware.hotelico.clients.infrastructure.utils.HibernateUtils;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.deal.infrastructure.utils.DealStatus;
-import eu.getsoftware.hotelico.domain.utils.HibernateUtils;
 import lombok.Getter;
 import lombok.Setter;
 

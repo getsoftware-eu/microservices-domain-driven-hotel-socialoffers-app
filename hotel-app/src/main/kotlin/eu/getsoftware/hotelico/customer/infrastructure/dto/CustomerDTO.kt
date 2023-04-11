@@ -7,10 +7,8 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
 
-class CustomerDTO : BasicDTO
+data class CustomerDTO(val initId: Long) : BasicDTO()
 {
-    constructor(): super()
-
     var firstName: String? = null
     
     var lastName: String = ""

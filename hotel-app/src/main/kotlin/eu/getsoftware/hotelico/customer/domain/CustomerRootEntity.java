@@ -22,7 +22,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicUpdate;
 
 import eu.getsoftware.hotelico.checkin.domain.HotelActivity;
-import eu.getsoftware.hotelico.domain.utils.HibernateUtils;
+import eu.getsoftware.hotelico.clients.infrastructure.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.IFileUploadable;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

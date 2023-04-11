@@ -3,9 +3,7 @@ package eu.getsoftware.hotelico.menu.infrastructure.dto;
 import eu.getsoftware.hotelico.clients.infrastructure.dto.BasicDTO
 import java.sql.Timestamp
 
-class MenuItemDTO: BasicDTO {
-
-     constructor() : super()
+data class MenuItemDTO(val initId: Long): BasicDTO(initId) {
 
      var  orderId = 0L
 

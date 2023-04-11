@@ -6,27 +6,27 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.transaction.annotation.Transactional;
 
 import eu.getsoftware.hotelico.customer.domain.User;
-import eu.getsoftware.hotelico.customer.infrastructure.dto.UserDto;
+import eu.getsoftware.hotelico.customer.infrastructure.dto.UserDTO;
 
 public interface UserService
 {
-    List<UserDto> getUsers();
+    List<UserDTO> getUsers();
 
     @Transactional
-    UserDto addUser(UserDto userDto, String password);
+    UserDTO addUser(UserDTO userDto, String password);
 
     @Transactional
-    UserDto updateUser(UserDto userDto);
+    UserDTO updateUser(UserDTO userDto);
 
-    UserDto getById(int userId);
+    UserDTO getById(int userId);
 
-    List<UserDto> getByHotelId(int userId);
-
-    @Transactional
-    UserDto checkLogin(String email, String password);
+    List<UserDTO> getByHotelId(int userId);
 
     @Transactional
-    void deleteUser(UserDto userDto);
+    UserDTO checkLogin(String email, String password);
+
+    @Transactional
+    void deleteUser(UserDTO userDto);
     
     boolean isEmailExists(String email);
     

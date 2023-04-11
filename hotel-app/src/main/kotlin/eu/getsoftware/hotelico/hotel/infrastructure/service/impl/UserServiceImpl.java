@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.thoughtworks.xstream.mapper.Mapper;
 
 import eu.getsoftware.hotelico.customer.domain.User;
-import eu.getsoftware.hotelico.customer.infrastructure.dto.UserDto;
+import eu.getsoftware.hotelico.customer.infrastructure.dto.UserDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.UserDtoRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,45 +28,45 @@ public class UserServiceImpl implements UserService
     @Autowired
     private Mapper mapper;
 	
-    public List<UserDto> getUsers() {
+    public List<UserDTO> getUsers() {
         List<User> list = userDtoRepository.findAll();
-        List<UserDto> out = new ArrayList<UserDto>();
+        List<UserDTO> out = new ArrayList<UserDTO>();
         for (User dto : list) {
-            out.add(mapper.map(dto, UserDto.class));
+            out.add(mapper.map(dto, UserDTO.class));
         }
         return out;
     }
 
-    public UserDto getById(int userId) {
+    public UserDTO getById(int userId) {
         User dto = userDtoRepository.getOne(userId);
-        UserDto out = dto==null? null : (mapper.map(dto, UserDto.class));
+        UserDTO out = dto==null? null : (mapper.map(dto, UserDTO.class));
         return out;
     }
 
-    public List<UserDto> getByHotelId(int hotelId) {
+    public List<UserDTO> getByHotelId(int hotelId) {
         List<User> dtoList = userDtoRepository.findByHotelId(hotelId);
-        List<UserDto> out = new ArrayList<UserDto>();
+        List<UserDTO> out = new ArrayList<UserDTO>();
         for (User dto : dtoList) {
-            out.add(mapper.map(dto, UserDto.class));
+            out.add(mapper.map(dto, UserDTO.class));
         }
         return out;
     }
 
     @Transactional
     @Override
-    public UserDto addUser(UserDto userDto, String password) {
+    public UserDTO addUser(UserDTO userDto, String password) {
         User dto = mapper.map(userDto, User.class);
         dto.setPassword(password);
-        return mapper.map(userDtoRepository.saveAndFlush(dto), UserDto.class);
+        return mapper.map(userDtoRepository.saveAndFlush(dto), UserDTO.class);
     }
 
     @Override
-    public UserDto checkLogin(String email, String password){
+    public UserDTO checkLogin(String email, String password){
         User dto = userDtoRepository.findByEMail(email);
 
         if(dto != null && dto.getPassword().equals(password))
         {
-            UserDto out = (mapper.map(dto, UserDto.class));
+            UserDTO out = (mapper.map(dto, UserDTO.class));
             return out;
         }
         else
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService
 
     @Transactional
     @Override
-    public UserDto updateUser(UserDto userDto) {
+    public UserDTO updateUser(UserDTO userDto) {
         User dto = userDtoRepository.getOne(userDto.id);
         if(dto!=null)
         {
@@ -85,12 +85,12 @@ public class UserServiceImpl implements UserService
 //            dto.setCompany(userDto.getCompany());
 //            dto.setEmail(userDto.getEmail());
         }
-        return mapper.map(userDtoRepository.saveAndFlush(dto), UserDto.class);
+        return mapper.map(userDtoRepository.saveAndFlush(dto), UserDTO.class);
     }
 
     @Transactional
     @Override
-    public void deleteUser(UserDto userDto) {
+    public void deleteUser(UserDTO userDto) {
         userDtoRepository.delete(userDto.getId());
     }
 

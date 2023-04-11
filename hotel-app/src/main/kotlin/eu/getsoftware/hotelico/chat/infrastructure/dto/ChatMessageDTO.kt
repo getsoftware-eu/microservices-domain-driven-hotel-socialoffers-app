@@ -5,7 +5,7 @@ import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils
 import java.sql.Timestamp
 import java.util.*
 
-class ChatMessageDTO : BasicDTO
+data class ChatMessageDTO(val initId: Long) : BasicDTO(initId)
 {
   var creationTime: Long? = null
 
@@ -25,10 +25,7 @@ class ChatMessageDTO : BasicDTO
 
   var specialContent = mapOf<String, String>()
   
-  constructor() 
-  
-  constructor(initId: Long, message: String, senderId: Long, receiverId: Long) {
-    this.initId = initId
+  constructor(initId: Long, message: String, senderId: Long, receiverId: Long) : this(initId) {
     this.message = message
     this.senderId = senderId
     this.receiverId = receiverId

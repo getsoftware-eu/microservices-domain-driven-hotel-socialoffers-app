@@ -5,7 +5,7 @@ import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils
 import java.sql.Timestamp
 import java.util.*
 
-class MenuOrderDTO: BasicDTO
+data class MenuOrderDTO(val initId: Long): BasicDTO(initId)
 {
     var hotelId: Long? = 0L
 
@@ -45,8 +45,6 @@ class MenuOrderDTO: BasicDTO
 
     var menuItems = arrayOfNulls<MenuItemDTO>(0)
 
-    constructor(): super()
-    
     fun getPreviewPictureUrl(): String {
         return previewPictureUrl ?: ControllerUtils.PREVIEW_MENU_NOT_AVAILABLE_URL
     }

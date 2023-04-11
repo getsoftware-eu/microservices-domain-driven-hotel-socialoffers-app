@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.customer.infrastructure.dto;
 /**
  * for serialisation to JSON!
  */
-class UserDto
+class UserDTO
 {
     private var id: Int = 0
 
@@ -24,6 +24,4 @@ class UserDto
 //    private boolean authLinkedIn;
 
     private var hotelId: Int? = null
-
-    constructor(): super()
 }

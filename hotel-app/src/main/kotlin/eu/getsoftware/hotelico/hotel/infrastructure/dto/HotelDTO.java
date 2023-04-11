@@ -82,4 +82,29 @@ public class HotelDTO extends BasicDTO
 
         return ControllerUtils.addHostPrefixOnDemand(picUrl);
    }
+    
+    public void setCustomerNumber(int customerNumber)
+    {
+        this.customerNumber = customerNumber;
+    }
+    
+    public void setCreationTime(long creationTime)
+    {
+        this.creationTime = creationTime;
+    }
+    
+    public void setAnonymeGuestNumber(int anonymeGuestNumber)
+    {
+        this.anonymeGuestNumber = anonymeGuestNumber;
+    }
+    
+    public void setActivityNumber(int activityNumber)
+    {
+        this.activityNumber = activityNumber;
+    }
+    
+    public void setKmFromMe(double kmFromMe)
+    {
+        this.kmFromMe = kmFromMe;
+    }
 }

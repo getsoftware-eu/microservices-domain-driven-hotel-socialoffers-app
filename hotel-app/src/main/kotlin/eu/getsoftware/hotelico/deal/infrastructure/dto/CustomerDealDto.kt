@@ -4,7 +4,7 @@ import eu.getsoftware.hotelico.clients.infrastructure.dto.BasicDTO
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils
 import java.util.*
 
-class CustomerDealDto: BasicDTO
+data class CustomerDealDto(val initId: Long): BasicDTO(initId)
 {
     /**
      * owner activity
@@ -50,8 +50,6 @@ class CustomerDealDto: BasicDTO
     private var pictureUrl: String? = null
 
     private var previewPictureUrl: String? = null
-
-    constructor(): super()
 
     fun isActiveBoolean(): Boolean {
         return active

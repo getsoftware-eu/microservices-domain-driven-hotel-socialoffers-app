@@ -1089,7 +1089,7 @@ public class HotelServiceImpl implements HotelService
 			//Eugen: important, consistencyId only here to create!
             hotelRootEntity.setConsistencyId(new Date().getTime());
             
-            if(hotelDto.getCreationTime()!=null && hotelDto.getCreationTime()>0)
+            if(hotelDto.getCreationTime()>0)
             {
                 hotelRootEntity.setCreationTime(hotelDto.getCreationTime());
             }   
@@ -1745,7 +1745,7 @@ public class HotelServiceImpl implements HotelService
 
         for (CustomerRootEntity nextStaff: hotelStaff)
         {
-            nextStaff.setActive(false);
+            nextStaff.getEntityAggregate().setActive(false);
             customerRepository.saveAndFlush(nextStaff);
         }
         
