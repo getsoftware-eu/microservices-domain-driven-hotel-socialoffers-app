@@ -839,9 +839,8 @@ public class HotelServiceImpl implements HotelService
     @Override
     public WallPostDTO getWallPostById(long wallPostId)
     {
-        List<HotelWallPost> wallPost = wallPostRepository.getMessageByInitId(wallPostId);
-        WallPostDTO out = wallPost.isEmpty()? null : (modelMapper.map(wallPost.get(0), WallPostDTO.class));
-        return out;
+        List<WallPostDTO> wallPost = wallPostRepository.getMessageDTOByInitId(wallPostId);
+        return wallPost.stream().findFirst().get();
     }
 
     @Transactional

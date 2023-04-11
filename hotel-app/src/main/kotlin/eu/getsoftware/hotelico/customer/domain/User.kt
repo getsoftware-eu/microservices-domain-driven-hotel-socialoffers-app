@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.customer.domain
 
-import eu.getsoftware.hotelico.domain.utils.HibernateUtils
-import eu.getsoftware.hotelico.domain.utils.HibernateUtils.ColumnDefinition.VARCHAR_100_DEFAULT_EMPTY
-import eu.getsoftware.hotelico.domain.utils.HibernateUtils.ColumnDefinition.VARCHAR_255_DEFAULT_EMPTY
+import eu.getsoftware.hotelico.clients.infrastructure.utils.HibernateUtils
+import eu.getsoftware.hotelico.clients.infrastructure.utils.HibernateUtils.ColumnDefinition.VARCHAR_100_DEFAULT_EMPTY
+import eu.getsoftware.hotelico.clients.infrastructure.utils.HibernateUtils.ColumnDefinition.VARCHAR_255_DEFAULT_EMPTY
 import java.io.Serializable
 import javax.persistence.*
 import javax.validation.constraints.NotNull
