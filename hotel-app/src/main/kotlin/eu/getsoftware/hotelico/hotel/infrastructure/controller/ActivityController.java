@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import eu.getsoftware.hotelico.hotel.infrastructure.aspects.NotifyClients;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDto;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
 
@@ -39,36 +39,36 @@ public class ActivityController extends BasicController
   @MessageMapping("/activity")
   //who should recieve result of this method
   @SendTo("/activitytopic/message")
-  public HotelActivityDto sendActivity(HotelActivityDto activityDto) {
+  public HotelActivityDTO sendActivity(HotelActivityDTO activityDto) {
     logger.info("Activity sent");
 
-    HotelActivityDto savedActivity = hotelService.addUpdateHotelActivity(activityDto.getSenderId(), activityDto);
+    HotelActivityDTO savedActivity = hotelService.addUpdateHotelActivity(activityDto.getSenderId(), activityDto);
     
     return activityDto;
   }
 
   @RequestMapping(value = "/activities/customer/{customerId}/hotel/{hotelId}", method = RequestMethod.GET)
   public @ResponseBody
-  List<HotelActivityDto> getActivitiesByHotelId(@PathVariable long customerId, @PathVariable long hotelId) {
+  List<HotelActivityDTO> getActivitiesByHotelId(@PathVariable long customerId, @PathVariable long hotelId) {
     //TODO Eugen: socket ConnectException: Connection timed out: connect
     return hotelService.getHotelActivitiesByHotelId(customerId, hotelId);
   }
   
   @RequestMapping(value = "/action/{action}/customer/{customerId}/activityId/{activityId}", method = RequestMethod.GET)
   public @ResponseBody
-  HotelActivityDto addActivityAction(@PathVariable String action, @PathVariable long customerId, @PathVariable long activityId) {
+  HotelActivityDTO addActivityAction(@PathVariable String action, @PathVariable long customerId, @PathVariable long activityId) {
     return hotelService.addActivityAction(customerId, activityId, action);
   }
   
   @RequestMapping(value = "/activities/sender/{senderId}/hotel/{hotelId}", method = RequestMethod.GET)
   public @ResponseBody
-  List<HotelActivityDto> getActivitiesByCreatorAndHotelId(@PathVariable long senderId, @PathVariable long hotelId) {
+  List<HotelActivityDTO> getActivitiesByCreatorAndHotelId(@PathVariable long senderId, @PathVariable long hotelId) {
     return hotelService.getHotelActivitiesBySenderAndHotelId(senderId, hotelId);
   }  
   
   @RequestMapping(value = "/activities/customer/{customerId}/activityId/{activityId}", method = RequestMethod.GET)
   public @ResponseBody
-  HotelActivityDto getActivityById(@PathVariable long customerId, @PathVariable long activityId) {
+  HotelActivityDTO getActivityById(@PathVariable long customerId, @PathVariable long activityId) {
     return hotelService.getHotelActivityById(customerId, activityId);
   }
 //  
@@ -95,11 +95,11 @@ public class ActivityController extends BasicController
   }
 
   @RequestMapping(value = "/customer/{customerId}/activity/{activityId}", method = RequestMethod.POST)//, headers ="Accept:*/*")
-  public @ResponseBody 
-  HotelActivityDto addUpdateActivity(@PathVariable long customerId, @PathVariable long activityId, @RequestBody HotelActivityDto activityDto) {
+  public @ResponseBody
+  HotelActivityDTO addUpdateActivity(@PathVariable long customerId, @PathVariable long activityId, @RequestBody HotelActivityDTO activityDto) {
 
 //    activityDto.setInitId(activityId);
-    HotelActivityDto out = hotelService.addUpdateHotelActivity(customerId, activityDto);
+    HotelActivityDTO out = hotelService.addUpdateHotelActivity(customerId, activityDto);
     return out;
   }
 

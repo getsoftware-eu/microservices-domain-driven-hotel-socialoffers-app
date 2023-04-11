@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDto;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
 
 @Controller
@@ -36,17 +36,17 @@ public class WallController  extends BasicController
   @MessageMapping("/wall")
   //who should recieve result of this method
 //  @SendTo("/walltopic/message")
-  public WallPostDto sendMessage(WallPostDto wallPostDto) {
+  public WallPostDTO sendMessage(WallPostDTO wallPostDto) {
     logger.info("Message sent");
 
-    WallPostDto savedMessage = hotelService.addUpdateWallPost(wallPostDto);
+    WallPostDTO savedMessage = hotelService.addUpdateWallPost(wallPostDto);
  
     return savedMessage;
   }
 
   @RequestMapping(value = "/messages/customer/{requesterId}/hotel/{hotelId}", method = RequestMethod.GET)
   public @ResponseBody
-  List<WallPostDto> getMessagesByHotelId(@PathVariable long hotelId, @PathVariable long requesterId) {
+  List<WallPostDTO> getMessagesByHotelId(@PathVariable long hotelId, @PathVariable long requesterId) {
     return hotelService.getWallPostsByHotelId(hotelId);
   }
   
@@ -59,7 +59,7 @@ public class WallController  extends BasicController
   @RequestMapping(value = "/messages/{messageId}", method = RequestMethod.POST)
   @SendTo("/walltopic/message")
   public @ResponseBody
-  WallPostDto addMessagesByMessageId(@PathVariable long messageId, @RequestBody WallPostDto dto) {
+  WallPostDTO addMessagesByMessageId(@PathVariable long messageId, @RequestBody WallPostDTO dto) {
     return hotelService.addUpdateWallPost(dto);
   }
 //  @RequestMapping(value = "/messages/{messageId}", method = RequestMethod.PUT)

@@ -26,7 +26,7 @@ import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.MailValidator;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDto;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.MailService;
@@ -290,13 +290,13 @@ public class MailServiceImpl implements MailService
 			}
 			mailContent = mailContent.replace("#[customer.mail]", customerEntity.getEmail());
 			
-			List<HotelActivityDto> hotelActivities = hotelService.getHotelActivitiesByHotelId(-1, hotel.getId());
+			List<HotelActivityDTO> hotelActivities = hotelService.getHotelActivitiesByHotelId(-1, hotel.getId());
 			
 			//sort by orderIndex!!!
 			if (hotelActivities.size() > 0) {
-				Collections.sort(hotelActivities, new Comparator<HotelActivityDto>() {
+				Collections.sort(hotelActivities, new Comparator<HotelActivityDTO>() {
 					@Override
-					public int compare(final HotelActivityDto object1, final HotelActivityDto object2) {
+					public int compare(final HotelActivityDTO object1, final HotelActivityDTO object2) {
 						return Integer.compare(object1.getOrderIndex(), object2.getOrderIndex());
 					}
 				} );
@@ -308,7 +308,7 @@ public class MailServiceImpl implements MailService
 			
 			String activitiesBlock = "";
 			
-			for (HotelActivityDto nextActivity : hotelActivities)
+			for (HotelActivityDTO nextActivity : hotelActivities)
 			{
 				String temp_activity = mailActivityContent + "";
 				

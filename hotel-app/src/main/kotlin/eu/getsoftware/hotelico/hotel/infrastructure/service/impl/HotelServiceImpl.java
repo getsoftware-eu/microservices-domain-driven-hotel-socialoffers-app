@@ -35,10 +35,10 @@ import eu.getsoftware.hotelico.deal.infrastructure.dto.CustomerDealDto;
 import eu.getsoftware.hotelico.deal.infrastructure.utils.DealStatus;
 import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 import eu.getsoftware.hotelico.hotel.domain.HotelWallPost;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDto;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDto;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.ActivityRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.DealRepository;
@@ -208,9 +208,9 @@ public class HotelServiceImpl implements HotelService
     }
 
     @Override
-    public HotelActivityDto addActivityAction(long customerId, long activityId, String action)
+    public HotelActivityDTO addActivityAction(long customerId, long activityId, String action)
     {
-        HotelActivityDto activityDto = null;
+        HotelActivityDTO activityDto = null;
         
         CustomerRootEntity sender = customerRepository.getOne(ControllerUtils.getTryEntityId(customerId));
         
@@ -820,7 +820,7 @@ public class HotelServiceImpl implements HotelService
     }
 
     @Override
-    public HotelActivityDto getHotelActivityById(long requesterId, long activityId)
+    public HotelActivityDTO getHotelActivityById(long requesterId, long activityId)
     {
         HotelActivity hotelActivity = getActivityByIdOrInitId((int)activityId, activityId);
 
@@ -831,16 +831,16 @@ public class HotelServiceImpl implements HotelService
             requester = customerRepository.getOne(ControllerUtils.getTryEntityId(requesterId));
         }
         
-        HotelActivityDto activityDto = convertActivityToDto(hotelActivity, requester);
+        HotelActivityDTO activityDto = convertActivityToDto(hotelActivity, requester);
 
         return activityDto;
     }
 
     @Override
-    public WallPostDto getWallPostById(long wallPostId)
+    public WallPostDTO getWallPostById(long wallPostId)
     {
         List<HotelWallPost> wallPost = wallPostRepository.getMessageByInitId(wallPostId);
-        WallPostDto out = wallPost.isEmpty()? null : (modelMapper.map(wallPost.get(0), WallPostDto.class));
+        WallPostDTO out = wallPost.isEmpty()? null : (modelMapper.map(wallPost.get(0), WallPostDTO.class));
         return out;
     }
 
@@ -866,7 +866,7 @@ public class HotelServiceImpl implements HotelService
     }
 
     @Override
-    public HotelActivityDto addUpdateHotelActivity(long customerId, HotelActivityDto hotelActivityDto)
+    public HotelActivityDTO addUpdateHotelActivity(long customerId, HotelActivityDTO hotelActivityDto)
     {
         if(customerId>0)
         {
@@ -896,7 +896,7 @@ public class HotelServiceImpl implements HotelService
 			//TODO Eugen: Last Minute!!!!
 			if(hotelActivityDto.getLastMinute())
 			{
-				WallPostDto checkinNotificationWall = new WallPostDto();
+				WallPostDTO checkinNotificationWall = new WallPostDTO();
 		
 				checkinNotificationWall.getSpecialContent().put("activityId", String.valueOf(hotelActivityDto.getId()));
 				checkinNotificationWall.setHotelId(hotelActivity.getHotelRootEntity().getId());
@@ -954,7 +954,7 @@ public class HotelServiceImpl implements HotelService
         return customerDeal;
     }
 
-    private HotelActivityDto createHotelActivity(HotelActivityDto hotelActivityDto)
+    private HotelActivityDTO createHotelActivity(HotelActivityDTO hotelActivityDto)
     {
         HotelActivity hotelActivity;// ###### CREATE HOTEL OBJECT 
 
@@ -998,7 +998,7 @@ public class HotelServiceImpl implements HotelService
         return hotelActivityDto;
     }
 
-    public HotelActivity fillActivityFromDto(HotelActivity hotelActivity, HotelActivityDto hotelActivityDto)
+    public HotelActivity fillActivityFromDto(HotelActivity hotelActivity, HotelActivityDTO hotelActivityDto)
     {
         hotelActivity.setInitId(hotelActivityDto.getInitId());
 
@@ -1020,7 +1020,7 @@ public class HotelServiceImpl implements HotelService
     }
 
     @Override
-    public WallPostDto addWallPost(WallPostDto wallPostDto)
+    public WallPostDTO addWallPost(WallPostDTO wallPostDto)
     {
         CustomerRootEntity sender = customerService.getEntityById(wallPostDto.getSenderId());
         
@@ -1139,7 +1139,7 @@ public class HotelServiceImpl implements HotelService
 	
 	
     @Override
-    public HotelActivityDto updateHotelActivity(HotelActivityDto hotelActivityDto)
+    public HotelActivityDTO updateHotelActivity(HotelActivityDTO hotelActivityDto)
     {
         HotelActivity hotelActivity = getActivityByIdOrInitId(hotelActivityDto.getId(), hotelActivityDto.getInitId());
 
@@ -1228,7 +1228,7 @@ public class HotelServiceImpl implements HotelService
 		return unsubscribeGuestsToPushId;
 	}
 
-	public HotelActivity fillHotelFromDto(HotelActivityDto hotelActivityDto, HotelActivity hotelActivity)
+	public HotelActivity fillHotelFromDto(HotelActivityDTO hotelActivityDto, HotelActivity hotelActivity)
     {
 //        hotelActivity = modelMapper.map(hotelActivityDto, HotelActivity.class);
         
@@ -1252,7 +1252,7 @@ public class HotelServiceImpl implements HotelService
     }
 
     @Override
-    public WallPostDto addUpdateWallPost(WallPostDto wallPostDto)
+    public WallPostDTO addUpdateWallPost(WallPostDTO wallPostDto)
     {
         List<HotelWallPost> wallPost = wallPostRepository.getMessageBySenderAndInitId(wallPostDto.getSenderId(), wallPostDto.getInitId());
 
@@ -1269,7 +1269,7 @@ public class HotelServiceImpl implements HotelService
     }
     
     @Override
-    public WallPostDto updateWallPost(WallPostDto wallPostDto)
+    public WallPostDTO updateWallPost(WallPostDTO wallPostDto)
     {
         List<HotelWallPost> wallPosts = wallPostRepository.getMessageByInitId(wallPostDto.getInitId());
 
@@ -1290,11 +1290,11 @@ public class HotelServiceImpl implements HotelService
             //            wallPost.setPhone(hotelDto.getPhone());
             //            wallPost.setLogoUrl(hotelDto.getLo());
         }
-        return modelMapper.map(wallPostRepository.saveAndFlush(updateWallPost), WallPostDto.class);
+        return modelMapper.map(wallPostRepository.saveAndFlush(updateWallPost), WallPostDTO.class);
     }
     
     @Override
-    public List<HotelActivityDto> getHotelActivitiesByHotelId(long requesterId, long hotelId)
+    public List<HotelActivityDTO> getHotelActivitiesByHotelId(long requesterId, long hotelId)
     {
         CustomerRootEntity requester = customerRepository.getOne(requesterId);
         
@@ -1326,7 +1326,7 @@ public class HotelServiceImpl implements HotelService
             }
         }
         
-        List<HotelActivityDto> out = new ArrayList<HotelActivityDto>();
+        List<HotelActivityDTO> out = new ArrayList<HotelActivityDTO>();
         
         //TODO EUGEN how to set seen activities
         //if(requester!=null && requester.getSeenActivities()!=null)
@@ -1352,7 +1352,7 @@ public class HotelServiceImpl implements HotelService
             for (HotelActivity hotelActivity : list) {
 //                requester.getSeenActivities().add(hotelActivity);
                 
-                HotelActivityDto activityDto = this.convertActivityToDto(hotelActivity, requester);
+                HotelActivityDTO activityDto = this.convertActivityToDto(hotelActivity, requester);
                 
                 if(activityDto.getValidDealId()==0 && guestActivityToDealMap.containsKey(hotelActivity.getId()))
                 {
@@ -1385,14 +1385,14 @@ public class HotelServiceImpl implements HotelService
 	}
 	
     @Override
-    public HotelActivityDto convertActivityToDto(HotelActivity hotelActivity, CustomerRootEntity requester)
+    public HotelActivityDTO convertActivityToDto(HotelActivity hotelActivity, CustomerRootEntity requester)
     {
         if(hotelActivity == null)
         {
             return null;
         }
 
-        HotelActivityDto activityDto = modelMapper.map(hotelActivity, HotelActivityDto.class);
+        HotelActivityDTO activityDto = modelMapper.map(hotelActivity, HotelActivityDTO.class);
         
         activityDto.setLikeCounter(hotelActivity.getLikedCustomerEntities().size());
         activityDto.setSubscribeCounter(hotelActivity.getSubscribeCustomerEntities().size());
@@ -1451,7 +1451,7 @@ public class HotelServiceImpl implements HotelService
     }
 
     @Override
-    public List<HotelActivityDto> getHotelActivitiesBySenderAndHotelId(long senderId, long hotelId)
+    public List<HotelActivityDTO> getHotelActivitiesBySenderAndHotelId(long senderId, long hotelId)
     {
         List<HotelActivity> list = new ArrayList<>();
         
@@ -1465,21 +1465,21 @@ public class HotelServiceImpl implements HotelService
             list = activityRepository.getTimeValidByHotelId(hotelId, new Date());
         }
         
-        List<HotelActivityDto> out = new ArrayList<HotelActivityDto>();
+        List<HotelActivityDTO> out = new ArrayList<HotelActivityDTO>();
         for (HotelActivity hotelActivity : list) {
             
-            HotelActivityDto activityDto = convertActivityToDto(hotelActivity, customerEntity);
+            HotelActivityDTO activityDto = convertActivityToDto(hotelActivity, customerEntity);
             out.add(activityDto);
         }
         return out;
     }
 
     @Override
-    public List<WallPostDto> getWallPostsByHotelId(long hotelId)
+    public List<WallPostDTO> getWallPostsByHotelId(long hotelId)
     {
         List<HotelWallPost> list = wallPostRepository.getByHotelId(hotelId, new Date());
        
-        List<WallPostDto> out = new ArrayList<WallPostDto>();
+        List<WallPostDTO> out = new ArrayList<WallPostDTO>();
 
         boolean wallIsDemoValid = ControllerUtils.NO_WALL_EXPIRES_FOR_DEMOHOTEL && hotelId == hotelRepository.getDemoHotelId();
         
@@ -1487,16 +1487,16 @@ public class HotelServiceImpl implements HotelService
 
             if(wallIsDemoValid || wallPost.getValidUntil().after(new Date()))
             {
-                WallPostDto dto = convertWallToDto(wallPost);
+                WallPostDTO dto = convertWallToDto(wallPost);
                 out.add(dto);
             }
         }
         return out;
     }
 
-    public WallPostDto convertWallToDto(HotelWallPost wallPost)
+    public WallPostDTO convertWallToDto(HotelWallPost wallPost)
     {
-        WallPostDto dto = modelMapper.map(wallPost, WallPostDto.class);
+        WallPostDTO dto = modelMapper.map(wallPost, WallPostDTO.class);
 
 //        dto.setTimestamp(wallPost.getTimestamp());
         dto.setCreationTime(wallPost.getTimestamp().getTime());

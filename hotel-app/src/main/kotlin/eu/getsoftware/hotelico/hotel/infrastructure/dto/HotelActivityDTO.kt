@@ -4,9 +4,8 @@ import eu.getsoftware.hotelico.clients.infrastructure.dto.BasicDTO
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils
 import java.util.*
 
-class HotelActivityDto: BasicDTO
+data class HotelActivityDTO(var hotelId: Long? = 0L): BasicDTO()
 {
-
     var dealDaysDuration = 0
 
     var likeCounter = 0
@@ -42,9 +41,7 @@ class HotelActivityDto: BasicDTO
     var dealAllowed = true
 
     var lastMinute = false
-
-    var hotelId: Long? = 0L
-
+    
     var senderId: Long? = 0L
 
     var validFrom: Date? = null
@@ -67,8 +64,6 @@ class HotelActivityDto: BasicDTO
 
     private var pictureUrl: String? = null
     private var previewPictureUrl: String? = null
-
-   constructor(): super()
 
     fun isActiveBoolean(): Boolean {
         return active

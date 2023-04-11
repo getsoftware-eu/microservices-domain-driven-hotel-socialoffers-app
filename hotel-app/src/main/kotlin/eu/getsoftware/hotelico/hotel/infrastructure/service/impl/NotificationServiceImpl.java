@@ -31,9 +31,9 @@ import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
 import eu.getsoftware.hotelico.deal.infrastructure.utils.DealStatus;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDto;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDto;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDto;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDTO;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDTO;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.ChatRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
@@ -102,7 +102,7 @@ public class NotificationServiceImpl implements NotificationService
 		
 		for(Long nextOnlineCustomerId: allOnlineCustomerIds)
 		{
-			CustomerNotificationDto receiverNotification = this.getCustomerNotification(nextOnlineCustomerId, event);
+			CustomerNotificationDTO receiverNotification = this.getCustomerNotification(nextOnlineCustomerId, event);
 			
 			if(dto.getHotelId()!=null)
 			{
@@ -121,9 +121,9 @@ public class NotificationServiceImpl implements NotificationService
 	}
 	
 	@Override
-	public CustomerNotificationDto getCustomerNotification(long receiverId, HotelEvent event)
+	public CustomerNotificationDTO getCustomerNotification(long receiverId, HotelEvent event)
 	{
-		CustomerNotificationDto nextNotification = new CustomerNotificationDto();
+		CustomerNotificationDTO nextNotification = new CustomerNotificationDTO();
 		
 		nextNotification.setCreationTime(new Date().getTime());
 		
@@ -158,7 +158,7 @@ public class NotificationServiceImpl implements NotificationService
 		{
 			//Eugen: short notification only about online users! only if it has changes!!!
 			
-			CustomerNotificationDto previousNotification = lastMessagesService.getLastFullNotification(receiverId);
+			CustomerNotificationDTO previousNotification = lastMessagesService.getLastFullNotification(receiverId);
 			
 			boolean onlineListIsEqual = previousNotification!=null && Arrays.equals(previousNotification.getHotelOnlineGuestIds(), nextNotification.getHotelOnlineGuestIds());
 			
@@ -363,7 +363,7 @@ public class NotificationServiceImpl implements NotificationService
 	@Override
 	public void createAndSendNotification(long receiverId, HotelEvent event){
 		
-		CustomerNotificationDto receiverNotification = this.getCustomerNotification(receiverId, event);
+		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 		
 		if(receiverNotification==null)
 		{
@@ -511,7 +511,7 @@ public class NotificationServiceImpl implements NotificationService
 	@Override
 	public void createAndSendPushNotification_Chat(long receiverId, HotelEvent event, long senderId, String message)
 	{
-		CustomerNotificationDto receiverNotification = this.getCustomerNotification(receiverId, event);
+		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 		
 		simpMessagingTemplate.convertAndSend(ControllerUtils.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
 		
@@ -534,7 +534,7 @@ public class NotificationServiceImpl implements NotificationService
 	@Override
 	public void createAndSendPushNotification_Activity(long receiverId, HotelEvent event, HotelActivity activity, String message)
 	{
-		CustomerNotificationDto receiverNotification = this.getCustomerNotification(receiverId, event);
+		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 		
 		simpMessagingTemplate.convertAndSend(ControllerUtils.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
 		
@@ -554,13 +554,13 @@ public class NotificationServiceImpl implements NotificationService
 	 
 
 	@Override
-	public CustomerNotificationDto getLastNotification(long customerId, boolean pushRequest)
+	public CustomerNotificationDTO getLastNotification(long customerId, boolean pushRequest)
 	{
-		CustomerNotificationDto dto = lastMessagesService.getLastPushNotifiation(customerId);
+		CustomerNotificationDTO dto = lastMessagesService.getLastPushNotifiation(customerId);
 		
 		if(customerId<=0 || dto==null)
 		{
-			dto = new CustomerNotificationDto();
+			dto = new CustomerNotificationDTO();
 			
 			String  title ="Hotelico.de";
 			String  message ="New Message!";
@@ -621,13 +621,13 @@ public class NotificationServiceImpl implements NotificationService
 	}
 
 	@Override
-	public void broadcastActivityNotification(HotelActivityDto hotelActivityDto)
+	public void broadcastActivityNotification(HotelActivityDTO hotelActivityDto)
 	{
 		simpMessagingTemplate.convertAndSend(ControllerUtils.SOCKET_ACTIVITY_TOPIC + hotelActivityDto.getHotelId() + "", hotelActivityDto);
 	}
 	
 	@Override
-	public void broadcastWallNotification(WallPostDto wallPostDto)
+	public void broadcastWallNotification(WallPostDTO wallPostDto)
 	{
 		simpMessagingTemplate.convertAndSend(ControllerUtils.SOCKET_WALL_TOPIC + wallPostDto.getHotelId(), wallPostDto);
 	}
@@ -675,7 +675,7 @@ public class NotificationServiceImpl implements NotificationService
 			{
 				String pushUrlPostfix = "//" + hotelActivity.getHotelRootEntity().getId() + "/" + hotelActivity.getId();
 
-				CustomerNotificationDto receiverNotification = new CustomerNotificationDto();
+				CustomerNotificationDTO receiverNotification = new CustomerNotificationDTO();
 
 				receiverNotification.setPushCustomerEvent(eventActivityNewLastMinute.getPushTitle(), notificationMessage, eventActivityNewLastMinute.getPushUrl()+pushUrlPostfix, eventActivityNewLastMinute.getPushIcon(), hotelActivity.getSender().getId()+"");
 				lastMessagesService.setLastPushNotifiation((int)nextGuestId, receiverNotification);
@@ -694,7 +694,7 @@ public class NotificationServiceImpl implements NotificationService
 			this.createAndSendNotification(receiver.getId(), event);
 		}
 		else{
-			CustomerNotificationDto receiverNotification = new CustomerNotificationDto();
+			CustomerNotificationDTO receiverNotification = new CustomerNotificationDTO();
 			receiverNotification.setCustomerEvent(0, 0, event, "new event", 0);
 			receiverNotification.setReceiverId(guestCustomerId);
 			simpMessagingTemplate.convertAndSend(ControllerUtils.SOCKET_NOTIFICATION_TOPIC + guestCustomerId + "", receiverNotification);

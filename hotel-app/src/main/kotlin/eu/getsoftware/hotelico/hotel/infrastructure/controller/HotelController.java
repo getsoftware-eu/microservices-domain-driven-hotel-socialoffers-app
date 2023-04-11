@@ -19,10 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import eu.getsoftware.hotelico.clients.infrastructure.exception.HotelException;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.aspects.NotifyClients;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDto;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDto;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.FileUploadService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
@@ -106,8 +106,8 @@ public class HotelController extends BasicController
     
    
      @RequestMapping(value = "/wall/messages/hotelId/{id}", method = RequestMethod.GET)
-    public List<WallPostDto> getWallPostsByHotelId(@PathVariable int id) {
-        List<WallPostDto> out = hotelService.getWallPostsByHotelId(id);
+    public List<WallPostDTO> getWallPostsByHotelId(@PathVariable int id) {
+        List<WallPostDTO> out = hotelService.getWallPostsByHotelId(id);
         return out;
     }
     
@@ -132,9 +132,9 @@ public class HotelController extends BasicController
 
     @NotifyClients
     @RequestMapping(value = "/wall/{id}", method = RequestMethod.PUT)
-    public WallPostDto updateWallPost(@PathVariable long id, @RequestBody WallPostDto wallPostDto) {
+    public WallPostDTO updateWallPost(@PathVariable long id, @RequestBody WallPostDTO wallPostDto) {
         wallPostDto.setInitId(id);
-        WallPostDto out = hotelService.updateWallPost(wallPostDto);
+        WallPostDTO out = hotelService.updateWallPost(wallPostDto);
         return out;
     }
     
@@ -149,8 +149,8 @@ public class HotelController extends BasicController
     
     @NotifyClients
     @RequestMapping(value = "/wall", method = RequestMethod.POST)
-    public WallPostDto addWallPost(@RequestBody WallPostDto wallPostDto) {
-        WallPostDto out = hotelService.addUpdateWallPost(wallPostDto);
+    public WallPostDTO addWallPost(@RequestBody WallPostDTO wallPostDto) {
+        WallPostDTO out = hotelService.addUpdateWallPost(wallPostDto);
         return out;
     }
 
@@ -165,7 +165,7 @@ public class HotelController extends BasicController
 
     @RequestMapping(value = "/getGpsHotelCity/requesterId/{requesterId}/lat/{lat}/lon/{lon}", method = RequestMethod.GET)
     public @ResponseBody
-    CustomerNotificationDto getGpsHotelCity(@PathVariable long requesterId, @PathVariable String lat, @PathVariable String lon, HttpSession httpSession) {
+    CustomerNotificationDTO getGpsHotelCity(@PathVariable long requesterId, @PathVariable String lat, @PathVariable String lon, HttpSession httpSession) {
 
         double latPoint = Double.parseDouble(lat);
         double lonPoint = Double.parseDouble(lon);
@@ -178,7 +178,7 @@ public class HotelController extends BasicController
 
         if(gpsCity!=null)
         {
-            CustomerNotificationDto notificationDto = new CustomerNotificationDto();
+            CustomerNotificationDTO notificationDto = new CustomerNotificationDTO();
             notificationDto.setPushCustomerEvent("gpsCity", gpsCity, "", "", "");
             return notificationDto;
         }

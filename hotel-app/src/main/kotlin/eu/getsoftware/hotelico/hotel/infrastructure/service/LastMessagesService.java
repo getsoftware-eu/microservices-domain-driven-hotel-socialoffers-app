@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import eu.getsoftware.hotelico.chat.domain.ChatMessage;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDto;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDTO;
 
 /**
  * <br/>
@@ -93,13 +93,13 @@ public interface LastMessagesService
 
 	CustomerDTO getWaitingSocialCustomer(String sessionState);
 
-	CustomerNotificationDto getLastPushNotifiation(long customerId);
+	CustomerNotificationDTO getLastPushNotifiation(long customerId);
 	
-	void setLastPushNotifiation(long customerId, CustomerNotificationDto lastNotification);
+	void setLastPushNotifiation(long customerId, CustomerNotificationDTO lastNotification);
 	
-	void setLastFullNotification(long receiverId, CustomerNotificationDto nextNotification);
+	void setLastFullNotification(long receiverId, CustomerNotificationDTO nextNotification);
 	
-	CustomerNotificationDto getLastFullNotification(long receiverId);
+	CustomerNotificationDTO getLastFullNotification(long receiverId);
 	
 	/**
 	 * send periodical notification max every 5 min!

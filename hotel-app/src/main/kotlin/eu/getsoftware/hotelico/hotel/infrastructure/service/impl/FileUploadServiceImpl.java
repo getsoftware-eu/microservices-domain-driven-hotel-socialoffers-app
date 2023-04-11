@@ -35,7 +35,7 @@ import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
 import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDto;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.ActivityRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.HotelRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.FileUploadService;
@@ -570,7 +570,7 @@ public class FileUploadServiceImpl implements FileUploadService
 							activityRepository.saveAndFlush(activity);
 							
 							//TODO Eugen: send activity image notification
-							HotelActivityDto activityDto = hotelService.convertActivityToDto(activity, sender);
+							HotelActivityDTO activityDto = hotelService.convertActivityToDto(activity, sender);
 							
 							notificationService.broadcastActivityNotification(activityDto);
 

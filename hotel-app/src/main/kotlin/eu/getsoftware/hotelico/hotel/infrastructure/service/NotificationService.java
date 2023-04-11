@@ -7,9 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import eu.getsoftware.hotelico.checkin.domain.HotelActivity;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDto;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDto;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDto;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDTO;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDTO;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;
 
 /**
@@ -21,7 +21,7 @@ public interface NotificationService
 {
 	
 	@Transactional
-	CustomerNotificationDto getLastNotification(long customerId, boolean pushRequest);
+	CustomerNotificationDTO getLastNotification(long customerId, boolean pushRequest);
 	
 //	void sendPushActivity(long receiverId, HotelEvent event, HotelActivity activity, String message, CustomerNotificationDto receiverNotification);
 
@@ -47,7 +47,7 @@ public interface NotificationService
 	 * @return
 	 */
 	@Transactional
-	CustomerNotificationDto getCustomerNotification(long receiverId, HotelEvent event);
+	CustomerNotificationDTO getCustomerNotification(long receiverId, HotelEvent event);
 	
 	void notificateAboutEntityEvent(CustomerDTO dto, HotelEvent event, String eventContent, long entityId);
 	
@@ -55,12 +55,12 @@ public interface NotificationService
 	
 	void sendPush(String pushId);
 	
-	void broadcastActivityNotification(HotelActivityDto hotelActivityDto);
+	void broadcastActivityNotification(HotelActivityDTO hotelActivityDto);
 	
 	@Transactional
 	boolean sendPushToAllNotLoggedInHotel(HotelActivity hotelActivity);
 	
-	void broadcastWallNotification(WallPostDto wallPostDto);
+	void broadcastWallNotification(WallPostDTO wallPostDto);
 
 	void sendNotificationToCustomerOrGuest(CustomerRootEntity receiver, long guestCustomerId, HotelEvent eventDealNewUpdate);
 }

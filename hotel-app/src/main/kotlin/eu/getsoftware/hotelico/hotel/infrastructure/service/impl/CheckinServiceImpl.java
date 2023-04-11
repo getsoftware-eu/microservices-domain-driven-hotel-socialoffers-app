@@ -20,7 +20,7 @@ import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
 import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDto;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.ChatRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.HotelRepository;
@@ -184,7 +184,7 @@ public class CheckinServiceImpl implements CheckinService
 							if(lastSameHotelCheckin==null || convertToLocalDateTime(lastSameHotelCheckin).getDayOfYear() != LocalDateTime.now().getDayOfYear() )
 							{
 
-								WallPostDto checkinNotificationWallDto = new WallPostDto();
+								WallPostDTO checkinNotificationWallDto = new WallPostDTO();
 
 								checkinNotificationWallDto.getSpecialContent().put("customerId", String.valueOf(customerEntity.getId()));
 								checkinNotificationWallDto.setHotelId(hotelRootEntity.getId());

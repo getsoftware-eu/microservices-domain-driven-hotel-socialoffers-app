@@ -6,10 +6,8 @@ import java.util.Map
 /**
  * Created by Eugen on 30.07.2015.
  */
-class CustomerNotificationDto
+data class CustomerNotificationDTO (var id: Long = 0)
 {
-    var id: Long = 0
-
     var receiverId: Long? = null
 
     var creationTime: Long = 0

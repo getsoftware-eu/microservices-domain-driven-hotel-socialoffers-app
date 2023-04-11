@@ -7,10 +7,21 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import eu.getsoftware.hotelico.chat.domain.ChatMessage;
+import eu.getsoftware.hotelico.chat.infrastructure.dto.ChatMessageDTO;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 
 public interface ChatRepository extends JpaRepository<ChatMessage, Long> {
 
+	public final static String FIND_DTO_MESSAGES_BY_CUSTOMER_IDS = "SELECT new eu.getsoftware.hotelico.chat.infrastructure.dto.ChatMessageDTO(m.name, m.title, m.composer) " +
+			"FROM ChatMessage m " +
+			"WHERE m.active = true " +
+			"AND ( " + 
+				"(m.sender.id = :customerId AND m.receiver.id = :receiverId) " +
+				" OR " +
+				"(m.sender.id = :receiverId AND m.receiver.id = :customerId) " +
+			") "+
+			"AND m.sender.active = TRUE AND m.receiver.active = TRUE ";	
+	
 	public final static String FIND_MESSAGES_BY_CUSTOMER_IDS = "SELECT m " +
 			"FROM ChatMessage m " +
 			"WHERE m.active = true " +
@@ -105,6 +116,12 @@ public interface ChatRepository extends JpaRepository<ChatMessage, Long> {
 			"WHERE m.active = true AND m.initId = :initId ";
 	
 
+	/**
+	 * Eugen: generate DTO messagesDTO by customer ids direct from DB.
+	 */
+	@Query(FIND_DTO_MESSAGES_BY_CUSTOMER_IDS)
+	public List<ChatMessageDTO> getMessagesDTOByCustomerIds(@Param("customerId") Long customerId, @Param("receiverId") Long receiverId);
+	
 	/**
 	 * Find messages by customer ids.
 	 */

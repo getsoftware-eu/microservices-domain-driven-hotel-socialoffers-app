@@ -31,7 +31,7 @@ import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDto;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.ChatRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.HotelRepository;
@@ -69,9 +69,9 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	
 	private Map<String, CustomerDTO> waitingSocialCustomers =  new HashMap<>();
 	
-	private Map<Long, CustomerNotificationDto> lastPushNotifications =  new HashMap<>();
+	private Map<Long, CustomerNotificationDTO> lastPushNotifications =  new HashMap<>();
 	
-	private Map<Long, CustomerNotificationDto> lastFullNotifications =  new HashMap<>();
+	private Map<Long, CustomerNotificationDTO> lastFullNotifications =  new HashMap<>();
 	
 	private long virtualHotelId = 0L;
 	
@@ -471,7 +471,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	}
 
 	@Override
-	public CustomerNotificationDto getLastPushNotifiation(long customerId)
+	public CustomerNotificationDTO getLastPushNotifiation(long customerId)
 	{
 		if(customerId<=0)
 		{
@@ -482,19 +482,19 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	}
 
 	@Override
-	public void setLastPushNotifiation(long customerId, CustomerNotificationDto lastNotification)
+	public void setLastPushNotifiation(long customerId, CustomerNotificationDTO lastNotification)
 	{
 		lastPushNotifications.put(customerId, lastNotification);
 	}
 	
 	@Override
-	public void setLastFullNotification(long receiverId, CustomerNotificationDto nextNotification)
+	public void setLastFullNotification(long receiverId, CustomerNotificationDTO nextNotification)
 	{
 		lastFullNotifications.put(receiverId, nextNotification);
 	}
 	
 	@Override
-	public CustomerNotificationDto getLastFullNotification(long receiverId)
+	public CustomerNotificationDTO getLastFullNotification(long receiverId)
 	{
 		return lastFullNotifications.get(receiverId);
 	}
@@ -507,7 +507,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 			return true;
 		}
 		
-		CustomerNotificationDto lastNotification = lastFullNotifications.get(sessionCustomerId);
+		CustomerNotificationDTO lastNotification = lastFullNotifications.get(sessionCustomerId);
 		
 		if(lastNotification==null)
 		{

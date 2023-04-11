@@ -27,7 +27,7 @@ import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
 import eu.getsoftware.hotelico.hotel.infrastructure.aspects.NotifyClients;
 import eu.getsoftware.hotelico.hotel.infrastructure.controller.BasicController;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDto;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.CheckinService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
@@ -286,7 +286,7 @@ public class CustomerController extends BasicController
     
     @RequestMapping(value = "/customerLastNotification/{customerId}/push/{pushRequest}", method = RequestMethod.GET)
     public @ResponseBody
-    CustomerNotificationDto getCustomerLastNotification(@PathVariable("customerId") long customerId, @PathVariable("pushRequest") boolean pushRequest) {
+    CustomerNotificationDTO getCustomerLastNotification(@PathVariable("customerId") long customerId, @PathVariable("pushRequest") boolean pushRequest) {
         
         return notificationService.getLastNotification(customerId, pushRequest);
     }
@@ -339,7 +339,7 @@ public class CustomerController extends BasicController
     
     @RequestMapping(value = "/{customerId}/customerPing", method = RequestMethod.GET)
     public @ResponseBody
-    CustomerNotificationDto getCustomerPing(@PathVariable("customerId") long customerId, @ModelAttribute(ControllerUtils.SESSION_CUSTOMER) CustomerDTO sessionCustomer,  BindingResult result, SessionStatus sessionStatus, HttpSession httpSession) {
+    CustomerNotificationDTO getCustomerPing(@PathVariable("customerId") long customerId, @ModelAttribute(ControllerUtils.SESSION_CUSTOMER) CustomerDTO sessionCustomer,  BindingResult result, SessionStatus sessionStatus, HttpSession httpSession) {
         sessionStatus.setComplete();
 
         if (result.hasErrors()) {
