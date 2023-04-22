@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.infrastructure.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -9,8 +10,11 @@ import org.springframework.web.client.RestTemplate;
 
 import eu.getsoftware.hotelico.amqp.RabbitMQMessageProducer;
 import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.HotelDTO;
+import eu.getsoftware.hotelico.clients.infrastructure.notification.CustomerUpdateRequest;
 import eu.getsoftware.hotelico.clients.infrastructure.notification.NotificationRequest;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.domain.model.MenuItem;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.domain.model.MenuUserEntity;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.infrastructure.repository.MenuUserRepository;
 import eu.getsoftware.hotelico.infrastructure.notification.NotificationService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +28,10 @@ public class MenuService
 	private RabbitMQMessageProducer rabbitMQMessageProducer;	
 	
 	@Autowired
-	private NotificationService notificationService;
+	private NotificationService notificationService;	
+	
+	@Autowired
+	private MenuUserRepository menuUserRepository;
 	
 	@Autowired
 	private RestTemplate restTemplate;
@@ -59,7 +66,7 @@ public class MenuService
 	 * 	via my 'notification'-module (that uses 'amqp'-module)
 	 * 	
 	 * 	// ACHTUNG: but not menuItem, for this you have to create extra common Entitý! and persist in notification-module 
-	 * 			
+	 * 	BUT WHERE is exchange = "internal.exchange" and routingKey ?? ANSWER: it is in Notification Module properties  !!!!		
 	 * @param toCustomerId
 	 * @param toCustomerName
 	 * @param message
@@ -101,7 +108,18 @@ public class MenuService
 		);
 	}
 	
-	;
+	/**
+	 * Listen for customer system update
+	 * @param customerUpdateRequest
+	 */
+	@RabbitListener(queues = "${rabbitmq.queue.customer.update}")
+	public void consumeNotification(CustomerUpdateRequest customerUpdateRequest){
+		log.info("Consumed {} from queue", customerUpdateRequest);
+		log.info(customerUpdateRequest.message());
+		
+		handleSystemCustomerUpdate(customerUpdateRequest);
+		
+	}
 	
 	/**
 	 * Notification-Service listener, with internal jackson-Converter to 'notificationRequest'-Obj
@@ -110,7 +128,15 @@ public class MenuService
 	@RabbitListener(queues = "${rabbitmq.queue.menu.notification}")
 	public void consumeNotification(NotificationRequest notificationRequest){
 		log.info("Consumed {} from queue", notificationRequest);
-		log.info(notificationRequest.message());	
+		log.info(notificationRequest.message());
+		
+		handleMenuNotification(notificationRequest);
+		
+	}
+	
+	private void handleMenuNotification(NotificationRequest notificationRequest)
+	{
+		throw new UnsupportedOperationException("not implemented");
 	}
 	
 	/**
@@ -136,5 +162,28 @@ public class MenuService
 	public List<MenuItem> getItems()
 	{
 		return List.of(new MenuItem());
+	}
+	
+	
+	private void handleSystemCustomerUpdate(CustomerUpdateRequest customerUpdateRequest)
+	{
+		Optional<MenuUserEntity> updatedChatUserOptional = menuUserRepository.findById(customerUpdateRequest.customerId());
+		
+		MenuUserEntity entity;
+		
+		if(updatedChatUserOptional.isEmpty())
+		{
+			entity = new MenuUserEntity(customerUpdateRequest.customerId());
+			entity.setFirstName(customerUpdateRequest.customerName());
+		}
+		else {
+			MenuUserEntity updatedChatUser = updatedChatUserOptional.get();
+			entity = menuUserRepository.findByUserId(updatedChatUser.getId());
+			
+			entity.setEmail(updatedChatUser.getEmail());
+			entity.setFirstName(updatedChatUser.getFirstName());
+		}
+		
+		MenuUserEntity persistedEntity = menuUserRepository.save(entity);
 	}
 }
