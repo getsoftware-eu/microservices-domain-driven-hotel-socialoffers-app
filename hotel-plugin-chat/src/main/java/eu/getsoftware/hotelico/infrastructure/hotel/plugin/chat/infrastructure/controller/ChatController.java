@@ -1,0 +1,50 @@
+package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.infrastructure.controller;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import eu.getsoftware.hotelico.clients.infrastructure.chat.dto.ChatMsgDTO;
+import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.domain.model.ChatMessageEntity;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.domain.model.ChatUserEntity;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.infrastructure.repository.ChatMessageRepository;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.infrastructure.repository.ChatUserRepository;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.infrastructure.service.ChatService;
+
+@RestController
+@RequestMapping("/api/v0/chat")
+public class ChatController {
+	
+	private final ChatMessageRepository chatMessageRepository;	
+	private final ChatUserRepository chatUserRepository;
+	private final ChatService chatService;
+	
+	public ChatController(ChatMessageRepository chatMessageRepository, ChatUserRepository chatUserRepository, ChatService chatService)
+	{
+		this.chatMessageRepository = chatMessageRepository;
+		this.chatUserRepository = chatUserRepository;
+		this.chatService = chatService;
+	}
+	
+	@PostMapping("/message")
+	public ChatMsgDTO postMessage(@RequestBody ChatMsgDTO msgDTO) {
+		
+		ChatMessageEntity messageEntity = chatService.convertFromDTO(msgDTO);
+		
+		ChatMessageEntity updateEntity = chatMessageRepository.save(messageEntity);
+		
+		return chatService.convertToDTO(updateEntity);
+	}
+	
+	@PostMapping("/customer")
+	public CustomerDTO updateUser(@RequestBody CustomerDTO customerDTO) {
+		
+		ChatUserEntity userEntity = chatService.convertFromDTO(customerDTO);
+		
+		ChatUserEntity updateEntity = chatUserRepository.save(userEntity);
+		
+		return chatService.convertToDTO(updateEntity);
+	}
+}
