@@ -6,8 +6,8 @@ import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
 
 import eu.getsoftware.hotelico.checkin.domain.CustomerHotelCheckin;
+import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
-import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 
 public interface CustomerService
 {

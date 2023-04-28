@@ -7,8 +7,8 @@ import java.util.Set;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 
+import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
-import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
 import eu.getsoftware.hotelico.hotel.infrastructure.aspects.NotifyClients;
 import eu.getsoftware.hotelico.hotel.infrastructure.controller.BasicController;
@@ -39,22 +39,22 @@ import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
 //@SessionAttributes(ControllerUtils.SESSION_CUSTOMER)
 public class CustomerController extends BasicController
 {
-
-    @Autowired
-    private CustomerService customerService;    
     
-    @Autowired
-    private CheckinService checkinService;
-	
-    @Autowired
-    private NotificationService notificationService;     
-	
-    @Autowired
-    private LastMessagesService lastMessagesService;    
-	
-    @Autowired
-    private LoginHotelicoService loginService;
-	
+    private final CustomerService customerService;
+    private final CheckinService checkinService;
+    private final NotificationService notificationService;
+    private final LastMessagesService lastMessagesService;
+    private final LoginHotelicoService loginService;
+    
+    public CustomerController(CustomerService customerService, CheckinService checkinService, NotificationService notificationService, LastMessagesService lastMessagesService, LoginHotelicoService loginService)
+    {
+        this.customerService = customerService;
+        this.checkinService = checkinService;
+        this.notificationService = notificationService;
+        this.lastMessagesService = lastMessagesService;
+        this.loginService = loginService;
+    }
+    
     //INIT Session values
     @ModelAttribute(ControllerUtils.SESSION_CUSTOMER)
     public CustomerDTO initSessionCustomer(HttpSession httpSession) {
@@ -92,9 +92,9 @@ public class CustomerController extends BasicController
     
     // @NotifyClients
     @RequestMapping(value = "/customers/{id}/requesterId/{requesterId}", method = RequestMethod.PUT)
-    public @ResponseBody CustomerDTO update(@PathVariable long id, @PathVariable int requesterId, @RequestBody CustomerDTO dto, HttpSession httpSession) {
-        dto.setId(id);
-        CustomerDTO out = customerService.updateCustomer(dto, requesterId);
+    public @ResponseBody CustomerDTO update(@PathVariable long id, @PathVariable int requesterId, @RequestBody @Valid CustomerDTO customerDTO, HttpSession httpSession) {
+        customerDTO.setId(id);
+        CustomerDTO out = customerService.updateCustomer(customerDTO, requesterId);
         
         //update in session
         httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, out);
@@ -104,7 +104,7 @@ public class CustomerController extends BasicController
     
     @RequestMapping(value = "/customers/{id}/requesterId/{requesterId}", method = RequestMethod.GET)
     public @ResponseBody CustomerDTO getById(@PathVariable int id, @PathVariable int requesterId) {
-        CustomerDTO out = null;
+        CustomerDTO out;
         
         try
         {
@@ -121,7 +121,7 @@ public class CustomerController extends BasicController
 
     @RequestMapping(value = "/customerwithmessage/{getId}/sender/{senderId}", method = RequestMethod.GET)
     public @ResponseBody CustomerDTO getCustomerWithLastMessageById(@PathVariable int getId, @PathVariable int senderId) {
-        CustomerDTO out = null;
+        CustomerDTO out;
 
         try
         {
@@ -143,13 +143,13 @@ public class CustomerController extends BasicController
     //eugen: @ModelAttribute(ControllerUtils.SESSION_CUSTOMER) makes new object empty
     CustomerDTO add(@RequestBody /*@ModelAttribute(ControllerUtils.SESSION_CUSTOMER)*/ CustomerDTO customerDto, HttpSession httpSession, HttpServletResponse response) {
 
-        if(customerDto.getGuestAccount())
+        if(customerDto.isGuestAccount())
         {
             customerDto.setPassword(customerDto.getFirstName() + "_tempPassword_" + new Random().nextInt());
         }
 
 
-        CustomerDTO out = null;
+        CustomerDTO out;
         
         try
         {
@@ -181,10 +181,6 @@ public class CustomerController extends BasicController
     @RequestMapping(value = "/customers/{password}", method = RequestMethod.POST)
     public @ResponseBody CustomerDTO register(@PathVariable("password") String password, @RequestBody CustomerDTO customerDto, HttpSession httpSession,  HttpServletResponse response)
     {
-//        if(customerDto.isGuestAccount())
-//        {
-//            customerDto.setPassword(customerDto.getFirstName() + "_tempPassword_" + new Random().nextInt());
-//        }
 
         CustomerDTO out = customerService.addCustomer(customerDto, password);
 
@@ -253,8 +249,7 @@ public class CustomerController extends BasicController
         CustomerDTO out = checkinService.updateCheckin(sessionCustomer);
 
         httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, out);
-        sessionCustomer = out;
-
+    
         return out;
     }
 
@@ -362,15 +357,13 @@ public class CustomerController extends BasicController
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public @ResponseBody CustomerDTO logout(@ModelAttribute(ControllerUtils.SESSION_CUSTOMER) CustomerDTO customerDto, HttpSession httpSession, WebRequest request, SessionStatus status, HttpServletResponse response) {
-
-
-        if(customerDto !=null)
+        
+        if(customerDto != null)
         {
             loginService.logoutCustomer(customerDto);
             httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, customerDto);
             lastMessagesService.setLastFullNotification(customerDto.getId(), null);
-
-            customerDto = null;
+    
             status.setComplete();
             response.addCookie(new Cookie(ControllerUtils.SESSION_CUSTOMER_ID, null));
             httpSession.removeAttribute(ControllerUtils.SESSION_CUSTOMER);

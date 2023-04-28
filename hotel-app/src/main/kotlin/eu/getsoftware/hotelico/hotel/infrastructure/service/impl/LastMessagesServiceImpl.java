@@ -13,11 +13,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.common.cache.CacheBuilder;
@@ -45,23 +46,21 @@ import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 @Service
 public class LastMessagesServiceImpl implements LastMessagesService
 {
-	@Autowired
-	private CustomerService customerService;	
+	private final CustomerService customerService;	
 	
-	@Autowired
-	private CheckinRepository checkinRepository;
+	private final CheckinRepository checkinRepository;
 
-	@Autowired
-	private HotelRepository hotelRepository;
+	private final HotelRepository hotelRepository;
 	
-	@Autowired
-	private ChatRepository chatRepository;
+	private final ChatRepository chatRepository;
 
-	@Autowired
-	private CustomerRepository customerRepository;
+	private final CustomerRepository customerRepository;
 	
 	private Map<Long, Date> lastCustomerOnlineMap = new HashMap<>();
 	private Map<Long, Long> currentConsistencyIdsMap = new HashMap<>();
+	
+	private BlockingQueue<ChatMessage> lastUnreadMsgQueue = new ArrayBlockingQueue<>(10);
+	private BlockingQueue<ChatMessage> lastMsgQueue = new ArrayBlockingQueue<>(10);
 	
 	private Map<Long, Map<Long, List<ChatMessage>>> unreadChatsForReceiverFromSendersMap = new HashMap<>();
 	
@@ -83,6 +82,15 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	 * anonymGuests id to GPS point
 	 */
 	private HashMap<Long, Double> guestToGpsPointMap = new HashMap<>();
+	
+	public LastMessagesServiceImpl(CustomerService customerService, CheckinRepository checkinRepository, HotelRepository hotelRepository, ChatRepository chatRepository, CustomerRepository customerRepository)
+	{
+		this.customerService = customerService;
+		this.checkinRepository = checkinRepository;
+		this.hotelRepository = hotelRepository;
+		this.chatRepository = chatRepository;
+		this.customerRepository = customerRepository;
+	}
 	
 	@PostConstruct
 	public void init() {
@@ -274,6 +282,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 
 		if(unreadForReceiver!=null)
 		{
+			unreadMsgQueue.stream().filter(chatMessage -> chatMessage.getReceiver().getId() == receiverId).forEach(chatMessage -> chatMessage.re);
 			unreadChatsForReceiverFromSendersMap.get(receiverId).remove(senderId);
 		}
 	}

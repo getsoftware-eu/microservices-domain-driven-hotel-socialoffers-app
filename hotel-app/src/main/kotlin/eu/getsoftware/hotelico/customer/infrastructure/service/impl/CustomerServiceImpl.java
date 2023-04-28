@@ -23,14 +23,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import eu.getsoftware.hotelico.amqp.RabbitMQMessageProducer;
 import eu.getsoftware.hotelico.chat.domain.ChatMessage;
 import eu.getsoftware.hotelico.chat.infrastructure.service.ChatService;
 import eu.getsoftware.hotelico.checkin.domain.CustomerHotelCheckin;
+import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.infrastructure.notification.CustomerUpdateRequest;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.domain.CustomerAggregate;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.domain.Language;
-import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
 import eu.getsoftware.hotelico.deal.domain.CustomerDeal;
@@ -94,8 +96,11 @@ public class CustomerServiceImpl implements CustomerService
     private DealRepository dealRepository;
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
-	
-	@Override
+    
+    @Autowired
+    private RabbitMQMessageProducer rabbitMQMessageProducer;
+    
+    @Override
     public List<CustomerDTO> getCustomers() {
         List<CustomerRootEntity> list = customerRepository.findByActive(true);
         List<CustomerDTO> outList = new ArrayList<CustomerDTO>();
@@ -215,7 +220,7 @@ public class CustomerServiceImpl implements CustomerService
 		CustomerDTO dto =  convertMyCustomerToFullDto(customerRepository.saveAndFlush(customerEntity));
         
         
-        registerPush();
+        registerPush(dto);
         
         
         //// NOTIFICATE OTHERS!!!!
@@ -228,7 +233,7 @@ public class CustomerServiceImpl implements CustomerService
         return dto;
     }
 
-    private void registerPush()
+    private void registerPush(CustomerDTO dto)
     {
 //        ortcClient.subscribeWithNotifications("myChannel", true, new OnMessage() {
 //            public void run(OrtcClient sender, String channel, String message) {
@@ -236,6 +241,28 @@ public class CustomerServiceImpl implements CustomerService
 //                        channel, message));
 //            };
 //        });
+    
+        CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest(
+                dto.getId(), 
+                dto.getFirstName(),
+                dto.getEmail());
+        
+        sendViaPreconfiguredRabbitmqProducer(customerUpdateRequest);
+    }
+    
+    
+    /**
+     * 	Method 2: with my configured (added jacksonConverter()) @Bean producer
+     * 	via 'amqp'-module (configured)
+     * @param customerUpdateRequest
+     */
+    private void sendViaPreconfiguredRabbitmqProducer(CustomerUpdateRequest customerUpdateRequest)
+    {
+        //only for 1 and 2 Method we have to write this system variables: 
+        String exchange = "internal.exchange";
+        String routingKey = "internal.notification.customer-update";
+        
+        rabbitMQMessageProducer.publish(customerUpdateRequest, exchange, routingKey);
     }
 
 
@@ -739,7 +766,7 @@ public class CustomerServiceImpl implements CustomerService
 
         long virtualCodeId = lastMessagesService.getInitHotelId();
         
-        if(dto.getHotelId()!= null && dto.getHotelId()>0 && dto.getHotelId() != virtualCodeId)
+        if(/*dto.getHotelId()!= null &&*/ dto.getHotelId()>0 && dto.getHotelId() != virtualCodeId)
         {
             HotelRootEntity outHotelRootEntity = validCheckin!=null? validCheckin.getHotel() : hotelRepository.getOne(dto.getHotelId());
             if(outHotelRootEntity !=null && !outHotelRootEntity.isVirtual())

@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.lang.NonNull;
+
 import eu.getsoftware.hotelico.clients.infrastructure.dto.BasicDTO;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import lombok.Getter;
@@ -19,12 +21,14 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class CustomerDTO<points> extends BasicDTO
 {
+    @NonNull
     private String firstName = null;
 
     private String lastName = "";
 
     private String password = null;
-
+    
+    @NonNull
     private String email = null;
 
     private String company = null;
@@ -65,7 +69,7 @@ public class CustomerDTO<points> extends BasicDTO
     /**
      * calculate current avatarUrl
      */
-    private String  avatarUrl = null;
+    private String avatarUrl = null;
 
     private String errorResponse = null;
 
@@ -74,7 +78,7 @@ public class CustomerDTO<points> extends BasicDTO
     private String website = null;
     private String education = null;
     
-    Map<String, String> systemMessages = new HashMap<>();
+    private Map<String, String> systemMessages = new HashMap<>();
 
     private String lastMessageToMe = null;
 
@@ -117,25 +121,25 @@ public class CustomerDTO<points> extends BasicDTO
     private boolean  chatWithMe = false;
     private boolean  inMyHotel = false;
     
-    Date checkinFrom = null;
+    private Date checkinFrom = null;
     
-    Date checkinTo = null;
+    private Date checkinTo = null;
     
-    List<String> languages  = null;
+    private List<String> languages  = null;
 
-    String getProfileImageUrl() {
+    public String getProfileImageUrl() {
         return ControllerUtils.addHostPrefixOnDemand(profileImageUrl);
     }
     
-    void setProfileImageUrl(String profileImageUrl) {
+    public void setProfileImageUrl(String profileImageUrl) {
         this.profileImageUrl = profileImageUrl;
     }
     
-    String getCity() {
+    public String getCity() {
         return hotelCity != null ? hotelCity : city;
     }
     
-    void setCity(String city) {
+    public void setCity(String city) {
         this.city = city;
     }
 
@@ -150,29 +154,47 @@ public class CustomerDTO<points> extends BasicDTO
         return age;
     }
 
-    String getAvatarUrl() {
+    public String getAvatarUrl() {
         return ControllerUtils.addHostPrefixOnDemand(avatarUrl);
     }
     
-    void setAvatarUrl(String avatarUrl) {
+    public void setAvatarUrl(String avatarUrl) {
         this.avatarUrl = avatarUrl;
     }
 
-    boolean isFullCheckin() {
+    public boolean isFullCheckin() {
         return fullCheckin || ControllerUtils.CHECKIN_FULL_ALWAYS;
     }  
     
-    void setFullCheckin(boolean fullCheckin) {
+    public void setFullCheckin(boolean fullCheckin) {
         this.fullCheckin = fullCheckin;
     }
 
-    void addSystemMessage(String key, String value) {
+    public void addSystemMessage(String key, String value) {
         systemMessages.put(key,value);
     }
-
+    
+    public void setErrorResponse(String msg){
+        this.errorResponse = msg;
+    }
+    
     //TODO EUGEN: IT BOMBS SERIALIZATION
 //    public void setLastMessageTimeToMe(Long lastMessageTimeToMe)
 //    {
 //        this.lastMessageTimeToMe = lastMessageTimeToMe;
 //    }
+    
+    public CustomerDTO(long initId){
+        super(initId);
+    }
+    
+    public void setPassword(String s)
+    {
+        this.password = s;
+    }    
+    
+    public void setLogged(boolean logged)
+    {
+        this.logged = logged;
+    }
 }
