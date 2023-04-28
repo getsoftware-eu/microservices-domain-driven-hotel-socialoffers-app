@@ -12,6 +12,7 @@ import eu.getsoftware.hotelico.clients.infrastructure.notification.CustomerUpdat
 import eu.getsoftware.hotelico.clients.infrastructure.notification.NotificationRequest;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.domain.model.ChatMessageEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.domain.model.ChatUserEntity;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.infrastructure.repository.ChatMessageRepository;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.infrastructure.repository.ChatUserRepository;
 import eu.getsoftware.hotelico.infrastructure.notification.NotificationService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +23,14 @@ public class ChatService
 {
 	private final NotificationService notificationService;
 	private final RabbitMQMessageProducer rabbitMQMessageProducer;
+	private final ChatMessageRepository chatMessageRepository;
 	private final ChatUserRepository chatUserRepository;
 	
-	public ChatService(NotificationService notificationService, RabbitMQMessageProducer rabbitMQMessageProducer, ChatUserRepository chatUserRepository)
+	public ChatService(NotificationService notificationService, RabbitMQMessageProducer rabbitMQMessageProducer, ChatMessageRepository chatMessageRepository, ChatUserRepository chatUserRepository)
 	{
 		this.notificationService = notificationService;
 		this.rabbitMQMessageProducer = rabbitMQMessageProducer;
+		this.chatMessageRepository = chatMessageRepository;
 		this.chatUserRepository = chatUserRepository;
 	}
 	
@@ -53,6 +56,14 @@ public class ChatService
 	public CustomerDTO convertToDTO(ChatUserEntity entity)
 	{
 		throw new UnsupportedOperationException("not implemented");
+	}
+	
+	public ChatMessageEntity createChatMessageFromDTO(ChatMsgDTO msgDTO)
+	{
+		ChatMessageEntity messageEntity = this.convertFromDTO(msgDTO);
+		
+		ChatMessageEntity updateEntity = chatMessageRepository.save(messageEntity);
+		return updateEntity;
 	}
 	
 	/**
@@ -103,5 +114,10 @@ public class ChatService
 		notificationService.send(myNotification);
 	}
 	
-	
+	public ChatUserEntity updateCustomerFromDTO(CustomerDTO customerDTO)
+	{
+		ChatUserEntity userEntity = this.convertFromDTO(customerDTO);
+		
+		return chatUserRepository.save(userEntity);
+	}
 }

@@ -31,20 +31,16 @@ public class ChatController {
 	@PostMapping("/message")
 	public ChatMsgDTO postMessage(@RequestBody ChatMsgDTO msgDTO) {
 		
-		ChatMessageEntity messageEntity = chatService.convertFromDTO(msgDTO);
-		
-		ChatMessageEntity updateEntity = chatMessageRepository.save(messageEntity);
-		
-		return chatService.convertToDTO(updateEntity);
+		ChatMessageEntity createdEntity = chatService.createChatMessageFromDTO(msgDTO);
+		return chatService.convertToDTO(createdEntity);
 	}
+	
+
 	
 	@PostMapping("/customer")
 	public CustomerDTO updateUser(@RequestBody CustomerDTO customerDTO) {
 		
-		ChatUserEntity userEntity = chatService.convertFromDTO(customerDTO);
-		
-		ChatUserEntity updateEntity = chatUserRepository.save(userEntity);
-		
+		ChatUserEntity updateEntity = chatService.updateCustomerFromDTO(customerDTO);
 		return chatService.convertToDTO(updateEntity);
 	}
 }

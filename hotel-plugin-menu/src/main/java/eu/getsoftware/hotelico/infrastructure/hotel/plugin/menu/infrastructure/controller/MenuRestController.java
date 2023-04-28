@@ -2,7 +2,6 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.infrastructure.
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,8 +14,12 @@ import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.infrastructure.s
 @RequestMapping("/menu")
 public class MenuRestController
 {
-	@Autowired
-	private MenuService menuService;
+	private final MenuService menuService;
+	
+	public MenuRestController(MenuService menuService)
+	{
+		this.menuService = menuService;
+	}
 	
 	@RequestMapping(value = "/items", method = RequestMethod.GET)
 	public @ResponseBody List<MenuItem> getItems() {
