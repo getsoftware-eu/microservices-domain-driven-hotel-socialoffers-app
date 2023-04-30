@@ -12,8 +12,8 @@ This separation ensures, that the two types of entities do not depend on each ot
 
 ![Aggregate root](/docs/img/ddd.webp)
 
-## About 'Hotel interaction Application'
-### 'MAKING GUESTS & HOTELS HAPPY'
+## About 'Hotel interaction Application' Project: it is a software system designed to facilitate interactions and improve experiences between guests and hotels.
+### The Slogan of this project is 'MAKING GUESTS & HOTELS HAPPY'
 
 ![Application intro](/docs/img/app3.png)
 
