@@ -1,13 +1,14 @@
-# My vision of a Domain-driven Design and Clean Architecture implementation with microservices and AWS
+# My vision of a Domain-driven Design and Clean Architecture using microservices and AWS
 
-"Clean" (Layered) Architecture is another way to provide for <b>separation of concerns</b>, <b>encapsulation</b> and <b>decoupling</b>, by grouping code units by their domain and functional role within the application.
+The "Clean" (Layered) Architecture is another way to provide <b>separation of concerns</b>, <b>encapsulation</b> and <b>decoupling</b>, by grouping code units according to their domain and functional roles within the application.
+(This approach ensures that the architecture is easy to maintain and extend, as changes to one layer do not affect the others)
 
-### It's a refactoring of the old 'Hotel-interaction' project: an attempt to encapsulate domain-data (with Domain-driven Design and Clean Architecture).
+### To achieve this vision, I am refactoring my old 'Hotel-interaction' project, in order to encapsulate domain-data (using Domain-driven Design and Clean Architecture principles), which will enable us to create a modular and scalable system that can easily be adapted to future changes and enhancements.
 
 ![Agregates is only one entry to domain entities](/docs/img/diagramm1.png)
 
-For simplicity, <b>Jpa-entities</b> will be handled as <b>Domain-entities</b> directly at the <b>Domain-Layer</b>, but actually in Clean-architecture Jpa-Entities should be separated from Domain-entities and should be used only in <b>Infrastructure-Layer</b> (with Jpa Repository).
-Then they would not depend on each other, but this would require a double declaration of same entity-fields in different layers.
+To simplify the implementation, we are handling <b>JPA-entities</b> as <b>Domain-entities</b> directly at the <b>Domain-Layer</b>. However, in Clean-architecture,  it is best practice to separate JPA entities from domain entities  and use them only in the <b>Infrastructure-Layer</b> (with JPA repositories).
+This separation ensures, that the two types of entities do not depend on each other, but this would require a double declaration of same entity-fields in different layers. While this may seem redundant, it ensures that the domain layer is not tightly coupled to the JPA infrastructure layer, which would make the system less flexible and harder to maintain in the long term.
 
 ![Aggregate root](/docs/img/ddd.webp)
 
@@ -25,9 +26,14 @@ Then they would not depend on each other, but this would require a double declar
 Guests can get to know other guests in the hotel. And earn bonus points for hotel offers at the same time
 ![Special offers on guests](/docs/img/appInfo.jpg)
 
+## Architecture details
+- According to the "Building Microservices" book by Sam Newman, all microservice should have its own DB (and for example its own view of a central user entity).
+- Notifications will be persisted by preconfigured (Jackson serialisation and route) through a central preconfigured 'notification' module, which uses a 'notification'-RabbitMQ-queue for message passing and has its own database.
+- When a user update occurs, it will be propagated to all microservices through a 'system' RabbitMQ queue, ensuring that each microservice updates its user-view in its own database.
+
 ### TODO: starting building AWS Architecture (first attempt) 
 ![AWS](/docs/img/aws.drawio.png)
 
 ### "Clean" (Onion) Architecture with java
-Based on my another Github project:
+Based on my another GitHub project:
 https://github.com/getsoftware-eu/my-onion-clean-architecture
