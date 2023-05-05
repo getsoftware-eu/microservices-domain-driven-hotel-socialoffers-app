@@ -5,8 +5,8 @@ import java.util.Map;
 import org.springframework.transaction.annotation.Transactional;
 
 import eu.getsoftware.hotelico.checkin.domain.HotelActivity;
+import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
-import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDTO;

@@ -18,16 +18,17 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import eu.getsoftware.hotelico.checkin.domain.HotelActivity;
 import eu.getsoftware.hotelico.clients.infrastructure.exception.BasicHotelException;
+import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ReorderAction;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
-import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
 import eu.getsoftware.hotelico.deal.domain.CustomerDeal;
@@ -184,12 +185,14 @@ public class HotelServiceImpl implements HotelService
 
         if(ControllerUtils.isEmptyString(hotelCode))
         {
-            return null;
+	        new IllegalArgumentException("hotelcode is wrong: " + hotelCode);
         }
-
-        HotelRootEntity hotelRootEntity = hotelRepository.findByCurrentHotelAccessCodeAndActive(hotelCode, true);
+	
+	    HotelDTO dto = hotelRepository.findByCurrentHotelAccessCodeAndActive(hotelCode, true)
+			    .map(h -> convertHotelToDto(h))
+			    .orElseThrow(() -> new ResourceNotFoundException("hotel not found, hotelCode is wrong: " + hotelCode));
         
-        return convertHotelToDto(hotelRootEntity);
+        return dto;
     }
 
     @Override

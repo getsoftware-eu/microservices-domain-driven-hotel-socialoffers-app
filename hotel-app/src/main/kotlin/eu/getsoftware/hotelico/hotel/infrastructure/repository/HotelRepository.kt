@@ -4,6 +4,7 @@ import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
+import java.util.*
 
 interface HotelRepository: JpaRepository<HotelRootEntity, Long> {
 
@@ -42,7 +43,7 @@ interface HotelRepository: JpaRepository<HotelRootEntity, Long> {
 	 * Find hotel by hotelCode.
 	 */
 	//@Query(FIND_BY_HOTEL_CODE_QUERY)
-	fun findByCurrentHotelAccessCodeAndActive(currentHotelAccessCode: String, active: Boolean = true): HotelRootEntity
+	fun findByCurrentHotelAccessCodeAndActive(currentHotelAccessCode: String, active: Boolean = true): Optional<HotelRootEntity>
 	
 	@Query(FIND_ACTIVITY_NUMBER_BY_HOTEL_QUERY)
 	fun getActivityCounter(@Param("hotelId") hotelId: Int): Int

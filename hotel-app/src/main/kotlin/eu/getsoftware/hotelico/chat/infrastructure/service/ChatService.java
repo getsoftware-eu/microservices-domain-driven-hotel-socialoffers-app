@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import eu.getsoftware.hotelico.chat.domain.ChatMessage;
 import eu.getsoftware.hotelico.chat.infrastructure.dto.ChatMessageDTO;
-import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
 
 public interface ChatService
 {

@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 
@@ -33,8 +33,10 @@ import eu.getsoftware.hotelico.hotel.infrastructure.service.CheckinService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.LoginHotelicoService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
+import io.swagger.annotations.Api;
 
-@Controller
+@Api(value = "CustomerController") //add to swagger
+@RestController
 @RequestMapping("/customers")
 //@SessionAttributes(ControllerUtils.SESSION_CUSTOMER)
 public class CustomerController extends BasicController

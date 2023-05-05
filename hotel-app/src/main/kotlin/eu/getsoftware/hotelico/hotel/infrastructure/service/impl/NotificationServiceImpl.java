@@ -9,11 +9,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -25,9 +23,9 @@ import eu.getsoftware.hotelico.chat.domain.ChatMessage;
 import eu.getsoftware.hotelico.chat.infrastructure.dto.ChatMessageDTO;
 import eu.getsoftware.hotelico.chat.infrastructure.service.ChatService;
 import eu.getsoftware.hotelico.checkin.domain.HotelActivity;
+import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
-import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
 import eu.getsoftware.hotelico.deal.infrastructure.utils.DealStatus;
@@ -43,55 +41,56 @@ import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;
 import eu.getsoftware.hotelico.menu.infrastructure.dto.MenuOrderDTO;
 import eu.getsoftware.hotelico.menu.infrastructure.service.MenuService;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <br/>
  * Created by e.fanshil
  * At 05.02.2016 12:10
  */
+@Slf4j
 @Service
 public class NotificationServiceImpl implements NotificationService
 {
 	
-	@Autowired
-	private HotelService hotelService;
+	private final HotelService hotelService;
 	
-	@Autowired
-	private MenuService menuService;	
+	private final MenuService menuService;	
 	
-	@Autowired
-	private LastMessagesService lastMessagesService;
+	private final LastMessagesService lastMessagesService;
 	
-	@Autowired
-	private CustomerService customerService;	
+	private final CustomerService customerService;	
 	
-	@Autowired
-	private ChatService chatService;	
+	private final ChatService chatService;	
 	
-	@Autowired
-	private MailService mailService;
+	private final MailService mailService;
 	
-	@Autowired
-	private CustomerRepository customerRepository;	
+	private final CustomerRepository customerRepository;	
 	
-	@Autowired
-	private CheckinRepository checkinRepository;	
+	private final CheckinRepository checkinRepository;	
 	
-	@Autowired
-	private ChatRepository chatRepository;
+	private final ChatRepository chatRepository;
 	
-	@Autowired
-	private SimpMessagingTemplate simpMessagingTemplate;
+	private final SimpMessagingTemplate simpMessagingTemplate;
 	
-	private Logger logger = LoggerFactory.getLogger(getClass());
+	public NotificationServiceImpl(HotelService hotelService, MenuService menuService, LastMessagesService lastMessagesService, CustomerService customerService, ChatService chatService, MailService mailService, CustomerRepository customerRepository, CheckinRepository checkinRepository, ChatRepository chatRepository, SimpMessagingTemplate simpMessagingTemplate)
+	{
+		this.hotelService = hotelService;
+		this.menuService = menuService;
+		this.lastMessagesService = lastMessagesService;
+		this.customerService = customerService;
+		this.chatService = chatService;
+		this.mailService = mailService;
+		this.customerRepository = customerRepository;
+		this.checkinRepository = checkinRepository;
+		this.chatRepository = chatRepository;
+		this.simpMessagingTemplate = simpMessagingTemplate;
+	}
 	
 	@Override
 	public void notificateAboutEntityEvent(CustomerDTO dto, HotelEvent event, String eventContent, long entityId)
 	{
-		if(dto==null)
-		{
-			return;
-		}
+		Objects.requireNonNull(dto);
 		
 		List<Long> allOnlineCustomerIds = lastMessagesService.getOnlineCustomerIds();
 		
@@ -104,7 +103,7 @@ public class NotificationServiceImpl implements NotificationService
 		{
 			CustomerNotificationDTO receiverNotification = this.getCustomerNotification(nextOnlineCustomerId, event);
 			
-			if(dto.getHotelId()!=null)
+			if(dto.getHotelId()>0)
 			{
 				receiverNotification.setCustomerEvent(dto.getId(), dto.getHotelId(), event, eventContent, entityId);
 				
@@ -413,14 +412,16 @@ public class NotificationServiceImpl implements NotificationService
 				
 				if(nextFeedCustomerRootEntity !=null && nextFeedCustomerRootEntity.getEntityAggregate().isAllowHotelNotification())
 				{
-					ChatMessageDTO feedChatMessage = new ChatMessageDTO();
+					long time = new Date().getTime();
+					
+					ChatMessageDTO feedChatMessage = new ChatMessageDTO(time);
 					
 					feedChatMessage.setSenderId(customerEntity.getId());
 					feedChatMessage.setReceiverId(nextFeedCustomerRootEntity.getId());
 					feedChatMessage.setMessage(feedMessage);
-					feedChatMessage.setInitId(new Date().getTime());
-					feedChatMessage.setCreationTime(new Date().getTime());
-					feedChatMessage.setTimestamp( new Timestamp(new Date().getTime()));
+					feedChatMessage.setInitId(time);
+					feedChatMessage.setCreationTime(time);
+					feedChatMessage.setTimestamp( new Timestamp(time));
 					
 					if(!ControllerUtils.isEmptyString(inviteActivityId))
 					{
@@ -452,7 +453,7 @@ public class NotificationServiceImpl implements NotificationService
 	
 	public void sendMailList(CustomerRootEntity customerEntity, Map<String, String> systemMessages)
 	{
-		logger.info("mailList inhalt: " + systemMessages);
+		log.info("mailList inhalt: " + systemMessages);
 		
 		String mailList = systemMessages.get("mailList");
 		

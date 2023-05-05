@@ -17,7 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import eu.getsoftware.hotelico.chat.infrastructure.dto.ChatMessageDTO;
 import eu.getsoftware.hotelico.chat.infrastructure.service.ChatService;
-import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
+import io.swagger.annotations.ApiOperation;
 
 @Controller
 @RequestMapping("/chat")
@@ -34,6 +35,7 @@ public class ChatController extends BasicController
     return "chat";
   }
 
+  @ApiOperation(value = "basic send chat method", produces = "application/json")
   @MessageMapping("/chat")
   //who should recieve result of this method
 //  @SendTo("/chattopic/message") //Send to all

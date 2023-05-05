@@ -27,13 +27,13 @@ import eu.getsoftware.hotelico.hotel.infrastructure.service.FileUploadService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 import io.micrometer.core.annotation.Timed;
+import io.swagger.annotations.ApiOperation;
 
 @Timed("sensorMap.controller") //eugen: profiler
 @RestController
 @RequestMapping("/hotels")
 public class HotelController extends BasicController
 {
-
     @Autowired
     private HotelService hotelService;
     
@@ -65,8 +65,9 @@ public class HotelController extends BasicController
         response.setHeader("Cache-Control", "no-cache");
         HotelDTO out = hotelService.getHotelById(hotelId);
         return out;
-    }   
+    }
     
+    @ApiOperation(value = "every hotel has its unique code", produces = "application/json")
     @RequestMapping(value = "/customer/{customerId}/hotelCode/{hotelCode}", method = RequestMethod.GET)
     public HotelDTO getHotelByCode(@PathVariable long customerId, @PathVariable String hotelCode, final HttpServletResponse response) {
 //        response.setHeader("Cache-Control", "no-cache");
