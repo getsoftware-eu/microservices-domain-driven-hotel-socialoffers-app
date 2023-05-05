@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import eu.getsoftware.hotelico.deal.infrastructure.dto.CustomerDealDTO;
+import eu.getsoftware.hotelico.deal.infrastructure.utils.DealAction;
 import eu.getsoftware.hotelico.hotel.infrastructure.aspects.NotifyClients;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
@@ -55,7 +56,7 @@ public class DealController extends BasicController
   @RequestMapping(value = "/action/{action}/customer/{customerId}/activityId/{activityId}/dealId/{dealId}/tablePosition/{tablePosition}/totalMoney/{totalMoney}", method = RequestMethod.GET)
   public @ResponseBody
   CustomerDealDTO addDealAction(@PathVariable String action, @PathVariable long customerId, @PathVariable long activityId, @PathVariable long dealId, @PathVariable String tablePosition, @PathVariable double totalMoney) {
-    return hotelService.addDealAction(customerId, activityId, dealId, action, tablePosition, totalMoney);
+    return hotelService.addDealAction(customerId, activityId, dealId, DealAction.parseByName(action), tablePosition, totalMoney);
   }
 	
   

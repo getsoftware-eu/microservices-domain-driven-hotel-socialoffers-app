@@ -235,16 +235,11 @@ public class ControllerUtils
 		return null;
 	}
 	
-	public static long getTryEntityId(long requesterId)
+	public static long getTryEntityId(long requesterInitId)
 	{
 		int customerId = 0;
 		
-		if(requesterId == (int) requesterId)
-		{
-			customerId = (int) requesterId;
-		}
-		
-		return customerId;
+		throw new UnsupportedOperationException("mapping from initId to entityId is not implemented");
 	}
 
 	public static String addHostPrefixOnDemand(String pictureUrl)

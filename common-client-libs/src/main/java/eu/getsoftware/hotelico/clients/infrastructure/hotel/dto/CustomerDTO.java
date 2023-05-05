@@ -197,4 +197,24 @@ public class CustomerDTO<points> extends BasicDTO
     {
         this.logged = logged;
     }
+	
+	public void setInMyHotel(boolean b)
+	{
+        this.inMyHotel = b;
+	}
+    
+    public boolean getHotelStaff()
+    {
+        return hotelStaff;
+    }
+    
+    public void setHotelId(long id)
+    {
+        this.hotelId = id;
+    }
+    
+    public boolean isAdmin()
+    {
+        return admin;
+    }
 }

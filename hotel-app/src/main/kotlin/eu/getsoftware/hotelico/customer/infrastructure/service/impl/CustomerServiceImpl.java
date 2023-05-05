@@ -225,7 +225,7 @@ public class CustomerServiceImpl implements CustomerService
         
         //// NOTIFICATE OTHERS!!!!
 
-        if(!dto.getHotelStaff() && !dto.getAdmin())
+        if(!dto.getHotelStaff() && !dto.isAdmin())
         {
             notificationService.notificateAboutEntityEvent(dto, HotelEvent.EVENT_REGISTER, "Now Registered!", dto.getId());
         }
@@ -287,7 +287,7 @@ public class CustomerServiceImpl implements CustomerService
 
         dto = loginService.checkBeforeLoginProperties(customerDto, dto);
 
-        if(!dto.getHotelStaff() && !dto.getAdmin())
+        if(!dto.getHotelStaff() && !dto.isAdmin())
         {
             notificationService.notificateAboutEntityEvent(dto, HotelEvent.EVENT_REGISTER, "Now Registered!", dto.getId());
         }
@@ -314,7 +314,7 @@ public class CustomerServiceImpl implements CustomerService
 
         dto = loginService.checkBeforeLoginProperties(customerDto, dto);
         
-        if(!dto.getHotelStaff() && !dto.getAdmin())
+        if(!dto.getHotelStaff() && !dto.isAdmin())
         {
             notificationService.notificateAboutEntityEvent(dto, HotelEvent.EVENT_REGISTER, "Now Registered!", dto.getId());
         }

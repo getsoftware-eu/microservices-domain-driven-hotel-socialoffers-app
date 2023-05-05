@@ -102,6 +102,7 @@ public class HotelRootEntity implements Serializable, IFileUploadable
     @Column(name = "pictureUrl", nullable = true, length = 250)
     private String pictureUrl;    
     
+	//TODO convert string data to own structure
     @Column(name = "guestPushIds", nullable = true, columnDefinition="LONGTEXT")
     private String guestPushIds = "";    
 	

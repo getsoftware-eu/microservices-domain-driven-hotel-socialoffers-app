@@ -3,6 +3,7 @@ package eu.getsoftware.hotelico.hotel.infrastructure.service;
 import java.awt.geom.Point2D;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import eu.getsoftware.hotelico.clients.infrastructure.utils.ReorderAction;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.deal.domain.CustomerDeal;
 import eu.getsoftware.hotelico.deal.infrastructure.dto.CustomerDealDTO;
+import eu.getsoftware.hotelico.deal.infrastructure.utils.DealAction;
 import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 import eu.getsoftware.hotelico.hotel.domain.HotelWallPost;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDTO;
@@ -71,7 +73,7 @@ public interface HotelService
     @Transactional
     List<WallPostDTO> getWallPostsByHotelId(long hotelId);
     
-    @Transactional HotelDTO getHotelById(long hotelId);    
+    HotelDTO getHotelById(long hotelId);    
     
     @Transactional
     HotelActivityDTO getHotelActivityById(long requesterId, long activityId);    
@@ -107,16 +109,16 @@ public interface HotelService
     CustomerDealDTO addUpdateDeal(long guestCustomerId, long activityId, CustomerDealDTO activityDealDto);
 	
 	@Transactional
-    CustomerDealDTO addDealAction(long guestCustomerId, long activityId, long givenId, String action, String tablePosition, double totalMoney);
+    CustomerDealDTO addDealAction(long guestCustomerId, long activityId, long givenId, DealAction action, String tablePosition, double totalMoney);
 	
 	@Transactional
 	int getCustomerDealCounter(long customerId, long guestId);
     
     @Transactional
-    HotelActivity getActivityByIdOrInitId(long id, long initId);
+    Optional<HotelActivity> getActivityByIdOrInitId(long id, long initId);
    
     @Transactional
-    CustomerDeal getDealByIdOrInitId(long id, long initId);
+    Optional<CustomerDeal> getDealByIdOrInitId(long id, long initId);
     
     WallPostDTO convertWallToDto(HotelWallPost wallPost);
 
