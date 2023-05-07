@@ -12,6 +12,9 @@ This separation ensures, that the two types of entities do not depend on each ot
 
 ![Aggregate root](/docs/img/ddd.webp)
 
+### TODO: starting building AWS Architecture (first attempt)
+![AWS](/docs/img/aws.drawio.png)
+
 ## About 'Hotel interaction Application' Project: it is a software system designed to facilitate interactions and improve experiences between guests and hotels.
 ### The Slogan of this project is 'MAKING GUESTS & HOTELS HAPPY'
 
@@ -30,9 +33,6 @@ Guests can get to know other guests in the hotel. And earn bonus points for hote
 - According to the "Building Microservices" book by Sam Newman, all microservice should have its own DB (and for example its own view of a central user entity).
 - Notifications will be persisted by preconfigured (Jackson serialisation and route) through a central preconfigured 'notification' module, which uses a 'notification'-RabbitMQ-queue for message passing and has its own database.
 - When a user update occurs, it will be propagated to all microservices through a 'system' RabbitMQ queue, ensuring that each microservice updates its user-view in its own database.
-
-### TODO: starting building AWS Architecture (first attempt) 
-![AWS](/docs/img/aws.drawio.png)
 
 ### "Clean" (Onion) Architecture with java
 Based on my another GitHub project:
