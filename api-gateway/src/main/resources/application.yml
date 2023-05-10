@@ -13,7 +13,11 @@ spring:
         - id: menu
           uri: lb://MENU
           predicates:
-            - Path=/api/v1/menus/**
+            - Path=/api/v1/menus/**        
+        - id: chat
+          uri: lb://CHAT
+          predicates:
+            - Path=/api/v1/chat/**
 server:
   port: 8083
   
