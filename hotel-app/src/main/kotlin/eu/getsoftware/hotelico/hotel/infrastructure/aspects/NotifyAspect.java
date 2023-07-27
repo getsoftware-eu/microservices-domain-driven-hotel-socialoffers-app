@@ -1,12 +1,12 @@
 package eu.getsoftware.hotelico.hotel.infrastructure.aspects;
 
-import java.util.Date;
-
+import eu.getsoftware.hotelico.hotel.infrastructure.service.ProduceRabbitmqMessageService;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
+
+import java.util.Date;
 
 /**
  * notify users about
@@ -16,7 +16,7 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 public class NotifyAspect {
 
     @Autowired
-    private SimpMessagingTemplate template;
+    private ProduceRabbitmqMessageService produceRabbitmqMessageService;
 
     private static final String WEBSOCKET_TOPIC = "/topic/notify";
     
@@ -30,7 +30,7 @@ public class NotifyAspect {
 
     @After("methodPointcut() && notifyPointcut()") 
     public void notifyClients() throws Throwable {
-        template.convertAndSend(WEBSOCKET_TOPIC, new Date());
+        produceRabbitmqMessageService.produceSimpMessage(WEBSOCKET_TOPIC, new Date());
     }
 
 }

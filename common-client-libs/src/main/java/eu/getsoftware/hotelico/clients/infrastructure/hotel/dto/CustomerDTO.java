@@ -16,10 +16,15 @@ import lombok.Getter;
 import lombok.With;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * DTO lieber immutable - all field are final and no side effects!
+ */
 @With
 @Getter
 @SuperBuilder
-public class CustomerDTO<points> extends BasicDTO
+public class CustomerDTO extends BasicDTO
+        
+        //all fields are final!!!
 {
     @NonNull
     private String firstName = null;
@@ -90,7 +95,7 @@ public class CustomerDTO<points> extends BasicDTO
     
     private double points = 0.0;
     
-    private boolean hotelStaff = false;
+    public boolean hotelStaff = false;
     
     private boolean fullCheckin = false;
     
@@ -131,18 +136,6 @@ public class CustomerDTO<points> extends BasicDTO
         return ControllerUtils.addHostPrefixOnDemand(profileImageUrl);
     }
     
-    public void setProfileImageUrl(String profileImageUrl) {
-        this.profileImageUrl = profileImageUrl;
-    }
-    
-    public String getCity() {
-        return hotelCity != null ? hotelCity : city;
-    }
-    
-    public void setCity(String city) {
-        this.city = city;
-    }
-
     public int getAge() {
 
         if (birthdayTime == null)
@@ -153,14 +146,18 @@ public class CustomerDTO<points> extends BasicDTO
         
         return age;
     }
-
+    
+    public String getCity() {
+        return hotelCity != null ? hotelCity : city;
+    }
+    
     public String getAvatarUrl() {
         return ControllerUtils.addHostPrefixOnDemand(avatarUrl);
     }
     
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
-    }
+//    public void setAvatarUrl(String avatarUrl) {
+//        this.avatarUrl = avatarUrl;
+//    }
 
     public boolean isFullCheckin() {
         return fullCheckin || ControllerUtils.CHECKIN_FULL_ALWAYS;
@@ -188,33 +185,147 @@ public class CustomerDTO<points> extends BasicDTO
         super(initId);
     }
     
-    public void setPassword(String s)
-    {
-        this.password = s;
-    }    
+//    public void setPassword(String s)
+//    {
+//        this.password = s;
+//    }    
+//    
+//    public void setLogged(boolean logged)
+//    {
+//        this.logged = logged;
+//    }
+//	
+//	public void setInMyHotel(boolean b)
+//	{
+//        this.inMyHotel = b;
+//	}
+//    
+//    public void setHotelId(long id)
+//    {
+//        this.hotelId = id;
+//    }
+//    
+//    public boolean isAdmin()
+//    {
+//        return admin;
+//    }
     
-    public void setLogged(boolean logged)
+    /**
+     * functional methods, that creates a new instance with custom parameter
+     * @param error
+     * @return
+     */
+    public CustomerDTO withErroResponse(String error)
     {
-        this.logged = logged;
+        CustomerDTO temp = new CustomerDTO(0);
+        temp.errorResponse = error;
+        return temp;
     }
-	
-	public void setInMyHotel(boolean b)
-	{
-        this.inMyHotel = b;
-	}
     
-    public boolean getHotelStaff()
+    /**
+     * CustomerDTO dto = new CustomerBuilder(reuiredParams).setOptional1("user").setOptional2(true).build();
+     */
+    public static class CustomerBuilder
     {
-        return hotelStaff;
+        /**
+         * eugen: builder-Required parameters!!!!!
+         */
+        
+        private long initId;
+        @NonNull
+        private String firstName;
+    
+        /**
+         *  eugen: builder-Optional parameters - initialized to default values!!!!!!
+         */
+        
+        private String lastName = "";
+        private String password = "";
+        @NonNull
+        private String email = "";
+        private String company = "";
+        private String employer = "";
+        private String city = "";
+        private String originalCity = "";
+        private String sex = "m";
+        private String birthdayTime = null;
+        // private var age: Int? = null;
+        private String country = "";
+        private String status = "";
+        private String jobTitle = "";
+        private String jobDescriptor = "";
+        private long hotelId = -1;
+        private String hotelName = "";
+        private String hotelCity = "";
+        private String hotelCode = "";
+        /**
+         * extra save social network picture url
+         */
+        private String profileImageUrl = "";
+        /**
+         * calculate current avatarUrl
+         */
+        private String avatarUrl = "";
+        private String prefferedLanguage = "en";
+        private String website = "";
+        private String education = "";
+        private String lastMessageToMe = "";
+        private long lastMessageTimeToMe = 0L;
+        private long customerConsistencyId = 0L;
+        private long hotelConsistencyId = 0L;
+        private double points = 0.0;
+        private boolean hotelStaff = false;
+        private boolean fullCheckin = false;
+        private boolean  allowHotelNotification = true;
+        private boolean  showInGuestList = true;
+        private boolean  checkedIn = false;
+        private boolean  admin = false;
+        private boolean  logged = false;
+        private boolean  online = false;
+        private boolean  guestAccount = false;
+        private boolean  showAvatar = true;
+        private boolean  hideCheckinPopup = false;
+        private boolean  hideChromePushPopup = false;
+        private boolean  hideHotelListPopup = false;
+        private boolean  hideWallPopup = false;
+        private boolean  chatWithMe = false;
+        private boolean  inMyHotel = false;
+        private Date checkinFrom = null;
+        private Date checkinTo = null;
+    
+        public CustomerBuilder(long initId) {
+            this.initId = initId;
+        }
+        
+        public CustomerBuilder setCity(String city) {
+            this.city = city;
+            return this;
+        }
+        
+        public CustomerBuilder setFirstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+        
+        public CustomerBuilder setEnabled(String email) {
+            this.email = email;
+            return this;
+        }
+    
+        public CustomerBuilder setProfileImageUrl(String profileImageUrl) {
+            this.profileImageUrl = profileImageUrl;
+            return this;
+        }
+    
+        public CustomerDTO build(){
+            return new CustomerDTO(this);
+        }
     }
     
-    public void setHotelId(long id)
-    {
-        this.hotelId = id;
-    }
-    
-    public boolean isAdmin()
-    {
-        return admin;
+    // private constructor of DTO for Builder
+    private CustomerDTO(CustomerBuilder builder) {
+        setInitId(builder.initId);
+        email = builder.email;
+        profileImageUrl = builder.profileImageUrl;
     }
 }

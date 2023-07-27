@@ -1,10 +1,11 @@
 package eu.getsoftware.hotelico.hotel.infrastructure.service;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 /**
  * <br/>
@@ -27,5 +28,6 @@ public interface LoginHotelicoService
 	
 	long getCryptoHash(CustomerRootEntity customerEntity, String initialPassword);
 	
-	@Transactional CustomerDTO checkBeforeLoginProperties(CustomerDTO loggingCustomer, CustomerDTO dbCustomer);
+	@Transactional
+	Optional<CustomerDTO> checkBeforeLoginProperties(CustomerDTO loggingCustomer, CustomerDTO dbCustomer);
 }

@@ -1,41 +1,41 @@
 package eu.getsoftware.hotelico.customer.infrastructure.service;
 
-import java.util.List;
-import java.util.Set;
-
-import org.springframework.transaction.annotation.Transactional;
-
 import eu.getsoftware.hotelico.checkin.domain.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+/**
+ * All methods of this class throws NullPoinrerException if a required argument is null
+ */
 public interface CustomerService
 {
-    @Transactional
     List<CustomerDTO> getCustomers();
     
-    @Transactional
     long getCustomerHotelId(long customerId);
     
-    @Transactional CustomerDTO getByLinkedInId(String linkedInId);    
+    CustomerDTO getByLinkedInId(String linkedInId);
     
-    @Transactional CustomerDTO getByFacebookId(String facebookId);    
+    /**
+     * 
+     * @param facebookId
+     * @return Dto of customer 
+     * returns ResourceNotFoundException if customer with facebookId not found
+     */
+    Optional<CustomerDTO> getByFacebookId(String facebookId);    
     
-    @Transactional CustomerDTO getByEmail(String email);
+    Optional<CustomerDTO> getByEmail(String email);
     
     @Transactional
     Set<CustomerDTO> getByHotelId(long customerId, long hotelId, boolean addStaff);
 	
 	CustomerDTO fillDtoWithHotelInfo(CustomerDTO dto, CustomerHotelCheckin validCheckin);
 	
-	/**
-     * Set this dto info personally to me
-     * @param requester
-     * @param dto
-     * @return
-     */
-    @Transactional CustomerDTO setDtoLastMessageWithRequester(CustomerRootEntity requester, CustomerDTO dto);
-
+	
     @Transactional
     Set<CustomerDTO> getByCity(long customerId, String city);
     
@@ -51,7 +51,8 @@ public interface CustomerService
    
     @Transactional CustomerDTO addLinkedInCustomer(CustomerDTO customerDto, String linkedIn);
        
-    @Transactional CustomerDTO addFacebookCustomer(CustomerDTO customerDto, String facebookId);
+    @Transactional 
+    CustomerDTO addFacebookCustomer(CustomerDTO customerDto, String facebookId);
     
     @Transactional CustomerDTO updateCustomer(CustomerDTO customerDto, int requesterId);
     

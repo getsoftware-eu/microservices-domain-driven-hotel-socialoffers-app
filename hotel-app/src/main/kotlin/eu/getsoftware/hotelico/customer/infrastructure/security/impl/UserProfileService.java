@@ -1,26 +1,17 @@
 package eu.getsoftware.hotelico.customer.infrastructure.security.impl;
 
-import static org.apache.http.entity.ContentType.IMAGE_GIF;
-import static org.apache.http.entity.ContentType.IMAGE_JPEG;
-import static org.apache.http.entity.ContentType.IMAGE_PNG;
-
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.UUID;
-
+import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
+import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.FileStore;
+import eu.getsoftware.hotelico.main.config.BucketName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
-import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.FileStore;
-import eu.getsoftware.hotelico.main.hotel.config.BucketName;
+import java.io.IOException;
+import java.util.*;
+
+import static org.apache.http.entity.ContentType.*;
 
 @Service
 public class UserProfileService

@@ -1,30 +1,12 @@
 package eu.getsoftware.hotelico.hotel.infrastructure.service.impl;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
-
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import eu.getsoftware.hotelico.chat.domain.ChatMessage;
-import eu.getsoftware.hotelico.chat.infrastructure.dto.ChatMessageDTO;
-import eu.getsoftware.hotelico.chat.infrastructure.service.ChatService;
+import eu.getsoftware.hotelico.chat.domain.ChatMessageView;
+import eu.getsoftware.hotelico.chat.infrastructure.service.ChatMSComminicationService;
 import eu.getsoftware.hotelico.checkin.domain.HotelActivity;
+import eu.getsoftware.hotelico.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.infrastrukture.menu.dto.MenuOrderDTO;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
@@ -32,16 +14,22 @@ import eu.getsoftware.hotelico.deal.infrastructure.utils.DealStatus;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDTO;
-import eu.getsoftware.hotelico.hotel.infrastructure.repository.ChatRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.CheckinRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.MailService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.*;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;
-import eu.getsoftware.hotelico.menu.infrastructure.dto.MenuOrderDTO;
-import eu.getsoftware.hotelico.menu.infrastructure.service.MenuService;
+import eu.getsoftware.hotelico.menu.infrastructure.service.impl.MenuMSCommunicationService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.sql.Timestamp;
+import java.util.*;
 
 /**
  * <br/>
@@ -50,18 +38,17 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class NotificationServiceImpl implements NotificationService
 {
 	
 	private final HotelService hotelService;
 	
-	private final MenuService menuService;	
+	private final MenuMSCommunicationService menuMSCommunicationService;	
 	
 	private final LastMessagesService lastMessagesService;
 	
 	private final CustomerService customerService;	
-	
-	private final ChatService chatService;	
 	
 	private final MailService mailService;
 	
@@ -69,23 +56,9 @@ public class NotificationServiceImpl implements NotificationService
 	
 	private final CheckinRepository checkinRepository;	
 	
-	private final ChatRepository chatRepository;
+	private final ChatMSComminicationService chatMSComminicationService;
 	
-	private final SimpMessagingTemplate simpMessagingTemplate;
-	
-	public NotificationServiceImpl(HotelService hotelService, MenuService menuService, LastMessagesService lastMessagesService, CustomerService customerService, ChatService chatService, MailService mailService, CustomerRepository customerRepository, CheckinRepository checkinRepository, ChatRepository chatRepository, SimpMessagingTemplate simpMessagingTemplate)
-	{
-		this.hotelService = hotelService;
-		this.menuService = menuService;
-		this.lastMessagesService = lastMessagesService;
-		this.customerService = customerService;
-		this.chatService = chatService;
-		this.mailService = mailService;
-		this.customerRepository = customerRepository;
-		this.checkinRepository = checkinRepository;
-		this.chatRepository = chatRepository;
-		this.simpMessagingTemplate = simpMessagingTemplate;
-	}
+	private final HotelRabbitMQProducer hotelRabbitMQProducer;
 	
 	@Override
 	public void notificateAboutEntityEvent(CustomerDTO dto, HotelEvent event, String eventContent, long entityId)
@@ -115,7 +88,7 @@ public class NotificationServiceImpl implements NotificationService
 				//                }
 			}
 			
-			simpMessagingTemplate.convertAndSend(ControllerUtils.SOCKET_NOTIFICATION_TOPIC + nextOnlineCustomerId, receiverNotification);
+			hotelRabbitMQProducer.produceSimpWebsocketMessage(ControllerUtils.SOCKET_NOTIFICATION_TOPIC + nextOnlineCustomerId, receiverNotification);
 		}
 	}
 	
@@ -211,7 +184,7 @@ public class NotificationServiceImpl implements NotificationService
 			//TODO Eugen: Menu orders of customer: Problem one time ausführung
 			if(isStaffOrAdmin || HotelEvent.EVENT_MENU_NEW_UPDATE.equals(event))
 			{
-				List<MenuOrderDTO> menusOfCustomer = menuService.getActiveMenusByCustomerId(receiverId, receiverHotelId, 0, -1, false);
+				List<MenuOrderDTO> menusOfCustomer = menuMSCommunicationService.getActiveMenusByCustomerId(receiverId, receiverHotelId, 0, -1, false);
 				
 				int acceptedMenuCount = 0;
 				for (MenuOrderDTO nextMenu: menusOfCustomer)
@@ -226,7 +199,7 @@ public class NotificationServiceImpl implements NotificationService
 				
 				nextNotification.setMyMenuOrdersNumber(acceptedMenuCount);
 				
-				List<MenuOrderDTO> waitingMenusToRoom = menuService.getAllHotelMenusToRoom(receiverId, receiverHotelId, 0);
+				List<MenuOrderDTO> waitingMenusToRoom = menuMSCommunicationService.getAllHotelMenusToRoom(receiverId, receiverHotelId, 0);
 				nextNotification.setMenuOrderInRoomNumber(waitingMenusToRoom.size());
 			}
 			
@@ -245,7 +218,7 @@ public class NotificationServiceImpl implements NotificationService
 		{
 			//######################## 3. ONLY UNREAD CHAT INFO
 			
-			Map<Long, List<ChatMessage>> unreadChatsBySenders = lastMessagesService.getCustomerUnreadChatsBySenders(receiverId);
+			Map<Long, List<ChatMessageView>> unreadChatsBySenders = lastMessagesService.getCustomerUnreadChatsBySenders(receiverId);
 			
 			Map<Long, Integer> unreadChatBySenderCounter = new HashMap<>();
 			
@@ -256,21 +229,21 @@ public class NotificationServiceImpl implements NotificationService
 				//TODO Eugen: soll ich Staff von anderen Hotels ausschliessen???? ja
 				if (nextUnreadSenderId != receiverId /*&& !hotelStaffIdList.contains(nextUnreadSenderId)*/)
 				{
-					List<ChatMessage> unreadChatMessages = unreadChatsBySenders.get(nextUnreadSenderId);
+					List<ChatMessageView> unreadChatMessages = unreadChatsBySenders.get(nextUnreadSenderId);
 					
 					if (!unreadChatMessages.isEmpty() && ControllerUtils.CHAT_NOTIFICATE_DELIEVERY_INDIVIDUAL_CHAT)
 					{
-						ChatMessage lastUnreadMessage = unreadChatMessages.get(unreadChatMessages.size() - 1);
+						ChatMessageView lastUnreadMessage = unreadChatMessages.get(unreadChatMessages.size() - 1);
 						
 						if (!lastUnreadMessage.isDelieveredToReceiver() && !lastUnreadMessage.isSeenByReceiver() && lastUnreadMessage.getReceiver().getId() == receiverId && allOnlineCustomersIds.contains(receiverId))
 						{
 							if (!lastUnreadMessage.isDelieveredToReceiver()) //Eugen: ONLY 1 Time, then it will be marked as delivered!!!
 							{
 								lastUnreadMessage.setDelieveredToReceiver(true);
-								chatRepository.saveAndFlush(lastUnreadMessage);
+								chatMSComminicationService.addUpdateChatMessage(lastUnreadMessage);
 								
 								//Eugen: notificate Sender, that his message was delievered
-								ChatMessageDTO chatMessageDto = chatService.convertMessageToDto(lastUnreadMessage);
+								ChatMsgDTO chatMessageDto = chatMSComminicationService.convertMessageToDto(lastUnreadMessage);
 								simpMessagingTemplate.convertAndSend(ControllerUtils.SOCKET_CHAT_TOPIC + lastUnreadMessage.getSender().getId() + "", chatMessageDto);
 							}
 							
@@ -297,8 +270,8 @@ public class NotificationServiceImpl implements NotificationService
 			Set<CustomerRootEntity> allChatPartners = new HashSet<>();
 			
 			//TODO Eugen: save last message in cache
-			allChatPartners.addAll(chatRepository.getChatSendersByCustomerId(receiverId));
-			allChatPartners.addAll(chatRepository.getChatReceiversByCustomerId(receiverId));
+			allChatPartners.addAll(chatMSComminicationService.getChatSendersByCustomerId(receiverId));
+			allChatPartners.addAll(chatMSComminicationService.getChatReceiversByCustomerId(receiverId));
 			
 			//        allChatPartners.removeAll(hotelCustomers);
 			//        Set<Customer> notHotelChatPartners = allChatPartners;
@@ -321,7 +294,7 @@ public class NotificationServiceImpl implements NotificationService
 				//TODO eugen: iterate over all chatPartners auto in query
 				//TODO Eugen: cashingService
 				//            ChatMessage nextLastMessage = chatRepository.getLastMessageByCustomerAndReceiverIds(nextChatCustomer.getId(), receiverId);
-				ChatMessage nextLastMessage = lastMessagesService.getLastMessageBetweenCustomers(nextChatCustomerRootEntity.getId(), receiverId);
+				ChatMsgDTO nextLastMessage = lastMessagesService.getLastMessageBetweenCustomers(nextChatCustomerRootEntity.getId(), receiverId);
 				//Integer chatPartnerId = nextLastMessage.getSender().getId()==sessionCustomer.getId()? nextLastMessage.getReceiver().getId(): nextLastMessage.getSender().getId();
 				if (nextLastMessage != null)
 				{
@@ -370,7 +343,7 @@ public class NotificationServiceImpl implements NotificationService
 			return;
 		}
 		
-		simpMessagingTemplate.convertAndSend(ControllerUtils.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
+		hotelRabbitMQProducer.produceSimpWebsocketMessage(ControllerUtils.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
 		
 		if(event.getPushUrl()!=null)
 		{
@@ -428,7 +401,7 @@ public class NotificationServiceImpl implements NotificationService
 						feedChatMessage.getSpecialContent().put("activityId", inviteActivityId);
 					}
 					
-					chatService.addChatMessage(feedChatMessage);
+					chatMSComminicationService.addChatMessage(feedChatMessage);
 				}
 				
 			}
@@ -514,7 +487,7 @@ public class NotificationServiceImpl implements NotificationService
 	{
 		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 		
-		simpMessagingTemplate.convertAndSend(ControllerUtils.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
+		hotelRabbitMQProducer.produceSimpWebsocketMessage(ControllerUtils.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
 		
 		if(event.getPushUrl()!=null)
 		{
@@ -537,7 +510,7 @@ public class NotificationServiceImpl implements NotificationService
 	{
 		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 		
-		simpMessagingTemplate.convertAndSend(ControllerUtils.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
+		hotelRabbitMQProducer.produceSimpWebsocketMessage(ControllerUtils.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
 		
 		if(event.getPushUrl()!=null)
 		{
@@ -624,13 +597,13 @@ public class NotificationServiceImpl implements NotificationService
 	@Override
 	public void broadcastActivityNotification(HotelActivityDTO hotelActivityDto)
 	{
-		simpMessagingTemplate.convertAndSend(ControllerUtils.SOCKET_ACTIVITY_TOPIC + hotelActivityDto.getHotelId() + "", hotelActivityDto);
+		produceRabbitmqMessageService.produceSimpMessage(ControllerUtils.SOCKET_ACTIVITY_TOPIC + hotelActivityDto.getHotelId() + "", hotelActivityDto);
 	}
 	
 	@Override
 	public void broadcastWallNotification(WallPostDTO wallPostDto)
 	{
-		simpMessagingTemplate.convertAndSend(ControllerUtils.SOCKET_WALL_TOPIC + wallPostDto.getHotelId(), wallPostDto);
+		produceRabbitmqMessageService.produceSimpMessage(ControllerUtils.SOCKET_WALL_TOPIC + wallPostDto.getHotelId(), wallPostDto);
 	}
 
 	@Override
@@ -698,7 +671,7 @@ public class NotificationServiceImpl implements NotificationService
 			CustomerNotificationDTO receiverNotification = new CustomerNotificationDTO();
 			receiverNotification.setCustomerEvent(0, 0, event, "new event", 0);
 			receiverNotification.setReceiverId(guestCustomerId);
-			simpMessagingTemplate.convertAndSend(ControllerUtils.SOCKET_NOTIFICATION_TOPIC + guestCustomerId + "", receiverNotification);
+			hotelRabbitMQProducer.produceSimpWebsocketMessage(ControllerUtils.SOCKET_NOTIFICATION_TOPIC + guestCustomerId + "", receiverNotification);
 		}
 	}
 }

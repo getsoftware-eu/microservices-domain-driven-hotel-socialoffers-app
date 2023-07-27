@@ -1,17 +1,20 @@
 package eu.getsoftware.hotelico.clients.infrastructure.chat.dto;
 
 import java.sql.Timestamp;
+import java.util.Map;
 
 public record ChatMsgDTO(
 		Long initId,
-	    String message,
-	    Long senderId,
-	    Long receiverId,
-	    Boolean hotelStaff,
-	    Boolean seenByReceiver,
-	    Boolean delieveredToReceiver,
-	    Long creationTime,
-	    Timestamp timestamp
+		String message,
+		Long senderId,
+		Long receiverId,
+		Boolean hotelStaff,
+		Boolean seenByReceiver,
+		Boolean delieveredToReceiver,
+		Long creationTime,
+		Timestamp timestamp,
+		Map<String, String> specialContent
+
     ) 
 		//implements BasicDTO(initId)
 {

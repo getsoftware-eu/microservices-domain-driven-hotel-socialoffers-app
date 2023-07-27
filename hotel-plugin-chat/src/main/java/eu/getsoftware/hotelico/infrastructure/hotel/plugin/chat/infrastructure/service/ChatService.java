@@ -1,14 +1,8 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.infrastructure.service;
 
-import java.util.Optional;
-
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.stereotype.Service;
-
-import eu.getsoftware.hotelico.amqp.RabbitMQMessageProducer;
+import eu.getsoftware.hotelico.amqp.producer.RabbitMQMessageProducer;
 import eu.getsoftware.hotelico.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.infrastructure.notification.CustomerUpdateRequest;
 import eu.getsoftware.hotelico.clients.infrastructure.notification.NotificationRequest;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.domain.model.ChatMessageEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.domain.model.ChatUserEntity;
@@ -16,6 +10,7 @@ import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.infrastructure.r
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.infrastructure.repository.ChatUserRepository;
 import eu.getsoftware.hotelico.infrastructure.notification.NotificationService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
@@ -66,35 +61,7 @@ public class ChatService
 		return updateEntity;
 	}
 	
-	/**
-	 * Listen for customer system update
-	 * @param customerUpdateRequest
-	 */
-	@RabbitListener(queues = "${rabbitmq.queue.customer.update}")
-	public void consumeNotification(CustomerUpdateRequest customerUpdateRequest){
-		log.info("Consumed {} from queue", customerUpdateRequest);
-		log.info(customerUpdateRequest.message());
-		
-		Optional<ChatUserEntity> updatedChatUserOptional = chatUserRepository.findById(customerUpdateRequest.customerId());
-		
-		ChatUserEntity entity;
-		
-		if(updatedChatUserOptional.isEmpty())
-		{
-			entity = new ChatUserEntity(customerUpdateRequest.customerId());
-			entity.setFirstName(customerUpdateRequest.customerName());
-		}
-		else {
-			ChatUserEntity updatedChatUser = updatedChatUserOptional.get();
-			entity = chatUserRepository.findByUserId(updatedChatUser.getId());
-			
-			entity.setEmail(updatedChatUser.getEmail());
-			entity.setFirstName(updatedChatUser.getFirstName());
-		}
-		
-		ChatUserEntity persistedEntity = chatUserRepository.save(entity);
-		
-	}
+	
 	
 	/**
 	 *  inform other user about a new chat message via internal notification module!
@@ -111,7 +78,7 @@ public class ChatService
 	private void sendViaCustomerModuleWithConvertAndPersist(long toCustomerId, String toCustomerName, String message)
 	{
 		NotificationRequest myNotification = new NotificationRequest(toCustomerId, toCustomerName, message);
-		notificationService.send(myNotification);
+		notificationService.persistConsumedNotification(myNotification);
 	}
 	
 	public ChatUserEntity updateCustomerFromDTO(CustomerDTO customerDTO)

@@ -7,7 +7,7 @@ spring:
 #    hikari.idle-timeout: 10000
     password: postgres
     url: jdbc:postgresql://localhost:5432/hotel
-    username: postgres
+    username: eu_user
   jpa:
     hibernate:
       ddl-auto: create-drop #eugen, not for production: update

@@ -1,18 +1,6 @@
 package eu.getsoftware.hotelico.hotel.infrastructure.service.impl;
 
-import static eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils.convertToLocalDateTime;
-
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import eu.getsoftware.hotelico.chat.domain.ChatMessage;
+import eu.getsoftware.hotelico.chat.domain.ChatMessageView;
 import eu.getsoftware.hotelico.checkin.domain.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
@@ -30,6 +18,17 @@ import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
+import static eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils.convertToLocalDateTime;
 
 /**
  * <br/>
@@ -155,12 +154,12 @@ public class CheckinServiceImpl implements CheckinService
 							//TODO EUGEN: Check here if I already sent a message to him
 							// ### SEND WELLCOME MESSAGE
 							
-							ChatMessage lastMessageFromStaff = chatRepository.getLastMessageByCustomerAndReceiverIds(staffSender.getId(), customerEntity.getId());
+							ChatMessageView lastMessageFromStaff = chatRepository.getLastMessageByCustomerAndReceiverIds(staffSender.getId(), customerEntity.getId());
 							
 							//Send only first staffSender message!    
 							if(lastMessageFromStaff==null)
 							{
-								ChatMessage hiMessage = new ChatMessage();
+								ChatMessageView hiMessage = new ChatMessageView();
 								
 								String wellcomeMsg = "Hi, welcome to our Hotel! Please write me, if you need something";
 								String wellcomeGuestMsg = "Hi, welcome to thr guest view of our Hotel! Please get the hotel-code at the reception - without the hotel-code, you are not listed as a hotel guest, and you can not view the customers in the wall... ";

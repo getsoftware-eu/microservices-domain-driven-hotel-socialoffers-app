@@ -1,29 +1,5 @@
 package eu.getsoftware.hotelico.hotel.infrastructure.service.impl;
 
-import java.awt.geom.Point2D;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.Set;
-import java.util.concurrent.ThreadLocalRandom;
-
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import eu.getsoftware.hotelico.checkin.domain.HotelActivity;
 import eu.getsoftware.hotelico.clients.infrastructure.exception.BasicHotelException;
 import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
@@ -43,16 +19,24 @@ import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDTO;
-import eu.getsoftware.hotelico.hotel.infrastructure.repository.ActivityRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.repository.CheckinRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.repository.DealRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.repository.HotelRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.repository.WallPostRepository;
+import eu.getsoftware.hotelico.hotel.infrastructure.repository.*;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.CheckinService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.awt.geom.Point2D;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class HotelServiceImpl implements HotelService
@@ -1723,7 +1707,7 @@ public class HotelServiceImpl implements HotelService
     {
         CustomerDTO dto = customerService.getById(ControllerUtils.getTryEntityId(customerId), 0);
 
-        if(!dto.getHotelStaff() && !dto.isAdmin())
+        if(!dto.isHotelStaff() && !dto.isAdmin())
         {
             return new ResponseDTO("There is no staff rights", true);
         }

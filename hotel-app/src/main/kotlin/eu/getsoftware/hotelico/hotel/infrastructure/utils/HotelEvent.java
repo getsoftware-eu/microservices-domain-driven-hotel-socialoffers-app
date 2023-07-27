@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotel.infrastructure.utils;
 
-import eu.getsoftware.hotelico.chat.domain.ChatMessage;
+import eu.getsoftware.hotelico.chat.domain.ChatMessageView;
 import eu.getsoftware.hotelico.checkin.domain.HotelActivity;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ObjectUtils;
@@ -26,8 +26,8 @@ public enum HotelEvent
 	EVENT_ACTIVITY_NEW_LAST_MINUTE("EVENT_ACTIVITY_NEW_LAST_MINUTE", HotelActivity.class, "/" + ControllerUtils.HOST_SUFFIX + "#/app/activityList", "Last Minute Offer", null),
 	EVENT_WALL_NEW_MESSAGE("EVENT_WALL_NEW_MESSAGE", HotelWallPost.class, "/" + ControllerUtils.HOST_SUFFIX + "#/app/wall", "New Wall Message", ControllerUtils.PUSH_ICON),
 	EVENT_WALL_SEND_MESSAGE("EVENT_WALL_SEND_MESSAGE", HotelWallPost.class, null, null, null),
-	EVENT_CHAT_NEW_MESSAGE("EVENT_CHAT_NEW_MESSAGE", ChatMessage.class, "/" + ControllerUtils.HOST_SUFFIX + "#/app/chat/", "New chat Message", ControllerUtils.PUSH_ICON),
-	EVENT_CHAT_SEND_MESSAGE("EVENT_CHAT_SEND_MESSAGE", ChatMessage.class, null, null, null),
+	EVENT_CHAT_NEW_MESSAGE("EVENT_CHAT_NEW_MESSAGE", ChatMessageView.class, "/" + ControllerUtils.HOST_SUFFIX + "#/app/chat/", "New chat Message", ControllerUtils.PUSH_ICON),
+	EVENT_CHAT_SEND_MESSAGE("EVENT_CHAT_SEND_MESSAGE", ChatMessageView.class, null, null, null),
 	
 	EVENT_LOGO_CUSTOMER_CHANGE_MESSAGE("EVENT_LOGO_CUSTOMER_CHANGE_MESSAGE", CustomerRootEntity.class, null, null, null),
 	EVENT_LOGO_ACTIVITY_CHANGE_MESSAGE("EVENT_LOGO_ACTIVITY_CHANGE_MESSAGE", HotelActivity.class, null, null, null),

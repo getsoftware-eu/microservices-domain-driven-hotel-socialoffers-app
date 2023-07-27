@@ -1,4 +1,7 @@
-//nvm use 8.8.1
+//Node Version Manager:
+//nvm list
+//nvm install 8.8.1
+nvm use 8.8.1
 
 npm install -g grunt-cli
 npm install

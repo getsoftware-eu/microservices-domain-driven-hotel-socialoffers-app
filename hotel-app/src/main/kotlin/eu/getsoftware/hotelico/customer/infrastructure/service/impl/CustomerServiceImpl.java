@@ -1,34 +1,7 @@
 package eu.getsoftware.hotelico.customer.infrastructure.service.impl;
 
-import static eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils.convertToDate;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-import org.joda.time.DateTime;
-import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import eu.getsoftware.hotelico.amqp.RabbitMQMessageProducer;
-import eu.getsoftware.hotelico.chat.domain.ChatMessage;
-import eu.getsoftware.hotelico.chat.infrastructure.service.ChatService;
 import eu.getsoftware.hotelico.checkin.domain.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.infrastructure.notification.CustomerUpdateRequest;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.domain.CustomerAggregate;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
@@ -37,27 +10,35 @@ import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerReposi
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
 import eu.getsoftware.hotelico.deal.domain.CustomerDeal;
 import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
-import eu.getsoftware.hotelico.hotel.infrastructure.repository.ChatRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.DealRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.HotelRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.LanguageRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.CheckinService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.LoginHotelicoService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.MailService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.*;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;
+import org.joda.time.DateTime;
+import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.*;
+
+import static eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils.convertToDate;
 
 @Service
 public class CustomerServiceImpl implements CustomerService
 {
     @Autowired
     private CheckinRepository checkinRepository;      
-    
-    @Autowired
-    private ChatRepository chatRepository;    
     
     @Autowired
     private HotelRepository hotelRepository;     
@@ -69,13 +50,10 @@ public class CustomerServiceImpl implements CustomerService
     private CustomerRepository customerRepository;
 	
 	@Autowired
-	private LastMessagesService lastMessagesService;
+	private LastMessagesService lastMessagesService;	
 	
-	@Autowired
-    private ChatService chatService;		
-    
     @Autowired
-    private HotelService hotelService;	
+	private HotelRabbitMQProducer hotelRabbitmqProducer;
 	
 	@Autowired
     private LoginHotelicoService loginService;
@@ -96,9 +74,6 @@ public class CustomerServiceImpl implements CustomerService
     private DealRepository dealRepository;
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
-    
-    @Autowired
-    private RabbitMQMessageProducer rabbitMQMessageProducer;
     
     @Override
     public List<CustomerDTO> getCustomers() {
@@ -165,7 +140,7 @@ public class CustomerServiceImpl implements CustomerService
     @Override
     public CustomerDTO addCustomer(CustomerDTO customerDto, String password) {
                 
-        if(getByEmail(customerDto.getEmail())!=null)
+        if(getByEmail(customerDto.getEmail()).isPresent())
         {
             customerDto.setErrorResponse("Email already registered");
             return customerDto;
@@ -179,11 +154,11 @@ public class CustomerServiceImpl implements CustomerService
     
         long initHotelId = lastMessagesService.getInitHotelId();
 
-        if(customerDto.getHotelId()!=null && customerDto.getHotelId()>0)
+        if(customerDto.getHotelId()>0)
         {
             HotelRootEntity hotelRootEntity =  hotelRepository.getOne(customerDto.getHotelId());
           
-            if(hotelRootEntity !=null && customerDto.getHotelStaff())
+            if(hotelRootEntity !=null && customerDto.isHotelStaff())
             {
                 customerDto.setCheckinFrom(new Date());
                 customerDto.setCheckinTo(convertToDate(LocalDateTime.now().plusYears(10)));
@@ -218,54 +193,20 @@ public class CustomerServiceImpl implements CustomerService
         
         
 		CustomerDTO dto =  convertMyCustomerToFullDto(customerRepository.saveAndFlush(customerEntity));
-        
-        
-        registerPush(dto);
+    
+    
+        hotelRabbitmqProducer.registerPush(dto);
         
         
         //// NOTIFICATE OTHERS!!!!
 
-        if(!dto.getHotelStaff() && !dto.isAdmin())
+        if(!dto.isHotelStaff() && !dto.isAdmin())
         {
             notificationService.notificateAboutEntityEvent(dto, HotelEvent.EVENT_REGISTER, "Now Registered!", dto.getId());
         }
 
         return dto;
     }
-
-    private void registerPush(CustomerDTO dto)
-    {
-//        ortcClient.subscribeWithNotifications("myChannel", true, new OnMessage() {
-//            public void run(OrtcClient sender, String channel, String message) {
-//                Log.i(TAG, String.format("Message or push notification on channel %s: %s ",
-//                        channel, message));
-//            };
-//        });
-    
-        CustomerUpdateRequest customerUpdateRequest = new CustomerUpdateRequest(
-                dto.getId(), 
-                dto.getFirstName(),
-                dto.getEmail());
-        
-        sendViaPreconfiguredRabbitmqProducer(customerUpdateRequest);
-    }
-    
-    
-    /**
-     * 	Method 2: with my configured (added jacksonConverter()) @Bean producer
-     * 	via 'amqp'-module (configured)
-     * @param customerUpdateRequest
-     */
-    private void sendViaPreconfiguredRabbitmqProducer(CustomerUpdateRequest customerUpdateRequest)
-    {
-        //only for 1 and 2 Method we have to write this system variables: 
-        String exchange = "internal.exchange";
-        String routingKey = "internal.notification.customer-update";
-        
-        rabbitMQMessageProducer.publish(customerUpdateRequest, exchange, routingKey);
-    }
-
-
     
     @Transactional
     @Override
@@ -287,7 +228,7 @@ public class CustomerServiceImpl implements CustomerService
 
         dto = loginService.checkBeforeLoginProperties(customerDto, dto);
 
-        if(!dto.getHotelStaff() && !dto.isAdmin())
+        if(!dto.isHotelStaff() && !dto.isAdmin())
         {
             notificationService.notificateAboutEntityEvent(dto, HotelEvent.EVENT_REGISTER, "Now Registered!", dto.getId());
         }
@@ -314,7 +255,7 @@ public class CustomerServiceImpl implements CustomerService
 
         dto = loginService.checkBeforeLoginProperties(customerDto, dto);
         
-        if(!dto.getHotelStaff() && !dto.isAdmin())
+        if(!dto.isHotelStaff() && !dto.isAdmin())
         {
             notificationService.notificateAboutEntityEvent(dto, HotelEvent.EVENT_REGISTER, "Now Registered!", dto.getId());
         }
@@ -610,14 +551,19 @@ public class CustomerServiceImpl implements CustomerService
     
     
 //    @Override
+    
+    /**
+     * TODO modelMapper + manual sets OR Builder all one time???
+     * Jackson sadly can only rename fields, without external logik for setters
+     * @param customerEntity
+     * @param hotelId
+     * @param fullSerialization
+     * @param validCheckin
+     * @return
+     */
     private CustomerDTO convertCustomerToDto(CustomerRootEntity customerEntity, long hotelId, boolean fullSerialization, CustomerHotelCheckin validCheckin)
     {
-        if(customerEntity ==null) 
-        {
-            return null;
-        }
-        
-        CustomerDTO dto = modelMapper.map(customerEntity, CustomerDTO.class);
+        CustomerDTO dto = modelMapper.map(Objects.requireNonNull(customerEntity), CustomerDTO.class);
         
         dto = fillDtoProfileInfo(customerEntity, dto, fullSerialization);
 	
@@ -626,7 +572,7 @@ public class CustomerServiceImpl implements CustomerService
             dto = serializeCustomerHotelInfo(dto, hotelId, fullSerialization, validCheckin);
         }
 
-        if(dto.getHotelStaff() && !ControllerUtils.isEmptyString(dto.getHotelName()))
+        if(dto.isHotelStaff() && !ControllerUtils.isEmptyString(dto.getHotelName()))
         {
             dto.setFirstName(dto.getHotelName());
             dto.setLastName("");
@@ -777,7 +723,13 @@ public class CustomerServiceImpl implements CustomerService
         
         return dto;
     }
-
+    
+    /**
+     * TODO auto generate immutable final dto from Entity!!!
+     * @param dto
+     * @param validCheckin
+     * @return
+     */
 	@Override
     public CustomerDTO fillDtoWithHotelInfo(CustomerDTO dto, CustomerHotelCheckin validCheckin)
     {
@@ -789,7 +741,29 @@ public class CustomerServiceImpl implements CustomerService
             dto.setHotelCity(outHotelRootEntity.getCity());
             dto.setCheckedIn(true);
             dto.setHotelConsistencyId(outHotelRootEntity.getConsistencyId());
-
+    
+            /**
+            TypeMap<CustomerRootEntity, CustomerDTO> propertyMapper = this.mapper.createTypeMap(CustomerRootEntity.class, CustomerDTO.class);
+            propertyMapper.addMappings(
+                    mapper -> mapper.map(src -> src.getEntityAggregate().getName(), CustomerDTO::setCreator)
+            );
+//            Condition<Long, Long> hasTimestamp = ctx -> ctx. != null && ctx.getSource() > 0;
+//            Condition<Long, Long> isStaff = ctx -> ctx. != null && ctx.getSource() > 0;
+//            propertyMapper.addMappings(
+//                    mapper -> mapper.when(hasTimestamp).map(CustomerRootEntity::getTimestamp, CustomerDTO::setCreationTime)
+//                    mapper -> mapper.when(hasTimestamp).map(CustomerRootEntity::getTimestamp, CustomerDTO::setCreationTime)
+//            );
+            
+            // when game has zero timestamp
+            CustomerRootEntity game = new CustomerRootEntity(1L, "Game 1");
+            game.setTimestamp(0L);
+            CustomerDTO gameDTO = this.mapper.map(game, CustomerDTO.class);
+            **/
+    
+            /**
+             * TODO STRATEGY prepare all optional fields and execute DTO Builder or constructor???
+             */
+    
             if(ControllerUtils.HOTEL_DEMO_CODE.equalsIgnoreCase(outHotelRootEntity.getCurrentHotelAccessCode()))
             {
                 dto.setFullCheckin(true);
@@ -798,7 +772,7 @@ public class CustomerServiceImpl implements CustomerService
                 dto.setFullCheckin(validCheckin.isFullCheckin());
             }
 
-            if(dto.getHotelStaff())
+            if(dto.isHotelStaff())
             {
                 dto.setFirstName(outHotelRootEntity.getName());
                 dto.setLastName("");
@@ -860,44 +834,29 @@ public class CustomerServiceImpl implements CustomerService
     }
     
     @Override
-    public CustomerDTO getByFacebookId(String facebookId){
-        List<CustomerRootEntity> customerEntities = customerRepository.findByFacebookIdAndActive(facebookId, true);
-        
-        if(customerEntities.isEmpty())
-        {
-            return null;
-        }
-        
+    public Optional<CustomerDTO> getByFacebookId(String facebookId){
+    
         //TODO eugen: get Langguages from LinkedIn
-//        int hotelId = getCustomerHotelId(customer.getId());
-        CustomerDTO out = convertMyCustomerToFullDto(customerEntities.get(0));
-
-//        return updateOwnDtoCheckinInfo(out);
-        return out;
+    
+        return customerRepository.findByFacebookIdAndActive(Objects.requireNonNull(facebookId), true)
+                .stream()
+                .findFirst().map(c -> Optional.of(convertMyCustomerToFullDto(c)))
+                .orElse(Optional.empty());
     }
 
     @Override
-    public CustomerDTO getByEmail(String email)
+    public Optional<CustomerDTO> getByEmail(String email)
     {
-        if(email==null)
-        {
-            return null;
-        }
-        
-        List<CustomerRootEntity> customerEntities = customerRepository.findByEmailAndActive(email, true);
+        CustomerRootEntity customerEntity = customerRepository.findByEmailAndActive(Objects.requireNonNull(email), true)
+                .stream().findFirst().get();
 
-        CustomerDTO out = null;
-        
-        if(!customerEntities.isEmpty())
-        {
-            CustomerRootEntity customerEntity = customerEntities.get(0);
-            
-            long hotelId = getCustomerHotelId(customerEntity.getId());
-            out = convertMyCustomerToFullDto(customerEntity);
-        }
-        
+         if(customerEntity != null) {
+             
+            return Optional.of(convertMyCustomerToFullDto(customerEntity));
+         }
 //        return updateOwnDtoCheckinInfo(out);
-        return out;
+        
+        return Optional.empty();
     }
 
     @Override
@@ -1039,41 +998,7 @@ public class CustomerServiceImpl implements CustomerService
         return customerDtoSet;
     }
 
-    @Override
-    public CustomerDTO setDtoLastMessageWithRequester(CustomerRootEntity requester, CustomerDTO dto)
-    {
-        if(requester==null || dto==null)
-        {
-            if(requester==null && dto!=null)
-            {
-                dto.setInMyHotel(true);
-            }
-            
-            return  dto;
-        }
-        
-        ChatMessage lastMessage = chatRepository.getLastMessageByCustomerAndReceiverIds(dto.getId(), requester.getId());
-
-        long requesterHotelId = this.getCustomerHotelId(requester.getId());
-
-        dto.setInMyHotel(requesterHotelId > 0 && requesterHotelId == dto.getHotelId());
-        
-        if(lastMessage!=null)
-		{
-			Timestamp lastMessageTimestamp = lastMessage.getTimestamp();
-
-			String time = ControllerUtils.getTimeFormatted(lastMessageTimestamp);
-			
-			String message = lastMessage.getMessage();
-			message = message.length() > 11 ? message.substring(0, 10)+"...": message;
-
-            dto.setLastMessageToMe(message + " (at " + time + ")");
-			dto.setLastMessageTimeToMe(lastMessageTimestamp.getTime());
-            dto.setChatWithMe(true);
-		}
-        
-        return dto;
-    }
+    
 
     @Override
     public CustomerRootEntity addGetAnonymCustomer()

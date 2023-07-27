@@ -1,30 +1,22 @@
 package eu.getsoftware.hotelico.hotel.infrastructure.service.impl;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Period;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
-import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.DealRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.CheckinService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.LoginHotelicoService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.MailService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.*;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * <br/>
@@ -265,16 +257,16 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 	}
 	
 	@Override
-	public CustomerDTO checkBeforeLoginProperties(CustomerDTO loggingCustomer, CustomerDTO dbCustomer)
+	public Optional<CustomerDTO> checkBeforeLoginProperties(CustomerDTO loggingCustomer, CustomerDTO dbCustomer)
 	{
 		if(loggingCustomer == null)
 		{
-			return dbCustomer;
+			return Optional.ofNullable(dbCustomer);
 		}
 		
 		if(dbCustomer == null)
 		{
-			return null;
+			return Optional.empty();
 		}
 		//UPDATE ONLY FIELDS, THAT COULD BE SET WITHOUT LOGIN
 		
@@ -285,7 +277,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 			
 			if(dbCustomer.getId()>0 && dbCustomer.getSystemMessages().containsKey("guestCustomerId"))
 			{
-				Long guestId = Long.parseLong(dbCustomer.getSystemMessages().get("guestCustomerId"));
+				Long guestId = Long.parseLong(String.valueOf(dbCustomer.getSystemMessages().get("guestCustomerId")));
 				
 				boolean anonymGuestDealsExists = dealRepository.existAnonymDelasByGuestId(guestId);
 				
@@ -315,7 +307,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 		
 		
 		//CHECKIN, IF NOT LOGGED WAS CHECKINED!!!!!
-		if(!dbCustomer.getCheckedIn() && ( loggingCustomer.getHotelId()!=null && loggingCustomer.getHotelId()>0 || !ControllerUtils.isEmptyString(loggingCustomer.getHotelCode())))
+		if(!dbCustomer.getCheckedIn() && ( loggingCustomer.getHotelId()>0 || !ControllerUtils.isEmptyString(loggingCustomer.getHotelCode())))
 		{
 			dbCustomer.setHotelId(loggingCustomer.getHotelId());
 			dbCustomer.setHotelCode(loggingCustomer.getHotelCode());
@@ -324,7 +316,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 			dbCustomer = checkinService.updateCheckin(dbCustomer);
 		}
 		
-		return dbCustomer;
+		return Optional.of(dbCustomer);
 	}
 
 	

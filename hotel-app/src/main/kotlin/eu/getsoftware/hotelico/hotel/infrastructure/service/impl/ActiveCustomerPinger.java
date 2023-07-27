@@ -1,29 +1,28 @@
 package eu.getsoftware.hotelico.hotel.infrastructure.service.impl;
 
-import java.util.List;
-
-import org.springframework.messaging.simp.SimpMessagingTemplate;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelRabbitMQProducer;
+import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
+import java.util.List;
 
 /**
  *  * http://www.theotherian.com/2014/03/spring-boot-websockets-stomp-chat.html?m=1
  */
 public class ActiveCustomerPinger
 {
-  private SimpMessagingTemplate template;
+  private HotelRabbitMQProducer hotelRabbitMQProducer;
   private LastMessagesService lastMessagesService;
 
-  public ActiveCustomerPinger(SimpMessagingTemplate template, LastMessagesService lastMessagesService) {
-    this.template = template;
+  public ActiveCustomerPinger(HotelRabbitMQProducer hotelRabbitMQProducer, LastMessagesService lastMessagesService) {
+    this.hotelRabbitMQProducer = hotelRabbitMQProducer;
     this.lastMessagesService = lastMessagesService;
   }
   
   @Scheduled(fixedDelay = 2000)
   public void pingUsers() {
     List<Long> activeUsers = lastMessagesService.getOnlineCustomerIds();
-    template.convertAndSend("/topic/active", activeUsers);
+    hotelRabbitMQProducer.produceSimpWebsocketMessage("/topic/active", activeUsers);
   }
 
 }
