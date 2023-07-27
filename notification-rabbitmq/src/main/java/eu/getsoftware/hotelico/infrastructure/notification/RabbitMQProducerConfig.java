@@ -8,8 +8,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * do we configure rabbitMQ PRODUCER server????
+ * here is binding (user)Topic for exchange to (user)Queue
+ */
 @Configuration
-public class NotificationConfig
+public class RabbitMQProducerConfig
 {
 	@Value("${rabbitmq.exchanges.internal}")
 	private String internalExchangeName;	

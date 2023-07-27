@@ -14,7 +14,8 @@
         <module>apigw</module>
 		<module>amqp</module>
 		<module>notification</module>
-	</modules>
+        <module>hotel-plugin-chat</module>
+    </modules>
 	
 	<name>social-hotel-interactions</name>
 	<url>http://getSoftware.eu</url>
@@ -303,7 +304,7 @@
 				<configuration>
 					<nodeVersion>v8.1.2</nodeVersion>
 					<npmVersion>5.2.0</npmVersion>
-					<workingDirectory>src/main/frontend</workingDirectory>
+					<workingDirectory>hotel-app/src/main/frontend</workingDirectory>
 				</configuration>
 			</plugin>
 			<!-- /Frontend Plugin -->
