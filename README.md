@@ -24,6 +24,7 @@ This separation ensures, that the two types of entities do not depend on each ot
 
 <b>Infrastructure-level</b>
 - Implementation of (technical) help-IServices (UserServiceImpl), that was declared in- and will be injected in-INTERACTOR
+  - In fact lowest level: only Repository(Service-translator: Dto<--to-->Repository), Controller(Rest-Api), API-Handler-Exceptions, AWS(data actions) (??). Another services are higher level?
 - Custom implementations for interfaces of upper layer (IServices) : (help-IServices implementation)
 - We can update (swap) this custom implementation package with another one, <b>but we don't change upper layer</b> logik!
 
