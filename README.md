@@ -14,14 +14,14 @@ This separation ensures, that the two types of entities do not depend on each ot
 
 <b>Application-layer</b> 
 - <b>Separation of usecase-logik-methods from technical (low-level) service-help-methods</b>
-- Usecases are <b>interactors</b> with Domain-Aggregates endpoints: create Obj, findByName...)
-  - use DTO with <b>lower</b> layers (UserDTO)
-  - use help-IServices ('IUserService') 
-    - e.g. 'UserRegisterINTERACTOR' (uses IUserService) and makes <b>custom usecases</b> steps based on i-help-infrastructure-methods
+- Usecases are <b>'interactors'</b> with Domain-Aggregates endpoints: create Obj, findByName...)
+  - define own DTO with <b>lower</b> layers (UserDTO)
+  - define own help-IServices ('IUserService') 
+    - e.g. 'UserRegisterINTERACTOR' (uses injected IUserService) and makes <b>custom usecases</b> steps based on i-help-infrastructure-methods
 
 <b>Infrastructure-level</b>
-- Implementation of (technical) help-IServices (UserServiceImpl), that will be injected in INTERACTOR
-- Custom implementation for upper layer (IServices) : (help-IServices implementation)
+- Implementation of (technical) help-IServices (UserServiceImpl), that was declared in- and will be injected in-INTERACTOR
+- Custom implementations for interfaces of upper layer (IServices) : (help-IServices implementation)
 - We can update (swap) this custom implementation package with another one, <b>but we don't change upper layer</b> logik!
 
 
