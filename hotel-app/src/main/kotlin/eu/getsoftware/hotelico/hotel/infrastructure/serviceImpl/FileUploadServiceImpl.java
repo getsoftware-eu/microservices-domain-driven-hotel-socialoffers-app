@@ -1,31 +1,4 @@
-package eu.getsoftware.hotelico.hotel.infrastructure.service.impl;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URI;
-import java.nio.file.DirectoryStream;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+package eu.getsoftware.hotelico.hotel.infrastructure.serviceImpl;
 
 import eu.getsoftware.hotelico.checkin.domain.HotelActivity;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
@@ -34,17 +7,22 @@ import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
+import eu.getsoftware.hotelico.hotel.application.iservice.*;
 import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.ActivityRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.HotelRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.FileUploadService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.IFileUploadable;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.ImageService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.nio.file.*;
+import java.util.*;
 
 /**
  * Created by Eugen on 22.08.2015.
@@ -63,7 +41,7 @@ public class FileUploadServiceImpl implements FileUploadService
 	private HotelRepository hotelRepository;
 	
 	@Autowired
-	private HotelService hotelService;		
+	private IHotelService hotelService;		
 	
 	@Autowired
 	private NotificationService notificationService;	

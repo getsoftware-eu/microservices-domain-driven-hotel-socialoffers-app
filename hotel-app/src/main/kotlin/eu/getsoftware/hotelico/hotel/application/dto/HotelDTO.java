@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.infrastructure.dto;
+package eu.getsoftware.hotelico.hotel.application.dto;
 
 import eu.getsoftware.hotelico.clients.infrastructure.dto.BasicDTO;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;

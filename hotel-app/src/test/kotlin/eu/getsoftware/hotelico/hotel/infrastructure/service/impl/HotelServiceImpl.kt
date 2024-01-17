@@ -1,9 +1,8 @@
 package eu.getsoftware.hotelico.hotel.infrastructure.service.impl;
 
+import eu.getsoftware.hotelico.hotel.application.dto.HotelDTO
 import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelDTO
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.HotelRepository
-import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -14,7 +13,8 @@ import org.springframework.data.repository.findByIdOrNull
 class HotelServiceImpl {
 	
 	val hotelRepository: HotelRepository = mockk();
-	val hotelService = HotelService(hotelRepository);
+	val IHotelService =
+		eu.getsoftware.hotelico.hotel.application.iservice.IHotelService(hotelRepository);
 	
 	val sampleHotelDTO = HotelDTO(123);
 	val sampleHotelEntity = HotelRootEntity();
@@ -25,7 +25,7 @@ class HotelServiceImpl {
 		every { hotelRepository.findByIdOrNull(1) } returns sampleHotelEntity;
 		
 		//when
-		val result = hotelService.getBankAccount(1);
+		val result = IHotelService.getBankAccount(1);
 		
 		//then
 		verify(exactly = 1) { hotelRepository.findByIdOrNull(1) };

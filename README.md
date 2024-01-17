@@ -10,6 +10,15 @@ The "Clean" (Layered) Architecture is another way to provide <b>separation of co
 To simplify the implementation, we are handling <b>JPA-entities</b> as <b>Domain-entities</b> directly at the <b>Domain-Layer</b>. However, in Clean-architecture,  it is best practice to separate JPA entities from domain entities  and use them only in the <b>Infrastructure-Layer</b> (with JPA repositories).
 This separation ensures, that the two types of entities do not depend on each other, but this would require a double declaration of same entity-fields in different layers. While this may seem redundant, it ensures that the domain layer is not tightly coupled to the JPA infrastructure layer, which would make the system less flexible and harder to maintain in the long term.
 
+<b>Application-layer</b> (I-Interactors with Domain-Aggregates endpoints: create Obj, findByName...)
+- e.g. IHotelService, HotelDTO
+- only abstract or interface methods (usecases declaration)
+
+<b>Infrastructure-level</b>
+- e.g. HotelServiceImpl and Repository
+- Custom implementation of abstract package (IServices) : (usecases implementation)
+- We can update (swap) this custom implementation package with another one, <b>but we don't change abstract package</b>!
+
 ![Aggregate root](/docs/img/ddd.webp)
 
 ### TODO: starting building AWS Architecture (first attempt)
@@ -37,3 +46,4 @@ Guests can get to know other guests in the hotel. And earn bonus points for hote
 ### "Clean" (Onion) Architecture with java
 Based on my another GitHub project:
 https://github.com/getsoftware-eu/my-onion-clean-architecture
+

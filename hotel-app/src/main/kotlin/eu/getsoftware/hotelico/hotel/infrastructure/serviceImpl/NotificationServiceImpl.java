@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.infrastructure.service.impl;
+package eu.getsoftware.hotelico.hotel.infrastructure.serviceImpl;
 
 import eu.getsoftware.hotelico.chat.domain.ChatMessageView;
 import eu.getsoftware.hotelico.chat.infrastructure.service.ChatMSComminicationService;
@@ -11,11 +11,11 @@ import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
 import eu.getsoftware.hotelico.deal.infrastructure.utils.DealStatus;
+import eu.getsoftware.hotelico.hotel.application.iservice.*;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.CheckinRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.*;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;
 import eu.getsoftware.hotelico.menu.infrastructure.service.impl.MenuMSCommunicationService;
 import lombok.RequiredArgsConstructor;
@@ -42,7 +42,7 @@ import java.util.*;
 public class NotificationServiceImpl implements NotificationService
 {
 	
-	private final HotelService hotelService;
+	private final IHotelService hotelService;
 	
 	private final MenuMSCommunicationService menuMSCommunicationService;	
 	

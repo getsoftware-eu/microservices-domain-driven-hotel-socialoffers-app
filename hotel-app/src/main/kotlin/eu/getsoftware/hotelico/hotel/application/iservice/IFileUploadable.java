@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.infrastructure.service;
+package eu.getsoftware.hotelico.hotel.application.iservice;
 
 
 /**

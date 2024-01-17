@@ -2,8 +2,8 @@ package eu.getsoftware.hotelico.hotel.webui.controller;
 
 import eu.getsoftware.hotelico.clients.infrastructure.controller.BasicController;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
+import eu.getsoftware.hotelico.hotel.application.iservice.IHotelService;
+import eu.getsoftware.hotelico.hotel.application.iservice.LastMessagesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class StartController  extends BasicController
 {
     @Autowired
-    private HotelService hotelService;    
+    private IHotelService hotelService;    
     
     @Autowired
     private LastMessagesService lastMessagesService;

@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.infrastructure.service.impl;
+package eu.getsoftware.hotelico.hotel.infrastructure.serviceImpl;
 
 import eu.getsoftware.hotelico.chat.domain.ChatMessageView;
 import eu.getsoftware.hotelico.checkin.domain.CustomerHotelCheckin;
@@ -7,19 +7,20 @@ import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
+import eu.getsoftware.hotelico.hotel.application.iservice.CheckinService;
+import eu.getsoftware.hotelico.hotel.application.iservice.IHotelService;
+import eu.getsoftware.hotelico.hotel.application.iservice.LastMessagesService;
+import eu.getsoftware.hotelico.hotel.application.iservice.NotificationService;
 import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.ChatRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.HotelRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.WallPostRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.CheckinService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -45,7 +46,7 @@ public class CheckinServiceImpl implements CheckinService
 	private LastMessagesService lastMessagesService;	
 			
 	@Autowired
-	private HotelService hotelService;	
+	private IHotelService hotelService;	
 		
 	@Autowired
 	private NotificationService notificationService;	
@@ -64,7 +65,8 @@ public class CheckinServiceImpl implements CheckinService
 	
 	@Autowired
 	private ChatRepository chatRepository;
-	
+
+	@Transactional
 	@Override
 	public CustomerDTO updateCheckin(CustomerDTO customerDto) {
 		
@@ -74,7 +76,8 @@ public class CheckinServiceImpl implements CheckinService
 		
 		return customerDto; //mapper.map(customerRepository.saveAndFlush(customer), CustomerDto.class);
 	}
-	
+
+	@Transactional
 	@Override
 	public CustomerDTO setCustomerCheckin(CustomerDTO customerDto, CustomerRootEntity customerEntity)
 	{

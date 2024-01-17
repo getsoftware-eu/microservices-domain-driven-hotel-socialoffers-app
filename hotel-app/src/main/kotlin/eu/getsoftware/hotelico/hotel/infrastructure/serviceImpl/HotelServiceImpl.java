@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.infrastructure.service.impl;
+package eu.getsoftware.hotelico.hotel.infrastructure.serviceImpl;
 
 import eu.getsoftware.hotelico.checkin.domain.HotelActivity;
 import eu.getsoftware.hotelico.clients.infrastructure.exception.BasicHotelException;
@@ -13,17 +13,17 @@ import eu.getsoftware.hotelico.deal.infrastructure.dto.CustomerDealDTO;
 import eu.getsoftware.hotelico.deal.infrastructure.utils.ActivityAction;
 import eu.getsoftware.hotelico.deal.infrastructure.utils.DealAction;
 import eu.getsoftware.hotelico.deal.infrastructure.utils.DealStatus;
+import eu.getsoftware.hotelico.hotel.application.dto.HotelDTO;
+import eu.getsoftware.hotelico.hotel.application.iservice.CheckinService;
+import eu.getsoftware.hotelico.hotel.application.iservice.IHotelService;
+import eu.getsoftware.hotelico.hotel.application.iservice.LastMessagesService;
+import eu.getsoftware.hotelico.hotel.application.iservice.NotificationService;
 import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 import eu.getsoftware.hotelico.hotel.domain.HotelWallPost;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDTO;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.*;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.CheckinService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
-public class HotelServiceImpl implements HotelService
+public class HotelServiceImpl implements IHotelService
 {
 	@Autowired
 	private CustomerService customerService;
@@ -78,8 +78,8 @@ public class HotelServiceImpl implements HotelService
     private SimpMessagingTemplate simpMessagingTemplate;
 	
 	private int specialHotelId = -999;
-	
-	public List<HotelDTO> getHotels() {
+
+    public List<HotelDTO> getHotels() {
         List<HotelRootEntity> list = hotelRepository.findByVirtualAndActive(false, true);
         List<HotelDTO> out = new ArrayList<HotelDTO>();
         for (HotelRootEntity hotelRootEntity : list) {
@@ -531,13 +531,13 @@ public class HotelServiceImpl implements HotelService
 	@Override
 	public CustomerDealDTO addUpdateDeal(long guestCustomerId, long activityId, CustomerDealDTO dealDto)
 	{
-        CustomerDeal  deal  = getDealByIdOrInitId(dealDto.getId(), dealDto.getInitId());
+        Optional<CustomerDeal>  dealOptional  = getDealByIdOrInitId(dealDto.getId(), dealDto.getInitId());
 		
         CustomerRootEntity sender = customerRepository.getOne(ControllerUtils.getTryEntityId(guestCustomerId));
         
-        if(deal!=null)
+        if(dealOptional.isPresent())
         {
-            deal = updateDealFromDto(deal, dealDto);
+            var deal = updateDealFromDto(dealOptional.get(), dealDto);
 
             dealRepository.saveAndFlush(deal);
 
@@ -545,9 +545,9 @@ public class HotelServiceImpl implements HotelService
         }
         else
         {
-            HotelActivity activity = getActivityByIdOrInitId(ControllerUtils.getTryEntityId(activityId), activityId);
+            Optional<HotelActivity> activityOptional = getActivityByIdOrInitId(ControllerUtils.getTryEntityId(activityId), activityId);
             
-            CustomerDeal newDeal = createDeal(sender, guestCustomerId, activity);
+            CustomerDeal newDeal = createDeal(sender, guestCustomerId, activityOptional.get());
             return convertDealToDto(newDeal);
         }
 //        return null;
@@ -565,87 +565,79 @@ public class HotelServiceImpl implements HotelService
         long customerEntityId = ControllerUtils.getTryEntityId(customerId);
 		
 		CustomerRootEntity sender = customerRepository.getOne(customerEntityId);
-		
-		HotelActivity activity = getActivityByIdOrInitId((int)activityId, activityId);
+
+        Optional<HotelActivity> activityOptional = getActivityByIdOrInitId((int)activityId, activityId);
 		
         CustomerDealDTO resultDealDto = null;
         
+        if(activityOptional.isPresent() /*&& sender != null*/)
 		switch (dealAction)
 		{
 			case NEW_DEAL: {
 				
-				if(/*sender!=null && */activity!=null)
-				{
-                    CustomerDeal newDeal = createDeal(sender, customerId,activity);
+                CustomerDeal newDeal = createDeal(sender, customerId, activityOptional.get());
 
-                    resultDealDto = convertDealToDto(newDeal);
-				}
+                resultDealDto = convertDealToDto(newDeal);
                 
                 break;
             }
 			
 			case ACCEPT_DEAL: {
 
-                if(/*sender!=null && */activity!=null)
+                CustomerDeal acceptDeal = new CustomerDeal(sender, activityOptional.get());
+
+                if(sender==null && acceptDeal!=null)
                 {
-                    CustomerDeal acceptDeal = new CustomerDeal(sender, activity);
-
-                    if(sender==null && acceptDeal!=null)
-                    {
-                        CustomerRootEntity anonym = customerService.addGetAnonymCustomer();
-                        acceptDeal.setCustomer(anonym);
-                        acceptDeal.setGuestCustomerId(customerEntityId);
-                    }
-                    
-                    acceptDeal.setDealCode(String.valueOf(givenId));
-
-                    acceptDeal.setStatus(DealStatus.ACCEPTED);
-                    
-                    dealRepository.saveAndFlush(acceptDeal);
-
-                    resultDealDto = convertDealToDto(acceptDeal);
+                    CustomerRootEntity anonym = customerService.addGetAnonymCustomer();
+                    acceptDeal.setCustomer(anonym);
+                    acceptDeal.setGuestCustomerId(customerEntityId);
                 }
+                
+                acceptDeal.setDealCode(String.valueOf(givenId));
+
+                acceptDeal.setStatus(DealStatus.ACCEPTED);
+                
+                dealRepository.saveAndFlush(acceptDeal);
+
+                resultDealDto = convertDealToDto(acceptDeal);
 
                 break;
             }
 			
 			case EXECUTE: {
 
-                if(/*sender!=null && */activity!=null)
-                {
-                    List<CustomerDeal> executeDeals = dealRepository.getByInitId(givenId);
+                List<CustomerDeal> executeDeals = dealRepository.getByInitId(givenId);
 
-					CustomerDeal execute = null;
-					
-					if(!executeDeals.isEmpty())
-					{
-						execute = executeDeals.get(0);	
-					}
-					
-					if(execute != null)
-					{
+                CustomerDeal execute = null;
+                
+                if(!executeDeals.isEmpty())
+                {
+                    execute = executeDeals.get(0);	
+                }
+                
+                if(execute != null)
+                {
 //						if (sender == null)
 //						{
 //							Customer anonym = customerService.addGetAnonymCustomer();
 //							execute.setCustomer(anonym);
 //							execute.setGuestCustomerId(customerEntityId);
 //						}
-						
+                    
 //						execute.setDealCode(String.valueOf(givenId));
-						
-						execute.setStatus(DealStatus.EXECUTED);
-						
-						if(tablePosition!=null && !tablePosition.equalsIgnoreCase("-"))
-						{
-							execute.setTablePosition(tablePosition);
-						}
-						dealRepository.saveAndFlush(execute);
+                    
+                    execute.setStatus(DealStatus.EXECUTED);
+                    
+                    if(tablePosition!=null && !tablePosition.equalsIgnoreCase("-"))
+                    {
+                        execute.setTablePosition(tablePosition);
+                    }
+                    dealRepository.saveAndFlush(execute);
 
-                        resultDealDto = convertDealToDto(execute);
-					}
-					else {
-						return null;
-					}
+                    resultDealDto = convertDealToDto(execute);
+                }
+                else {
+                    return null;
                 }
 
                 break;
@@ -653,32 +645,29 @@ public class HotelServiceImpl implements HotelService
 			
 			case CLOSE: {
 
-                if(/*sender!=null && */activity!=null)
+                List<CustomerDeal> executeDeals = dealRepository.getByInitId(givenId);
+
+                CustomerDeal execute = null;
+                
+                if(!executeDeals.isEmpty())
                 {
-                    List<CustomerDeal> executeDeals = dealRepository.getByInitId(givenId);
+                    execute = executeDeals.get(0);	
+                }
+                
+                if(execute != null)
+                {
+                    execute.setStatus(DealStatus.CLOSED);
+                    if(totalMoney>0 || execute.getTotalMoney()==null || execute.getTotalMoney()<totalMoney)
+                    {
+                        execute.setTotalMoney(totalMoney);
+                    }
+                    
+                    dealRepository.saveAndFlush(execute);
 
-					CustomerDeal execute = null;
-					
-					if(!executeDeals.isEmpty())
-					{
-						execute = executeDeals.get(0);	
-					}
-					
-					if(execute != null)
-					{
-						execute.setStatus(DealStatus.CLOSED);
-						if(totalMoney>0 || execute.getTotalMoney()==null || execute.getTotalMoney()<totalMoney)
-						{
-							execute.setTotalMoney(totalMoney);
-						}
-						
-						dealRepository.saveAndFlush(execute);
-
-                        resultDealDto = convertDealToDto(execute);
-					}
-					else {
-						return null;
-					}
+                    resultDealDto = convertDealToDto(execute);
+                }
+                else {
+                    return null;
                 }
 
                 break;
@@ -688,15 +677,15 @@ public class HotelServiceImpl implements HotelService
 				
 				List<CustomerDeal> editDeals = dealRepository.getByInitId(givenId);
                 
-                if(editDeals.isEmpty() || !editDeals.get(0).getActivity().equals(activity))
+                if(editDeals.isEmpty() || !editDeals.get(0).getActivity().equals(activityOptional.get()))
                 {
 					List<DealStatus> filterStatusList = DealStatus.getFilterStatusList(false);
 					
 					//Eugen: cannot edit closed deals!
                     editDeals = sender!=null?
-                                dealRepository.getActiveByCustomerAndActivityId(sender.getId(), activity.getId(), filterStatusList, new Date(), new Date())
+                                dealRepository.getActiveByCustomerAndActivityId(sender.getId(), activityOptional.get().getId(), filterStatusList, new Date(), new Date())
                                 :
-                                dealRepository.getActiveByGuestAndActivityId(customerId, activity.getId(), filterStatusList, new Date(), new Date());
+                                dealRepository.getActiveByGuestAndActivityId(customerId, activityOptional.get().getId(), filterStatusList, new Date(), new Date());
 
                     if(editDeals.size()>1)
                     {
@@ -708,7 +697,7 @@ public class HotelServiceImpl implements HotelService
                 {
                     for (CustomerDeal next: editDeals)
                     {
-                        if(activity.equals(next.getActivity()))
+                        if(activityOptional.get().equals(next.getActivity()))
                         {
                             return convertDealToDto(next);
                         }
@@ -720,8 +709,6 @@ public class HotelServiceImpl implements HotelService
             
 			case REJECT_DEAL: {
 
-                if(/*sender!=null && */activity!=null)
-                {
                     List<CustomerDeal> rejectDeals = dealRepository.getByInitId(givenId);
 
                     CustomerDeal rejectDeal = null;
@@ -742,7 +729,6 @@ public class HotelServiceImpl implements HotelService
 //                    else {
 //                        return null;
 //                    }
-                }
                 
                 break;
             }
@@ -844,6 +830,7 @@ public class HotelServiceImpl implements HotelService
         return convertHotelToDto(hotelRepository.saveAndFlush(hotelRootEntity));
     }
 
+    @Transactional
     @Override
     public HotelActivityDTO addUpdateHotelActivity(long customerId, HotelActivityDTO hotelActivityDto)
     {

@@ -1,35 +1,28 @@
-package eu.getsoftware.hotelico.hotel.infrastructure.service.impl;
+package eu.getsoftware.hotelico.hotel.infrastructure.serviceImpl;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.transaction.Transactional;
-import javax.xml.bind.ValidationException;
-
+import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.infrastructure.utils.MailValidator;
+import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
+import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
+import eu.getsoftware.hotelico.hotel.application.dto.HotelDTO;
+import eu.getsoftware.hotelico.hotel.application.iservice.IHotelService;
+import eu.getsoftware.hotelico.hotel.application.iservice.MailService;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
-import eu.getsoftware.hotelico.clients.infrastructure.utils.MailValidator;
-import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
-import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelActivityDTO;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelDTO;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.MailService;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.transaction.Transactional;
+import javax.xml.bind.ValidationException;
+import java.io.*;
+import java.net.URLDecoder;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * Created by Eugen on 31.07.2015.
@@ -51,7 +44,7 @@ public class MailServiceImpl implements MailService
 	private CustomerService customerService;	
 	
 	@Autowired
-	private HotelService hotelService;
+	private IHotelService hotelService;
 	/**
 	 * This method will send compose and send the message
 	 * */

@@ -1,10 +1,9 @@
-package eu.getsoftware.hotelico.hotel.infrastructure.service;
-
-import org.springframework.transaction.annotation.Transactional;
+package eu.getsoftware.hotelico.hotel.application.iservice;
 
 import eu.getsoftware.hotelico.checkin.domain.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <br/>
@@ -13,9 +12,9 @@ import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
  */
 public interface CheckinService
 {
-	@Transactional CustomerDTO updateCheckin(CustomerDTO customerDto);
+	CustomerDTO updateCheckin(CustomerDTO customerDto);
 	
-	@Transactional CustomerDTO setCustomerCheckin(CustomerDTO customerDto, CustomerRootEntity customerEntity);
+	CustomerDTO setCustomerCheckin(CustomerDTO customerDto, CustomerRootEntity customerEntity);
 	
 	/**
 	 * check the current checkin of logging user. It will find the current hotel of user

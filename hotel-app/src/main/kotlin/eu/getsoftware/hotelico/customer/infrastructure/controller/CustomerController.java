@@ -1,39 +1,30 @@
 package eu.getsoftware.hotelico.customer.infrastructure.controller;
 
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
+import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
+import eu.getsoftware.hotelico.hotel.application.iservice.CheckinService;
+import eu.getsoftware.hotelico.hotel.application.iservice.LastMessagesService;
+import eu.getsoftware.hotelico.hotel.application.iservice.LoginHotelicoService;
+import eu.getsoftware.hotelico.hotel.application.iservice.NotificationService;
+import eu.getsoftware.hotelico.hotel.infrastructure.aspects.NotifyClients;
+import eu.getsoftware.hotelico.hotel.infrastructure.controller.BasicController;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDTO;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;
+import io.swagger.annotations.Api;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.support.SessionStatus;
-import org.springframework.web.context.request.WebRequest;
-
-import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
-import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
-import eu.getsoftware.hotelico.hotel.infrastructure.aspects.NotifyClients;
-import eu.getsoftware.hotelico.hotel.infrastructure.controller.BasicController;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDTO;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.CheckinService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.LoginHotelicoService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
-import io.swagger.annotations.Api;
+import java.util.List;
+import java.util.Random;
+import java.util.Set;
 
 @Api(value = "CustomerController") //add to swagger
 @RestController

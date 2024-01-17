@@ -10,11 +10,11 @@ import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
+import eu.getsoftware.hotelico.hotel.application.iservice.HotelRabbitMQProducer;
+import eu.getsoftware.hotelico.hotel.application.iservice.IHotelService;
+import eu.getsoftware.hotelico.hotel.application.iservice.LastMessagesService;
+import eu.getsoftware.hotelico.hotel.application.iservice.NotificationService;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.CheckinRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelRabbitMQProducer;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.NotificationService;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;
 import org.apache.commons.lang.NotImplementedException;
 import org.modelmapper.ModelMapper;
@@ -43,7 +43,7 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 	private NotificationService notificationService;	
 	
 	@Autowired
-	private HotelService hotelService;
+	private IHotelService hotelService;
 	
 	@Autowired
 	private CustomerRepository customerRepository;	

@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.main
 
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelDTO
+import eu.getsoftware.hotelico.hotel.application.dto.HotelDTO
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.jupiter.api.Test
@@ -19,7 +19,8 @@ class KotlinTestingDemoApplicationIntegrationTest {
 	
 	@Test
 	fun whePostCalled_thenShouldReturnBankObject() {
-		val result = restTemplate.postForEntity("/api/v1/hotels", HotelDTO(123), HotelDTO::class.java);
+		val result = restTemplate.postForEntity("/api/v1/hotels",
+            HotelDTO(123), HotelDTO::class.java);
 		
 		assertNotNull(result)
 		assertEquals(HttpStatus.OK, result?.statusCode)

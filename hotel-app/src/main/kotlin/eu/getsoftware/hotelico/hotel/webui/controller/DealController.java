@@ -3,9 +3,9 @@ package eu.getsoftware.hotelico.hotel.webui.controller;
 import eu.getsoftware.hotelico.clients.infrastructure.controller.BasicController;
 import eu.getsoftware.hotelico.deal.infrastructure.dto.CustomerDealDTO;
 import eu.getsoftware.hotelico.deal.infrastructure.utils.DealAction;
+import eu.getsoftware.hotelico.hotel.application.iservice.IHotelService;
 import eu.getsoftware.hotelico.hotel.infrastructure.aspects.NotifyClients;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class DealController extends BasicController
   private Logger logger = LoggerFactory.getLogger(getClass());
   
   @Autowired
-  private HotelService hotelService;
+  private IHotelService hotelService;
 	
   @RequestMapping(method = RequestMethod.GET)
   public String viewApplication() {

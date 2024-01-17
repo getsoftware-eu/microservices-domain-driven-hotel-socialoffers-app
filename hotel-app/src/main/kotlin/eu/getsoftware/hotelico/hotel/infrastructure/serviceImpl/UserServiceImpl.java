@@ -1,33 +1,36 @@
-package eu.getsoftware.hotelico.hotel.infrastructure.service.impl;//package de.hotelico.service.impl;
+package eu.getsoftware.hotelico.hotel.infrastructure.serviceImpl;//package de.hotelico.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import com.thoughtworks.xstream.mapper.Mapper;
+import eu.getsoftware.hotelico.customer.domain.User;
+import eu.getsoftware.hotelico.customer.infrastructure.dto.UserDTO;
+import eu.getsoftware.hotelico.hotel.application.iservice.IUserService;
+import eu.getsoftware.hotelico.hotel.infrastructure.repository.UserDtoRepository;
+import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.thoughtworks.xstream.mapper.Mapper;
-
-import eu.getsoftware.hotelico.customer.domain.User;
-import eu.getsoftware.hotelico.customer.infrastructure.dto.UserDTO;
-import eu.getsoftware.hotelico.hotel.infrastructure.repository.UserDtoRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.UserService;
-import lombok.extern.slf4j.Slf4j;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
 @CacheConfig(cacheNames = {"userCache"})
-public class UserServiceImpl implements UserService
+public class UserServiceImpl implements IUserService
 {
-    @Autowired
     private UserDtoRepository userDtoRepository; 
-    
-    @Autowired
     private Mapper mapper;
-	
+
+    UserServiceImpl(
+            UserDtoRepository userDtoRepository,
+            Mapper mapper
+    ){
+        this.userDtoRepository = userDtoRepository;
+        this.mapper = mapper;
+    }
+    
     public List<UserDTO> getUsers() {
         List<User> list = userDtoRepository.findAll();
         List<UserDTO> out = new ArrayList<UserDTO>();
@@ -102,7 +105,8 @@ public class UserServiceImpl implements UserService
     }
 	
 	@Cacheable
-	public User getByUserName(String username) {
+    @NotNull
+    public User getByUserName(@NotNull String username) {
 	
 		log.info("getByUserName: username=$username");
 	

@@ -6,15 +6,21 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="apigw" />
-        <module name="notification" />
         <module name="hotel-client" />
+        <module name="common-client-libs" />
         <module name="clients" />
         <module name="chat" />
         <module name="amqp" />
+        <module name="hotel-plugin-menu" />
+        <module name="hotel-app" />
         <module name="menu" />
         <module name="eureka-server" />
+        <module name="hotel-plugin-chat" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="api-gateway" target="17" />
+      <module name="notification-rabbitmq" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>

@@ -1,4 +1,7 @@
-package eu.getsoftware.hotelico.hotel.infrastructure.service;
+package eu.getsoftware.hotelico.hotel.application.iservice;
+
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,10 +10,6 @@ import java.nio.file.FileSystem;
 import java.nio.file.Path;
 import java.util.List;
 
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
-
-import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 
 /**
  * Created by Eugen on 22.08.2015.

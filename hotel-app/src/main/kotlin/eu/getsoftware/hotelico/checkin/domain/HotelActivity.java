@@ -1,33 +1,19 @@
 package eu.getsoftware.hotelico.checkin.domain;
 
+import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
+import eu.getsoftware.hotelico.domain.utils.HibernateUtils;
+import eu.getsoftware.hotelico.hotel.application.iservice.IFileUploadable;
+import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.Type;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import org.hibernate.annotations.Type;
-
-import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
-import eu.getsoftware.hotelico.domain.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.IFileUploadable;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * Created by Eugen on 16.07.2015.

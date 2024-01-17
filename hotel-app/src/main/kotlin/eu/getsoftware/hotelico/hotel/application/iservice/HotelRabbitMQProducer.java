@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.infrastructure.service;
+package eu.getsoftware.hotelico.hotel.application.iservice;
 
 import eu.getsoftware.hotelico.amqp.producer.RabbitMQMessageProducer;
 import eu.getsoftware.hotelico.clients.infrastructure.chat.dto.ChatMsgDTO;

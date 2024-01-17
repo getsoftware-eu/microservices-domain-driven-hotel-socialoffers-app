@@ -1,13 +1,12 @@
-package eu.getsoftware.hotelico.hotel.infrastructure.service.impl;
+package eu.getsoftware.hotelico.hotel.infrastructure.serviceImpl;
+
+import eu.getsoftware.hotelico.hotel.application.iservice.ImageService;
+import eu.getsoftware.hotelico.hotel.infrastructure.utils.ImageUtils;
+import org.springframework.stereotype.Service;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
-
-import org.springframework.stereotype.Service;
-
-import eu.getsoftware.hotelico.hotel.infrastructure.service.ImageService;
-import eu.getsoftware.hotelico.hotel.infrastructure.utils.ImageUtils;
 
 /**
  * Created by Eugen on 10.11.2015.

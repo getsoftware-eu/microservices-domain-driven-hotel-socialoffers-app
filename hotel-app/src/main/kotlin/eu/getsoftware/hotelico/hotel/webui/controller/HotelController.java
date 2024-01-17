@@ -2,15 +2,16 @@ package eu.getsoftware.hotelico.hotel.webui.controller;
 
 import eu.getsoftware.hotelico.clients.infrastructure.controller.BasicController;
 import eu.getsoftware.hotelico.clients.infrastructure.exception.BasicHotelException;
-import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
+import eu.getsoftware.hotelico.hotel.application.dto.HotelDTO;
+import eu.getsoftware.hotelico.hotel.application.iservice.IHotelActivityService;
+import eu.getsoftware.hotelico.hotel.application.iservice.IHotelService;
+import eu.getsoftware.hotelico.hotel.application.iservice.IWallpostService;
+import eu.getsoftware.hotelico.hotel.application.iservice.LastMessagesService;
 import eu.getsoftware.hotelico.hotel.infrastructure.aspects.NotifyClients;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDTO;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDTO;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.FileUploadService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.HotelService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
 import io.micrometer.core.annotation.Timed;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,16 +29,17 @@ import java.util.List;
 public class HotelController extends BasicController
 {
     @Autowired
-    private HotelService hotelService;
+    private IHotelService hotelService;    
+    
+    @Autowired
+    private IHotelActivityService hotelActivityService;    
+    
+    @Autowired
+    private IWallpostService hotelWallpostService;
     
     @Autowired
     private LastMessagesService lastMessagesService;
     
-    @Autowired
-    private FileUploadService fileUploadService;
-	
-	 
-	
     @RequestMapping(method = RequestMethod.GET)
     public String viewHotels() {
         return "hotels";
@@ -71,7 +73,7 @@ public class HotelController extends BasicController
     @RequestMapping(value = "/action/{action}/hotelId/{hotelId}/customer/{guestCustomerId}", method = RequestMethod.POST)
     public CustomerDTO addHotelGuestAction(@PathVariable String action, @PathVariable Long hotelId, @PathVariable long guestCustomerId, @RequestBody CustomerDTO guestDto, final HttpServletResponse response) {
 //        response.setHeader("Cache-Control", "no-cache");
-        CustomerDTO out = hotelService.addGuestAction(guestCustomerId, action, hotelId, guestDto);
+        CustomerDTO out = hotelActivityService.addGuestAction(guestCustomerId, action, hotelId, guestDto);
         return out;
     }   
     
@@ -101,7 +103,7 @@ public class HotelController extends BasicController
    
      @RequestMapping(value = "/wall/messages/hotelId/{id}", method = RequestMethod.GET)
     public List<WallPostDTO> getWallPostsByHotelId(@PathVariable int id) {
-        List<WallPostDTO> out = hotelService.getWallPostsByHotelId(id);
+        List<WallPostDTO> out = hotelWallpostService.getWallPostsByHotelId(id);
         return out;
     }
     
@@ -128,7 +130,7 @@ public class HotelController extends BasicController
     @RequestMapping(value = "/wall/{id}", method = RequestMethod.PUT)
     public WallPostDTO updateWallPost(@PathVariable long id, @RequestBody WallPostDTO wallPostDto) {
         wallPostDto.setInitId(id);
-        WallPostDTO out = hotelService.updateWallPost(wallPostDto);
+        WallPostDTO out = hotelWallpostService.updateWallPost(wallPostDto);
         return out;
     }
     
@@ -144,7 +146,7 @@ public class HotelController extends BasicController
     @NotifyClients
     @RequestMapping(value = "/wall", method = RequestMethod.POST)
     public WallPostDTO addWallPost(@RequestBody WallPostDTO wallPostDto) {
-        WallPostDTO out = hotelService.addUpdateWallPost(wallPostDto);
+        WallPostDTO out = hotelWallpostService.addUpdateWallPost(wallPostDto);
         return out;
     }
 

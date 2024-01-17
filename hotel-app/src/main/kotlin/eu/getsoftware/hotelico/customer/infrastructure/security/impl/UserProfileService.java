@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.customer.infrastructure.security.impl;
 
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.FileStore;
+import eu.getsoftware.hotelico.hotel.application.iservice.FileStore;
 import eu.getsoftware.hotelico.main.config.BucketName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

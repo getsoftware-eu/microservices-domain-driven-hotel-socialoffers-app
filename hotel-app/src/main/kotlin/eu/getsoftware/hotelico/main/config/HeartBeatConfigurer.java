@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.main.config;
 
 
-import eu.getsoftware.hotelico.hotel.infrastructure.service.LastMessagesService;
-import eu.getsoftware.hotelico.hotel.infrastructure.service.impl.ActiveCustomerPinger;
+import eu.getsoftware.hotelico.hotel.application.iservice.LastMessagesService;
+import eu.getsoftware.hotelico.hotel.infrastructure.serviceImpl.ActiveCustomerPinger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
