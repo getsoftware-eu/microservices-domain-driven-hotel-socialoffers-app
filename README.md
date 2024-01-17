@@ -7,18 +7,24 @@ The "Clean" (Layered) Architecture is another way to provide <b>separation of co
 
 ![Agregates is only one entry to domain entities](/docs/img/diagramm1.png)
 
+<b>Domain-layer</b>
+
 To simplify the implementation, we are handling <b>JPA-entities</b> as <b>Domain-entities</b> directly at the <b>Domain-Layer</b>. However, in Clean-architecture,  it is best practice to separate JPA entities from domain entities  and use them only in the <b>Infrastructure-Layer</b> (with JPA repositories).
 This separation ensures, that the two types of entities do not depend on each other, but this would require a double declaration of same entity-fields in different layers. While this may seem redundant, it ensures that the domain layer is not tightly coupled to the JPA infrastructure layer, which would make the system less flexible and harder to maintain in the long term.
 
-<b>Application-layer</b> (Interactors (via IServices) with Domain-Aggregates endpoints: create Obj, findByName...)
-- help-IServices (IUserService) 
-- dto with <b>lower</b> layers (UserDTO)
-- UserRegisterINTERACTOR (uses IUserService) and makes <b>exact usecases</b> steps based on i-help-infrastructure-methods
+<b>Application-layer</b> 
+- <b>Separation of usecase-logik-methods from technical (low-level) service-help-methods</b>
+- Usecases are <b>interactors</b> with Domain-Aggregates endpoints: create Obj, findByName...)
+  - use DTO with <b>lower</b> layers (UserDTO)
+  - use help-IServices ('IUserService') 
+    - e.g. 'UserRegisterINTERACTOR' (uses IUserService) and makes <b>custom usecases</b> steps based on i-help-infrastructure-methods
 
 <b>Infrastructure-level</b>
-- Implementation of help-IServices (UserServiceImpl), that will be injected in INTERACTOR
-- Custom implementation of upper (more abstract) package (IServices) : (help-IServices-infrastructure implementation)
-- We can update (swap) this custom implementation package with another one, <b>but we don't change upper package</b> logik!
+- Implementation of (technical) help-IServices (UserServiceImpl), that will be injected in INTERACTOR
+- Custom implementation for upper layer (IServices) : (help-IServices implementation)
+- We can update (swap) this custom implementation package with another one, <b>but we don't change upper layer</b> logik!
+
+
 
 ![Aggregate root](/docs/img/ddd.webp)
 
