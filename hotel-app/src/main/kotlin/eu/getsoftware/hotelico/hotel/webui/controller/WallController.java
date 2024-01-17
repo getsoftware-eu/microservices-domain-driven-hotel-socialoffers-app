@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.hotel.webui.controller;
 
 import eu.getsoftware.hotelico.clients.infrastructure.controller.BasicController;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
-import eu.getsoftware.hotelico.hotel.application.iservice.IHotelService;
+import eu.getsoftware.hotelico.hotel.application.iService.IHotelService;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

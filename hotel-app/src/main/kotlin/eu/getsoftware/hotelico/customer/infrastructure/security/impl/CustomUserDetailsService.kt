@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.customer.infrastructure.security.impl//package e
 
 import eu.getsoftware.hotelico.customer.infrastructure.repository.UserRolesRepository
 import eu.getsoftware.hotelico.customer.infrastructure.security.CustomUserDetails
-import eu.getsoftware.hotelico.hotel.application.iservice.IUserService
+import eu.getsoftware.hotelico.hotel.application.iService.IUserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService

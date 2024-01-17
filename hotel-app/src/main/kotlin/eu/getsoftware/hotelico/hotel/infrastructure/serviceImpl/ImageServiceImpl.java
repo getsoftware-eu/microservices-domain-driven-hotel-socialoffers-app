@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotel.infrastructure.serviceImpl;
 
-import eu.getsoftware.hotelico.hotel.application.iservice.ImageService;
+import eu.getsoftware.hotelico.hotel.application.iService.ImageService;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.ImageUtils;
 import org.springframework.stereotype.Service;
 

@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.hotel.infrastructure.serviceImpl;//package de.ho
 import com.thoughtworks.xstream.mapper.Mapper;
 import eu.getsoftware.hotelico.customer.domain.User;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.UserDTO;
-import eu.getsoftware.hotelico.hotel.application.iservice.IUserService;
+import eu.getsoftware.hotelico.hotel.application.iService.IUserService;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.UserDtoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;

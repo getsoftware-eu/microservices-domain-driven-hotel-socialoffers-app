@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.application.iservice;
+package eu.getsoftware.hotelico.hotel.application.iService;
 
 import java.io.File;
 import java.io.InputStream;

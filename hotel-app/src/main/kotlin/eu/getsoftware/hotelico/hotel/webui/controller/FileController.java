@@ -4,7 +4,7 @@ import eu.getsoftware.hotelico.clients.infrastructure.controller.BasicController
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
-import eu.getsoftware.hotelico.hotel.application.iservice.FileUploadService;
+import eu.getsoftware.hotelico.hotel.application.iService.FileUploadService;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.ActivityRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.HotelRepository;
 import org.springframework.beans.factory.annotation.Autowired;

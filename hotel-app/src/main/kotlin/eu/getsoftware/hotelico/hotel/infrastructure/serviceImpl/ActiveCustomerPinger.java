@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotel.infrastructure.serviceImpl;
 
-import eu.getsoftware.hotelico.hotel.application.iservice.HotelRabbitMQProducer;
-import eu.getsoftware.hotelico.hotel.application.iservice.LastMessagesService;
+import eu.getsoftware.hotelico.hotel.application.iService.HotelRabbitMQProducer;
+import eu.getsoftware.hotelico.hotel.application.iService.LastMessagesService;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.List;

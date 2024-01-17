@@ -1,22 +1,11 @@
 package eu.getsoftware.hotelico.checkin.domain;
 
-import java.util.Date;
-
-import javax.persistence.AssociationOverride;
-import javax.persistence.AssociationOverrides;
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-
-import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
-import eu.getsoftware.hotelico.domain.utils.HibernateUtils;
+import eu.getsoftware.hotelico.clients.infrastructure.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 import lombok.Data;
+
+import javax.persistence.*;
+import java.util.Date;
 
 
 @Data

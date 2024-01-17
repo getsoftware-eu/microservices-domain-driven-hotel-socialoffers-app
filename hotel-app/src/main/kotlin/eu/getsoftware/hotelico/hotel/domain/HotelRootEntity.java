@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.hotel.domain;
 import eu.getsoftware.hotelico.checkin.domain.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.checkin.domain.HotelActivity;
 import eu.getsoftware.hotelico.domain.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotel.application.iservice.IFileUploadable;
+import eu.getsoftware.hotelico.hotel.application.iService.IFileUploadable;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;

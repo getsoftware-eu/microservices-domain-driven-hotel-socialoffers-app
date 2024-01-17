@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.application.iservice;
+package eu.getsoftware.hotelico.hotel.application.iService;
 
 import eu.getsoftware.hotelico.customer.domain.User;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.UserDTO;
@@ -10,7 +10,6 @@ import java.util.List;
 public interface IUserService
 {
     List<UserDTO> getUsers();
-
     
     UserDTO addUser(UserDTO userDto, String password);
 

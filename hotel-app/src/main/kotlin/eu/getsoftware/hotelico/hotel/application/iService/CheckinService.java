@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.application.iservice;
+package eu.getsoftware.hotelico.hotel.application.iService;
 
 import eu.getsoftware.hotelico.checkin.domain.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;

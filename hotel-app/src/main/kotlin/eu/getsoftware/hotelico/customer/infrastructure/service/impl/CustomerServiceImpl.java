@@ -9,7 +9,7 @@ import eu.getsoftware.hotelico.customer.domain.Language;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
 import eu.getsoftware.hotelico.deal.domain.CustomerDeal;
-import eu.getsoftware.hotelico.hotel.application.iservice.*;
+import eu.getsoftware.hotelico.hotel.application.iService.*;
 import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.DealRepository;

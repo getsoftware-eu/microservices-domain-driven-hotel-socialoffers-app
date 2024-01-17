@@ -4,10 +4,10 @@ import eu.getsoftware.hotelico.clients.infrastructure.controller.BasicController
 import eu.getsoftware.hotelico.clients.infrastructure.exception.BasicHotelException;
 import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
 import eu.getsoftware.hotelico.hotel.application.dto.HotelDTO;
-import eu.getsoftware.hotelico.hotel.application.iservice.IHotelActivityService;
-import eu.getsoftware.hotelico.hotel.application.iservice.IHotelService;
-import eu.getsoftware.hotelico.hotel.application.iservice.IWallpostService;
-import eu.getsoftware.hotelico.hotel.application.iservice.LastMessagesService;
+import eu.getsoftware.hotelico.hotel.application.iService.IHotelActivityService;
+import eu.getsoftware.hotelico.hotel.application.iService.IHotelService;
+import eu.getsoftware.hotelico.hotel.application.iService.IWallpostService;
+import eu.getsoftware.hotelico.hotel.application.iService.LastMessagesService;
 import eu.getsoftware.hotelico.hotel.infrastructure.aspects.NotifyClients;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;

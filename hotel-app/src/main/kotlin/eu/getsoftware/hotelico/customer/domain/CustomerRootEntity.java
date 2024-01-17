@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.customer.domain;
 
 import eu.getsoftware.hotelico.checkin.domain.HotelActivity;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotel.application.iservice.IFileUploadable;
+import eu.getsoftware.hotelico.hotel.application.iService.IFileUploadable;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 

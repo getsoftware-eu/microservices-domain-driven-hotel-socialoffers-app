@@ -5,7 +5,7 @@ import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
-import eu.getsoftware.hotelico.hotel.application.iservice.*;
+import eu.getsoftware.hotelico.hotel.application.iService.*;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.DealRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.utils.HotelEvent;

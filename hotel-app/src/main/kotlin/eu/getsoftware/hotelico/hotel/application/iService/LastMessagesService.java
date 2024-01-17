@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.application.iservice;
+package eu.getsoftware.hotelico.hotel.application.iService;
 
 import eu.getsoftware.hotelico.chat.domain.ChatMessageView;
 import eu.getsoftware.hotelico.clients.infrastructure.chat.dto.ChatMsgDTO;

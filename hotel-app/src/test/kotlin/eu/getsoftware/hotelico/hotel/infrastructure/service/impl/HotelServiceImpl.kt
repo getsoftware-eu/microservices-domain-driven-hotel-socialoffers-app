@@ -14,7 +14,7 @@ class HotelServiceImpl {
 	
 	val hotelRepository: HotelRepository = mockk();
 	val IHotelService =
-		eu.getsoftware.hotelico.hotel.application.iservice.IHotelService(hotelRepository);
+		eu.getsoftware.hotelico.hotel.application.iService.IHotelService(hotelRepository);
 	
 	val sampleHotelDTO = HotelDTO(123);
 	val sampleHotelEntity = HotelRootEntity();
