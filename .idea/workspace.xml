@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="Refactoring">
+    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="Readme Refactoring">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
@@ -14,7 +14,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="4697" />
+    <option name="totalTimeSeconds" value="5256" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -365,7 +365,7 @@
       <workItem from="1690460634075" duration="438000" />
       <workItem from="1704147322675" duration="133000" />
       <workItem from="1705515858277" duration="6030000" />
-      <workItem from="1705529648331" duration="762000" />
+      <workItem from="1705529648331" duration="1958000" />
     </task>
     <task id="LOCAL-00001" summary="-CHG: Microservice refactoring(Eureka-server)">
       <created>1655287660110</created>
@@ -582,7 +582,23 @@
       <option name="project" value="LOCAL" />
       <updated>1705526576644</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Readme Refactoring">
+      <option name="closed" value="true" />
+      <created>1705530427596</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1705530427596</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Readme Refactoring">
+      <option name="closed" value="true" />
+      <created>1705531094162</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1705531094162</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -632,7 +648,8 @@
     <MESSAGE value="-splitting 'menu' and 'chat' microSer from main app" />
     <MESSAGE value="-todo" />
     <MESSAGE value="Refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactoring" />
+    <MESSAGE value="Readme Refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="Readme Refactoring" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

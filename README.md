@@ -16,6 +16,7 @@ This separation ensures, that the two types of entities do not depend on each ot
 - <b>Separation of usecase-logik-methods from technical (low-level) service-help-methods</b>
 - Usecases are <b>'interactors'</b> with Domain-Aggregates endpoints: create Obj, findByName...)
   - define own DTO with <b>lower</b> layers (UserDTO)
+    - Or just abstract Generics, instead of own dto: e.g. class UseCase<T: IUser, Z: IUserDTO> 
   - define own help-IServices ('IUserService') 
     - e.g. 'UserRegisterINTERACTOR' (uses injected IUserService) and makes <b>custom usecases</b> steps based on i-help-infrastructure-methods
 
