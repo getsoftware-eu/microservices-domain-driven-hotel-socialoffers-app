@@ -15,10 +15,10 @@ This separation ensures, that the two types of entities do not depend on each ot
 <b>Application-layer</b> 
 - <b>Separation of usecase-logik-methods from technical (low-level) service-help-methods</b>
 - Usecases are <b>'interactors'</b> with Domain-Aggregates endpoints: create Obj, findByName...)
-  - define own (or use same level-) DTO with <b>lower</b> layers (UserDTO)
-    - Or just abstract Generics, instead of own dto: e.g. class UseCase<T: IUser, Z: IUserDTO> 
-  - define own (or use same level-) help-IServices ('IUserService') 
-    - e.g. 'UserRegisterINTERACTOR' (uses injected IUserService) and makes <b>custom usecases</b> steps based on i-help-infrastructure-methods
+  - 1.define own (or use same level-) DTO with <b>lower</b> layers (UserDTO)
+    - Or just via own Interfaces-Generics, instead of own DTO: e.g. class UseCase<T: IUser, Z: IUserDTO> 
+  - 2.define own (or use same level-) help-IServices ('IUserService') 
+    - e.g. 'UserRegisterINTERACTOR' (uses injected IUserService) and implements <b>custom usecases</b> steps based on i-help-infrastructure-methods
     - Problem: used IServices not anemic calls (ServiceImpl.save() dummy call to low-level-Repository.save())
 
 
