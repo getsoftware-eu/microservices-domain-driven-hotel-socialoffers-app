@@ -1,15 +1,14 @@
 package eu.getsoftware.hotelico.hotel.infrastructure.repository;
 
-import java.util.Date;
-import java.util.List;
-
+import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDTO;
+import eu.getsoftware.hotelico.hotel.infrastructure.entities.HotelWallPost;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
-import eu.getsoftware.hotelico.hotel.domain.HotelWallPost;
-import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDTO;
+import java.util.Date;
+import java.util.List;
 
 public interface WallPostRepository extends JpaRepository<HotelWallPost, Long> {
 	

@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotel.domain;
+package eu.getsoftware.hotelico.hotel.infrastructure.entities;
 
 import eu.getsoftware.hotelico.clients.infrastructure.utils.HibernateUtils;
 import lombok.AccessLevel;

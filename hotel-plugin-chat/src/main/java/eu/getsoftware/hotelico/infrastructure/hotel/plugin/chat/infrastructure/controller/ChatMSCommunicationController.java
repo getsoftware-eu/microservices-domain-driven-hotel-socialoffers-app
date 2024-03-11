@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.infrastructure.controller;
 
+import eu.getsoftware.hotelico.apiController.IChatApiController;
 import eu.getsoftware.hotelico.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.domain.model.ChatMessageEntity;
@@ -7,14 +8,13 @@ import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.domain.model.Cha
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.infrastructure.repository.ChatMessageRepository;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.infrastructure.repository.ChatUserRepository;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.infrastructure.service.ChatService;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v0/chat")
-public class ChatMSCommunicationController {
+public class ChatMSCommunicationController implements IChatApiController {
 	
 	private final ChatMessageRepository chatMessageRepository;	
 	private final ChatUserRepository chatUserRepository;
@@ -27,15 +27,15 @@ public class ChatMSCommunicationController {
 		this.chatService = chatService;
 	}
 	
-	@PostMapping("/message")
-	public ChatMsgDTO postMessage(@RequestBody ChatMsgDTO msgDTO) {
+//	@PostMapping("/message")  in interface
+	@Override public ChatMsgDTO postMessage(@RequestBody ChatMsgDTO msgDTO) {
 		
 		ChatMessageEntity createdEntity = chatService.createChatMessageFromDTO(msgDTO);
 		return chatService.convertToDTO(createdEntity);
 	}
 	
 	
-	@PostMapping("/customer")
+//	@PostMapping("/customer") in interface
 	public CustomerDTO updateUser(@RequestBody CustomerDTO customerDTO) {
 		
 		ChatUserEntity updateEntity = chatService.updateCustomerFromDTO(customerDTO);

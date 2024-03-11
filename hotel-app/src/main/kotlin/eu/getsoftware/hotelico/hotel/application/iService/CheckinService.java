@@ -24,6 +24,6 @@ public interface CheckinService
 	@Transactional CustomerDTO updateOwnDtoCheckinInfo(CustomerDTO dto, CustomerHotelCheckin validCheckin);
 	
 	@Transactional
-	CustomerRootEntity getStaffbyHotelId(long hotelId);
+	ICustomerRootEntity getStaffbyHotelId(long hotelId);
 
 }

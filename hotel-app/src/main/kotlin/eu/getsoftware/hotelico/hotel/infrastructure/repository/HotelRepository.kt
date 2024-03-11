@@ -1,12 +1,13 @@
 package eu.getsoftware.hotelico.hotel.infrastructure.repository;
 
-import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity
+import eu.getsoftware.hotelico.hotel.domain.iRepository.IHotelRepository
+import eu.getsoftware.hotelico.hotel.infrastructure.entities.HotelRootEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import java.util.*
 
-interface HotelRepository: JpaRepository<HotelRootEntity, Long> {
+interface HotelRepository: IHotelRepository, JpaRepository<HotelRootEntity, Long> {
 
 	companion object {
 		

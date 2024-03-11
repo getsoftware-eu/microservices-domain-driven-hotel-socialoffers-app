@@ -8,11 +8,11 @@ package eu.getsoftware.hotelico.checkin.domain;
  * Thus we cannot run DB queries, without depending on other class
  */
 
+import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotel.infrastructure.entities.HotelRootEntity;
+
 import javax.persistence.Embeddable;
 import javax.persistence.ManyToOne;
-
-import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
-import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 
 @Embeddable
 class CustomerHotelCheckinId implements java.io.Serializable {

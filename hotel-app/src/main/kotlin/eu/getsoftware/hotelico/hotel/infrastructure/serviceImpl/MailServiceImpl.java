@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.hotel.infrastructure.serviceImpl;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.MailValidator;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
-import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
+import eu.getsoftware.hotelico.customer.domain.iService.CustomerService;
 import eu.getsoftware.hotelico.hotel.application.dto.HotelDTO;
 import eu.getsoftware.hotelico.hotel.application.iService.IHotelService;
 import eu.getsoftware.hotelico.hotel.application.iService.MailService;

@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.menu.domain;
 
 import eu.getsoftware.hotelico.clients.infrastructure.utils.HibernateUtils;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
-import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
+import eu.getsoftware.hotelico.hotel.infrastructure.entities.HotelRootEntity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;

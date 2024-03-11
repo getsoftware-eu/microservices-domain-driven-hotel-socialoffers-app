@@ -4,7 +4,7 @@ import eu.getsoftware.hotelico.chat.domain.ChatMessageView;
 import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
-import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerDtoService;
+import eu.getsoftware.hotelico.customer.domain.iService.CustomerDtoService;
 
 import java.sql.Timestamp;
 

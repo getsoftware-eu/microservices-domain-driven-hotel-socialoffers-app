@@ -6,8 +6,8 @@ import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ObjectUtils;
 import eu.getsoftware.hotelico.customer.domain.CustomerRootEntity;
 import eu.getsoftware.hotelico.deal.domain.CustomerDeal;
-import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
-import eu.getsoftware.hotelico.hotel.domain.HotelWallPost;
+import eu.getsoftware.hotelico.hotel.infrastructure.entities.HotelRootEntity;
+import eu.getsoftware.hotelico.hotel.infrastructure.entities.HotelWallPost;
 
 /**
  * <br/>

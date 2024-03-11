@@ -1,9 +1,9 @@
 package eu.getsoftware.hotelico.hotel.webui.controller;
 
 import eu.getsoftware.hotelico.clients.infrastructure.controller.BasicController;
+import eu.getsoftware.hotelico.customer.domain.iService.CustomerService;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.infrastructure.repository.CustomerRepository;
-import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
 import eu.getsoftware.hotelico.hotel.application.iService.FileUploadService;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.ActivityRepository;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.HotelRepository;

@@ -2,12 +2,12 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.infrastructure.
 
 import eu.getsoftware.hotelico.amqp.producer.RabbitMQMessageProducer;
 import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.HotelDTO;
+import eu.getsoftware.hotelico.clients.infrastructure.menu.MenuDTO;
 import eu.getsoftware.hotelico.clients.infrastructure.notification.CustomerUpdateRequest;
 import eu.getsoftware.hotelico.clients.infrastructure.notification.NotificationRequest;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.domain.model.MenuItemEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.domain.model.MenuUserEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.infrastructure.repository.MenuUserRepository;
-import eu.getsoftware.hotelico.infrastructure.notification.NotificationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
@@ -158,9 +158,9 @@ public class AsyncMSCommunicationService
 		Long hotelInitId = checkHotelResponse.getInitId();
 	}
 	
-	public List<MenuItemEntity> getItems()
+	public List<MenuDTO> getItems()
 	{
-		return List.of(new MenuItemEntity());
+		return List.of(new MenuDTO(123));
 	}
 	
 	

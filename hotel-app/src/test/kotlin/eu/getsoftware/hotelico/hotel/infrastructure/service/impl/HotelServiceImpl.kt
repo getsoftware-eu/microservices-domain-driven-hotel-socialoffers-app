@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotel.infrastructure.service.impl;
 
 import eu.getsoftware.hotelico.hotel.application.dto.HotelDTO
-import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity
+import eu.getsoftware.hotelico.hotel.infrastructure.entities.HotelRootEntity
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.HotelRepository
 import io.mockk.every
 import io.mockk.mockk

@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.customer.infrastructure.controller;
 
 import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.infrastructure.utils.ControllerUtils;
-import eu.getsoftware.hotelico.customer.infrastructure.service.CustomerService;
+import eu.getsoftware.hotelico.customer.domain.iService.CustomerService;
 import eu.getsoftware.hotelico.hotel.application.iService.CheckinService;
 import eu.getsoftware.hotelico.hotel.application.iService.LastMessagesService;
 import eu.getsoftware.hotelico.hotel.application.iService.LoginHotelicoService;

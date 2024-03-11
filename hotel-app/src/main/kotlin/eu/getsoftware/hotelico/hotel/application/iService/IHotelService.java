@@ -3,8 +3,8 @@ package eu.getsoftware.hotelico.hotel.application.iService;
 import eu.getsoftware.hotelico.clients.infrastructure.exception.BasicHotelException;
 import eu.getsoftware.hotelico.deal.domain.CustomerDeal;
 import eu.getsoftware.hotelico.hotel.application.dto.HotelDTO;
-import eu.getsoftware.hotelico.hotel.domain.HotelRootEntity;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.ResponseDTO;
+import eu.getsoftware.hotelico.hotel.infrastructure.entities.HotelRootEntity;
 
 import java.awt.geom.Point2D;
 import java.util.List;

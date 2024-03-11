@@ -51,7 +51,7 @@ public class HotelController extends BasicController
 //    }
     
     @RequestMapping(value = "/customer/hotel", method = RequestMethod.GET)
-    public  List<HotelDTO> getHotels() {
+    public List<HotelDTO> getHotels() {
         return hotelService.getHotels();
     }
 

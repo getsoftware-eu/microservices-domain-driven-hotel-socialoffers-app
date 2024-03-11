@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.hotel.application.iService;
 
 import eu.getsoftware.hotelico.clients.infrastructure.hotel.dto.CustomerDTO;
-import eu.getsoftware.hotelico.hotel.domain.HotelWallPost;
 import eu.getsoftware.hotelico.hotel.infrastructure.dto.WallPostDTO;
+import eu.getsoftware.hotelico.hotel.infrastructure.entities.HotelWallPost;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
