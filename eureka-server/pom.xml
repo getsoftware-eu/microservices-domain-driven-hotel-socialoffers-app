@@ -41,13 +41,14 @@
             <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-sleuth</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-sleuth-zipkin</artifactId>
-        </dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing</artifactId>
+         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>io.micrometer.tracing</groupId>-->
+<!--            <artifactId>spring-cloud-sleuth-zipkin</artifactId>-->
+<!--&lt;!&ndash;            <version>${spring.cloud-version}</version> from dependencyManagement: org.springframework.cloud&ndash;&gt;-->
+<!--         </dependency>-->
     </dependencies>
     
 </project>

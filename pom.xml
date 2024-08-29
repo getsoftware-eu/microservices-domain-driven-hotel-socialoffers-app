@@ -7,13 +7,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	
 	<modules>
-        <module>common-client-libs</module>
+        <module>common-client-api-libs</module>
 		<module>eureka-server</module>
 		<module>hotel-app</module>
 		<module>hotel-plugin-menu</module>
-        <module>apigw</module>
+        <module>api-gateway</module>
 		<module>amqp</module>
-		<module>notification</module>
+		<module>notification-rabbitmq</module>
         <module>hotel-plugin-chat</module>
     </modules>
 	
@@ -24,15 +24,20 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<!--<spring.version>4.0.2.RELEASE</spring.version>-->
 		<!--<mysql.connector.version>5.1.31</mysql.connector.version>-->
-		<kotlin.version>1.4.0</kotlin.version>
-		<kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
-		<jetty-version>8.1.16.v20140903</jetty-version>
-		<spring.boot.maven.plugin.version>2.5.7</spring.boot.maven.plugin.version>
-		<spring.boot.dependencies.version>2.5.7</spring.boot.dependencies.version>
-		<spring.cloud-version>2020.0.3</spring.cloud-version>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-		
+		<java.version>17</java.version>
+		<spring.boot.version>3.1.0</spring.boot.version>
+		<kotlin.version>1.9.0</kotlin.version>
+		<kotlin.compiler.jvmTarget>${java.version}</kotlin.compiler.jvmTarget>
+		<spring.boot.maven.plugin.version>${spring.boot.version}</spring.boot.maven.plugin.version>
+		<spring.boot.dependencies.version>${spring.boot.version}</spring.boot.dependencies.version>
+		<!--		//schould be in bom dependency management automaticly-->
+		<spring.cloud-version>2023.0.3</spring.cloud-version>
+		<!--		//schould be in bom dependency management automaticly-->
+		<keycloak.version>21.0.1</keycloak.version> 
+
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
+
 		<image>eugenfff/${project.artifactId}:${project.version}</image>
 <!--		eugen example for sub modules-->
 <!--			<artifactId>notification</artifactId>-->
@@ -53,6 +58,13 @@
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
 				<version>${spring.cloud-version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.keycloak.bom</groupId>
+				<artifactId>keycloak-adapter-bom</artifactId>
+				<version>${keycloak.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -319,12 +331,19 @@
 		</repository>
 		<repository>
 			<id>central</id>
-			<url>https://repo1.maven.org/maven2/</url>
+			<url>https://repo.maven.apache.org/maven2</url>
 		</repository>
-		<!--<repository>-->
-			<!--<id>org.jspresso.framework</id>-->
-			<!--<url>https://repository.jspresso.org/maven2/</url>-->
-		<!--</repository>-->
+		<repository>
+			<id>spring-releases</id>
+			<url>https://repo.spring.io/releases</url>
+		</repository>
+		<repository>
+			<id>spring-snapshot</id>
+			<url>https://repo.spring.io/snapshot</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
 		<repository>
 			<id>jaspersoft-third-party</id>
 			<url>https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/</url>

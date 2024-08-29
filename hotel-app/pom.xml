@@ -17,11 +17,11 @@
 <!--        <hibernate.version>5.0.12.Final</hibernate.version>-->
 <!--        <joda-time.version>2.3</joda-time.version>-->
         <spring-security-crypto.version>4.0.1.RELEASE</spring-security-crypto.version>
-        <kotlin.version>1.5.0</kotlin.version>
-        <kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <testcontainers.version>1.16.0</testcontainers.version>
+<!--        <kotlin.version>1.8.20</kotlin.version>-->
+        <kotlin.compiler.jvmTarget>17</kotlin.compiler.jvmTarget>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <testcontainers.version>1.19.0</testcontainers.version>
     </properties>
     
     
@@ -73,7 +73,7 @@
         
         <dependency>
             <groupId>eu.getsoftware.hotelico</groupId>
-            <artifactId>common-client-libs</artifactId>
+            <artifactId>common-client-api-libs</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
@@ -474,8 +474,7 @@
         <dependency>
             <groupId>org.keycloak</groupId>
             <artifactId>keycloak-spring-boot-starter</artifactId>
-            <version>4.0.0.Final</version>
-        </dependency>
+            <!-- Version is automatically applied from dependencyManagement -->        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
@@ -496,15 +495,17 @@
     </dependencies>
 
 
-    <dependencyManagement>
+    <dependencyManagement> 
+<!--   Управление версиями зависимостей в одном POM:
+Избежание дублирования: Если у вас есть один проект, и в нем много зависимостей, которые требуют одинаковой версии (например, различные Spring Boot стартеры), <dependencyManagement> позволяет указать версии этих зависимостей только один раз. Затем вы можете добавлять эти зависимости в <dependencies> секции без необходимости указывать версию каждый раз.-->
         <dependencies>
-            <dependency>
-                <groupId>org.keycloak.bom</groupId>
-                <artifactId>keycloak-adapter-bom</artifactId>
-                <version>${keycloak.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.keycloak.bom</groupId>-->
+<!--                <artifactId>keycloak-adapter-bom</artifactId>-->
+<!--                <version>${keycloak.version}</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-bom</artifactId>
@@ -527,9 +528,9 @@
 <!--                </configuration>-->
             </plugin>
             <plugin>
-                <artifactId>kotlin-maven-plugin</artifactId>
                 <groupId>org.jetbrains.kotlin</groupId>
-                <version>${kotlin.version}</version>
+                <artifactId>kotlin-maven-plugin</artifactId>
+<!--                <version>${kotlin.version}</version> from dependencyManagement: org.springframework.cloud-->
         
                 <configuration>
                     <compilerPlugins>
