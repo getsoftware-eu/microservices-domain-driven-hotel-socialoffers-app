@@ -6,7 +6,8 @@ import eu.getsoftware.hotelico.customer.adapter.out.persistence.model.CustomerRo
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.model.Language;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.application.domain.CustomerAggregate;
-import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerService;
+import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerPortService;
+import eu.getsoftware.hotelico.customer.common.iEntity.ICustomerEntity;
 import eu.getsoftware.hotelico.deal.adapter.out.persistence.model.CustomerDeal;
 import eu.getsoftware.hotelico.hotel.adapter.out.persistence.model.hotel.HotelRootEntity;
 import eu.getsoftware.hotelico.hotel.adapter.out.persistence.repository.CheckinRepository;
@@ -19,6 +20,7 @@ import eu.getsoftware.hotelico.hotel.application.port.in.iService.LoginHotelicoS
 import eu.getsoftware.hotelico.hotel.application.port.in.iService.MailService;
 import eu.getsoftware.hotelico.hotel.common.utils.HotelEvent;
 import eu.getsoftware.hotelico.hotelCustomer.adapter.out.persistence.CustomerHotelCheckin;
+import eu.getsoftware.hotelico.infrastructure.notification.NotificationService;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,7 +36,7 @@ import java.util.*;
 import static eu.getsoftware.hotelico.common.utils.ControllerUtils.convertToDate;
 
 @Service
-public class CustomerPortServiceImpl implements CustomerService
+public class CustomerPortServiceImpl implements CustomerPortService
 {
     @Autowired
     private CheckinRepository checkinRepository;      
@@ -396,8 +398,28 @@ public class CustomerPortServiceImpl implements CustomerService
 
         return dto;
     }
-	
-	@Override
+
+    @Override
+    public boolean relocateGuestDealsToLoggedCustomer(ICustomerEntity customerEntity, Long guestCustomerId) {
+        return false;
+    }
+
+    @Override
+    public CustomerDTO convertCustomerToDto(ICustomerEntity customerEntity, long hotelId) {
+        return null;
+    }
+
+    @Override
+    public CustomerDTO convertCustomerToDto(ICustomerEntity customerEntity, boolean fullSerialization, CustomerHotelCheckin validCheckin) {
+        return null;
+    }
+
+    @Override
+    public CustomerDTO convertMyCustomerToFullDto(ICustomerEntity customerEntity) {
+        return null;
+    }
+
+    @Override
     public boolean relocateGuestDealsToLoggedCustomer(CustomerRootEntity customerEntity, Long guestCustomerId)
     {
         if(customerEntity ==null || guestCustomerId==null)
@@ -717,12 +739,11 @@ public class CustomerPortServiceImpl implements CustomerService
         customerRepository.deleteById(customerDto.getId());
     }
 
-    
+    @Override
+    public String getCustomerAvatarUrl(ICustomerEntity customerEntity) {
+        return null;
+    }
 
-    
-
-
-    
 
     @Override
     public Optional<CustomerDTO> getByEmail(String email)

@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.in.web.
 import eu.getsoftware.hotelico.adapter.in.web.controller.BasicController;
 import eu.getsoftware.hotelico.clients.infrastructure.menu.dto.MenuItemDTO;
 import eu.getsoftware.hotelico.clients.infrastructure.menu.dto.MenuOrderDTO;
-import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.port.in.iservice.MenuPortService;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.port.in.iservice.IMenuPortService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class MenuController extends BasicController
 //  private HotelService hotelService;  
 	
   @Autowired
-  private MenuPortService menuService;
+  private IMenuPortService menuService;
 	
   @RequestMapping(method = RequestMethod.GET)
   public String viewApplication() {

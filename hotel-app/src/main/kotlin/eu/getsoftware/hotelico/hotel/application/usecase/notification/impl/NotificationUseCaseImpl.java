@@ -8,7 +8,7 @@ import eu.getsoftware.hotelico.clients.infrastructure.menu.dto.MenuOrderDTO;
 import eu.getsoftware.hotelico.common.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.repository.CustomerRepository;
-import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerService;
+import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerPortService;
 import eu.getsoftware.hotelico.deal.application.infrastructure.utils.DealStatus;
 import eu.getsoftware.hotelico.hotel.adapter.out.persistence.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotel.application.iService.*;
@@ -53,7 +53,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	
 	private final LastMessagesService lastMessagesService;
 	
-	private final CustomerService customerService;	
+	private final CustomerPortService customerService;	
 	
 	private final MailService mailService;
 	
@@ -64,7 +64,8 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	private final ChatMSComminicationService chatMSComminicationService;
 	
 	private final HotelRabbitMQProducer hotelRabbitMQProducer;
-	
+	private ProduceRabbitmqMessageService produceRabbitmqMessageService;
+
 	@Override
 	public void notificateAboutEntityEvent(CustomerDTO dto, HotelEvent event, String eventContent, long entityId)
 	{
@@ -303,18 +304,18 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 				//Integer chatPartnerId = nextLastMessage.getSender().getId()==sessionCustomer.getId()? nextLastMessage.getReceiver().getId(): nextLastMessage.getSender().getId();
 				if (nextLastMessage != null)
 				{
-					Timestamp timeStamp = nextLastMessage.getTimestamp();
+					Timestamp timeStamp = nextLastMessage.timestamp();
 					
 					String time = ControllerUtils.getTimeFormatted(timeStamp);
 					
-					String message = nextLastMessage.getMessage();
+					String message = nextLastMessage.message();
 					//                message = message.length() > ControllerUtils.chatListMessageLength ? message.substring(0, ControllerUtils.chatListMessageLength-2) + "..." : message;
 					
 					lastMessagesForCustomer.put(nextChatCustomerRootEntity.getId(), message);// + " (" + time + ")");
 					lastMessageTimesForCustomer.put(nextChatCustomerRootEntity.getId(), time);
 					
 					//only if it notifications to message sender
-					if (nextLastMessage.getSender().getId() == receiverId && ControllerUtils.CHAT_NOTIFICATE_DELIEVERY_CHATLIST)
+					if (nextLastMessage.senderId() == receiverId && ControllerUtils.CHAT_NOTIFICATE_DELIEVERY_CHATLIST)
 					{
 						lastMessageSeenByCustomer.put(nextChatCustomerRootEntity.getId(), nextLastMessage.getReceiver().equals(nextChatCustomerRootEntity) && nextLastMessage.isSeenByReceiver());
 						lastMessageDelieveredToCustomer.put(nextChatCustomerRootEntity.getId(), nextLastMessage.getReceiver().equals(nextChatCustomerRootEntity) && nextLastMessage.isDelieveredToReceiver());

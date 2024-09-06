@@ -2,6 +2,7 @@ package eu.getsoftware.hotelico.hotel.application.usecase.checkin;
 
 import eu.getsoftware.hotelico.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.customer.application.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelCustomer.adapter.out.persistence.CustomerHotelCheckin;
 import org.springframework.transaction.annotation.Transactional;
 

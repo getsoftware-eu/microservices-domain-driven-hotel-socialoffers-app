@@ -4,7 +4,7 @@ import eu.getsoftware.hotelico.common.utils.ControllerUtils;
 import eu.getsoftware.hotelico.common.utils.FileUtils;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.repository.CustomerRepository;
-import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerService;
+import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerPortService;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.hotel.adapter.out.persistence.model.hotel.HotelRootEntity;
 import eu.getsoftware.hotelico.hotel.adapter.out.persistence.repository.ActivityRepository;
@@ -49,7 +49,7 @@ public class FileUploadServiceImpl implements FileUploadService
 	private NotificationService notificationService;	
 		
 	@Autowired
-	private CustomerService customerService;	
+	private CustomerPortService customerService;	
 	
 	@Autowired
 	private LastMessagesService lastMessagesService;

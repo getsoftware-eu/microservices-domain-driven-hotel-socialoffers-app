@@ -4,6 +4,7 @@ import eu.getsoftware.hotelico.adapter.in.web.controller.BasicController;
 import eu.getsoftware.hotelico.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.infrastructure.service.ChatService;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

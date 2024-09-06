@@ -4,18 +4,20 @@ import eu.getsoftware.hotelico.clients.infrastructure.notification.ChatMessageRe
 import eu.getsoftware.hotelico.clients.infrastructure.notification.CustomerUpdateRequest;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatUserEntity;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.repository.ChatUserRepository;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.infrastructure.service.ChatMessageService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
 @Slf4j
+@RequiredArgsConstructor
 public class ChatEventsConsumer
 {
-	@Autowired
-	private ChatMessageService chatMessageService;
+	private final ChatMessageService chatMessageService;
+	private final ChatUserRepository chatUserRepository;
 	/**
 	 * Listen for customer system update
 	 * @param customerUpdateRequest

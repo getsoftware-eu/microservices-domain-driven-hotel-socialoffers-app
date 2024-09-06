@@ -9,25 +9,19 @@ import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.pers
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.repository.ChatMessageRepository;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.repository.ChatUserRepository;
 import eu.getsoftware.hotelico.infrastructure.notification.NotificationService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class ChatService
 {
 	private final NotificationService notificationService;
 	private final RabbitMQMessageProducer rabbitMQMessageProducer;
 	private final ChatMessageRepository chatMessageRepository;
 	private final ChatUserRepository chatUserRepository;
-	
-	public ChatService(NotificationService notificationService, RabbitMQMessageProducer rabbitMQMessageProducer, ChatMessageRepository chatMessageRepository, ChatUserRepository chatUserRepository)
-	{
-		this.notificationService = notificationService;
-		this.rabbitMQMessageProducer = rabbitMQMessageProducer;
-		this.chatMessageRepository = chatMessageRepository;
-		this.chatUserRepository = chatUserRepository;
-	}
 	
 	public ChatMessageEntity convertFromDTO(ChatMsgDTO msgDTO)
 	{

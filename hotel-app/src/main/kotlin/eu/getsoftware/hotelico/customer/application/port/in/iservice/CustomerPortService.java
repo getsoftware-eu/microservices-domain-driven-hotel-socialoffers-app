@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * All methods of this class throws NullPoinrerException if a required argument is null
  */
-public interface CustomerService
+public interface CustomerPortService
 {
     List<CustomerDTO> getCustomers();
     

@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.hotel.adapter.in.web.controller;
 
 import eu.getsoftware.hotelico.adapter.in.web.controller.BasicController;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.repository.CustomerRepository;
-import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerService;
+import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerPortService;
 import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.hotel.adapter.out.persistence.repository.ActivityRepository;
 import eu.getsoftware.hotelico.hotel.adapter.out.persistence.repository.HotelRepository;
@@ -31,7 +31,7 @@ public class FileController  extends BasicController {
 	private FileUploadService fileUploadService;	
 	
 	@Autowired
-	private CustomerService customerService;	
+	private CustomerPortService customerService;	
 	@Autowired
 	private CustomerRepository customerRepository;	
 	

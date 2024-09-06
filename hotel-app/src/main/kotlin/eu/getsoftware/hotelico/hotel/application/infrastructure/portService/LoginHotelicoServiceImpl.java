@@ -4,7 +4,7 @@ import eu.getsoftware.hotelico.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.common.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.repository.CustomerRepository;
-import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerService;
+import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerPortService;
 import eu.getsoftware.hotelico.hotel.adapter.out.persistence.repository.DealRepository;
 import eu.getsoftware.hotelico.hotel.application.iService.*;
 import eu.getsoftware.hotelico.hotel.application.infrastructure.dto.ResponseDTO;
@@ -32,7 +32,7 @@ import java.util.Optional;
 public class LoginHotelicoServiceImpl implements LoginHotelicoService
 {
 	@Autowired
-	private CustomerService customerService;	
+	private CustomerPortService customerService;	
 	
 	@Autowired
 	private LastMessagesService lastMessagesService;

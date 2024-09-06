@@ -6,7 +6,7 @@ import eu.getsoftware.hotelico.common.utils.ControllerUtils;
 import eu.getsoftware.hotelico.common.utils.ReorderAction;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.repository.CustomerRepository;
-import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerService;
+import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerPortService;
 import eu.getsoftware.hotelico.deal.adapter.out.persistence.model.CustomerDeal;
 import eu.getsoftware.hotelico.deal.application.infrastructure.dto.CustomerDealDTO;
 import eu.getsoftware.hotelico.deal.application.infrastructure.utils.ActivityAction;
@@ -42,7 +42,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class HotelServiceImpl implements IHotelService
 {
 	@Autowired
-	private CustomerService customerService;
+	private CustomerPortService customerService;
 	
 	@Autowired
 	private NotificationService notificationService;	

@@ -166,7 +166,12 @@ public class CustomerRootEntity implements ICustomerRootEntity, Serializable, IF
     //####################################################
     
     public long getId(){ return this.id; }
-    
+
+    @Override
+    public void setPasswordHash(long passwordHash) {
+        
+    }
+
     public void updateLastSeenOnline()
     {
         this.lastSeenOnline = new Date();

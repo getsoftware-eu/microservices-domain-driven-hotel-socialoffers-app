@@ -11,7 +11,7 @@ import eu.getsoftware.hotelico.clients.infrastructure.notification.ChatMessageRe
 import eu.getsoftware.hotelico.common.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.repository.CustomerRepository;
-import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerService;
+import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerPortService;
 import eu.getsoftware.hotelico.hotel.adapter.out.persistence.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotel.adapter.out.persistence.repository.HotelRepository;
 import eu.getsoftware.hotelico.hotel.application.infrastructure.dto.CustomerNotificationDTO;
@@ -49,7 +49,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	@Autowired
 	private HotelRabbitMQProducer hotelRabbitMQProducer;
 	
-	private final CustomerService customerService;	
+	private final CustomerPortService customerService;	
 	
 	private final CheckinRepository checkinRepository;
 
@@ -84,7 +84,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	 */
 	private HashMap<Long, Double> guestToGpsPointMap = new HashMap<>();
 	
-	public LastMessagesServiceImpl(CustomerService customerService, CheckinRepository checkinRepository, HotelRepository hotelRepository, ChatRepository chatRepository, CustomerRepository customerRepository)
+	public LastMessagesServiceImpl(CustomerPortService customerService, CheckinRepository checkinRepository, HotelRepository hotelRepository, ChatRepository chatRepository, CustomerRepository customerRepository)
 	{
 		this.customerService = customerService;
 		this.checkinRepository = checkinRepository;

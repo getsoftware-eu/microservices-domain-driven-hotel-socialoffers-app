@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.hotel.application.infrastructure.portService;
 import eu.getsoftware.hotelico.common.utils.ControllerUtils;
 import eu.getsoftware.hotelico.common.utils.MailValidator;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.model.CustomerRootEntity;
-import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerService;
+import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerPortService;
 import eu.getsoftware.hotelico.hotel.application.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotel.application.port.in.iService.IHotelService;
 import eu.getsoftware.hotelico.hotel.application.port.in.iService.MailService;
@@ -41,7 +41,7 @@ public class MailServiceImpl implements MailService
 	private SimpleMailMessage preConfiguredMessage;
 	
 	@Autowired
-	private CustomerService customerService;	
+	private CustomerPortService customerService;	
 	
 	@Autowired
 	private IHotelService hotelService;

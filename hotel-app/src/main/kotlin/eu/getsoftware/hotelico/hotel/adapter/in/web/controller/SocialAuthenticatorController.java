@@ -4,7 +4,7 @@ import eu.getsoftware.hotelico.adapter.in.web.controller.BasicController;
 import eu.getsoftware.hotelico.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.common.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.repository.CustomerRepository;
-import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerService;
+import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerPortService;
 import eu.getsoftware.hotelico.hotel.application.port.in.iService.LastMessagesService;
 import eu.getsoftware.hotelico.hotel.application.port.in.iService.LoginHotelicoService;
 import jakarta.inject.Inject;
@@ -48,7 +48,7 @@ public class SocialAuthenticatorController extends BasicController
 	}
 
 	@Autowired
-	private CustomerService customerService;
+	private CustomerPortService customerService;
 
 	@Autowired
 	private LastMessagesService lastMessagesService;

@@ -61,6 +61,7 @@ public class MenuOrder implements Serializable
 	private String customerComment;
 
 	@Enumerated(EnumType.STRING)
+	@Setter
 	private DealStatus status;		
 	
 	@Column

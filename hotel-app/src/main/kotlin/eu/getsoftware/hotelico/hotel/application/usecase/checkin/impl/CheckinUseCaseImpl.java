@@ -1,11 +1,11 @@
 package eu.getsoftware.hotelico.hotel.application.usecase.checkin.impl;
 
 import eu.getsoftware.hotelico.chat.domain.ChatMessageView;
+import eu.getsoftware.hotelico.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.common.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.repository.CustomerRepository;
-import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerService;
-import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
+import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerPortService;
 import eu.getsoftware.hotelico.hotel.adapter.out.persistence.model.hotel.HotelRootEntity;
 import eu.getsoftware.hotelico.hotel.adapter.out.persistence.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotel.adapter.out.persistence.repository.HotelRepository;
@@ -40,7 +40,7 @@ import static eu.getsoftware.hotelico.common.utils.ControllerUtils.convertToLoca
 public class CheckinUseCaseImpl implements CheckinUseCase
 {
 	@Autowired
-	private CustomerService customerService;		
+	private CustomerPortService customerService;		
 	
 	@Autowired
 	private LastMessagesService lastMessagesService;	
@@ -65,17 +65,7 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 	
 	@Autowired
 	private ChatRepository chatRepository;
-
-	@Transactional
-	@Override
-	public CustomerDTO updateCheckin(CustomerDTO customerDto) {
-		
-		CustomerRootEntity customerEntity = customerDto.getId()>0 ? customerRepository.getOne(customerDto.getId()) : null;
-		
-		customerDto = setCustomerCheckin(customerDto, customerEntity);
-		
-		return customerDto; //mapper.map(customerRepository.saveAndFlush(customer), CustomerDto.class);
-	}
+	
 
 	@Transactional
 	@Override
@@ -285,7 +275,18 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 		
 		return null;
 	}
-	
+
+	@Override
+	@Transactional
+	public CustomerDTO updateCheckin(CustomerDTO customerDto) {
+		CustomerRootEntity customerEntity = customerDto.getId()>0 ? customerRepository.getOne(customerDto.getId()) : null;
+
+		customerDto = setCustomerCheckin(customerDto, customerEntity);
+
+		return customerDto; //mapper.map(customerRepository.saveAndFlush(customer), CustomerDto.class);
+
+	}
+
 	@Override
 	public CustomerRootEntity getStaffbyHotelId(long hotelId)
 	{

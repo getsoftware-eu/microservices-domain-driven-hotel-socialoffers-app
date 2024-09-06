@@ -1,6 +1,8 @@
 package eu.getsoftware.hotelico.hotelCustomer.adapter.out.persistence;
 
 import eu.getsoftware.hotelico.common.utils.HibernateUtils;
+import eu.getsoftware.hotelico.customer.adapter.out.persistence.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.customer.application.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotel.adapter.out.persistence.model.hotel.HotelRootEntity;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -62,7 +64,7 @@ public class CustomerHotelCheckin implements java.io.Serializable {
 	}
 	
 	@Transient
-	public CustomerRootEntity getCustomer() {
+	public ICustomerRootEntity getCustomer() {
 		return getPk().getCustomer();
 	}
 	

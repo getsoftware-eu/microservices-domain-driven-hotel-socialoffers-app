@@ -7,7 +7,7 @@ import eu.getsoftware.hotelico.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.common.utils.ControllerUtils;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.repository.CustomerRepository;
-import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerService;
+import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerPortService;
 import eu.getsoftware.hotelico.hotel.adapter.out.persistence.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotel.application.infrastructure.service.HotelRabbitMQProducer;
 import eu.getsoftware.hotelico.hotel.application.port.in.iService.IHotelService;
@@ -34,7 +34,7 @@ import java.util.*;
 public class ChatMSCommunicationServiceImpl implements ChatMSComminicationService
 {
 	@Autowired
-	private CustomerService customerService;		
+	private CustomerPortService customerService;		
 	
 	@Autowired
 	private LastMessagesService lastMessagesService;		

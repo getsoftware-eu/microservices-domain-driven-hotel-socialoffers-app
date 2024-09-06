@@ -1,11 +1,10 @@
 package eu.getsoftware.hotelico.infrastructure.notification;
 
-import java.time.LocalDateTime;
-
-import org.springframework.stereotype.Service;
-
 import eu.getsoftware.hotelico.clients.infrastructure.notification.NotificationRequest;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 @AllArgsConstructor
@@ -13,7 +12,7 @@ public class NotificationService
 {
 
     private final NotificationRepository notificationRepository;
-    private String standandSender = "hotelicoStandardSender";
+    private final String standandSender = "hotelicoStandardSender";
     
     /**
      * 

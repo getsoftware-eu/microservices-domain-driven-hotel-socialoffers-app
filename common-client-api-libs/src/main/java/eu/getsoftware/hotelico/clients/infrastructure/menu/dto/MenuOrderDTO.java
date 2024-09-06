@@ -3,6 +3,7 @@ package eu.getsoftware.hotelico.clients.infrastructure.menu.dto;
 import eu.getsoftware.hotelico.common.dto.BasicDTO;
 import eu.getsoftware.hotelico.common.utils.ControllerUtils;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.With;
 import lombok.experimental.SuperBuilder;
 
@@ -21,6 +22,8 @@ public class MenuOrderDTO extends BasicDTO{
     String firstName = "";
     String lastName = "";
     String customerComment = "";
+    
+    @Setter
     String orderStatus = null;
     double totalPrice = 0.0;
     double totalMoney = 0;
@@ -29,6 +32,8 @@ public class MenuOrderDTO extends BasicDTO{
     Date validFrom = null;
     Date validTo = null;
     boolean orderInRoom = false;
+    
+    @Setter
     boolean closed = false;
     Timestamp timestamp = null;
     List<MenuItemDTO> menuItems;

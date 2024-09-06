@@ -8,31 +8,24 @@ import eu.getsoftware.hotelico.clients.infrastructure.notification.NotificationR
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuItemEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuUserEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.repository.MenuUserRepository;
+import eu.getsoftware.hotelico.infrastructure.notification.NotificationService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
+@AllArgsConstructor
 public class AsyncMSCommunicationService
 {
-	@Autowired
 	private AmqpTemplate amqpTemplate;	
-	
-	@Autowired
 	private RabbitMQMessageProducer rabbitMQMessageProducer;	
-	
-	@Autowired
 	private NotificationService notificationService;	
-	
-	@Autowired
 	private MenuUserRepository menuUserRepository;
-	
-	@Autowired
 	private RestTemplate restTemplate;
 	
 	/**

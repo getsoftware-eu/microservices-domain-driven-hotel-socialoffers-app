@@ -11,7 +11,7 @@ import java.util.List;
  * Created by e.fanshil
  * At 05.02.2016 15:30
  */
-public interface MenuPortService
+public interface IMenuPortService
 {	
 	List<MenuOrderDTO> getActiveMenusByCustomerId(long customerId, long hotelId, long cafeId, long orderId, boolean closed);
 	

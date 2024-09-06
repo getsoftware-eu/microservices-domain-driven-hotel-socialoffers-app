@@ -22,7 +22,7 @@ public class ChatMessageService {
 		return chatMessageRepository.findAll();
 	}
 	
-	public ChatMessageEntity getLastMessageByCustomerAndReceiverIds(long customerId, long receiverId){
+	public Optional<ChatMessageEntity> getLastMessageByCustomerAndReceiverIds(long customerId, long receiverId){
 		return chatMessageRepository.getLastMessageByCustomerAndReceiverIds(customerId, receiverId);
 	}
 	

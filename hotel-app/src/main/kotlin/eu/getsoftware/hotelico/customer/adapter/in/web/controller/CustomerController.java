@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.customer.adapter.in.web.controller;
 
 import eu.getsoftware.hotelico.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.common.utils.ControllerUtils;
-import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerService;
+import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerPortService;
 import eu.getsoftware.hotelico.hotel.application.infrastructure.aspects.NotifyClients;
 import eu.getsoftware.hotelico.hotel.application.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotel.application.infrastructure.dto.ResponseDTO;
@@ -33,13 +33,13 @@ import java.util.Set;
 public class CustomerController extends BasicController
 {
     
-    private final CustomerService customerService;
+    private final CustomerPortService customerService;
     private final CheckinService checkinService;
     private final NotificationService notificationService;
     private final LastMessagesService lastMessagesService;
     private final LoginHotelicoService loginService;
     
-    public CustomerController(CustomerService customerService, CheckinService checkinService, NotificationService notificationService, LastMessagesService lastMessagesService, LoginHotelicoService loginService)
+    public CustomerController(CustomerPortService customerService, CheckinService checkinService, NotificationService notificationService, LastMessagesService lastMessagesService, LoginHotelicoService loginService)
     {
         this.customerService = customerService;
         this.checkinService = checkinService;
