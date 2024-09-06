@@ -5,16 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="update clean architecure &quot;ports and adapters&quot;">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/in/web/controller/ChatMSCommunicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/in/web/controller/ChatMSCommunicationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/repository/ChatMessageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/repository/ChatMessageRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/repository/ChatUserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/repository/ChatUserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/application/infrastructure/amqp/ChatEventsConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/application/infrastructure/amqp/ChatEventsConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/application/infrastructure/service/ChatMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/application/infrastructure/service/ChatMessageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/application/infrastructure/service/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/application/infrastructure/service/ChatService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/application/model/ChatMessageEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/model/ChatMessageEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/application/model/ChatUserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/model/ChatUserEntity.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +13,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="25802" />
+    <option name="totalTimeSeconds" value="26227" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -397,7 +388,7 @@
       <workItem from="1715016766985" duration="1130000" />
       <workItem from="1724962709815" duration="6183000" />
       <workItem from="1724971933581" duration="7764000" />
-      <workItem from="1725614325702" duration="7981000" />
+      <workItem from="1725614325702" duration="8407000" />
     </task>
     <task id="LOCAL-00001" summary="-CHG: Microservice refactoring(Eureka-server)">
       <created>1655287660110</created>
@@ -702,7 +693,15 @@
       <option name="project" value="LOCAL" />
       <updated>1725621032367</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="update clean architecure &quot;ports and adapters&quot;">
+      <option name="closed" value="true" />
+      <created>1725626321239</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1725626321239</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
