@@ -3,11 +3,11 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.in.web.
 import eu.getsoftware.hotelico.adapter.in.web.controller.api.IChatApiController;
 import eu.getsoftware.hotelico.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.infrastructure.chat.dto.ChatMsgDTO;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageEntity;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatUserEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.repository.ChatMessageRepository;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.repository.ChatUserRepository;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.infrastructure.service.ChatService;
-import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.model.ChatMessageEntity;
-import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.model.ChatUserEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

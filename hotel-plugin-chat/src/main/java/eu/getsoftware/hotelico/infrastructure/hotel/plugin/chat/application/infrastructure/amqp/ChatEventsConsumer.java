@@ -2,9 +2,9 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.inf
 
 import eu.getsoftware.hotelico.clients.infrastructure.notification.ChatMessageRequest;
 import eu.getsoftware.hotelico.clients.infrastructure.notification.CustomerUpdateRequest;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageEntity;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatUserEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.infrastructure.service.ChatMessageService;
-import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.model.ChatMessageEntity;
-import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.model.ChatUserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;

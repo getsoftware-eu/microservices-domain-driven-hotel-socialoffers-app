@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.model;
+package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model;
 
 import lombok.Getter;
 import lombok.Setter;
