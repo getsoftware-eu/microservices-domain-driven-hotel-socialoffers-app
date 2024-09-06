@@ -13,9 +13,9 @@
     <file url="file://$PROJECT_DIR$/clients/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/clients/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/clients/target/generated-resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/common-client-libs/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/common-client-libs/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/common-client-libs/target/generated-resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common-client-api-libs/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common-client-api-libs/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/common-client-api-libs/target/generated-resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eureka-server/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eureka-server/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/eureka-server/target/generated-resources" charset="UTF-8" />

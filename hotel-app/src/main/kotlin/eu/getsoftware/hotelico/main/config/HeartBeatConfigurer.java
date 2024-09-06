@@ -1,8 +1,9 @@
 package eu.getsoftware.hotelico.main.config;
 
 
-import eu.getsoftware.hotelico.hotel.application.iService.LastMessagesService;
-import eu.getsoftware.hotelico.hotel.infrastructure.serviceImpl.ActiveCustomerPinger;
+import eu.getsoftware.hotelico.hotel.application.infrastructure.service.ActiveCustomerPinger;
+import eu.getsoftware.hotelico.hotel.application.port.in.iService.LastMessagesService;
+import jakarta.inject.Inject;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -10,8 +11,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
-
-import javax.inject.Inject;
 
 /**
  * Override the scheduling configuration so that we can schedule our own scheduled bean and

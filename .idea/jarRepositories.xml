@@ -2,14 +2,29 @@
 <project version="4">
   <component name="RemoteRepositoriesConfiguration">
     <remote-repository>
+      <option name="id" value="spring-releases" />
+      <option name="name" value="spring-releases" />
+      <option name="url" value="https://repo.spring.io/releases" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="jaspersoft-third-party" />
       <option name="name" value="jaspersoft-third-party" />
       <option name="url" value="https://jaspersoft.jfrog.io/jaspersoft/third-party-ce-artifacts/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="central" />
+      <option name="url" value="https://repo.maven.apache.org/maven2" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="org.springframework.maven.milestone" />
       <option name="name" value="Spring Maven Milestone Repository" />
       <option name="url" value="https://repo.spring.io/milestone" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="spring-snapshot" />
+      <option name="name" value="spring-snapshot" />
+      <option name="url" value="https://repo.spring.io/snapshot" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="central" />

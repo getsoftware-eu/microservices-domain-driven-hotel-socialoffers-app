@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.main
 
-import eu.getsoftware.hotelico.hotel.application.dto.HotelDTO
+import eu.getsoftware.hotelico.hotel.common.dto.HotelDTO
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
 import org.junit.jupiter.api.Test
