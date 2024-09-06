@@ -14,8 +14,8 @@ import org.springframework.core.type.filter.TypeFilter;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
-@EnableJpaRepositories(basePackages = { "eu.getsoftware.hotelico" }) //TODO Eugen: all domains as array?
-@EntityScan(basePackages = {"eu.getsoftware.hotelico"}) //TODO Eugen: all domains as array?
+@EnableJpaRepositories(basePackages = { "eu.getsoftware.hotelico.customer.adapter.out", "eu.getsoftware.hotelico.deal.adapter.out", "eu.getsoftware.hotelico.hotel.adapter.out" }) //TODO Eugen: all domains as array?
+@EntityScan(basePackages = {"eu.getsoftware.hotelico.customer.adapter.out", "eu.getsoftware.hotelico.deal.adapter.out", "eu.getsoftware.hotelico.hotel.adapter.out"}) //TODO Eugen: all domains as array?
 public class InfrastructureConfiguration
 {
 	@Bean

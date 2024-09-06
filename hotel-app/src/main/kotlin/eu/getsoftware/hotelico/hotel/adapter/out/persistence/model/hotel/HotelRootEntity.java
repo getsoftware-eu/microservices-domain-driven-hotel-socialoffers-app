@@ -1,15 +1,15 @@
 package eu.getsoftware.hotelico.hotel.adapter.out.persistence.model.hotel;
 
+import eu.getsoftware.hotelico.common.utils.HibernateUtils;
+import eu.getsoftware.hotelico.hotel.application.port.in.iService.IFileUploadable;
 import eu.getsoftware.hotelico.hotelCustomer.adapter.out.persistence.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotelCustomer.adapter.out.persistence.HotelActivity;
-import eu.getsoftware.hotelico.domain.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotel.application.port.in.iService.IFileUploadable;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;

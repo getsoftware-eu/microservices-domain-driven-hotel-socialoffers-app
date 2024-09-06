@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.chat.domain;
+package eu.getsoftware.hotelico.chatView.domain;
 
 import eu.getsoftware.hotelico.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.model.CustomerRootEntity;

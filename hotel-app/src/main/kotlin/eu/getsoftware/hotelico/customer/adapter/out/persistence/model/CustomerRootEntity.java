@@ -87,6 +87,7 @@ public class CustomerRootEntity implements ICustomerRootEntity, Serializable, IF
     private long lastResetPasswordRequestTime;
     
     @Column(name = "consistencyId", columnDefinition = "BIGINT(20) DEFAULT 0")
+    @Setter
     private long consistencyId;
    
     @Column(name = "lastResetPasswordConfirmationTime")
@@ -99,6 +100,7 @@ public class CustomerRootEntity implements ICustomerRootEntity, Serializable, IF
     private String email;
     
     @Column(name = "pictureUrl",  length = 250)
+    @Setter
     private String pictureUrl;
 
     @Column

@@ -5,17 +5,15 @@ import eu.getsoftware.hotelico.common.utils.FileUtils;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.customer.adapter.out.persistence.repository.CustomerRepository;
 import eu.getsoftware.hotelico.customer.application.port.in.iservice.CustomerPortService;
-import eu.getsoftware.hotelico.customer.infrastructure.dto.CustomerDTO;
 import eu.getsoftware.hotelico.hotel.adapter.out.persistence.model.hotel.HotelRootEntity;
 import eu.getsoftware.hotelico.hotel.adapter.out.persistence.repository.ActivityRepository;
 import eu.getsoftware.hotelico.hotel.adapter.out.persistence.repository.HotelRepository;
-import eu.getsoftware.hotelico.hotel.application.iService.*;
 import eu.getsoftware.hotelico.hotel.application.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotel.application.port.in.iService.*;
 import eu.getsoftware.hotelico.hotel.common.utils.HotelEvent;
-import eu.getsoftware.hotelico.hotel.usecase.notification.app.usecases.impl.NotificationService;
 import eu.getsoftware.hotelico.hotelCustomer.adapter.out.persistence.HotelActivity;
-import org.springframework.beans.factory.annotation.Autowired;
+import eu.getsoftware.hotelico.infrastructure.notification.NotificationService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,32 +28,25 @@ import java.util.*;
  * Created by Eugen on 22.08.2015.
  */
 @Service
+@RequiredArgsConstructor
 public class FileUploadServiceImpl implements FileUploadService
 {
 
-	@Autowired
-	private CustomerRepository customerRepository;
+	private final CustomerRepository customerRepository;
 
-	@Autowired
-	private ActivityRepository activityRepository;
+	private final ActivityRepository activityRepository;
 
-	@Autowired
-	private HotelRepository hotelRepository;
+	private final HotelRepository hotelRepository;
 	
-	@Autowired
-	private IHotelService hotelService;		
+	private final IHotelService hotelService;		
 	
-	@Autowired
-	private NotificationService notificationService;	
+	private final NotificationService notificationService;	
 		
-	@Autowired
-	private CustomerPortService customerService;	
+	private final CustomerPortService customerService;	
 	
-	@Autowired
-	private LastMessagesService lastMessagesService;
+	private final LastMessagesService lastMessagesService;
 	
-	@Autowired
-	private ImageService imageService;
+	private final ImageService imageService;
 	
 //	@Autowired
 //	private CheckinRepository checkinRepository;
