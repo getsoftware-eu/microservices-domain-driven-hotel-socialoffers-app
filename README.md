@@ -1,4 +1,6 @@
-# My Vision of Domain-driven Design and Clean Architecture using microservices and AWS
+# My Vision of Clean Architecture and Domain-driven Design using microservices and AWS
+
+In this project, I use a <b>Hexagon</b> as a boundary between an application and the outside world. Inside the 'hexagon', I use a mix of simplified <b>Domain-Driven Design</b> (DDD) with <b>Clean</b>-Architecture (The 'infrastructure' and 'use case' logic is grouped into separate layers).
 
 The "Clean" (Layered) Architecture is another way to provide <b>separation of concerns</b>, <b>encapsulation</b> and <b>decoupling</b>, by grouping code units according to their domain and functional roles within the application.
 (This approach ensures that the architecture is easy to maintain and extend, as changes to one layer do not affect the others)
