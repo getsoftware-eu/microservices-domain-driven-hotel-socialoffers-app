@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model;
 
-import eu.getsoftware.hotelico.common.utils.DealStatus;
-import eu.getsoftware.hotelico.common.utils.HibernateUtils;
+import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
+import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

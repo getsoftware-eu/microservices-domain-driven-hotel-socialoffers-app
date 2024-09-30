@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.in.web.controller;
 
-import eu.getsoftware.hotelico.adapter.in.web.controller.BasicController;
-import eu.getsoftware.hotelico.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.infrastructure.chat.dto.ChatMsgDTO;
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
+import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.infrastructure.service.ChatService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;

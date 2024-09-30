@@ -1,14 +1,14 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.infrastructure.service;
 
-import eu.getsoftware.hotelico.amqp.producer.RabbitMQMessageProducer;
-import eu.getsoftware.hotelico.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.infrastructure.chat.dto.ChatMsgDTO;
-import eu.getsoftware.hotelico.clients.infrastructure.notification.NotificationRequest;
+import eu.getsoftware.hotelico.clients.api.amqp.producer.RabbitMQMessageProducer;
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.NotificationRequest;
+import eu.getsoftware.hotelico.clients.api.infrastructure.notification.NotificationService;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatUserEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.repository.ChatMessageRepository;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.repository.ChatUserRepository;
-import eu.getsoftware.hotelico.infrastructure.notification.NotificationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

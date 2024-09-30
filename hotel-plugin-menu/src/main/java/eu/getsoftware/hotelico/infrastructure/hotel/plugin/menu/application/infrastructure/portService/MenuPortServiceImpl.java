@@ -1,15 +1,15 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.infrastructure.portService;
 
-import eu.getsoftware.hotelico.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.infrastructure.menu.dto.MenuItemDTO;
-import eu.getsoftware.hotelico.clients.infrastructure.menu.dto.MenuOrderDTO;
-import eu.getsoftware.hotelico.common.utils.ControllerUtils;
-import eu.getsoftware.hotelico.common.utils.DealStatus;
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuItemDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
+import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuItemEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuOrder;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.repository.MenuItemRepository;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.repository.MenuOrderRepository;
-import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.port.in.iservice.IMenuPortService;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.iservice.IMenuPortService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

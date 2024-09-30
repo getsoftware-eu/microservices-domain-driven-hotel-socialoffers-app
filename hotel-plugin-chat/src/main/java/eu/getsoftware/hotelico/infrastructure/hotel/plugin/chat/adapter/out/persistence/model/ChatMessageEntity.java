@@ -12,7 +12,7 @@ import java.util.Objects;
 
 
 @Getter @Setter
-@Document(collection = "chat_messages")
+@Document(collection = "chat_messages") //Every bounded context stores its entities in its own DB schema
 public class ChatMessageEntity implements Serializable
 {
   private static final long serialVersionUID = -5478152926665631989L;

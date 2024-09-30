@@ -1,14 +1,14 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.infrastructure.service;
 
-import eu.getsoftware.hotelico.amqp.producer.RabbitMQMessageProducer;
-import eu.getsoftware.hotelico.clients.common.dto.HotelDTO;
-import eu.getsoftware.hotelico.clients.infrastructure.menu.MenuDTO;
-import eu.getsoftware.hotelico.clients.infrastructure.notification.CustomerUpdateRequest;
-import eu.getsoftware.hotelico.clients.infrastructure.notification.NotificationRequest;
+import eu.getsoftware.hotelico.clients.api.amqp.producer.RabbitMQMessageProducer;
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.MenuDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.CustomerUpdateRequest;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.NotificationRequest;
+import eu.getsoftware.hotelico.clients.api.infrastructure.notification.NotificationService;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuItemEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuUserEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.repository.MenuUserRepository;
-import eu.getsoftware.hotelico.infrastructure.notification.NotificationService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AmqpTemplate;

@@ -1,6 +1,10 @@
 # My Vision of Clean Architecture and Domain-driven Design using microservices and AWS
 
-In this project, I use a <b>Hexagon</b> as a boundary between an application and the outside world. Inside the 'hexagon', I use a mix of simplified <b>Domain-Driven Design</b> (DDD) with <b>Clean</b>-Architecture (The 'infrastructure' and 'use case' logic is grouped into separate layers).
+In this project, I use a <b>Hexagon</b> as a boundary between an application and the outside world. 
+
+Inside the 'hexagon', I use a mix of simplified <b>Domain-Driven Design</b> (DDD) with <b>Clean</b>-Architecture (The 'infrastructure' and 'use case' logic is grouped into separate layers).
+
+DDD helps maintain boundaries between domains.
 
 The "Clean" (Layered) Architecture is another way to provide <b>separation of concerns</b>, <b>encapsulation</b> and <b>decoupling</b>, by grouping code units according to their domain and functional roles within the application.
 (This approach ensures that the architecture is easy to maintain and extend, as changes to one layer do not affect the others)
@@ -46,6 +50,14 @@ The "Clean" (Layered) Architecture is another way to provide <b>separation of co
 
 3. Extra "Main" (<b>Config</b>) package
     - SpringConfig classes are divided separately for the 'application', 'useCases' and 'infrastructure' layers.
+
+
+## Simplified Domain-driven Design:
+### Interaction via (how to couple bounded contexts):
+#### - shared domain-events (sharing updates between contexts)
+#### - or application-service (that orchestrate ddd contexts)
+### Every bounded context stores its entities in its own DB schema (+ own persistence adapters)
+#### - Example @Table(schema = "userschema")
 
 ![aggregate model](/docs/img/aggregate-root.jpg)
 

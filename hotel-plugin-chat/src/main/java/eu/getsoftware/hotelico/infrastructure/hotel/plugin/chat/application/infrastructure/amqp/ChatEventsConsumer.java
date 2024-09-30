@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.infrastructure.amqp;
 
-import eu.getsoftware.hotelico.clients.infrastructure.notification.ChatMessageRequest;
-import eu.getsoftware.hotelico.clients.infrastructure.notification.CustomerUpdateRequest;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.ChatMessageRequest;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.CustomerUpdateRequest;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatUserEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.repository.ChatUserRepository;
