@@ -5,7 +5,7 @@ import eu.getsoftware.hotelico.clients.api.clients.domain.user.IUserDomain;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.User;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.UserDtoRepository;
 import eu.getsoftware.hotelico.hotelapp.application.customer.common.dto.UserDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.IUserService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.cache.annotation.CacheConfig;

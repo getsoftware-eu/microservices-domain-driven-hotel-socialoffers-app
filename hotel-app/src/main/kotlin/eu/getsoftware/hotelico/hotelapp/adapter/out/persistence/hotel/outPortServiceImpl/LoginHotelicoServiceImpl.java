@@ -7,13 +7,13 @@ import eu.getsoftware.hotelico.hotel.usecase.checkin.app.usecases.impl.CheckinSe
 import eu.getsoftware.hotelico.hotel.usecase.notification.app.usecases.impl.NotificationService;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.DealRepository;
-import eu.getsoftware.hotelico.hotelapp.application.customer.iPortService.in.CustomerPortService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.HotelEvent;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.LastMessagesService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.LoginHotelicoService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.MailService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.dto.ResponseDTO;
+import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.CustomerPortService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LoginHotelicoService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.MailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

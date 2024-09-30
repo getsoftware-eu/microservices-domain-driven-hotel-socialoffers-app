@@ -17,8 +17,8 @@ package eu.getsoftware.hotelico.hotelapp.main.config.adapter;
  */
 
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.social.SecurityContext;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.social.UserCookieGenerator;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social.SecurityContext;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social.UserCookieGenerator;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.social.connect.Connection;

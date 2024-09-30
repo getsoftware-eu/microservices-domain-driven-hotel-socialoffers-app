@@ -14,7 +14,7 @@ class HotelServiceImpl {
 	
 	val hotelRepository: HotelRepository = mockk();
 	val IHotelService =
-        eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.IHotelService(
+        eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService(
             hotelRepository
         );
 	

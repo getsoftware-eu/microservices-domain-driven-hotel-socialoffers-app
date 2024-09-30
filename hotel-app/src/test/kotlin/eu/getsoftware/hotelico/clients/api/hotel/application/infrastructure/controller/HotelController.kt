@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.clients.api.hotel.application.infrastructure.con
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.ninjasquad.springmockk.MockkBean
 import eu.getsoftware.hotelico.hotelapp.application.hotel.common.dto.HotelDTO
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.IHotelService
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService
 import io.mockk.every
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

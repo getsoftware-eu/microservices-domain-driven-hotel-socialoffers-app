@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.main.config;
 
-import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.aspects.NotifyAspect;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.aspects.NotifyAspect;
 import io.micrometer.core.aop.TimedAspect;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.modelmapper.ModelMapper;

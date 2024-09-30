@@ -14,10 +14,10 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.C
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.HotelRepository;
-import eu.getsoftware.hotelico.hotelapp.application.customer.iPortService.in.CustomerPortService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.LastMessagesService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.dto.CustomerNotificationDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.service.HotelRabbitMQProducer;
+import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.CustomerPortService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.service.HotelRabbitMQProducer;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.AsyncRabbitTemplate.RabbitConverterFuture;

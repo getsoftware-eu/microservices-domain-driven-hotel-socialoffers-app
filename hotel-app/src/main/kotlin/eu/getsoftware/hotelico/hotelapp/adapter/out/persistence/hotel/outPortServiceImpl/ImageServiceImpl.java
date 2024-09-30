@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortServiceImpl;
 
 import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.ImageUtils;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.ImageService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.ImageService;
 import org.springframework.stereotype.Service;
 
 import java.awt.image.BufferedImage;

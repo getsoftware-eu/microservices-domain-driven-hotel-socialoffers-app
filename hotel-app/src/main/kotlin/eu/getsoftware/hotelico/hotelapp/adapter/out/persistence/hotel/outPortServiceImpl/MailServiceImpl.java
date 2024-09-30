@@ -3,11 +3,11 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortSe
 import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
 import eu.getsoftware.hotelico.clients.common.utils.MailValidator;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
-import eu.getsoftware.hotelico.hotelapp.application.customer.iPortService.in.CustomerPortService;
+import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.common.dto.HotelDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.IHotelService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.MailService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.dto.HotelActivityDTO;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.MailService;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;

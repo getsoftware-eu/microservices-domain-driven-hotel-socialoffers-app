@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.main.config;
 
 
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.LastMessagesService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.service.ActiveCustomerPinger;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.service.ActiveCustomerPinger;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
 import jakarta.inject.Inject;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

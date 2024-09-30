@@ -4,7 +4,7 @@ import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.model.HotelActivity;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.ICustomerDeal;
-import eu.getsoftware.hotelico.hotelapp.application.deal.infrastructure.utils.DealStatus;
+import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.DealStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

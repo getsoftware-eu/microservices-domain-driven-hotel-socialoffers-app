@@ -50,8 +50,8 @@ package eu.getsoftware.hotelico.hotelapp.main.config.infrastructure;
  * limitations under the License.
  */
 
-import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.social.SecurityContext;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.social.SimpleConnectionSignUp;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social.SecurityContext;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social.SimpleConnectionSignUp;
 import eu.getsoftware.hotelico.hotelapp.main.config.adapter.SimpleSignInAdapter;
 import jakarta.inject.Inject;
 import jakarta.sql.DataSource;
