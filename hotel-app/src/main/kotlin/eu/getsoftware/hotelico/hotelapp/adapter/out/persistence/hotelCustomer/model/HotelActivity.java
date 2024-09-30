@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.m
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelRootEntity;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.IFileUploadable;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.IFileUploadable;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

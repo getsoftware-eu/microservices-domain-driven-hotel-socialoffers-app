@@ -1,0 +1,1 @@
+UseCases should use port.out.iPortService (port."in" interface for UseCases, port."out" interface for used Repositories)

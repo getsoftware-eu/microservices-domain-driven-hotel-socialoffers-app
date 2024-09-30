@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.usecase.register;
 
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.IUserService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.IUserService;
 
 import java.time.LocalDateTime;
 

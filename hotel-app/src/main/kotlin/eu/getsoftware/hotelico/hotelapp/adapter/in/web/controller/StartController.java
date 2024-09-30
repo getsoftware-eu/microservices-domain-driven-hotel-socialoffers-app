@@ -2,8 +2,8 @@ package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller;
 
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
 import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.IHotelService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.LastMessagesService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.IHotelService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.LastMessagesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

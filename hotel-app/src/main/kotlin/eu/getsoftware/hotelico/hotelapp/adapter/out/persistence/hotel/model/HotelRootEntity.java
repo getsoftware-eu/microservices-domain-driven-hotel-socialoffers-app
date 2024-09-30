@@ -3,7 +3,8 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.model.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.model.HotelActivity;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.IFileUploadable;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.IFileUploadable;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,7 +18,7 @@ import java.util.Set;
 @Entity
 @Getter @Setter
 @Table(name = "hotel", schema = "hotel")
-public class HotelRootEntity implements Serializable, IFileUploadable
+public class HotelRootEntity implements IHotelRootEntity, Serializable, IFileUploadable
 {
     private static final long serialVersionUID = -4429239383913774205L;
 	

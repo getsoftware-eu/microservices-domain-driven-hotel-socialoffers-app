@@ -1,15 +1,14 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository;
 
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.iRepository.ICustomerRepository
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-
-import java.sql.Timestamp;
+import eu.getsoftware.hotelico.hotelapp.application.customer.iPortService.out.IRepository.ICustomerRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
+import java.sql.Timestamp
 
 interface CustomerRepository: ICustomerRepository, JpaRepository<CustomerRootEntity, Long> {
 	

@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.service;
 
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.LastMessagesService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.LastMessagesService;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.List;

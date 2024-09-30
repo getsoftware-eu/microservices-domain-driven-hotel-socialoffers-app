@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller.deal;
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
 import eu.getsoftware.hotelico.hotelapp.application.deal.infrastructure.dto.CustomerDealDTO;
 import eu.getsoftware.hotelico.hotelapp.application.deal.infrastructure.utils.DealAction;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.IHotelService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.IHotelService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.aspects.NotifyClients;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.dto.ResponseDTO;
 import org.slf4j.Logger;

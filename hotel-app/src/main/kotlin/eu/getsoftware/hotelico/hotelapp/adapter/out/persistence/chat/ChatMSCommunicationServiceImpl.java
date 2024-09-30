@@ -10,10 +10,10 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.reposit
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.model.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.model.HotelActivity;
-import eu.getsoftware.hotelico.hotelapp.application.customer.iservice.CustomerPortService;
+import eu.getsoftware.hotelico.hotelapp.application.customer.iPortService.in.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.HotelEvent;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.IHotelService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.LastMessagesService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.IHotelService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.LastMessagesService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.service.HotelRabbitMQProducer;
 import eu.getsoftware.hotelico.hotelapp.application.service.ChatMSComminicationService;
 import org.apache.commons.lang.NotImplementedException;

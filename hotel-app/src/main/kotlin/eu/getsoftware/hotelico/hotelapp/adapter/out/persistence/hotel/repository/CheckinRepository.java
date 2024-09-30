@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repositor
 
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.model.CustomerHotelCheckin;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.iRepository.ICheckinRepository;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.out.iRepository.ICheckinRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
