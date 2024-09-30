@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.application.chat.infrastructure.impl;
+package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.chat;
 
 import eu.getsoftware.hotelico.chat.domain.ChatMessageView;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;

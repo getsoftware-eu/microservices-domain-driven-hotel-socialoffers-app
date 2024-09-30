@@ -1,0 +1,1 @@
+The "client" folder is an important part of a microservice system, providing a centralized and unified way for services to communicate with each other.

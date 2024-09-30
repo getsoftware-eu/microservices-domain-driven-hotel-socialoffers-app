@@ -1,1 +1,3 @@
 API-Classes to import to other projcts? To synchronize REST API???
+
+The client folder is an important part of a microservice system, providing a centralized and unified way for services to communicate with each other.

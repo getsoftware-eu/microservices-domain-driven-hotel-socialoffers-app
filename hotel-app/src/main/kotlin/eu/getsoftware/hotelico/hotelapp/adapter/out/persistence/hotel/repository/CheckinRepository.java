@@ -2,6 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repositor
 
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.model.CustomerHotelCheckin;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.iRepository.ICheckinRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -9,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Date;
 import java.util.List;
 
-public interface CheckinRepository extends JpaRepository<CustomerHotelCheckin, Long> {
+public interface CheckinRepository extends ICheckinRepository, JpaRepository<CustomerHotelCheckin, Long> {
 
 	public final static String FIND_ACTIVE_BY_CUSTOMER_QUERY = "SELECT c " +
 			"FROM CustomerHotelCheckin c " +

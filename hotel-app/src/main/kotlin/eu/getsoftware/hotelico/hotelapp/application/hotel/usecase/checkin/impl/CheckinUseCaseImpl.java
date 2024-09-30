@@ -3,17 +3,16 @@ package eu.getsoftware.hotelico.hotelapp.application.hotel.usecase.checkin.impl;
 import eu.getsoftware.hotelico.chat.domain.ChatMessageView;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
-import eu.getsoftware.hotelico.hotel.infrastructure.repository.ChatRepository;
 import eu.getsoftware.hotelico.hotel.usecase.notification.app.usecases.impl.NotificationService;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.CheckinRepository;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.HotelRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.WallPostRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.model.CustomerHotelCheckin;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.iRepository.ICustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.application.customer.iservice.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.HotelEvent;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.iRepository.IHotelRepository;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.IHotelService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.LastMessagesService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.dto.WallPostDTO;
@@ -52,10 +51,10 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 	private NotificationService notificationService;	
 	
 	@Autowired
-	private CustomerRepository customerRepository;	
+	private ICustomerRepository customerRepository;	
 	
 	@Autowired
-	private HotelRepository hotelRepository;	
+	private IHotelRepository hotelRepository;	
 	
 	@Autowired
 	private WallPostRepository wallPostRepository;	
@@ -64,7 +63,7 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 	private CheckinRepository checkinRepository;	
 	
 	@Autowired
-	private ChatRepository chatRepository;
+	private IChatRepository chatRepository;
 	
 
 	@Transactional
@@ -90,7 +89,7 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 				//Eugen: full checkin, wenn checked-in with Hotel-Code!
 				isFullCheckin = (hotelRootEntity !=null);
 			}
-			if(hotelRootEntity ==null && customerDto.getHotelId()!=null && customerDto.getHotelId()>0 && (!ControllerUtils.ALLOW_INIT_VIRTUAL_HOTEL || customerDto.getHotelId() != virtualHotelId))
+			if(hotelRootEntity ==null && customerDto.getHotelId()>0 && (!ControllerUtils.ALLOW_INIT_VIRTUAL_HOTEL || customerDto.getHotelId() != virtualHotelId))
 			{
 				hotelRootEntity = hotelRepository.getOne(customerDto.getHotelId());
 			}
@@ -105,7 +104,6 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 			//If checkin exists, 
 			if(hotelRootEntity != null && !hotelRootEntity.isVirtual() && checkinDateIsValid)
 			{
-
 				Date lastSameHotelCheckin = checkinRepository.getLastByCustomerAndHotelId(customerEntity.getId(), hotelRootEntity.getId());
 
 				customerDto.setHotelId(hotelRootEntity.getId());
@@ -218,8 +216,10 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 				customerEntity.getEntityAggregate().setConsistencyId(consistencyId);
 				
 				lastMessagesService.updateCustomerConsistencyId(customerEntity.getId(), consistencyId);
+
+				CustomerRootEntity iCustomerRootEntity = customerRepository.saveAndFlush(customerEntity);
 				
-				customerDto = customerService.convertCustomerToDto(customerRepository.saveAndFlush(customerEntity), true, nowGoodCheckin);
+				customerDto = customerService.convertCustomerToDto(iCustomerRootEntity, true, nowGoodCheckin);
 				
 			}
 			else{ //if no hotel more, maybe cancel actual checkin

@@ -1,12 +1,11 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.usecase.notification;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.dto.WallPostDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.HotelEvent;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.model.HotelActivity;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
@@ -28,10 +27,10 @@ public interface NotificationUseCase
 	void createAndSendNotification(long receiverId, HotelEvent event);
 
 	@Transactional
-	void sendMailList(CustomerRootEntity customerEntity, Map<String, String> systemMessages);
+	void sendMailList(ICustomerRootEntity customerEntity, Map<String, String> systemMessages);
 	
 	@Transactional
-	void sendFeedMessage(CustomerRootEntity customerEntity, Map<String, String> systemMessages);
+	void sendFeedMessage(ICustomerRootEntity customerEntity, Map<String, String> systemMessages);
 	
 	@Transactional
 	void createAndSendPushNotification_Chat(long receiverId, HotelEvent event, long senderId, String message);

@@ -3,6 +3,7 @@ package eu.getsoftware.hotelico.hotelapp.application.customer.domain.model;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.CustomerAggregate;
 
 public interface ICustomerRootEntity {
+    
     void setConsistencyId(long consistencyId);
 
     long getId();

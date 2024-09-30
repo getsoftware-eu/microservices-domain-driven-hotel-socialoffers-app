@@ -2,6 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.application.customer.domain.infrastruct
 
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.iRepository.ICustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.service.FileStore;
 import eu.getsoftware.hotelico.hotelapp.main.config.BucketName;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import static org.apache.http.entity.ContentType.*;
 public class UserProfileService
 {
 
-    private CustomerRepository customerRepository;
+    private ICustomerRepository customerRepository;
     private final FileStore fileStore;
 
     @Autowired

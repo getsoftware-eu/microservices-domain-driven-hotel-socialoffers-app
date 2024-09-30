@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.iEntity;
+package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model;
 
 import java.util.Set;
 

@@ -223,7 +223,12 @@ public class CustomerDTO extends BasicDTO
         temp.errorResponse = error;
         return temp;
     }
-    
+
+    public void setHotelId(long id) {
+        
+        this.hotelId = id;
+    }
+
     /**
      * CustomerDTO dto = new CustomerBuilder(reuiredParams).setOptional1("user").setOptional2(true).build();
      */

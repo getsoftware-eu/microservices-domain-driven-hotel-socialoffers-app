@@ -1,10 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService;
 
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.BasicHotelException;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.dto.ResponseDTO;
-import eu.getsoftware.hotelico.hotelapp.model.CustomerDeal;
 
 import java.awt.geom.Point2D;
 import java.util.List;
@@ -22,7 +20,7 @@ public interface IHotelService
     
     HotelDTO updateHotel(HotelDTO hotelDto);    
     
-    Map<Long, String> getNotLoggedGuestPushIdsByHotel(HotelRootEntity hotelRootEntity);    
+    Map<Long, String> getNotLoggedGuestPushIdsByHotel(IHotelRootEntity hotelRootEntity);    
 	
     Map<Long, String> getUnsubscribeGuestPushIds();
 

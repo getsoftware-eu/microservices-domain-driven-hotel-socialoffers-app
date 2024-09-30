@@ -1,28 +1,26 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.usecase.notification.impl;
 
-import eu.getsoftware.hotelico.chat.domain.ChatMessageView;
-import eu.getsoftware.hotelico.hotelapp.application.service.ChatMSComminicationService;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
 import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository;
+import eu.getsoftware.hotelico.hotelapp.application.chat.infrastructure.ChatMSComminicationService;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.iRepository.ICustomerRepository;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.iservice.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.deal.infrastructure.utils.DealStatus;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.CheckinRepository;
-import eu.getsoftware.hotelico.hotel.application.iService.*;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.HotelEvent;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.iRepository.ICheckinRepository;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.IHotelService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.LastMessagesService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.MailService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.infrastructure.service.HotelRabbitMQProducer;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.IHotelService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.LastMessagesService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.iPortService.MailService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.usecase.notification.NotificationUseCase;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.HotelEvent;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.model.HotelActivity;
-import eu.getsoftware.hotelico.hotelapp.application.menuview.service.MenuMSCommunicationService;
+import eu.getsoftware.hotelico.hotelapp.application.menu.infrastructure.service.MenuMSCommunicationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
@@ -46,7 +44,6 @@ import java.util.*;
 @RequiredArgsConstructor
 public class NotificationUseCaseImpl implements NotificationUseCase
 {
-	
 	private final IHotelService hotelService;
 	
 	private final MenuMSCommunicationService menuMSCommunicationService;	
@@ -57,9 +54,9 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	
 	private final MailService mailService;
 	
-	private final CustomerRepository customerRepository;	
+	private final ICustomerRepository customerRepository;	
 	
-	private final CheckinRepository checkinRepository;	
+	private final ICheckinRepository checkinRepository;	
 	
 	private final ChatMSComminicationService chatMSComminicationService;
 	
@@ -273,7 +270,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 			Map<Long, Boolean> lastMessageSeenByCustomer = new HashMap<>();
 			Map<Long, Boolean> lastMessageDelieveredToCustomer = new HashMap<>();
 			
-			Set<CustomerRootEntity> allChatPartners = new HashSet<>();
+			Set<ICustomerRootEntity> allChatPartners = new HashSet<>();
 			
 			//TODO Eugen: save last message in cache
 			allChatPartners.addAll(chatMSComminicationService.getChatSendersByCustomerId(receiverId));
@@ -284,7 +281,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 			
 			//////////////
 			
-			for (CustomerRootEntity nextChatCustomerRootEntity : allChatPartners)
+			for (ICustomerRootEntity nextChatCustomerRootEntity : allChatPartners)
 			{
 				//            if (ControllerUtils.isCustomerOnline(nextNotHotelCustomer))
 				//            {
@@ -360,7 +357,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 		
 	}
 	
-	public void sendFeedMessage(CustomerRootEntity customerEntity, Map<String, String> systemMessages)
+	public void sendFeedMessage(ICustomerRootEntity customerEntity, Map<String, String> systemMessages)
 	{
 		String feedMessage = systemMessages.get("hotelFeedMessage");
 		
@@ -387,7 +384,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 			{
 				long nextId = Integer.parseInt(nextCustomerId.trim());
 				
-				CustomerRootEntity nextFeedCustomerRootEntity = customerRepository.getOne(nextId);
+				ICustomerRootEntity nextFeedCustomerRootEntity = customerRepository.getOne(nextId);
 				
 				if(nextFeedCustomerRootEntity !=null && nextFeedCustomerRootEntity.getEntityAggregate().isAllowHotelNotification())
 				{
@@ -422,7 +419,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 			if(sendToUnLogged)
 			{
 				int activId = Integer.parseInt(inviteActivityId);
-				HotelActivity hotelActivity = hotelService.getActivityByIdOrInitId(activId, activId);
+				IHotelActivity hotelActivity = hotelService.getActivityByIdOrInitId(activId, activId);
 				
 				//SEND GUEST PUSH!!!
 				this.sendPushToAllNotLoggedInHotel(hotelActivity);
@@ -430,7 +427,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 		}
 	}
 	
-	public void sendMailList(CustomerRootEntity customerEntity, Map<String, String> systemMessages)
+	public void sendMailList(ICustomerRootEntity customerEntity, Map<String, String> systemMessages)
 	{
 		log.info("mailList inhalt: " + systemMessages);
 		
@@ -497,7 +494,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 		
 		if(event.getPushUrl()!=null)
 		{
-			CustomerRootEntity sender = customerRepository.getOne(senderId);
+			ICustomerRootEntity sender = customerRepository.getOne(senderId);
 			
 			if(sender!=null)
 			{
@@ -512,7 +509,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	}
 	
 	@Override
-	public void createAndSendPushNotification_Activity(long receiverId, HotelEvent event, HotelActivity activity, String message)
+	public void createAndSendPushNotification_Activity(long receiverId, HotelEvent event, IHotelActivity activity, String message)
 	{
 		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 		
@@ -565,7 +562,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 			return;
 		}
 		
-		CustomerRootEntity customerEntity = customerRepository.getOne(customerId);
+		ICustomerRootEntity customerEntity = customerRepository.getOne(customerId);
 		
 		String pushRegistrationId = customerEntity.getPushRegistrationId();
 
@@ -613,7 +610,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	}
 
 	@Override
-	public boolean sendPushToAllNotLoggedInHotel(HotelActivity hotelActivity)
+	public boolean sendPushToAllNotLoggedInHotel(IHotelActivity hotelActivity)
 	{
 		if(hotelActivity==null)
 		{
@@ -630,9 +627,9 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 
 		Set<String> loggedGuestPushIds = new HashSet<>();
 		
-		List<CustomerRootEntity> allActiveInHotel = checkinRepository.getActiveCustomersByHotelId(hotelActivity.getHotelRootEntity().getId(), new Date());
+		List<ICustomerRootEntity> allActiveInHotel = checkinRepository.getActiveCustomersByHotelId(hotelActivity.getHotelRootEntity().getId(), new Date());
 		
-		for (CustomerRootEntity nextActiveCustomerRootEntity : allActiveInHotel)
+		for (ICustomerRootEntity nextActiveCustomerRootEntity : allActiveInHotel)
 		{
 			loggedGuestPushIds.add(nextActiveCustomerRootEntity.getPushRegistrationId());
 		}
@@ -667,7 +664,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	}
 	
 	@Override
-	public void sendNotificationToCustomerOrGuest(CustomerRootEntity receiver, long guestCustomerId, HotelEvent event)
+	public void sendNotificationToCustomerOrGuest(ICustomerRootEntity receiver, long guestCustomerId, HotelEvent event)
 	{
 		if(receiver!=null)
 		{
