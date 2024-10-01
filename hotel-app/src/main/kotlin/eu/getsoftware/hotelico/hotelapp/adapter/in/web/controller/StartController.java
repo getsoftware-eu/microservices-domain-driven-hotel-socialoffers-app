@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller;
 
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +32,11 @@ public class StartController  extends BasicController
     public String viewUsers(ModelMap model) {
 
         model.addAttribute("virtualHotelId", lastMessagesService.getInitHotelId());
-        model.addAttribute("host", ControllerUtils.HOST);
-        model.addAttribute("hostSuffix", ControllerUtils.HOST_SUFFIX);
+        model.addAttribute("host", AppConfigProperties.HOST);
+        model.addAttribute("hostSuffix", AppConfigProperties.HOST_SUFFIX);
         
         model.addAttribute("demoHotelId", lastMessagesService.getDemoHotelId());
-        model.addAttribute("demoHotelCode", ControllerUtils.HOTEL_DEMO_CODE);
+        model.addAttribute("demoHotelCode", AppConfigProperties.HOTEL_DEMO_CODE);
         
         return "start";
     }

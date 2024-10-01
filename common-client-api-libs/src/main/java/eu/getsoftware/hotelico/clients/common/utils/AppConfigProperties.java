@@ -10,7 +10,8 @@ import java.util.concurrent.ThreadLocalRandom;
 /**
  * Created by Eugen on 14.07.2015.
  */
-public class ControllerUtils
+//@ConfigurationProperties(prefix = "buckpal")
+public class AppConfigProperties
 {
 	public static final String SESSION_CUSTOMER_ID = "sessionCustomerId";
 	public static final String SESSION_CUSTOMER = "sessionCustomer";
@@ -114,10 +115,10 @@ public class ControllerUtils
 			return time;
 		
 		if(date.after(convertToDate(LocalDateTime.now().withHour(0).withMinute(0))))
-			time = ControllerUtils.timeFormat.format(date.getTime());
+			time = AppConfigProperties.timeFormat.format(date.getTime());
 		else
 //			time = ControllerUtils.dateTimeFormat.format(date.getTime());
-			time = ControllerUtils.dateFormat.format(date.getTime());
+			time = AppConfigProperties.dateFormat.format(date.getTime());
 		return time;
 	}
 

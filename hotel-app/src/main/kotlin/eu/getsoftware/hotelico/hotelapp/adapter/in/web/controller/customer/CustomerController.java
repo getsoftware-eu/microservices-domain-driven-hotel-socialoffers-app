@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller.customer;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotel.infrastructure.controller.BasicController;
 import eu.getsoftware.hotelico.hotel.usecase.checkin.app.usecases.impl.CheckinService;
 import eu.getsoftware.hotelico.hotel.usecase.notification.app.usecases.impl.NotificationService;
@@ -49,9 +49,9 @@ public class CustomerController extends BasicController
     }
     
     //INIT Session values
-    @ModelAttribute(ControllerUtils.SESSION_CUSTOMER)
+    @ModelAttribute(AppConfigProperties.SESSION_CUSTOMER)
     public CustomerDTO initSessionCustomer(HttpSession httpSession) {
-        return httpSession.getAttribute(ControllerUtils.SESSION_CUSTOMER)!=null? (CustomerDTO) httpSession.getAttribute(ControllerUtils.SESSION_CUSTOMER) : new CustomerDTO(0); // populates form for the first time if its null
+        return httpSession.getAttribute(AppConfigProperties.SESSION_CUSTOMER)!=null? (CustomerDTO) httpSession.getAttribute(AppConfigProperties.SESSION_CUSTOMER) : new CustomerDTO(0); // populates form for the first time if its null
     }
     
     @RequestMapping(method = RequestMethod.GET)
@@ -90,7 +90,7 @@ public class CustomerController extends BasicController
         CustomerDTO out = customerService.updateCustomer(customerDTO, requesterId);
         
         //update in session
-        httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, out);
+        httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
         
         return out;
     }
@@ -153,8 +153,8 @@ public class CustomerController extends BasicController
             out.setErrorResponse("Connection error: " + e.getMessage());
         }
         //set in session
-        httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, out);
-        response.addCookie(new Cookie(ControllerUtils.SESSION_CUSTOMER_ID, out.getId() + ""));
+        httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
+        response.addCookie(new Cookie(AppConfigProperties.SESSION_CUSTOMER_ID, out.getId() + ""));
 
         return out;
     }
@@ -167,7 +167,7 @@ public class CustomerController extends BasicController
         task.setId(id);
         customerService.deleteCustomer(task);
 
-        httpSession.removeAttribute(ControllerUtils.SESSION_CUSTOMER);
+        httpSession.removeAttribute(AppConfigProperties.SESSION_CUSTOMER);
     }
 
     @NotifyClients
@@ -182,15 +182,15 @@ public class CustomerController extends BasicController
             out = loginService.checkBeforeLoginProperties(customerDto, out);
         }
         
-        httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, out);
-        response.addCookie(new Cookie(ControllerUtils.SESSION_CUSTOMER_ID, out.getId() + ""));
+        httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
+        response.addCookie(new Cookie(AppConfigProperties.SESSION_CUSTOMER_ID, out.getId() + ""));
 
         return out;
     }
     
 
     @RequestMapping(value = "/login/email/{email:.+}/password/{password}", method = RequestMethod.GET)
-    public @ResponseBody CustomerDTO checkLogin(@ModelAttribute(ControllerUtils.SESSION_CUSTOMER) CustomerDTO sessionCustomer, @PathVariable String email, @PathVariable String password, SessionStatus sessionStatus, HttpSession httpSession/*, HttpServletResponse response*/) {
+    public @ResponseBody CustomerDTO checkLogin(@ModelAttribute(AppConfigProperties.SESSION_CUSTOMER) CustomerDTO sessionCustomer, @PathVariable String email, @PathVariable String password, SessionStatus sessionStatus, HttpSession httpSession/*, HttpServletResponse response*/) {
 
         sessionStatus.setComplete();
         
@@ -201,8 +201,8 @@ public class CustomerController extends BasicController
 			lastMessagesService.setLastFullNotification(out.getId(), null);
 		}
 		
-        httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, out);
-        httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER+"2", out);
+        httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
+        httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER+"2", out);
         sessionCustomer = out;
 //        response.addCookie(new Cookie(ControllerUtils.SESSION_CUSTOMER_ID, out.getId() + ""));
 
@@ -224,8 +224,8 @@ public class CustomerController extends BasicController
 		}
        
         
-        httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, out);
-        httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER+"2", out);
+        httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
+        httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER+"2", out);
 //        sessionCustomer = out;
 //        response.addCookie(new Cookie(ControllerUtils.SESSION_CUSTOMER_ID, out.getId() + ""));
 
@@ -241,13 +241,13 @@ public class CustomerController extends BasicController
         
         CustomerDTO out = checkinService.updateCheckin(sessionCustomer);
 
-        httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, out);
+        httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
     
         return out;
     }
 
     @RequestMapping(value = "/validSessionCustomer", method = RequestMethod.GET)
-    public @ResponseBody CustomerDTO getValidSessionCustomer(/*@CookieValue(value = ControllerUtils.SESSION_CUSTOMER_ID, required = false) String sessionCustomerCookie ,*/ @ModelAttribute(ControllerUtils.SESSION_CUSTOMER) CustomerDTO sessionCustomer,  BindingResult result, SessionStatus sessionStatus, HttpSession httpSession) {
+    public @ResponseBody CustomerDTO getValidSessionCustomer(/*@CookieValue(value = ControllerUtils.SESSION_CUSTOMER_ID, required = false) String sessionCustomerCookie ,*/ @ModelAttribute(AppConfigProperties.SESSION_CUSTOMER) CustomerDTO sessionCustomer, BindingResult result, SessionStatus sessionStatus, HttpSession httpSession) {
         sessionStatus.setComplete();
 
         if (result.hasErrors()) {
@@ -258,13 +258,13 @@ public class CustomerController extends BasicController
         {
             CustomerDTO out = customerService.getById(sessionCustomer.getId(), sessionCustomer.getId());
 			lastMessagesService.setLastFullNotification(out.getId(), null);
-			httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, out);
+			httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
         }
         else if(sessionCustomer!=null && sessionCustomer.getId()>0)
         {
             CustomerDTO out = customerService.synchronizeCustomerToDto(sessionCustomer);
 			lastMessagesService.setLastFullNotification(out.getId(), null);
-			httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, out);
+			httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
 
             return out;
         }
@@ -280,7 +280,7 @@ public class CustomerController extends BasicController
     }
     
     @RequestMapping(value = "/validSessionCustomer", method = RequestMethod.POST)
-    public @ResponseBody CustomerDTO setValidSessionCustomer(/*@CookieValue(value = ControllerUtils.SESSION_CUSTOMER_ID, required = false) String sessionCustomerCookie ,*/ @ModelAttribute(ControllerUtils.SESSION_CUSTOMER) CustomerDTO sessionCustomer,  BindingResult result, SessionStatus sessionStatus, HttpSession httpSession) {
+    public @ResponseBody CustomerDTO setValidSessionCustomer(/*@CookieValue(value = ControllerUtils.SESSION_CUSTOMER_ID, required = false) String sessionCustomerCookie ,*/ @ModelAttribute(AppConfigProperties.SESSION_CUSTOMER) CustomerDTO sessionCustomer, BindingResult result, SessionStatus sessionStatus, HttpSession httpSession) {
         sessionStatus.setComplete();
 
         if (result.hasErrors()) {
@@ -290,7 +290,7 @@ public class CustomerController extends BasicController
         {
             CustomerDTO out = customerService.getById(sessionCustomer.getId(), sessionCustomer.getId());
 			lastMessagesService.setLastFullNotification(out.getId(), null);
-			httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, out);
+			httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
         }
         else 
         if(sessionCustomer!=null && sessionCustomer.getId()>0)
@@ -299,7 +299,7 @@ public class CustomerController extends BasicController
             sessionCustomer.setLogged(true);
             lastMessagesService.checkCustomerOnline(sessionCustomer.getId());
 			lastMessagesService.setLastFullNotification(sessionCustomer.getId(), null);
-			httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, sessionCustomer);
+			httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, sessionCustomer);
 
         }
         
@@ -327,7 +327,7 @@ public class CustomerController extends BasicController
     
     @RequestMapping(value = "/{customerId}/customerPing", method = RequestMethod.GET)
     public @ResponseBody
-    CustomerNotificationDTO getCustomerPing(@PathVariable("customerId") long customerId, @ModelAttribute(ControllerUtils.SESSION_CUSTOMER) CustomerDTO sessionCustomer,  BindingResult result, SessionStatus sessionStatus, HttpSession httpSession) {
+    CustomerNotificationDTO getCustomerPing(@PathVariable("customerId") long customerId, @ModelAttribute(AppConfigProperties.SESSION_CUSTOMER) CustomerDTO sessionCustomer, BindingResult result, SessionStatus sessionStatus, HttpSession httpSession) {
         sessionStatus.setComplete();
 
         if (result.hasErrors()) {
@@ -349,18 +349,18 @@ public class CustomerController extends BasicController
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public @ResponseBody CustomerDTO logout(@ModelAttribute(ControllerUtils.SESSION_CUSTOMER) CustomerDTO customerDto, HttpSession httpSession, WebRequest request, SessionStatus status, HttpServletResponse response) {
+    public @ResponseBody CustomerDTO logout(@ModelAttribute(AppConfigProperties.SESSION_CUSTOMER) CustomerDTO customerDto, HttpSession httpSession, WebRequest request, SessionStatus status, HttpServletResponse response) {
         
         if(customerDto != null)
         {
             loginService.logoutCustomer(customerDto);
-            httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, customerDto);
+            httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, customerDto);
             lastMessagesService.setLastFullNotification(customerDto.getId(), null);
     
             status.setComplete();
-            response.addCookie(new Cookie(ControllerUtils.SESSION_CUSTOMER_ID, null));
-            httpSession.removeAttribute(ControllerUtils.SESSION_CUSTOMER);
-            request.removeAttribute(ControllerUtils.SESSION_CUSTOMER, WebRequest.SCOPE_SESSION);
+            response.addCookie(new Cookie(AppConfigProperties.SESSION_CUSTOMER_ID, null));
+            httpSession.removeAttribute(AppConfigProperties.SESSION_CUSTOMER);
+            request.removeAttribute(AppConfigProperties.SESSION_CUSTOMER, WebRequest.SCOPE_SESSION);
             //            store.cleanupAttribute(request, ControllerUtils.SESSION_CUSTOMER_ID);
             status.setComplete();
 		}
@@ -400,7 +400,7 @@ public class CustomerController extends BasicController
 
         if(dto!=null)
         {
-            httpSession.setAttribute(ControllerUtils.SESSION_CUSTOMER, dto);
+            httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, dto);
         }
 
         return dto;

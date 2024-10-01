@@ -16,4 +16,6 @@ public interface IHotelEvent {
 
 //    HotelEvent parseByValue(String value);
     
+    IHotelEvent getEventCheckin();
+    IHotelEvent getEventCheckout();
 }

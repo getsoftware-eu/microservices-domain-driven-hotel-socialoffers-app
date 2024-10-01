@@ -19,4 +19,7 @@ public interface IHotelRootEntity {
 
     public void setMediaUploaded(boolean mediaUploaded);
 
+    boolean isVirtual();
+
+    String getCurrentHotelAccessCode();
 }

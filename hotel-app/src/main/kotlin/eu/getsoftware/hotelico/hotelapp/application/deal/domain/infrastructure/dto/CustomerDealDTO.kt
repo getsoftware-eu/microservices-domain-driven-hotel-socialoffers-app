@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.dto;
 
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties
 import java.util.*
 
 data class CustomerDealDTO(val initId: Long): BasicDTO(initId)
@@ -56,15 +56,15 @@ data class CustomerDealDTO(val initId: Long): BasicDTO(initId)
     }
 
     fun getValidToString(): String {
-        return ControllerUtils.dateFormat.format(validTo)
+        return AppConfigProperties.dateFormat.format(validTo)
     }
 
     fun getValidFromString(): String {
-        return ControllerUtils.dateFormat.format(validFrom)
+        return AppConfigProperties.dateFormat.format(validFrom)
     }
 
     fun getPictureUrl(): String? {
-        return ControllerUtils.addHostPrefixOnDemand(pictureUrl)
+        return AppConfigProperties.addHostPrefixOnDemand(pictureUrl)
     }
 
     fun setPictureUrl(pictureUrl: String) {
@@ -73,9 +73,9 @@ data class CustomerDealDTO(val initId: Long): BasicDTO(initId)
 
     fun getPreviewPictureUrl(): String? {
         
-        val picUrl = if (ControllerUtils.isEmptyString(previewPictureUrl)) ControllerUtils.PREVIEW_HOTEL_NOT_AVAILABLE_URL else previewPictureUrl
+        val picUrl = if (AppConfigProperties.isEmptyString(previewPictureUrl)) AppConfigProperties.PREVIEW_HOTEL_NOT_AVAILABLE_URL else previewPictureUrl
 
-        return ControllerUtils.addHostPrefixOnDemand(picUrl)
+        return AppConfigProperties.addHostPrefixOnDemand(picUrl)
     }
 
     fun setPreviewPictureUrl(previewPictureUrl: String) {
@@ -83,6 +83,6 @@ data class CustomerDealDTO(val initId: Long): BasicDTO(initId)
     }
 
     fun getTimeString(): String? {
-        return if (consistencyId > 0) ControllerUtils.getTimeFormatted(Date(consistencyId)) else null
+        return if (consistencyId > 0) AppConfigProperties.getTimeFormatted(Date(consistencyId)) else null
     }
 }

@@ -1,6 +1,5 @@
 package eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto;
 
-import eu.getsoftware.hotelico.clients.api.clients.domain.chat.IChatMessageDomain;
 import lombok.Getter;
 
 import java.sql.Timestamp;
@@ -19,10 +18,11 @@ public record ChatMsgDTO(
 		Timestamp timestamp,
 		Map<String, String> specialContent
 
-    ) implements IChatMessageDomain
+    ) 
 		//implements BasicDTO(initId)
 {
-	 
+	
+
 //    Map specialContent = HashMap<String, String>();
 //	
 //	Date getSendTime() 

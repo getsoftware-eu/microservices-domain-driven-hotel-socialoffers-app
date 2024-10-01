@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto;
 
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties
 import java.util.*
 
 data class HotelActivityDTO(var hotelId: Long? = 0L): BasicDTO()
@@ -70,15 +70,15 @@ data class HotelActivityDTO(var hotelId: Long? = 0L): BasicDTO()
     }
 
     fun getValidToString(): String {
-        return ControllerUtils.dateFormat.format(validTo)
+        return AppConfigProperties.dateFormat.format(validTo)
     }
 
     fun getValidFromString(): String {
-        return ControllerUtils.dateFormat.format(validFrom)
+        return AppConfigProperties.dateFormat.format(validFrom)
     }
 
     fun getPictureUrl(): String? {
-        return ControllerUtils.addHostPrefixOnDemand(pictureUrl)
+        return AppConfigProperties.addHostPrefixOnDemand(pictureUrl)
     }
     
     fun setPictureUrl(pictureUrl: String){
@@ -86,7 +86,7 @@ data class HotelActivityDTO(var hotelId: Long? = 0L): BasicDTO()
     }
     
     fun getPreviewPictureUrl(): String {
-        return previewPictureUrl ?: ControllerUtils.PREVIEW_ACTIVITY_NOT_AVAILABLE_URL
+        return previewPictureUrl ?: AppConfigProperties.PREVIEW_ACTIVITY_NOT_AVAILABLE_URL
     }
 
     fun setPreviewPictureUrl(previewPictureUrl: String) {

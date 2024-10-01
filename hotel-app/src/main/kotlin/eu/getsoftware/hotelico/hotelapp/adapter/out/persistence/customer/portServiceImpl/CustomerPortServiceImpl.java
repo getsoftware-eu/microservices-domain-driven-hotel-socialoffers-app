@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.portSe
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.infrastructure.notification.NotificationService;
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.Language;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository;
@@ -33,7 +33,7 @@ import java.net.URLDecoder;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import static eu.getsoftware.hotelico.clients.common.utils.ControllerUtils.convertToDate;
+import static eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties.convertToDate;
 
 @Service
 public class CustomerPortServiceImpl implements CustomerPortService
@@ -270,9 +270,9 @@ public class CustomerPortServiceImpl implements CustomerPortService
                
            } 
            
-           if(customerEntity !=null && customerDto.getSystemMessages().containsKey(ControllerUtils.PUSH_CHROME_ID))
+           if(customerEntity !=null && customerDto.getSystemMessages().containsKey(AppConfigProperties.PUSH_CHROME_ID))
            {
-               customerEntity.getEntityAggregate().setPushRegistrationId(customerDto.getSystemMessages().get(ControllerUtils.PUSH_CHROME_ID));
+               customerEntity.getEntityAggregate().setPushRegistrationId(customerDto.getSystemMessages().get(AppConfigProperties.PUSH_CHROME_ID));
            }
 		   
 		   if(customerEntity !=null && customerDto.getSystemMessages().containsKey("latitude") && customerDto.getSystemMessages().containsKey("longitude"))
@@ -289,7 +289,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
                String fromName = customerDto.getSystemMessages().get("fromName");
                String fromEmail = customerDto.getSystemMessages().get("fromMail");
                
-               if(ControllerUtils.isEmptyString(fromName))
+               if(AppConfigProperties.isEmptyString(fromName))
                {
                    fromName = customerEntity.getFirstName();
                }
@@ -523,7 +523,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
             dto = serializeCustomerHotelInfo(dto, hotelId, fullSerialization, validCheckin);
         }
 
-        if(dto.isHotelStaff() && !ControllerUtils.isEmptyString(dto.getHotelName()))
+        if(dto.isHotelStaff() && !AppConfigProperties.isEmptyString(dto.getHotelName()))
         {
             dto.setFirstName(dto.getHotelName());
             dto.setLastName("");
@@ -596,12 +596,12 @@ public class CustomerPortServiceImpl implements CustomerPortService
     public String getCustomerAvatarUrl(CustomerRootEntity customerEntity)
     {
 
-        String avatar_m = /*isOrange? "angulr/img/build/avatar/incognito-orange-m.png" :*/ "/" + ControllerUtils.HOST_SUFFIX + "angulr/img/build/avatar/incognito-m.png";
-        String avatar_f = /*isOrange? "angulr/img/build/avatar/incognito-orange-f.png" :*/  "/" + ControllerUtils.HOST_SUFFIX + "angulr/img/build/avatar/incognito-f.png";
+        String avatar_m = /*isOrange? "angulr/img/build/avatar/incognito-orange-m.png" :*/ "/" + AppConfigProperties.HOST_SUFFIX + "angulr/img/build/avatar/incognito-m.png";
+        String avatar_f = /*isOrange? "angulr/img/build/avatar/incognito-orange-f.png" :*/  "/" + AppConfigProperties.HOST_SUFFIX + "angulr/img/build/avatar/incognito-f.png";
 
         if(customerEntity.isHotelStaff())
 		{
-			return  "/" + ControllerUtils.HOST_SUFFIX + "angulr/img/build/avatar/staff.png";
+			return  "/" + AppConfigProperties.HOST_SUFFIX + "angulr/img/build/avatar/staff.png";
 		}
 
         //		if(!isShowAvatar() && (!userId || userId==$scope.hotelState.profileData.id))
@@ -611,9 +611,9 @@ public class CustomerPortServiceImpl implements CustomerPortService
         //				return $scope.hotelState.profileData.avatarUrl;
         //			}
         //		}
-        String currentPictureUrl = ControllerUtils.isEmptyString(customerEntity.getPictureUrl()) ? customerEntity.getEntityAggregate().getProfileImageUrl() : customerEntity.getPictureUrl();
+        String currentPictureUrl = AppConfigProperties.isEmptyString(customerEntity.getPictureUrl()) ? customerEntity.getEntityAggregate().getProfileImageUrl() : customerEntity.getPictureUrl();
         //		if(!isShowAvatar() && userId && $rootScope.allCustomersById && $rootScope.allCustomersById[userId] && $rootScope.allCustomersById[userId].avatarUrl.length>0 && $rootScope.allCustomersById[userId].showAvatar)
-        if(customerEntity.isShowAvatar() && !ControllerUtils.isEmptyString(currentPictureUrl))
+        if(customerEntity.isShowAvatar() && !AppConfigProperties.isEmptyString(currentPictureUrl))
 		{
 			//			return $rootScope.allCustomersById[userId].avatarUrl;
 			return currentPictureUrl.startsWith("http") || currentPictureUrl.startsWith("/")? currentPictureUrl :  "/" + currentPictureUrl;
@@ -713,7 +713,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
              * TODO STRATEGY prepare all optional fields and execute DTO Builder or constructor???
              */
     
-            if(ControllerUtils.HOTEL_DEMO_CODE.equalsIgnoreCase(outHotelRootEntity.getCurrentHotelAccessCode()))
+            if(AppConfigProperties.HOTEL_DEMO_CODE.equalsIgnoreCase(outHotelRootEntity.getCurrentHotelAccessCode()))
             {
                 dto.setFullCheckin(true);
             }
@@ -825,7 +825,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
         
         List<CustomerHotelCheckin> checkins = new ArrayList<>();
         
-        if(ControllerUtils.SHOW_ONLY_FULL_CHECKIN_USERS)
+        if(AppConfigProperties.SHOW_ONLY_FULL_CHECKIN_USERS)
         {
             checkins = checkinRepository.getActiveFullCheckinByHotelId(hotelId, new Date());
         }
@@ -842,14 +842,14 @@ public class CustomerPortServiceImpl implements CustomerPortService
             CustomerRootEntity nextCustomerRootEntity = nextCheckin.getCustomer();
 
             //eugen: filter guest accounts not active more than 1 day
-            if(nextCustomerRootEntity.isGuestAccount() && nextCustomerRootEntity.getLastSeenOnline()!=null && nextCustomerRootEntity.getLastSeenOnline().before(convertToDate(LocalDateTime.now().minusDays(ControllerUtils.AWAY_GUEST_DAYS_TIMEOUT))))
+            if(nextCustomerRootEntity.isGuestAccount() && nextCustomerRootEntity.getLastSeenOnline()!=null && nextCustomerRootEntity.getLastSeenOnline().before(convertToDate(LocalDateTime.now().minusDays(AppConfigProperties.AWAY_GUEST_DAYS_TIMEOUT))))
             {
-                if(ControllerUtils.SET_AWAY_GUEST_INACTIVE)
+                if(AppConfigProperties.SET_AWAY_GUEST_INACTIVE)
                 {
                     nextCustomerRootEntity.getEntityAggregate().setActive(false);
                 }
 
-                if(ControllerUtils.SET_AWAY_GUEST_CHECKOUT)
+                if(AppConfigProperties.SET_AWAY_GUEST_CHECKOUT)
                 {
                     //remove guest checkin
                     List<CustomerHotelCheckin> guestCheckin = checkinRepository.getActiveByCustomerId(nextCustomerRootEntity.getId(), new Date());

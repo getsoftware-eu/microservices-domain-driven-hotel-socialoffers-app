@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortSe
 import eu.getsoftware.api.hotelapp.application.hotel.iService.*;
 import eu.getsoftware.hotelico.api.hotelapp.application.hotel.iService.*;
 import eu.getsoftware.hotelico.clients.api.infrastructure.notification.NotificationService;
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.FileUtils;
 import eu.getsoftware.hotelico.hotel.application.port.in.iService.*;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
@@ -508,7 +508,7 @@ public class FileUploadServiceImpl implements FileUploadService
 						
 						if (fileAdded != null)
 						{
-							sender.setPictureUrl(ControllerUtils.getRelativePath(fileAdded));
+							sender.setPictureUrl(AppConfigProperties.getRelativePath(fileAdded));
 							
 							long newConsistencyId = new Date().getTime();
 							
@@ -532,13 +532,13 @@ public class FileUploadServiceImpl implements FileUploadService
 							
 							if (fileAdded != null)
 							{
-								activity.setPictureUrl(ControllerUtils.getRelativePath(fileAdded));
+								activity.setPictureUrl(AppConfigProperties.getRelativePath(fileAdded));
 								activity.setConsistencyId(new Date().getTime());
 							}
 							
 							if (previewAdded != null)
 							{
-								activity.setPreviewPictureUrl(ControllerUtils.getRelativePath(previewAdded));
+								activity.setPreviewPictureUrl(AppConfigProperties.getRelativePath(previewAdded));
 								activity.setConsistencyId(new Date().getTime());
 							}
 							activityRepository.saveAndFlush(activity);
@@ -577,13 +577,13 @@ public class FileUploadServiceImpl implements FileUploadService
 							
 							if (fileAdded != null)
 							{
-								hotelRootEntity.setPictureUrl(ControllerUtils.getRelativePath(fileAdded));
+								hotelRootEntity.setPictureUrl(AppConfigProperties.getRelativePath(fileAdded));
 								hotelRootEntity.setConsistencyId(new Date().getTime());
 							}
 							
 							if (previewAdded != null)
 							{
-								hotelRootEntity.setPreviewPictureUrl(ControllerUtils.getRelativePath(previewAdded));
+								hotelRootEntity.setPreviewPictureUrl(AppConfigProperties.getRelativePath(previewAdded));
 								hotelRootEntity.setConsistencyId(new Date().getTime());
 							}
 							hotelRepository.saveAndFlush(hotelRootEntity);

@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortSe
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.BasicHotelException;
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.ReorderAction;
 import eu.getsoftware.hotelico.hotel.usecase.checkin.app.usecases.impl.CheckinService;
 import eu.getsoftware.hotelico.hotel.usecase.notification.app.usecases.impl.NotificationService;
@@ -14,6 +14,7 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.Hote
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.*;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.model.HotelActivity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.CustomerPortService;
+import eu.getsoftware.hotelico.hotelapp.application.deal.domain.ICustomerDeal;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.dto.CustomerDealDTO;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.ActivityAction;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.DealAction;
@@ -22,6 +23,7 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
 import org.modelmapper.ModelMapper;
@@ -83,7 +85,7 @@ public class HotelServiceImpl implements IHotelService
         List<HotelDTO> out = new ArrayList<HotelDTO>();
         for (HotelRootEntity hotelRootEntity : list) {
             
-            boolean ignoreDemoHotel = ControllerUtils.HIDE_DEMO_HOTEL_FROM_HOTEL_LIST && ControllerUtils.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelRootEntity.getCurrentHotelAccessCode());
+            boolean ignoreDemoHotel = AppConfigProperties.HIDE_DEMO_HOTEL_FROM_HOTEL_LIST && AppConfigProperties.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelRootEntity.getCurrentHotelAccessCode());
 
             if(hotelRootEntity.isActive() && !ignoreDemoHotel)
             {
@@ -105,7 +107,7 @@ public class HotelServiceImpl implements IHotelService
         List<HotelDTO> out = new ArrayList<HotelDTO>();
         for (HotelRootEntity hotelRootEntity : list) {
             
-            boolean ignoreDemoHotel = ControllerUtils.HIDE_DEMO_HOTEL_FROM_HOTEL_LIST && ControllerUtils.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelRootEntity.getCurrentHotelAccessCode());
+            boolean ignoreDemoHotel = AppConfigProperties.HIDE_DEMO_HOTEL_FROM_HOTEL_LIST && AppConfigProperties.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelRootEntity.getCurrentHotelAccessCode());
             
             if(hotelRootEntity.isActive() && !hotelRootEntity.isVirtual() && !ignoreDemoHotel && (!citiesList.contains(hotelRootEntity.getCity())))
             {
@@ -143,7 +145,7 @@ public class HotelServiceImpl implements IHotelService
         List<HotelDTO> out = new ArrayList<HotelDTO>();
         for (HotelRootEntity hotelRootEntity : list) {
             
-            boolean ignoreDemoHotel = ControllerUtils.HIDE_DEMO_HOTEL_FROM_HOTEL_LIST && ControllerUtils.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelRootEntity.getCurrentHotelAccessCode());
+            boolean ignoreDemoHotel = AppConfigProperties.HIDE_DEMO_HOTEL_FROM_HOTEL_LIST && AppConfigProperties.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelRootEntity.getCurrentHotelAccessCode());
            
             if(hotelRootEntity.isActive() && !hotelRootEntity.isVirtual() && !ignoreDemoHotel && (filterCity==null || filterCity.equals(hotelRootEntity.getCity())))
             {
@@ -162,6 +164,11 @@ public class HotelServiceImpl implements IHotelService
     }
 
     @Override
+    public Map<Long, String> getNotLoggedGuestPushIdsByHotel(IHotelRootEntity hotelRootEntity) {
+        return Map.of();
+    }
+
+    @Override
     public HotelRootEntity getEntityById(long hotelId) {
         HotelRootEntity hotelRootEntity = hotelRepository.getOne(hotelId);
         return hotelRootEntity;
@@ -171,7 +178,7 @@ public class HotelServiceImpl implements IHotelService
     @Override
     public HotelDTO getHotelByCode(String hotelCode) {
 
-        if(ControllerUtils.isEmptyString(hotelCode))
+        if(AppConfigProperties.isEmptyString(hotelCode))
         {
 	        new IllegalArgumentException("hotelcode is wrong: " + hotelCode);
         }
@@ -201,7 +208,7 @@ public class HotelServiceImpl implements IHotelService
     @Override
     public HotelActivityDTO addActivityAction(long customerId, long activityId, ActivityAction action)
     {
-        CustomerRootEntity sender = customerRepository.findById(ControllerUtils.getTryEntityId(customerId))
+        CustomerRootEntity sender = customerRepository.findById(AppConfigProperties.getTryEntityId(customerId))
 		        .orElseThrow(()-> new ResourceNotFoundException("customer not found with initId=" + customerId));
         
         HotelActivity activity = getActivityByIdOrInitId(activityId, activityId);
@@ -366,7 +373,17 @@ public class HotelServiceImpl implements IHotelService
 
         return null;
     }
-    
+
+    @Override
+    public double getDistanceKmToHotel(Point2D.Double from, IHotelRootEntity to) {
+        return 0;
+    }
+
+    @Override
+    public void avoidDoubleInitId(List<ICustomerDeal> resultList) {
+
+    }
+
     @Override
     public double getDistanceKmToHotel(Point2D.Double from, HotelRootEntity hotelRootEntity)
     {
@@ -403,7 +420,7 @@ public class HotelServiceImpl implements IHotelService
 		
 		//Eugen: if Customer is staff or admin, will become all deals!!! 
         
-        long customerEntityId = ControllerUtils.getTryEntityId(customerId);
+        long customerEntityId = AppConfigProperties.getTryEntityId(customerId);
         
 //        if (customerId == (int)customerId)
 //        {
@@ -508,7 +525,7 @@ public class HotelServiceImpl implements IHotelService
 	@Override
 	public ResponseDTO deleteDeal(long customerId, long activityId, long dealId)
 	{
-        long dealEntityId = ControllerUtils.getTryEntityId(dealId);
+        long dealEntityId = AppConfigProperties.getTryEntityId(dealId);
         
 		CustomerDeal deal = dealRepository.getOne(dealEntityId);
 		
@@ -532,7 +549,7 @@ public class HotelServiceImpl implements IHotelService
 	{
         Optional<CustomerDeal>  dealOptional  = getDealByIdOrInitId(dealDto.getId(), dealDto.getInitId());
 		
-        CustomerRootEntity sender = customerRepository.getOne(ControllerUtils.getTryEntityId(guestCustomerId));
+        CustomerRootEntity sender = customerRepository.getOne(AppConfigProperties.getTryEntityId(guestCustomerId));
         
         if(dealOptional.isPresent())
         {
@@ -544,7 +561,7 @@ public class HotelServiceImpl implements IHotelService
         }
         else
         {
-            Optional<HotelActivity> activityOptional = getActivityByIdOrInitId(ControllerUtils.getTryEntityId(activityId), activityId);
+            Optional<HotelActivity> activityOptional = getActivityByIdOrInitId(AppConfigProperties.getTryEntityId(activityId), activityId);
             
             CustomerDeal newDeal = createDeal(sender, guestCustomerId, activityOptional.get());
             return convertDealToDto(newDeal);
@@ -561,7 +578,7 @@ public class HotelServiceImpl implements IHotelService
 	@Override
 	public CustomerDealDTO addDealAction(long customerId, long activityId, long givenId, DealAction dealAction, String tablePosition, double totalMoney)
 	{
-        long customerEntityId = ControllerUtils.getTryEntityId(customerId);
+        long customerEntityId = AppConfigProperties.getTryEntityId(customerId);
 		
 		CustomerRootEntity sender = customerRepository.getOne(customerEntityId);
 
@@ -793,7 +810,7 @@ public class HotelServiceImpl implements IHotelService
         
         if(hotelActivity!=null)
         {
-            requester = customerRepository.getOne(ControllerUtils.getTryEntityId(requesterId));
+            requester = customerRepository.getOne(AppConfigProperties.getTryEntityId(requesterId));
         }
         
         HotelActivityDTO activityDto = convertActivityToDto(hotelActivity, requester);
@@ -812,7 +829,7 @@ public class HotelServiceImpl implements IHotelService
     @Override
     public HotelDTO addHotel(HotelDTO hotelDto) {
 		
-		if(!ControllerUtils.isEmptyString(hotelDto.getEmail()))
+		if(!AppConfigProperties.isEmptyString(hotelDto.getEmail()))
 		{
 			List<HotelRootEntity> hotelsWithSameMail = hotelRepository.findByEmailAndActive(hotelDto.getEmail(), true);
 			
@@ -835,7 +852,7 @@ public class HotelServiceImpl implements IHotelService
     {
         if(customerId>0)
         {
-	        Optional<CustomerRootEntity> creatorOpt = customerRepository.findById(ControllerUtils.getTryEntityId(customerId));
+	        Optional<CustomerRootEntity> creatorOpt = customerRepository.findById(AppConfigProperties.getTryEntityId(customerId));
 
             //Check creator role
             if(creatorOpt.isPresent())
@@ -955,7 +972,7 @@ public class HotelServiceImpl implements IHotelService
 
         if(hotelActivity.getValidTo()==null)
 		{
-			hotelActivity.setValidTo(ControllerUtils.convertToDate(LocalDateTime.now().plusDays(7)));
+			hotelActivity.setValidTo(AppConfigProperties.convertToDate(LocalDateTime.now().plusDays(7)));
 		}
 
         hotelActivity.setConsistencyId(new Date().getTime());
@@ -987,12 +1004,12 @@ public class HotelServiceImpl implements IHotelService
         newMessage.setSpecialWallContent(wallPostDto.getSpecialContent().toString());
 
         //wallPost is valid only 1 day | 1 Month for DEMO...
-        if(ControllerUtils.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelRootEntity.getCurrentHotelAccessCode()))
+        if(AppConfigProperties.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelRootEntity.getCurrentHotelAccessCode()))
         {
-            newMessage.setValidUntil(ControllerUtils.convertToDate(LocalDateTime.now().plusMonths(6)));
+            newMessage.setValidUntil(AppConfigProperties.convertToDate(LocalDateTime.now().plusMonths(6)));
         }
         else {
-            newMessage.setValidUntil(ControllerUtils.convertToDate(LocalDateTime.now().plusDays(3)));
+            newMessage.setValidUntil(AppConfigProperties.convertToDate(LocalDateTime.now().plusDays(3)));
         }
 
         wallPostRepository.saveAndFlush(newMessage);
@@ -1044,7 +1061,7 @@ public class HotelServiceImpl implements IHotelService
                 hotelRootEntity.setCreationTime(hotelDto.getCreationTime());
             }   
 			
-			if(!ControllerUtils.isEmptyString(hotelDto.getWellcomeMessage()))
+			if(!AppConfigProperties.isEmptyString(hotelDto.getWellcomeMessage()))
             {
                 hotelRootEntity.setWellcomeMessage(hotelDto.getWellcomeMessage());
             }
@@ -1180,7 +1197,7 @@ public class HotelServiceImpl implements IHotelService
 
         hotelActivity.setValidFrom(hotelActivityDto.getValidFrom() != null ? hotelActivityDto.getValidFrom() : new Date());
 
-        hotelActivity.setValidTo(hotelActivityDto.getValidTo() != null && !hotelActivityDto.getLastMinute() ? hotelActivityDto.getValidTo() : hotelActivityDto.getLastMinute() ? ControllerUtils.convertToDate(LocalDateTime.now().plusDays(1).withHour(4)) : ControllerUtils.convertToDate(LocalDateTime.now().plusDays(7)));
+        hotelActivity.setValidTo(hotelActivityDto.getValidTo() != null && !hotelActivityDto.getLastMinute() ? hotelActivityDto.getValidTo() : hotelActivityDto.getLastMinute() ? AppConfigProperties.convertToDate(LocalDateTime.now().plusDays(1).withHour(4)) : AppConfigProperties.convertToDate(LocalDateTime.now().plusDays(7)));
 
         hotelActivity.setActive(hotelActivityDto.isActiveBoolean());
         hotelActivity.setLastMinute(hotelActivityDto.getLastMinute());
@@ -1395,7 +1412,7 @@ public class HotelServiceImpl implements IHotelService
     {
         List<HotelActivity> list = new ArrayList<>();
         
-        CustomerRootEntity customerEntity = customerService.getEntityById(ControllerUtils.getTryEntityId(senderId));
+        CustomerRootEntity customerEntity = customerService.getEntityById(AppConfigProperties.getTryEntityId(senderId));
         
         if(customerEntity !=null && customerEntity.isHotelStaff() || customerEntity.isAdmin())
         {
@@ -1421,7 +1438,7 @@ public class HotelServiceImpl implements IHotelService
        
         List<WallPostDTO> out = new ArrayList<WallPostDTO>();
 
-        boolean wallIsDemoValid = ControllerUtils.NO_WALL_EXPIRES_FOR_DEMOHOTEL && hotelId == hotelRepository.getDemoHotelId();
+        boolean wallIsDemoValid = AppConfigProperties.NO_WALL_EXPIRES_FOR_DEMOHOTEL && hotelId == hotelRepository.getDemoHotelId();
         
         for (HotelWallPost wallPost : list) {
 
@@ -1456,7 +1473,7 @@ public class HotelServiceImpl implements IHotelService
             dto.setInitId(wallPost.getTimestamp().getTime());
         }
 
-        dto.setSendTimeString(wallPost.getTimestamp() != null ? ControllerUtils.getTimeFormatted(wallPost.getTimestamp()) : null);
+        dto.setSendTimeString(wallPost.getTimestamp() != null ? AppConfigProperties.getTimeFormatted(wallPost.getTimestamp()) : null);
 
 		dto.setHotelId(wallPost.getHotelRootEntity().getId());
 		
@@ -1484,7 +1501,7 @@ public class HotelServiceImpl implements IHotelService
 	                    HotelActivity activity = activityOpt.get();
                         dto.getSpecialContent().put("name", activity.getTitle());
                         dto.getSpecialContent().put("hotelId", activity.getHotelRootEntity().getId()+"");
-                        dto.getSpecialContent().put("pictureUrl", activity.getPreviewPictureUrl()!=null?activity.getPreviewPictureUrl() : ControllerUtils.PREVIEW_ACTIVITY_NOT_AVAILABLE_URL );
+                        dto.getSpecialContent().put("pictureUrl", activity.getPreviewPictureUrl()!=null?activity.getPreviewPictureUrl() : AppConfigProperties.PREVIEW_ACTIVITY_NOT_AVAILABLE_URL );
                     }
 
                 }
@@ -1562,9 +1579,9 @@ public class HotelServiceImpl implements IHotelService
 			String guestCustomerId1 = (String) guestDto.getSystemMessages().get("guestCustomerId");
 			Long dtoGuestCustomerId = Long.parseLong(guestCustomerId1);
 			
-			String guestPushId = (String) guestDto.getSystemMessages().get(ControllerUtils.PUSH_CHROME_ID);
+			String guestPushId = (String) guestDto.getSystemMessages().get(AppConfigProperties.PUSH_CHROME_ID);
 
-			if (getNotLoggedGuestPushIds.containsValue(guestPushId) || ControllerUtils.isEmptyString(guestPushId))
+			if (getNotLoggedGuestPushIds.containsValue(guestPushId) || AppConfigProperties.isEmptyString(guestPushId))
 			{
 				return null;
 			}
@@ -1596,7 +1613,7 @@ public class HotelServiceImpl implements IHotelService
 
 			Long dtoGuestCustomerId = Long.parseLong((String) guestDto.getSystemMessages().get("guestCustomerId"));			
 			
-			String guestPushId = (String)  guestDto.getSystemMessages().get(ControllerUtils.PUSH_CHROME_ID);
+			String guestPushId = (String)  guestDto.getSystemMessages().get(AppConfigProperties.PUSH_CHROME_ID);
 
 //			String hotelPushIds = hotel.getGuestPushIds();
 
@@ -1631,7 +1648,7 @@ public class HotelServiceImpl implements IHotelService
 			
 			Long dtoGuestCustomerId = Long.parseLong((String) guestDto.getSystemMessages().get("guestCustomerId"));
 			
-			String guestPushId = (String) guestDto.getSystemMessages().get(ControllerUtils.PUSH_CHROME_ID);
+			String guestPushId = (String) guestDto.getSystemMessages().get(AppConfigProperties.PUSH_CHROME_ID);
 			
 			if(!getNotLoggedGuestPushIds.containsValue(guestPushId))
 			{
@@ -1689,9 +1706,24 @@ public class HotelServiceImpl implements IHotelService
 	}
 
     @Override
+    public String getVirtualHotelCode() {
+        return "";
+    }
+
+    @Override
+    public IHotelRootEntity findByCurrentHotelAccessCodeAndActive(String hotelCode, boolean active) {
+        return null;
+    }
+
+    @Override
+    public IHotelRootEntity getOne(long hotelId) {
+        return null;
+    }
+
+    @Override
     public ResponseDTO deleteHotelActivity(long customerId, long activityId)
     {
-        CustomerDTO dto = customerService.getById(ControllerUtils.getTryEntityId(customerId), 0);
+        CustomerDTO dto = customerService.getById(AppConfigProperties.getTryEntityId(customerId), 0);
 
         if(!dto.isHotelStaff() && !dto.isAdmin())
         {

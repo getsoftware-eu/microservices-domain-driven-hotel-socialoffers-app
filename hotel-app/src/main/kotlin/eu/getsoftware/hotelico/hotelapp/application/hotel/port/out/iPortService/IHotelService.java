@@ -4,6 +4,7 @@ import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.Basi
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.ICustomerDeal;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
 
 import java.awt.geom.Point2D;
@@ -39,4 +40,14 @@ public interface IHotelService
     HotelDTO updateHotel(HotelDTO hotelDto);    
    
     ResponseDTO deleteHotel(long hotelId, long customerId);
+
+    String getVirtualHotelCode();
+
+    IHotelRootEntity findByCurrentHotelAccessCodeAndActive(String hotelCode, boolean active);
+
+    IHotelRootEntity getOne(long hotelId);
+
+    void addUpdateWallPost(WallPostDTO checkinNotificationWallDto);
+
+    int getCustomerDealCounter(long receiverId, int i);
 }

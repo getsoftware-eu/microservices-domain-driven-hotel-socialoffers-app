@@ -1,59 +1,58 @@
-package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.usecase.checkin;
+package eu.getsoftware.hotelico.hotelapp.application.multiDomainApplicationCheckinService.useCase;
 
-import eu.getsoftware.hotelico.chat.domain.ChatMessageView;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
-import eu.getsoftware.hotelico.hotel.usecase.notification.app.usecases.impl.NotificationService;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelEvent;
-import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.CustomerPortService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.port.in.CheckinUseCase;
+import eu.getsoftware.hotelico.clients.api.clients.domain.customer.ICustomerRootEntity;
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
+import eu.getsoftware.hotelico.hotelapp.application.chat.port.out.IChatService;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerHotelCheckin;
+import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.in.NotificationUseCase;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.ICheckinService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IWallpostService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
-import org.springframework.beans.factory.annotation.Autowired;
+import eu.getsoftware.hotelico.hotelapp.application.multiDomainApplicationCheckinService.port.in.CheckinUseCase;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-import static eu.getsoftware.hotelico.clients.common.utils.ControllerUtils.convertToLocalDateTime;
-
 /**
+ * Application Service that uses multiply domain services (is portService = domainService?)
  * <br/>
  * Created by e.fanshil
  * At 03.02.2016 14:04
  */
 @Service
-public class CheckinUseCaseImpl implements CheckinUseCase
+@RequiredArgsConstructor
+/*public*/ class CheckinUseCaseImpl implements CheckinUseCase
 {
-	@Autowired
 	private CustomerPortService customerService;		
 	
-	@Autowired
 	private LastMessagesService lastMessagesService;	
 			
-	@Autowired
-	private IHotelService hotelService;	
+	private IHotelService hotelService;			
+	
+	private ICheckinService checkinService;		
+	
+	private IChatService chatService;	
+	
+	private IWallpostService wallpostService;	
 		
-	@Autowired
-	private NotificationService notificationService;	
+	private NotificationUseCase notificationUseCase;
 	
-	@Autowired
-	private WallPostRepository wallPostRepository;	
-	
-	@Autowired
-	private CheckinRepository checkinRepository;	
-	
+	private eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.IHotelEvent hotelEvent;
+
 	@Transactional
 	@Override
-	public CustomerDTO setCustomerCheckin(CustomerDTO customerDto, CustomerRootEntity customerEntity)
-	{
-		HotelRootEntity hotelRootEntity = null;
+	public CustomerDTO setCustomerCheckin(CustomerDTO customerDto, ICustomerRootEntity customerEntity) {
+			
+		IHotelRootEntity hotelRootEntity = null;
 		
 		if(customerEntity != null)
 		{
@@ -61,26 +60,26 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 			
 			long virtualHotelId = lastMessagesService.getInitHotelId();
 			
-			String virtualHotelCode = ControllerUtils.ALLOW_INIT_VIRTUAL_HOTEL ? hotelService.getVirtualHotelCode() : null;
+			String virtualHotelCode = AppConfigProperties.ALLOW_INIT_VIRTUAL_HOTEL ? hotelService.getVirtualHotelCode() : null;
 			
 			boolean isFullCheckin = false;
 			
-			if(customerDto.getHotelCode()!=null && !(virtualHotelCode!=null && customerDto.getHotelCode().equals(virtualHotelCode) ))
+			if(customerDto.getHotelCode()!=null && !(customerDto.getHotelCode().equals(virtualHotelCode) ))
 			{
 				hotelRootEntity = hotelService.findByCurrentHotelAccessCodeAndActive(customerDto.getHotelCode(), true);
 				
 				//Eugen: full checkin, wenn checked-in with Hotel-Code!
 				isFullCheckin = (hotelRootEntity !=null);
 			}
-			if(hotelRootEntity ==null && customerDto.getHotelId()>0 && (!ControllerUtils.ALLOW_INIT_VIRTUAL_HOTEL || customerDto.getHotelId() != virtualHotelId))
+			if(hotelRootEntity ==null && customerDto.getHotelId()>0 && (!AppConfigProperties.ALLOW_INIT_VIRTUAL_HOTEL || customerDto.getHotelId() != virtualHotelId))
 			{
 				hotelRootEntity = hotelService.getOne(customerDto.getHotelId());
 			}
 			
-			List<CustomerHotelCheckin> activeCustomerCheckins = checkinService.getActiveByCustomerId(customerEntity.getId(), new Date());
+			List<ICustomerHotelCheckin> activeCustomerCheckins = checkinService.getActiveByCustomerId(customerEntity.getId(), new Date());
 			
-			boolean isDemoCheckin = hotelRootEntity != null && ControllerUtils.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelRootEntity.getCurrentHotelAccessCode());
-			boolean checkinDateIsValid = ControllerUtils.NO_CHECKOUT_FOR_DEMOHOTEL && isDemoCheckin || customerDto.getCheckinTo()!=null && customerDto.getCheckinTo().after(new Date());
+			boolean isDemoCheckin = hotelRootEntity != null && AppConfigProperties.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelRootEntity.getCurrentHotelAccessCode());
+			boolean checkinDateIsValid = AppConfigProperties.NO_CHECKOUT_FOR_DEMOHOTEL && isDemoCheckin || customerDto.getCheckinTo()!=null && customerDto.getCheckinTo().after(new Date());
 			
 			isFullCheckin = isFullCheckin || isDemoCheckin;// set id DTO getter! || ControllerUtils.CHECKIN_FULL_ALWAYS;
 			
@@ -91,12 +90,12 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 
 				customerDto.setHotelId(hotelRootEntity.getId());
 				
-				CustomerHotelCheckin nowGoodCheckin = null;
+				ICustomerHotelCheckin nowGoodCheckin = null;
 				
 				//if no checkin exists, create a new one
 				if(activeCustomerCheckins.isEmpty())
 				{
-					CustomerHotelCheckin customerHotelCheckin = new CustomerHotelCheckin();
+					ICustomerHotelCheckin customerHotelCheckin = checkinService.createCheckin(); 
 					customerHotelCheckin.setCustomer(customerEntity);
 					customerHotelCheckin.setHotel(hotelRootEntity);
 					
@@ -106,7 +105,7 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 					
 					customerHotelCheckin.setValidFrom(customerDto.getCheckinFrom());
 					customerHotelCheckin.setValidTo(customerDto.getCheckinTo());
-					checkinService.saveAndFlush(customerHotelCheckin);
+					checkinService.save(customerHotelCheckin);
 					nowGoodCheckin = customerHotelCheckin;
 					
 					customerDto.setErrorResponse("");
@@ -115,61 +114,23 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 					if(!customerEntity.isHotelStaff() && !customerEntity.isAdmin())
 					{
 						customerDto.setHotelId(hotelRootEntity.getId());
-						notificationService.notificateAboutEntityEvent(customerDto, HotelEvent.EVENT_CHECKIN, "New check-in in your hotel", hotelRootEntity.getId());
+						notificationUseCase.notificateAboutEntityEvent(customerDto, hotelEvent.getEventCheckin(), "New check-in in your hotel", hotelRootEntity.getId());
 					}
 					
 					//sent wellcome message to new fullCheckin customers
 					if(!customerEntity.isHotelStaff() && !customerEntity.isAdmin())
 					{
-						CustomerRootEntity staffSender = this.getStaffbyHotelId(hotelRootEntity.getId());
+						ICustomerRootEntity staffSender = this.getStaffbyHotelId(hotelRootEntity.getId());
 						
 						if (staffSender!=null)
 						{
 							//TODO EUGEN: Check here if I already sent a message to him
 							// ### SEND WELLCOME MESSAGE
-							
-							ChatMessageView lastMessageFromStaff = chatService.getLastMessageByCustomerAndReceiverIds(staffSender.getId(), customerEntity.getId());
-							
-							//Send only first staffSender message!    
-							if(lastMessageFromStaff==null)
-							{
-								ChatMessageView hiMessage = new ChatMessageView();
-								
-								String wellcomeMsg = "Hi, welcome to our Hotel! Please write me, if you need something";
-								String wellcomeGuestMsg = "Hi, welcome to thr guest view of our Hotel! Please get the hotel-code at the reception - without the hotel-code, you are not listed as a hotel guest, and you can not view the customers in the wall... ";
-								
-								if("de".equalsIgnoreCase(customerEntity.getEntityAggregate().getPrefferedLanguage()))
-								{
-									wellcomeMsg = "Hallo, herzlich willkommen im Hotel! Bitte schreiben Sie mir, wenn Sie etwas brauchen";
-									wellcomeGuestMsg = "Hallo, herzlich willkommen im Hotel Gast-Zugang! Bitte bekommen Sie den Zugang-Kode an der Rezeption. Ohne Hotel-Kode sind ihre Aktivitäten in Hotel beschränkt";
-								}
-								
-								hiMessage.setMessage(isFullCheckin? wellcomeMsg : wellcomeGuestMsg);
-								
-								hiMessage.setSender(staffSender);
-								hiMessage.setReceiver(customerEntity);
-								hiMessage.setInitId(new Date().getTime());
-								hiMessage.setTimestamp(new Timestamp(new Date().getTime()));
-								chatService.save(hiMessage);
-							}
-							
-							// ### Notificate Wall
-							if(lastSameHotelCheckin==null || convertToLocalDateTime(lastSameHotelCheckin).getDayOfYear() != LocalDateTime.now().getDayOfYear() )
-							{
 
-								WallPostDTO checkinNotificationWallDto = new WallPostDTO();
+							chatService.sendFirstChatMessageOnDemand(customerEntity, staffSender, isFullCheckin);
 
-								checkinNotificationWallDto.getSpecialContent().put("customerId", String.valueOf(customerEntity.getId()));
-								checkinNotificationWallDto.setHotelId(hotelRootEntity.getId());
-								checkinNotificationWallDto.setSenderId(staffSender.getId());
-//								checkinNotificationWallDto.setsetValidUntil(new DateTime().plusDays(1).toDate());
-								checkinNotificationWallDto.setInitId(new Date().getTime());
-								checkinNotificationWallDto.setMessage("New guest at our hotel:");
+							wallpostService.sendNotificationWallpostOnDemand(customerEntity, lastSameHotelCheckin, hotelRootEntity, staffSender);
 
-								hotelService.addUpdateWallPost(checkinNotificationWallDto);
-								
-							}
-							
 						}
 					}
 					
@@ -178,7 +139,7 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 				{
 					//EUGEN: only update checkin, no event
 					
-					for (CustomerHotelCheckin nextCheckin : activeCustomerCheckins)
+					for (ICustomerHotelCheckin nextCheckin : activeCustomerCheckins)
 					{
 						if(hotelRootEntity.equals(nextCheckin.getHotel())) //if the checkin of actual hotel, NO HOTEL EVENT!
 						{
@@ -187,7 +148,7 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 							nextCheckin.setValidTo(customerDto.getCheckinTo());
 							nextCheckin.setStaffCheckin(customerEntity.isHotelStaff());
 							nextCheckin.setFullCheckin(isFullCheckin);
-							checkinService.saveAndFlush(nextCheckin);
+							checkinService.save(nextCheckin);
 							customerDto.setErrorResponse("");
 							nowGoodCheckin = nextCheckin;
 							break;
@@ -200,14 +161,14 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 				
 				lastMessagesService.updateCustomerConsistencyId(customerEntity.getId(), consistencyId);
 
-				CustomerRootEntity iCustomerRootEntity = customerService.saveAndFlush(customerEntity);
+				ICustomerRootEntity iCustomerRootEntity = customerService.save(customerEntity);
 				
 				customerDto = customerService.convertCustomerToDto(iCustomerRootEntity, true, nowGoodCheckin);
 				
 			}
 			else{ //if no hotel more, maybe cancel actual checkin
 				
-				for (CustomerHotelCheckin nextCheckin : activeCustomerCheckins)
+				for (ICustomerHotelCheckin nextCheckin : activeCustomerCheckins)
 				{
 					nextCheckin.setActive(false);
 					
@@ -216,9 +177,11 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 					
 					customerService.save(nextCheckin.getCustomer());
 					
-					notificationService.notificateAboutEntityEvent(customerDto, HotelEvent.EVENT_CHECKOUT, "Checkout from your hotel", nextCheckin.getHotel().getId());
+					//TODO eu: how to implement domain events, without  low level entity .class ??
 					
-					checkinService.saveAndFlush(nextCheckin);
+					notificationUseCase.notificateAboutEntityEvent(customerDto, hotelEvent.getEventCheckout(), "Checkout from your hotel", nextCheckin.getHotel().getId());
+					
+					checkinService.save(nextCheckin);
 				}
 				
 				Long wantedHotelId = customerDto.getHotelId();
@@ -227,7 +190,7 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 				customerEntity.getEntityAggregate().setConsistencyId(consistencyId);
 				lastMessagesService.updateCustomerConsistencyId(customerEntity.getId(), consistencyId);
 				
-				customerDto = customerService.convertMyCustomerToFullDto(customerService.saveAndFlush(customerEntity));
+				customerDto = customerService.convertMyCustomerToFullDto(customerService.save(customerEntity));
 				
 				if(wantedHotelId>0 && (customerDto.getCheckinTo()==null || customerDto.getCheckinTo().before(new Date()))) {
 					customerDto.setErrorResponse("Checkin Date is wrong or in past");
@@ -239,7 +202,7 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 						customerDto.setErrorResponse("Hotel wurde nicht gefunden");
 					}
 					
-					if(wantedHotelId == virtualHotelId && ControllerUtils.ALLOW_INIT_VIRTUAL_HOTEL)
+					if(wantedHotelId == virtualHotelId && AppConfigProperties.ALLOW_INIT_VIRTUAL_HOTEL)
 					{
 						customerDto.setHotelId(virtualHotelId);
 						customerDto.setFullCheckin(true);
@@ -249,7 +212,6 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 			
 			//Eugen: every time update customer current hotelId!!!
 			lastMessagesService.updateCustomerHotelId(customerDto.getId(), customerDto.getHotelId());
-			
 			
 			
 			return customerDto;
@@ -262,7 +224,7 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 	@Override
 	@Transactional
 	public CustomerDTO updateCheckin(CustomerDTO customerDto) {
-		CustomerRootEntity customerEntity = customerDto.getId()>0 ? customerService.getOne(customerDto.getId()) : null;
+		ICustomerRootEntity customerEntity = customerDto.getId()>0 ? customerService.getOne(customerDto.getId()) : null;
 
 		customerDto = setCustomerCheckin(customerDto, customerEntity);
 
@@ -270,14 +232,16 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 
 	}
 
-	@Override
-	public CustomerRootEntity getStaffbyHotelId(long hotelId)
-	{
-		CustomerRootEntity staff = null;
-	 
-		List<CustomerRootEntity> hotelStaffs = checkinService.getStaffByHotelId(hotelId);
+	
 
-		Iterator<CustomerRootEntity> staffIterator = hotelStaffs.iterator();
+	@Override
+	public ICustomerRootEntity getStaffbyHotelId(long hotelId)
+	{
+		ICustomerRootEntity staff = null;
+	 
+		List<ICustomerRootEntity> hotelStaffs = checkinService.getStaffByHotelId(hotelId);
+
+		Iterator<ICustomerRootEntity> staffIterator = hotelStaffs.iterator();
 		
 		if (staffIterator.hasNext())
 		{
@@ -289,7 +253,7 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 	
 
 	@Override
-	public CustomerDTO updateOwnDtoCheckinInfo(CustomerDTO dto, CustomerHotelCheckin validCheckin)
+	public CustomerDTO updateOwnDtoCheckinInfo(CustomerDTO dto, ICustomerHotelCheckin validCheckin)
 	{
 		if(dto==null || dto.getId()<=0){
 			return  null;
@@ -298,23 +262,23 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 		//Reset dto only if consistencyId too old!!!
 		//        dto = synchronizeCustomerToDto(dto);
 		
-		List<CustomerHotelCheckin> activeCheckins = validCheckin!=null ? new ArrayList<CustomerHotelCheckin>() : checkinService.getActiveByCustomerId(dto.getId(), new Date());
+		List<ICustomerHotelCheckin> activeCheckins = validCheckin!=null ? new ArrayList<ICustomerHotelCheckin>() : checkinService.getActiveByCustomerId(dto.getId(), new Date());
 		
 		//        CustomerHotelCheckin validCheckin = null;
 		
 		if(!activeCheckins.isEmpty() || validCheckin!=null) //exists active checkin
 		{
-			Iterator<CustomerHotelCheckin> iterator = activeCheckins.iterator();
+			Iterator<ICustomerHotelCheckin> iterator = activeCheckins.iterator();
 			
 			while(iterator.hasNext() && validCheckin==null)
 			{
-				CustomerHotelCheckin customerCheckin = iterator.next();
+				ICustomerHotelCheckin customerCheckin = iterator.next();
 				
 				//If checkin is old, set it not active
 				if(new Date().after(customerCheckin.getValidTo()))
 				{
 					customerCheckin.setActive(false);
-					checkinService.saveAndFlush(customerCheckin);
+					checkinService.save(customerCheckin);
 				}
 				else
 				{
@@ -326,7 +290,7 @@ public class CheckinUseCaseImpl implements CheckinUseCase
 		
 		if(validCheckin!=null) // if checkin exists and valid
 		{
-			CustomerRootEntity checkinCustomerRootEntity = validCheckin.getCustomer();
+			ICustomerRootEntity checkinCustomerRootEntity = validCheckin.getCustomer();
 			
 			//TODO Eugen: cannot set logged automaticly
 			//TODO Eugen: checkinCustomerRootEntity.setActive(true)? update entity?

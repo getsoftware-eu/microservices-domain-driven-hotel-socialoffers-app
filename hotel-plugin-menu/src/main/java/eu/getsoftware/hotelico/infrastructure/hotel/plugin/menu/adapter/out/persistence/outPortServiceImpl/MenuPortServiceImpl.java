@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.per
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuItemDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuItemEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuOrder;
@@ -120,7 +120,7 @@ public class MenuPortServiceImpl implements IMenuPortService
 	@Override
 	public MenuOrderDTO addMenuAction(long requesterId, long initMenuOrderId, String action)
 	{
-		long customerId = ControllerUtils.getTryEntityId(requesterId);
+		long customerId = AppConfigProperties.getTryEntityId(requesterId);
 		
 		List<MenuOrder> menuOrders = menuOrderRepository.getMenuByInitId(initMenuOrderId);
 		
@@ -219,7 +219,7 @@ public class MenuPortServiceImpl implements IMenuPortService
 	@Override
 	public MenuOrderDTO deleteMenuOrder(long requesterId, long initMenuOrderId)
 	{
-		long customerId = ControllerUtils.getTryEntityId(requesterId);
+		long customerId = AppConfigProperties.getTryEntityId(requesterId);
 		
 		List<MenuOrder> menuOrders = menuOrderRepository.getMenuByInitId(initMenuOrderId);
 
@@ -305,7 +305,7 @@ public class MenuPortServiceImpl implements IMenuPortService
 	{
 		List<MenuItemDTO> resultList = new ArrayList<>();
 		
-		if(ControllerUtils.isEmptyString(reorder))
+		if(AppConfigProperties.isEmptyString(reorder))
 		{
 			return resultList;
 		}
@@ -394,7 +394,7 @@ public class MenuPortServiceImpl implements IMenuPortService
 			menuOrder = modelMapper.map(menuOrderDto, MenuOrder.class);
 			
 			menuOrder.setValidFrom(new Date());
-			menuOrder.setValidTo(ControllerUtils.convertToDate(LocalDateTime.now().withHour(0).withMinute(0).plusDays(1).plusHours(3)));
+			menuOrder.setValidTo(AppConfigProperties.convertToDate(LocalDateTime.now().withHour(0).withMinute(0).plusDays(1).plusHours(3)));
 			menuOrder.setStatus(DealStatus.ACCEPTED);
 
 			menuOrder.setTimestamp(new Timestamp(new Date().getTime()));
@@ -422,7 +422,7 @@ public class MenuPortServiceImpl implements IMenuPortService
 		{
 			menuOrder.setInitId(new Date().getTime());
 
-			menuOrder.setOrderCode(ControllerUtils.generateCode());
+			menuOrder.setOrderCode(AppConfigProperties.generateCode());
 		}
 		
 //		if(initMenuOrderId<=0)
@@ -441,9 +441,9 @@ public class MenuPortServiceImpl implements IMenuPortService
 			}
 		}
 		
-		if(initMenuOrderId>0 && !ControllerUtils.isEmptyString(menuOrderDto.getCustomerComment()))
+		if(initMenuOrderId>0 && !AppConfigProperties.isEmptyString(menuOrderDto.getCustomerComment()))
 		{
-			menuOrder.setCustomerComment(menuOrderDto.getCustomerComment() + (!menuOrderDto.getCustomerComment().equalsIgnoreCase(menuOrder.getCustomerComment()) && !ControllerUtils.isEmptyString(menuOrder.getCustomerComment())? " | old: " +menuOrder.getCustomerComment() : "" ));
+			menuOrder.setCustomerComment(menuOrderDto.getCustomerComment() + (!menuOrderDto.getCustomerComment().equalsIgnoreCase(menuOrder.getCustomerComment()) && !AppConfigProperties.isEmptyString(menuOrder.getCustomerComment())? " | old: " +menuOrder.getCustomerComment() : "" ));
 		}
 		
 		if(DealStatus.REJECTED.equals(menuOrder.getStatus()))

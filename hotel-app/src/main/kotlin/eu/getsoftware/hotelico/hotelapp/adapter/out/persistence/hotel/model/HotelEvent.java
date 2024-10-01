@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model;
 
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.ObjectUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.chatview.model.ChatMessageView;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
@@ -24,10 +24,10 @@ public enum HotelEvent implements IHotelEvent
 	EVENT_LOGIN("EVENT_LOGIN", CustomerRootEntity.class, null, null, null),
 	EVENT_DEAL_NEW_UPDATE("EVENT_DEAL_NEW_UPDATE", CustomerDeal.class, null, null, null),
 	EVENT_MENU_NEW_UPDATE("EVENT_MENU_NEW_UPDATE", CustomerDeal.class, null, null, null),
-	EVENT_ACTIVITY_NEW_LAST_MINUTE("EVENT_ACTIVITY_NEW_LAST_MINUTE", HotelActivity.class, "/" + ControllerUtils.HOST_SUFFIX + "#/app/activityList", "Last Minute Offer", null),
-	EVENT_WALL_NEW_MESSAGE("EVENT_WALL_NEW_MESSAGE", HotelWallPost.class, "/" + ControllerUtils.HOST_SUFFIX + "#/app/wall", "New Wall Message", ControllerUtils.PUSH_ICON),
+	EVENT_ACTIVITY_NEW_LAST_MINUTE("EVENT_ACTIVITY_NEW_LAST_MINUTE", HotelActivity.class, "/" + AppConfigProperties.HOST_SUFFIX + "#/app/activityList", "Last Minute Offer", null),
+	EVENT_WALL_NEW_MESSAGE("EVENT_WALL_NEW_MESSAGE", HotelWallPost.class, "/" + AppConfigProperties.HOST_SUFFIX + "#/app/wall", "New Wall Message", AppConfigProperties.PUSH_ICON),
 	EVENT_WALL_SEND_MESSAGE("EVENT_WALL_SEND_MESSAGE", HotelWallPost.class, null, null, null),
-	EVENT_CHAT_NEW_MESSAGE("EVENT_CHAT_NEW_MESSAGE", ChatMessageView.class, "/" + ControllerUtils.HOST_SUFFIX + "#/app/chat/", "New chat Message", ControllerUtils.PUSH_ICON),
+	EVENT_CHAT_NEW_MESSAGE("EVENT_CHAT_NEW_MESSAGE", ChatMessageView.class, "/" + AppConfigProperties.HOST_SUFFIX + "#/app/chat/", "New chat Message", AppConfigProperties.PUSH_ICON),
 	EVENT_CHAT_SEND_MESSAGE("EVENT_CHAT_SEND_MESSAGE", ChatMessageView.class, null, null, null),
 	
 	EVENT_LOGO_CUSTOMER_CHANGE_MESSAGE("EVENT_LOGO_CUSTOMER_CHANGE_MESSAGE", CustomerRootEntity.class, null, null, null),
@@ -83,7 +83,12 @@ public enum HotelEvent implements IHotelEvent
 	{
 		return entityClass.getSimpleName();
 	}
-	
+
+	@Override
+	public IHotelEvent getEventCheckin() {
+		return HotelEvent.EVENT_CHECKIN;
+	}
+
 	public static HotelEvent parseByValue(String value)
 	{
 		if (!ObjectUtils.isEmpty(value))

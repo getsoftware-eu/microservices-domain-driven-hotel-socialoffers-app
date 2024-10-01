@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.main.config.infrastructure
 
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils.FILTER_PATH_MULTITENANT
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties.FILTER_PATH_MULTITENANT
 import eu.getsoftware.hotelico.hotelapp.main.config.infrastructure.resolver.MultitenantKeycloakConfigResolver
 import org.keycloak.adapters.KeycloakConfigResolver
 import org.keycloak.adapters.springsecurity.KeycloakSecurityComponents

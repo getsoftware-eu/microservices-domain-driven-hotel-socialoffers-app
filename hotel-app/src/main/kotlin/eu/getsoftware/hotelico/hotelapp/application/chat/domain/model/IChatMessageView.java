@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.chat.domain.model;
 
+import eu.getsoftware.hotelico.clients.api.clients.domain.customer.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 
 import java.sql.Timestamp;
 

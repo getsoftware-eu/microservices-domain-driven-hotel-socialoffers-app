@@ -1,8 +1,10 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.domain.customer.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.model.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotelapp.application.customer.common.iEntity.ICustomerEntity;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerHotelCheckin;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -22,7 +24,7 @@ public interface CustomerPortService
     
     Set<CustomerDTO> getByHotelId(long customerId, long hotelId, boolean addStaff);
 	
-	CustomerDTO fillDtoWithHotelInfo(CustomerDTO dto, CustomerHotelCheckin validCheckin);
+	CustomerDTO fillDtoWithHotelInfo(CustomerDTO dto, ICustomerHotelCheckin validCheckin);
    
     Set<CustomerDTO> getByCity(long customerId, String city);
     
@@ -60,4 +62,8 @@ public interface CustomerPortService
     ICustomerEntity addGetAnonymCustomer();
 
     boolean isStaffOrAdminId(long receiverId);
+
+    ICustomerRootEntity save(ICustomerRootEntity customerEntity);
+
+    ICustomerRootEntity getOne(Long id);
 }

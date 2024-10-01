@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository;
 
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.deal.model.CustomerDeal;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.DealStatus;
-import eu.getsoftware.hotelico.hotelapp.model.CustomerDeal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

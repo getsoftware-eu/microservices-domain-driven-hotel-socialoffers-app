@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository;
 
+import eu.getsoftware.hotelico.clients.api.clients.domain.customer.ICustomerRootEntity
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.IRepository.ICustomerRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable

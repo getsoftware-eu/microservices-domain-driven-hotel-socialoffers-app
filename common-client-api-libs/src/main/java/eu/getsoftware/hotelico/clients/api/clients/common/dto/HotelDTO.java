@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.clients.api.clients.common.dto;
 
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -74,13 +74,13 @@ public class HotelDTO extends BasicDTO
 	}
 	
 	public String getPictureUrl() {
-		return ControllerUtils.addHostPrefixOnDemand(pictureUrl);
+		return AppConfigProperties.addHostPrefixOnDemand(pictureUrl);
 	}
 	
 	public String getPreviewPictureUrl() {
 		
-		String picUrl = (ControllerUtils.isEmptyString(previewPictureUrl))? ControllerUtils.PREVIEW_HOTEL_NOT_AVAILABLE_URL : previewPictureUrl;
+		String picUrl = (AppConfigProperties.isEmptyString(previewPictureUrl))? AppConfigProperties.PREVIEW_HOTEL_NOT_AVAILABLE_URL : previewPictureUrl;
 		
-		return ControllerUtils.addHostPrefixOnDemand(picUrl);
+		return AppConfigProperties.addHostPrefixOnDemand(picUrl);
 	}
 }

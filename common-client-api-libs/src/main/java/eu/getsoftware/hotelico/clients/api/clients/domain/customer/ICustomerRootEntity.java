@@ -1,15 +1,11 @@
-package eu.getsoftware.hotelico.hotelapp.application.customer.domain.model;
-
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.CustomerAggregate;
+package eu.getsoftware.hotelico.clients.api.clients.domain.customer;
 
 public interface ICustomerRootEntity {
     
     void setConsistencyId(long consistencyId);
 
     long getId();
-
-    CustomerAggregate getCustomerGPSPosition();
-
+    
     void setHotelStaff(boolean b);
 
     void setLogged(boolean b);
@@ -41,4 +37,12 @@ public interface ICustomerRootEntity {
     void setFacebookId(String facebookId);
 
     void setPushRegistrationId(String s);
+
+    boolean isHotelStaff();
+
+    boolean isAdmin();
+
+    ICustomerRootEntity getEntityAggregate();
+
+    String getPrefferedLanguage();
 }

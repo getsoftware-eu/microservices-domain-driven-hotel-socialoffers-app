@@ -1,1 +1,0 @@
-An "application-level" global UseCase that interacts with many domains and uses their ports.

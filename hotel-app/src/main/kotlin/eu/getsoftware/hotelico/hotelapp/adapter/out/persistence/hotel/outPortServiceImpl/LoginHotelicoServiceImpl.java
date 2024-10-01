@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortServiceImpl;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotel.application.iService.*;
 import eu.getsoftware.hotelico.hotel.usecase.checkin.app.usecases.impl.CheckinService;
 import eu.getsoftware.hotelico.hotel.usecase.notification.app.usecases.impl.NotificationService;
@@ -63,7 +63,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 			
 			Long generatedPasswordHash = getCryptoHash(customerEntity, password);
 			
-			if(!generatedPasswordHash.equals(customerEntity.getPasswordHash()) && !ControllerUtils.USE_ADMIN_MODE && !"ROOTPASSWORD".equalsIgnoreCase(password))
+			if(!generatedPasswordHash.equals(customerEntity.getPasswordHash()) && !AppConfigProperties.USE_ADMIN_MODE && !"ROOTPASSWORD".equalsIgnoreCase(password))
 			{
 				throw new RuntimeException("Password is not correct.");
 			}
@@ -129,7 +129,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 			//            String newContext = passwordEncoder.encodePassword(saltedPasswordQuery);
 			
 			//            String link = pageRenderLinkSource.createPageRenderLinkWithContext(Pwreset.class, username, newContext).toAbsoluteURI();
-			String link = ControllerUtils.HOST + ControllerUtils.HOST_SUFFIX + "#/app/forgotpwd/email/" + email + "/resetcode/" + saltedPasswordQuery;
+			String link = AppConfigProperties.HOST + AppConfigProperties.HOST_SUFFIX + "#/app/forgotpwd/email/" + email + "/resetcode/" + saltedPasswordQuery;
 			
 			String body = getEncodedMailWithPasswordCode(customerEntity, link);
 			
@@ -312,7 +312,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 		
 		
 		//CHECKIN, IF NOT LOGGED WAS CHECKINED!!!!!
-		if(!dbCustomer.getCheckedIn() && ( loggingCustomer.getHotelId()>0 || !ControllerUtils.isEmptyString(loggingCustomer.getHotelCode())))
+		if(!dbCustomer.getCheckedIn() && ( loggingCustomer.getHotelId()>0 || !AppConfigProperties.isEmptyString(loggingCustomer.getHotelCode())))
 		{
 			dbCustomer.setHotelId(loggingCustomer.getHotelId());
 			dbCustomer.setHotelCode(loggingCustomer.getHotelCode());

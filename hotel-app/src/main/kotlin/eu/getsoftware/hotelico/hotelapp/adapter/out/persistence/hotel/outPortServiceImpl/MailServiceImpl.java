@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortServiceImpl;
 
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.MailValidator;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.CustomerPortService;
@@ -53,7 +53,7 @@ public class MailServiceImpl implements MailService
 	{
 		try
 		{
-			if (ControllerUtils.isEmptyString(senderEmail))
+			if (AppConfigProperties.isEmptyString(senderEmail))
 			{
 				throw new ValidationException("Kein E-Mail-Sender wurde eingetragen");
 			}
@@ -65,7 +65,7 @@ public class MailServiceImpl implements MailService
 				throw new ValidationException("Ungültige E-Mail-Adresse: " + clearSenderMail);
 			}
 			
-			if (ControllerUtils.isEmptyString(receivers))
+			if (AppConfigProperties.isEmptyString(receivers))
 			{
 				throw new ValidationException("Kein E-Mail-Empfänger wurde eingetragen");
 				
@@ -82,11 +82,11 @@ public class MailServiceImpl implements MailService
 				}
 			}
 			
-			if (ControllerUtils.isEmptyString(subject))
+			if (AppConfigProperties.isEmptyString(subject))
 			{
 				throw new ValidationException("E-Mail Betreff ist leer");
 			}
-			if (ControllerUtils.isEmptyString(body))
+			if (AppConfigProperties.isEmptyString(body))
 			{
 				throw new ValidationException("E-Mail Text ist leer");
 			}
@@ -149,7 +149,7 @@ public class MailServiceImpl implements MailService
 			message.setContent(body, "text/html; charset=utf-8");
 			//		message.setReplyTo("noreply@hotelico.de");
 			
-			if(ControllerUtils.isEmptyString(from))
+			if(AppConfigProperties.isEmptyString(from))
 			{
 				message.addFrom(new InternetAddress[] { new InternetAddress("noreply@hotelico.de") });
 			}
@@ -245,10 +245,10 @@ public class MailServiceImpl implements MailService
 //			try
 			{
 				temp_activity = temp_activity.replace("#[hotelico.name]",  "HoteliCo");
-				temp_activity = temp_activity.replace("#[hotelico.pictureUrl]", "http://hotelico.de/"  + ControllerUtils.HOST_SUFFIX + "/angulr/img/build/logo/logoFull.png" );
+				temp_activity = temp_activity.replace("#[hotelico.pictureUrl]", "http://hotelico.de/"  + AppConfigProperties.HOST_SUFFIX + "/angulr/img/build/logo/logoFull.png" );
 				temp_activity = temp_activity.replace("#[hotelico.shortDescription]", "shortDescription");
 				temp_activity = temp_activity.replace("#[hotelico.description]", "description");
-				temp_activity = temp_activity.replace("#[hotelico.url]", "https://hotelico.de/" + ControllerUtils.HOST_SUFFIX);
+				temp_activity = temp_activity.replace("#[hotelico.url]", "https://hotelico.de/" + AppConfigProperties.HOST_SUFFIX);
 			}
 //			catch (UnsupportedEncodingException e)
 //			{
@@ -273,7 +273,7 @@ public class MailServiceImpl implements MailService
 			try
 			{
 				mailContent = mailContent.replace("#[hotel.name]", URLDecoder.decode(hotel.getName(), "UTF-8"));
-				mailContent = mailContent.replace("#[hotel.url]", "http://hotelico.de/" + ControllerUtils.HOST_SUFFIX + "#/app/hotelPreview/" + hotel.getId());
+				mailContent = mailContent.replace("#[hotel.url]", "http://hotelico.de/" + AppConfigProperties.HOST_SUFFIX + "#/app/hotelPreview/" + hotel.getId());
 				mailContent = mailContent.replace("#[hotel.pictureUrl]", "http://hotelico.de/" + hotel.getPictureUrl());
 				mailContent = mailContent.replace("#[hotel.wellcomeMsg]", URLDecoder.decode(hotel.getWellcomeMessage(), "UTF-8"));
 			}
@@ -311,7 +311,7 @@ public class MailServiceImpl implements MailService
 					temp_activity = temp_activity.replace("#[activity.pictureUrl]", "http://hotelico.de/" + nextActivity.getPictureUrl());
 					temp_activity = temp_activity.replace("#[activity.shortDescription]", URLDecoder.decode(nextActivity.getShortDescription(), "UTF-8"));
 					temp_activity = temp_activity.replace("#[activity.description]", URLDecoder.decode(nextActivity.getDescription(), "UTF-8"));
-					temp_activity = temp_activity.replace("#[activity.url]", "https://hotelico.de/" + ControllerUtils.HOST_SUFFIX + "#/app/activityList//" + hotelId + "/" + nextActivity.getId());
+					temp_activity = temp_activity.replace("#[activity.url]", "https://hotelico.de/" + AppConfigProperties.HOST_SUFFIX + "#/app/activityList//" + hotelId + "/" + nextActivity.getId());
 				}
 				catch (UnsupportedEncodingException e)
 				{

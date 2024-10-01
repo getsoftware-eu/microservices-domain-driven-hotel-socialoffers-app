@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
@@ -64,7 +64,7 @@ public class SocialAuthenticatorController extends BasicController
 
 
 	public static final String STATE = "state";
-	private static final String applicationHost= ControllerUtils.HOST + ControllerUtils.HOST_SUFFIX;
+	private static final String applicationHost= AppConfigProperties.HOST + AppConfigProperties.HOST_SUFFIX;
 	private static final String linkedInCallBackPath= "social/auth/linkedIn/callback";
 	private static final String facebookCallBackPath= "social/auth/facebook/callback";
 	private static final String linkedInClientId = "77rxbh8n0ta2fc";
@@ -324,7 +324,7 @@ public class SocialAuthenticatorController extends BasicController
 
 		String redirectUrl = "#/access/login";
 
-		if(ControllerUtils.isEmptyString(code))
+		if(AppConfigProperties.isEmptyString(code))
 		{
 			return new RedirectView(applicationHost+redirectUrl);
 		}
@@ -420,7 +420,7 @@ public class SocialAuthenticatorController extends BasicController
 			
 			if(profile!=null && Locale.GERMAN.equals(profile.getLocale()))
 			{
-				if(!ControllerUtils.isEmptyString(profile.getLocale().getLanguage()))
+				if(!AppConfigProperties.isEmptyString(profile.getLocale().getLanguage()))
 				{
 					foundFacebookCustomerDTO.setPrefferedLanguage(profile.getLocale().getLanguage().toLowerCase());
 				}
@@ -493,8 +493,8 @@ public class SocialAuthenticatorController extends BasicController
 			//			{
 			//				;
 			//			}
-			session.setAttribute(ControllerUtils.SESSION_CUSTOMER_ID, foundFacebookCustomerDTO.getId());
-			session.setAttribute(ControllerUtils.SESSION_CUSTOMER, foundFacebookCustomerDTO);
+			session.setAttribute(AppConfigProperties.SESSION_CUSTOMER_ID, foundFacebookCustomerDTO.getId());
+			session.setAttribute(AppConfigProperties.SESSION_CUSTOMER, foundFacebookCustomerDTO);
 
 		}
 

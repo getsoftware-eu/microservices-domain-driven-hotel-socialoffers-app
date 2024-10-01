@@ -8,7 +8,7 @@ import eu.getsoftware.hotelico.chat.domain.ChatMessageView;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.ChatMessageRequest;
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotel.infrastructure.repository.ChatRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository;
@@ -33,8 +33,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicLong;
 
-import static eu.getsoftware.hotelico.clients.common.utils.ControllerUtils.convertToDate;
-import static eu.getsoftware.hotelico.clients.common.utils.ControllerUtils.convertToLocalDateTime;
+import static eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties.convertToDate;
+import static eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties.convertToLocalDateTime;
 
 /**
  * <br/>
@@ -102,7 +102,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	@Override
 	public long getInitHotelId()
 	{
-		if(!ControllerUtils.ALLOW_INIT_VIRTUAL_HOTEL)
+		if(!AppConfigProperties.ALLOW_INIT_VIRTUAL_HOTEL)
 		{
 			return 0;	
 		}
@@ -533,7 +533,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 		
 		long diffMinutes = diff / (60 * 1000) % 60;
 		
-		return diffMinutes >= ControllerUtils.NOTIFICATION_MIN_DELAY_MINUTES;
+		return diffMinutes >= AppConfigProperties.NOTIFICATION_MIN_DELAY_MINUTES;
 	}
 
 	@Override

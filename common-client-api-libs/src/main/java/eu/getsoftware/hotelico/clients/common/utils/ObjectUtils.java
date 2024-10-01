@@ -238,7 +238,7 @@ public final class ObjectUtils
 	
 	public static boolean isEmpty(String value)
 	{
-		return ControllerUtils.isEmptyString(value);
+		return AppConfigProperties.isEmptyString(value);
 	}
 	
 	public static boolean isEmpty(Object[] value)
@@ -253,7 +253,7 @@ public final class ObjectUtils
 	
 	public static String trim(String value)
 	{
-		return ControllerUtils.trimString(value);
+		return AppConfigProperties.trimString(value);
 	}
 	
 	public static String trimToNull(String value)

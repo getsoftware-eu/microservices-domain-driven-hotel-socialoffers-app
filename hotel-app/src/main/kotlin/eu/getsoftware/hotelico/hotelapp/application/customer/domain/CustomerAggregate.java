@@ -1,10 +1,10 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.domain;
 
+import eu.getsoftware.hotelico.clients.api.clients.domain.customer.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity.CustomerRootEntityBuilder;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerDetails;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerPreferences;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 
 import java.util.Date;
 import java.util.Optional;

@@ -1,24 +1,24 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.usecase.notification;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.domain.customer.ICustomerRootEntity;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.api.infrastructure.notification.NotificationService;
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.chatview.model.ChatMessageView;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.chat.domain.infrastructure.ChatMSComminicationService;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
-import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.CustomerPortService;
+import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.DealStatus;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.IHotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.service.HotelRabbitMQProducer;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.in.NotificationUseCase;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.MailService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.*;
 import eu.getsoftware.hotelico.hotelapp.application.menu.infrastructure.service.MenuMSCommunicationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,14 +53,16 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	private final CustomerPortService customerService;	
 	
 	private final MailService mailService;
+	private final ICheckinService checkinService;
 	
 	private final ChatMSComminicationService chatMSComminicationService;
 	
 	private final HotelRabbitMQProducer hotelRabbitMQProducer;
-	private ProduceRabbitmqMessageService produceRabbitmqMessageService;
+	private final NotificationService notificationService;
+	private final INotificationService inotificationService;
 
 	@Override
-	public void notificateAboutEntityEvent(CustomerDTO dto, HotelEvent event, String eventContent, long entityId)
+	public void notificateAboutEntityEvent(CustomerDTO dto, IHotelEvent event, String eventContent, long entityId)
 	{
 		Objects.requireNonNull(dto);
 		
@@ -74,20 +76,8 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 		for(Long nextOnlineCustomerId: allOnlineCustomerIds)
 		{
 			CustomerNotificationDTO receiverNotification = this.getCustomerNotification(nextOnlineCustomerId, event);
-			
-			if(dto.getHotelId()>0)
-			{
-				receiverNotification.setCustomerEvent(dto.getId(), dto.getHotelId(), event, eventContent, entityId);
-				
-				//                if(event.getPushUrl()!=null)
-				//                {
-				//                    receiverNotification.setPushCustomerEvent(event.getPushTitle(), eventContent, event.getPushUrl(), event.getPushIcon());
-				//                    cacheService.setLastPushNotifiation(nextOnlineCustomerId, receiverNotification);
-				//                    sendPushRequest(nextOnlineCustomerId);
-				//                }
-			}
-			
-			hotelRabbitMQProducer.produceSimpWebsocketMessage(ControllerUtils.SOCKET_NOTIFICATION_TOPIC + nextOnlineCustomerId, receiverNotification);
+
+			inotificationService.notificateAboutEntityEvent(dto, receiverNotification, event);
 		}
 	}
 	
@@ -151,7 +141,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 			
 			//######## ACTIVITIES 
 			
-			if (ControllerUtils.USE_UNREAD_ACTIVITY_COUNT)
+			if (AppConfigProperties.USE_UNREAD_ACTIVITY_COUNT)
 			{
 				//                int hotelActivitiesTotalNumber = hotelActivityRepository.getTimeValidCounterByHotelId(receiverHotelId, new Date());
 				
@@ -170,7 +160,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 			
 			//########## LAST SEEN CUSTOMERS
 			
-			if (ControllerUtils.USE_LAST_SEEN_CUSTOMERS)
+			if (AppConfigProperties.USE_LAST_SEEN_CUSTOMERS)
 			{
 				//TODO Eugen
 				Map<Long, String> lastSeenOnlineMap = new HashMap<>();
@@ -230,7 +220,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 				{
 					List<ChatMessageView> unreadChatMessages = unreadChatsBySenders.get(nextUnreadSenderId);
 					
-					if (!unreadChatMessages.isEmpty() && ControllerUtils.CHAT_NOTIFICATE_DELIEVERY_INDIVIDUAL_CHAT)
+					if (!unreadChatMessages.isEmpty() && AppConfigProperties.CHAT_NOTIFICATE_DELIEVERY_INDIVIDUAL_CHAT)
 					{
 						ChatMessageView lastUnreadMessage = unreadChatMessages.get(unreadChatMessages.size() - 1);
 						
@@ -243,7 +233,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 								
 								//Eugen: notificate Sender, that his message was delievered
 								ChatMsgDTO chatMessageDto = chatMSComminicationService.convertMessageToDto(lastUnreadMessage);
-								simpMessagingTemplate.convertAndSend(ControllerUtils.SOCKET_CHAT_TOPIC + lastUnreadMessage.getSender().getId() + "", chatMessageDto);
+								simpMessagingTemplate.convertAndSend(AppConfigProperties.SOCKET_CHAT_TOPIC + lastUnreadMessage.getSender().getId() + "", chatMessageDto);
 							}
 							
 						}
@@ -299,7 +289,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 				{
 					Timestamp timeStamp = nextLastMessage.timestamp();
 					
-					String time = ControllerUtils.getTimeFormatted(timeStamp);
+					String time = AppConfigProperties.getTimeFormatted(timeStamp);
 					
 					String message = nextLastMessage.message();
 					//                message = message.length() > ControllerUtils.chatListMessageLength ? message.substring(0, ControllerUtils.chatListMessageLength-2) + "..." : message;
@@ -308,7 +298,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 					lastMessageTimesForCustomer.put(nextChatCustomerRootEntity.getId(), time);
 					
 					//only if it notifications to message sender
-					if (nextLastMessage.senderId() == receiverId && ControllerUtils.CHAT_NOTIFICATE_DELIEVERY_CHATLIST)
+					if (nextLastMessage.senderId() == receiverId && AppConfigProperties.CHAT_NOTIFICATE_DELIEVERY_CHATLIST)
 					{
 						lastMessageSeenByCustomer.put(nextChatCustomerRootEntity.getId(), nextLastMessage.getReceiver().equals(nextChatCustomerRootEntity) && nextLastMessage.isSeenByReceiver());
 						lastMessageDelieveredToCustomer.put(nextChatCustomerRootEntity.getId(), nextLastMessage.getReceiver().equals(nextChatCustomerRootEntity) && nextLastMessage.isDelieveredToReceiver());
@@ -342,7 +332,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 			return;
 		}
 		
-		hotelRabbitMQProducer.produceSimpWebsocketMessage(ControllerUtils.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
+		hotelRabbitMQProducer.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
 		
 		if(event.getPushUrl()!=null)
 		{
@@ -365,7 +355,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 		String fromName = systemMessages.get("fromName");
 //		String fromEmail = systemMessages.get("fromMail");
 		
-		if(ControllerUtils.isEmptyString(fromName))
+		if(AppConfigProperties.isEmptyString(fromName))
 		{
 			fromName = customerEntity.getFirstName();
 		}
@@ -395,7 +385,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 					feedChatMessage.setCreationTime(time);
 					feedChatMessage.setTimestamp( new Timestamp(time));
 					
-					if(!ControllerUtils.isEmptyString(inviteActivityId))
+					if(!AppConfigProperties.isEmptyString(inviteActivityId))
 					{
 						feedChatMessage.getSpecialContent().put("activityId", inviteActivityId);
 					}
@@ -408,7 +398,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 		
 		// PART 2: send to anonyme (not logged) users
 		
-		if(!ControllerUtils.isEmptyString(sendToAllNotLoggedInHotel))
+		if(!AppConfigProperties.isEmptyString(sendToAllNotLoggedInHotel))
 		{
 			Boolean sendToUnLogged = Boolean.parseBoolean(sendToAllNotLoggedInHotel);
 			
@@ -438,22 +428,22 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 		
 		String customSubject = systemMessages.get("customSubject");
 		
-		if(ControllerUtils.isEmptyString(fromName))
+		if(AppConfigProperties.isEmptyString(fromName))
 		{
 			fromName = customerEntity.getFirstName();
 		}
 		
-		if(ControllerUtils.isEmptyString(fromEmail))
+		if(AppConfigProperties.isEmptyString(fromEmail))
 		{
 			fromEmail = customerEntity.getEmail();
 		}
 		
-		if(ControllerUtils.isEmptyString(customSubject))
+		if(AppConfigProperties.isEmptyString(customSubject))
 		{
 			customSubject = "Willkomen in unserem Hotel";
 		}
 		
-		if(ControllerUtils.isEmptyString(mailContent))
+		if(AppConfigProperties.isEmptyString(mailContent))
 		{
 			mailContent = mailService.getWellcomeMailBody(customerEntity);
 		}
@@ -488,7 +478,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	{
 		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 		
-		hotelRabbitMQProducer.produceSimpWebsocketMessage(ControllerUtils.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
+		hotelRabbitMQProducer.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
 		
 		if(event.getPushUrl()!=null)
 		{
@@ -512,7 +502,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	{
 		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 		
-		hotelRabbitMQProducer.produceSimpWebsocketMessage(ControllerUtils.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
+		hotelRabbitMQProducer.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
 		
 		if(event.getPushUrl()!=null)
 		{
@@ -544,7 +534,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 			//lastPushNotification.put("tag", "angulr/img/build/logo/logo_push.png");
 			
 			//Default. if no notification was found!!!
-			String  relocateUrl = "/" + ControllerUtils.HOST_SUFFIX + "#/app/chatList/false//";
+			String  relocateUrl = "/" + AppConfigProperties.HOST_SUFFIX + "#/app/chatList/false//";
 			
 			dto.setPushCustomerEvent(title, message, relocateUrl, icon, "");
 		}
@@ -571,7 +561,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	@Override
 	public void sendPush(String pushRegistrationId)
 	{
-		if(ControllerUtils.isEmptyString(pushRegistrationId))
+		if(AppConfigProperties.isEmptyString(pushRegistrationId))
 		{
 			return;
 		}
@@ -599,13 +589,13 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	@Override
 	public void broadcastActivityNotification(HotelActivityDTO hotelActivityDto)
 	{
-		produceRabbitmqMessageService.produceSimpMessage(ControllerUtils.SOCKET_ACTIVITY_TOPIC + hotelActivityDto.getHotelId() + "", hotelActivityDto);
+		produceRabbitmqMessageService.produceSimpMessage(AppConfigProperties.SOCKET_ACTIVITY_TOPIC + hotelActivityDto.getHotelId() + "", hotelActivityDto);
 	}
 	
 	@Override
 	public void broadcastWallNotification(WallPostDTO wallPostDto)
 	{
-		produceRabbitmqMessageService.produceSimpMessage(ControllerUtils.SOCKET_WALL_TOPIC + wallPostDto.getHotelId(), wallPostDto);
+		produceRabbitmqMessageService.produceSimpMessage(AppConfigProperties.SOCKET_WALL_TOPIC + wallPostDto.getHotelId(), wallPostDto);
 	}
 
 	@Override
@@ -673,7 +663,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 			CustomerNotificationDTO receiverNotification = new CustomerNotificationDTO();
 			receiverNotification.setCustomerEvent(0, 0, event, "new event", 0);
 			receiverNotification.setReceiverId(guestCustomerId);
-			hotelRabbitMQProducer.produceSimpWebsocketMessage(ControllerUtils.SOCKET_NOTIFICATION_TOPIC + guestCustomerId + "", receiverNotification);
+			hotelRabbitMQProducer.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + guestCustomerId + "", receiverNotification);
 		}
 	}
 }

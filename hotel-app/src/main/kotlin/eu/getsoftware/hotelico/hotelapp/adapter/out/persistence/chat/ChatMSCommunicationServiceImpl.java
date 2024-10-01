@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.chat;
 import eu.getsoftware.hotelico.chat.domain.ChatMessageView;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotel.usecase.notification.app.usecases.impl.NotificationService;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository;
@@ -156,10 +156,10 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 	
 		chatMessageDto = fillDtoFromMessage(chatMessageDto, newMessage);
 		
-		if(ControllerUtils.CHAT_DELIEVER_INDIVIDUAL)
+		if(AppConfigProperties.CHAT_DELIEVER_INDIVIDUAL)
 		{
-			hotelRabbitMQProducer.produceSimpWebsocketMessage(ControllerUtils.SOCKET_CHAT_TOPIC + newMessage.getSender().getId() + "", chatMessageDto);
-			hotelRabbitMQProducer.produceSimpWebsocketMessage(ControllerUtils.SOCKET_CHAT_TOPIC + newMessage.getReceiver().getId() + "", chatMessageDto);			
+			hotelRabbitMQProducer.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_CHAT_TOPIC + newMessage.getSender().getId() + "", chatMessageDto);
+			hotelRabbitMQProducer.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_CHAT_TOPIC + newMessage.getReceiver().getId() + "", chatMessageDto);			
 		}
 
 		notificationService.createAndSendNotification(sender.getId(), HotelEvent.EVENT_CHAT_SEND_MESSAGE);
@@ -212,7 +212,7 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 					{
 						chatDto.getSpecialContent().put("name", activity.getTitle());
 						chatDto.getSpecialContent().put("hotelId", activity.getHotelRootEntity().getId()+"");
-						chatDto.getSpecialContent().put("pictureUrl", activity.getPreviewPictureUrl()!=null?activity.getPreviewPictureUrl() : ControllerUtils.PREVIEW_ACTIVITY_NOT_AVAILABLE_URL );
+						chatDto.getSpecialContent().put("pictureUrl", activity.getPreviewPictureUrl()!=null?activity.getPreviewPictureUrl() : AppConfigProperties.PREVIEW_ACTIVITY_NOT_AVAILABLE_URL );
 					}
 
 				}
@@ -289,7 +289,7 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 				chatRepository.save(message);
 
 				//Notificate Sender about SEEN message
-				hotelRabbitMQProducer.produceSimpWebsocketMessage(ControllerUtils.SOCKET_CHAT_TOPIC + message.getSender().getId() + "", convertMessageToDto(message));
+				hotelRabbitMQProducer.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_CHAT_TOPIC + message.getSender().getId() + "", convertMessageToDto(message));
 
 				lastMessagesService.markMessageRead(message);
 				lastMessagesService.markLastMessageBetweenCustomers(message);
@@ -325,7 +325,7 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 			lastMessagesService.markLastMessageBetweenCustomers(latestUnreadMessage);
 
 			//Notificate Sender about last SEEN message
-			hotelRabbitMQProducer.produceSimpWebsocketMessage(ControllerUtils.SOCKET_CHAT_TOPIC + latestUnreadMessage.getSender().getId() + "", convertMessageToDto(latestUnreadMessage));
+			hotelRabbitMQProducer.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_CHAT_TOPIC + latestUnreadMessage.getSender().getId() + "", convertMessageToDto(latestUnreadMessage));
 		}
 
 		lastMessagesService.markChatRead(customerId, senderId);
@@ -394,7 +394,7 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 					{
 						Timestamp lastMessageTimestamp = nextLastMessage.getTimestamp();
 
-						String time = ControllerUtils.getTimeFormatted(lastMessageTimestamp);
+						String time = AppConfigProperties.getTimeFormatted(lastMessageTimestamp);
 
 						String message = nextLastMessage.getMessage();
 // Only Client can short the message, because it has to be encoded first. only then cuttet!!!					
@@ -462,7 +462,7 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 					{
 						Timestamp lastMessageTimestamp = nextLastMessage.getTimestamp();
 
-						String time = ControllerUtils.getTimeFormatted(lastMessageTimestamp);
+						String time = AppConfigProperties.getTimeFormatted(lastMessageTimestamp);
 
 						String message = nextLastMessage.getMessage();
 // Only Client can short the message, because it has to be encoded first. only then cuttet!!!					
@@ -541,7 +541,7 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 				//customer is in Hotel, so we need filter here all hotel chat Partners
 				List<CustomerHotelCheckin> inSameHotelCheckins = new ArrayList<>();
 				
-				if(ControllerUtils.SHOW_ONLY_FULL_CHECKIN_USERS)
+				if(AppConfigProperties.SHOW_ONLY_FULL_CHECKIN_USERS)
 				{
 					inSameHotelCheckins = checkinRepository.getActiveFullCheckinByHotelId(customerHotelId, new Date());
 				}

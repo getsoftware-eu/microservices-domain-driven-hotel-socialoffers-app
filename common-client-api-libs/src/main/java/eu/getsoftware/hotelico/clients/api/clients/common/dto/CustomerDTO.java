@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.clients.api.clients.common.dto;
 
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.With;
@@ -135,7 +135,7 @@ public class CustomerDTO extends BasicDTO
     private List<String> languages  = null;
 
     public String getProfileImageUrl() {
-        return ControllerUtils.addHostPrefixOnDemand(profileImageUrl);
+        return AppConfigProperties.addHostPrefixOnDemand(profileImageUrl);
     }
     
     public int getAge() {
@@ -154,7 +154,7 @@ public class CustomerDTO extends BasicDTO
     }
     
     public String getAvatarUrl() {
-        return ControllerUtils.addHostPrefixOnDemand(avatarUrl);
+        return AppConfigProperties.addHostPrefixOnDemand(avatarUrl);
     }
     
 //    public void setAvatarUrl(String avatarUrl) {
@@ -162,7 +162,7 @@ public class CustomerDTO extends BasicDTO
 //    }
 
     public boolean isFullCheckin() {
-        return fullCheckin || ControllerUtils.CHECKIN_FULL_ALWAYS;
+        return fullCheckin || AppConfigProperties.CHECKIN_FULL_ALWAYS;
     }  
     
     public void setFullCheckin(boolean fullCheckin) {
@@ -227,6 +227,13 @@ public class CustomerDTO extends BasicDTO
     public void setHotelId(long id) {
         
         this.hotelId = id;
+    }
+
+    public void setCheckinFrom(Date validFrom) {
+    }
+
+    public void setCheckinTo(Date validTo) {
+        
     }
 
     /**

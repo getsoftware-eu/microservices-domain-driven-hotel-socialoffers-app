@@ -1,12 +1,12 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository;
 
-import eu.getsoftware.hotelico.hotel.adapter.out.persistence.model.checkin.HotelActivity
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.model.HotelActivity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import java.util.*
 
-interface ActivityRepository: JpaRepository<eu.getsoftware.hotelico.hotel.adapter.out.persistence.model.checkin.HotelActivity, Long> {
+interface ActivityRepository: JpaRepository<HotelActivity, Long> {
 
 	companion object {
 

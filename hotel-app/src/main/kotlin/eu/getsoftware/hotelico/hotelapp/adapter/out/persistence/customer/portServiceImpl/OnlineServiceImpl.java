@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.portServiceImpl;
 
+import eu.getsoftware.hotelico.clients.api.clients.domain.customer.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.customer.common.iEntity.ICustomerEntity;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.iPortService.OnlineService;
 
 import java.sql.Timestamp;
@@ -11,7 +11,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-import static eu.getsoftware.hotelico.clients.common.utils.ControllerUtils.convertToDate;
+import static eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties.convertToDate;
 
 public class OnlineServiceImpl implements OnlineService {
 

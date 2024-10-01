@@ -1,9 +1,10 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.model;
 
+import eu.getsoftware.hotelico.clients.api.clients.domain.customer.ICustomerRootEntity;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelRootEntity;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerHotelCheckin;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,7 +19,7 @@ import java.util.Date;
 				joinColumns = @JoinColumn(name = "CUSTOMER_ID")),
 		@AssociationOverride(name = "pk.hotel",
 				joinColumns = @JoinColumn(name = "HOTEL_ID")) })
-public class CustomerHotelCheckin implements java.io.Serializable {
+public class CustomerHotelCheckin implements ICustomerHotelCheckin, java.io.Serializable {
 
 	private static final long serialVersionUID = -2949611288215768311L;
 	

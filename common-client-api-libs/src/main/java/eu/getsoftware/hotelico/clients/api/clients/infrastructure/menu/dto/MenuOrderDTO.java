@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto;
 
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
-import eu.getsoftware.hotelico.clients.common.utils.ControllerUtils;
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.With;
@@ -41,7 +41,7 @@ public class MenuOrderDTO extends BasicDTO{
     private String timeString = null;
 
     String getPreviewPictureUrl() {
-        return previewPictureUrl!=null ? previewPictureUrl: ControllerUtils.PREVIEW_MENU_NOT_AVAILABLE_URL;
+        return previewPictureUrl!=null ? previewPictureUrl: AppConfigProperties.PREVIEW_MENU_NOT_AVAILABLE_URL;
     }
 
     void setPreviewPictureUrl(String previewPictureUrl) {
@@ -49,7 +49,7 @@ public class MenuOrderDTO extends BasicDTO{
     }
     
     String getTimeString() {
-        return (timestamp != null)? ControllerUtils.getTimeFormatted(timestamp) : null;
+        return (timestamp != null)? AppConfigProperties.getTimeFormatted(timestamp) : null;
     }
 
     void setTimeString(String timeString) {
