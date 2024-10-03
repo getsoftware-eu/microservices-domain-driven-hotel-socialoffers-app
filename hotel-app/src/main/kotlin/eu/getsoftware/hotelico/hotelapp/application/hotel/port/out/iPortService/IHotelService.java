@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService;
 
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.BasicHotelException;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.ICustomerDeal;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
@@ -50,4 +51,6 @@ public interface IHotelService
     void addUpdateWallPost(WallPostDTO checkinNotificationWallDto);
 
     int getCustomerDealCounter(long receiverId, int i);
+
+    IHotelActivity getActivityByIdOrInitId(int activId, int activId1);
 }

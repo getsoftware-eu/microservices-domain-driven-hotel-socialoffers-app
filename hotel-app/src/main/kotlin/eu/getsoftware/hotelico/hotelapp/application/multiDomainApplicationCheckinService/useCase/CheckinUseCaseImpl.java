@@ -14,6 +14,7 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
 import eu.getsoftware.hotelico.hotelapp.application.multiDomainApplicationCheckinService.port.in.CheckinUseCase;
 import lombok.RequiredArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -95,18 +96,7 @@ import java.util.List;
 				//if no checkin exists, create a new one
 				if(activeCustomerCheckins.isEmpty())
 				{
-					ICustomerHotelCheckin customerHotelCheckin = checkinService.createCheckin(); 
-					customerHotelCheckin.setCustomer(customerEntity);
-					customerHotelCheckin.setHotel(hotelRootEntity);
-					
-					customerHotelCheckin.setStaffCheckin(customerEntity.isHotelStaff());
-					customerHotelCheckin.setFullCheckin(isFullCheckin);
-					customerDto.setFullCheckin(isFullCheckin);
-					
-					customerHotelCheckin.setValidFrom(customerDto.getCheckinFrom());
-					customerHotelCheckin.setValidTo(customerDto.getCheckinTo());
-					checkinService.save(customerHotelCheckin);
-					nowGoodCheckin = customerHotelCheckin;
+					nowGoodCheckin = createCustomerHotelCheckin(customerDto, customerEntity, hotelRootEntity, isFullCheckin);
 					
 					customerDto.setErrorResponse("");
 					
@@ -143,14 +133,8 @@ import java.util.List;
 					{
 						if(hotelRootEntity.equals(nextCheckin.getHotel())) //if the checkin of actual hotel, NO HOTEL EVENT!
 						{
-							//update the values of checkin
-							nextCheckin.setValidFrom(customerDto.getCheckinFrom());
-							nextCheckin.setValidTo(customerDto.getCheckinTo());
-							nextCheckin.setStaffCheckin(customerEntity.isHotelStaff());
-							nextCheckin.setFullCheckin(isFullCheckin);
-							checkinService.save(nextCheckin);
+							nowGoodCheckin = updateHotelCheckin(customerDto, customerEntity, nextCheckin, isFullCheckin);
 							customerDto.setErrorResponse("");
-							nowGoodCheckin = nextCheckin;
 							break;
 						}
 					}
@@ -184,7 +168,7 @@ import java.util.List;
 					checkinService.save(nextCheckin);
 				}
 				
-				Long wantedHotelId = customerDto.getHotelId();
+				long wantedHotelId = customerDto.getHotelId();
 				
 				long consistencyId = new Date().getTime();
 				customerEntity.getEntityAggregate().setConsistencyId(consistencyId);
@@ -219,6 +203,31 @@ import java.util.List;
 		}
 		
 		return null;
+	}
+
+	private ICustomerHotelCheckin updateHotelCheckin(CustomerDTO customerDto, ICustomerRootEntity customerEntity, ICustomerHotelCheckin nextCheckin, boolean isFullCheckin) {
+		//update the values of checkin
+		nextCheckin.setValidFrom(customerDto.getCheckinFrom());
+		nextCheckin.setValidTo(customerDto.getCheckinTo());
+		nextCheckin.setStaffCheckin(customerEntity.isHotelStaff());
+		nextCheckin.setFullCheckin(isFullCheckin);
+		return checkinService.save(nextCheckin);
+	}
+
+	@NotNull
+	private ICustomerHotelCheckin createCustomerHotelCheckin(CustomerDTO customerDto, ICustomerRootEntity customerEntity, IHotelRootEntity hotelRootEntity, boolean isFullCheckin) {
+		ICustomerHotelCheckin customerHotelCheckin = checkinService.createCheckin();
+		customerHotelCheckin.setCustomer(customerEntity);
+		customerHotelCheckin.setHotel(hotelRootEntity);
+
+		customerHotelCheckin.setStaffCheckin(customerEntity.isHotelStaff());
+		customerHotelCheckin.setFullCheckin(isFullCheckin);
+		customerDto.setFullCheckin(isFullCheckin);
+
+		customerHotelCheckin.setValidFrom(customerDto.getCheckinFrom());
+		customerHotelCheckin.setValidTo(customerDto.getCheckinTo());
+		checkinService.save(customerHotelCheckin);
+		return customerHotelCheckin;
 	}
 
 	@Override

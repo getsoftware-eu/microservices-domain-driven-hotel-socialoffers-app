@@ -45,4 +45,8 @@ public interface ICustomerRootEntity {
     ICustomerRootEntity getEntityAggregate();
 
     String getPrefferedLanguage();
+
+    String getFirstName();
+
+    String getEmail();
 }

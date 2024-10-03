@@ -15,12 +15,11 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.model.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotelapp.application.customer.common.iEntity.ICustomerEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.CustomerAggregate;
-import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.CustomerPortService;
+import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.service.HotelRabbitMQProducer;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LoginHotelicoService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.MailService;
-import eu.getsoftware.hotelico.hotelapp.model.CustomerDeal;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

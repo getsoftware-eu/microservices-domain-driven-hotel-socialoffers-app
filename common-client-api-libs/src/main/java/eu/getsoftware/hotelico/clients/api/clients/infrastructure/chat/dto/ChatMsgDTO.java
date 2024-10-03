@@ -7,19 +7,19 @@ import java.util.Map;
 
 @Getter
 public record ChatMsgDTO(
-		Long initId,
+		long initId,
 		String message,
-		Long senderId,
-		Long receiverId,
-		Boolean hotelStaff,
-		Boolean seenByReceiver,
-		Boolean delieveredToReceiver,
-		Long creationTime,
+		long senderId,
+		long receiverId,
+		boolean hotelStaff,
+		boolean seenByReceiver,
+		boolean deliveredToReceiver,
+		long creationTime,
 		Timestamp timestamp,
-		Map<String, String> specialContent
-
-    ) 
-		//implements BasicDTO(initId)
+		Map<String, String> specialContent,
+		boolean active
+//		String specialChatContent
+    ) /*implements IChatMessageView*/
 {
 	
 

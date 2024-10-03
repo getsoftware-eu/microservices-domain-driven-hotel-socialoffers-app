@@ -224,7 +224,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 					{
 						ChatMessageView lastUnreadMessage = unreadChatMessages.get(unreadChatMessages.size() - 1);
 						
-						if (!lastUnreadMessage.isDelieveredToReceiver() && !lastUnreadMessage.isSeenByReceiver() && lastUnreadMessage.getReceiver().getId() == receiverId && allOnlineCustomersIds.contains(receiverId))
+						if (!lastUnreadMessage.isDelieveredToReceiver() && !lastUnreadMessage.isSeenByReceiver() && lastUnreadMessage.getReceiverId() == receiverId && allOnlineCustomersIds.contains(receiverId))
 						{
 							if (!lastUnreadMessage.isDelieveredToReceiver()) //Eugen: ONLY 1 Time, then it will be marked as delivered!!!
 							{
@@ -233,7 +233,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 								
 								//Eugen: notificate Sender, that his message was delievered
 								ChatMsgDTO chatMessageDto = chatMSComminicationService.convertMessageToDto(lastUnreadMessage);
-								simpMessagingTemplate.convertAndSend(AppConfigProperties.SOCKET_CHAT_TOPIC + lastUnreadMessage.getSender().getId() + "", chatMessageDto);
+								simpMessagingTemplate.convertAndSend(AppConfigProperties.SOCKET_CHAT_TOPIC + lastUnreadMessage.getSenderId() + "", chatMessageDto);
 							}
 							
 						}
@@ -300,8 +300,8 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 					//only if it notifications to message sender
 					if (nextLastMessage.senderId() == receiverId && AppConfigProperties.CHAT_NOTIFICATE_DELIEVERY_CHATLIST)
 					{
-						lastMessageSeenByCustomer.put(nextChatCustomerRootEntity.getId(), nextLastMessage.getReceiver().equals(nextChatCustomerRootEntity) && nextLastMessage.isSeenByReceiver());
-						lastMessageDelieveredToCustomer.put(nextChatCustomerRootEntity.getId(), nextLastMessage.getReceiver().equals(nextChatCustomerRootEntity) && nextLastMessage.isDelieveredToReceiver());
+						lastMessageSeenByCustomer.put(nextChatCustomerRootEntity.getId(), nextLastMessage.receiverId()==(nextChatCustomerRootEntity.getId()) && nextLastMessage.seenByReceiver());
+						lastMessageDelieveredToCustomer.put(nextChatCustomerRootEntity.getId(), nextLastMessage.receiverId()==(nextChatCustomerRootEntity.getId()) && nextLastMessage.deliveredToReceiver());
 					}
 				}
 				//#######################
@@ -372,23 +372,34 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 				
 				ICustomerRootEntity nextFeedCustomerRootEntity = customerService.getOne(nextId);
 				
-				if(nextFeedCustomerRootEntity !=null && nextFeedCustomerRootEntity.getEntityAggregate().isAllowHotelNotification())
+				if(nextFeedCustomerRootEntity !=null && nextFeedCustomerRootEntity.isAllowHotelNotification())
 				{
 					long time = new Date().getTime();
+
+					var senderId=(customerEntity.getId());
+					var receiverId=(nextFeedCustomerRootEntity.getId());
+					var message=(feedMessage);
+					var initId=(time);
+					var creationTime=(time);
+					var timestamp=( new Timestamp(time));
 					
-					ChatMessageDTO feedChatMessage = new ChatMessageDTO(time);
+					var specialcontent = new HashMap<String, String>(10);
+					specialcontent.put("activityId", inviteActivityId);
 					
-					feedChatMessage.setSenderId(customerEntity.getId());
-					feedChatMessage.setReceiverId(nextFeedCustomerRootEntity.getId());
-					feedChatMessage.setMessage(feedMessage);
-					feedChatMessage.setInitId(time);
-					feedChatMessage.setCreationTime(time);
-					feedChatMessage.setTimestamp( new Timestamp(time));
+					var active =  true;
 					
-					if(!AppConfigProperties.isEmptyString(inviteActivityId))
-					{
-						feedChatMessage.getSpecialContent().put("activityId", inviteActivityId);
-					}
+					ChatMsgDTO feedChatMessage = new ChatMsgDTO(
+							initId,
+							message,
+							senderId,
+							receiverId,
+							false, 
+							false, 
+							false,
+							creationTime,
+							timestamp,
+							specialcontent,
+							active);
 					
 					chatMSComminicationService.addChatMessage(feedChatMessage);
 				}

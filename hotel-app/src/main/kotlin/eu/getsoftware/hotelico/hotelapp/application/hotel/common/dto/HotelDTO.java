@@ -15,10 +15,13 @@ public class HotelDTO extends BasicDTO
 {
     private int rating = 0;
     
+    @Setter
     private int activityNumber = 0;
     
+    @Setter
     private int customerNumber = 0;
     
+    @Setter
     private int anonymeGuestNumber = 0;
     
     private Long consistencyId = 0L;
@@ -26,6 +29,7 @@ public class HotelDTO extends BasicDTO
     @Setter(AccessLevel.NONE)
     private long creationTime = 0L;
 
+    @Setter
     private double kmFromMe = 0.0;
     
     private String name = null;
@@ -82,29 +86,4 @@ public class HotelDTO extends BasicDTO
 
         return AppConfigProperties.addHostPrefixOnDemand(picUrl);
    }
-    
-    public void setCustomerNumber(int customerNumber)
-    {
-        this.customerNumber = customerNumber;
-    }
-    
-    public void setCreationTime(long creationTime)
-    {
-        this.creationTime = creationTime;
-    }
-    
-    public void setAnonymeGuestNumber(int anonymeGuestNumber)
-    {
-        this.anonymeGuestNumber = anonymeGuestNumber;
-    }
-    
-    public void setActivityNumber(int activityNumber)
-    {
-        this.activityNumber = activityNumber;
-    }
-    
-    public void setKmFromMe(double kmFromMe)
-    {
-        this.kmFromMe = kmFromMe;
-    }
 }

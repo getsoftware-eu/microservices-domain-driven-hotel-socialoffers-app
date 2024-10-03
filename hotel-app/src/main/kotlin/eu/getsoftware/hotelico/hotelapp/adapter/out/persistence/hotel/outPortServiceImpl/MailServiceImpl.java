@@ -1,9 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortServiceImpl;
 
+import eu.getsoftware.hotelico.clients.api.clients.domain.customer.ICustomerRootEntity;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.MailValidator;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
-import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
@@ -41,7 +40,7 @@ public class MailServiceImpl implements MailService
 	private SimpleMailMessage preConfiguredMessage;
 	
 	@Autowired
-	private CustomerPortService customerService;	
+	private ICustomerPortService customerService;	
 	
 	@Autowired
 	private IHotelService hotelService;
@@ -177,7 +176,7 @@ public class MailServiceImpl implements MailService
 	}
 	
 	@Override
-	public String getWellcomeMailBody(CustomerRootEntity customerEntity)
+	public String getWellcomeMailBody(ICustomerRootEntity customerEntity)
 	{
 		String mailContent = "";
 		String mailHotelicoContent = "";

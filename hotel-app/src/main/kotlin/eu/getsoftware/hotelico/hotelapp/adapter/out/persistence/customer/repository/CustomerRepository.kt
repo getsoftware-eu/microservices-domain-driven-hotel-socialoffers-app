@@ -2,7 +2,6 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.reposi
 
 import eu.getsoftware.hotelico.clients.api.clients.domain.customer.ICustomerRootEntity
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity
-import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.IRepository.ICustomerRepository
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
@@ -10,7 +9,7 @@ import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import java.sql.Timestamp
 
-interface CustomerRepository: ICustomerRepository, JpaRepository<CustomerRootEntity, Long> {
+interface CustomerRepository: JpaRepository<CustomerRootEntity, Long> {
 	
 	companion object {
 		
@@ -40,38 +39,38 @@ interface CustomerRepository: ICustomerRepository, JpaRepository<CustomerRootEnt
 	/**
 	 * Find user by eMail.
 	 */
-	override fun findByEmailAndActive(email: String, active: Boolean): List<CustomerRootEntity>
+	fun findByEmailAndActive(email: String, active: Boolean): List<CustomerRootEntity>
 	
 	/**
 	 * Find user by linkedIn Id.
 	 */
-	override fun findByLinkedInIdAndActive(linkedInId: String, active: Boolean): List<CustomerRootEntity>	
+	fun findByLinkedInIdAndActive(linkedInId: String, active: Boolean): List<CustomerRootEntity>	
 	
 	/**
 	 * Find user by facebook Id.
 	 */
-	override fun findByFacebookIdAndActive(facebookId: String, active: Boolean): List<CustomerRootEntity>
+	fun findByFacebookIdAndActive(facebookId: String, active: Boolean): List<CustomerRootEntity>
 	
-	override fun findByActive(active: Boolean): List<CustomerRootEntity>	
+	fun findByActive(active: Boolean): List<CustomerRootEntity>	
 	
-	override fun findByActive(active: Boolean, pageable: Pageable): Page<ICustomerRootEntity>	
+	fun findByActive(active: Boolean, pageable: Pageable): Page<ICustomerRootEntity>	
 	
-	override fun findByLoggedAndActive(logged: Boolean, active: Boolean): List<CustomerRootEntity>
+	fun findByLoggedAndActive(logged: Boolean, active: Boolean): List<CustomerRootEntity>
 	
 	@Query(FIND_ALL_ONLINE)
-	override fun findAllOnline(@Param("checkDate") checkDate: Timestamp): List<CustomerRootEntity>
+	fun findAllOnline(@Param("checkDate") checkDate: Timestamp): List<CustomerRootEntity>
 
-//	@Query(FIND_BY_ID_LIST)
-override fun findByIdIn(ids: List<Long>): List<CustomerRootEntity>
+	//	@Query(FIND_BY_ID_LIST)
+	fun findByIdIn(ids: List<Long>): List<CustomerRootEntity>
 	
-	override fun findByHotelStaffAndActive(hotelStaff: Boolean, active: Boolean): List<String>
+	fun findByHotelStaffAndActive(hotelStaff: Boolean, active: Boolean): List<String>
 
 	@Query(FIND_ANONYM_CUSTOMER)
-	override fun getAnonymeCustomer(): List<CustomerRootEntity>
+	fun getAnonymeCustomer(): List<CustomerRootEntity>
 	
 	@Query(CHECK_STAFF_OR_ADMIN_CUSTOMER)
-	override fun checkStaffOrAdmin(@Param("customerId") customerId: Long): Boolean
+	fun checkStaffOrAdmin(@Param("customerId") customerId: Long): Boolean
 
 	@Query(FIND_CUSTOMER_CITIES)
-	abstract override fun findNotStaffUniueCities(): List<String>
+	abstract fun findNotStaffUniueCities(): List<String>
 }

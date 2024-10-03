@@ -8,10 +8,10 @@ import java.util.Set;
 public interface IHotelRootEntity {
 
     //eugen: mappedBy entity!
-    private Set<HotelWallPost> hotelWallPosts;
+    Set<HotelWallPost> hotelWallPosts();
 
     //eugen: mappedBy entity!
-    private Set<HotelActivity> hotelActivities;
+    Set<HotelActivity> hotelActivities();
 
     public long getId();
 

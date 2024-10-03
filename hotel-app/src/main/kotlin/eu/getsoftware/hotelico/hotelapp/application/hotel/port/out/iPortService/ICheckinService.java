@@ -11,7 +11,7 @@ public interface ICheckinService {
 
     Date getLastByCustomerAndHotelId(long id, long id1);
 
-    void save(ICustomerHotelCheckin customerHotelCheckin);
+    ICustomerHotelCheckin save(ICustomerHotelCheckin customerHotelCheckin);
 
     List<ICustomerRootEntity> getStaffByHotelId(long hotelId);
 

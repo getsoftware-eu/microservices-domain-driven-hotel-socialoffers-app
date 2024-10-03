@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.chatview.model;
 
-import eu.getsoftware.hotelico.clients.api.clients.domain.chat.IChatMessageDomain;
+import eu.getsoftware.hotelico.clients.api.clients.domain.chat.IChatMessageView;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
 import jakarta.persistence.*;
@@ -15,7 +15,7 @@ import java.util.Objects;
 @Entity
 @Getter @Setter
 @Table(name = "chat_message", schema = "chat")
-public class ChatMessageView implements IChatMessageDomain, Serializable
+public class ChatMessageView implements IChatMessageView, Serializable
 {
   private static final long serialVersionUID = -5478152926665631989L;
   
@@ -36,9 +36,11 @@ public class ChatMessageView implements IChatMessageDomain, Serializable
   @Column
   private Timestamp timestamp;
 
-  @ManyToOne
-  @JoinColumn(name="senderId")
-  private CustomerRootEntity sender;
+//  @ManyToOne
+//  @JoinColumn(name="senderId")
+//  private CustomerRootEntity sender;
+  @Column
+  private long senderId;
   
   @Column(name = "seenByReceiver", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
   private boolean seenByReceiver = false;  
@@ -46,9 +48,11 @@ public class ChatMessageView implements IChatMessageDomain, Serializable
   @Column(name = "delieveredToReceiver", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
   private boolean delieveredToReceiver = false;
   
-  @ManyToOne
-  @JoinColumn(name="receiverId")
-  private CustomerRootEntity receiver;
+//  @ManyToOne
+//  @JoinColumn(name="receiverId")
+//  private CustomerRootEntity receiver;
+  @Column
+  private long receiverId;
 
   @Column
   private String specialChatContent;
@@ -63,8 +67,8 @@ public class ChatMessageView implements IChatMessageDomain, Serializable
     this();
     
     this.message = message;
-    this.sender = sender;
-    this.receiver = receiver;
+    this.senderId = sender.getId();
+    this.receiverId = receiver.getId();
   }
   
   @Override
@@ -91,11 +95,11 @@ public class ChatMessageView implements IChatMessageDomain, Serializable
       return false;
     }
 
-    if (!Objects.equals(sender, that.sender))
+    if (!Objects.equals(senderId, that.senderId))
     {
       return false;
     }
-    return !(!Objects.equals(receiver, that.receiver));
+    return !(!Objects.equals(receiverId, that.receiverId));
 
   }
 
@@ -105,8 +109,6 @@ public class ChatMessageView implements IChatMessageDomain, Serializable
     int result = (int)id;
     result = 31 * result + (active ? 1 : 0);
     result = 31 * result + (message != null ? message.hashCode() : 0);
-    result = 31 * result + (sender != null ? sender.hashCode() : 0);
-    result = 31 * result + (receiver != null ? receiver.hashCode() : 0);
     result = 31 * result + (timestamp != null ? timestamp.hashCode() : 0);
     result = 31 * result + (seenByReceiver ? 1 : 0);
     return result;

@@ -1,7 +1,5 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService;
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
-
 /**
  * Created by Eugen on 31.07.2015.
  */
@@ -20,6 +18,6 @@ public interface MailService
 	 * */
 	 void sendPreConfiguredMail(String message);
 	
-	 String getWellcomeMailBody(CustomerRootEntity customerEntity);
+	 String getWellcomeMailBody(ICustomerRootEntity customerEntity);
 	
 }

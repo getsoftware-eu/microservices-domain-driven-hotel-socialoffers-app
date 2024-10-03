@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.domain.usecase.messages;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.domain.chat.IChatMessageView;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import eu.getsoftware.hotelico.hotelapp.application.chat.domain.model.IChatMessageView;
 import eu.getsoftware.hotelico.hotelapp.application.customer.common.iEntity.ICustomerEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.CustomerDtoUseCase;
 
