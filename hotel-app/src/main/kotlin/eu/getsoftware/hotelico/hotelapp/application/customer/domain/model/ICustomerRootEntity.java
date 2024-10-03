@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.clients.api.clients.domain.customer;
+package eu.getsoftware.hotelico.hotelapp.application.customer.domain.model;
 
 public interface ICustomerRootEntity {
     
@@ -49,4 +49,16 @@ public interface ICustomerRootEntity {
     String getFirstName();
 
     String getEmail();
+
+    double getLatitude();
+
+    double getLongitude();
+
+    void setLatitude(double latitude);
+
+    void setLongitude(double longitude);
+
+    ICustomerDetails getCustomerDetails();
+
+    ICustomerPreferences getCustomerPreferences();
 }

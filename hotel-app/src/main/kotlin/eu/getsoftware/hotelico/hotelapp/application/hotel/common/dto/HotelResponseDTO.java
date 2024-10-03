@@ -11,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @With
 @Getter
 @SuperBuilder()
-public class HotelDTO extends BasicDTO
+public class HotelResponseDTO extends BasicDTO
 {
     private int rating = 0;
     
@@ -68,7 +68,7 @@ public class HotelDTO extends BasicDTO
     
     private Boolean virtualfalse;
     
-    public HotelDTO(long initId){
+    public HotelResponseDTO(long initId){
         super(initId);
     }
     

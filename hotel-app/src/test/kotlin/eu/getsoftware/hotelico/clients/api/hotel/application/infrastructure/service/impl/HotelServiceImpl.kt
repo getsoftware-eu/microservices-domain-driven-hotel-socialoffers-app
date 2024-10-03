@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.clients.api.hotel.application.infrastructure.ser
 
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelRootEntity
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.HotelRepository
-import eu.getsoftware.hotelico.hotelapp.application.hotel.common.dto.HotelDTO
+import eu.getsoftware.hotelico.hotelapp.application.hotel.common.dto.HotelResponseDTO
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
@@ -18,7 +18,8 @@ class HotelServiceImpl {
             hotelRepository
         );
 	
-	val sampleHotelDTO = HotelDTO(123);
+	val sampleHotelResponseDTO =
+		HotelResponseDTO(123);
 	val sampleHotelEntity =
         HotelRootEntity();
 	

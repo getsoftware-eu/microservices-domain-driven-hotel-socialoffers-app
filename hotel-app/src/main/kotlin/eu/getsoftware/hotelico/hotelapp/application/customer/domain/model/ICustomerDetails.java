@@ -11,6 +11,8 @@ public interface ICustomerDetails {
 
     String getCity();
 
+    void setCity(String city);
+    
     void setBirthday(Date birthdayDate);
 
     void setProfileImageUrl(String s);

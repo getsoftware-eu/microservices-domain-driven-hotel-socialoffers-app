@@ -4,7 +4,7 @@
 //import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository.Companion.FIND_ALL_ONLINE
 //import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository.Companion.FIND_ANONYM_CUSTOMER
 //import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository.Companion.FIND_CUSTOMER_CITIES
-//import eu.getsoftware.hotelico.clients.api.clients.domain.customer.ICustomerRootEntity
+//import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity
 //import org.springframework.data.domain.Page
 //import org.springframework.data.domain.Pageable
 //import org.springframework.data.jpa.repository.Query

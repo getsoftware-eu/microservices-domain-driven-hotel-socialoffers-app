@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.portServiceImpl;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerRequestDTO;
 import eu.getsoftware.hotelico.clients.api.infrastructure.notification.NotificationService;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
@@ -13,8 +14,8 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.HotelRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.LanguageRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.model.CustomerHotelCheckin;
-import eu.getsoftware.hotelico.hotelapp.application.customer.common.iEntity.ICustomerEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.CustomerAggregate;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.service.HotelRabbitMQProducer;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
@@ -250,7 +251,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
     
     @Override
     @Transactional
-    public CustomerDTO updateCustomer(CustomerDTO customerDto, int updatorId) {
+    public CustomerDTO updateCustomer(CustomerRequestDTO customerDto, int updatorId) {
         
         CustomerRootEntity customerEntity = customerRepository.getOne(customerDto.getId());
     
@@ -399,22 +400,22 @@ public class CustomerPortServiceImpl implements CustomerPortService
     }
 
     @Override
-    public boolean relocateGuestDealsToLoggedCustomer(ICustomerEntity customerEntity, Long guestCustomerId) {
+    public boolean relocateGuestDealsToLoggedCustomer(ICustomerRootEntity customerEntity, Long guestCustomerId) {
         return false;
     }
 
     @Override
-    public CustomerDTO convertCustomerToDto(ICustomerEntity customerEntity, long hotelId) {
+    public CustomerDTO convertCustomerToDto(ICustomerRootEntity customerEntity, long hotelId) {
         return null;
     }
 
     @Override
-    public CustomerDTO convertCustomerToDto(ICustomerEntity customerEntity, boolean fullSerialization, CustomerHotelCheckin validCheckin) {
+    public CustomerDTO convertCustomerToDto(ICustomerRootEntity customerEntity, boolean fullSerialization, CustomerHotelCheckin validCheckin) {
         return null;
     }
 
     @Override
-    public CustomerDTO convertMyCustomerToFullDto(ICustomerEntity customerEntity) {
+    public CustomerDTO convertMyCustomerToFullDto(ICustomerRootEntity customerEntity) {
         return null;
     }
 
@@ -739,7 +740,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
     }
 
     @Override
-    public String getCustomerAvatarUrl(ICustomerEntity customerEntity) {
+    public String getCustomerAvatarUrl(ICustomerRootEntity customerEntity) {
         return null;
     }
 

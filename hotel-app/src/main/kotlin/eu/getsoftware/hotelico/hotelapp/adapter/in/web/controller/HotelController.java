@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.BasicHotelException;
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.common.dto.HotelDTO;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.common.dto.HotelResponseDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.aspects.NotifyClients;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
@@ -51,22 +51,22 @@ public class HotelController extends BasicController
 //    }
     
     @RequestMapping(value = "/customer/hotel", method = RequestMethod.GET)
-    public List<HotelDTO> getHotels() {
+    public List<HotelResponseDTO> getHotels() {
         return hotelService.getHotels();
     }
 
     @RequestMapping(value = "/customer/{customerId}/hotel/{hotelId}", method = RequestMethod.GET)
-    public HotelDTO get(@PathVariable long customerId, @PathVariable long hotelId, final HttpServletResponse response) {
+    public HotelResponseDTO get(@PathVariable long customerId, @PathVariable long hotelId, final HttpServletResponse response) {
         response.setHeader("Cache-Control", "no-cache");
-        HotelDTO out = hotelService.getHotelById(hotelId);
+        HotelResponseDTO out = hotelService.getHotelById(hotelId);
         return out;
     }
     
     @ApiOperation(value = "every hotel has its unique code", produces = "application/json")
     @RequestMapping(value = "/customer/{customerId}/hotelCode/{hotelCode}", method = RequestMethod.GET)
-    public HotelDTO getHotelByCode(@PathVariable long customerId, @PathVariable String hotelCode, final HttpServletResponse response) {
+    public HotelResponseDTO getHotelByCode(@PathVariable long customerId, @PathVariable String hotelCode, final HttpServletResponse response) {
 //        response.setHeader("Cache-Control", "no-cache");
-        HotelDTO out = hotelService.getHotelByCode(hotelCode);
+        HotelResponseDTO out = hotelService.getHotelByCode(hotelCode);
         return out;
     }    
     
@@ -78,25 +78,25 @@ public class HotelController extends BasicController
     }   
     
     @RequestMapping(value = "/customer/{customerId}/hotel", method = RequestMethod.GET)
-    public List<HotelDTO> getAll(@PathVariable long customerId, final HttpServletResponse response) {
+    public List<HotelResponseDTO> getAll(@PathVariable long customerId, final HttpServletResponse response) {
         return hotelService.getHotels();
     }   
     
     @RequestMapping(value = "/customer/{customerId}/hotelCities", method = RequestMethod.GET)
-    public List<HotelDTO> getHotelCities(@PathVariable long customerId, final HttpServletResponse response) {
+    public List<HotelResponseDTO> getHotelCities(@PathVariable long customerId, final HttpServletResponse response) {
         return hotelService.getHotelCities(customerId);
     } 
     
     @RequestMapping(value = "/customer/{customerId}/hotel/city/{city}", method = RequestMethod.GET)
-    public List<HotelDTO> getHotelCities(@PathVariable long customerId, @PathVariable String city, final HttpServletResponse response) throws BasicHotelException
+    public List<HotelResponseDTO> getHotelCities(@PathVariable long customerId, @PathVariable String city, final HttpServletResponse response) throws BasicHotelException
     {
         return hotelService.getHotelsByCity(customerId, city);
     }  
     
     @RequestMapping(value = "/customer/hotel/{hotelId}", method = RequestMethod.GET)
-    public HotelDTO getWithoutCustomer(@PathVariable long hotelId, final HttpServletResponse response) {
+    public HotelResponseDTO getWithoutCustomer(@PathVariable long hotelId, final HttpServletResponse response) {
         response.setHeader("Cache-Control", "no-cache");
-        HotelDTO out = hotelService.getHotelById(hotelId);
+        HotelResponseDTO out = hotelService.getHotelById(hotelId);
         return out;
     } 
     
@@ -109,9 +109,9 @@ public class HotelController extends BasicController
     
     @NotifyClients
     @RequestMapping(value = "/customer/{customerId}/hotel/{hotelId}", method = RequestMethod.PUT)
-    public HotelDTO update(@PathVariable long customerId, @PathVariable long hotelId, @RequestBody HotelDTO hotelDto) {
+    public HotelResponseDTO update(@PathVariable long customerId, @PathVariable long hotelId, @RequestBody HotelResponseDTO hotelDto) {
         
-        HotelDTO out = null;
+        HotelResponseDTO out = null;
         
         if(hotelId>0)
         {
@@ -136,8 +136,8 @@ public class HotelController extends BasicController
     
     @NotifyClients
     @RequestMapping(value = "/hotels", method = RequestMethod.POST)
-    public HotelDTO add(@RequestBody HotelDTO hotelDto) {
-        HotelDTO out = hotelService.addHotel(hotelDto);
+    public HotelResponseDTO add(@RequestBody HotelResponseDTO hotelDto) {
+        HotelResponseDTO out = hotelService.addHotel(hotelDto);
         return out;
     }
     

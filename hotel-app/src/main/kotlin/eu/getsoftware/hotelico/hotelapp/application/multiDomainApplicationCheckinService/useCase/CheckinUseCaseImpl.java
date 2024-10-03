@@ -1,10 +1,11 @@
 package eu.getsoftware.hotelico.hotelapp.application.multiDomainApplicationCheckinService.useCase;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.domain.customer.ICustomerRootEntity;
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerRequestDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.application.chat.port.out.IChatService;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerHotelCheckin;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.in.NotificationUseCase;
@@ -51,13 +52,15 @@ import java.util.List;
 
 	@Transactional
 	@Override
-	public CustomerDTO setCustomerCheckin(CustomerDTO customerDto, ICustomerRootEntity customerEntity) {
+	public CustomerDTO setCustomerCheckin(CustomerRequestDTO customerRequestDto, ICustomerRootEntity customerEntity) {
 			
 		IHotelRootEntity hotelRootEntity = null;
 		
+		CustomerDTO customerResponseDto = new CustomerDTO(123);
+		
 		if(customerEntity != null)
 		{
-			customerDto.setErrorResponse("");
+			customerResponseDto.setErrorResponse("");
 			
 			long virtualHotelId = lastMessagesService.getInitHotelId();
 			
@@ -65,22 +68,22 @@ import java.util.List;
 			
 			boolean isFullCheckin = false;
 			
-			if(customerDto.getHotelCode()!=null && !(customerDto.getHotelCode().equals(virtualHotelCode) ))
+			if(customerRequestDto.getHotelCode()!=null && !(customerRequestDto.getHotelCode().equals(virtualHotelCode) ))
 			{
-				hotelRootEntity = hotelService.findByCurrentHotelAccessCodeAndActive(customerDto.getHotelCode(), true);
+				hotelRootEntity = hotelService.findByCurrentHotelAccessCodeAndActive(customerRequestDto.getHotelCode(), true);
 				
 				//Eugen: full checkin, wenn checked-in with Hotel-Code!
 				isFullCheckin = (hotelRootEntity !=null);
 			}
-			if(hotelRootEntity ==null && customerDto.getHotelId()>0 && (!AppConfigProperties.ALLOW_INIT_VIRTUAL_HOTEL || customerDto.getHotelId() != virtualHotelId))
+			if(hotelRootEntity ==null && customerRequestDto.getHotelId()>0 && (!AppConfigProperties.ALLOW_INIT_VIRTUAL_HOTEL || customerRequestDto.getHotelId() != virtualHotelId))
 			{
-				hotelRootEntity = hotelService.getOne(customerDto.getHotelId());
+				hotelRootEntity = hotelService.getOne(customerRequestDto.getHotelId());
 			}
 			
 			List<ICustomerHotelCheckin> activeCustomerCheckins = checkinService.getActiveByCustomerId(customerEntity.getId(), new Date());
 			
 			boolean isDemoCheckin = hotelRootEntity != null && AppConfigProperties.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelRootEntity.getCurrentHotelAccessCode());
-			boolean checkinDateIsValid = AppConfigProperties.NO_CHECKOUT_FOR_DEMOHOTEL && isDemoCheckin || customerDto.getCheckinTo()!=null && customerDto.getCheckinTo().after(new Date());
+			boolean checkinDateIsValid = AppConfigProperties.NO_CHECKOUT_FOR_DEMOHOTEL && isDemoCheckin || customerRequestDto.getCheckinTo()!=null && customerRequestDto.getCheckinTo().after(new Date());
 			
 			isFullCheckin = isFullCheckin || isDemoCheckin;// set id DTO getter! || ControllerUtils.CHECKIN_FULL_ALWAYS;
 			
@@ -89,22 +92,22 @@ import java.util.List;
 			{
 				Date lastSameHotelCheckin = checkinService.getLastByCustomerAndHotelId(customerEntity.getId(), hotelRootEntity.getId());
 
-				customerDto.setHotelId(hotelRootEntity.getId());
+				customerRequestDto.setHotelId(hotelRootEntity.getId());
 				
 				ICustomerHotelCheckin nowGoodCheckin = null;
 				
 				//if no checkin exists, create a new one
 				if(activeCustomerCheckins.isEmpty())
 				{
-					nowGoodCheckin = createCustomerHotelCheckin(customerDto, customerEntity, hotelRootEntity, isFullCheckin);
-					
-					customerDto.setErrorResponse("");
+					nowGoodCheckin = createCustomerHotelCheckin(customerRequestDto, customerEntity, hotelRootEntity, isFullCheckin);
+
+					customerResponseDto.setErrorResponse("");
 					
 					//Inform others!!!
 					if(!customerEntity.isHotelStaff() && !customerEntity.isAdmin())
 					{
-						customerDto.setHotelId(hotelRootEntity.getId());
-						notificationUseCase.notificateAboutEntityEvent(customerDto, hotelEvent.getEventCheckin(), "New check-in in your hotel", hotelRootEntity.getId());
+						customerResponseDto.setHotelId(hotelRootEntity.getId());
+						notificationUseCase.notificateAboutEntityEvent(customerResponseDto, hotelEvent.getEventCheckin(), "New check-in in your hotel", hotelRootEntity.getId());
 					}
 					
 					//sent wellcome message to new fullCheckin customers
@@ -133,8 +136,8 @@ import java.util.List;
 					{
 						if(hotelRootEntity.equals(nextCheckin.getHotel())) //if the checkin of actual hotel, NO HOTEL EVENT!
 						{
-							nowGoodCheckin = updateHotelCheckin(customerDto, customerEntity, nextCheckin, isFullCheckin);
-							customerDto.setErrorResponse("");
+							nowGoodCheckin = updateHotelCheckin(customerRequestDto, customerEntity, nextCheckin, isFullCheckin);
+							customerResponseDto.setErrorResponse("");
 							break;
 						}
 					}
@@ -147,7 +150,7 @@ import java.util.List;
 
 				ICustomerRootEntity iCustomerRootEntity = customerService.save(customerEntity);
 				
-				customerDto = customerService.convertCustomerToDto(iCustomerRootEntity, true, nowGoodCheckin);
+				customerResponseDto = customerService.convertCustomerToDto(iCustomerRootEntity, true, nowGoodCheckin);
 				
 			}
 			else{ //if no hotel more, maybe cancel actual checkin
@@ -163,42 +166,42 @@ import java.util.List;
 					
 					//TODO eu: how to implement domain events, without  low level entity .class ??
 					
-					notificationUseCase.notificateAboutEntityEvent(customerDto, hotelEvent.getEventCheckout(), "Checkout from your hotel", nextCheckin.getHotel().getId());
+					notificationUseCase.notificateAboutEntityEvent(customerResponseDto, hotelEvent.getEventCheckout(), "Checkout from your hotel", nextCheckin.getHotel().getId());
 					
 					checkinService.save(nextCheckin);
 				}
 				
-				long wantedHotelId = customerDto.getHotelId();
+				long wantedHotelId = customerRequestDto.getHotelId();
 				
 				long consistencyId = new Date().getTime();
 				customerEntity.getEntityAggregate().setConsistencyId(consistencyId);
 				lastMessagesService.updateCustomerConsistencyId(customerEntity.getId(), consistencyId);
+
+				customerResponseDto = customerService.convertMyCustomerToFullDto(customerService.save(customerEntity));
 				
-				customerDto = customerService.convertMyCustomerToFullDto(customerService.save(customerEntity));
-				
-				if(wantedHotelId>0 && (customerDto.getCheckinTo()==null || customerDto.getCheckinTo().before(new Date()))) {
-					customerDto.setErrorResponse("Checkin Date is wrong or in past");
+				if(wantedHotelId>0 && (customerRequestDto.getCheckinTo()==null || customerRequestDto.getCheckinTo().before(new Date()))) {
+					customerResponseDto.setErrorResponse("Checkin Date is wrong or in past");
 				}
 				else
 				{
 					if(wantedHotelId>0)
 					{
-						customerDto.setErrorResponse("Hotel wurde nicht gefunden");
+						customerResponseDto.setErrorResponse("Hotel wurde nicht gefunden");
 					}
 					
 					if(wantedHotelId == virtualHotelId && AppConfigProperties.ALLOW_INIT_VIRTUAL_HOTEL)
 					{
-						customerDto.setHotelId(virtualHotelId);
-						customerDto.setFullCheckin(true);
+						customerResponseDto.setHotelId(virtualHotelId);
+						customerResponseDto.setFullCheckin(true);
 					}
 				}
 			}
 			
 			//Eugen: every time update customer current hotelId!!!
-			lastMessagesService.updateCustomerHotelId(customerDto.getId(), customerDto.getHotelId());
+			lastMessagesService.updateCustomerHotelId(customerResponseDto.getId(), customerResponseDto.getHotelId());
 			
 			
-			return customerDto;
+			return customerResponseDto;
 			
 		}
 		
@@ -232,25 +235,25 @@ import java.util.List;
 
 	@Override
 	@Transactional
-	public CustomerDTO updateCheckin(CustomerDTO customerDto) {
-		ICustomerRootEntity customerEntity = customerDto.getId()>0 ? customerService.getOne(customerDto.getId()) : null;
+	public CustomerDTO updateCheckin(CustomerRequestDTO customerRequestDto) {
+		ICustomerRootEntity customerEntity = customerRequestDto.getId()>0 ? customerService.getEntityById(customerRequestDto.getId()) : null;
 
-		customerDto = setCustomerCheckin(customerDto, customerEntity);
+		CustomerDTO customerResponseDto = setCustomerCheckin(customerRequestDto, customerEntity);
 
-		return customerDto; //mapper.map(customerService.saveAndFlush(customer), CustomerDto.class);
+		return customerResponseDto; //mapper.map(customerService.saveAndFlush(customer), CustomerDto.class);
 
 	}
 
 	
 
 	@Override
-	public ICustomerRootEntity getStaffbyHotelId(long hotelId)
+	public CustomerDTO getStaffbyHotelId(long hotelId)
 	{
-		ICustomerRootEntity staff = null;
+		CustomerDTO staff = null;
 	 
-		List<ICustomerRootEntity> hotelStaffs = checkinService.getStaffByHotelId(hotelId);
+		List<CustomerDTO> hotelStaffs = checkinService.getStaffByHotelId(hotelId);
 
-		Iterator<ICustomerRootEntity> staffIterator = hotelStaffs.iterator();
+		Iterator<CustomerDTO> staffIterator = hotelStaffs.iterator();
 		
 		if (staffIterator.hasNext())
 		{

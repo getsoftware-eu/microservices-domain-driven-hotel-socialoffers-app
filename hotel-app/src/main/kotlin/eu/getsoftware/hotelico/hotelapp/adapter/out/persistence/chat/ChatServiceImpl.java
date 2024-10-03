@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.chat;
 
-import eu.getsoftware.hotelico.clients.api.clients.domain.customer.ICustomerRootEntity;
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.hotelapp.application.chat.port.out.IChatService;
 
@@ -10,9 +10,9 @@ import java.util.Date;
 public class ChatServiceImpl implements IChatService {
     
     @Override
-    public void sendFirstChatMessageOnDemand(ICustomerRootEntity customerEntity, ICustomerRootEntity staffSender, boolean isFullCheckin) {
+    public void sendFirstChatMessageOnDemand(CustomerDTO customerDTO, CustomerDTO staffSender, boolean isFullCheckin) {
 
-        ChatMsgDTO lastMessageFromStaff = chatService.getLastMessageByCustomerAndReceiverIds(staffSender.getId(), customerEntity.getId());
+        ChatMsgDTO lastMessageFromStaff = chatService.getLastMessageByCustomerAndReceiverIds(staffSender.getId(), customerDTO.getId());
 
         //Send only first staffSender message!    
         if(lastMessageFromStaff==null)
@@ -21,7 +21,7 @@ public class ChatServiceImpl implements IChatService {
             String wellcomeMsg = "Hi, welcome to our Hotel! Please write me, if you need something";
             String wellcomeGuestMsg = "Hi, welcome to thr guest view of our Hotel! Please get the hotel-code at the reception - without the hotel-code, you are not listed as a hotel guest, and you can not view the customers in the wall... ";
 
-            if("de".equalsIgnoreCase(customerEntity.getEntityAggregate().getPrefferedLanguage()))
+            if("de".equalsIgnoreCase(customerDTO.getPrefferedLanguage()))
             {
                 wellcomeMsg = "Hallo, herzlich willkommen im Hotel! Bitte schreiben Sie mir, wenn Sie etwas brauchen";
                 wellcomeGuestMsg = "Hallo, herzlich willkommen im Hotel Gast-Zugang! Bitte bekommen Sie den Zugang-Kode an der Rezeption. Ohne Hotel-Kode sind ihre Aktivitäten in Hotel beschränkt";
@@ -30,7 +30,7 @@ public class ChatServiceImpl implements IChatService {
             String msg = (isFullCheckin ? wellcomeMsg : wellcomeGuestMsg);
 
             var sender = (staffSender);
-            var receiver = (customerEntity);
+            var receiver = (customerDTO);
             var initId = (new Date().getTime());
             var timestamp = (new Timestamp(new Date().getTime()));
 

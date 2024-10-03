@@ -1,7 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.chat.domain.infrastructure;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.domain.customer.ICustomerRootEntity;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,7 +47,7 @@ public interface ChatMSComminicationService
     
     Set<CustomerDTO> getAllNotChatPartners(long customerId, String city, long hotelId, int pageNumber);
 
-    Collection<? extends ICustomerRootEntity> getChatSendersByCustomerId(long receiverId);
+    Collection<? extends CustomerDTO> getChatSendersByCustomerId(long receiverId);
 
-    Collection<? extends ICustomerRootEntity> getChatReceiversByCustomerId(long receiverId);
+    Collection<? extends CustomerDTO> getChatReceiversByCustomerId(long receiverId);
 }

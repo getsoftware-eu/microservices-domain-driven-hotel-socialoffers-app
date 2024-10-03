@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.port.in;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.hotelapp.application.customer.common.iEntity.ICustomerEntity;
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerRequestDTO;
 
 public interface CustomerDtoUseCase
 {
@@ -11,6 +11,6 @@ public interface CustomerDtoUseCase
 	 * @param dto
 	 * @return
 	 */
-	CustomerDTO setDtoLastMessageWithRequester(ICustomerEntity requester, CustomerDTO dto);
+	CustomerDTO setDtoLastMessageWithRequester(CustomerRequestDTO requester, CustomerDTO dto);
 	
 }

@@ -1,6 +1,5 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository;
 
-import eu.getsoftware.hotelico.clients.api.clients.domain.customer.ICustomerRootEntity
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -53,7 +52,7 @@ interface CustomerRepository: JpaRepository<CustomerRootEntity, Long> {
 	
 	fun findByActive(active: Boolean): List<CustomerRootEntity>	
 	
-	fun findByActive(active: Boolean, pageable: Pageable): Page<ICustomerRootEntity>	
+	fun findByActive(active: Boolean, pageable: Pageable): Page<CustomerRootEntity>	
 	
 	fun findByLoggedAndActive(logged: Boolean, active: Boolean): List<CustomerRootEntity>
 	

@@ -1,7 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.port.in;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.domain.customer.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.IHotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
@@ -21,9 +20,9 @@ public interface NotificationUseCase
 	
 	void createAndSendNotification(long receiverId, IHotelEvent event);
 
-	void sendMailList(ICustomerRootEntity customerEntity, Map<String, String> systemMessages);
+	void sendMailList(CustomerDTO customerEntity, Map<String, String> systemMessages);
 	
-	void sendFeedMessage(ICustomerRootEntity customerEntity, Map<String, String> systemMessages);
+	void sendFeedMessage(CustomerDTO customerEntity, Map<String, String> systemMessages);
 	
 	void createAndSendPushNotification_Chat(long receiverId, IHotelEvent event, long senderId, String message);
 
@@ -49,5 +48,5 @@ public interface NotificationUseCase
 	
 	void broadcastWallNotification(WallPostDTO wallPostDto);
 
-	void sendNotificationToCustomerOrGuest(ICustomerRootEntity receiver, long guestCustomerId, IHotelEvent eventDealNewUpdate);
+	void sendNotificationToCustomerOrGuest(CustomerDTO receiver, long guestCustomerId, IHotelEvent eventDealNewUpdate);
 }

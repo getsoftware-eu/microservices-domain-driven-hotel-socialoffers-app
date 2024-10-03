@@ -1,9 +1,11 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.portServiceImpl;
 
-import eu.getsoftware.hotelico.clients.api.clients.domain.customer.ICustomerRootEntity;
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelEvent;
-import eu.getsoftware.hotelico.hotelapp.application.customer.common.iEntity.ICustomerEntity;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.iPortService.OnlineService;
+import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
+import lombok.RequiredArgsConstructor;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -13,24 +15,27 @@ import java.util.List;
 
 import static eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties.convertToDate;
 
+@RequiredArgsConstructor
 public class OnlineServiceImpl implements OnlineService {
 
+    private CustomerPortService customerPortService;
+    
     @Override
-    public List<ICustomerEntity> getAllOnline()
+    public List<CustomerDTO> getAllOnline()
     {
         LocalDateTime ldt = LocalDateTime.now().minusMinutes(25);
         ZonedDateTime zdt = ldt.atZone(ZoneId.of("America/Los_Angeles"));
         Long milis  = zdt.toInstant().toEpochMilli();
-        return customerRepository.findAllOnline(new Timestamp(milis));
+        return customerPortService.findAllOnline(new Timestamp(milis));
     }
 
     @Override
-    public List<ICustomerEntity> getAllIn24hOnline()
+    public List<CustomerDTO> getAllIn24hOnline()
     {
         LocalDateTime ldt = LocalDateTime.now().minusDays(1);
         ZonedDateTime zdt = ldt.atZone(ZoneId.of("America/Los_Angeles"));
         Long milis  = zdt.toInstant().toEpochMilli();
-        return customerRepository.findAllOnline(new Timestamp(milis));
+        return customerPortService.findAllOnline(new Timestamp(milis));
     }
 
     public static boolean isCustomerOnline(ICustomerRootEntity customerEntity)

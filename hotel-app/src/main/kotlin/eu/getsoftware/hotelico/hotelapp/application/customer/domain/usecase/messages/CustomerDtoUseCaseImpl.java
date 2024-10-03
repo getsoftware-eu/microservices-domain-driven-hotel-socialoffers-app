@@ -1,9 +1,9 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.domain.usecase.messages;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerRequestDTO;
 import eu.getsoftware.hotelico.clients.api.clients.domain.chat.IChatMessageView;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import eu.getsoftware.hotelico.hotelapp.application.customer.common.iEntity.ICustomerEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.CustomerDtoUseCase;
 
 import java.sql.Timestamp;
@@ -15,7 +15,7 @@ public class CustomerDtoUseCaseImpl implements CustomerDtoUseCase
 //	private IChatService chatService;
 	
 	@Override
-	public CustomerDTO setDtoLastMessageWithRequester(ICustomerEntity requester, CustomerDTO dto) {
+	public CustomerDTO setDtoLastMessageWithRequester(CustomerRequestDTO requester, CustomerDTO dto) {
 		
 		if(requester==null || dto==null)
 		{

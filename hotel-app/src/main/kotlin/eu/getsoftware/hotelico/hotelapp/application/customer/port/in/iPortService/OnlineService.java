@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.port.in.iPortService;
 
-import eu.getsoftware.hotelico.hotelapp.application.customer.common.iEntity.ICustomerEntity;
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -10,9 +10,9 @@ import java.util.List;
  */
 public interface OnlineService
 {
-    List<ICustomerEntity> getAllOnline();
+    List<CustomerDTO> getAllOnline();
 	
-    List<ICustomerEntity> getAllIn24hOnline();
+    List<CustomerDTO> getAllIn24hOnline();
 
     @Transactional
     void setCustomerPing(long sessionCustomerId);

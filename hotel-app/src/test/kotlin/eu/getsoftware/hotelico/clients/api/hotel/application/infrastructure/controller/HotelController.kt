@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.clients.api.hotel.application.infrastructure.con
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.ninjasquad.springmockk.MockkBean
-import eu.getsoftware.hotelico.hotelapp.application.hotel.common.dto.HotelDTO
+import eu.getsoftware.hotelico.hotelapp.application.hotel.common.dto.HotelResponseDTO
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService
 import io.mockk.every
 import org.junit.jupiter.api.Test
@@ -21,7 +21,8 @@ class HotelController(@Autowired val mockMvc: MockMvc) {
     lateinit var IHotelService: IHotelService
     val mapper = jacksonObjectMapper()
 
-    val sampleHotel = HotelDTO(123)
+    val sampleHotel =
+        HotelResponseDTO(123)
 
     @Test
     fun givenExistingBankAccount_whenGetRequest_thenReturnsBankAccountJsonWithStatus200() {

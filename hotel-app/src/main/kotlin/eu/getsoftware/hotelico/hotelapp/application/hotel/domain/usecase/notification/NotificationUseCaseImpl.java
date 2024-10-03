@@ -1,7 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.usecase.notification;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.domain.customer.ICustomerRootEntity;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
 import eu.getsoftware.hotelico.clients.api.infrastructure.notification.NotificationService;
@@ -256,7 +255,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 			Map<Long, Boolean> lastMessageSeenByCustomer = new HashMap<>();
 			Map<Long, Boolean> lastMessageDelieveredToCustomer = new HashMap<>();
 			
-			Set<ICustomerRootEntity> allChatPartners = new HashSet<>();
+			Set<CustomerDTO> allChatPartners = new HashSet<>();
 			
 			//TODO Eugen: save last message in cache
 			allChatPartners.addAll(chatMSComminicationService.getChatSendersByCustomerId(receiverId));
@@ -267,7 +266,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 			
 			//////////////
 			
-			for (ICustomerRootEntity nextChatCustomerRootEntity : allChatPartners)
+			for (CustomerDTO nextChatCustomerRootEntity : allChatPartners)
 			{
 				//            if (ControllerUtils.isCustomerOnline(nextNotHotelCustomer))
 				//            {
@@ -343,7 +342,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 		
 	}
 	
-	public void sendFeedMessage(ICustomerRootEntity customerEntity, Map<String, String> systemMessages)
+	public void sendFeedMessage(CustomerDTO customerEntity, Map<String, String> systemMessages)
 	{
 		String feedMessage = systemMessages.get("hotelFeedMessage");
 		
@@ -370,7 +369,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 			{
 				long nextId = Integer.parseInt(nextCustomerId.trim());
 				
-				ICustomerRootEntity nextFeedCustomerRootEntity = customerService.getOne(nextId);
+				CustomerDTO nextFeedCustomerRootEntity = customerService.getOne(nextId);
 				
 				if(nextFeedCustomerRootEntity !=null && nextFeedCustomerRootEntity.isAllowHotelNotification())
 				{
@@ -425,7 +424,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	}
 
 	@Transactional
-	public void sendMailList(ICustomerRootEntity customerEntity, Map<String, String> systemMessages)
+	public void sendMailList(CustomerDTO customerEntity, Map<String, String> systemMessages)
 	{
 		log.info("mailList inhalt: " + systemMessages);
 		
@@ -493,7 +492,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 		
 		if(event.getPushUrl()!=null)
 		{
-			ICustomerRootEntity sender = customerService.getOne(senderId);
+			CustomerDTO sender = customerService.getOne(senderId);
 			
 			if(sender!=null)
 			{
@@ -562,7 +561,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 			return;
 		}
 		
-		ICustomerRootEntity customerEntity = customerService.getOne(customerId);
+		CustomerDTO customerEntity = customerService.getOne(customerId);
 		
 		String pushRegistrationId = customerEntity.getPushRegistrationId();
 
@@ -627,9 +626,9 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 
 		Set<String> loggedGuestPushIds = new HashSet<>();
 		
-		List<ICustomerRootEntity> allActiveInHotel = checkinService.getActiveCustomersByHotelId(hotelActivity.getHotelRootEntity().getId(), new Date());
+		List<CustomerDTO> allActiveInHotel = checkinService.getActiveCustomersByHotelId(hotelActivity.getHotelRootEntity().getId(), new Date());
 		
-		for (ICustomerRootEntity nextActiveCustomerRootEntity : allActiveInHotel)
+		for (CustomerDTO nextActiveCustomerRootEntity : allActiveInHotel)
 		{
 			loggedGuestPushIds.add(nextActiveCustomerRootEntity.getPushRegistrationId());
 		}
@@ -664,7 +663,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	}
 	
 	@Override
-	public void sendNotificationToCustomerOrGuest(ICustomerRootEntity receiver, long guestCustomerId, HotelEvent event)
+	public void sendNotificationToCustomerOrGuest(CustomerDTO receiver, long guestCustomerId, HotelEvent event)
 	{
 		if(receiver!=null)
 		{

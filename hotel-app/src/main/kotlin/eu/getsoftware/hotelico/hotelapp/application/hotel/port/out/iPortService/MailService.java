@@ -1,5 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService;
 
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+
 /**
  * Created by Eugen on 31.07.2015.
  */
@@ -18,6 +20,6 @@ public interface MailService
 	 * */
 	 void sendPreConfiguredMail(String message);
 	
-	 String getWellcomeMailBody(ICustomerRootEntity customerEntity);
+	 String getWellcomeMailBody(CustomerDTO customerEntity);
 	
 }

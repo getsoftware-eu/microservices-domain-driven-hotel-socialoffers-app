@@ -1,15 +1,17 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.domain;
 
-import eu.getsoftware.hotelico.clients.api.clients.domain.customer.ICustomerRootEntity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity.CustomerRootEntityBuilder;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerDetails;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerPreferences;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 
 import java.util.Date;
 import java.util.Optional;
 
 /**
+ * TODO DO I  NEED Aggregate DUPLICATION, OR JUST RequestDTO and ResponseDTO?????
+ * 
+ * Maybe automate with Reflection????
+ * 
  * Aggregate for sub Entities: Any internal structural change will be not visible outside!
  * 
  * all setters for customerRootEntity, outside via aggregate: not direct jpa-entity setter logik!!!
@@ -17,14 +19,14 @@ import java.util.Optional;
  */
 public class CustomerAggregate
 {
-	private final CustomerRootEntityBuilder customerBuilder;
+//	private final CustomerRootEntityBuilder customerBuilder;
 	private final ICustomerRootEntity customerRootEntity;
 	private final ICustomerDetails customerDetails;
 	private final ICustomerPreferences customerPreferences;
 	
-	public CustomerAggregate(CustomerRootEntity customerRootEntity){
+	public CustomerAggregate(ICustomerRootEntity customerRootEntity){
 		this.customerRootEntity = customerRootEntity;
-		this.customerBuilder = customerRootEntity.toBuilder();
+//		this.customerBuilder = customerRootEntity.toBuilder();
 		this.customerDetails = customerRootEntity.getCustomerDetails();
 		this.customerPreferences = customerRootEntity.getCustomerPreferences();
 	}
@@ -100,7 +102,7 @@ public class CustomerAggregate
 	
 	public void setCity(String city)
 	{
-		customerDetails.setProfileImageUrl(city);
+		customerDetails.setCity(city);
 	}
 	
 	public void setCompany(String company)
@@ -146,12 +148,12 @@ public class CustomerAggregate
 	
 	public void setLatitude(double latitude)
 	{
-		customerRootEntity.getCustomerGPSPosition().setLatitude(latitude);
+		customerRootEntity.setLatitude(latitude);
 	}
 	
 	public void setLongitude(double longitude)
 	{		
-		customerRootEntity.getCustomerGPSPosition().setLongitude(longitude);
+		customerRootEntity.setLongitude(longitude);
 	}
 	
 	public void setHotelStaff(boolean b)
@@ -236,11 +238,11 @@ public class CustomerAggregate
 	
 	public double getLatitude()
 	{
-		return customerRootEntity.getCustomerGPSPosition().getLatitude();
+		return customerRootEntity.getLatitude();
 	}
 	
 	public double getLongitude()
 	{
-		return customerRootEntity.getCustomerGPSPosition().getLongitude();
+		return customerRootEntity.getLongitude();
 	}
 }

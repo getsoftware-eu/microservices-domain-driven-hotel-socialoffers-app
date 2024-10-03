@@ -19,7 +19,7 @@ import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.d
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.ActivityAction;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.DealAction;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.DealStatus;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.common.dto.HotelDTO;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.common.dto.HotelResponseDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
@@ -80,9 +80,9 @@ public class HotelServiceImpl implements IHotelService
 	
 	private int specialHotelId = -999;
 
-    public List<HotelDTO> getHotels() {
+    public List<HotelResponseDTO> getHotels() {
         List<HotelRootEntity> list = hotelRepository.findByVirtualAndActive(false, true);
-        List<HotelDTO> out = new ArrayList<HotelDTO>();
+        List<HotelResponseDTO> out = new ArrayList<HotelResponseDTO>();
         for (HotelRootEntity hotelRootEntity : list) {
             
             boolean ignoreDemoHotel = AppConfigProperties.HIDE_DEMO_HOTEL_FROM_HOTEL_LIST && AppConfigProperties.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelRootEntity.getCurrentHotelAccessCode());
@@ -96,7 +96,7 @@ public class HotelServiceImpl implements IHotelService
         return out;
     }
     
-    public List<HotelDTO> getHotelCities(long requesterId) {
+    public List<HotelResponseDTO> getHotelCities(long requesterId) {
         //TODO Eugen: Query by unique city!!!
         List<HotelRootEntity> list = hotelRepository.findByVirtualAndActive(false, true);
         
@@ -104,7 +104,7 @@ public class HotelServiceImpl implements IHotelService
         
         CustomerRootEntity requester = requesterId>0? customerRepository.getOne(requesterId): null;
         
-        List<HotelDTO> out = new ArrayList<HotelDTO>();
+        List<HotelResponseDTO> out = new ArrayList<HotelResponseDTO>();
         for (HotelRootEntity hotelRootEntity : list) {
             
             boolean ignoreDemoHotel = AppConfigProperties.HIDE_DEMO_HOTEL_FROM_HOTEL_LIST && AppConfigProperties.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelRootEntity.getCurrentHotelAccessCode());
@@ -112,7 +112,7 @@ public class HotelServiceImpl implements IHotelService
             if(hotelRootEntity.isActive() && !hotelRootEntity.isVirtual() && !ignoreDemoHotel && (!citiesList.contains(hotelRootEntity.getCity())))
             {
                 citiesList.add(hotelRootEntity.getCity());
-                HotelDTO hotelDto = convertHotelToDto(hotelRootEntity);
+                HotelResponseDTO hotelDto = convertHotelToDto(hotelRootEntity);
                 
                 if(requester!=null && hotelRootEntity.getLatitude()>-90 && requester.getEntityAggregate().getLatitude()>-90)
                 {
@@ -125,7 +125,7 @@ public class HotelServiceImpl implements IHotelService
         return out;
     }
     
-    public List<HotelDTO> getHotelsByCity(long requesterId, String filterCity) throws BasicHotelException
+    public List<HotelResponseDTO> getHotelsByCity(long requesterId, String filterCity) throws BasicHotelException
     {
         //TODO Eugen: Query by unique filterCity!!!
         List<HotelRootEntity> list = hotelRepository.findByVirtualAndActive(false, true);
@@ -142,14 +142,14 @@ public class HotelServiceImpl implements IHotelService
             throw new BasicHotelException("Customer not found with id=" + requesterId);	
         }
         
-        List<HotelDTO> out = new ArrayList<HotelDTO>();
+        List<HotelResponseDTO> out = new ArrayList<HotelResponseDTO>();
         for (HotelRootEntity hotelRootEntity : list) {
             
             boolean ignoreDemoHotel = AppConfigProperties.HIDE_DEMO_HOTEL_FROM_HOTEL_LIST && AppConfigProperties.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelRootEntity.getCurrentHotelAccessCode());
            
             if(hotelRootEntity.isActive() && !hotelRootEntity.isVirtual() && !ignoreDemoHotel && (filterCity==null || filterCity.equals(hotelRootEntity.getCity())))
             {
-                HotelDTO hotelDto = convertHotelToDto(hotelRootEntity);
+                HotelResponseDTO hotelDto = convertHotelToDto(hotelRootEntity);
                 if(requesterOptional.isPresent() && hotelRootEntity.getLatitude()>-90 && requesterOptional.get().getEntityAggregate().getLatitude()>-90)
                 {
 	                CustomerRootEntity requester = requesterOptional.get();
@@ -176,14 +176,14 @@ public class HotelServiceImpl implements IHotelService
 
 
     @Override
-    public HotelDTO getHotelByCode(String hotelCode) {
+    public HotelResponseDTO getHotelByCode(String hotelCode) {
 
         if(AppConfigProperties.isEmptyString(hotelCode))
         {
 	        new IllegalArgumentException("hotelcode is wrong: " + hotelCode);
         }
 	
-	    HotelDTO dto = hotelRepository.findByCurrentHotelAccessCodeAndActive(hotelCode, true)
+	    HotelResponseDTO dto = hotelRepository.findByCurrentHotelAccessCodeAndActive(hotelCode, true)
 			    .map(h -> convertHotelToDto(h))
 			    .orElseThrow(() -> new ResourceNotFoundException("hotel not found, hotelCode is wrong: " + hotelCode));
         
@@ -779,21 +779,21 @@ public class HotelServiceImpl implements IHotelService
     }
 
     @Override
-    public HotelDTO getHotelById(long hotelId) {
+    public HotelResponseDTO getHotelById(long hotelId) {
 	
 	    if(hotelId == specialHotelId)
 	    {
 		    return generateVirtualHotel();
 	    }
 		
-	    HotelDTO out  = hotelRepository.findById(hotelId)
+	    HotelResponseDTO out  = hotelRepository.findById(hotelId)
 			    .map(h -> convertHotelToDto(h))
 			    .orElseThrow(() -> new ResourceNotFoundException("Hotel not found with hotelId " + hotelId));
         
         return out;
     }
 	
-	private HotelDTO generateVirtualHotel()
+	private HotelResponseDTO generateVirtualHotel()
 	{
 		HotelRootEntity specialHotelRootEntity = hotelRepository.findByVirtualAndActive(true, true)
 				.stream().findFirst().orElseThrow(() -> new ResourceNotFoundException("no virtual hotel found"));
@@ -827,7 +827,7 @@ public class HotelServiceImpl implements IHotelService
 
     @Transactional
     @Override
-    public HotelDTO addHotel(HotelDTO hotelDto) {
+    public HotelResponseDTO addHotel(HotelResponseDTO hotelDto) {
 		
 		if(!AppConfigProperties.isEmptyString(hotelDto.getEmail()))
 		{
@@ -1028,7 +1028,7 @@ public class HotelServiceImpl implements IHotelService
 
     @Transactional
     @Override
-    public HotelDTO updateHotel(HotelDTO hotelDto) {
+    public HotelResponseDTO updateHotel(HotelResponseDTO hotelDto) {
         
 		Optional<HotelRootEntity> hotelRootEntityOpt = hotelRepository.findById(hotelDto.getId());
 	
@@ -1072,14 +1072,14 @@ public class HotelServiceImpl implements IHotelService
         return convertHotelToDto(hotelRootEntity);
     }
 
-    private HotelDTO convertHotelToDto(HotelRootEntity hotelRootEntity)
+    private HotelResponseDTO convertHotelToDto(HotelRootEntity hotelRootEntity)
     {
         if(hotelRootEntity == null)
         {
             throw new IllegalArgumentException("HotelRootEntity is null");
         }
 
-        HotelDTO dto = modelMapper.map(hotelRootEntity, HotelDTO.class);
+        HotelResponseDTO dto = modelMapper.map(hotelRootEntity, HotelResponseDTO.class);
         
         int activityNumber = 0;
         int customerNumber = 0;
