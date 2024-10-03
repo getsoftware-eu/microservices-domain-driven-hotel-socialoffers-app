@@ -28,4 +28,6 @@ public class CustomerRequestDTO extends BasicDTO
     private long hotelId = 0;
     
     private Date checkinTo = null;
+    private Date checkinFrom = null;
+
 }

@@ -92,7 +92,7 @@ import java.util.List;
 			{
 				Date lastSameHotelCheckin = checkinService.getLastByCustomerAndHotelId(customerEntity.getId(), hotelRootEntity.getId());
 
-				customerRequestDto.setHotelId(hotelRootEntity.getId());
+				customerRequestDto.setHotelId(hotelRootEntity.getId()); //eu: NO setters for parameter!!!!
 				
 				ICustomerHotelCheckin nowGoodCheckin = null;
 				
@@ -113,7 +113,7 @@ import java.util.List;
 					//sent wellcome message to new fullCheckin customers
 					if(!customerEntity.isHotelStaff() && !customerEntity.isAdmin())
 					{
-						ICustomerRootEntity staffSender = this.getStaffbyHotelId(hotelRootEntity.getId());
+						CustomerDTO staffSender = this.getStaffbyHotelId(hotelRootEntity.getId());
 						
 						if (staffSender!=null)
 						{
@@ -218,17 +218,19 @@ import java.util.List;
 	}
 
 	@NotNull
-	private ICustomerHotelCheckin createCustomerHotelCheckin(CustomerDTO customerDto, ICustomerRootEntity customerEntity, IHotelRootEntity hotelRootEntity, boolean isFullCheckin) {
+	private ICustomerHotelCheckin createCustomerHotelCheckin(CustomerRequestDTO customerRequestDTO, ICustomerRootEntity customerEntity, IHotelRootEntity hotelRootEntity, boolean isFullCheckin) {
 		ICustomerHotelCheckin customerHotelCheckin = checkinService.createCheckin();
 		customerHotelCheckin.setCustomer(customerEntity);
 		customerHotelCheckin.setHotel(hotelRootEntity);
 
+		CustomerDTO customerDto = new CustomerDto();
+		
 		customerHotelCheckin.setStaffCheckin(customerEntity.isHotelStaff());
 		customerHotelCheckin.setFullCheckin(isFullCheckin);
 		customerDto.setFullCheckin(isFullCheckin);
 
-		customerHotelCheckin.setValidFrom(customerDto.getCheckinFrom());
-		customerHotelCheckin.setValidTo(customerDto.getCheckinTo());
+		customerHotelCheckin.setValidFrom(customerRequestDTO.getCheckinFrom());
+		customerHotelCheckin.setValidTo(customerRequestDTO.getCheckinTo());
 		checkinService.save(customerHotelCheckin);
 		return customerHotelCheckin;
 	}
