@@ -1,7 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.model.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,42 +14,42 @@ import java.util.Set;
  */
 public interface CustomerPortService
 {
-    List<CustomerDTO> getCustomers();
+    List<ICustomerRootEntity> getCustomers();
     
     long getCustomerHotelId(long customerId);
     
-    Optional<CustomerDTO> getByEmail(String email);
+    Optional<ICustomerRootEntity> getByEmail(String email);
     
-    Set<CustomerDTO> getByHotelId(long customerId, long hotelId, boolean addStaff);
-	
-	CustomerDTO fillDtoWithHotelInfo(CustomerDTO dto, ICustomerHotelCheckin validCheckin);
-   
-    Set<CustomerDTO> getByCity(long customerId, String city);
-    
-    Set<CustomerDTO> getCustomerCities(long customerId);
+    Set<ICustomerRootEntity> getByHotelId(long customerId, long hotelId, boolean addStaff);
 
-    CustomerDTO getById(long customerId, long requesterCustomerId);
+    CustomerDTO fillDtoWithHotelInfo(CustomerDTO dto, ICustomerHotelCheckin validCheckin);
+   
+    Set<ICustomerRootEntity> getByCity(long customerId, String city);
     
-    ICustomerRootEntity getEntityById(long customerId);
+    Set<ICustomerRootEntity> getCustomerCities(long customerId);
+
+    ICustomerRootEntity getById(long customerId, long requesterCustomerId);
+    
+    Optional<ICustomerRootEntity> getEntityById(long customerId);
  
-    CustomerDTO addCustomer(CustomerDTO customerDto, String password);
+    ICustomerRootEntity addCustomer(ICustomerRootEntity customerDto, String password);
     
-    CustomerDTO updateCustomer(CustomerDTO customerDto, int requesterId);
+    ICustomerRootEntity updateCustomer(ICustomerRootEntity customerDto, int requesterId);
     
 //    @Transactional
     boolean relocateGuestDealsToLoggedCustomer(ICustomerRootEntity customerEntity, Long guestCustomerId);
 
     CustomerDTO convertCustomerToDto(ICustomerRootEntity customerEntity, long hotelId);
 
-    CustomerDTO convertCustomerToDto(ICustomerRootEntity customerEntity, boolean fullSerialization, CustomerHotelCheckin validCheckin);
+    CustomerDTO convertCustomerToDto(ICustomerRootEntity customerEntity, boolean fullSerialization, ICustomerHotelCheckin validCheckin);
     CustomerDTO convertMyCustomerToFullDto(ICustomerRootEntity customerEntity);
 		
-    CustomerDTO serializeCustomerHotelInfo(CustomerDTO dto, long hotelId, boolean fullSerialization, CustomerHotelCheckin validCheckin);
-    
-    CustomerDTO synchronizeCustomerToDto(CustomerDTO customerDto);
+    ICustomerRootEntity serializeCustomerHotelInfo(ICustomerRootEntity dto, long hotelId, boolean fullSerialization, ICustomerHotelCheckin validCheckin);
+
+    CustomerDTO synchronizeCustomerToDto(ICustomerRootEntity customerDto);
     
     @Transactional
-    void deleteCustomer(CustomerDTO customerDto);
+    void deleteCustomer(ICustomerRootEntity customerDto);
     
     String getCustomerAvatarUrl(ICustomerRootEntity customerEntity);
 
@@ -62,7 +61,7 @@ public interface CustomerPortService
 
     boolean isStaffOrAdminId(long receiverId);
 
-    CustomerDTO save(CustomerDTO customerEntity);
+    ICustomerRootEntity save(ICustomerRootEntity customerEntity);
 
-    CustomerDTO getOne(Long id);
+    ICustomerRootEntity getOne(Long id);
 }

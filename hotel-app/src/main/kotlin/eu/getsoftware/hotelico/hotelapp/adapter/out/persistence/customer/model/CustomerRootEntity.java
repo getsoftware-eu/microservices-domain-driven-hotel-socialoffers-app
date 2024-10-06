@@ -32,6 +32,7 @@ public class CustomerRootEntity implements ICustomerRootEntity, Serializable, IF
 {
     @Id
     @Setter(AccessLevel.PROTECTED)
+    @Getter
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "customer_id_generator")
     @SequenceGenerator(name="customer_id_generator", sequenceName = "customer_id_seq")
     private long id;
@@ -167,8 +168,6 @@ public class CustomerRootEntity implements ICustomerRootEntity, Serializable, IF
     
     //####################################################
     
-    public long getId(){ return this.id; }
-
     @Override
     public void setPasswordHash(long passwordHash) {
         

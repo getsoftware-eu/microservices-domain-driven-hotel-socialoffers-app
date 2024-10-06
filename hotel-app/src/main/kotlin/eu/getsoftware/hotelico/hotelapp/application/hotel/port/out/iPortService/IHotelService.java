@@ -1,9 +1,9 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService;
 
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.BasicHotelException;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.ICustomerDeal;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.common.dto.HotelResponseDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
@@ -14,11 +14,11 @@ import java.util.Map;
 
 public interface IHotelService
 {
-    List<HotelResponseDTO> getHotels();
+    List<HotelDTO> getHotels();
 
-    List<HotelResponseDTO> getHotelCities(long requesterId);
+    List<HotelDTO> getHotelCities(long requesterId);
 
-    List<HotelResponseDTO> getHotelsByCity(long customerId, String city) throws BasicHotelException;
+    List<HotelDTO> getHotelsByCity(long customerId, String city) throws BasicHotelException;
 
     Map<Long, String> getNotLoggedGuestPushIdsByHotel(IHotelRootEntity hotelRootEntity);
 
@@ -26,9 +26,9 @@ public interface IHotelService
 
     IHotelRootEntity getEntityById(long hotelId);
 
-    HotelResponseDTO getHotelById(long hotelId);
+    HotelDTO getHotelById(long hotelId);
 
-    HotelResponseDTO getHotelByCode(String hotelCode);
+    HotelDTO getHotelByCode(String hotelCode);
 
     String getGpsCity(Point2D.Double latLonPoint);
 
@@ -36,9 +36,9 @@ public interface IHotelService
 
     void avoidDoubleInitId(List<ICustomerDeal> resultList);
     
-    HotelResponseDTO addHotel(HotelResponseDTO hotelDto);    
+    HotelDTO addHotel(HotelDTO hotelDto);    
     
-    HotelResponseDTO updateHotel(HotelResponseDTO hotelDto);    
+    HotelDTO updateHotel(HotelDTO hotelDto);    
    
     ResponseDTO deleteHotel(long hotelId, long customerId);
 
@@ -47,6 +47,8 @@ public interface IHotelService
     IHotelRootEntity findByCurrentHotelAccessCodeAndActive(String hotelCode, boolean active);
 
     IHotelRootEntity getOne(long hotelId);
+    
+    HotelDTO convertToDTO(IHotelRootEntity hotelEntity);
 
     void addUpdateWallPost(WallPostDTO checkinNotificationWallDto);
 

@@ -5,6 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="refactoring &quot;in&quot; &quot;out&quot; customer DTO">
+      <change afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/common/dto/HotelRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/outPortServiceImpl/FileStore.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/useCase/handler/CreateHotelCheckinHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/useCase/handler/MyDomainEventHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/common/dto/CustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/common/dto/CustomerDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/common/dto/CustomerRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/common/dto/CustomerRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/customer/model/CustomerRootEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/customer/model/CustomerRootEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/customer/portServiceImpl/CustomerPortServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/customer/portServiceImpl/CustomerPortServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotelCustomer/model/CustomerHotelCheckin.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotelCustomer/model/CustomerHotelCheckin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/chat/port/out/IChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/chat/port/out/IChatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/customer/domain/model/ICustomerHotelCheckin.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/customer/domain/model/ICustomerHotelCheckin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/customer/port/out/iPortService/CustomerPortService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/customer/port/out/iPortService/CustomerPortService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/common/dto/HotelResponseDTO.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/ICheckinService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/ICheckinService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IHotelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IHotelService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IWallpostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IWallpostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/port/in/CheckinUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/port/in/CheckinUseCase.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -13,7 +31,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="61086" />
+    <option name="totalTimeSeconds" value="67560" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -148,11 +166,11 @@
       <recent name="eu.getsoftware.hotelico.clients.infrastructure.hotel.dto" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortServiceImpl" />
       <recent name="eu.getsoftware.hotelico.clients.api.clients.common.dto" />
       <recent name="eu.getsoftware.hotelico.api.common.model.chat" />
       <recent name="eu.getsoftware.hotelico.customer.application.port.in.iservice" />
       <recent name="eu.getsoftware.hotelico.hotel.feautures.checkin.app.usecases.impl" />
-      <recent name="eu.getsoftware.hotelico.hotel.feautures.checkin.app" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -407,7 +425,7 @@
       <workItem from="1727723818076" duration="8207000" />
       <workItem from="1727855964264" duration="3341000" />
       <workItem from="1727889311115" duration="4950000" />
-      <workItem from="1727949666075" duration="3579000" />
+      <workItem from="1727949666075" duration="12454000" />
     </task>
     <task id="LOCAL-00001" summary="-CHG: Microservice refactoring(Eureka-server)">
       <created>1655287660110</created>
@@ -583,14 +601,6 @@
       <option name="presentableId" value="LOCAL-00025" />
       <option name="project" value="LOCAL" />
       <updated>1683714777053</updated>
-    </task>
-    <task id="LOCAL-00030" summary="Refactoring">
-      <option name="closed" value="true" />
-      <created>1705526576644</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1705526576644</updated>
     </task>
     <task id="LOCAL-00031" summary="Readme Refactoring">
       <option name="closed" value="true" />
@@ -776,7 +786,15 @@
       <option name="project" value="LOCAL" />
       <updated>1727953247342</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="refactoring &quot;in&quot; &quot;out&quot; customer DTO">
+      <option name="closed" value="true" />
+      <created>1727953537678</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1727953537678</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -857,7 +875,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java</url>
-          <line>249</line>
+          <line>221</line>
           <properties class="eu.getsoftware.hotelico.hotelapp.application.multiDomainApplicationCheckinService.useCase.CheckinUseCaseImpl" method="getStaffbyHotelId">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -871,7 +889,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-field">
           <url>file://$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java</url>
-          <line>48</line>
+          <line>46</line>
           <properties field="notificationUseCase" class="eu.getsoftware.hotelico.hotelapp.application.multiDomainApplicationCheckinService.useCase.CheckinUseCaseImpl" />
           <option name="timeStamp" value="4" />
         </line-breakpoint>

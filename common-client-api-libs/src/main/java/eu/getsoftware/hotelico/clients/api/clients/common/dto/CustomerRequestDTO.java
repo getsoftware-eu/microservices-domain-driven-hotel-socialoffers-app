@@ -30,4 +30,7 @@ public class CustomerRequestDTO extends BasicDTO
     private Date checkinTo = null;
     private Date checkinFrom = null;
 
+    private String password = null;
+
+
 }

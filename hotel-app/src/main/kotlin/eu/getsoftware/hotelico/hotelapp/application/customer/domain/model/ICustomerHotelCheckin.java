@@ -6,6 +6,12 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRoo
 import java.util.Date;
 
 public interface ICustomerHotelCheckin {
+
+//    default ICustomerHotelCheckin instance(ICustomerRootEntity customerEntity, IHotelRootEntity hotelRootEntity) {
+//        setCustomer(customerEntity);
+//        setHotel(hotelRootEntity);
+//        return this;
+//    }
     
     void setCustomer(ICustomerRootEntity customerEntity);
 

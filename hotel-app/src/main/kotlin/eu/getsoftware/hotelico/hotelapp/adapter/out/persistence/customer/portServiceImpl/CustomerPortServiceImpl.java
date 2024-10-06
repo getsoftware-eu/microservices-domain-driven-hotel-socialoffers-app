@@ -9,6 +9,7 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.L
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortServiceImpl.HotelServiceImpl;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.DealRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.HotelRepository;
@@ -18,6 +19,7 @@ import eu.getsoftware.hotelico.hotelapp.application.customer.domain.CustomerAggr
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.service.HotelRabbitMQProducer;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LoginHotelicoService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.MailService;
@@ -40,6 +42,9 @@ public class CustomerPortServiceImpl implements CustomerPortService
 {
     @Autowired
     private CheckinRepository checkinRepository;      
+    
+    @Autowired
+    private IHotelService hotelService;
     
     @Autowired
     private HotelRepository hotelRepository;     
@@ -75,7 +80,9 @@ public class CustomerPortServiceImpl implements CustomerPortService
     private DealRepository dealRepository;
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
-    
+    @Autowired
+    private HotelServiceImpl hotelServiceImpl;
+
     @Override
     public List<CustomerDTO> getCustomers() {
         List<CustomerRootEntity> list = customerRepository.findByActive(true);
@@ -132,9 +139,8 @@ public class CustomerPortServiceImpl implements CustomerPortService
     }
     
     @Override
-    public CustomerRootEntity getEntityById(long customerId) {
-        CustomerRootEntity customerEntity = customerRepository.getOne(customerId);
-        return customerEntity;
+    public Optional<CustomerRootEntity> getEntityById(long customerId) {
+        return customerRepository.findById(customerId);
     }
 
     @Transactional
@@ -634,43 +640,45 @@ public class CustomerPortServiceImpl implements CustomerPortService
 
     @Override
     @Transactional
-    public CustomerDTO serializeCustomerHotelInfo(CustomerDTO dto, long hotelId, boolean fullSerialization, CustomerHotelCheckin validCheckin)
+    public CustomerDTO serializeCustomerHotelInfo(CustomerDTO requestDTO, long hotelId, boolean fullSerialization, CustomerHotelCheckin validCheckin)
     {
-        if(dto==null)
+        if(requestDTO==null)
         {
-            return dto;
+            return requestDTO;
         }
 
+        CustomerDTO customerDto = requestDTO.clone();
+
         //we trust to Parameter
-        dto.setHotelId(hotelId);
+        customerDto.setHotelId(hotelId);
 
         if(fullSerialization)
         {        
-            return checkinService.updateOwnDtoCheckinInfo(dto, validCheckin);
+            return checkinService.updateOwnDtoCheckinInfo(customerDto, validCheckin);
         }
 
-        dto.setCheckedIn(false);
-        dto.setHotelConsistencyId(0l);
-        dto.setHotelName(null);
-        dto.setHotelCity(null);
+        customerDto.setCheckedIn(false);
+        customerDto.setHotelConsistencyId(0l);
+        customerDto.setHotelName(null);
+        customerDto.setHotelCity(null);
         
         if(hotelId<=0){
-            return  dto;
+            return  customerDto;
         }
 
 
         long virtualCodeId = lastMessagesService.getInitHotelId();
         
-        if(/*dto.getHotelId()!= null &&*/ dto.getHotelId()>0 && dto.getHotelId() != virtualCodeId)
+        if(/*customerDto.getHotelId()!= null &&*/ customerDto.getHotelId()>0 && customerDto.getHotelId() != virtualCodeId)
         {
-            HotelRootEntity outHotelRootEntity = validCheckin!=null? validCheckin.getHotel() : hotelRepository.getOne(dto.getHotelId());
+            HotelRootEntity outHotelRootEntity = validCheckin!=null? validCheckin.getHotel() : hotelRepository.getOne(customerDto.getHotelId());
             if(outHotelRootEntity !=null && !outHotelRootEntity.isVirtual())
             {
-                dto = fillDtoWithHotelInfo(dto, validCheckin);
+                customerDto = fillDtoWithHotelInfo(customerDto, validCheckin);
             }
         }
         
-        return dto;
+        return customerDto;
     }
     
     /**
@@ -686,8 +694,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
         {
             HotelRootEntity outHotelRootEntity = validCheckin.getHotel();
             dto.setHotelId(outHotelRootEntity.getId());
-            dto.setHotelName(outHotelRootEntity.getName());
-            dto.setHotelCity(outHotelRootEntity.getCity());
+            dto.setHotelDTO(hotelService.convertToDTO(outHotelRootEntity));
             dto.setCheckedIn(true);
             dto.setHotelConsistencyId(outHotelRootEntity.getConsistencyId());
     

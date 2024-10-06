@@ -69,63 +69,12 @@ public class CustomerHotelCheckin implements ICustomerHotelCheckin, java.io.Seri
 		return getPk().getCustomer();
 	}
 	
-	public boolean isStaffCheckin()
-	{
-		return staffCheckin;
-	}
-
-	public void setStaffCheckin(boolean staffCheckin)
-	{
-		this.staffCheckin = staffCheckin;
-	}
-
 	public void setHotel(HotelRootEntity category) {
 		getPk().setHotel(category);
 	}
 
-	public Date getValidFrom() {
-		return this.validFrom;
-	}
-	
-	public Date getValidTo() {
-		return this.validTo;
-	}
-
-	public void setValidFrom(Date validFrom) {
-		this.validFrom = validFrom;
-	}	
-	
-	public void setValidTo(Date validTo) {
-		this.validTo = validTo;
-	}
-
-	public boolean isActive()
-	{
-		return active;
-	}
-
-	public void setActive(boolean active)
-	{
-		this.active = active;
-	}
-
-	public static long getSerialVersionUID()
-	{
-		return serialVersionUID;
-	}
-
 	public int hashCode() {
 		return (getPk() != null ? getPk().hashCode() : 0);
-	}
-
-	public boolean isFullCheckin()
-	{
-		return fullCheckin;
-	}
-
-	public void setFullCheckin(boolean fullCheckin)
-	{
-		this.fullCheckin = fullCheckin;
 	}
 	
 	public boolean equals(Object o) {

@@ -3,7 +3,6 @@ package eu.getsoftware.hotelico.hotelapp.application.multiDomainApplicationCheck
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerRequestDTO;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerHotelCheckin;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -13,9 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public interface CheckinUseCase
 {
-	CustomerDTO updateCheckin(CustomerRequestDTO customerDto);
+//	CustomerDTO updateCheckin(CustomerRequestDTO customerDto);
 	
-	CustomerDTO setCustomerCheckin(CustomerRequestDTO customerRequestDto, ICustomerRootEntity customerEntity);
+	CustomerDTO setCustomerCheckin(CustomerRequestDTO customerRequestDto);
 	
 	/**
 	 * check the current checkin of logging user. It will find the current hotel of user

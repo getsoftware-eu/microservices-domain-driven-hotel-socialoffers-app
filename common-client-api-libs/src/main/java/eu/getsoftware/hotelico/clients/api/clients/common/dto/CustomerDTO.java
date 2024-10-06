@@ -31,8 +31,6 @@ public class CustomerDTO extends BasicDTO
 
     private String lastName = "";
 
-    private String password = null;
-    
     @NonNull
     private String email = null;
 
@@ -60,12 +58,9 @@ public class CustomerDTO extends BasicDTO
 
     private long hotelId = -1;
 
-    private String hotelName = null;
-
-    private String hotelCity = null;
-
-    private String hotelCode = null;
-
+    @Setter
+    private HotelDTO hotelDTO = null;
+    
     /**
      * extra save social network picture url
      */
@@ -76,7 +71,8 @@ public class CustomerDTO extends BasicDTO
      */
     private String avatarUrl = null;
 
-    private String errorResponse = null;
+    @Setter
+    private String errorResponse = "";
 
     private String prefferedLanguage = null;
 
@@ -97,6 +93,7 @@ public class CustomerDTO extends BasicDTO
     
     public boolean hotelStaff = false;
     
+    @Setter
     private boolean fullCheckin = false;
     
     private boolean  allowHotelNotification = true;
@@ -165,16 +162,8 @@ public class CustomerDTO extends BasicDTO
         return fullCheckin || AppConfigProperties.CHECKIN_FULL_ALWAYS;
     }  
     
-    public void setFullCheckin(boolean fullCheckin) {
-        this.fullCheckin = fullCheckin;
-    }
-
     public void addSystemMessage(String key, String value) {
         systemMessages.put(key,value);
-    }
-    
-    public void setErrorResponse(String msg){
-        this.errorResponse = msg;
     }
     
     //TODO EUGEN: IT BOMBS SERIALIZATION
@@ -321,8 +310,8 @@ public class CustomerDTO extends BasicDTO
             return this;
         }
         
-        public CustomerBuilder setEnabled(String email) {
-            this.email = email;
+        public CustomerBuilder setStatus(String status) {
+            this.status = status;
             return this;
         }
     
