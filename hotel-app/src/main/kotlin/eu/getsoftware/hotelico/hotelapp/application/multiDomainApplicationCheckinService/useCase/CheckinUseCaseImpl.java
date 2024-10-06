@@ -23,8 +23,47 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 /**
- * Application Service that uses multiply domain services (is portService = domainService?)
+ * Architecture: Application Service that uses multiply domain services (is portService = domainService?)
  * <br/>
+ * 
+ * User story:
+ * [Customer] Bob makes a [checkin] in [hotel] NY, in order to attend to social interaction within a hotel.
+ * 
+ * UseCase: 
+ *  - Name: "new Hotel-Checkin"
+ *  - Short description: "Customer makes a checkin in a selected hotel"
+ *  - Actors: "Customer", "Hotelico App"
+ *  - Layer: clouds (top-view)
+ *  - Trigger: Customer selects a hotel from the list and confirms the selection
+ *  - Pre-Condition: 
+ *  				1. Customer is registered and has no active checkin.
+ *  				2. Customer opens a pre-selected list of hotels nearby and confirms his selection
+ *  				3. Customer set the start and end date of checkin	
+ *  				
+ *  - Primary flow: 1. [Hotel] validates the Checkin-data and GPS-Coordinates of the customer
+ *  				2. The created [checkin]-[notification] will be propagated to customer
+ *  				3. Checkin-[event] is published in the system
+ *  				4. Hotel [notification] is published in a hotel-feed
+ *  				5. hotel [offers feed] and to a hotel [social main-chat] will be shown to customer	
+ *  				6. Auto-generated [chat message] from the hotel-staff contact will be sent to customer
+ *  				 
+ *  - Alternative flow:	
+ *  				1a. [GPS-Area] of customer is wrong and [checkin status] "waiting back" is shown on the main page 
+ *  			
+ *  - Flow with errors:		
+ *  				2a. not correct [checkin dates] of customer : date selection will be reloaded with an error message
+ *  				3a. the [requirements of the selected hotel] are ot fulfilled : Customer receives an error 	
+ * 
+ *  - Result:       page with the [social board] of the selected hotel will be shown to customer 
+ *  
+ *  - After condition: no
+ *
+ *  - UseCase notes: Customer inputs hotelId, checkin request (dates, hotel) will be validated, 
+ *  				new checkin-instance is created, older checkins disabled if needed, 
+ * 					checkin-notification is published (+notificationInHotelFeed +initChatMessageToCustomer) 
+ * 
+ * - Invariante: 	only 1 active [checkin] for the given [customer] in the system
+ * 
  * Created by e.fanshil
  * At 03.02.2016 14:04
  */
@@ -50,7 +89,7 @@ import java.util.*;
 
 	@Transactional
 	@Override
-	public CustomerDTO setCustomerCheckin(CustomerRequestDTO customerRequestDto) {
+	public CustomerDTO createCustomerCheckinFromRequest(CustomerRequestDTO customerRequestDto) {
 
 		Optional<ICustomerRootEntity> customerEntityOpt = customerRequestDto.getId()>0 ? customerService.getEntityById(customerRequestDto.getId()) : Optional.empty();
 
@@ -101,7 +140,7 @@ import java.util.*;
 			//if no checkin exists, create a new one
 			if(activeCustomerCheckins.isEmpty())
 			{
-				nowGoodCheckin = CreateHotelCheckinHandler.handle(customerRequestDto, customerEntity, hotelRootEntity, isFullCheckin);
+				nowGoodCheckin = CreateHotelCheckinHandler().handle(customerRequestDto, customerEntity, hotelRootEntity, isFullCheckin);
 
 				customerResponseDto.setErrorResponse("");
 				

@@ -14,7 +14,7 @@ public interface CheckinUseCase
 {
 //	CustomerDTO updateCheckin(CustomerRequestDTO customerDto);
 	
-	CustomerDTO setCustomerCheckin(CustomerRequestDTO customerRequestDto);
+	CustomerDTO createCustomerCheckinFromRequest(CustomerRequestDTO customerRequestDto);
 	
 	/**
 	 * check the current checkin of logging user. It will find the current hotel of user

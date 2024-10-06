@@ -1,11 +1,8 @@
 package eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto;
 
-import lombok.Getter;
-
 import java.sql.Timestamp;
 import java.util.Map;
 
-@Getter
 public record ChatMsgDTO(
 		long initId,
 		String message,

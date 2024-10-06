@@ -146,10 +146,6 @@ public class CustomerDTO extends BasicDTO
         return age;
     }
 
-    public String getCity() {
-        return hotelCity != null ? hotelCity : city;
-    }
-    
     public String getAvatarUrl() {
         return AppConfigProperties.addHostPrefixOnDemand(avatarUrl);
     }
