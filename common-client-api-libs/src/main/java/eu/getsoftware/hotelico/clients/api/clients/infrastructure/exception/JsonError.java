@@ -11,8 +11,7 @@ import java.util.Map;
  * Created by e.fanshil
  * At 02.02.2016 13:28
  */
-public class JsonError
-{
+public class JsonError extends Throwable {
 	private final String message;
 	
 	public JsonError(String message) {

@@ -1,8 +1,10 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model;
 
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelWallPost;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.model.HotelActivity;
 
+import java.util.Collection;
 import java.util.Set;
 
 public interface IHotelRootEntity {
@@ -22,4 +24,6 @@ public interface IHotelRootEntity {
     boolean isVirtual();
 
     String getCurrentHotelAccessCode();
+
+    Collection<CustomerDTO> getStaffList();
 }

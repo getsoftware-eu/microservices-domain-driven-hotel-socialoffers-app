@@ -11,6 +11,7 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRoo
 import java.awt.geom.Point2D;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface IHotelService
 {
@@ -24,7 +25,7 @@ public interface IHotelService
 
     Map<Long, String> getUnsubscribeGuestPushIds();
 
-    IHotelRootEntity getEntityById(long hotelId);
+    Optional<IHotelRootEntity> getEntityById(long hotelId);
 
     HotelDTO getHotelById(long hotelId);
 
@@ -44,9 +45,9 @@ public interface IHotelService
 
     String getVirtualHotelCode();
 
-    IHotelRootEntity findByCurrentHotelAccessCodeAndActive(String hotelCode, boolean active);
+    Optional<IHotelRootEntity> findByCurrentHotelAccessCodeAndActive(String hotelCode, boolean active);
 
-    IHotelRootEntity getOne(long hotelId);
+    Optional<IHotelRootEntity> getOne(long hotelId);
     
     HotelDTO convertToDTO(IHotelRootEntity hotelEntity);
 

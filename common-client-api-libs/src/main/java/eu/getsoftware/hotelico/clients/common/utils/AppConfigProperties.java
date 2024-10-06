@@ -29,7 +29,8 @@ public class AppConfigProperties
 	public static final boolean USE_SSL = true;
 
 	public static String HOST = USE_LOCAL_HOST? (USE_SSL? "https://192.168.2.101/" : "http://192.168.2.100:8080/") : (USE_SSL? "https://hotelico.de/" : "http://hotelico.de/");
-	
+	public static int checkinDistanceKm = 5;
+
 	{
 		HOST = RUN_WITH_JETTY? USE_LOCAL_HOST ? "http://localhost:8082/" : "http://hotelico.de:8082/" : HOST;
 //		HOST = RUN_TEST? HOST + "test32/"  : HOST;

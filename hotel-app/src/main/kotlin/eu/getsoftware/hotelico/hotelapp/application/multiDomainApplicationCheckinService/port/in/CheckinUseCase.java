@@ -1,8 +1,9 @@
 package eu.getsoftware.hotelico.hotelapp.application.multiDomainApplicationCheckinService.port.in;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerRequestDTO;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerHotelCheckin;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.JsonError;
+import eu.getsoftware.hotelico.hotelapp.application.multiDomainApplicationCheckinService.useCase.dto.CheckinDTO;
+import eu.getsoftware.hotelico.hotelapp.application.multiDomainApplicationCheckinService.useCase.dto.CheckinRequestDTO;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -14,15 +15,15 @@ public interface CheckinUseCase
 {
 //	CustomerDTO updateCheckin(CustomerRequestDTO customerDto);
 	
-	CustomerDTO createCustomerCheckinFromRequest(CustomerRequestDTO customerRequestDto);
+	CheckinDTO validateAndCreateCustomerCheckin(CheckinRequestDTO customerRequestDto) throws JsonError;
 	
 	/**
 	 * check the current checkin of logging user. It will find the current hotel of user
 	 * @param dto
 	 * @return
 	 */
-	@Transactional 
-	CustomerDTO updateOwnDtoCheckinInfo(CustomerDTO dto, ICustomerHotelCheckin validCheckin);
+	@Transactional
+	CheckinDTO updateOwnDtoCheckinInfo(CheckinRequestDTO dto) throws JsonError;
 	
 	@Transactional
 	CustomerDTO getStaffbyHotelId(long hotelId);
