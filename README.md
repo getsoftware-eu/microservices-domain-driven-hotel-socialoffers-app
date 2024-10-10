@@ -31,23 +31,18 @@ The "Clean" (Layered) Architecture is another way to provide <b>separation of co
          - 2.define own (or use same level-) help-IServices ('IUserService') 
            - e.g. 'UserRegisterINTERACTOR' (uses injected IUserService) and implements <b>custom usecases</b> steps based on i-help-infrastructure-methods
            - Problem: used IServices not anemic calls (ServiceImpl.save() dummy call to low-level-Repository.save())
-
-   - <b>Infrastructure</b> layer
-     - Implementation of (technical) help-IServices (UserServiceImpl), that was declared in- and will be injected in-INTERACTOR
-       - In fact lowest level: only Repository(Service-translator: Dto<--to-->Repository), Controller(Rest-Api), API-Handler-Exceptions, AWS(data actions) (??). Another services are higher level?
-       - Custom implementations for interfaces of upper layer (IServices) : (help-IServices implementation)
-       - We can update (swap) this custom implementation package with another one, <b>but we don't change upper layer</b> logik!
-     - Implementation of (port) interfaces, that was declared for outside adapters
-
    - <b>Port</b> layer: interfaces for adapters (public boundaries)
 
+2. <b>Adapter</b> layer - Implementation of port-IServices (UserServiceImpl), that was declared in- and will be injected in-INTERACTOR
 
-2. <b>Adapter</b> layer
-    - <b>in</b> adapters:
+     - <b>in</b> adapters:
         - specific user request (Controller Adapters)
     - <b>out</b> adapters:
         - persistence details + mapping (Infrastructure Adapters)
         - Presenter (ViewModel Adapters)
+      
+          - In fact lowest level: only Repository(Service-translator: Dto<--to-->Repository), Controller(Rest-Api), API-Handler-Exceptions, AWS(data actions) 
+
 
 3. Extra "Main" (<b>Config</b>) package
     - SpringConfig classes are divided separately for the 'application', 'useCases' and 'infrastructure' layers.
@@ -84,6 +79,8 @@ Guests can get to know other guests in the hotel. And earn bonus points for hote
 - According to the "Building Microservices" book by Sam Newman, all microservice should have its own DB (and for example its own view of a central user entity).
 - Notifications will be persisted by preconfigured (Jackson serialisation and route) through a central preconfigured 'notification' module, which uses a 'notification'-RabbitMQ-queue for message passing and has its own database.
 - When a user update occurs, it will be propagated to all microservices through a 'system' RabbitMQ queue, ensuring that each microservice updates its user-view in its own database.
+
+## Used Projects as a basis:
 
 ### "Clean" Architecture with java
 Based on my another GitHub project:
