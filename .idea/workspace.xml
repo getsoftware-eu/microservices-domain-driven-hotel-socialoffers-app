@@ -4,19 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="docs">
+    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="big DTO with lombok builder()">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/api-gateway/src/main/java/eu/getsoftware/hotelico/clients/api/apigw/ApiGWApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/api-gateway/src/main/java/eu/getsoftware/hotelico/clients/api/apigw/ApiGWApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/common/dto/CustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/common/dto/CustomerDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/common/dto/CustomerRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/common/dto/CustomerRequestDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/common/dto/HotelDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/common/dto/HotelDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/common/dto/HotelRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/common/dto/HotelRequestDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/menu/MenuDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/menu/MenuDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/menu/dto/MenuItemDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/menu/dto/MenuItemDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/menu/dto/MenuOrderDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/menu/dto/MenuOrderDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/common/dto/BasicDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/common/dto/BasicDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/in/web/controller/ChatMSCommunicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/in/web/controller/ChatMSCommunicationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/in/web/controller/MenuRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/in/web/controller/MenuRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/out/persistence/outPortServiceImpl/MenuPortServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/out/persistence/outPortServiceImpl/MenuPortServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/application/iPortService/IMenuPortService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/application/iPortService/IMenuPortService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-rabbitmq/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-rabbitmq/src/main/java/module-info.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +18,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="93470" />
+    <option name="totalTimeSeconds" value="94107" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -453,7 +447,7 @@
       <workItem from="1727855964264" duration="3341000" />
       <workItem from="1727889311115" duration="4950000" />
       <workItem from="1727949666075" duration="35413000" />
-      <workItem from="1728504028206" duration="14250000" />
+      <workItem from="1728504028206" duration="14884000" />
     </task>
     <task id="LOCAL-00001" summary="-CHG: Microservice refactoring(Eureka-server)">
       <created>1655287660110</created>
@@ -629,14 +623,6 @@
       <option name="presentableId" value="LOCAL-00025" />
       <option name="project" value="LOCAL" />
       <updated>1683714777053</updated>
-    </task>
-    <task id="LOCAL-00038" summary="add REST API Controller central interface">
-      <option name="closed" value="true" />
-      <created>1710183494400</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1710183494400</updated>
     </task>
     <task id="LOCAL-00039" summary="refactoring">
       <option name="closed" value="true" />
@@ -822,7 +808,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728566853233</updated>
     </task>
-    <option name="localTasksCounter" value="62" />
+    <task id="LOCAL-00062" summary="big DTO with lombok builder()">
+      <option name="closed" value="true" />
+      <created>1728572964594</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1728572964594</updated>
+    </task>
+    <option name="localTasksCounter" value="63" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -852,7 +846,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="-REFACTOR: get DTO direct from JPA Repository" />
     <MESSAGE value="-REFACTOR: distinguish between REST HttpResponseCode based on different exceptions" />
     <MESSAGE value="-REFACTOR: rabbitMq propagate customer update" />
     <MESSAGE value="-REFACTOR: code refactoring" />
@@ -877,7 +870,8 @@
     <MESSAGE value="refoctoring tests" />
     <MESSAGE value="scrum docs" />
     <MESSAGE value="docs" />
-    <option name="LAST_COMMIT_MESSAGE" value="docs" />
+    <MESSAGE value="big DTO with lombok builder()" />
+    <option name="LAST_COMMIT_MESSAGE" value="big DTO with lombok builder()" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

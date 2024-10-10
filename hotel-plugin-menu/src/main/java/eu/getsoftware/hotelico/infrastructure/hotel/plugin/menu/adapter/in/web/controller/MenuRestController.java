@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.in.web.controller;
 
-import eu.getsoftware.hotelico.adapter.in.web.controller.api.IMenuApiController;
+import eu.getsoftware.hotelico.clients.api.adapter.in.web.controller.IMenuApiController;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.MenuDTO;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.infrastructure.service.AsyncMSCommunicationService;
 import org.springframework.stereotype.Controller;

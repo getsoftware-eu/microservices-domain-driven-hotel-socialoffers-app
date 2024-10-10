@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.iPortService;
 
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuItemDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
 
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public interface IMenuPortService
 {	
-	List<MenuOrderDTO> getActiveMenusByCustomerId(long customerId, long hotelId, long cafeId, long orderId, boolean closed);
+	List<MenuOrderDTO> getActiveMenusByCustomerId(CustomerDTO customerDTO, long hotelId, long cafeId, long orderId, boolean closed);
 	
 	MenuOrderDTO addMenuAction(long customerId, long initMenuOrderId, String action);
 
@@ -24,7 +25,7 @@ public interface IMenuPortService
 	 * @param cafeId
 	 * @return
 	 */
-	List<MenuOrderDTO> getAllHotelMenusToRoom(long requesterId, long hotelId, long cafeId);
+	List<MenuOrderDTO> getAllHotelMenusToRoom(CustomerDTO requesterDTO, long hotelId, long cafeId);
 	
 	MenuOrderDTO deleteMenuOrder(long requesterId, long initMenuOrderId);
 	

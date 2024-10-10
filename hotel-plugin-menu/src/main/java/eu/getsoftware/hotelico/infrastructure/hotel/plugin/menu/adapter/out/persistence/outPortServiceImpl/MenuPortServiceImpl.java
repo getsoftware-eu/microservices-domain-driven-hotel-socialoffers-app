@@ -3,6 +3,7 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.per
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuItemDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
+import eu.getsoftware.hotelico.clients.api.infrastructure.notification.NotificationService;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuItemEntity;
@@ -11,6 +12,7 @@ import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.pers
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.repository.MenuOrderRepository;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.iPortService.IMenuPortService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,8 +36,10 @@ public class MenuPortServiceImpl implements IMenuPortService
 	private final NotificationService notificationService;		
 	private final MenuItemRepository menuItemRepository;		
 	private final MenuOrderRepository menuOrderRepository;
-	private final ModelMapper modelMapper;
 	
+	private final ModelMapper modelMapper;
+
+	 
 	@Override
 	public List<MenuOrderDTO> getActiveMenusByCustomerId(CustomerDTO customerDTO, long hotelId, long cafeId, long orderId, boolean closed)
 	{
@@ -84,7 +88,7 @@ public class MenuPortServiceImpl implements IMenuPortService
 		
 		return dtoList;
 	}
-	
+
 	@Override
 	public List<MenuOrderDTO> getAllHotelMenusToRoom(CustomerDTO customerDTO, long hotelId, long cafeId)
 	{
@@ -111,10 +115,7 @@ public class MenuPortServiceImpl implements IMenuPortService
 		return dtoList;
 	}
 
-	@Override
-	public List<MenuOrderDTO> getActiveMenusByCustomerId(long customerId, long hotelId, long cafeId, long orderId, boolean closed) {
-		return null;
-	}
+
 
 	@Transactional
 	@Override
@@ -139,10 +140,7 @@ public class MenuPortServiceImpl implements IMenuPortService
 		return convertMenuOrderToDto(menuOrder);
 	}
 
-	@Override
-	public List<MenuOrderDTO> getAllHotelMenusToRoom(long requesterId, long hotelId, long cafeId) {
-		return null;
-	}
+	
 
 	private MenuOrderDTO convertMenuOrderToDto(MenuOrder menuOrder)
 	{
