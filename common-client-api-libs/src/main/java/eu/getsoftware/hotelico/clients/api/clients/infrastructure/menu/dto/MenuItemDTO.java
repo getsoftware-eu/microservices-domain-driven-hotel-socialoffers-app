@@ -12,31 +12,31 @@ import java.sql.Timestamp;
 @SuperBuilder
 public class MenuItemDTO extends BasicDTO{
 
-     Long  orderId = 0L;
+     private final long orderId = 0L;
 
-     int  orderIndex = 0;
+     private final int  orderIndex = 0;
 
-     Long  hotelId  = 0L;
+     private final long hotelId  = 0L;
+     
+     private final long cafeId = 0;
+     
+     private final long senderId  = 0;
 
-     long  cafeId = 0;
+     private final boolean delimiter = false;
 
-     long  senderId  = 0;
+     private final double price = 0.0;
 
-     boolean  delimiter = false;
+     private final int amount = 0;
 
-     double  price = 0.0;
+     private final String title = "";
 
-     int  amount = 0;
+     private final String shortDescription = "";
 
-     String  title = "";
+     private final String description = "";
 
-     String  shortDescription = "";
+     private final String pictureUrl = null;
 
-     String  description = "";
+     private final String previewPictureUrl  = null;
 
-     String  pictureUrl = null;
-
-     String  previewPictureUrl  = null;
-
-     Timestamp  timestamp = null;
+     private final Timestamp timestamp = null;
 }

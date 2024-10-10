@@ -3,7 +3,6 @@ package eu.getsoftware.hotelico.clients.api.clients.common.dto;
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.With;
 import lombok.experimental.SuperBuilder;
 import org.springframework.lang.NonNull;
@@ -27,109 +26,105 @@ public class CustomerDTO extends BasicDTO
         //all fields are final!!!
 {
     @NonNull
-    private String firstName = null;
+    private final String firstName = null;
 
-    private String lastName = "";
+    private final String lastName = "";
 
     @NonNull
-    private String email = null;
+    private final String email = null;
 
-    private String company = null;
+    private final String company = null;
 
-    private String employer = null;
+    private final String employer = null;
 
-    private String city = null;
+    private final String city = null;
 
-    private String originalCity = null;
+    private final String originalCity = null;
 
-    private String sex = null;
+    private final String sex = null;
 
-    private String birthdayTime = null;
+    private final String birthdayTime = null;
     
     // private var age: Int? = null;
 
-    private String country = null;
+    private final String country = null;
 
-    private String status = null;
+    private final String status = null;
 
-    private String jobTitle = null;
+    private final String jobTitle = null;
 
-    private String jobDescriptor = null;
+    private final String jobDescriptor = null;
 
-    private long hotelId = -1;
+    private final long hotelId = -1;
 
-    @Setter
-    private HotelDTO hotelDTO = null;
+    private final HotelDTO hotelDTO = null;
     
     /**
      * extra save social network picture url
      */
-    private String profileImageUrl = null;
+    private final String profileImageUrl = null;
 
     /**
      * calculate current avatarUrl
      */
-    private String avatarUrl = null;
+    private final String avatarUrl = null;
 
-    @Setter
-    private String errorResponse = "";
+    private final String errorResponse = "";
 
-    private String prefferedLanguage = null;
+    private final String prefferedLanguage = null;
 
-    private String website = null;
-    private String education = null;
+    private final String website = null;
+    private final String education = null;
     
-    private Map<String, String> systemMessages = new HashMap<>();
+    private final Map<String, String> systemMessages = new HashMap<>();
 
-    private String lastMessageToMe = null;
+    private final String lastMessageToMe = null;
 
-    private long lastMessageTimeToMe = 0L;
+    private final long lastMessageTimeToMe = 0L;
 
-    private long customerConsistencyId = 0L;
+    private final long customerConsistencyId = 0L;
 
-    private long hotelConsistencyId = 0L;
+    private final long hotelConsistencyId = 0L;
     
-    private double points = 0.0;
+    private final double points = 0.0;
     
-    public boolean hotelStaff = false;
+    public final boolean hotelStaff = false;
     
-    @Setter
-    private boolean fullCheckin = false;
+    private final boolean fullCheckin = false;
     
-    private boolean  allowHotelNotification = true;
+    private final boolean allowHotelNotification = true;
     
-    private boolean  showInGuestList = true;
+    private final boolean showInGuestList = true;
     
-    private boolean  checkedIn = false;
+    private final boolean checkedIn = false;
     
-    private boolean  admin = false;
+    private final boolean admin = false;
     
-    private boolean  logged = false;
+    private final boolean logged = false;
     
-    private boolean  online = false;
+    private final boolean online = false;
     
-    private boolean  guestAccount = false;
+    private final boolean guestAccount = false;
     
-    private boolean  showAvatar = true;
+    private final boolean showAvatar = true;
     
-    private boolean  hideCheckinPopup = false;
+    private final boolean hideCheckinPopup = false;
     
-    private boolean  hideChromePushPopup = false;
+    private final boolean hideChromePushPopup = false;
     
-    private boolean  hideHotelListPopup = false;
+    private final boolean hideHotelListPopup = false;
     
-    private boolean  hideWallPopup = false;
+    private final boolean hideWallPopup = false;
     
-    private boolean  chatWithMe = false;
+    private final boolean chatWithMe = false;
     
-    @Setter
-    private boolean  inMyHotel = false;
+    private final boolean inMyHotel = false;
     
-    private Date checkinFrom = null;
+    private final Date checkinFrom = null;
     
-    private Date checkinTo = null;
+    private final Date checkinTo = null;
     
-    private List<String> languages  = null;
+    private final List<String> languages  = null;
 
     public String getProfileImageUrl() {
         return AppConfigProperties.addHostPrefixOnDemand(profileImageUrl);
@@ -168,9 +163,9 @@ public class CustomerDTO extends BasicDTO
 //        this.lastMessageTimeToMe = lastMessageTimeToMe;
 //    }
     
-    public CustomerDTO(long initId){
-        super(initId);
-    }
+//    public CustomerDTO(long initId){
+//        super(initId);
+//    }
     
 //    public void setPassword(String s)
 //    {
@@ -202,17 +197,17 @@ public class CustomerDTO extends BasicDTO
      * @param error
      * @return
      */
-    public CustomerDTO withErroResponse(String error)
+    public CustomerDTO withErrorResponse(String error)
     {
-        CustomerDTO temp = new CustomerDTO(0);
-        temp.errorResponse = error;
+        CustomerDTO temp = CustomerDTO.builder().build(); //.errorResonse(error).build();
+        //temp.errorResponse = error;
         return temp;
     }
 
-    public void setHotelId(long id) {
-        
-        this.hotelId = id;
-    }
+//    public void setHotelId(long id) {
+//        
+//        this.hotelId = id;
+//    }
 
     public void setCheckinFrom(Date validFrom) {
     }
@@ -221,110 +216,110 @@ public class CustomerDTO extends BasicDTO
         
     }
 
-    /**
-     * CustomerDTO dto = new CustomerBuilder(reuiredParams).setOptional1("user").setOptional2(true).build();
-     */
-    public static class CustomerBuilder
-    {
-        /**
-         * eugen: builder-Required parameters!!!!!
-         */
-        
-        private long initId;
-        @NonNull
-        private String firstName;
-    
-        /**
-         *  eugen: builder-Optional parameters - initialized to default values!!!!!!
-         */
-        
-        private String lastName = "";
-        private String password = "";
-        @NonNull
-        private String email = "";
-        private String company = "";
-        private String employer = "";
-        private String city = "";
-        private String originalCity = "";
-        private String sex = "m";
-        private String birthdayTime = null;
-        // private var age: Int? = null;
-        private String country = "";
-        private String status = "";
-        private String jobTitle = "";
-        private String jobDescriptor = "";
-        private long hotelId = -1;
-        private String hotelName = "";
-        private String hotelCity = "";
-        private String hotelCode = "";
-        /**
-         * extra save social network picture url
-         */
-        private String profileImageUrl = "";
-        /**
-         * calculate current avatarUrl
-         */
-        private String avatarUrl = "";
-        private String prefferedLanguage = "en";
-        private String website = "";
-        private String education = "";
-        private String lastMessageToMe = "";
-        private long lastMessageTimeToMe = 0L;
-        private long customerConsistencyId = 0L;
-        private long hotelConsistencyId = 0L;
-        private double points = 0.0;
-        private boolean hotelStaff = false;
-        private boolean fullCheckin = false;
-        private boolean  allowHotelNotification = true;
-        private boolean  showInGuestList = true;
-        private boolean  checkedIn = false;
-        private boolean  admin = false;
-        private boolean  logged = false;
-        private boolean  online = false;
-        private boolean  guestAccount = false;
-        private boolean  showAvatar = true;
-        private boolean  hideCheckinPopup = false;
-        private boolean  hideChromePushPopup = false;
-        private boolean  hideHotelListPopup = false;
-        private boolean  hideWallPopup = false;
-        private boolean  chatWithMe = false;
-        private boolean  inMyHotel = false;
-        private Date checkinFrom = null;
-        private Date checkinTo = null;
-    
-        public CustomerBuilder(long initId) {
-            this.initId = initId;
-        }
-        
-        public CustomerBuilder setCity(String city) {
-            this.city = city;
-            return this;
-        }
-        
-        public CustomerBuilder setFirstName(String firstName) {
-            this.firstName = firstName;
-            return this;
-        }
-        
-        public CustomerBuilder setStatus(String status) {
-            this.status = status;
-            return this;
-        }
-    
-        public CustomerBuilder setProfileImageUrl(String profileImageUrl) {
-            this.profileImageUrl = profileImageUrl;
-            return this;
-        }
-    
-        public CustomerDTO build(){
-            return new CustomerDTO(this);
-        }
-    }
+//    /**
+//     * CustomerDTO dto = new CustomerBuilder(reuiredParams).setOptional1("user").setOptional2(true).build();
+//     */
+//    public static class CustomerBuilder
+//    {
+//        /**
+//         * eugen: builder-Required parameters!!!!!
+//         */
+//        
+//        private final long initId;
+//        @NonNull
+//        private final String firstName;
+//    
+//        /**
+//         *  eugen: builder-Optional parameters - initialized to default values!!!!!!
+//         */
+//        
+//        private final String lastName = "";
+//        private final String password = "";
+//        @NonNull
+//        private final String email = "";
+//        private final String company = "";
+//        private final String employer = "";
+//        private final String city = "";
+//        private final String originalCity = "";
+//        private final String sex = "m";
+//        private final String birthdayTime = null;
+//        // private var age: Int? = null;
+//        private final String country = "";
+//        private final String status = "";
+//        private final String jobTitle = "";
+//        private final String jobDescriptor = "";
+//        private final long hotelId = -1;
+//        private final String hotelName = "";
+//        private final String hotelCity = "";
+//        private final String hotelCode = "";
+//        /**
+//         * extra save social network picture url
+//         */
+//        private final String profileImageUrl = "";
+//        /**
+//         * calculate current avatarUrl
+//         */
+//        private final String avatarUrl = "";
+//        private final String prefferedLanguage = "en";
+//        private final String website = "";
+//        private final String education = "";
+//        private final String lastMessageToMe = "";
+//        private final long lastMessageTimeToMe = 0L;
+//        private final long customerConsistencyId = 0L;
+//        private final long hotelConsistencyId = 0L;
+//        private double points = 0.0;
+//        private final boolean hotelStaff = false;
+//        private final boolean fullCheckin = false;
+//        private final boolean  allowHotelNotification = true;
+//        private final boolean  showInGuestList = true;
+//        private final boolean  checkedIn = false;
+//        private final boolean  admin = false;
+//        private final boolean  logged = false;
+//        private final boolean  online = false;
+//        private final boolean  guestAccount = false;
+//        private final boolean  showAvatar = true;
+//        private final boolean  hideCheckinPopup = false;
+//        private final boolean  hideChromePushPopup = false;
+//        private final boolean  hideHotelListPopup = false;
+//        private final boolean  hideWallPopup = false;
+//        private final boolean  chatWithMe = false;
+//        private final boolean  inMyHotel = false;
+//        private Date checkinFrom = null;
+//        private Date checkinTo = null;
+//    
+//        public CustomerBuilder(long initId) {
+//            this.initId = initId;
+//        }
+//        
+//        public CustomerBuilder setCity(String city) {
+//            this.city = city;
+//            return this;
+//        }
+//        
+//        public CustomerBuilder setFirstName(String firstName) {
+//            this.firstName = firstName;
+//            return this;
+//        }
+//        
+//        public CustomerBuilder setStatus(String status) {
+//            this.status = status;
+//            return this;
+//        }
+//    
+//        public CustomerBuilder setProfileImageUrl(String profileImageUrl) {
+//            this.profileImageUrl = profileImageUrl;
+//            return this;
+//        }
+//    
+//        public CustomerDTO build(){
+//            return new CustomerDTO(this);
+//        }
+//    }
     
     // private constructor of DTO for Builder
-    private CustomerDTO(CustomerBuilder builder) {
-        setInitId(builder.initId);
-        email = builder.email;
-        profileImageUrl = builder.profileImageUrl;
-    }
+//    private CustomerDTO(CustomerBuilder builder) {
+//        setInitId(builder.initId);
+//        email = builder.email;
+//        profileImageUrl = builder.profileImageUrl;
+//    }
 }

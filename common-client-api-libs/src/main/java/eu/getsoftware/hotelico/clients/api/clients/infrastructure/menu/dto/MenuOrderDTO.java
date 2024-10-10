@@ -3,11 +3,11 @@ package eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto;
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.With;
 import lombok.experimental.SuperBuilder;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,44 +15,42 @@ import java.util.List;
 @Getter
 @SuperBuilder
 public class MenuOrderDTO extends BasicDTO{
-    long hotelId = 0L;
-    long senderId = 0L;
-    int itemAmount = 0;
-    String orderLocation = "";
-    String firstName = "";
-    String lastName = "";
-    String customerComment = "";
+    private final long hotelId = 0L;
+    private final long senderId = 0L;
+    private final int itemAmount = 0;
+    private final String orderLocation = "";
+    private final String firstName = "";
+    private final String lastName = "";
+    private final String customerComment = "";
     
-    @Setter
-    String orderStatus = null;
-    double totalPrice = 0.0;
-    double totalMoney = 0;
-    String orderCode = "";
-    private String previewPictureUrl = null;
-    Date validFrom = null;
-    Date validTo = null;
-    boolean orderInRoom = false;
+    private final String orderStatus = null;
+    private final double totalPrice = 0.0;
+    private final double totalMoney = 0;
+    private final String orderCode = "";
+    private final String previewPictureUrl = null;
+    private final Date validFrom = null;
+    private final Date validTo = null;
+    private final boolean orderInRoom = false;
     
-    @Setter
-    boolean closed = false;
-    Timestamp timestamp = null;
-    List<MenuItemDTO> menuItems;
+    private final boolean closed = false;
+    private final Timestamp  timestamp = null;
+    private final List<MenuItemDTO> menuItems = new ArrayList<>();
     
-    private String timeString = null;
+    private final String timeString = null;
 
-    String getPreviewPictureUrl() {
+    private final String  getPreviewPictureUrl() {
         return previewPictureUrl!=null ? previewPictureUrl: AppConfigProperties.PREVIEW_MENU_NOT_AVAILABLE_URL;
     }
 
-    void setPreviewPictureUrl(String previewPictureUrl) {
-        this.previewPictureUrl = previewPictureUrl;
-    }
+//    void setPreviewPictureUrl(String previewPictureUrl) {
+//        this.previewPictureUrl = previewPictureUrl;
+//    }
     
-    String getTimeString() {
+    private final String  getTimeString() {
         return (timestamp != null)? AppConfigProperties.getTimeFormatted(timestamp) : null;
     }
 
-    void setTimeString(String timeString) {
-        this.timeString = timeString;
-    }
+//    void setTimeString(String timeString) {
+//        this.timeString = timeString;
+//    }
 }

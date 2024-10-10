@@ -1,9 +1,7 @@
 package eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu;
 
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.With;
 import lombok.experimental.SuperBuilder;
 
@@ -12,14 +10,13 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder()
 public class MenuDTO extends BasicDTO
 {
-	private Long consistencyId = 0L;
+	private final Long consistencyId = 0L;
 	
-	@Setter(AccessLevel.NONE)
-	private long creationTime = 0L;
+	private final long creationTime = 0L;
 	
-	public MenuDTO(long initId){
-		super(initId);
-	}
+//	public MenuDTO(long initId){
+//		super(initId);
+//	}
 	
 	public long getCreationTime() {
 		return (creationTime > 0)? creationTime : getId();

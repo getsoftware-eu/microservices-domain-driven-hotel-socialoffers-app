@@ -2,7 +2,6 @@ package eu.getsoftware.hotelico.clients.api.clients.common.dto;
 
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.With;
@@ -14,60 +13,60 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder()
 public class HotelDTO extends BasicDTO
 {
-	private int rating = 0;
+	private final int rating = 0;
 	
-	private int activityNumber = 0;
+	private final int activityNumber = 0;
 	
-	private int customerNumber = 0;
+	private final int customerNumber = 0;
 	
-	private int anonymeGuestNumber = 0;
+	private final int anonymeGuestNumber = 0;
 	
-	private Long consistencyId = 0L;
+	private final long consistencyId = 0L;
 	
-	@Setter(AccessLevel.NONE)
-	private long creationTime = 0L;
+//	@Setter(AccessLevel.NONE)
+	private final long creationTime = 0L;
 	
-	private double kmFromMe = 0.0;
+	private final double kmFromMe = 0.0;
 	
-	private String name = null;
+	private final String name = null;
 	
-	private String wellcomeMessage = null;
+	private final String wellcomeMessage = null;
 	
-	private String description = null;
+	private final String description = null;
 	
-	private String info = null;
+	private final String info = null;
 	
-	private String city = null;
+	private final String city = null;
 	
-	private String postalCode = null;
+	private final String postalCode = null;
 	
-	private String street = null;
+	private final String street = null;
 	
-	private String house = null;
+	private final String house = null;
 	
-	private String phone = null;
+	private final String phone = null;
 	
-	private String fax = null;
+	private final String fax = null;
 	
-	private String email = null;
+	private final String email = null;
 	
-	private String currentHotelAccessCode= null;
+	private final String currentHotelAccessCode= null;
 	
 	//    private  String picture;
 	
-	private  String pictureUrl= null;
+	private final String pictureUrl= null;
 	
-	private  String previewPictureUrl= null;
+	private final String previewPictureUrl= null;
 	
-	private String website = null;
+	private final String website = null;
 	
-	private String mapLink = null;
+	private final String mapLink = null;
 	
-	private Boolean virtualfalse;
+	private final boolean virtual = false;
 	
-	public HotelDTO(long initId){
-		super(initId);
-	}
+//	public HotelDTO(long initId){
+//		super(initId);
+//	}
 	
 	public long getCreationTime() {
 		return (creationTime > 0)? creationTime : getId();
