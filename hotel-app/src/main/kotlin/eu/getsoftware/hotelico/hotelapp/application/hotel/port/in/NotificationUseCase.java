@@ -10,6 +10,7 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.
 import java.util.Map;
 
 /**
+ * in port, only DTO, not inner entity
  * <br/>
  * Created by e.fanshil
  * At 05.02.2016 12:10
@@ -44,7 +45,7 @@ public interface NotificationUseCase
 	
 	void broadcastActivityNotification(HotelActivityDTO hotelActivityDto);
 	
-	boolean sendPushToAllNotLoggedInHotel(IHotelActivity hotelActivity);
+	boolean sendPushToAllNotLoggedInHotel(HotelActivityDTO hotelActivity);
 	
 	void broadcastWallNotification(WallPostDTO wallPostDto);
 

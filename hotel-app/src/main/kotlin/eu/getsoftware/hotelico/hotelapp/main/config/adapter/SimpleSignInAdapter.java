@@ -16,7 +16,7 @@ package eu.getsoftware.hotelico.hotelapp.main.config.adapter;
  * limitations under the License.
  */
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.customer.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social.SecurityContext;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social.UserCookieGenerator;
 import jakarta.servlet.http.HttpServletRequest;

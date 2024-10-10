@@ -3,11 +3,10 @@ package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.usecase.notifi
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
-import eu.getsoftware.hotelico.clients.api.infrastructure.notification.NotificationService;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.chatview.model.ChatMessageView;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.chat.domain.infrastructure.ChatMSComminicationService;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.ICheckinService;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.DealStatus;
@@ -17,7 +16,10 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.service.HotelRabbitMQProducer;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.in.NotificationUseCase;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.*;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.INotificationService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.MailService;
 import eu.getsoftware.hotelico.hotelapp.application.menu.infrastructure.service.MenuMSCommunicationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +59,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	private final ChatMSComminicationService chatMSComminicationService;
 	
 	private final HotelRabbitMQProducer hotelRabbitMQProducer;
-	private final NotificationService notificationService;
+//	private final NotificationService notificationService;
 	private final INotificationService inotificationService;
 
 	@Override
@@ -81,7 +83,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	}
 	
 	@Override
-	public CustomerNotificationDTO getCustomerNotification(long receiverId, HotelEvent event)
+	public CustomerNotificationDTO getCustomerNotification(long receiverId, IHotelEvent event)
 	{
 		CustomerNotificationDTO nextNotification = new CustomerNotificationDTO();
 		
@@ -321,7 +323,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	}
 	
 	@Override
-	public void createAndSendNotification(long receiverId, HotelEvent event){
+	public void createAndSendNotification(long receiverId, IHotelEvent event){
 		
 		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 		
@@ -484,7 +486,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	
 	@Override
 	@Transactional
-	public void createAndSendPushNotification_Chat(long receiverId, HotelEvent event, long senderId, String message)
+	public void createAndSendPushNotification_Chat(long receiverId, IHotelEvent event, long senderId, String message)
 	{
 		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 		
@@ -492,13 +494,13 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 		
 		if(event.getPushUrl()!=null)
 		{
-			CustomerDTO sender = customerService.getOne(senderId);
+			Optional<ICustomerRootEntity> senderOpt = customerService.getOne(senderId);
 			
-			if(sender!=null)
+			if(senderOpt.isPresent())
 			{
 				String pushUrlPostfix = String.valueOf(senderId);
 				
-				receiverNotification.setPushCustomerEvent(event.getPushTitle() + " from " + sender.getFirstName(), message, event.getPushUrl()+pushUrlPostfix, event.getPushIcon(), senderId+"");
+				receiverNotification.setPushCustomerEvent(event.getPushTitle() + " from " + senderOpt.get().getFirstName(), message, event.getPushUrl()+pushUrlPostfix, event.getPushIcon(), senderId+"");
 				lastMessagesService.setLastPushNotifiation(receiverId, receiverNotification);
 				sendPushRequest(receiverId);
 			}
@@ -508,7 +510,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	
 	@Override
 	@Transactional
-	public void createAndSendPushNotification_Activity(long receiverId, HotelEvent event, IHotelActivity activity, String message)
+	public void createAndSendPushNotification_Activity(long receiverId, IHotelEvent event, IHotelActivity activity, String message)
 	{
 		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 		
@@ -555,17 +557,17 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	@Override
 	public void sendPushRequest(long customerId)
 	{
-		
 		if(customerId<=0)
 		{
 			return;
 		}
-		
-		CustomerDTO customerEntity = customerService.getOne(customerId);
-		
-		String pushRegistrationId = customerEntity.getPushRegistrationId();
 
-		sendPush(pushRegistrationId);
+		Optional<ICustomerRootEntity> customerEntityOpt = customerService.getOne(customerId);
+		
+		if(customerEntityOpt.isPresent()) {
+			String pushRegistrationId = customerEntity.getPushRegistrationId();
+			sendPush(pushRegistrationId);
+		}
 	}
 	
 	@Override
@@ -609,7 +611,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	}
 
 	@Override
-	public boolean sendPushToAllNotLoggedInHotel(IHotelActivity hotelActivity)
+	public boolean sendPushToAllNotLoggedInHotel(HotelActivityDTO hotelActivity)
 	{
 		if(hotelActivity==null)
 		{
@@ -622,7 +624,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 
 		String notificationMessage = "new last minute deal";
 
-		HotelEvent eventActivityNewLastMinute = HotelEvent.EVENT_ACTIVITY_NEW_LAST_MINUTE;
+		IHotelEvent eventActivityNewLastMinute = HotelEvent.EVENT_ACTIVITY_NEW_LAST_MINUTE;
 
 		Set<String> loggedGuestPushIds = new HashSet<>();
 		
@@ -663,7 +665,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	}
 	
 	@Override
-	public void sendNotificationToCustomerOrGuest(CustomerDTO receiver, long guestCustomerId, HotelEvent event)
+	public void sendNotificationToCustomerOrGuest(CustomerDTO receiver, long guestCustomerId, IHotelEvent event)
 	{
 		if(receiver!=null)
 		{
