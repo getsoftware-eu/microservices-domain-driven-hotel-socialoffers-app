@@ -11,6 +11,7 @@ The "Clean" (Layered) Architecture is another way to provide <b>separation of co
 
 ### To achieve this vision, I am refactoring my old 'Hotel-interaction' project, in order to encapsulate domain-data (using Domain-driven Design and Clean Architecture principles as Onion and Hexagonal), which will enable us to create a modular and scalable system that can easily be adapted to future changes and enhancements.
 
+![DDD in Hexagon Architecture](/docs/img/adapterMultiDomain.JPG)
 ![Agregates is only one entry to domain entities](/docs/img/diagramm1.png)
 ![Aggregate root](/docs/img/ddd.webp)
 
@@ -51,6 +52,8 @@ The "Clean" (Layered) Architecture is another way to provide <b>separation of co
 3. Extra "Main" (<b>Config</b>) package
     - SpringConfig classes are divided separately for the 'application', 'useCases' and 'infrastructure' layers.
 
+### TODO: starting building AWS Architecture (first attempt)
+![AWS](/docs/img/aws.drawio.png)
 
 ## Simplified Domain-driven Design:
 ### Interaction via (how to couple bounded contexts):
@@ -61,8 +64,7 @@ The "Clean" (Layered) Architecture is another way to provide <b>separation of co
 
 ![aggregate model](/docs/img/aggregate-root.jpg)
 
-### TODO: starting building AWS Architecture (first attempt)
-![AWS](/docs/img/aws.drawio.png)
+
 
 ## About 'Hotel interaction Application' Project: it is a software system designed to facilitate interactions and improve experiences between guests and hotels.
 ### The Slogan of this project is 'MAKING GUESTS & HOTELS HAPPY'
@@ -83,7 +85,7 @@ Guests can get to know other guests in the hotel. And earn bonus points for hote
 - Notifications will be persisted by preconfigured (Jackson serialisation and route) through a central preconfigured 'notification' module, which uses a 'notification'-RabbitMQ-queue for message passing and has its own database.
 - When a user update occurs, it will be propagated to all microservices through a 'system' RabbitMQ queue, ensuring that each microservice updates its user-view in its own database.
 
-### "Clean" (Onion) Architecture with java
+### "Clean" Architecture with java
 Based on my another GitHub project:
 https://github.com/getsoftware-eu/clean-architecture-hexagonal-my-approach
 
