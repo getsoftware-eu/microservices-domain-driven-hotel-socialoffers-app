@@ -1,7 +1,7 @@
 //package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iRepository;
 //
 //import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotelCustomer.model.CustomerHotelCheckin
+//import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.model.CustomerHotelCheckin
 //import org.springframework.data.repository.query.Param
 //import java.util.*
 //

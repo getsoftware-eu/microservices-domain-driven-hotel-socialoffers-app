@@ -2,26 +2,25 @@ package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelWallPost;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelWallPost;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 
 public interface IWallpostService {
-    WallPostDTO updateWallPost(WallPostDTO wallPostDto);
+    IHotelWallPost updateWallPost(IHotelWallPost wallPostDto);
 
     @Transactional
-    WallPostDTO addWallPost(WallPostDTO wallPostDto);
+    IHotelWallPost addWallPost(IHotelWallPost wallPostDto);
 
-    WallPostDTO convertWallToDto(HotelWallPost wallPost);
+    IHotelWallPost convertWallToDto(IHotelWallPost wallPost);
 
-    WallPostDTO addUpdateWallPost(WallPostDTO wallPostDto);
+    IHotelWallPost addUpdateWallPost(IHotelWallPost wallPostDto);
     
-    List<WallPostDTO> getWallPostsByHotelId(long hotelId);
+    List<IHotelWallPost> getWallPostsByHotelId(long hotelId);
 
-    WallPostDTO getWallPostById(long wallPostId);
+    IHotelWallPost getWallPostById(long wallPostId);
 
     List<CustomerDTO> getWallPostParticipantsByHotelId(long requesterId, long hotelId);
 

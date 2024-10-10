@@ -8,7 +8,7 @@ import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.C
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.AsyncRabbitTemplate;
-import org.springframework.amqp.rabbit.AsyncRabbitTemplate.RabbitConverterFuture;
+import org.springframework.amqp.rabbit.RabbitConverterFuture;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -40,6 +40,7 @@ public class HotelRabbitMQProducer
 		simpMessagingTemplate.convertAndSend(destination, dto);
 		return "Message(" + dto + ")" + " has been produced.";
 	}
+	
 	public String produceSimpWebsocketMessage(String destination, List<? extends Object> list) {
 		
 		simpMessagingTemplate.convertAndSend(destination, list);

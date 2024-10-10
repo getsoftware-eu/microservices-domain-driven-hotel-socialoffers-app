@@ -4,17 +4,817 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="UseCase story">
-      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/useCase/dto/CheckinDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/useCase/dto/CheckinRequestDTO.java" afterDir="false" />
+    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="archiving frontend">
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/test/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/HotelServiceImplTest.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/test/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/jpaTests/HotelRepositoryTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/exception/JsonError.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/exception/JsonError.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/common/utils/AppConfigProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/common/utils/AppConfigProperties.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/api/datatable.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/api/groups" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/api/login" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/api/saveUser" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/api/signup" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/angular-dnd.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/app.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/app.min.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/bootstrap-social.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/chat.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/dropzone/basic.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/dropzone/dropzone.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/eugen.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/font.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/app.arrow.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/app.butterbar.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/app.buttons.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/app.colors.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/app.components.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/app.item.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/app.layout.boxed.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/app.layout.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/app.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/app.mixins.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/app.nav.dock.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/app.nav.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/app.nav.offscreen.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/app.ng.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/app.plugin.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/app.reset.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/app.utilities.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/app.variables.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/app.widgets.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/md.base.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/md.btn.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/md.card.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/md.check.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/md.color.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/md.icon.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/md.input.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/md.layout.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/md.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/md.list.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/md.switch.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/md.variables.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/less/md.whiteframe.less" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/material-design-icons.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/md.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/css/whiteApp.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/fonts/FontAwesome.otf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/fonts/Material-Design-Icons.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/fonts/Material-Design-Icons.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/fonts/Material-Design-Icons.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/fonts/Material-Design-Icons.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/fonts/fontawesome-webfont.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/fonts/fontawesome-webfont.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/fonts/fontawesome-webfont.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/fonts/fontawesome-webfont.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/fonts/fontawesome-webfont.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/fonts/glyphicons-halflings-regular.eot" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/fonts/glyphicons-halflings-regular.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/fonts/glyphicons-halflings-regular.ttf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/fonts/glyphicons-halflings-regular.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/fonts/glyphicons-halflings-regular.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/fonts/sourcesanspro/sourcesanspro-bold.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/fonts/sourcesanspro/sourcesanspro-light.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/fonts/sourcesanspro/sourcesanspro.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ad.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ae.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/af.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ag.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ai.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/al.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/am.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/an.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ao.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ar.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/as.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/at.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/au.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/aw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ax.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/az.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ba.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/bb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/bd.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/be.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/bf.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/bg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/bh.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/bi.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/bj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/bm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/bn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/bo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/br.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/bs.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/bt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/bv.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/bw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/by.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/bz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ca.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/catalonia.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/cc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/cd.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/cf.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/cg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ch.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ci.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ck.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/cl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/cm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/cn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/co.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/cr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/cs.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/cu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/cv.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/cx.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/cy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/cz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/de.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/dj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/dk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/dm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/do.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/dz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ec.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ee.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/eg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/eh.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/en.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/england.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/er.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/es.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/et.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/eu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/fi.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/fj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/fk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/fm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/fo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/fr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ga.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/galicia.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/gb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/gd.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ge.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/gf.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/gg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/gh.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/gi.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/gl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/gm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/gn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/gp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/gq.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/gr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/gs.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/gt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/gu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/gw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/gy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/hk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/hm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/hn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/hr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ht.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/hu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/id.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ie.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/il.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/im.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/in.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/io.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/iq.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ir.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/is.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/it.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/je.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/jm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/jo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/jp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ke.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/kg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/kh.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ki.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/km.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/kn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/kp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/kr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/kw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ky.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/kz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/la.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/lb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/lc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/li.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/lk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/lr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ls.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/lt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/lu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/lv.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ly.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ma.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/mc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/md.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/me.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/mf.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/mg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/mh.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/mk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ml.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/mm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/mn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/mo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/mp.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/mq.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/mr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ms.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/mt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/mu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/mv.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/mw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/mx.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/my.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/mz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/na.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/nc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/nc2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ne.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/nf.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ng.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ni.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/nl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/no.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/np.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/nr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/nu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/nz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/om.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/pa.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/pe.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/pf.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/pg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ph.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/pk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/pl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/pm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/pn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/pr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ps.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/pt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/pw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/py.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/qa.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/re.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ro.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/rs.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ru.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/rw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/sa.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/sb.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/sc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/scotland.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/sd.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/se.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/sg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/sh.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/si.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/sj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/sk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/sl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/sm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/sn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/so.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/sr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/st.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/sv.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/sy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/sz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/tc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/td.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/tf.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/tg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/th.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/tj.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/tk.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/tl.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/tm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/tn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/to.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/tr.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/tt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/tv.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/tw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/tz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ua.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ug.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/um.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/us.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/uy.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/uz.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/va.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/vc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ve.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/vg.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/vi.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/vn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/vu.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/wales.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/wf.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ws.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/ye.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/yt.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/za.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/zm.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/flags/zw.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/icons/loader.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/add/1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/add/checkin/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/add/checkin/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/add/checkin/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/add/checkin/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/add/hotellogin/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/add/hotellogin/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/add/hotellogin/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/add/hotellogin/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/add/house.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/add/loginactivity/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/add/loginactivity/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/add/loginchatlist/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/add/loginwall/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/add/Без имени-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/avatar/eugen.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/avatar/incognito-f.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/avatar/incognito-m.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/avatar/incognito-orange-f.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/avatar/staff-orange.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/avatar/staff.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/chat/delieveredByReceiver.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/chat/delieveredToReceiver.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/chat/delieveredToServer.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/chat/seenByReceiver.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/default/noHotelImage.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/dropzone/spritemap.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/dropzone/spritemap@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/linkedIn/signLinkedIn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/linkedIn/signLinkedInHover.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/loading/loader.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/loading/sloganLoading.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/logo/activityPreview.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/logo/hotelPreview.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/logo/house.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/logo/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/logo/logoFull.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/logo/logoFull2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/logo/logoLogin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/logo/logoWhite.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/logo/logo_hotelico.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/logo/logo_hotelico_transparent.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/logo/logo_hotelico_transparent45.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/logo/photo_not_available.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/logoGrey.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/logoNormal300.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/bottom/angebot-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/bottom/angebot-inactive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/bottom/chat-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/bottom/chat-inactive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/bottom/checkout-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/bottom/checkout-inactive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/bottom/feedback-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/bottom/feedback-inactive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/bottom/hotel-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/bottom/hotel-inactive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/bottom/language-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/bottom/language-inactive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/bottom/logout-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/bottom/logout-inactive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/bottom/me-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/bottom/me-inactive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/bottom/wall-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/bottom/wall-inactive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/bottom/Без имени-4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/chatIconLeft.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/iconChatLeft.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/iconHotel.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/iconHotelLeft.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/iconProfilLeft.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/iconWallLeft.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/push-mobile.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/push-pc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/build/menu/selectArrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/add/1.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/add/checkin/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/add/checkin/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/add/checkin/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/add/checkin/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/add/hotellogin/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/add/hotellogin/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/add/hotellogin/3.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/add/hotellogin/4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/add/house.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/add/loginactivity/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/add/loginactivity/2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/add/loginchatlist/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/add/loginwall/1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/add/Без имени-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/avatar/eugen.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/avatar/incognito-f.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/avatar/incognito-m.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/avatar/incognito-orange-f.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/avatar/staff-orange.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/avatar/staff.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/chat/delieveredByReceiver.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/chat/delieveredToReceiver.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/chat/delieveredToServer.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/chat/seenByReceiver.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/default/noHotelImage.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/dropzone/spritemap.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/dropzone/spritemap@2x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/linkedIn/signLinkedIn.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/linkedIn/signLinkedInHover.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/loading/loader.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/loading/sloganLoading.gif" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logo/activityPreview.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logo/hotelPreview.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logo/house.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logo/logo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logo/logoFull.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logo/logoFull2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logo/logoLogin.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logo/logoWhite.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logo/logo_hotelico.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logo/logo_hotelico_transparent.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logo/logo_hotelico_transparent45.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logo/photo_not_available.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logoGrey.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logoNormal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logoNormal300.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logoOpacity.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logoOpacity300.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logoOpacity40.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logoOriginal.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logoOriginal1024.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logoOriginal16.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logoOriginal50.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/logoWhite.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/bottom/angebot-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/bottom/angebot-inactive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/bottom/chat-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/bottom/chat-inactive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/bottom/checkout-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/bottom/checkout-inactive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/bottom/feedback-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/bottom/feedback-inactive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/bottom/hotel-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/bottom/hotel-inactive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/bottom/language-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/bottom/language-inactive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/bottom/logout-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/bottom/logout-inactive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/bottom/me-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/bottom/me-inactive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/bottom/wall-active.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/bottom/wall-inactive.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/bottom/Без имени-4.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/chatIconLeft.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/iconChatLeft.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/iconHotel.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/iconHotelLeft.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/iconProfilLeft.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/iconWallLeft.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/push-mobile.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/push-pc.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/menu/selectArrow.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/open.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/p0.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/ratingStern.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/staff.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/img/src/staff.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/index.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/index.min.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/app/calendar/calendar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/app/contact/contact.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/app/contact/contacts.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/app/mail/mail-service.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/app/mail/mail.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/app/mail/mails.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/app/map/load-google-maps.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/app/map/map.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/app/map/ui-map.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/app/music/ctrl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/app/music/theme.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/app/music/videogular.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/app/note/note.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/app/note/notes.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/app/todo/todo.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/app/weather/angular-skycons.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/app/weather/ctrl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/app/weather/skycons.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/calendar/calendar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/contact/contact.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/contact/contacts.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/mail/mail-service.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/mail/mail.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/mail/mails.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/map/load-google-maps.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/map/map.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/map/ui-map.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/music/ctrl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/music/theme.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/music/videogular.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/note/note.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/note/notes.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/todo/todo.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/weather/angular-skycons.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/weather/ctrl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/app/weather/skycons.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/build/app.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/build/app.src.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/build/template_cache.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/config.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/config.lazyload.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/config.router.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/bootstrap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/file-upload.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/form.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/grid.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/activityList.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/blocks/activityCtrl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/blocks/filterHotelCity.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/blocks/hotelCtrl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/blocks/slideCtrl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/chat.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/chatList.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/checkIn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/datumPicker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/dealList.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/editActivity.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/editDeal.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/editHotel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/feed.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/feedback.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/forgotpwd.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/hotel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/hotelList.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/hotelMailList.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/hotelPreview.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/hotelRegister.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/imageCrop.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/language.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/login.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/menuList.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/notification.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/passwordReset.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/profile.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/register.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/wall.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/hotel/werbung.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/largeLoad.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/material.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/scroll.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/select.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/signin.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/signup.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/slider.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/tab.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/table.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/toaster.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/tree.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/uigrid.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/upload.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/vectormap.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/controllers/xeditable.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/directives/insertNotification.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/directives/loginSubmit.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/directives/modalFocus.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/directives/ng-img-crop.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/directives/scroll-to-bottom.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/directives/setnganimate.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/directives/ui-butterbar.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/directives/ui-focus.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/directives/ui-fullscreen.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/directives/ui-jq.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/directives/ui-module.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/directives/ui-nav.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/directives/ui-scroll.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/directives/ui-shift.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/directives/ui-toggleclass.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/filters/fromNow.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/initTranslate.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/lib/angular-carousel.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/lib/angular-dnd.min.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/lib/fastclick.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/lib/push/ChromePushManager.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/lib/push/ortc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/lib/timer-worker.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/main.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/services/activityDtoService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/services/chatService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/services/customerDtoService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/services/hotelCheckinService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/services/hotelDtoService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/services/hotelLoginService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/services/hotelNotification.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/services/hotelService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/services/hotelState.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/services/logoutCustomerService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/services/notificationService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/services/sessionCustomerService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/services/ui-load.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/services/userService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/services/wallService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/temp/directives/dropZone.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/js/temp/dropzone.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/l10n/de.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/l10n/en.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/l10n/ru.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/material.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/material.min.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/app.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/blocks/aside.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/blocks/aside.music.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/blocks/aside.right.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/blocks/header.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/blocks/header.music.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/blocks/material.aside.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/blocks/material.header.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/blocks/material.layout.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/blocks/material.nav.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/blocks/nav.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/blocks/page_footer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/blocks/settings.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/addActivityAccardion.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/chatListCustomer.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/dealSubTabBlock.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/editActivityAccardion.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/editHotelAccardion.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/fullCheckinRequest.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/impressumBottomBlock.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/menuItemBlock.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/menuItemOrderingBlock.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/modal.editActivityForm.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/modal.editDealForm.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/modal.editHotelForm.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/modal.editMenuOrderForm.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/modal.hotelActivityFeedForm.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/modal.hotelCodeForm.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/modal.loginform.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/modal.showPushForm.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/notLoggedInfoBlock.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/pushRequest.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/selectHotelCityBlock.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/showActivityBlock.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/showAlertBlock.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/showCarousel.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/showDealBlock.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/showDealPreviewBlock.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/showHotelBlock.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/showHotelPreviewBlock.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/showMenuOrderPreviewBlock.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/blocks/socialLogin.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_404.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_about.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_about_eugen.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_activityList.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_agb.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_avatar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_chat.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_chatList.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_checkIn.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_dealList.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_dse.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_editActivity.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_editHotel.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_feed.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_feedback.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_forgotpwd.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_hotel.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_hotelList.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_hotelLogin.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_hotelMailList.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_hotelPreview.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_hotelRegister.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_impressum.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_language.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_login.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_menuList.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_privacy.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_profile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_register.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_userInfo.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_wall.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/hotel/page_werbung.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/layout_footer_mobile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/layout_fullwidth.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/layout_mobile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/material/button.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/material/card.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/material/color.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/material/dialog.tmpl.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/material/form.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/material/icon.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/material/list.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/material/ngmaterial.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/material/toast.tmpl.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/modal.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/frontend/angulr/tpl/ngmaterial.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/in/web/controller/FileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/in/web/controller/FileController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/in/web/controller/HotelApiExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/in/web/controller/hotel/HotelApiExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/in/web/controller/HotelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/in/web/controller/hotel/HotelController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/in/web/controller/SocialAuthenticatorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/in/web/controller/SocialAuthenticatorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/chat/ChatMSCommunicationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/chat/ChatMSCommunicationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/chat/ChatServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/chat/ChatServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/chatview/model/ChatMessageView.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/chatview/model/ChatMessageView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/customer/model/CustomerDetails.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/model/CustomerDetails.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/customer/model/CustomerGPSPosition.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/model/CustomerGPSPosition.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/customer/model/CustomerPreferences.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/model/CustomerPreferences.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/customer/model/CustomerRootEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/model/CustomerRootEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/customer/model/InterestCustomer.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/model/InterestCustomer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/customer/model/Language.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/model/Language.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/customer/model/User.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/model/User.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/customer/model/UserRole.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/model/UserRole.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/customer/portServiceImpl/CustomerPortServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/portServiceImpl/CustomerPortServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/customer/portServiceImpl/OnlineServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/portServiceImpl/OnlineServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/customer/portServiceImpl/SocialPortServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/portServiceImpl/SocialPortServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/customer/repository/CustomerRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/repository/CustomerRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/customer/repository/UserRolesRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/repository/UserRolesRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/customer/security/CustomUserDetailsService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/security/CustomUserDetailsService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/customer/security/UserProfileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/security/UserProfileService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/deal/model/CustomerDeal.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/deal/model/CustomerDeal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/deal/model/CustomerDealId.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/deal/model/CustomerDealId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/model/HotelEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/model/HotelEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/model/HotelRootEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/model/HotelRootEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/model/HotelWallPost.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/model/HotelWallPost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/model/oldmodel/FileUpload.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/model/oldmodel/FileUpload.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/model/oldmodel/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/model/oldmodel/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/outPortServiceImpl/FileStore.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/FileStore.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/outPortServiceImpl/FileUploadServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/FileUploadServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/outPortServiceImpl/HotelServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/HotelServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/outPortServiceImpl/ImageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/ImageServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/outPortServiceImpl/LastMessagesServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/LastMessagesServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/outPortServiceImpl/LoginHotelicoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/LoginHotelicoServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/outPortServiceImpl/MailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/MailServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/outPortServiceImpl/NotificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/NotificationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/outPortServiceImpl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/outPortServiceImpl/WallPostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/WallPostServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/repository/ActivityRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/repository/ActivityRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/repository/CheckinRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/checkin/repository/CheckinRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/repository/DealRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/repository/DealRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/repository/FileUploadRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/repository/FileUploadRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/repository/HotelRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/repository/HotelRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/repository/LanguageRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/repository/LanguageRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/repository/UserDtoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/repository/UserDtoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotel/repository/WallPostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/repository/WallPostRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotelCustomer/model/CustomerHotelCheckin.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/checkin/model/CustomerHotelCheckin.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotelCustomer/model/CustomerHotelCheckinId.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/checkin/model/CustomerHotelCheckinId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/hotelCustomer/model/HotelActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/checkin/model/HotelActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/menuview/model/MenuItemView.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/menuview/model/MenuItemView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/menuview/model/MenuOrderView.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/menuview/model/MenuOrderView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/customer/domain/CustomerAggregate.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/customer/domain/CustomerAggregate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/customer/domain/infrastructure/security/CustomUserDetails.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/customer/domain/infrastructure/security/CustomUserDetails.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/customer/domain/model/ICustomerHotelCheckin.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/domain/model/ICustomerHotelCheckinEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/customer/port/out/iPortService/CustomerPortService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/customer/port/out/iPortService/CustomerPortService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/deal/domain/ICustomerDeal.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/deal/domain/ICustomerDeal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/Address.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/model/Address.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/HotelAggregate.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/model/HotelGroupAggregate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/infrastructure/dto/CustomerNotificationDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/infrastructure/dto/CustomerNotificationDTO.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/infrastructure/service/FileStore.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/infrastructure/service/HotelRabbitMQProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/infrastructure/service/HotelRabbitMQProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/infrastructure/social/SecurityContext.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/infrastructure/social/SecurityContext.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/model/IHotelEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/model/IHotelEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/model/IHotelRootEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/model/IHotelRootEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/ICheckinService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/ICheckinService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/model/IHotelWallpost.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/model/IHotelWallPost.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/usecase/notification/NotificationUseCaseImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/usecase/notification/NotificationUseCaseImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/in/NotificationUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/in/NotificationUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/ICheckinService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/port/out/ICheckinService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IDealService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IDealService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IHotelActivityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IHotelActivityService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IHotelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IHotelService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/port/in/CheckinUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/port/in/CheckinUseCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IWallpostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IWallpostService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/LastMessagesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/LastMessagesService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/LoginHotelicoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/LoginHotelicoService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iRepository/ICheckinRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iRepository/ICheckinRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/port/in/CheckinUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/port/in/CheckinUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/useCase/dto/CheckinDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/dto/CheckinDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/useCase/dto/CheckinRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/dto/CheckinRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/useCase/handler/CreateHotelCheckinHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/handler/CreateHotelCheckinHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/useCase/handler/MyDomainEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/handler/MyDomainEventHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/main/config/adapter/SimpleSignInAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/main/config/adapter/SimpleSignInAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/test/kotlin/eu/getsoftware/hotelico/clients/api/hotel/application/infrastructure/controller/HotelController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/test/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/in/web/controller/hotel/HotelController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/test/kotlin/eu/getsoftware/hotelico/clients/api/hotel/application/infrastructure/repository/HotelRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/test/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/jpaTests/HotelRepositoryTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/test/kotlin/eu/getsoftware/hotelico/clients/api/hotel/application/infrastructure/service/impl/HotelServiceImpl.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/test/kotlin/eu/getsoftware/hotelico/clients/api/hotelapp/main/KotlinTestingDemoApplicationIntegrationTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/test/kotlin/eu/getsoftware/hotelico/hotelapp/KotlinTestingDemoApplicationIntegrationTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/test/kotlin/eu/getsoftware/hotelico/clients/api/infrastructure/hotel/jpaTests/HotelRepositoryTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +822,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="77098" />
+    <option name="totalTimeSeconds" value="86540" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -94,32 +894,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Maven.hotel-app [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotelservices [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotelservices [test].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.MainApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_directory_selection&quot;: &quot;D:/work/projects/GetSoftw/social-hotel-interactions/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/chat/infrastructure&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/work/projects/TEMP&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;2389370ba893e5daeee482193e73d301&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.hotel-app [install].executor": "Run",
+    "Maven.hotelservices [clean].executor": "Run",
+    "Maven.hotelservices [test].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "Spring Boot.MainApplication.executor": "Debug",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "D:/work/projects/GetSoftw/social-hotel-interactions/hotel-app/src/test/kotlin/eu/getsoftware/hotelico/hotelapp",
+    "last_opened_file_path": "D:/work/projects/TEMP",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "spring.configuration.checksum": "2389370ba893e5daeee482193e73d301",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -132,22 +932,22 @@
       <recent name="C:\work\GetSoftw\social-hotel-interactions\hotel-client\src\main" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\hotel-app\src\test\kotlin\eu\getsoftware\hotelico\hotelapp\adapter\out\hotel\persistence\hotel\jpaTests" />
       <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\hotelapp\adapter\out\persistence\customer\security" />
       <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\main\config\adapter" />
       <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\hotel\adapter\in\web\controller" />
       <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\customer\adapter\out\persistence\model" />
-      <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\hotel\adapter\out\persistence\model\oldmodel" />
     </key>
     <key name="CreateBuilderDialog.RecentsKey">
       <recent name="eu.getsoftware.hotelico.customer.infrastructure.dto" />
       <recent name="eu.getsoftware.hotelico.clients.infrastructure.hotel.dto" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="eu.getsoftware.hotelico.hotelapp.adapter" />
       <recent name="eu.getsoftware.hotelico.hotelapp.application.customer.iPortService.out.IRepository" />
       <recent name="eu.getsoftware.hotelico.clients.api.adapter.in.web.controller" />
       <recent name="eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.api" />
       <recent name="eu.getsoftware.hotelico.main.config.infrastructure" />
-      <recent name="eu.getsoftware.hotelico.adapter.in.web.controller.api" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="eu.getsoftware.hotelico.hotel.application.infrastructure.service" />
@@ -233,6 +1033,13 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
+    <configuration name="ApiGWApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="apigw" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="eu.getsoftware.hotelico.clients.api.apigw.ApiGWApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ApiGWApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="apigw" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="eu.getsoftware.hotelico.apigw.ApiGWApplication" />
@@ -253,6 +1060,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="EurekaServerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="eureka-server" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="eu.getsoftware.hotelico.clients.api.hotel.eurekaserver.EurekaServerApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="MainApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="hotel-client" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="eu.getsoftware.hotelico.hotel.MainApplication" />
@@ -269,6 +1083,14 @@
     <configuration name="MainApplication (2)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="hotel-app" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="eu.getsoftware.hotelico.main.MainApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MainApplication (3)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+      <module name="hotel-app" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="eu.getsoftware.hotelico.hotelapp.main.MainApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -313,6 +1135,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="NotificationApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="notification" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="eu.getsoftware.hotelico.clients.api.infrastructure.notification.NotificationApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="NotificationApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="notification" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="eu.getsoftware.hotelico.infrastructure.notification.NotificationApplication" />
@@ -340,6 +1169,10 @@
     </configuration>
     <list>
       <item itemvalue="Maven.hotelservices [clean]" />
+      <item itemvalue="Spring Boot.ApiGWApplication (1)" />
+      <item itemvalue="Spring Boot.EurekaServerApplication" />
+      <item itemvalue="Spring Boot.NotificationApplication (1)" />
+      <item itemvalue="Spring Boot.MainApplication (3)" />
       <item itemvalue="Spring Boot.MainApplication (2)" />
       <item itemvalue="Spring Boot.MainApplication" />
       <item itemvalue="Spring Boot.NotificationApplication" />
@@ -416,7 +1249,8 @@
       <workItem from="1727723818076" duration="8207000" />
       <workItem from="1727855964264" duration="3341000" />
       <workItem from="1727889311115" duration="4950000" />
-      <workItem from="1727949666075" duration="25986000" />
+      <workItem from="1727949666075" duration="35413000" />
+      <workItem from="1728504028206" duration="5960000" />
     </task>
     <task id="LOCAL-00001" summary="-CHG: Microservice refactoring(Eureka-server)">
       <created>1655287660110</created>
@@ -592,14 +1426,6 @@
       <option name="presentableId" value="LOCAL-00025" />
       <option name="project" value="LOCAL" />
       <updated>1683714777053</updated>
-    </task>
-    <task id="LOCAL-00033" summary="Readme Refactoring">
-      <option name="closed" value="true" />
-      <created>1705531617313</created>
-      <option name="number" value="00033" />
-      <option name="presentableId" value="LOCAL-00033" />
-      <option name="project" value="LOCAL" />
-      <updated>1705531617313</updated>
     </task>
     <task id="LOCAL-00034" summary="Readme Refactoring">
       <option name="closed" value="true" />
@@ -785,7 +1611,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728244867148</updated>
     </task>
-    <option name="localTasksCounter" value="57" />
+    <task id="LOCAL-00057" summary="UseCase.steps in interactor">
+      <option name="closed" value="true" />
+      <created>1728250406962</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1728250406962</updated>
+    </task>
+    <option name="localTasksCounter" value="58" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -815,8 +1649,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="-CHG: Microservice refactoring (hotel microservice)" />
-    <MESSAGE value="-CHG: Microservice refactoring (maven submodule architecture)" />
     <MESSAGE value="-CHG: Microservice refactoring (hotel submodul)" />
     <MESSAGE value="-REFACTOR: structure" />
     <MESSAGE value="-REFACTOR: Kotlin data class dor DTO" />
@@ -840,7 +1672,9 @@
     <MESSAGE value="refactoring out ports" />
     <MESSAGE value="refactoring &quot;in&quot; &quot;out&quot; customer DTO" />
     <MESSAGE value="UseCase story" />
-    <option name="LAST_COMMIT_MESSAGE" value="UseCase story" />
+    <MESSAGE value="UseCase.steps in interactor" />
+    <MESSAGE value="archiving frontend" />
+    <option name="LAST_COMMIT_MESSAGE" value="archiving frontend" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -865,9 +1699,9 @@
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java</url>
+          <url>file://$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java</url>
           <line>318</line>
-          <properties class="eu.getsoftware.hotelico.hotelapp.application.multiDomainApplicationCheckinService.useCase.CheckinUseCaseImpl" method="getStaffbyHotelId">
+          <properties class="eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.CheckinUseCaseImpl">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
@@ -879,9 +1713,9 @@
           <option name="timeStamp" value="3" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-field">
-          <url>file://$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java</url>
+          <url>file://$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java</url>
           <line>89</line>
-          <properties field="notificationUseCase" class="eu.getsoftware.hotelico.hotelapp.application.multiDomainApplicationCheckinService.useCase.CheckinUseCaseImpl" />
+          <properties field="wallpostService" class="eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.CheckinUseCaseImpl" />
           <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>

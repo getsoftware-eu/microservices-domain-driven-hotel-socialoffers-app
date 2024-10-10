@@ -25,7 +25,7 @@ public interface IHotelService
 
     Map<Long, String> getUnsubscribeGuestPushIds();
 
-    Optional<IHotelRootEntity> getEntityById(long hotelId);
+    Optional<? extends IHotelRootEntity> getEntityById(long hotelId);
 
     HotelDTO getHotelById(long hotelId);
 

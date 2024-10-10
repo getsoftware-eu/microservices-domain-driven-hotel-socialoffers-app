@@ -2,11 +2,14 @@ package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService
 
 import eu.getsoftware.hotelico.clients.api.clients.domain.user.IUserDomain;
 import eu.getsoftware.hotelico.hotelapp.application.customer.common.dto.UserDTO;
-import org.jetbrains.annotations.NotNull;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * похож на in.port 
+ */
 public interface IUserService
 {
     List<UserDTO> getUsers();

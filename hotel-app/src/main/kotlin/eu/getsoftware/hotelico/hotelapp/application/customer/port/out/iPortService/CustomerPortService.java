@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerHotelCheckin;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,23 +14,25 @@ import java.util.Set;
  */
 public interface CustomerPortService
 {
-    List<ICustomerRootEntity> getCustomers();
+    List<? extends ICustomerRootEntity> getCustomers();
+    
+    List<CustomerDTO> getCustomerDTOs();
     
     long getCustomerHotelId(long customerId);
     
-    Optional<ICustomerRootEntity> getByEmail(String email);
+    Optional<? extends ICustomerRootEntity> getByEmail(String email);
     
     Set<ICustomerRootEntity> getByHotelId(long customerId, long hotelId, boolean addStaff);
 
-    CustomerDTO fillDtoWithHotelInfo(CustomerDTO dto, ICustomerHotelCheckin validCheckin);
+    CustomerDTO fillDtoWithHotelInfo(CustomerDTO dto, ICustomerHotelCheckinEntity validCheckin);
    
     Set<ICustomerRootEntity> getByCity(long customerId, String city);
     
     Set<ICustomerRootEntity> getCustomerCities(long customerId);
 
-    ICustomerRootEntity getById(long customerId, long requesterCustomerId);
+    Optional<? extends ICustomerRootEntity> getById(long customerId, long requesterCustomerId);
     
-    Optional<ICustomerRootEntity> getEntityById(long customerId);
+    Optional<? extends ICustomerRootEntity> getEntityById(long customerId);
  
     ICustomerRootEntity addCustomer(ICustomerRootEntity customerDto, String password);
     
@@ -41,10 +43,10 @@ public interface CustomerPortService
 
     CustomerDTO convertCustomerToDto(ICustomerRootEntity customerEntity, long hotelId);
 
-    CustomerDTO convertCustomerToDto(ICustomerRootEntity customerEntity, boolean fullSerialization, ICustomerHotelCheckin validCheckin);
+    CustomerDTO convertCustomerToDto(ICustomerRootEntity customerEntity, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin);
     CustomerDTO convertMyCustomerToFullDto(ICustomerRootEntity customerEntity);
 		
-    ICustomerRootEntity serializeCustomerHotelInfo(ICustomerRootEntity dto, long hotelId, boolean fullSerialization, ICustomerHotelCheckin validCheckin);
+    ICustomerRootEntity serializeCustomerHotelInfo(ICustomerRootEntity dto, long hotelId, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin);
 
     CustomerDTO synchronizeCustomerToDto(ICustomerRootEntity customerDto);
     
@@ -63,5 +65,5 @@ public interface CustomerPortService
 
     ICustomerRootEntity save(ICustomerRootEntity customerEntity);
 
-    ICustomerRootEntity getOne(Long id);
+    Optional<ICustomerRootEntity> getOne(Long id);
 }

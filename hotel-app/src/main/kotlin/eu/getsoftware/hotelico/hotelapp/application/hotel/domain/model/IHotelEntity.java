@@ -4,6 +4,6 @@ import java.util.Set;
 
 public interface IHotelEntity {
     //eugen: mappedBy entity!
-    Set<IHotelWallpost> getHotelWallPosts();
+    Set<IHotelWallPost> getHotelWallPosts();
 
 }
