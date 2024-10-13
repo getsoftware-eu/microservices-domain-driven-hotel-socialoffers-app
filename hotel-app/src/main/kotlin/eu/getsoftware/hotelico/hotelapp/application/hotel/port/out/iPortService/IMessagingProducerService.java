@@ -10,4 +10,9 @@ public interface IMessagingProducerService<E extends IHotelEvent> {
 
     void sendCustomerNotification(CustomerUpdateRequest requestDTO, E hotelEvent);
 
+    /**
+     * for events in domain layer??
+     */
+//    void sendDomainNotification(DomainUpdateRequest requestDTO, E hotelEvent);
+
 }

@@ -4,17 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="EventEnum to rabbitMqTopic">
+    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="EventEnum as rabbitMqTopic">
+      <change afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/common/model/innerModelService/IDomainRegisterDTOGateway.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/innerDomainService/domainEvents/DomainEvent.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/innerDomainService/domainEvents/DomainEventRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/innerDomainService/domainEvents/IDomainEventsProducerService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/innerDomainService/domainEvents/IDomainEventsReceiverService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/innerDomainService/domainGateway/DomainEntityInnerGatewayServiceAbstr.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/in/web/controller/hotel/HotelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/in/web/controller/hotel/HotelController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/microservice/ActiveCustomerPinger.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/microservice/ActiveCustomerPinger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/microservice/MessagingRabbitMQProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/microservice/MessagingRabbitMQProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/microservice/WebSocketNotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/microservice/WebSocketNotificationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/infrastructure/dto/CustomerNotificationDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/infrastructure/dto/CustomerNotificationDTO.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/usecase/notification/NotificationUseCaseImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/usecase/notification/NotificationUseCaseImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/in/NotificationUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/in/NotificationUseCase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/model/HotelGroupAggregate.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/model/HotelGroupAggregate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IMessagingProducerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IMessagingProducerService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,16 +21,17 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="102465" />
+    <option name="totalTimeSeconds" value="104833" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Interface" />
-        <option value="Class" />
         <option value="Record" />
         <option value="Kotlin Class" />
         <option value="Interface" />
+        <option value="Enum" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -133,36 +133,38 @@
       <recent name="C:\work\GetSoftw\social-hotel-interactions\hotel-client\src\main" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\hotelapp\application\hotel\domain\innerDomainService\domainGateway" />
+      <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\hotelapp\application\hotel\domain\innerDomainService" />
       <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\hotel-app\src\test\kotlin\eu\getsoftware\hotelico\hotelapp\adapter\out\hotel\persistence\hotel\jpaTests" />
       <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\hotelapp\adapter\out\persistence\customer\security" />
       <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\main\config\adapter" />
-      <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\hotel\adapter\in\web\controller" />
-      <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\customer\adapter\out\persistence\model" />
     </key>
     <key name="CreateBuilderDialog.RecentsKey">
       <recent name="eu.getsoftware.hotelico.customer.infrastructure.dto" />
       <recent name="eu.getsoftware.hotelico.clients.infrastructure.hotel.dto" />
     </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="eu.getsoftware.hotelico.clients.common.model.innerModelService" />
       <recent name="eu.getsoftware.hotelico.hotelapp.adapter" />
       <recent name="eu.getsoftware.hotelico.hotelapp.application.customer.iPortService.out.IRepository" />
       <recent name="eu.getsoftware.hotelico.clients.api.adapter.in.web.controller" />
       <recent name="eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.api" />
-      <recent name="eu.getsoftware.hotelico.main.config.infrastructure" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="eu.getsoftware.hotelico.hotel.application.infrastructure.service" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure" />
+      <recent name="eu.getsoftware.hotelico.clients.common.model" />
       <recent name="eu.getsoftware.hotelico.hotelapp.application.hotel.domain.iRepository" />
       <recent name="eu.getsoftware.hotelico.clients.infrastructure.hotel.dto" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure" />
       <recent name="eu.getsoftware.hotelico.hotelapp.application.multiDomainApplicationCheckinService.useCase.dto" />
       <recent name="eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortServiceImpl" />
       <recent name="eu.getsoftware.hotelico.clients.api.clients.common.dto" />
       <recent name="eu.getsoftware.hotelico.api.common.model.chat" />
-      <recent name="eu.getsoftware.hotelico.customer.application.port.in.iservice" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -452,7 +454,7 @@
       <workItem from="1727889311115" duration="4950000" />
       <workItem from="1727949666075" duration="35413000" />
       <workItem from="1728504028206" duration="16769000" />
-      <workItem from="1728827748404" duration="9798000" />
+      <workItem from="1728827748404" duration="12589000" />
     </task>
     <task id="LOCAL-00001" summary="-CHG: Microservice refactoring(Eureka-server)">
       <created>1655287660110</created>
@@ -628,14 +630,6 @@
       <option name="presentableId" value="LOCAL-00025" />
       <option name="project" value="LOCAL" />
       <updated>1683714777053</updated>
-    </task>
-    <task id="LOCAL-00043" summary="Readme Refactoring">
-      <option name="closed" value="true" />
-      <created>1725626765051</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1725626765051</updated>
     </task>
     <task id="LOCAL-00044" summary="refactoring">
       <option name="closed" value="true" />
@@ -821,7 +815,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728840789299</updated>
     </task>
-    <option name="localTasksCounter" value="67" />
+    <task id="LOCAL-00067" summary="EventEnum as rabbitMqTopic">
+      <option name="closed" value="true" />
+      <created>1728841549039</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1728841549039</updated>
+    </task>
+    <option name="localTasksCounter" value="68" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -851,7 +853,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="-REFACTOR: readme text refactoring" />
     <MESSAGE value="-REFACTOR: add swagger to REST API (Controllers)" />
     <MESSAGE value="-REFACTOR: Optional&lt;Type&gt;" />
     <MESSAGE value="-REFACTOR: README.md" />
@@ -876,7 +877,8 @@
     <MESSAGE value="asynchronous messageService + webSocketService" />
     <MESSAGE value="refactoring" />
     <MESSAGE value="EventEnum to rabbitMqTopic" />
-    <option name="LAST_COMMIT_MESSAGE" value="EventEnum to rabbitMqTopic" />
+    <MESSAGE value="EventEnum as rabbitMqTopic" />
+    <option name="LAST_COMMIT_MESSAGE" value="EventEnum as rabbitMqTopic" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
