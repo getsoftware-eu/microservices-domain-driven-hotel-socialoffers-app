@@ -5,6 +5,7 @@ import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatM
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.chatview.model.ChatMessageView;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.outPortServiceImpl.microservice.MessagingRabbitMQProducer;
 import eu.getsoftware.hotelico.hotelapp.application.chat.domain.infrastructure.ChatMSComminicationService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.ICheckinService;
@@ -41,7 +42,7 @@ import java.util.*;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class NotificationUseCaseImpl implements NotificationUseCase
+public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 {
 	private final IHotelService hotelService;
 	
@@ -57,13 +58,12 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	private final ChatMSComminicationService chatMSComminicationService;
 	
 	private final MessagingRabbitMQProducer hotelRabbitMQProducer;
-//	private final NotificationService notificationService;
 	private final INotificationService notificationService;
 	
 	private IWebSocketService webSocketService;
 
 	@Override
-	public void notificateAboutEntityEvent(CustomerDTO dto, IHotelEvent event, String eventContent, long entityId)
+	public void notificateAboutEntityEventWebSocket(CustomerDTO dto, IHotelEvent event, String eventContent, long entityId)
 	{
 		Objects.requireNonNull(dto);
 		
@@ -328,7 +328,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	}
 	
 	@Override
-	public void createAndSendNotification(long receiverId, IHotelEvent event){
+	public void createAndSendWebSocketNotification(long receiverId, IHotelEvent event){
 		
 		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 		
@@ -342,7 +342,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 		
 		if(event.getPushUrl()!=null)
 		{
-			receiverNotification.setPushCustomerEvent("Hotelico.de", event.getPushTitle(), event.getPushUrl(), event.getPushIcon(), "");
+			receiverNotification.setSocketPushCustomerEvent("Hotelico.de", event.getPushTitle(), event.getPushUrl(), event.getPushIcon(), "");
 			lastMessagesService.setLastPushNotifiation(receiverId, receiverNotification);
 			sendPushRequest(receiverId);
 		}
@@ -491,11 +491,12 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	
 	@Override
 	@Transactional
-	public void createAndSendPushNotification_Chat(long receiverId, IHotelEvent event, long senderId, String message)
+	public void createAndSendWebSocketNotification_Chat(long receiverId, IHotelEvent event, long senderId, String message)
 	{
 		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
-		
-		webSocketService.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
+
+		String webSocketTopic = AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + receiverId + "";
+		webSocketService.produceSimpWebsocketMessage(webSocketTopic, receiverNotification);
 		
 		if(event.getPushUrl()!=null)
 		{
@@ -505,7 +506,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 			{
 				String pushUrlPostfix = String.valueOf(senderId);
 				
-				receiverNotification.setPushCustomerEvent(event.getPushTitle() + " from " + senderOpt.get().getFirstName(), message, event.getPushUrl()+pushUrlPostfix, event.getPushIcon(), senderId+"");
+				receiverNotification.setSocketPushCustomerEvent(event.getPushTitle() + " from " + senderOpt.get().getFirstName(), message, event.getPushUrl()+pushUrlPostfix, event.getPushIcon(), senderId+"");
 				lastMessagesService.setLastPushNotifiation(receiverId, receiverNotification);
 				sendPushRequest(receiverId);
 			}
@@ -515,11 +516,12 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	
 	@Override
 	@Transactional
-	public void createAndSendPushNotification_Activity(long receiverId, IHotelEvent event, IHotelActivity activity, String message)
+	public void createAndSendWebSocketNotification_Activity(long receiverId, IHotelEvent event, IHotelActivity activity, String message)
 	{
 		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
-		
-		webSocketService.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
+
+		String webSocketTopic = AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + receiverId + "";
+		webSocketService.produceSimpWebsocketMessage(webSocketTopic, receiverNotification);
 		
 		if(event.getPushUrl()!=null)
 		{
@@ -527,7 +529,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 			{
 				String pushUrlPostfix = "//" + activity.getHotelRootEntity().getId() + "/" + activity.getId();
 
-				receiverNotification.setPushCustomerEvent(event.getPushTitle(), message, event.getPushUrl()+pushUrlPostfix, event.getPushIcon(), activity.getSender().getId()+"");
+				receiverNotification.setSocketPushCustomerEvent(event.getPushTitle(), message, event.getPushUrl()+pushUrlPostfix, event.getPushIcon(), activity.getSender().getId()+"");
 				lastMessagesService.setLastPushNotifiation(receiverId, receiverNotification);
 				sendPushRequest(receiverId);
 			}		
@@ -553,7 +555,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 			//Default. if no notification was found!!!
 			String  relocateUrl = "/" + AppConfigProperties.HOST_SUFFIX + "#/app/chatList/false//";
 			
-			dto.setPushCustomerEvent(title, message, relocateUrl, icon, "");
+			dto.setSocketPushCustomerEvent(title, message, relocateUrl, icon, "");
 		}
 		
 		return dto;
@@ -660,7 +662,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 
 				CustomerNotificationDTO receiverNotification = new CustomerNotificationDTO();
 
-				receiverNotification.setPushCustomerEvent(eventActivityNewLastMinute.getPushTitle(), notificationMessage, eventActivityNewLastMinute.getPushUrl()+pushUrlPostfix, eventActivityNewLastMinute.getPushIcon(), hotelActivity.getSender().getId()+"");
+				receiverNotification.setSocketPushCustomerEvent(eventActivityNewLastMinute.getPushTitle(), notificationMessage, eventActivityNewLastMinute.getPushUrl()+pushUrlPostfix, eventActivityNewLastMinute.getPushIcon(), hotelActivity.getSender().getId()+"");
 				lastMessagesService.setLastPushNotifiation((int)nextGuestId, receiverNotification);
 				this.sendPush(pushId);
 			}
@@ -674,7 +676,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	{
 		if(receiver!=null)
 		{
-			this.createAndSendNotification(receiver.getId(), event);
+			this.createAndSendWebSocketNotification(receiver.getId(), event);
 		}
 		else{
 			CustomerNotificationDTO receiverNotification = new CustomerNotificationDTO();

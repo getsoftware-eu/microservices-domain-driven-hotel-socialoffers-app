@@ -19,7 +19,9 @@ public class ActiveCustomerPinger
   @Scheduled(fixedDelay = 2000)
   public void pingUsers() {
     List<Long> activeUsers = lastMessagesService.getOnlineCustomerIds();
-    webSocketService.produceSimpWebsocketMessage("/topic/active", activeUsers);
+    
+    String webSocketTopic = "/topic/active";
+    webSocketService.produceSimpWebsocketMessage(webSocketTopic, activeUsers);
   }
 
 }

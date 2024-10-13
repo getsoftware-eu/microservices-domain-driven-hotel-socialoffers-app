@@ -6,7 +6,6 @@ import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatM
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.ChatMessageRequest;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.CustomerUpdateRequest;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelEvent;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.IHotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IMessagingProducerService;
 import lombok.AllArgsConstructor;
 import org.springframework.amqp.core.AmqpTemplate;
@@ -20,15 +19,15 @@ import org.springframework.stereotype.Service;
  */
 @Service
 @AllArgsConstructor
-public class MessagingRabbitMQProducer<E extends IHotelEvent> implements IMessagingProducerService<E>
+public class MessagingRabbitMQProducer implements IMessagingProducerService<HotelEvent>
 {
 	/** soll identisch sein, mit preconfigured producer from imported amqp lib on maven **/
-	private AmqpTemplate amqpTemplate;
-	private RabbitMQMessageProducer rabbitMQMessageProducer;
-	private AsyncRabbitTemplate asyncRabbitTemplate;
+	private final AmqpTemplate amqpTemplate;
+	private final RabbitMQMessageProducer rabbitMQMessageProducer;
+	private final AsyncRabbitTemplate asyncRabbitTemplate;
 
 	@Override
-	public void sendCustomerNotification(CustomerUpdateRequest requestDTO, E hotelEvent) {
+	public void sendCustomerNotification(CustomerUpdateRequest requestDTO, HotelEvent hotelEvent) {
 		
 		String exchange = "internal.exchange";
 		String routingKey = getRabbitMQTopicFromEventEnum(hotelEvent);
@@ -50,7 +49,7 @@ public class MessagingRabbitMQProducer<E extends IHotelEvent> implements IMessag
 		rabbitMQMessageProducer.publish(exchange, routingKey, chatMessageRequest);
 	}
 
-	public String getRabbitMQTopicFromEventEnum(E hotelEvent) {
+	public String getRabbitMQTopicFromEventEnum(HotelEvent hotelEvent) {
 
 		String routingKey;
 
@@ -114,7 +113,7 @@ public class MessagingRabbitMQProducer<E extends IHotelEvent> implements IMessag
 	 * 	via 'amqp'-module (configured)
 	 * @param customerUpdateRequest
 	 */
-	public void sendTopicViaPreconfiguredRabbitmqProducer(CustomerUpdateRequest customerUpdateRequest, E hotelEvent)
+	public void sendTopicViaPreconfiguredRabbitmqProducer(CustomerUpdateRequest customerUpdateRequest, HotelEvent hotelEvent)
 	{
 		//only for 1 and 2 Method we have to write this system variables: 
 		String exchange = "internal.exchange";
@@ -123,7 +122,7 @@ public class MessagingRabbitMQProducer<E extends IHotelEvent> implements IMessag
 		rabbitMQMessageProducer.publish(exchange, routingKey, customerUpdateRequest);
 	}
 
-	public void sendCustomerNotification2(CustomerUpdateRequest requestDTO, E hotelEvent)
+	public void sendCustomerNotification2(CustomerUpdateRequest requestDTO, HotelEvent hotelEvent)
 	{
 		//        ortcClient.subscribeWithNotifications("myChannel", true, new OnMessage() {
 		//            public void run(OrtcClient sender, String channel, String message) {
@@ -136,7 +135,7 @@ public class MessagingRabbitMQProducer<E extends IHotelEvent> implements IMessag
 		sendTopicViaPreconfiguredRabbitmqProducer(requestDTO, hotelEvent);
 	}
 
-	public void notificateAboutEntityEvent(CustomerDTO dto, E hotelEvent, String eventContent, long entityId) {
+	public void notificateAboutEntityEvent(CustomerDTO dto, HotelEvent hotelEvent, String eventContent, long entityId) {
 
 		String exchange = "internal.exchange";
 		String routingKey = getRabbitMQTopicFromEventEnum(hotelEvent);
@@ -148,7 +147,7 @@ public class MessagingRabbitMQProducer<E extends IHotelEvent> implements IMessag
 		
 	}
 
-	private Object extractPayloadFromHotelEvent(E hotelEvent, String eventContent, long entityId) {
+	private Object extractPayloadFromHotelEvent(HotelEvent hotelEvent, String eventContent, long entityId) {
 	}
 
 

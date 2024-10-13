@@ -174,7 +174,7 @@ public class HotelController extends BasicController
         if(gpsCity!=null)
         {
             CustomerNotificationDTO notificationDto = new CustomerNotificationDTO();
-            notificationDto.setPushCustomerEvent("gpsCity", gpsCity, "", "", "");
+            notificationDto.setSocketPushCustomerEvent("gpsCity", gpsCity, "", "", "");
             return notificationDto;
         }
 

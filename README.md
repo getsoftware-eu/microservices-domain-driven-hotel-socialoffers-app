@@ -29,8 +29,8 @@ The "Clean" (Layered) Architecture is another way to provide <b>separation of co
          - 1.define own (or use same level-) DTO with <b>lower</b> layers (UserDTO)
            - Or just via own Interfaces-Generics, instead of own DTO: e.g. class UseCase<T: IUser, Z: IUserDTO> 
          - 2.define own (or use same level-) help-IServices ('IUserService') 
-           - e.g. 'UserRegisterINTERACTOR' (uses injected IUserService) and implements <b>custom usecases</b> steps based on i-help-infrastructure-methods
-           - Problem: used IServices not anemic calls (ServiceImpl.save() dummy call to low-level-Repository.save())
+           - e.g. 'CheckinUseCaseImpl' (uses injected IAsynchronMessagingService) and implements <b>custom usecases</b> steps based on i-help-infrastructure-methods
+           - Problem: used IServices anemic calls (ServiceImpl.save() dummy call to low-level-Repository.save())
    - <b>Port</b> layer: interfaces for adapters (public boundaries)
 
 2. <b>Adapter</b> layer - Implementation of port-IServices (UserServiceImpl), that was declared in- and will be injected in-INTERACTOR

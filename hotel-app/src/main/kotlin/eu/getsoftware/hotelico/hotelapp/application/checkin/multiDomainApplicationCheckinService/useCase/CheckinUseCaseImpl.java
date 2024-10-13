@@ -200,7 +200,7 @@ import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hot
 				if(!customerEntity.isHotelStaff() && !customerEntity.isAdmin())
 				{
 					checkinResponseDto.setHotelId(hotelEntity.getId());
-					notificationUseCase.notificateAboutEntityEvent(checkinResponseDto, hotelEvent.getEventCheckin(), "New check-in in your hotel", hotelRootEntity.getId());
+					notificationUseCase.notificateAboutEntityEventWebSocket(checkinResponseDto, hotelEvent.getEventCheckin(), "New check-in in your hotel", hotelRootEntity.getId());
 				}
 
 				//sent wellcome message to new fullCheckin customers
@@ -261,7 +261,7 @@ import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hot
 
 				//TODO eu: how to implement domain events, without  low level entity .class ??
 
-				notificationUseCase.notificateAboutEntityEvent(checkinResponseDto, hotelEvent.getEventCheckout(), "Checkout from your hotel", nextCheckin.getHotel().getId());
+				notificationUseCase.notificateAboutEntityEventWebSocket(checkinResponseDto, hotelEvent.getEventCheckout(), "Checkout from your hotel", nextCheckin.getHotel().getId());
 
 				checkinService.save(nextCheckin);
 			}

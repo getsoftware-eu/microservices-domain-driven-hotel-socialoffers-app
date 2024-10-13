@@ -74,7 +74,7 @@ data class CustomerNotificationDTO (var id: Long = 0)
         this.customerEvent["entityId"] = entityId.toString() 
     }
 
-    fun setPushCustomerEvent(pushTitle: String, pushMessage: String, pushUrl: String, pushIcon: String, chatPartnerId: String) {
+    fun setSocketPushCustomerEvent(pushTitle: String, pushMessage: String, pushUrl: String, pushIcon: String, chatPartnerId: String) {
 
         this.customerEvent["pushTitle"] = pushTitle
         this.customerEvent["pushIcon"] = pushIcon

@@ -3,20 +3,20 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hot
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IWebSocketService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 class WebSocketNotificationService implements IWebSocketService {
 
     /**
      * expected the user is the one authenticated with the WebSocket session
      */
-    @Autowired
-    private SimpMessagingTemplate simpMessagingTemplate;
+    private final SimpMessagingTemplate simpMessagingTemplate;
 
     public String produceSimpWebsocketMessage(String destination, CustomerNotificationDTO dto) {
 
