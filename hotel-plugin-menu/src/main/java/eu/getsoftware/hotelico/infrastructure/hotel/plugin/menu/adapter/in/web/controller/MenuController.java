@@ -32,7 +32,8 @@ public class MenuController extends BasicController
   @RequestMapping(value = "/order/customer/{customerId}/hotelId/{hotelId}/cafeId/{cafeId}/orderId/{orderId}/showClosed/{showClosed}", method = RequestMethod.GET)
 	public @ResponseBody
 	List<MenuOrderDTO> getMenus(@PathVariable long customerId, @PathVariable long hotelId, @PathVariable long cafeId, @PathVariable long orderId, @PathVariable boolean showClosed) {
-		return menuService.getActiveMenusByCustomerId(customerId, hotelId, cafeId, orderId, showClosed);
+	  long requesterId = 123;	
+      return menuService.getActiveMenusByCustomerId( customerId, hotelId, cafeId, orderId, showClosed);
 	}
 		
 	@RequestMapping(value = "/item/customer/{customerId}/hotelId/{hotelId}/cafeId/{cafeId}/menuItemId/{menuItemId}", method = RequestMethod.GET)

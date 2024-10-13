@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.outPortServiceImpl;//package de.hotelico.service.impl;
 
 import com.thoughtworks.xstream.mapper.Mapper;
-import eu.getsoftware.hotelico.clients.api.clients.domain.user.IUserDomain;
+import eu.getsoftware.hotelico.clients.common.domain.IDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.customer.model.User;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.repository.UserDtoRepository;
 import eu.getsoftware.hotelico.hotelapp.application.customer.common.dto.UserDTO;
@@ -107,7 +107,7 @@ public class UserServiceImpl implements IUserService
 	
 	@Cacheable
     @NotNull
-    public IUserDomain getByUserName(@NotNull String username) {
+    public IDomainEntity getByUserName(@NotNull String username) {
 	
 		log.info("getByUserName: username=$username");
 	

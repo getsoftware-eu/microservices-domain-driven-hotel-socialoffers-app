@@ -4,16 +4,60 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="EventEnum as rabbitMqTopic">
-      <change afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/common/model/innerModelService/IDomainRegisterDTOGateway.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/innerDomainService/domainEvents/DomainEvent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/innerDomainService/domainEvents/DomainEventRequestDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/innerDomainService/domainEvents/IDomainEventsProducerService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/innerDomainService/domainEvents/IDomainEventsReceiverService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/innerDomainService/domainGateway/DomainEntityInnerGatewayServiceAbstr.kt" afterDir="false" />
+    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="DomainGateway to load domainEntity interfaces and call interface methods :))">
+      <change afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/IDomainEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/IDomainRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/IDomainResponseDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/domainGateway/DomainEntityDTOServiceAbstr.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/domainGateway/IDomainEntityGateway.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/mapper/IDomainMapper.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/common/error/UserNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/checkin/portServiceImpl/CheckinPortServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/model/domainServiceImpl/CustomerPersistGatewayServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/port/out/GPSValidationHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_02_2023_20_14__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_23_02_2023_20_14__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/model/HotelGroupAggregate.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/model/HotelGroupAggregate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IMessagingProducerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IMessagingProducerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-client-api-libs/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/common-client-api-libs/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/common/dto/CustomerRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/common/dto/CustomerRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/common/dto/HotelRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/common/dto/HotelRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/domain/user/IUserDomain.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/notification/NotificationRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/notification/NotificationRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/common/model/innerModelService/IDomainRegisterDTOGateway.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/common/model/innerModelService/IDomainRegisterDTOGateway.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/checkin/repository/CheckinRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/checkin/repository/CheckinRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/model/CustomerRootEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/model/CustomerRootEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/portServiceImpl/CustomerPortServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/portServiceImpl/CustomerPortServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/repository/CustomerRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/customer/repository/CustomerRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/HotelServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/HotelServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/repository/ActivityRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/repository/ActivityRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/repository/DealRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/repository/DealRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/repository/HotelRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/repository/HotelRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/repository/LanguageRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/repository/LanguageRepository.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/repository/UserDtoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/repository/UserDtoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/repository/WallPostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/repository/WallPostRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/dto/CheckinRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/dto/CheckinRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/handler/CreateHotelCheckinHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/handler/CreateHotelCheckinHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/port/out/ICheckinService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/port/out/CheckinPortService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/customer/domain/model/ICustomerRootEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/customer/domain/model/ICustomerRootEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/innerDomainService/domainEvents/DomainEventRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/innerDomainService/domainEvents/DomainEventRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/innerDomainService/domainEvents/IDomainEventsReceiverService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/innerDomainService/domainEvents/IDomainEventsReceiverService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/innerDomainService/domainGateway/DomainEntityInnerGatewayServiceAbstr.kt" beforeDir="false" afterPath="$PROJECT_DIR$/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/domainGateway/DomainEntityGatewayServiceAbstr.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/usecase/notification/NotificationUseCaseImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/usecase/notification/NotificationUseCaseImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/outPortServiceImpl/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/outPortServiceImpl/ChatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/in/web/controller/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/in/web/controller/MenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/out/persistence/outPortServiceImpl/MenuPortServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/out/persistence/outPortServiceImpl/MenuPortServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/out/persistence/repository/MenuOrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/out/persistence/repository/MenuOrderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/application/iPortService/IMenuPortService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/application/iPortService/IMenuPortService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/application/infrastructure/service/AsyncMSCommunicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/application/infrastructure/service/AsyncMSCommunicationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/main/MenuApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/main/MenuApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-rabbitmq/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-rabbitmq/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-rabbitmq/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/NotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-rabbitmq/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/NotificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,7 +65,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="104833" />
+    <option name="totalTimeSeconds" value="111674" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -29,9 +73,9 @@
         <option value="Kotlin Interface" />
         <option value="Record" />
         <option value="Kotlin Class" />
-        <option value="Interface" />
         <option value="Enum" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -94,43 +138,48 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Maven.apigw [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-app [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotelservices [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotelservices [test].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.MainApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_directory_selection&quot;: &quot;D:/work/projects/GetSoftw/social-hotel-interactions/hotel-app/src/test/kotlin/eu/getsoftware/hotelico/hotelapp&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/work/projects/TEMP&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;2389370ba893e5daeee482193e73d301&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.apigw [package].executor": "Run",
+    "Maven.common-client-api-libs [deploy].executor": "Run",
+    "Maven.common-client-api-libs [package].executor": "Run",
+    "Maven.hotel-app [install].executor": "Run",
+    "Maven.hotelservices [clean].executor": "Run",
+    "Maven.hotelservices [test].executor": "Run",
+    "Maven.notification [deploy].executor": "Run",
+    "Maven.notification [install].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.MainApplication.executor": "Debug",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "D:/work/projects/GetSoftw/social-hotel-interactions/hotel-app/src/test/kotlin/eu/getsoftware/hotelico/hotelapp",
+    "last_opened_file_path": "D:/work/projects/GetSoftw/social-hotel-interactions/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/domain/user",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "spring.configuration.checksum": "2389370ba893e5daeee482193e73d301",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\common-client-api-libs\src\main\java\eu\getsoftware\hotelico\clients\api\clients\domain\user" />
       <recent name="C:\WORK\projects\GetSoftw\social-hotel-interactions\docs\img" />
       <recent name="C:\work\GetSoftw\social-hotel-interactions\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\hotel\infrastructure\error" />
       <recent name="C:\work\GetSoftw\social-hotel-interactions\apigw\src\main\resources" />
       <recent name="C:\work\GetSoftw\social-hotel-interactions" />
-      <recent name="C:\work\GetSoftw\social-hotel-interactions\hotel-client\src\main" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\hotelapp\application\hotel\domain\innerDomainService\domainGateway" />
@@ -154,17 +203,18 @@
       <recent name="eu.getsoftware.hotelico.hotel.application.infrastructure.service" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="eu.getsoftware.hotelico.hotelapp.application.hotel.domain.mapper" />
+      <recent name="eu.getsoftware.hotelico.hotelapp.application.hotel.domain.innerDomainService.domainGateway" />
       <recent name="eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure" />
       <recent name="eu.getsoftware.hotelico.clients.common.model" />
       <recent name="eu.getsoftware.hotelico.hotelapp.application.hotel.domain.iRepository" />
-      <recent name="eu.getsoftware.hotelico.clients.infrastructure.hotel.dto" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="eu.getsoftware.hotelico.clients.api.clients.domain" />
+      <recent name="eu.getsoftware.hotelico.clients.common.error" />
+      <recent name="eu.getsoftware.hotelico.hotelapp.application.hotel.domain.innerDomainService.domainGateway" />
       <recent name="eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure" />
       <recent name="eu.getsoftware.hotelico.hotelapp.application.multiDomainApplicationCheckinService.useCase.dto" />
-      <recent name="eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortServiceImpl" />
-      <recent name="eu.getsoftware.hotelico.clients.api.clients.common.dto" />
-      <recent name="eu.getsoftware.hotelico.api.common.model.chat" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -395,14 +445,6 @@
       </list>
     </recent_temporary>
   </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -454,7 +496,8 @@
       <workItem from="1727889311115" duration="4950000" />
       <workItem from="1727949666075" duration="35413000" />
       <workItem from="1728504028206" duration="16769000" />
-      <workItem from="1728827748404" duration="12589000" />
+      <workItem from="1728827748404" duration="12644000" />
+      <workItem from="1728846907801" duration="8713000" />
     </task>
     <task id="LOCAL-00001" summary="-CHG: Microservice refactoring(Eureka-server)">
       <created>1655287660110</created>
@@ -630,14 +673,6 @@
       <option name="presentableId" value="LOCAL-00025" />
       <option name="project" value="LOCAL" />
       <updated>1683714777053</updated>
-    </task>
-    <task id="LOCAL-00044" summary="refactoring">
-      <option name="closed" value="true" />
-      <created>1725632687233</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1725632687233</updated>
     </task>
     <task id="LOCAL-00045" summary="refactoring">
       <option name="closed" value="true" />
@@ -823,7 +858,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728841549039</updated>
     </task>
-    <option name="localTasksCounter" value="68" />
+    <task id="LOCAL-00068" summary="DomainGateway to load domainEntity interfaces and call interface methods :))">
+      <option name="closed" value="true" />
+      <created>1728844386618</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1728844386619</updated>
+    </task>
+    <option name="localTasksCounter" value="69" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -853,7 +896,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="-REFACTOR: add swagger to REST API (Controllers)" />
     <MESSAGE value="-REFACTOR: Optional&lt;Type&gt;" />
     <MESSAGE value="-REFACTOR: README.md" />
     <MESSAGE value="-splitting 'menu' and 'chat' microSer from main app" />
@@ -878,7 +920,8 @@
     <MESSAGE value="refactoring" />
     <MESSAGE value="EventEnum to rabbitMqTopic" />
     <MESSAGE value="EventEnum as rabbitMqTopic" />
-    <option name="LAST_COMMIT_MESSAGE" value="EventEnum as rabbitMqTopic" />
+    <MESSAGE value="DomainGateway to load domainEntity interfaces and call interface methods :))" />
+    <option name="LAST_COMMIT_MESSAGE" value="DomainGateway to load domainEntity interfaces and call interface methods :))" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -904,7 +947,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java</url>
-          <line>347</line>
+          <line>350</line>
           <properties class="eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.CheckinUseCaseImpl" method="getStaffbyHotelId">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -918,7 +961,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-field">
           <url>file://$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java</url>
-          <line>95</line>
+          <line>96</line>
           <properties field="notificationUseCase" class="eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.CheckinUseCaseImpl" />
           <option name="timeStamp" value="4" />
         </line-breakpoint>

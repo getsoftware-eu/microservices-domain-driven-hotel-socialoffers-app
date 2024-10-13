@@ -2,9 +2,9 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.inf
 
 import eu.getsoftware.hotelico.clients.api.amqp.producer.RabbitMQMessageProducer;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.CustomerUpdateConsumeRequest;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.NotificationConsumeRequest;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.MenuDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.CustomerUpdateRequest;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.NotificationRequest;
 import eu.getsoftware.hotelico.clients.api.infrastructure.notification.NotificationService;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuItemEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuUserEntity;
@@ -65,7 +65,7 @@ public class AsyncMSCommunicationService
 	 */
 	private void sendViaCustomerModuleWithConvertAndPersist(long toCustomerId, String toCustomerName, String message)
 	{
-		NotificationRequest myNotification = new NotificationRequest(toCustomerId, toCustomerName, message);
+		NotificationConsumeRequest myNotification = new NotificationConsumeRequest(toCustomerId, toCustomerName, toCustomerId, toCustomerName, message);
 		notificationService.persistConsumedNotification(myNotification);
 	}
 	
@@ -105,7 +105,7 @@ public class AsyncMSCommunicationService
 	 * @param customerUpdateRequest
 	 */
 	@RabbitListener(queues = "${rabbitmq.queue.customer.update}")
-	public void consumeNotification(CustomerUpdateRequest customerUpdateRequest){
+	public void consumeNotification(CustomerUpdateConsumeRequest customerUpdateRequest){
 		log.info("Consumed {} from queue", customerUpdateRequest);
 		log.info(customerUpdateRequest.message());
 		
@@ -118,7 +118,7 @@ public class AsyncMSCommunicationService
 	 * @param notificationRequest
 	 */
 	@RabbitListener(queues = "${rabbitmq.queue.menu.notification}")
-	public void consumeNotification(NotificationRequest notificationRequest){
+	public void consumeNotification(NotificationConsumeRequest notificationRequest){
 		log.info("Consumed {} from queue", notificationRequest);
 		log.info(notificationRequest.message());
 		
@@ -126,7 +126,7 @@ public class AsyncMSCommunicationService
 		
 	}
 	
-	private void handleMenuNotification(NotificationRequest notificationRequest)
+	private void handleMenuNotification(NotificationConsumeRequest notificationRequest)
 	{
 		throw new UnsupportedOperationException("not implemented");
 	}
@@ -153,11 +153,12 @@ public class AsyncMSCommunicationService
 	
 	public List<MenuDTO> getItems()
 	{
-		return List.of(new MenuDTO(123));
+		MenuDTO dto = MenuDTO.builder().id(123L).build();
+		return List.of(dto);
 	}
 	
 	
-	private void handleSystemCustomerUpdate(CustomerUpdateRequest customerUpdateRequest)
+	private void handleSystemCustomerUpdate(CustomerUpdateConsumeRequest customerUpdateRequest)
 	{
 		Optional<MenuUserEntity> updatedChatUserOptional = menuUserRepository.findById(customerUpdateRequest.customerId());
 		

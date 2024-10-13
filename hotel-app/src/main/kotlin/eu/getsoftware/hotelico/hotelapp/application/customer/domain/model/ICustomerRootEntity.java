@@ -1,6 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.domain.model;
 
-public interface ICustomerRootEntity {
+import eu.getsoftware.hotelico.clients.common.domain.IDomainEntity;
+
+public interface ICustomerRootEntity extends IDomainEntity {
     
     void setConsistencyId(long consistencyId);
 

@@ -6,10 +6,12 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
 
+@Repository
 public interface WallPostRepository extends JpaRepository<HotelWallPost, Long> {
 	
 	//Eugen: direct DTO from Repository

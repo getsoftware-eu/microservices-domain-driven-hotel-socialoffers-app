@@ -1,0 +1,1 @@
+These Request receives rabbitMQ.consumer in another microservice!

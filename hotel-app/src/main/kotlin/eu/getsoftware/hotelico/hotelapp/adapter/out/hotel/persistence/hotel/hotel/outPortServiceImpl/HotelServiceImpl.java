@@ -6,20 +6,19 @@ import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.Basi
 import eu.getsoftware.hotelico.clients.api.infrastructure.notification.NotificationService;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.ReorderAction;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.checkin.model.HotelActivity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.checkin.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.deal.model.CustomerDeal;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelEvent;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelWallPost;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.repository.ActivityRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.repository.DealRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.repository.HotelRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.repository.WallPostRepository;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.customer.repository.CustomerRepository;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelEvent;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelRootEntity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelWallPost;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.checkin.model.HotelActivity;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.ICheckinService;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.ICustomerDeal;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.dto.CustomerDealDTO;
@@ -55,7 +54,7 @@ public class HotelServiceImpl implements IHotelService
 	private NotificationService notificationService;	
 	
     @Autowired
-	private ICheckinService checkinService;
+	private CheckinPortService checkinService;
 	
 	@Autowired
 	private LastMessagesService lastMessagesService;

@@ -2,8 +2,8 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.per
 
 import eu.getsoftware.hotelico.clients.api.amqp.producer.RabbitMQMessageProducer;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.NotificationConsumeRequest;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.NotificationRequest;
 import eu.getsoftware.hotelico.clients.api.infrastructure.notification.NotificationService;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatUserEntity;
@@ -72,7 +72,7 @@ public class ChatService implements IChatService
 	 */
 	private void sendViaCustomerModuleWithConvertAndPersist(long toCustomerId, String toCustomerName, String message)
 	{
-		NotificationRequest myNotification = new NotificationRequest(toCustomerId, toCustomerName, message);
+		NotificationConsumeRequest myNotification = new NotificationConsumeRequest(123, toCustomerName, toCustomerId, toCustomerName, message);
 		notificationService.persistConsumedNotification( myNotification);
 	}
 	

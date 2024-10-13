@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.clients.api.clients.common.dto;
 
+import eu.getsoftware.hotelico.clients.common.domain.IDomainRequestDTO;
 import lombok.With;
 
 import java.util.Date;
@@ -13,10 +14,12 @@ import java.util.Date;
 public record CustomerRequestDTO (
         long hotelCode,
         long hotelId,
+        long requesterId,
         Date checkinTo,
         Date checkinFrom,
+        String name, 
         String password 
-) //implements BasicDTO
+) implements IDomainRequestDTO
         
         //all fields are final!!!
 {

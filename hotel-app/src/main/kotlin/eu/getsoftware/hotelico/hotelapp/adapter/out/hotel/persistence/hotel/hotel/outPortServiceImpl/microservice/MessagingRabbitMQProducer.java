@@ -2,9 +2,9 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hot
 
 import eu.getsoftware.hotelico.clients.api.amqp.producer.RabbitMQMessageProducer;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageConsumeRequest;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.CustomerUpdateConsumeRequest;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.ChatMessageRequest;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.CustomerUpdateRequest;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IMessagingProducerService;
 import lombok.AllArgsConstructor;
@@ -27,7 +27,7 @@ public class MessagingRabbitMQProducer implements IMessagingProducerService<Hote
 	private final AsyncRabbitTemplate asyncRabbitTemplate;
 
 	@Override
-	public void sendCustomerNotification(CustomerUpdateRequest requestDTO, HotelEvent hotelEvent) {
+	public void sendCustomerNotification(CustomerUpdateConsumeRequest requestDTO, HotelEvent hotelEvent) {
 		
 		String exchange = "internal.exchange";
 		String routingKey = getRabbitMQTopicFromEventEnum(hotelEvent);
@@ -40,7 +40,7 @@ public class MessagingRabbitMQProducer implements IMessagingProducerService<Hote
 	 * 	via 'amqp'-module (configured)
 	 * @param chatMessageRequest
 	 */
-	public void sendChatMessageTopicRequest(ChatMessageRequest chatMessageRequest)
+	public void sendChatMessageTopicRequest(ChatMessageConsumeRequest chatMessageRequest)
 	{
 		//only for 1 and 2 Method we have to write this system variables: 
 		String exchange = "internal.exchange";
@@ -86,7 +86,7 @@ public class MessagingRabbitMQProducer implements IMessagingProducerService<Hote
 	 * @param chatMessageRequest
 	 * @return
 	 */
-	public RabbitConverterFuture<ChatMsgDTO> sendAsynchDirectExchangeMethodCall(ChatMessageRequest chatMessageRequest)
+	public RabbitConverterFuture<ChatMsgDTO> sendAsynchDirectExchangeMethodCall(ChatMessageConsumeRequest chatMessageRequest)
 	{
 		String directExchange = "internal.exchange";
 		/**
@@ -113,7 +113,7 @@ public class MessagingRabbitMQProducer implements IMessagingProducerService<Hote
 	 * 	via 'amqp'-module (configured)
 	 * @param customerUpdateRequest
 	 */
-	public void sendTopicViaPreconfiguredRabbitmqProducer(CustomerUpdateRequest customerUpdateRequest, HotelEvent hotelEvent)
+	public void sendTopicViaPreconfiguredRabbitmqProducer(CustomerUpdateConsumeRequest customerUpdateRequest, HotelEvent hotelEvent)
 	{
 		//only for 1 and 2 Method we have to write this system variables: 
 		String exchange = "internal.exchange";
@@ -122,7 +122,7 @@ public class MessagingRabbitMQProducer implements IMessagingProducerService<Hote
 		rabbitMQMessageProducer.publish(exchange, routingKey, customerUpdateRequest);
 	}
 
-	public void sendCustomerNotification2(CustomerUpdateRequest requestDTO, HotelEvent hotelEvent)
+	public void sendCustomerNotification2(CustomerUpdateConsumeRequest requestDTO, HotelEvent hotelEvent)
 	{
 		//        ortcClient.subscribeWithNotifications("myChannel", true, new OnMessage() {
 		//            public void run(OrtcClient sender, String channel, String message) {

@@ -8,7 +8,7 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.chat
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.outPortServiceImpl.microservice.MessagingRabbitMQProducer;
 import eu.getsoftware.hotelico.hotelapp.application.chat.domain.infrastructure.ChatMSComminicationService;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.ICheckinService;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
@@ -53,7 +53,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 	private final CustomerPortService customerService;	
 	
 	private final MailService mailService;
-	private final ICheckinService checkinService;
+	private final CheckinPortService checkinService;
 	
 	private final ChatMSComminicationService chatMSComminicationService;
 	

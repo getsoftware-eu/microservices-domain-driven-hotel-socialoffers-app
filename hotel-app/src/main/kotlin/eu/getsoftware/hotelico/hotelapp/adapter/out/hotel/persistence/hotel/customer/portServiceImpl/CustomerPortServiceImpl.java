@@ -8,14 +8,14 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.chec
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.checkin.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.customer.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.customer.model.Language;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.customer.model.domainServiceImpl.CustomerPersistGatewayServiceImpl;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelRootEntity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.outPortServiceImpl.HotelServiceImpl;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.repository.DealRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.repository.HotelRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.repository.LanguageRepository;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.ICheckinService;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.CustomerAggregate;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
@@ -36,11 +36,8 @@ import java.util.stream.Collectors;
 import static eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties.convertToDate;
 
 @Service
-public class CustomerPortServiceImpl implements CustomerPortService
+public class CustomerPortServiceImpl implements CustomerPortService 
 {
-    @Autowired
-    private CheckinRepository checkinRepository;      
-    
     @Autowired
     private IHotelService hotelService;
     
@@ -66,7 +63,10 @@ public class CustomerPortServiceImpl implements CustomerPortService
     private MailService mailService;     
     
 	@Autowired
-    private ICheckinService checkinService; 
+    private CheckinPortService checkinService; 
+        
+	@Autowired
+    private CheckinRepository checkinRepository; 
     
     @Autowired
     private ModelMapper modelMapper;
@@ -75,12 +75,13 @@ public class CustomerPortServiceImpl implements CustomerPortService
     private DealRepository dealRepository;
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
-    @Autowired
-    private HotelServiceImpl hotelServiceImpl;
     
     @Autowired
-    private IMessagingProducerService messagingService;
-
+    private CustomerPersistGatewayServiceImpl customerPersistGatewayService;
+    
+    @Autowired
+    private IMessagingProducerService<HotelEvent> messagingService;
+    
     @Override
     public List<CustomerRootEntity> getCustomers() {
         return customerRepository.findByActive(true);
@@ -103,20 +104,20 @@ public class CustomerPortServiceImpl implements CustomerPortService
     }
     
     @Override
-    public Optional<CustomerRootEntity> getById(long requesterId, long dtoRequesterId) {
+    public Optional<CustomerRootEntity> getById(long customerId, long dtoRequesterId) {
         
-        CustomerRootEntity customerEntity = customerRepository.getOne(requesterId);
+        CustomerRootEntity customerEntity = customerPersistGatewayService.findEntityById(customerId);
         
         CustomerDTO out = null;
        
-        if(requesterId == dtoRequesterId){
+        if(customerId == dtoRequesterId){
             
             //I want MY Profile!
             out = convertMyCustomerToFullDto(customerEntity);
         }
         else{ //fremd profile
             
-            long requesterHotelId = getCustomerHotelId(requesterId);
+            long requesterHotelId = getCustomerHotelId(customerId);
             long hotelId = getCustomerHotelId(customerEntity.getId());
 
             out = convertCustomerToDto(customerEntity, hotelId);

@@ -271,4 +271,9 @@ public class CustomerRootEntity implements ICustomerRootEntity, Serializable, IF
 
     }
 
+    @Override
+    public void setInitValues(String name) {
+        //this.setFirstName(name);
+        //this.setT(LocalDateTime.now());
+    }
 }

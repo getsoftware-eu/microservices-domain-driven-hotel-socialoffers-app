@@ -1,7 +1,7 @@
-package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.innerDomainService.domainGateway
+package eu.getsoftware.hotelico.clients.common.domain.domainGateway
 
-import eu.getsoftware.hotelico.clients.api.clients.domain.user.IUserDomain
-import eu.getsoftware.hotelico.clients.common.model.innerModelService.IDomainRegisterDTOGateway
+import eu.getsoftware.hotelico.clients.common.domain.IDomainEntity
+import eu.getsoftware.hotelico.clients.common.error.UserNotFoundException
 import java.util.*
 
 /**
@@ -14,21 +14,13 @@ import java.util.*
  * 
  * its internal business conditions, that have to be internal treaten
  */
-abstract class DomainEntityInnerGatewayServiceAbstr<T: IUserDomain, I : IUserDomainRequestDTO, O : IUserDomainResponseDTO>(
-    private val domainMapper: IDomainMapper<T, I, O>,
+abstract class DomainEntityGatewayServiceAbstr<T: IDomainEntity>(
     private val domainRepository: IDomainEntityGateway<T, Long>,
-) : IDomainRegisterDTOGateway<T, I, O> {
+) 
+{
 
     abstract val assetClass: Class<T>
 
-    /**
-     * eu: find a DomainEntity in Domain layer and call interface methods ++++
-     */
-    override fun getModelDTOById(id: Long): O? {
-        val user = findEntityById(id)
-        return domainMapper.toResponseDTO(user)
-    }
-    
     fun createEntity(name: String): T {
         val entity: T  
         try {
@@ -41,20 +33,10 @@ abstract class DomainEntityInnerGatewayServiceAbstr<T: IUserDomain, I : IUserDom
         return entity
     }
     
-    override fun createEntityFromDTO(userRequestDTO: I): T {
-        val entity : T = createEntity(userRequestDTO.name())
-        domainMapper.updateAllFromDto(userRequestDTO, entity)
-        return entity
-    }
-
-    override fun saveEntity(entity: T) {
+    //override 
+    fun saveEntity(entity: T) {
         domainRepository.save(entity)
     }    
-    
-    override fun saveFromDTO(userRequestDTO : I) {
-        val entity : T = createEntityFromDTO(userRequestDTO)
-        domainRepository.save(entity)
-    }  
     
 //    fun save(entity: T): T {
 //        val entity : T = createInstance(assetClass)
@@ -65,6 +47,7 @@ abstract class DomainEntityInnerGatewayServiceAbstr<T: IUserDomain, I : IUserDom
 //        return entity
 //    }
 
+    //override 
     fun findEntityById(id: Long): T {
         val optionalUser: Optional<T> = domainRepository.findById(id)
 
@@ -76,7 +59,8 @@ abstract class DomainEntityInnerGatewayServiceAbstr<T: IUserDomain, I : IUserDom
         } else throw UserNotFoundException(id)
     }
 
-    override abstract fun existsByName(name: String): Boolean
+    //override 
+    abstract fun existsByName(name: String): Boolean
     
     @Throws(InstantiationException::class, IllegalAccessException::class)
     inline fun createInstance(assetClass: Class<T>): T {

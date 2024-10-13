@@ -5,10 +5,12 @@ import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.u
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
 
+@Repository
 public interface DealRepository extends JpaRepository<CustomerDeal, Long> {
 
 	public final static String FIND_BY_INIT_ID_QUERY = "SELECT c " +

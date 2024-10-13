@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService;
 
-import eu.getsoftware.hotelico.clients.api.clients.domain.user.IUserDomain;
+import eu.getsoftware.hotelico.clients.common.domain.IDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.common.dto.UserDTO;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,5 +30,5 @@ public interface IUserService
     
     boolean isEmailExists(String email);
     
-    IUserDomain getByUserName(@NotNull String username);
+    IDomainEntity getByUserName(@NotNull String username);
 }

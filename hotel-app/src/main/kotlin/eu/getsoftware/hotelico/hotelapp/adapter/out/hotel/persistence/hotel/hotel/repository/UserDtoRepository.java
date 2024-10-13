@@ -5,9 +5,11 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.cust
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface UserDtoRepository extends JpaRepository<User, Integer> {
 
 	public final static String FIND_BY_EMAIL_QUERY = "SELECT u " +

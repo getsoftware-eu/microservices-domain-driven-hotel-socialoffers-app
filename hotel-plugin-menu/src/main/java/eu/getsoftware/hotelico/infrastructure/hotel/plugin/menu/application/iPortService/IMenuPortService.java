@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface IMenuPortService
 {	
-	List<MenuOrderDTO> getActiveMenusByCustomerId(CustomerDTO customerDTO, long hotelId, long cafeId, long orderId, boolean closed);
+	List<MenuOrderDTO> getActiveMenusByCustomerId(long customerId, long hotelId, long cafeId, long orderId, boolean closed);
 	
 	MenuOrderDTO addMenuAction(long customerId, long initMenuOrderId, String action);
 

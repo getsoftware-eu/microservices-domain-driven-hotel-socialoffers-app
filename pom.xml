@@ -8,10 +8,10 @@
 	
 	<modules>
         <module>common-client-api-libs</module>
-		<module>eureka-server</module>
+		<module>eureka-server-spring-cloud</module>
 		<module>hotel-app</module>
 		<module>hotel-plugin-menu</module>
-        <module>api-gateway</module>
+        <module>api-gateway-spring-cloud</module>
 		<module>amqp</module>
 		<module>notification-rabbitmq</module>
         <module>hotel-plugin-chat</module>
@@ -34,6 +34,7 @@
 		<spring.cloud-version>2023.0.3</spring.cloud-version>
 		<!--		//schould be in bom dependency management automaticly-->
 		<keycloak.version>21.0.1</keycloak.version> 
+		<mapstruct.version>1.5.5.Final</mapstruct.version> 
 
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
@@ -45,8 +46,14 @@
 	
 	</properties>
 	
-	<dependencyManagement>
+	<dependencyManagement>            
+		<!-- Defining dependency versions for child POMs-->
 		<dependencies>
+			<dependency>
+				<groupId>org.mapstruct</groupId>
+				<artifactId>mapstruct</artifactId>
+				<version>${mapstruct.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-dependencies</artifactId>
@@ -115,17 +122,6 @@
 				<directory>${project.build.directory}/generated-resources</directory>
 			</resource>
 		</resources>
-		<!--<plugins>-->
-		<!--&lt;!&ndash;<plugin>&ndash;&gt;-->
-		<!--&lt;!&ndash;<groupId>org.springframework.boot</groupId>&ndash;&gt;-->
-		<!--&lt;!&ndash;<artifactId>spring-boot-maven-plugin</artifactId>&ndash;&gt;-->
-		<!--&lt;!&ndash;</plugin>&ndash;&gt;-->
-		<!-- -->
-		<!--</plugins>-->
-		<!--</build>-->
-		<!-- -->
-		<!-- -->
-		<!--<build>-->
 		<pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
 			<plugins>
 				<plugin>

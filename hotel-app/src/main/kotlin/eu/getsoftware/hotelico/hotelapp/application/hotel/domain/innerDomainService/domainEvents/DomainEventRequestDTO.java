@@ -2,6 +2,6 @@ package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.innerDomainSer
 
 public class DomainEventRequestDTO {
     
-    long hotelId;
-    long customerId;
+    long entityId;
+    String payload;
 }

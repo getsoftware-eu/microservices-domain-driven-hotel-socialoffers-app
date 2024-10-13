@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * out port - обслуживает именно меня, можно entity использовать and not only dto usage
  */
-public interface ICheckinService {
+public interface CheckinPortService {
     
     List<ICustomerHotelCheckinEntity> getActiveByCustomerId(long id, Date date);
 

@@ -41,13 +41,13 @@ public class MenuPortServiceImpl implements IMenuPortService
 
 	 
 	@Override
-	public List<MenuOrderDTO> getActiveMenusByCustomerId(CustomerDTO customerDTO, long hotelId, long cafeId, long orderId, boolean closed)
+	public List<MenuOrderDTO> getActiveMenusByCustomerId(long customerId, long hotelId, long cafeId, long orderId, boolean closed)
 	{
 		//TODO Eugen: CHECK get closed menu on demand!!!
 		
 		//get customerDTO
 //		long customerId = ControllerUtils.getTryEntityId(requesterId);
-//		CustomerRootEntity customerEntity = customerRepository.getOne(customerId);
+		CustomerDTO customerDTO = customerService.getCustomerById(customerId);
 
 		List<MenuOrder> menus = new ArrayList<>();
 		

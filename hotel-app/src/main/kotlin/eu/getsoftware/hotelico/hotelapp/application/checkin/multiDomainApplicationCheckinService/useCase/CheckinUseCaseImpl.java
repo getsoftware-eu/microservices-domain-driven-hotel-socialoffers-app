@@ -3,9 +3,9 @@ package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicat
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerRequestDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageConsumeRequest;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.CustomerUpdateConsumeRequest;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.JsonError;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.ChatMessageRequest;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.CustomerUpdateRequest;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.chat.port.out.IChatService;
@@ -13,7 +13,8 @@ import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustom
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto.CheckinDTO;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto.CheckinRequestDTO;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.in.CheckinUseCase;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.ICheckinService;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.GPSValidationHandler;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
@@ -77,7 +78,7 @@ import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hot
  */
 @Service
 @RequiredArgsConstructor
-/*public*/ class CheckinUseCaseImpl implements CheckinUseCase
+class CheckinUseCaseImpl implements CheckinUseCase
 {
 	private CustomerPortService customerService;
 	
@@ -87,7 +88,7 @@ import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hot
 			
 	private IHotelService hotelService;			
 	
-	private ICheckinService checkinService;		
+	private CheckinPortService checkinService;		
 	
 	private IChatService chatService;	
 	
@@ -95,6 +96,8 @@ import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hot
 		
 	private NotificationUseCase notificationUseCase;
 	
+	private GPSValidationHandler gpsValidationHandler;
+
 	@Transactional
 	@Override
 	public CheckinDTO validateAndCreateCustomerCheckin(CheckinRequestDTO customerRequestDto) throws JsonError {
@@ -103,7 +106,7 @@ import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hot
 
 		validateCheckin(customerRequestDto); // UseCase.Primary-flow.step.1
 		
-		validateCustomerGPSLocation(customerRequestDto.customerId()); //UseCase.Primary-flow.step.2
+		validateCustomerGPSLocation(customerRequestDto.customerId(), customerRequestDto.hotelId()); //UseCase.Primary-flow.step.2
 
 		ICustomerHotelCheckinEntity newCheckin = createCheckin(customerRequestDto); //UseCase.Primary-flow.step.3
 
@@ -122,7 +125,7 @@ import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hot
 
 		HotelEvent hotelEvent = EVENT_CHECKIN;
 		
-		CustomerUpdateRequest notificationCustomerRequest = new CustomerUpdateRequest(
+		CustomerUpdateConsumeRequest notificationCustomerRequest = new CustomerUpdateConsumeRequest(
 				checkinResponseDTO.getCustomerId(),
 				checkinResponseDTO.getHotelId(),
 				"customer-name from DB",
@@ -131,9 +134,9 @@ import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hot
 		messagingProducerService.sendCustomerNotification(notificationCustomerRequest, hotelEvent);
 	}
 
-	private boolean validateCustomerGPSLocation(long customerId, long hotelId) {
+	private boolean validateCustomerGPSLocation(long customerId, long hotelId) throws JsonError {
 		int distanceKm = AppConfigProperties.checkinDistanceKm;
-		if(! GPSValidationHandler.checkLastCustomerLocationDiffToHotelById(customerId, hotelId, distanceKm))
+		if(! gpsValidationHandler.checkLastCustomerLocationDiffToHotelById(customerId, hotelId, distanceKm))
 		{
 			throw new JsonError("Checkin will be activated only in area of " + distanceKm + "km. near the hotel.");
 		}
@@ -142,17 +145,17 @@ import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hot
 
 	private static boolean validateCheckin(CheckinRequestDTO checkinRequestDto) throws JsonError {
 
-		if( checkinRequestDto.getId()<=0)
+		if( checkinRequestDto.customerId()<=0)
 		{
 			throw new JsonError("no user for checkin.");
 		}
 
-		if(! CheckinValidationHandler.validateCheckinDates(checkinRequestDto))
+		if(! checkinRequestDto.validateCheckinDates())
 		{
 			throw new JsonError("please correct your checkin information.");
 		}
 
-		if(checkinRequestDto.getHotelId()>0 && (checkinRequestDto.getCheckinTo()==null || checkinRequestDto.getCheckinTo().before(new Date()))) {
+		if(checkinRequestDto.hotelId()>0 && (checkinRequestDto.checkinTo()==null || checkinRequestDto.checkinTo().before(new Date()))) {
 			throw new JsonError("Checkin Date is wrong or in past");
 		}
 		
@@ -161,7 +164,7 @@ import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hot
 
 	private ICustomerHotelCheckinEntity createCheckin(CheckinRequestDTO checkinRequestDto) throws JsonError {
 		
-		ICustomerRootEntity customerEntity = customerService.getEntityById(checkinRequestDto.getCustomerId())
+		ICustomerRootEntity customerEntity = customerService.getEntityById(checkinRequestDto.customerId())
 				.orElseThrow(() -> new JsonError("Customer not found"));
 		
 		var hotelEntity = getHotelEntityFromCheckinRequest(checkinRequestDto)				
@@ -170,7 +173,7 @@ import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hot
 		boolean isFullCheckin = hotelEntity.isVirtual();
 
 		boolean isDemoCheckin = AppConfigProperties.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelEntity.getCurrentHotelAccessCode());
-		boolean checkinDateIsValid = AppConfigProperties.NO_CHECKOUT_FOR_DEMOHOTEL && isDemoCheckin || checkinRequestDto.getCheckinTo()!=null && checkinRequestDto.getCheckinTo().after(new Date());
+		boolean checkinDateIsValid = AppConfigProperties.NO_CHECKOUT_FOR_DEMOHOTEL && isDemoCheckin || checkinRequestDto.checkinTo()!=null && checkinRequestDto.getCheckinTo().after(new Date());
 
 		isFullCheckin = isFullCheckin || isDemoCheckin;// set id DTO getter! || ControllerUtils.CHECKIN_FULL_ALWAYS;
 
@@ -319,7 +322,7 @@ import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hot
 		CustomerDTO initHotelStaff = newCheckin.getHotel().getStaffList().stream().findFirst()
 				.orElseThrow(()-> new JsonError("HotelStaff is not set for hotel" + newCheckin.getHotel().getId()));
 
-		ChatMessageRequest wellcomeChatMessage = new ChatMessageRequest(
+		ChatMessageConsumeRequest wellcomeChatMessage = new ChatMessageConsumeRequest(
 				initHotelStaff.getId(),
 				newCheckin.getCustomer().getId(), 
 				false,

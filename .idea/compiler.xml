@@ -6,8 +6,8 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="apigw" />
         <module name="notification" />
+        <module name="apigw" />
         <module name="hotel-client" />
         <module name="clients" />
         <module name="chat" />
@@ -16,8 +16,8 @@
         <module name="common-client-api-libs" />
         <module name="hotel-app" />
         <module name="menu" />
-        <module name="eureka-server" />
         <module name="hotel-plugin-chat" />
+        <module name="eureka-server" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
