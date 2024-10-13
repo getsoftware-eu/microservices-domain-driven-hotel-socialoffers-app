@@ -4,6 +4,8 @@ import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerRequestDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.JsonError;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.ChatMessageRequest;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.CustomerUpdateRequest;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.application.chat.port.out.IChatService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
@@ -16,6 +18,7 @@ import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortServi
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.in.NotificationUseCase;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IMessagingProducerService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IWallpostService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
 import lombok.RequiredArgsConstructor;
@@ -23,8 +26,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
-
-import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelEvent.EVENT_CHECKIN;
 
 /**
  * Architecture: Application Service that uses multiply domain services (is portService = domainService?)
@@ -75,7 +76,9 @@ import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hot
 @RequiredArgsConstructor
 /*public*/ class CheckinUseCaseImpl implements CheckinUseCase
 {
-	private CustomerPortService customerService;		
+	private CustomerPortService customerService;
+	
+	private IMessagingProducerService messagingProducerService;		
 	
 	private LastMessagesService lastMessagesService;	
 			
@@ -101,13 +104,26 @@ import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hot
 
 		ICustomerHotelCheckinEntity newCheckin = createCheckin(customerRequestDto); //UseCase.Primary-flow.step.3
 
-		sendWelcomeMessageFromHotelStaffToCustomer(newCheckin); //UseCase.Primary-flow.step.4
+		sendInitMessageFromHotelStaffToCustomer(newCheckin); //UseCase.Primary-flow.step.4
 		
-		CheckinDTO checkinDTO = checkinService.getResponseDTO(newCheckin); //UseCase.Primary-flow.step.5
+		CheckinDTO checkinResponseDTO = checkinService.getResponseDTO(newCheckin); //UseCase.Primary-flow.step.5
 		
-		notificatinService.publishEvent(EVENT_CHECKIN, checkinDTO); //UseCase.Primary-flow.step.6
+		notificateHotelAboutNewGuest(checkinResponseDTO);
+				
+		return checkinResponseDTO;
+	}
 
-		return checkinDTO;
+	private void notificateHotelAboutNewGuest(CheckinDTO checkinResponseDTO) {
+
+		// notificatinService.publishEvent(EVENT_CHECKIN, checkinResponseDTO); //UseCase.Primary-flow.step.6
+
+		CustomerUpdateRequest notificationCustomerRequest = new CustomerUpdateRequest(
+				checkinResponseDTO.getCustomerId(),
+				checkinResponseDTO.getHotelId(),
+				"customer-name from DB",
+				"customer-email from DB");		
+				
+		messagingProducerService.notificateAllAboutCustomer(notificationCustomerRequest);
 	}
 
 	private boolean validateCustomerGPSLocation(long customerId, long hotelId) {
@@ -294,16 +310,24 @@ import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hot
 	}
 
 
-	private void sendWelcomeMessageFromHotelStaffToCustomer(ICustomerHotelCheckinEntity newCheckin) throws JsonError {
+	private void sendInitMessageFromHotelStaffToCustomer(ICustomerHotelCheckinEntity newCheckin) throws JsonError {
 		CustomerDTO initHotelStaff = newCheckin.getHotel().getStaffList().stream().findFirst()
 				.orElseThrow(()-> new JsonError("HotelStaff is not set for hotel" + newCheckin.getHotel().getId()));
+
+		ChatMessageRequest wellcomeChatMessage = new ChatMessageRequest(
+				initHotelStaff.getId(),
+				newCheckin.getCustomer().getId(), 
+				false,
+				newCheckin.getHotel().getWellcomeMessage());
 		
-		chatService.sendFirstChatMessageOnDemand(
-				EVENT_CHECKIN, 
-				initHotelStaff, 
-				newCheckin.getCustomer(), 
-				newCheckin.getHotel().getWellcomeMessage()
-		);
+		messagingProducerService.sendChatMessageTopicRequest(wellcomeChatMessage); //UseCase.Primary-flow.step.6
+
+//		chatService.sendFirstChatMessageOnDemand(
+//				EVENT_CHECKIN, 
+//				initHotelStaff, 
+//				newCheckin.getCustomer(), 
+//				newCheckin.getHotel().getWellcomeMessage()
+//		);
 	}
 
 	private ICustomerHotelCheckinEntity updateHotelCheckin(CustomerRequestDTO customerRequestDTO, ICustomerRootEntity customerEntity, ICustomerHotelCheckinEntity nextCheckin, boolean isFullCheckin) {

@@ -19,11 +19,7 @@ import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.ICheckinSer
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.CustomerAggregate;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.service.HotelRabbitMQProducer;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LoginHotelicoService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.MailService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.*;
 import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,9 +56,6 @@ public class CustomerPortServiceImpl implements CustomerPortService
 	@Autowired
 	private LastMessagesService lastMessagesService;	
 	
-    @Autowired
-	private HotelRabbitMQProducer hotelRabbitmqProducer;
-	
 	@Autowired
     private LoginHotelicoService loginService;
 	
@@ -84,6 +77,9 @@ public class CustomerPortServiceImpl implements CustomerPortService
 	private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private HotelServiceImpl hotelServiceImpl;
+    
+    @Autowired
+    private IMessagingProducerService messagingService;
 
     @Override
     public List<CustomerRootEntity> getCustomers() {
@@ -199,12 +195,9 @@ public class CustomerPortServiceImpl implements CustomerPortService
         aggregate.setLogged(true);
         //customer.updateLastSeenOnline();
         
-        
 		CustomerDTO dto =  convertMyCustomerToFullDto(customerRepository.saveAndFlush(customerEntity));
     
-    
-        hotelRabbitmqProducer.registerPush(dto);
-        
+        messagingService.notificateAllAboutCustomer(dto);
         
         //// NOTIFICATE OTHERS!!!!
 

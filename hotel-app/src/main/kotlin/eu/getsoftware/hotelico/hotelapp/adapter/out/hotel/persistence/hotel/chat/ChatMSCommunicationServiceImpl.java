@@ -11,9 +11,10 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.chec
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.customer.model.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelEvent;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.outPortServiceImpl.microservice.MessagingRabbitMQProducer;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.CustomerPortService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.service.HotelRabbitMQProducer;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IWebSocketService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
 import eu.getsoftware.hotelico.hotelapp.application.service.ChatMSComminicationService;
 import org.apache.commons.lang.NotImplementedException;
@@ -52,11 +53,14 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 	private CheckinRepository checkinRepository;
 
 	@Autowired
-	HotelRabbitMQProducer hotelRabbitMQProducer;
+	MessagingRabbitMQProducer hotelRabbitMQProducer;
 	
 	@Autowired
 	private ModelMapper modelMapper;
 	
+	@Autowired
+	private IWebSocketService webSocketService;
+
 	@Override
 	public List<ChatMessageView> getChatMessages()
 	{
@@ -158,8 +162,8 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 		
 		if(AppConfigProperties.CHAT_DELIEVER_INDIVIDUAL)
 		{
-			hotelRabbitMQProducer.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_CHAT_TOPIC + newMessage.getSender().getId() + "", chatMessageDto);
-			hotelRabbitMQProducer.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_CHAT_TOPIC + newMessage.getReceiver().getId() + "", chatMessageDto);			
+			webSocketService.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_CHAT_TOPIC + newMessage.getSender().getId() + "", chatMessageDto);
+			webSocketService.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_CHAT_TOPIC + newMessage.getReceiver().getId() + "", chatMessageDto);			
 		}
 
 		notificationService.createAndSendNotification(sender.getId(), HotelEvent.EVENT_CHAT_SEND_MESSAGE);
@@ -289,7 +293,7 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 				chatRepository.save(message);
 
 				//Notificate Sender about SEEN message
-				hotelRabbitMQProducer.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_CHAT_TOPIC + message.getSender().getId() + "", convertMessageToDto(message));
+				webSocketService.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_CHAT_TOPIC + message.getSender().getId() + "", convertMessageToDto(message));
 
 				lastMessagesService.markMessageRead(message);
 				lastMessagesService.markLastMessageBetweenCustomers(message);
@@ -324,8 +328,8 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 		{
 			lastMessagesService.markLastMessageBetweenCustomers(latestUnreadMessage);
 
-			//Notificate Sender about last SEEN message
-			hotelRabbitMQProducer.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_CHAT_TOPIC + latestUnreadMessage.getSender().getId() + "", convertMessageToDto(latestUnreadMessage));
+			//Notificate Sender via WebSocket about last UN-SEEN message
+			webSocketService.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_CHAT_TOPIC + latestUnreadMessage.getSender().getId() + "", convertMessageToDto(latestUnreadMessage));
 		}
 
 		lastMessagesService.markChatRead(customerId, senderId);

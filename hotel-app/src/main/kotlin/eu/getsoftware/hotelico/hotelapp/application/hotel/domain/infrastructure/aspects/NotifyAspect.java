@@ -30,7 +30,7 @@ public class NotifyAspect {
 
     @After("methodPointcut() && notifyPointcut()") 
     public void notifyClients() throws Throwable {
-        produceRabbitmqMessageService.produceSimpMessage(WEBSOCKET_TOPIC, new Date());
+        webSocketService.produceSimpWebsocketMessage(WEBSOCKET_TOPIC, new Date());
     }
 
 }

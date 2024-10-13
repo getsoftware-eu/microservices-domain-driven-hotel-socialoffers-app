@@ -4,6 +4,8 @@ import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.chatview.model.ChatMessageView;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.outPortServiceImpl.microservice.MessagingRabbitMQProducer;
 import eu.getsoftware.hotelico.hotelapp.application.chat.domain.infrastructure.ChatMSComminicationService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.ICheckinService;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
@@ -14,12 +16,8 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.IHotelEve
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.service.HotelRabbitMQProducer;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.in.NotificationUseCase;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.INotificationService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.MailService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.*;
 import eu.getsoftware.hotelico.hotelapp.application.menu.infrastructure.service.MenuMSCommunicationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,9 +56,11 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	
 	private final ChatMSComminicationService chatMSComminicationService;
 	
-	private final HotelRabbitMQProducer hotelRabbitMQProducer;
+	private final MessagingRabbitMQProducer hotelRabbitMQProducer;
 //	private final NotificationService notificationService;
-	private final INotificationService inotificationService;
+	private final INotificationService notificationService;
+	
+	private IWebSocketService webSocketService;
 
 	@Override
 	public void notificateAboutEntityEvent(CustomerDTO dto, IHotelEvent event, String eventContent, long entityId)
@@ -78,7 +78,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 		{
 			CustomerNotificationDTO receiverNotification = this.getCustomerNotification(nextOnlineCustomerId, event);
 
-			inotificationService.notificateAboutEntityEvent(dto, receiverNotification, event);
+			webSocketService.notificateAboutEntityEvent(dto, receiverNotification, event);
 		}
 	}
 	
@@ -208,6 +208,11 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 		{
 			//######################## 3. ONLY UNREAD CHAT INFO
 			
+			//TODO EU: Unread ChatQueue wird automatisch Nachricht deliver, wenn der Customer will be online, why doing this manually?
+			//TODO EU: похоже что пытались повторить функциональность ACK/NACK для каждого ожидаюшщего сообщения. Пропадут ли это Queue при restart?
+			// - Если очередь настроена как персистентная (то есть при создании указано свойство durable = true), то она сохраняется после перезапуска сервера.
+			// - - При отправке сообщения нужно установить флаг deliveryMode = 2 (Persistent). Только в этом случае сообщения сохраняются на диск и будут восстановлены после перезапуска сервера.
+			// - - Аварийное завершение работы RabbitMQ: Если сообщения не подтверждены (ACK) клиентом или не записаны на диск до сбоя, они могут быть потеряны.
 			Map<Long, List<ChatMessageView>> unreadChatsBySenders = lastMessagesService.getCustomerUnreadChatsBySenders(receiverId);
 			
 			Map<Long, Integer> unreadChatBySenderCounter = new HashMap<>();
@@ -333,7 +338,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 			return;
 		}
 		
-		hotelRabbitMQProducer.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
+		webSocketService.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
 		
 		if(event.getPushUrl()!=null)
 		{
@@ -490,7 +495,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	{
 		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 		
-		hotelRabbitMQProducer.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
+		webSocketService.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
 		
 		if(event.getPushUrl()!=null)
 		{
@@ -514,7 +519,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	{
 		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 		
-		hotelRabbitMQProducer.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
+		webSocketService.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + receiverId + "", receiverNotification);
 		
 		if(event.getPushUrl()!=null)
 		{
@@ -601,13 +606,13 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 	@Override
 	public void broadcastActivityNotification(HotelActivityDTO hotelActivityDto)
 	{
-		produceRabbitmqMessageService.produceSimpMessage(AppConfigProperties.SOCKET_ACTIVITY_TOPIC + hotelActivityDto.getHotelId() + "", hotelActivityDto);
+		webSocketService.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_ACTIVITY_TOPIC + hotelActivityDto.getHotelId() + "", hotelActivityDto);
 	}
 	
 	@Override
 	public void broadcastWallNotification(WallPostDTO wallPostDto)
 	{
-		produceRabbitmqMessageService.produceSimpMessage(AppConfigProperties.SOCKET_WALL_TOPIC + wallPostDto.getHotelId(), wallPostDto);
+		webSocketService.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_WALL_TOPIC + wallPostDto.getHotelId(), wallPostDto);
 	}
 
 	@Override
@@ -675,7 +680,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase
 			CustomerNotificationDTO receiverNotification = new CustomerNotificationDTO();
 			receiverNotification.setCustomerEvent(0, 0, event, "new event", 0);
 			receiverNotification.setReceiverId(guestCustomerId);
-			hotelRabbitMQProducer.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + guestCustomerId + "", receiverNotification);
+			webSocketService.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + guestCustomerId + "", receiverNotification);
 		}
 	}
 }

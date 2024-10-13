@@ -4,9 +4,9 @@
     <file url="file://$PROJECT_DIR$/amqp/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/amqp/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/amqp/target/generated-resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/api-gateway/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/api-gateway/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/api-gateway/target/generated-resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-gateway-spring-cloud/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-gateway-spring-cloud/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/api-gateway-spring-cloud/target/generated-resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/chat/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/chat/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/chat/target/generated-resources" charset="UTF-8" />
