@@ -7,6 +7,7 @@ import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.Json
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.ChatMessageRequest;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.CustomerUpdateRequest;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.chat.port.out.IChatService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto.CheckinDTO;
@@ -26,6 +27,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+
+import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelEvent.EVENT_CHECKIN;
 
 /**
  * Architecture: Application Service that uses multiply domain services (is portService = domainService?)
@@ -117,13 +120,15 @@ import java.util.*;
 
 		// notificatinService.publishEvent(EVENT_CHECKIN, checkinResponseDTO); //UseCase.Primary-flow.step.6
 
+		HotelEvent hotelEvent = EVENT_CHECKIN;
+		
 		CustomerUpdateRequest notificationCustomerRequest = new CustomerUpdateRequest(
 				checkinResponseDTO.getCustomerId(),
 				checkinResponseDTO.getHotelId(),
 				"customer-name from DB",
 				"customer-email from DB");		
 				
-		messagingProducerService.notificateAllAboutCustomer(notificationCustomerRequest);
+		messagingProducerService.sendCustomerNotification(notificationCustomerRequest, hotelEvent);
 	}
 
 	private boolean validateCustomerGPSLocation(long customerId, long hotelId) {

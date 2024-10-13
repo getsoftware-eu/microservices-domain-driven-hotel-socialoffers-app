@@ -8,10 +8,10 @@ import eu.getsoftware.hotelico.clients.api.clients.infrastructure.notification.C
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.IHotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IMessagingProducerService;
+import lombok.AllArgsConstructor;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.rabbit.AsyncRabbitTemplate;
 import org.springframework.amqp.rabbit.RabbitConverterFuture;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 
@@ -19,17 +19,55 @@ import org.springframework.stereotype.Service;
  * eu: Producer of asynchron messaging
  */
 @Service
-public class MessagingRabbitMQProducer implements IMessagingProducerService
+@AllArgsConstructor
+public class MessagingRabbitMQProducer<E extends IHotelEvent> implements IMessagingProducerService<E>
 {
-	@Autowired
-	private RabbitMQMessageProducer rabbitMQMessageProducer;
-	
 	/** soll identisch sein, mit preconfigured producer from imported amqp lib on maven **/
-	@Autowired
-	private AmqpTemplate amqpTemplate;	
-	
-	@Autowired
+	private AmqpTemplate amqpTemplate;
+	private RabbitMQMessageProducer rabbitMQMessageProducer;
 	private AsyncRabbitTemplate asyncRabbitTemplate;
+
+	@Override
+	public void sendCustomerNotification(CustomerUpdateRequest requestDTO, E hotelEvent) {
+		
+		String exchange = "internal.exchange";
+		String routingKey = getRabbitMQTopicFromEventEnum(hotelEvent);
+		
+		rabbitMQMessageProducer.publish(exchange, routingKey, requestDTO);
+	}
+
+	/**
+	 * 	Chat with Method 2: with my configured (added jacksonConverter()) @Bean producer
+	 * 	via 'amqp'-module (configured)
+	 * @param chatMessageRequest
+	 */
+	public void sendChatMessageTopicRequest(ChatMessageRequest chatMessageRequest)
+	{
+		//only for 1 and 2 Method we have to write this system variables: 
+		String exchange = "internal.exchange";
+		String routingKey = "internal.chat.message-request";
+
+		rabbitMQMessageProducer.publish(exchange, routingKey, chatMessageRequest);
+	}
+
+	public String getRabbitMQTopicFromEventEnum(E hotelEvent) {
+
+		String routingKey;
+
+		switch (hotelEvent)
+		{
+			case HotelEvent.EVENT_CHAT_SEND_MESSAGE -> {
+				routingKey = "internal.chat.message-request"; break;
+			}
+			case HotelEvent.EVENT_CHECKIN -> {
+				routingKey = "internal.notification.customer-update"; break;
+			}
+			default -> throw new RuntimeException("invalid hotelEvent"); //break;
+		};
+
+		return routingKey;
+
+	}
 	
 	public String produceAMQPMessage(String topicExchangeName, String routingKey, String message) {
 		amqpTemplate.convertAndSend(topicExchangeName, routingKey, message);
@@ -76,7 +114,7 @@ public class MessagingRabbitMQProducer implements IMessagingProducerService
 	 * 	via 'amqp'-module (configured)
 	 * @param customerUpdateRequest
 	 */
-	public void sendTopicViaPreconfiguredRabbitmqProducer(CustomerUpdateRequest customerUpdateRequest, HotelEvent hotelEvent)
+	public void sendTopicViaPreconfiguredRabbitmqProducer(CustomerUpdateRequest customerUpdateRequest, E hotelEvent)
 	{
 		//only for 1 and 2 Method we have to write this system variables: 
 		String exchange = "internal.exchange";
@@ -85,21 +123,7 @@ public class MessagingRabbitMQProducer implements IMessagingProducerService
 		rabbitMQMessageProducer.publish(exchange, routingKey, customerUpdateRequest);
 	}
 
-	/**
-	 * 	Chat with Method 2: with my configured (added jacksonConverter()) @Bean producer
-	 * 	via 'amqp'-module (configured)
-	 * @param chatMessageRequest
-	 */
-	public void sendChatMessageTopicRequest(ChatMessageRequest chatMessageRequest)
-	{
-		//only for 1 and 2 Method we have to write this system variables: 
-		String exchange = "internal.exchange";
-		String routingKey = "internal.chat.message-request";
-		
-		rabbitMQMessageProducer.publish(exchange, routingKey, chatMessageRequest);
-	}
-	
-	public void notificateAllAboutCustomer(CustomerUpdateRequest requestDTO)
+	public void sendCustomerNotification2(CustomerUpdateRequest requestDTO, E hotelEvent)
 	{
 		//        ortcClient.subscribeWithNotifications("myChannel", true, new OnMessage() {
 		//            public void run(OrtcClient sender, String channel, String message) {
@@ -107,42 +131,25 @@ public class MessagingRabbitMQProducer implements IMessagingProducerService
 		//                        channel, message));
 		//            };
 		//        });
-		
-		
-		
-		sendTopicViaPreconfiguredRabbitmqProducer(requestDTO);
+
+
+		sendTopicViaPreconfiguredRabbitmqProducer(requestDTO, hotelEvent);
 	}
 
-	public void notificateAboutEntityEvent(CustomerDTO dto, IHotelEvent event, String eventContent, long entityId) {
+	public void notificateAboutEntityEvent(CustomerDTO dto, E hotelEvent, String eventContent, long entityId) {
 
 		String exchange = "internal.exchange";
-		String routingKey = getRabbitMQTopicFromEventEnum(event);
+		String routingKey = getRabbitMQTopicFromEventEnum(hotelEvent);
 
-		Object payloadFromEvent = extractPayloadFromHotelEvent(event, eventContent, entityId);
-		
+		Object payloadFromEvent = extractPayloadFromHotelEvent(hotelEvent, eventContent, entityId);
+
 		rabbitMQMessageProducer.publish(exchange, routingKey, payloadFromEvent);
 
-	}
-
-	private Object extractPayloadFromHotelEvent(IHotelEvent event, String eventContent, long entityId) {
-	}
-
-	public String getRabbitMQTopicFromEventEnum(HotelEvent hotelEvent) {
-
-		String routingKey;
 		
-		switch (hotelEvent)
-		{
-			case EVENT_CHAT_SEND_MESSAGE -> {
-				  routingKey = "internal.chat.message-request"; break;
-			}  
-			case EVENT_CHECKIN -> {
-				  routingKey = "internal.notification.customer-update"; break;
-			} 
-			default -> throw new RuntimeException("invalid hotelEvent"); break;
-		};
-		
-		return routingKey;
-	
 	}
+
+	private Object extractPayloadFromHotelEvent(E hotelEvent, String eventContent, long entityId) {
+	}
+
+
 }

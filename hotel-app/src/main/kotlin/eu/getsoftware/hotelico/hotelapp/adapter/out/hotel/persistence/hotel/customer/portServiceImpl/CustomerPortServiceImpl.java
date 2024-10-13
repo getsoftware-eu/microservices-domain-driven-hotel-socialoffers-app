@@ -197,7 +197,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
         
 		CustomerDTO dto =  convertMyCustomerToFullDto(customerRepository.saveAndFlush(customerEntity));
     
-        messagingService.notificateAllAboutCustomer(dto);
+        messagingService.sendCustomerNotification(dto, hotelEvent);
         
         //// NOTIFICATE OTHERS!!!!
 
