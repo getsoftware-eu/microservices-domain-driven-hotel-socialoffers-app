@@ -104,7 +104,7 @@
         </plugins>
     </build>
 
-    <artifactId>common-client-api-libs</artifactId>
+    <artifactId>shared-client-libs</artifactId>
 
    
     
