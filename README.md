@@ -47,7 +47,12 @@ The "Clean" (Layered) Architecture is another way to provide <b>separation of co
 3. Extra "Main" (<b>Config</b>) package
     - SpringConfig classes are divided separately for the 'application', 'useCases' and 'infrastructure' layers.
 
-### TODO: starting building AWS Architecture (first attempt)
+
+### TODO: event driven interaction
+![event-driven](/docs/img/cca-event-driven.JPG)
+
+
+### "Hotelico" Cloud (AWS) Architecture
 ![AWS](/docs/img/aws.drawio.png)
 
 ## Simplified Domain-driven Design:
