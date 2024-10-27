@@ -1,6 +1,7 @@
-package eu.getsoftware.hotelico.clients.api.infrastructure.notification;
+package eu.getsoftware.hotelico.clients.api.infrastructure.notification.main;
 
 import eu.getsoftware.hotelico.clients.api.amqp.producer.RabbitMQMessageProducer;
+import eu.getsoftware.hotelico.clients.api.infrastructure.notification.main.config.RabbitMQProducerConfig;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication(
         scanBasePackages = {
-                "eu.getsoftware.hotelico.notification",
+                "eu.getsoftware.hotelico.clients.api.infrastructure.notification",
                 "eu.getsoftware.hotelico.amqp", //eugen in order to use @RabbitListener(queues)
         }
 )
@@ -17,10 +18,10 @@ import org.springframework.context.annotation.Bean;
 //PropertySources( //in case of K8s
 //  @PropertySource("classpath:clients-${spring.profiles.active}.properties") //use client-default.properties or client-k8s.properties für feign client properties!
 //})
-public class NotificationApplication
+public class NotificationTestApplication
 {
     public static void main(String[] args) {
-        SpringApplication.run(NotificationApplication.class, args);
+        SpringApplication.run(NotificationTestApplication.class, args);
     }
     
     /**

@@ -1,11 +1,7 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.infrastructure.service;
 
 import eu.getsoftware.hotelico.clients.api.amqp.producer.RabbitMQMessageProducer;
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.CustomerUpdateConsumeRequest;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.NotificationConsumeRequest;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.MenuDTO;
-import eu.getsoftware.hotelico.clients.api.infrastructure.notification.NotificationService;
+import eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.service.amqp.MessageProducerWithPersistence;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuItemEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuUserEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.repository.MenuUserRepository;
@@ -24,10 +20,10 @@ public class AsyncMSCommunicationService
 {
 	private AmqpTemplate amqpTemplate;	
 	private RabbitMQMessageProducer rabbitMQMessageProducer;	
-	private NotificationService notificationService;	
 	private MenuUserRepository menuUserRepository;
 	private RestTemplate restTemplate;
-	
+	private MessageProducerWithPersistence messageProducerWithPersistence;
+
 	/**
 	 * Queue will be calculated from routing-key in exchange
 	 */
@@ -66,7 +62,7 @@ public class AsyncMSCommunicationService
 	private void sendViaCustomerModuleWithConvertAndPersist(long toCustomerId, String toCustomerName, String message)
 	{
 		NotificationConsumeRequest myNotification = new NotificationConsumeRequest(toCustomerId, toCustomerName, toCustomerId, toCustomerName, message);
-		notificationService.persistConsumedNotification(myNotification);
+		messageProducerWithPersistence.sendPersistCheckinCreateEvent(myNotification);
 	}
 	
 	/**
@@ -141,9 +137,9 @@ public class AsyncMSCommunicationService
 	}
 	
 	public void restRequestAnotherModule(long customerId){
-		HotelDTO checkHotelResponse = restTemplate.getForObject(
+		HotelResponseDTO checkHotelResponse = restTemplate.getForObject(
 				"http://HOTEL-APP/api/v1/hotels/customer/{customerId}/hotel",
-				HotelDTO.class,
+				HotelResponseDTO.class,
 				customerId
 		);
 		

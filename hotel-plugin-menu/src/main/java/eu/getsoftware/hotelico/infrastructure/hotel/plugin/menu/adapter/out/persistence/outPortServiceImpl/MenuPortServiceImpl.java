@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.per
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuItemDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
-import eu.getsoftware.hotelico.clients.api.infrastructure.notification.NotificationService;
+import eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.NotificationService;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuItemEntity;

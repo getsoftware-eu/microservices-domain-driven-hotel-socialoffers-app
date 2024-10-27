@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainLayer;
+package eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainLayerPayload;
 
 public record DomianCustomerConsumeRequest(
         Long customerId,

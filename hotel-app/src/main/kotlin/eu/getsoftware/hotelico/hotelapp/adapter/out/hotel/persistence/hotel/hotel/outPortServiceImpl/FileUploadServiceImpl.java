@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hot
 
 import eu.getsoftware.api.hotelapp.application.hotel.iService.*;
 import eu.getsoftware.hotelico.api.hotelapp.application.hotel.iService.*;
-import eu.getsoftware.hotelico.clients.api.infrastructure.notification.NotificationService;
+import eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.NotificationService;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.FileUtils;
 import eu.getsoftware.hotelico.hotel.application.port.in.iService.*;

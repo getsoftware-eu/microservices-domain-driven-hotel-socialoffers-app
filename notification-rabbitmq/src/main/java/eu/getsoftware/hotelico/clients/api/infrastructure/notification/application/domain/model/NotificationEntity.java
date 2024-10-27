@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.clients.api.infrastructure.notification;
+package eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.domain.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -27,6 +27,7 @@ public class NotificationEntity
     private Long notificationId;
     private Long toCustomerId;
     private String toCustomerEmail;
+    private String toCustomerName;
     private String sender;
     private String message;
     private LocalDateTime sentAt;

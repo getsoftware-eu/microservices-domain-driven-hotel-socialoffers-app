@@ -60,6 +60,13 @@
         </dependency>
 
         <dependency>
+            <groupId>jakarta.sql</groupId>
+            <artifactId>jakarta.sql-api</artifactId>
+            <version>3.0.0</version> <!-- Используйте последнюю стабильную версию -->
+
+        </dependency>
+        
+        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>

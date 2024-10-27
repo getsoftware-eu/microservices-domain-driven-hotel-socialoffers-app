@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hot
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.BasicHotelException;
-import eu.getsoftware.hotelico.clients.api.infrastructure.notification.NotificationService;
+import eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.NotificationService;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.ReorderAction;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.checkin.model.HotelActivity;

@@ -13,7 +13,6 @@
         <module name="chat" />
         <module name="amqp" />
         <module name="hotel-plugin-menu" />
-        <module name="common-client-api-libs" />
         <module name="hotel-app" />
         <module name="menu" />
         <module name="hotel-plugin-chat" />
@@ -22,6 +21,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="api-gateway" target="17" />
+      <module name="common-client-api-libs" target="17" />
       <module name="notification-rabbitmq" target="17" />
     </bytecodeTargetLevel>
   </component>

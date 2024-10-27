@@ -1,5 +1,6 @@
-package eu.getsoftware.hotelico.clients.api.infrastructure.notification;
+package eu.getsoftware.hotelico.clients.api.infrastructure.notification.adapter.in.web;
 
+import eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.service.IMessagePersistService;
 import eu.getsoftware.hotelico.clients.infrastructure.notification.NotificationRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class NotificationController
 {
 
-    private final NotificationService notificationService;
+    private final IMessagePersistService messagePersistService;
 
     @PostMapping
     public void sendNotification(@RequestBody NotificationRequest notificationRequest) {
         log.info("New notification... {}", notificationRequest);
-        notificationService.persistConsumedNotification(notificationRequest);
+        messagePersistService.persistConsumedNotification(notificationRequest);
     }
 }

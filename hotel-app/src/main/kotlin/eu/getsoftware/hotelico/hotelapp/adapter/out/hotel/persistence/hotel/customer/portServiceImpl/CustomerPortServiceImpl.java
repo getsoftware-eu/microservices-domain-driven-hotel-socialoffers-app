@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.cus
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerRequestDTO;
-import eu.getsoftware.hotelico.clients.api.infrastructure.notification.NotificationService;
+import eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.NotificationService;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.checkin.model.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.checkin.repository.CheckinRepository;
