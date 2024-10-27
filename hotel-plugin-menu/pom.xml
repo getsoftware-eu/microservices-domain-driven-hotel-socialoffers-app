@@ -61,14 +61,16 @@
             <artifactId>amqp</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency> 
+        
         <dependency>
             <groupId>eu.getsoftware.hotelico</groupId>
-            <artifactId>notification</artifactId>
+            <artifactId>messaging</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>eu.getsoftware.hotelico</groupId>
-            <artifactId>notification</artifactId>
+            <artifactId>messaging</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

@@ -1,6 +1,6 @@
 - wieso default language: englisch?
 - VORSCHLAG: vielleicht Gerät-sprache benutzen?
-- Bild Notifications allow
+- Bild messaging allow
 - BUG TODO: Verzögerung bei der ersten "get Deal" Popup? (15 sec)
 
 -> "get Delay" optimieren... und mit "loading" den Gast Informieren

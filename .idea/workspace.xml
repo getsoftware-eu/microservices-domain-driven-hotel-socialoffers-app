@@ -5,35 +5,43 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="RabbitMq Listener + shared RabbitQueueConfig">
-      <change afterPath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amqp/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/amqp/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/main/config/RabbitMQConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amqp/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/producer/RabbitMQMessageProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/amqp/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/application/producer/RabbitMQMessageProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/microservice/MessagingRabbitMQProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/persistence/hotel/hotel/outPortServiceImpl/microservice/MessagingRabbitMQProducer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/outPortServiceImpl/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/outPortServiceImpl/ChatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/amqp/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/amqp-simple-rabbitmq-configuration/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/amqp/amqp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/amqp-simple-rabbitmq-configuration/amqp.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/amqp/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/amqp-simple-rabbitmq-configuration/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/amqp/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/application/domain/model/DomainMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/amqp-simple-rabbitmq-configuration/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/application/domain/model/DomainMessage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/amqp/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/application/domain/model/DomainMessagePayload.java" beforeDir="false" afterPath="$PROJECT_DIR$/amqp-simple-rabbitmq-configuration/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/application/domain/model/DomainMessagePayload.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/amqp/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/application/producer/RabbitMQMessageProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/amqp-simple-rabbitmq-configuration/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/application/producer/RabbitMQMessageProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/amqp/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/main/config/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/amqp-simple-rabbitmq-configuration/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/main/config/RabbitMQConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/TODO.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/TODO.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/scrum/1Sprint.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/scrum/1Sprint.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-chat/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-chat/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/in/web/controller/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/in/web/controller/MenuController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/application/infrastructure/service/AsyncMSCommunicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/application/infrastructure/service/AsyncMSCommunicationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-rabbitmq/notification-rabbitmq.iml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/notification-rabbitmq.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-rabbitmq/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-rabbitmq/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/in/web/NotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/in/web/NotificationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-rabbitmq/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/out/persistence/MessagePersistServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/out/persistence/MessagePersistServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-rabbitmq/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/out/persistence/NotificationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/out/persistence/NotificationRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-rabbitmq/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/domain/model/NotificationEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/out/persistence/model/NotificationEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-rabbitmq/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/service/IMessagePersistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/service/IMessagePersistService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-rabbitmq/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/service/amqp/MessageConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/service/amqp/MessageConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-rabbitmq/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/service/amqp/MessageProducerWithPersistence.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/service/amqp/MessageProducerWithPersistence.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-rabbitmq/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/main/NotificationTestApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/main/NotificationTestApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-rabbitmq/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/main/config/RabbitMQProducerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/main/config/RabbitMQProducerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-rabbitmq/src/main/java/module-info.txt" beforeDir="false" afterPath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/module-info.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-rabbitmq/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/resources/application-docker.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-rabbitmq/src/main/resources/application-kube.properties" beforeDir="false" afterPath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/resources/application-kube.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/notification-rabbitmq/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/amqpConsumeNotification/ChatMessageConsumeRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/amqpConsumeNotification/ChatMessageCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/amqpConsumeNotification/CustomerUpdateConsumeRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/amqpConsumeNotification/CustomerUpdateCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/amqpConsumeNotification/NotificationConsumeRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/amqpConsumeNotification/NotificationEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/amqpConsumeNotification/domainLayerPayload/DomianCustomerConsumeRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/amqpConsumeNotification/domainLayerPayload/DomainCustomerCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/messaging/DomainMessage.java" beforeDir="false" afterPath="$PROJECT_DIR$/amqp/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/application/domain/model/DomainMessage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/messaging/message/DomainMessagePayload.java" beforeDir="false" afterPath="$PROJECT_DIR$/amqp/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/application/domain/model/DomainMessagePayload.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/notification-rabbitmq.iml" beforeDir="false" afterPath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/notification-rabbitmq.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/in/web/NotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/in/web/NotificationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/out/persistence/MessagePersistServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/out/persistence/MessagePersistServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/out/persistence/NotificationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/out/persistence/NotificationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/out/persistence/model/NotificationEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/out/persistence/model/NotificationEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/service/IMessagePersistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/service/IMessagePersistService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/service/amqp/MessageConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/service/amqp/MessageConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/service/amqp/MessageProducerWithPersistence.java" beforeDir="false" afterPath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/service/amqp/MessageProducerWithPersistence.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/main/NotificationTestApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/main/NotificationTestApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/main/config/RabbitMQProducerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/main/config/RabbitMQProducerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/java/module-info.txt" beforeDir="false" afterPath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/module-info.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/resources/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/resources/application-kube.properties" beforeDir="false" afterPath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/resources/application-kube.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/notification-rabbitmq-convert-persist/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/resources/clients-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/resources/clients-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/resources/clients-kube.properties" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/resources/clients-kube.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +49,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="120667" />
+    <option name="totalTimeSeconds" value="121597" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -373,6 +381,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="NotificationTestApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="messaging" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="eu.getsoftware.hotelico.clients.api.infrastructure.notification.main.NotificationTestApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="NotificationTestApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="notification" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="eu.getsoftware.hotelico.clients.api.infrastructure.notification.main.config.NotificationTestApplication" />
@@ -400,6 +415,7 @@
     </configuration>
     <list>
       <item itemvalue="Maven.hotelservices [clean]" />
+      <item itemvalue="Spring Boot.NotificationTestApplication (1)" />
       <item itemvalue="Spring Boot.ApiGWApplication (1)" />
       <item itemvalue="Spring Boot.EurekaServerApplication" />
       <item itemvalue="Spring Boot.NotificationTestApplication" />
@@ -479,7 +495,8 @@
       <workItem from="1728897636513" duration="166000" />
       <workItem from="1729893720008" duration="576000" />
       <workItem from="1730020512666" duration="7637000" />
-      <workItem from="1730064290350" duration="1982000" />
+      <workItem from="1730064290350" duration="2016000" />
+      <workItem from="1730066573224" duration="1159000" />
     </task>
     <task id="LOCAL-00001" summary="-CHG: Microservice refactoring(Eureka-server)">
       <created>1655287660110</created>
@@ -655,14 +672,6 @@
       <option name="presentableId" value="LOCAL-00025" />
       <option name="project" value="LOCAL" />
       <updated>1683714777053</updated>
-    </task>
-    <task id="LOCAL-00049" summary="refactoring out ports">
-      <option name="closed" value="true" />
-      <created>1727715237872</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1727715237872</updated>
     </task>
     <task id="LOCAL-00050" summary="refactoring out ports">
       <option name="closed" value="true" />
@@ -848,7 +857,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730063801131</updated>
     </task>
-    <option name="localTasksCounter" value="73" />
+    <task id="LOCAL-00073" summary="RabbitMq Listener + shared RabbitQueueConfig">
+      <option name="closed" value="true" />
+      <created>1730066301341</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1730066301341</updated>
+    </task>
+    <option name="localTasksCounter" value="74" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

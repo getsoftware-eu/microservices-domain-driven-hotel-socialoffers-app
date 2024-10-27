@@ -14,7 +14,7 @@ public class MessagePersistServiceImpl implements IMessagePersistService
 {
 
     private final NotificationRepository notificationRepository;
-    private final String standandSender = "hotelicoStandardSender";
+    private final String standardSender = "hotelicoStandardSender";
     
     /**
      * 
@@ -25,7 +25,7 @@ public class MessagePersistServiceImpl implements IMessagePersistService
         NotificationEntity buildedNotificationEntity = NotificationEntity.builder()
                 .toCustomerId(notificationRequest.toCustomerId())
                 .toCustomerName(notificationRequest.toCustomerName())
-                .sender(standandSender)
+                .sender(standardSender)
                 .message(notificationRequest.message())
                 .sentAt(LocalDateTime.now())
                 .build();

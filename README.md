@@ -82,7 +82,7 @@ Guests can get to know other guests in the hotel. And earn bonus points for hote
 
 ## Architecture details
 - According to the "Building Microservices" book by Sam Newman, all microservice should have its own DB (and for example its own view of a central user entity).
-- Notifications will be persisted by preconfigured (Jackson serialisation and route) through a central preconfigured 'notification' module, which uses a 'notification'-RabbitMQ-queue for message passing and has its own database.
+- Messaging will be persisted by preconfigured (Jackson serialisation and route) through a central preconfigured 'messaging' module, which uses a 'notification'-RabbitMQ-queue for message passing and has its own database.
 - When a user update occurs, it will be propagated to all microservices through a 'system' RabbitMQ queue, ensuring that each microservice updates its user-view in its own database.
 
 ## Used Projects as a basis:

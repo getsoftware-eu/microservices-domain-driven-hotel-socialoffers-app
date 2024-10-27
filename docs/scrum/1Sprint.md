@@ -37,7 +37,7 @@ A: The system should validate the hotel-entry-code ID entered by the guest.
 
 - As a hotel-owner # I want to stimulate my customers to offline communication in the hotel bar # because I want that customers spend more money inside of hotel
 
-- As a hotel-guest # I want receive hotel-notifications about new guests with similar interests # because I value the hobby c другими с общими ценностями
+- As a hotel-guest # I want receive hotel-messaging about new guests with similar interests # because I value the hobby c другими с общими ценностями
   - A: Each guest's name, should be only part-displayed.
 
 

@@ -1,8 +1,5 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.in.web.controller;
 
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuItemDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
-import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.iPortService.IMenuPortService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;

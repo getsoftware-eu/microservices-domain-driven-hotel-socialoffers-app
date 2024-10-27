@@ -7,14 +7,14 @@
 	<version>0.0.1-SNAPSHOT</version>
 	
 	<modules>
-        <module>common-client-api-libs</module>
-		<module>eureka-server-spring-cloud</module>
+        <module>shared-client-libs</module>
 		<module>hotel-app</module>
+		<module>hotel-plugin-chat</module>
 		<module>hotel-plugin-menu</module>
-        <module>api-gateway-spring-cloud</module>
-		<module>amqp</module>
-		<module>notification-rabbitmq</module>
-        <module>hotel-plugin-chat</module>
+		<module>eureka-server-spring-cloud</module>
+		<module>api-gateway-spring-cloud</module>
+		<module>amqp-simple-rabbitmq-configuration</module>
+		<module>messaging-full-rabbitmq-configuraton</module>
     </modules>
 	
 	<name>social-hotel-interactions</name>

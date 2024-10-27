@@ -1,0 +1,4 @@
+ 
+This module precofingure a binding of messaging-topic to messaging-queue. 
+All messages over this queue will be persisted in a local DB.
+ 

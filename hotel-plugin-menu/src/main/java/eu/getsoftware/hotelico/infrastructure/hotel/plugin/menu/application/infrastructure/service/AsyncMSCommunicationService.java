@@ -1,6 +1,10 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.infrastructure.service;
 
 import eu.getsoftware.hotelico.clients.api.amqp.application.producer.RabbitMQMessageProducer;
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.CustomerUpdateCommand;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.NotificationEvent;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.MenuDTO;
 import eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.service.amqp.MessageProducerWithPersistence;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuItemEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuUserEntity;
@@ -124,10 +128,10 @@ public class AsyncMSCommunicationService
 	
 	/**
 	 * Notification-Service listener, with internal jackson-Converter to 'notificationRequest'-Obj
-	 * @param notificationRequest
+	 * @param notificationEvent
 	 */
 	@RabbitListener(queues = "${rabbitmq.queue.menu.notification}")
-	public void consumeNotification(Notificationevent notificationEvent){
+	public void consumeNotification(NotificationEvent notificationEvent){
 		log.info("Consumed {} from queue", notificationEvent);
 		log.info(notificationEvent.message());
 		
@@ -135,7 +139,7 @@ public class AsyncMSCommunicationService
 		
 	}
 	
-	private void handleMenuNotification(Notificationevent notificationEvent)
+	private void handleMenuNotification(NotificationEvent notificationEvent)
 	{
 		throw new UnsupportedOperationException("not implemented");
 	}
@@ -150,14 +154,14 @@ public class AsyncMSCommunicationService
 	}
 	
 	public void restRequestAnotherModule(long customerId){
-		HotelResponseDTO checkHotelResponse = restTemplate.getForObject(
+		HotelDTO checkHotelResponse = restTemplate.getForObject(
 				"http://HOTEL-APP/api/v1/hotels/customer/{customerId}/hotel",
-				HotelResponseDTO.class,
+				HotelDTO.class,
 				customerId
 		);
 		
-		Long hotelId = checkHotelResponse.getId();
-		Long hotelInitId = checkHotelResponse.getInitId();
+		long hotelId = checkHotelResponse.getId();
+		long hotelInitId = checkHotelResponse.getInitId();
 	}
 	
 	public List<MenuDTO> getItems()

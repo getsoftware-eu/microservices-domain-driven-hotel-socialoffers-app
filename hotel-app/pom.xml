@@ -510,7 +510,7 @@
         </dependency>
         <dependency>
             <groupId>eu.getsoftware.hotelico</groupId>
-            <artifactId>notification</artifactId>
+            <artifactId>messaging</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
