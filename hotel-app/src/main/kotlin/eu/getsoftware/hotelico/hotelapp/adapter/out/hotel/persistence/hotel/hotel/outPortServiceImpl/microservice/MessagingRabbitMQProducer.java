@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.outPortServiceImpl.microservice;
 
-import eu.getsoftware.hotelico.clients.api.amqp.producer.RabbitMQMessageProducer;
+import eu.getsoftware.hotelico.clients.api.amqp.application.producer.RabbitMQMessageProducer;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageConsumeRequest;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.CustomerUpdateConsumeRequest;
@@ -27,7 +27,7 @@ public class MessagingRabbitMQProducer implements IMessagingProducerService<Hote
 	private final AsyncRabbitTemplate asyncRabbitTemplate;
 
 	@Override
-	public void sendCustomerNotification(CustomerUpdateConsumeRequest requestDTO, HotelEvent hotelEvent) {
+	public void sendCustomerNotification(CustomerUpdateCommand requestDTO, HotelEvent hotelEvent) {
 		
 		String exchange = "internal.exchange";
 		String routingKey = getRabbitMQTopicFromEventEnum(hotelEvent);

@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.outPortServiceImpl;
 
-import eu.getsoftware.hotelico.clients.api.amqp.producer.RabbitMQMessageProducer;
+import eu.getsoftware.hotelico.clients.api.amqp.application.producer.RabbitMQMessageProducer;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.NotificationConsumeRequest;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
