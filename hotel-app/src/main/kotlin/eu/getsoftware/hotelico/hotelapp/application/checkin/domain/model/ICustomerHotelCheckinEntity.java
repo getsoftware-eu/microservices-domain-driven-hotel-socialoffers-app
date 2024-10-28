@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model;
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
 import jakarta.validation.constraints.NotNull;

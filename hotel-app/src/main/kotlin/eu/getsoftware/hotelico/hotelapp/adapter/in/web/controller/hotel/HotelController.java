@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller.hotel;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.BasicHotelException;
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.aspects.NotifyClients;
@@ -15,61 +16,81 @@ import io.micrometer.core.annotation.Timed;
 import io.swagger.annotations.ApiOperation;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.geom.Point2D;
+import java.net.URI;
 import java.util.List;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
+
 @Timed("sensorMap.controller") //eugen: profiler
-@RestController
+@RepositoryRestController
 @RequestMapping("/api/v1/hotels")
+@RequiredArgsConstructor
 public class HotelController extends BasicController
 {
-    @Autowired
-    private IHotelService hotelService;    
-    
-    @Autowired
-    private IHotelActivityService hotelActivityService;    
-    
-    @Autowired
-    private IWallpostService hotelWallpostService;
-    
-    @Autowired
-    private LastMessagesService lastMessagesService;
+    private final IHotelService hotelService;    
+    private final IHotelActivityService hotelActivityService;    
+    private final IWallpostService hotelWallpostService;
+    private final LastMessagesService lastMessagesService;
     
     @RequestMapping(method = RequestMethod.GET)
     public String viewHotels() {
         return "hotels";
     }
-
-//    @RequestMapping(value = "/hotels", method = RequestMethod.GET)
-//    public  List<HotelDto> getHotels() {
-//        return hotelService.getHotels();
-//    }
     
     @RequestMapping(value = "/customer/hotel", method = RequestMethod.GET)
-    public List<HotelResponseDTO> getHotels() {
+    public List<HotelDTO> getHotels() {
         return hotelService.getHotels();
     }
 
+
+    /**
+     * eu: create a link to created entity :)))
+     * @param inputHotelDTO
+     * @param persistentEntityResourceAssembler
+     * @return
+     */
+    @RequestMapping(method = POST, value = "/hotels")
+    @ResponseBody
+    public ResponseEntity<Resource<HotelDTO>> createNewHotel(@RequestBody HotelDTO inputHotelDTO,
+                                                            PersistentEntityResourceAssembler persistentEntityResourceAssembler
+    ) {
+
+        HotelDTO createdHotel = createWithSkuHandling(inputHotelDTO);
+
+        Resource<HotelDTO> hotelResource = new Resource<>(createdHotel);
+        hotelResource.add(persistentEntityResourceAssembler.getSelfLinkFor(createdHotel));
+        
+        URI location = linkTo(HotelController.class)
+                .slash("/hotels")
+                .slash(createdHotel.getId())
+                .toUri();
+        return ResponseEntity.created(location).body(hotelResource);
+    }
+    
     @RequestMapping(value = "/customer/{customerId}/hotel/{hotelId}", method = RequestMethod.GET)
-    public HotelResponseDTO get(@PathVariable long customerId, @PathVariable long hotelId, final HttpServletResponse response) {
+    public HotelDTO get(@PathVariable long customerId, @PathVariable long hotelId, final HttpServletResponse response) {
         response.setHeader("Cache-Control", "no-cache");
-        HotelResponseDTO out = hotelService.getHotelById(hotelId);
+        HotelDTO out = hotelService.getHotelById(hotelId);
         return out;
     }
     
     @ApiOperation(value = "every hotel has its unique code", produces = "application/json")
     @RequestMapping(value = "/customer/{customerId}/hotelCode/{hotelCode}", method = RequestMethod.GET)
-    public HotelResponseDTO getHotelByCode(@PathVariable long customerId, @PathVariable String hotelCode, final HttpServletResponse response) {
+    public HotelDTO getHotelByCode(@PathVariable long customerId, @PathVariable String hotelCode, final HttpServletResponse response) {
 //        response.setHeader("Cache-Control", "no-cache");
-        HotelResponseDTO out = hotelService.getHotelByCode(hotelCode);
+        HotelDTO out = hotelService.getHotelByCode(hotelCode);
         return out;
     }    
     
-    @RequestMapping(value = "/action/{action}/hotelId/{hotelId}/customer/{guestCustomerId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/action/{action}/hotelId/{hotelId}/customer/{guestCustomerId}", method = POST)
     public CustomerDTO addHotelGuestAction(@PathVariable String action, @PathVariable Long hotelId, @PathVariable long guestCustomerId, @RequestBody CustomerDTO guestDto, final HttpServletResponse response) {
 //        response.setHeader("Cache-Control", "no-cache");
         CustomerDTO out = hotelActivityService.addGuestAction(guestCustomerId, action, hotelId, guestDto);
@@ -77,25 +98,25 @@ public class HotelController extends BasicController
     }   
     
     @RequestMapping(value = "/customer/{customerId}/hotel", method = RequestMethod.GET)
-    public List<HotelResponseDTO> getAll(@PathVariable long customerId, final HttpServletResponse response) {
+    public List<HotelDTO> getAll(@PathVariable long customerId, final HttpServletResponse response) {
         return hotelService.getHotels();
     }   
     
     @RequestMapping(value = "/customer/{customerId}/hotelCities", method = RequestMethod.GET)
-    public List<HotelResponseDTO> getHotelCities(@PathVariable long customerId, final HttpServletResponse response) {
+    public List<HotelDTO> getHotelCities(@PathVariable long customerId, final HttpServletResponse response) {
         return hotelService.getHotelCities(customerId);
     } 
     
     @RequestMapping(value = "/customer/{customerId}/hotel/city/{city}", method = RequestMethod.GET)
-    public List<HotelResponseDTO> getHotelCities(@PathVariable long customerId, @PathVariable String city, final HttpServletResponse response) throws BasicHotelException
+    public List<HotelDTO> getHotelCities(@PathVariable long customerId, @PathVariable String city, final HttpServletResponse response) throws BasicHotelException
     {
         return hotelService.getHotelsByCity(customerId, city);
     }  
     
     @RequestMapping(value = "/customer/hotel/{hotelId}", method = RequestMethod.GET)
-    public HotelResponseDTO getWithoutCustomer(@PathVariable long hotelId, final HttpServletResponse response) {
+    public HotelDTO getWithoutCustomer(@PathVariable long hotelId, final HttpServletResponse response) {
         response.setHeader("Cache-Control", "no-cache");
-        HotelResponseDTO out = hotelService.getHotelById(hotelId);
+        HotelDTO out = hotelService.getHotelById(hotelId);
         return out;
     } 
     
@@ -108,9 +129,9 @@ public class HotelController extends BasicController
     
     @NotifyClients
     @RequestMapping(value = "/customer/{customerId}/hotel/{hotelId}", method = RequestMethod.PUT)
-    public HotelResponseDTO update(@PathVariable long customerId, @PathVariable long hotelId, @RequestBody HotelResponseDTO hotelDto) {
+    public HotelDTO update(@PathVariable long customerId, @PathVariable long hotelId, @RequestBody HotelDTO hotelDto) {
         
-        HotelResponseDTO out = null;
+        HotelDTO out = null;
         
         if(hotelId>0)
         {
@@ -134,16 +155,16 @@ public class HotelController extends BasicController
     }
     
     @NotifyClients
-    @RequestMapping(value = "/hotels", method = RequestMethod.POST)
-    public HotelResponseDTO add(@RequestBody HotelResponseDTO hotelDto) {
-        HotelResponseDTO out = hotelService.addHotel(hotelDto);
+    @RequestMapping(value = "/hotels", method = POST)
+    public HotelDTO add(@RequestBody HotelDTO hotelDto) {
+        HotelDTO out = hotelService.addHotel(hotelDto);
         return out;
     }
     
     
     
     @NotifyClients
-    @RequestMapping(value = "/wall", method = RequestMethod.POST)
+    @RequestMapping(value = "/wall", method = POST)
     public WallPostDTO addWallPost(@RequestBody WallPostDTO wallPostDto) {
         WallPostDTO out = hotelWallpostService.addUpdateWallPost(wallPostDto);
         return out;

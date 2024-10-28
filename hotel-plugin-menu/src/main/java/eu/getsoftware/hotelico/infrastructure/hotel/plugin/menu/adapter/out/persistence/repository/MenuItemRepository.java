@@ -1,15 +1,60 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.repository;
 
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuItemEntity;
+import jakarta.persistence.metamodel.Attribute;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.annotation.RestResource;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
+/**
+ * eu: from DDD example
+ */
 
+@RepositoryRestResource
 public interface MenuItemRepository extends JpaRepository<MenuItemEntity, Long> {
 
+	@RestResource(exported = false)
+	@Query("select p from MenuItemEntity p")
+	Stream<MenuItemEntity> streamAll();
+
+	@RestResource(exported = false)
+	List<MenuItemEntity> findByRefPriceNull();
+
+	@RestResource(exported = false)
+	List<MenuItemEntity> findByLastModifiedAtBefore(@Param("lastModifiedAt") LocalDateTime lastModifiedAt);
+
+	@RestResource(rel = "find-by-sku", path = "find-by-sku")
+	Optional<MenuItemEntity> findBySku(@Param("sku") String sku);
+
+	@RestResource(exported = false)
+	@Query("Select distinct value(a) from MenuItemEntity p join p.attrs a " +
+			"where key(a).namespace = :namespace " +
+			"and key(a).name = :attributeName " +
+			"and value(a).attributeType = com.epages.entity.attributes.AttributeType.STRING " +
+			"and value(a).stringValue like concat(:query, '%')")
+	List<Attribute> findStringAttributeValuesByNameAndSearchQuery(@Param("namespace") String namespace,
+																  @Param("attributeName") String attributeName,
+																  @Param("query") String query, Pageable pageable);
+
+	@RestResource(exported = false)
+	@Query("Select count(p) from MenuItemEntity p join p.attrs a " +
+			"where key(a).namespace = :namespace " +
+			"and key(a).name = :name ")
+	int countByAttributeNamespaceAndAttributeName(@Param("namespace") String namespace,
+												  @Param("name") String attributeName);
+
+	@RestResource(exported = false)
+	@Query("Select count(p) from MenuItemEntity p where p.sku = :sku")
+	int countBySku(@Param("sku") String sku);
+	
 	public final static String FIND_BY_ORDER_ID_QUERY = " SELECT m " +
 			" FROM MenuItem m " +
 			" WHERE m.menuOrder IS NOT NULL " +

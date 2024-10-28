@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.deal.domain;
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.customer.model.CustomerRootEntity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.checkin.model.HotelActivity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelActivity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
 
 public interface ICustomerDeal {
     

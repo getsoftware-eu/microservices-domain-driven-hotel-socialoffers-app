@@ -1,25 +1,65 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging;
 
+import eu.getsoftware.hotelico.clients.api.amqp.application.domain.model.DomainMessage;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto.CheckinDTO;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Component;
 
-@Component
+import java.util.Map;
+
+import static com.google.common.collect.Maps.newLinkedHashMap;
+
 @Slf4j
+@Component
 @RequiredArgsConstructor
 public class CheckinMessagePublisher {
-    
+
+    private static final String DEFAULT_EXCHANGE = "";
+    private static final String CHECKIN_CREATED_EVENT_TYPE_NAME = "checkin.checkin.created.event";
+    private static final String CHECKIN_UPDATED_EVENT_TYPE_NAME = "checkin.checkin.updated.event";
+    private static final String CHECKIN_DELETED_EVENT_TYPE_NAME = "checkin.checkin.deleted.event";
+
+    @NonNull
     private final DomainMessagePublisher domainMessagePublisher;
     private final DomainMessageFactory domainMessageFactory;
+
+    @NonNull
+    private final EntityDomainMessageFactory entityMessageFactory;
+    @NonNull
+    private final AmqpTemplate amqpTemplate;
+    @NonNull
+    private final StorageApiUriBuilder storageApiUriBuilder;
+    @NonNull
+    private ShopRefRepository shopRefRepository;
     
     public void publishCheckinCreatedEvent(CheckinDTO checkinDTO){
-        publishMessage("checkin.checkin.created.event", checkinDTO);
+        DomainMessage<?> message = buildMessage(CHECKIN_CREATED_EVENT_TYPE_NAME, checkinDTO, false);
+        publishMessage(message);
+        
+//        publishMessage(CHECKIN_CREATED_EVENT_TYPE_NAME, checkinDTO);
+    }
+
+    public void publishProductUpdatedEvent(CheckinDTO checkinDTO) {
+        boolean temporarilyExcludeChangeSetAsHotFix = false;
+        DomainMessage<?> message = buildMessage(CHECKIN_UPDATED_EVENT_TYPE_NAME, checkinDTO, temporarilyExcludeChangeSetAsHotFix);
+        publishMessage(message);
+    }
+
+    public void publishProductDeletedEvent(CheckinDTO checkinDTO) {
+        DomainMessage<?> message = buildMessage(CHECKIN_DELETED_EVENT_TYPE_NAME, checkinDTO, false);
+        publishMessage(message);
     }
     
-    public void publishCheckinDeletedEvent(CheckinDTO checkinDTO){
-        publishMessage("checkin.checkin.deleted.event", checkinDTO);
-    }
+//    public void publishCheckinUpdatedEvent(CheckinDTO checkinDTO){
+//        publishMessage("checkin.checkin.updated.event", checkinDTO);
+//    }
+//    
+//    public void publishCheckinDeletedEvent(CheckinDTO checkinDTO){
+//        publishMessage("checkin.checkin.deleted.event", checkinDTO);
+//    }
 
     /**
      * only private execution!!
@@ -30,7 +70,7 @@ public class CheckinMessagePublisher {
 
         // DomainMessage<ChatSendEventMessage> domainMessage = domainChatMessageFactory.create(messageType, eventMessage);
        
-        DomainMessage<CheckinAggregatePayload> eventMessage = domainMessageFactory
+        DomainMessage<?> eventMessage = domainMessageFactory
                 .prepareDomainMessageForType(messageType)
                 .withEntity(checkinDTO)
                 .withCurrentTenant()
@@ -40,5 +80,30 @@ public class CheckinMessagePublisher {
         domainMessagePublisher.publish(eventMessage);
         log.info("Published message {}", eventMessage);
     }
+
+    private DomainMessage<?> buildMessage(String messageType, CheckinDTO checkinDTO, boolean includeChangeSet) {
+
+        Map<String, Object> additionalProperties = newLinkedHashMap();
+
+        if (checkinDTO.getDefaultImage() != null) {
+            additionalProperties.put("defaultImageDataUri", toRelativeUri(product.getDefaultImage()));
+        }
+
+        ChangeSetStep changeSetStep = entityMessageFactory
+                .prepareDomainMessageForType(messageType)
+                .withEntityAndProjection(checkinDTO, CheckinMessagingProjection.class)
+                .withPayloadType("product")
+                .withCurrentTenant();
+
+        BuildStep buildStep = includeChangeSet ? changeSetStep.withChangeSet() : changeSetStep.withoutChangeSet();
+
+        return buildStep
+                .withStandardContext()
+                .withContextProperty("locale", checkinDTO.getCurrentLocale())
+                .withContextProperty("shopTaxModel", shopRefRepository.getMandatoryCurrent().getTaxModel())
+                .withAdditionalProperties(additionalProperties)
+                .build();
+    }
+}
     
 }

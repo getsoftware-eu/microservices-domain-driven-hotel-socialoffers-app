@@ -1,0 +1,9 @@
+FROM rabbitmq:management
+
+ADD ["rabbitmq.config", "/etc/rabbitmq/"]
+RUN mkdir /docker-init.d
+COPY ["docker-init.d", "/docker-init.d/"]
+ADD ["aggregate-definitions.sh", "/"]
+
+RUN rabbitmq-plugins enable rabbitmq_tracing
+RUN /aggregate-definitions.sh /docker-init.d > /etc/rabbitmq/definitions.json

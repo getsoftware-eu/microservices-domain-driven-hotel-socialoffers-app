@@ -1,9 +1,9 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelRootEntity
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.outPortServiceImpl.HotelServiceImpl
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.repository.HotelRepository
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelRootEntity
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.HotelServiceImpl
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.HotelRepository
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify

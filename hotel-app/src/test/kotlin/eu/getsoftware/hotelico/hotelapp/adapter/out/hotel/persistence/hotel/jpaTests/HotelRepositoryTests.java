@@ -1,9 +1,9 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.jpaTests;
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.checkin.model.CustomerHotelCheckin;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.checkin.repository.CheckinRepository;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.customer.model.CustomerRootEntity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.customer.repository.CustomerRepository;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.CustomerHotelCheckin;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import jakarta.persistence.PersistenceException;
 import org.junit.jupiter.api.Test;

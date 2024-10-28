@@ -8,7 +8,7 @@ import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNot
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.JsonError;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging.CheckinMessagePublisher;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelEvent;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.chat.port.out.IChatService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto.CheckinDTO;
@@ -30,7 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelEvent.EVENT_CHECKIN;
+import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent.EVENT_CHECKIN;
 
 /**
  * Architecture: Application Service that uses multiply domain services (is portService = domainService?)
@@ -122,10 +122,14 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		return checkinResponseDTO;
 	}
 
+	/**
+	 * eu: not manually event, but @Observer repository or Service!!!
+	 * @param checkinResponseDTO
+	 */
 	private void notificateHotelAboutNewGuest(CheckinDTO checkinResponseDTO) {
 
-		//eu:1 with DDD Publisher!
-		checkinMessagePublisher.publishCheckinCreatedEvent(checkinResponseDTO);
+		//eu:1 NOT MANUALLY, BUT WITH Service @OBSERVER!!! with DDD Publisher!
+		// checkinMessagePublisher.publishCheckinCreatedEvent(checkinResponseDTO);
 		
 		
 		// eu:2 manuell topic exchange

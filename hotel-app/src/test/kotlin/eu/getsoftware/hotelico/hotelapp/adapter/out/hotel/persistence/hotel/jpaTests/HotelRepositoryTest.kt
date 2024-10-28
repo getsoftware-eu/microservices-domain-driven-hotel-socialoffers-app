@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.jpaTests
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.repository.HotelRepository
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.HotelRepository
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

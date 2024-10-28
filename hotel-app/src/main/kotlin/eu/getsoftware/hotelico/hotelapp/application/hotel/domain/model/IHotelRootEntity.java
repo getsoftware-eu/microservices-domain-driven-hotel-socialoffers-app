@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelWallPost;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.checkin.model.HotelActivity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelActivity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelWallPost;
 
 import java.util.Collection;
 import java.util.Set;

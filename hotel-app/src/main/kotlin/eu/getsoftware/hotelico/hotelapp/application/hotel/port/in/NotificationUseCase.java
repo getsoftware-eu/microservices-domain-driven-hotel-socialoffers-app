@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.port.in;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelEvent;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;

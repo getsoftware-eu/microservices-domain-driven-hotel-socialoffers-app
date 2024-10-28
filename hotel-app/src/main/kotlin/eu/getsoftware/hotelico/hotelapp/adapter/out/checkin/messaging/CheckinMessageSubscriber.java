@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging;
 
 import eu.getsoftware.hotelico.clients.api.amqp.application.domain.model.DomainMessage;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.checkin.repository.CheckinRepository;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto.CheckinDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -66,4 +66,17 @@ public class CheckinMessageSubscriber implements DomainMessageSubscriber {
                 .hotelId(payload.getHoteId())
                 .customerId(payload.getCustomerId());
     }
+
+    private final TenantAccessor tenantAccessor;
+
+    @RabbitListener("checkin.checkin.created.event")
+    public void createProduct(DomainMessage<CheckinAggregatePayload> message) {
+        CheckinAggregatePayload payload = message.getPayload();
+        withMdc(CHECKIN, payload.getId()).execute(() -> {
+            log.info("Processing event {}", message.getMessageType());
+            var checkin = toCheckin(payload).build();
+            checkinRepository.index(checkin);
+        });
+    }
 }
+
