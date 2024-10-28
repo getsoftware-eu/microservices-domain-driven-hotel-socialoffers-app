@@ -9,6 +9,7 @@ import java.util.Date;
 @Getter
 public class CheckinDTO {
 
+    long initId;
     long customerId;
     
     @Setter

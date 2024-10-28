@@ -1,9 +1,10 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.outPortServiceImpl;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuItemDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
-import eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.NotificationService;
+import eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.service.amqp.MessageProducerWithPersistence;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuItemEntity;
@@ -33,7 +34,7 @@ public class MenuPortServiceImpl implements IMenuPortService
 	private final CustomerService customerService;		
 	private final LastMessagesService lastMessagesService;		
 	private final CheckinService checkinService;	
-	private final NotificationService notificationService;		
+	private final MessageProducerWithPersistence notificationService;		
 	private final MenuItemRepository menuItemRepository;		
 	private final MenuOrderRepository menuOrderRepository;
 	
@@ -47,7 +48,8 @@ public class MenuPortServiceImpl implements IMenuPortService
 		
 		//get customerDTO
 //		long customerId = ControllerUtils.getTryEntityId(requesterId);
-		CustomerDTO customerDTO = customerService.getCustomerById(customerId);
+		//TODO: how get CustomerDTO : from localDB(viewEntity filled by eventSourcing?+) or from (other asynchron microservice request?-)
+		//CustomerDTO customerDTO = customerService.getCustomerById(customerId);
 
 		List<MenuOrder> menus = new ArrayList<>();
 		
@@ -70,13 +72,13 @@ public class MenuPortServiceImpl implements IMenuPortService
 				menus = menuOrderRepository.getMenuByInitId(orderId);
 			}
 		}
-		else if(customerDTO !=null && (customerDTO.isAdmin() || customerDTO.isHotelStaff() && hotelId== lastMessagesService.getCustomerHotelId(customerId)))
+		else if(hotelId>0) //if(customerDTO !=null && (customerDTO.isAdmin() || customerDTO.isHotelStaff() && hotelId== lastMessagesService.getCustomerHotelId(customerId)))
 		{
 			menus = menuOrderRepository.getActiveByHotelId(hotelId, filterStatusList, filterDateFrom, filterDateTo);
 		}
 		else
 		{
-			menus = menuOrderRepository.getActiveIdByCustomerId(customerDTO.getId(), filterStatusList, filterDateFrom, filterDateTo);
+			menus = menuOrderRepository.getActiveIdByCustomerId(customerId, filterStatusList, filterDateFrom, filterDateTo);
 		}
 		
 		List<MenuOrderDTO> dtoList = new ArrayList<>();
@@ -90,14 +92,14 @@ public class MenuPortServiceImpl implements IMenuPortService
 	}
 
 	@Override
-	public List<MenuOrderDTO> getAllHotelMenusToRoom(CustomerDTO customerDTO, long hotelId, long cafeId)
+	public List<MenuOrderDTO> getAllHotelMenusToRoom(long customerId, long hotelId, long cafeId, boolean isAdminOrStaff)
 	{
 //		long customerId = ControllerUtils.getTryEntityId(requesterId);
 //		CustomerRootEntity customerEntity = customerId>0? customerRepository.getOne(customerId) : null;
 
 		List<MenuOrder> waitingMenusToRoom = new ArrayList<>();
 		
-		if(customerDTO !=null && (customerDTO.isAdmin() || customerDTO.isHotelStaff() && hotelId == lastMessagesService.getCustomerHotelId(customerDTO.getId())))
+		if(isAdminOrStaff && hotelId == lastMessagesService.getCustomerHotelId(customerId)))
 		{
 			List<DealStatus> statusList =  new ArrayList<>();
 			//ONLY ACCEPTED
@@ -129,7 +131,7 @@ public class MenuPortServiceImpl implements IMenuPortService
 		
 		if(menuOrders.isEmpty())
 		{
-			menuOrder = menuOrderRepository.getOne(initMenuOrderId);
+			menuOrder = menuOrderRepository.findById(initMenuOrderId).orElseThrow(() -> new RuntimeException("..."));
 		}
 		
 		if(!menuOrders.isEmpty())
@@ -153,12 +155,12 @@ public class MenuPortServiceImpl implements IMenuPortService
 		
 		if(menuOrder.getHotelRootEntityId() > 0)
 		{
-			dto.setHotelId(menuOrder.getHotelRootEntityId());
+			dto = dto.withHotelId(menuOrder.getHotelRootEntityId());
 		}
 		
 		if(menuOrder.getSenderId() > 0)
 		{
-			dto.setSenderId(menuOrder.getSenderId());
+			dto = dto.withSenderId(menuOrder.getSenderId());
 		}
 		
 		if(DealStatus.REJECTED.equals(menuOrder.getStatus()))
@@ -167,12 +169,12 @@ public class MenuPortServiceImpl implements IMenuPortService
 		}
 		
 		boolean closed = Arrays.asList(DealStatus.REJECTED, DealStatus.CLOSED).contains(menuOrder.getStatus());
-		
-		dto.setClosed(closed);
+
+		dto = dto.withClosed(closed);
 		
 		if(menuOrder.getStatus()!=null)
 		{
-			dto.setOrderStatus(menuOrder.getStatus().getName());
+			dto = dto.withOrderStatus(menuOrder.getStatus().getName());
 		}
 		
 //		dto.getTotalMoney(menuOrder.get);
@@ -181,7 +183,7 @@ public class MenuPortServiceImpl implements IMenuPortService
 		
 //		if(menuOrder.getMenuItems().size()>0)
 //		{
-			dto.setItemAmount(menuOrder.getMenuItems().size());
+			dto = dto.withItemAmount(menuOrder.getMenuItems().size());
 			
 //			int counter = 0;
 //			
@@ -194,8 +196,6 @@ public class MenuPortServiceImpl implements IMenuPortService
 //			dto.setMenuItems(dtoItems);
 //		}
 		
-		
-		
 		return dto;
 	}
 	
@@ -203,12 +203,12 @@ public class MenuPortServiceImpl implements IMenuPortService
 	{
 		MenuItemDTO dto = modelMapper.map(menuItem, MenuItemDTO.class);
 
-		dto.setHotelId(menuItem.getHotelRootEntity().getId());
-		dto.setSenderId(menuItem.getCreator().getId());
+		dto = dto.withHotelId(menuItem.getHotelRootEntity().getId());
+		dto = dto.withSenderId(menuItem.getCreator().getId());
 		
 		if(!menuItem.isActive())
 		{
-			dto.setAmount(-1);
+			dto = dto.withAmount(-1);
 		}
 		return dto;
 	}
@@ -244,12 +244,12 @@ public class MenuPortServiceImpl implements IMenuPortService
 	
 	@Transactional
 	@Override
-	public MenuItemDTO deleteMenuItem(CustomerDTO customerDTO, long menuItemId)
+	public MenuItemDTO deleteMenuItem(boolean isAdminOrStaff, long menuItemId)
 	{
 //		long customerId = ControllerUtils.getTryEntityId(requesterId);
 //		CustomerRootEntity customerEntity = customerRepository.getOne(customerId);
 		
-		if(customerDTO !=null && (customerDTO.isAdmin() || customerDTO.isHotelStaff()))
+		if(isAdminOrStaff)
 		{
 			List<MenuItemEntity> menuItems = menuItemRepository.getByInitId(menuItemId);
 			
@@ -260,7 +260,7 @@ public class MenuPortServiceImpl implements IMenuPortService
 				menuItem = menuItems.isEmpty()? menuItemRepository.getOne(menuItemId) : menuItems.get(0);
 			}
 			
-			if(menuItem!=null && (customerEntity.isAdmin() || menuItem.getHotelRootEntity().getId() == (customerService.getCustomerHotelId(customerId))))
+			if(menuItem!=null && (isAdminOrStaff || menuItem.getHotelEntity().getId() == (customerService.getCustomerHotelId(customerId))))
 			{
 				menuItem.setActive(false);
 				
@@ -283,7 +283,7 @@ public class MenuPortServiceImpl implements IMenuPortService
 		
 		if(menuItemDto.getId()>=0 || !menuItems.isEmpty())
 		{
-			menuItem = menuItems.isEmpty()? menuItemRepository.getOne(menuItemDto.getId()) : menuItems.get(0);
+			menuItem = menuItems.isEmpty()? menuItemRepository.findById(menuItemDto.getId()).orElseThrow(()-> new RuntimeException("bla")) : menuItems.get(0);
 		}
 		
 		if(menuItem==null)
@@ -399,13 +399,13 @@ public class MenuPortServiceImpl implements IMenuPortService
 		}
 		
 		//TODO Eugen: action
-		HotelRootEntity hotelRootEntity = hotelPortService.getOne(menuOrderDto.getHotelId());
-		if(hotelRootEntity !=null)
+		HotelDTO hotelDTO = hotelPortService.getOne(menuOrderDto.getHotelId());
+		if(hotelDTO !=null)
 		{
-			menuOrder.setHotelRootEntity(hotelRootEntity);
+			menuOrder.setHotelRootEntity(hotelDTO);
 		}
 		
-		CustomerRootEntity sender = customerPortService.getById(menuOrderDto.getSenderId());
+		CustomerDTO sender = customerPortService.getById(menuOrderDto.getSenderId());
 		if(sender!=null)
 		{
 			menuOrder.setSender(sender);
@@ -461,7 +461,7 @@ public class MenuPortServiceImpl implements IMenuPortService
 		
 		menuOrderRepository.saveAndFlush(menuOrder);
 		
-		if(menuOrderDto.getMenuItems().length>0) // && initMenuOrderId<=0)
+		if(!menuOrderDto.getMenuItems().isEmpty()) // && initMenuOrderId<=0)
 		{
 			if(menuOrder.getMenuItems()==null)
 			{
@@ -496,12 +496,11 @@ public class MenuPortServiceImpl implements IMenuPortService
 		
 		notificationService.sendNotificationToCustomerOrGuest(null, menuOrderDto.getSenderId(), HotelEvent.EVENT_MENU_NEW_UPDATE);
 		
-		
 		if(DealStatus.ACCEPTED.equals(clientOrderStatus))
 		{
 			//TODO Eugen: notificate STAFF about menu??? if orderedToRoom
 			
-			ICustomerRootEntity staff = checkinService.getStaffbyHotelId(menuOrderDto.getHotelId());
+			CustomerDTO staff = checkinService.getStaffbyHotelId(menuOrderDto.getHotelId());
 			
 			//Notificate STAFF about deal action!!!
 			if(staff != null)

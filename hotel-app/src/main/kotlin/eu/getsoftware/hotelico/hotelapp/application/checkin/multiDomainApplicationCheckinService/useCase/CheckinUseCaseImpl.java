@@ -4,9 +4,10 @@ import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerRequestDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageConsumeRequest;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.CustomerUpdateConsumeRequest;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.CustomerUpdateCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.JsonError;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging.CheckinMessagePublisher;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.chat.port.out.IChatService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
@@ -97,6 +98,8 @@ class CheckinUseCaseImpl implements CheckinUseCase
 	private NotificationUseCase notificationUseCase;
 	
 	private GPSValidationHandler gpsValidationHandler;
+	
+	private CheckinMessagePublisher checkinMessagePublisher;
 
 	@Transactional
 	@Override
@@ -109,7 +112,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		validateCustomerGPSLocation(customerRequestDto.customerId(), customerRequestDto.hotelId()); //UseCase.Primary-flow.step.2
 
 		ICustomerHotelCheckinEntity newCheckin = createCheckin(customerRequestDto); //UseCase.Primary-flow.step.3
-
+		
 		sendInitMessageFromHotelStaffToCustomer(newCheckin); //UseCase.Primary-flow.step.4
 		
 		CheckinDTO checkinResponseDTO = checkinService.getResponseDTO(newCheckin); //UseCase.Primary-flow.step.5
@@ -121,17 +124,23 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 	private void notificateHotelAboutNewGuest(CheckinDTO checkinResponseDTO) {
 
+		//eu:1 with DDD Publisher!
+		checkinMessagePublisher.publishCheckinCreatedEvent(checkinResponseDTO);
+		
+		
+		// eu:2 manuell topic exchange
 		// notificatinService.publishEvent(EVENT_CHECKIN, checkinResponseDTO); //UseCase.Primary-flow.step.6
 
-		HotelEvent hotelEvent = EVENT_CHECKIN;
-		
-		CustomerUpdateConsumeRequest notificationCustomerRequest = new CustomerUpdateConsumeRequest(
+		HotelEvent customHotelEvent = EVENT_CHECKIN; //eu: internal spring customEvent for @EventListener
+
+		CustomerUpdateCommand notificationCustomerRequest = new CustomerUpdateCommand(
 				checkinResponseDTO.getCustomerId(),
 				checkinResponseDTO.getHotelId(),
 				"customer-name from DB",
-				"customer-email from DB");		
-				
-		messagingProducerService.sendCustomerNotification(notificationCustomerRequest, hotelEvent);
+				"customer-email from DB");
+
+
+		messagingProducerService.sendCustomerNotification(notificationCustomerRequest, customHotelEvent);
 	}
 
 	private boolean validateCustomerGPSLocation(long customerId, long hotelId) throws JsonError {
@@ -292,7 +301,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 		//Eugen: every time update customer current hotelId!!!
 		lastMessagesService.updateCustomerHotelId(newCheckinEntity.getCustomer().getId(), newCheckinEntity.getHotel().getId());
-
+		
 		return newCheckinEntity;
 	}
 
