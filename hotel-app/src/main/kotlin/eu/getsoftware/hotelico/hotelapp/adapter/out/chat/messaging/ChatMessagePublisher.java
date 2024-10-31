@@ -1,8 +1,10 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.chat.messaging;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import eu.getsoftware.hotelico.clients.api.amqp.application.domain.model.DomainMessage;
 import eu.getsoftware.hotelico.clients.api.amqp.application.domain.model.DomainMessagePayload;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging.CheckinMessagePublisher;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,12 +13,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.codehaus.jackson.annotate.JsonTypeName;
 import org.springframework.stereotype.Component;
 
+import static eu.getsoftware.hotelico.hotelapp.adapter.out.chat.messaging.MessageStatus.QUEUED;
+
 @Component
 @Slf4j
 @RequiredArgsConstructor
 public class ChatMessagePublisher {
     
-    private final DomainMessagePublisher domainMessagePublisher;
+    private final CheckinMessagePublisher domainMessagePublisher;
     private final DomainMessageFactory domainMessageFactory;
     
     public void publishChatSentEvent(ChatMsgDTO chatMsgDTO){
@@ -34,13 +38,19 @@ public class ChatMessagePublisher {
         domainMessagePublisher.publish(domainMessage);
         log.info("Published message of type {}", domainMessage.getMessageType());
     }
-    
+
+    /**
+     * Payload have to be send in Queue in JSON - FORM
+     */
     @AllArgsConstructor
     @Builder
     @Getter
     @JsonTypeName("chat-send-event")
     static class ChatSendEventMessage extends DomainMessagePayload {
+
+        @JsonProperty
         private long messageId;
+        
         private MessageStatus status;
     }
     

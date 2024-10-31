@@ -1,3 +1,7 @@
+import com.google.common.collect.ImmutableList;
+import org.springframework.amqp.rabbit.listener.adapter.MessageListenerAdapter;
+import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -55,10 +59,15 @@ public class DomainMessageSubscriberConfiguration extends AbstractDomainMessageS
         return listenerAdapter;
     }
 
+    /**
+     * Eu: Alle Payloads in Queue, hier listen
+     * @return
+     */
     @Override
     protected DomainMessagePayloadSubtypeModule getDomainMessagePayloadSubtypeModule() {
         return new DomainMessagePayloadSubtypeModule(
                 ShopPayload.class,
+                ChatPayload.class,
                 ProductPayload.class,
                 AttributePayload.class,
                 ImagePayload.class,

@@ -5,7 +5,7 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.Sets;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageConsumeRequest;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
@@ -599,7 +599,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 			// ChatMessage dbLastMessage = chatRepository.getLastMessageByCustomerAndReceiverIds(fromMin, toMax);
 			
 			//TODO asynchron request chat microService
-			RabbitConverterFuture<ChatMsgDTO> chatMsgOptFuture = hotelRabbitMQProducer.sendAsynchDirectExchangeMethodCall(new ChatMessageConsumeRequest(senderId, receiverId, true, ""));
+			RabbitConverterFuture<ChatMsgDTO> chatMsgOptFuture = hotelRabbitMQProducer.sendAsynchDirectExchangeMethodCall(new ChatMessageCommand(senderId, receiverId, true, ""));
 			
 			chatMsgOptFuture.addCallback(new ListenableFutureCallback<>() {
 				@Override

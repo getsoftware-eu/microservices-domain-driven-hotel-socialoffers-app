@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.infrastructure.amqp;
 
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageConsumeRequest;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.CustomerUpdateConsumeRequest;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatUserEntity;
@@ -49,7 +49,7 @@ public class ChatEventsConsumer
 	}
 	
 	@RabbitListener(queues = "${rabbitmq.queue.chat.request}")
-	public void consumeCustomerUpdateNotification(ChatMessageConsumeRequest chatMessageRequest){
+	public void consumeCustomerUpdateNotification(ChatMessageCommand chatMessageRequest){
 		log.info("Consumed {} from queue", chatMessageRequest);
 		log.info(chatMessageRequest.customMsg());
 		

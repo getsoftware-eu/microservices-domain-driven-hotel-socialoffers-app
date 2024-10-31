@@ -34,6 +34,35 @@ public class CheckinMessagePublisher {
     private final StorageApiUriBuilder storageApiUriBuilder;
     @NonNull
     private ShopRefRepository shopRefRepository;
+
+    public void publishCheckinUpdatedEvent(CheckinDTO checkinDTO){
+        publishMessage(CHECKIN_UPDATED_EVENT_TYPE_NAME, checkinDTO);
+    }
+
+    public void publishCheckinDeletedEvent(CheckinDTO checkinDTO){
+        publishMessage(CHECKIN_DELETED_EVENT_TYPE_NAME, checkinDTO);
+    }
+
+    /**
+     * only private execution!!
+     * @param messageType
+     * @param checkinDTO
+     */
+    private void publishMessage(String messageType, CheckinDTO checkinDTO) {
+
+        // DomainMessage<ChatSendEventMessage> domainMessage = domainChatMessageFactory.create(messageType, eventMessage);
+
+        DomainMessage<?> eventMessage = domainMessageFactory
+                .prepareDomainMessageForType(messageType)
+//                .withEntity(checkinDTO)
+                .withEntityAndProjection(checkinEntity, CheckinDTO.class) //eu: create projection for json
+                .withCurrentTenant()
+                .withAdditionalProperty("data","test")
+                .build();
+
+        domainMessagePublisher.publish(eventMessage);
+        log.info("Published message {}", eventMessage);
+    }
     
     public void publishCheckinCreatedEvent(CheckinDTO checkinDTO){
         DomainMessage<?> message = buildMessage(CHECKIN_CREATED_EVENT_TYPE_NAME, checkinDTO, false);
@@ -52,34 +81,8 @@ public class CheckinMessagePublisher {
         DomainMessage<?> message = buildMessage(CHECKIN_DELETED_EVENT_TYPE_NAME, checkinDTO, false);
         publishMessage(message);
     }
+
     
-//    public void publishCheckinUpdatedEvent(CheckinDTO checkinDTO){
-//        publishMessage("checkin.checkin.updated.event", checkinDTO);
-//    }
-//    
-//    public void publishCheckinDeletedEvent(CheckinDTO checkinDTO){
-//        publishMessage("checkin.checkin.deleted.event", checkinDTO);
-//    }
-
-    /**
-     * only private execution!!
-     * @param messageType
-     * @param checkinDTO
-     */
-    private void publishMessage(String messageType, CheckinDTO checkinDTO) {
-
-        // DomainMessage<ChatSendEventMessage> domainMessage = domainChatMessageFactory.create(messageType, eventMessage);
-       
-        DomainMessage<?> eventMessage = domainMessageFactory
-                .prepareDomainMessageForType(messageType)
-                .withEntity(checkinDTO)
-                .withCurrentTenant()
-                .withAdditionalProperty("data","test")
-                .build();
-
-        domainMessagePublisher.publish(eventMessage);
-        log.info("Published message {}", eventMessage);
-    }
 
     private DomainMessage<?> buildMessage(String messageType, CheckinDTO checkinDTO, boolean includeChangeSet) {
 

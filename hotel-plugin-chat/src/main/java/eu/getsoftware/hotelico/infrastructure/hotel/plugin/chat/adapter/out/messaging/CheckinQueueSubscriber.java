@@ -1,27 +1,28 @@
-package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging;
+package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.messaging;
 
-import eu.getsoftware.hotelico.clients.api.amqp.application.domain.model.DomainMessage;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto.CheckinDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
+
 /**
- * central subscriber class
- * eu: builds from payload our local (re-created) instance for persisting it (partial) updated state in repository
+ * eu: This listener reacts on new events only in checkin Query.
+ * For every incoming checkin-event we have own "Processing Manager" actions(commands)!
  */
 @Slf4j
 @Component
 @RequiredArgsConstructor
 @RabbitListener(queues = "checkin.queue", id = "listener")
-public class CheckinMessageSubscriber implements DomainMessageSubscriber {
+public class CheckinQueueSubscriber implements DomainMessageSubscriber {
     
     private static final String TYPE = "checkin";
-    
-    private final CheckinRepository checkinRepository;
+
+    /**
+     * extra "prozess manager" for checkin-events for Chat-Domain-Microservice
+     */
+    ChatCheckinProzessManager chatCheckinProzessManager;
     
 //    @DomainMessageHandler("checkin.checkin.created.event")
     @RabbitHandler //to consume multiple data type payloads from the same queue
@@ -30,8 +31,7 @@ public class CheckinMessageSubscriber implements DomainMessageSubscriber {
 
         {
             log.info("Processing event {}", message.getMessageType());
-            CheckinDTO checkin = toCheckin(payload).build();
-            checkinRepository.save(checkin);
+            chatCheckinProzessManager.createWellcomeChatMessage(payload.checkinCustomer, payload.hotelId);
         }
     }
 
@@ -42,8 +42,8 @@ public class CheckinMessageSubscriber implements DomainMessageSubscriber {
 
         {
             log.info("Processing event {}", message.getMessageType());
-            CheckinDTO checkin = toCheckin(payload).build();
-            checkinRepository.partialUpdateCheckin(checkin);
+//            CheckinDTO checkin = toCheckin(payload).build();
+//            checkinRepository.partialUpdateCheckin(checkin);
         }
     } 
     
@@ -54,7 +54,7 @@ public class CheckinMessageSubscriber implements DomainMessageSubscriber {
 
         {
             log.info("Processing event {}", message.getMessageType());
-            checkinRepository.delete(payload.getId());
+            chatCheckinProzessManager.createClosingChatMessage(payload.checkinCustomer, payload.hotelId);
         }
     }
 

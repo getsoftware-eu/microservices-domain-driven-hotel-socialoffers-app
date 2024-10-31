@@ -1,13 +1,14 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService;
 
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageConsumeRequest;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.CustomerUpdateCommand;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.IHotelEvent;
 
 public interface IMessagingProducerService<E extends IHotelEvent> {
 
-    void sendChatMessageTopicRequest(ChatMessageConsumeRequest chatMessageRequest);
+    void sendChatMessageCommand(ChatMessageCommand chatMessageRequest);
 
-    void sendCustomerNotification(CustomerUpdateConsumeRequest requestDTO, E hotelEvent);
+    void sendCustomerNotificationCommand(CustomerUpdateCommand requestDTO, E hotelEvent);
 
     /**
      * for events in domain layer??

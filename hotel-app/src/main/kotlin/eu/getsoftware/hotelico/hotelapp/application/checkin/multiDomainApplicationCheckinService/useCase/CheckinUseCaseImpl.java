@@ -3,12 +3,11 @@ package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicat
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerRequestDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageConsumeRequest;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.CustomerUpdateCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.JsonError;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging.CheckinMessagePublisher;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.chat.port.out.IChatService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto.CheckinDTO;
@@ -27,6 +26,7 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.*;
 
@@ -103,11 +103,12 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 	@Transactional
 	@Override
-	public CheckinDTO validateAndCreateCustomerCheckin(CheckinRequestDTO customerRequestDto) throws JsonError {
+	public CheckinDTO validateAndCreateCustomerCheckin(@Validated CheckinRequestDTO customerRequestDto) throws JsonError {
 
 		// UseCase : Primary-flow
 
-		validateCheckin(customerRequestDto); // UseCase.Primary-flow.step.1
+		//eu: error: not validate DTO!!! DTO validates itself!!!! 
+		// validateCheckin(customerRequestDto); // UseCase.Primary-flow.step.1
 		
 		validateCustomerGPSLocation(customerRequestDto.customerId(), customerRequestDto.hotelId()); //UseCase.Primary-flow.step.2
 
@@ -117,6 +118,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		
 		CheckinDTO checkinResponseDTO = checkinService.getResponseDTO(newCheckin); //UseCase.Primary-flow.step.5
 		
+		//eu: error: create no commands to other domains, they receive event and execute own logik!!!
 		notificateHotelAboutNewGuest(checkinResponseDTO);
 				
 		return checkinResponseDTO;
@@ -135,45 +137,28 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		// eu:2 manuell topic exchange
 		// notificatinService.publishEvent(EVENT_CHECKIN, checkinResponseDTO); //UseCase.Primary-flow.step.6
 
-		HotelEvent customHotelEvent = EVENT_CHECKIN; //eu: internal spring customEvent for @EventListener
-
-		CustomerUpdateCommand notificationCustomerRequest = new CustomerUpdateCommand(
+		CustomerUpdateCommand notificationCustomerCommand = new CustomerUpdateCommand(
 				checkinResponseDTO.getCustomerId(),
 				checkinResponseDTO.getHotelId(),
 				"customer-name from DB",
 				"customer-email from DB");
 
 
-		messagingProducerService.sendCustomerNotification(notificationCustomerRequest, customHotelEvent);
+		messagingProducerService.sendCustomerNotificationCommand(notificationCustomerCommand, EVENT_CHECKIN);
 	}
 
 	private boolean validateCustomerGPSLocation(long customerId, long hotelId) throws JsonError {
+		
 		int distanceKm = AppConfigProperties.checkinDistanceKm;
+		
 		if(! gpsValidationHandler.checkLastCustomerLocationDiffToHotelById(customerId, hotelId, distanceKm))
 		{
 			throw new JsonError("Checkin will be activated only in area of " + distanceKm + "km. near the hotel.");
 		}
-		return true;
-	}
-
-	private static boolean validateCheckin(CheckinRequestDTO checkinRequestDto) throws JsonError {
-
-		if( checkinRequestDto.customerId()<=0)
-		{
-			throw new JsonError("no user for checkin.");
-		}
-
-		if(! checkinRequestDto.validateCheckinDates())
-		{
-			throw new JsonError("please correct your checkin information.");
-		}
-
-		if(checkinRequestDto.hotelId()>0 && (checkinRequestDto.checkinTo()==null || checkinRequestDto.checkinTo().before(new Date()))) {
-			throw new JsonError("Checkin Date is wrong or in past");
-		}
 		
 		return true;
 	}
+	
 
 	private ICustomerHotelCheckinEntity createCheckin(CheckinRequestDTO checkinRequestDto) throws JsonError {
 		
@@ -335,7 +320,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		CustomerDTO initHotelStaff = newCheckin.getHotel().getStaffList().stream().findFirst()
 				.orElseThrow(()-> new JsonError("HotelStaff is not set for hotel" + newCheckin.getHotel().getId()));
 
-		ChatMessageConsumeRequest wellcomeChatMessage = new ChatMessageConsumeRequest(
+		ChatMessageCommand wellcomeChatMessage = new ChatMessageCommand(
 				initHotelStaff.getId(),
 				newCheckin.getCustomer().getId(), 
 				false,
