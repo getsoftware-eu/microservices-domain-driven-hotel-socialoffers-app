@@ -4,22 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="DDD examples">
-      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/chat/messaging/MessageStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/messaging/CheckinQueueSubscriber.java" afterDir="false" />
+    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="fix rabbitMq @RabbitHandler for many payloads for one Queue">
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/test/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/dto/CheckinRequestDTOTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/chat/messaging/ChatMessagePublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/chat/messaging/ChatMessagePublisher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/checkin/messaging/CheckinMessagePublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/checkin/messaging/CheckinMessagePublisher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/checkin/messaging/CheckinMessageSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/checkin/messaging/CheckinMessageSubscriber.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/customer/portServiceImpl/CustomerPortServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/customer/portServiceImpl/CustomerPortServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/outPortServiceImpl/LastMessagesServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/outPortServiceImpl/LastMessagesServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/outPortServiceImpl/microservice/MessagingRabbitMQProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/outPortServiceImpl/microservice/MessagingRabbitMQProducer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/dto/CheckinRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/dto/CheckinRequestDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IMessagingProducerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IMessagingProducerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/main/config/infrastructure/DomainMessageSubscriberConfiguration.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/main/config/infrastructure/DomainMessageSubscriberConfiguration.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/application/infrastructure/amqp/ChatEventsConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/application/infrastructure/amqp/ChatEventsConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/amqpConsumeNotification/ChatMessageCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/amqpConsumeNotification/ChatMessageCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/application/infrastructure/service/AsyncMSCommunicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/application/infrastructure/service/AsyncMSCommunicationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/amqpConsumeNotification/CustomerUpdateCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/amqpConsumeNotification/SocketNotificationCommand.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +21,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="136300" />
+    <option name="totalTimeSeconds" value="137808" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -38,6 +32,7 @@
         <option value="Class" />
         <option value="Interface" />
         <option value="Enum" />
+        <option value="JUnit5 Test Class" />
       </list>
     </option>
   </component>
@@ -100,40 +95,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Maven.apigw [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.common-client-api-libs [deploy].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.common-client-api-libs [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-app [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-app [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotelservices [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotelservices [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotelservices [test].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.notification [deploy].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.notification [install].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;Spring Boot.MainApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_directory_selection&quot;: &quot;D:/work/projects/GetSoftw/social-hotel-interactions/hotel-app/src/test/kotlin/eu/getsoftware/hotelico/hotelapp&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/work/projects/GetSoftw/social-hotel-interactions/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/domain/user&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;2389370ba893e5daeee482193e73d301&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.apigw [package].executor": "Run",
+    "Maven.common-client-api-libs [deploy].executor": "Run",
+    "Maven.common-client-api-libs [package].executor": "Run",
+    "Maven.hotel-app [compile].executor": "Run",
+    "Maven.hotel-app [install].executor": "Run",
+    "Maven.hotelservices [clean].executor": "Run",
+    "Maven.hotelservices [install].executor": "Run",
+    "Maven.hotelservices [test].executor": "Run",
+    "Maven.notification [deploy].executor": "Run",
+    "Maven.notification [install].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.MainApplication.executor": "Debug",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "D:/work/projects/GetSoftw/social-hotel-interactions/hotel-app/src/test/kotlin/eu/getsoftware/hotelico/hotelapp",
+    "last_opened_file_path": "D:/work/projects/GetSoftw/social-hotel-interactions/common-client-api-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/domain/user",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "spring.configuration.checksum": "2389370ba893e5daeee482193e73d301",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -156,6 +153,9 @@
       <recent name="eu.getsoftware.hotelico.customer.infrastructure.dto" />
       <recent name="eu.getsoftware.hotelico.clients.infrastructure.hotel.dto" />
     </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
       <recent name="eu.getsoftware.hotelico.clients.common.model.innerModelService" />
       <recent name="eu.getsoftware.hotelico.hotelapp.adapter" />
@@ -165,6 +165,9 @@
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="eu.getsoftware.hotelico.hotel.application.infrastructure.service" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
       <recent name="eu.getsoftware.hotelico.hotelapp.application.hotel.domain.mapper" />
@@ -476,7 +479,7 @@
       <workItem from="1730064290350" duration="2016000" />
       <workItem from="1730066573224" duration="2262000" />
       <workItem from="1730106425820" duration="10244000" />
-      <workItem from="1730395637839" duration="6063000" />
+      <workItem from="1730395637839" duration="7569000" />
     </task>
     <task id="LOCAL-00001" summary="-CHG: Microservice refactoring(Eureka-server)">
       <created>1655287660110</created>
@@ -652,14 +655,6 @@
       <option name="presentableId" value="LOCAL-00025" />
       <option name="project" value="LOCAL" />
       <updated>1683714777053</updated>
-    </task>
-    <task id="LOCAL-00053" summary="refactoring &quot;in&quot; &quot;out&quot; customer DTO">
-      <option name="closed" value="true" />
-      <created>1727953247342</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1727953247342</updated>
     </task>
     <task id="LOCAL-00054" summary="refactoring &quot;in&quot; &quot;out&quot; customer DTO">
       <option name="closed" value="true" />
@@ -845,7 +840,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730119337824</updated>
     </task>
-    <option name="localTasksCounter" value="77" />
+    <task id="LOCAL-00077" summary="fix rabbitMq @RabbitHandler for many payloads for one Queue">
+      <option name="closed" value="true" />
+      <created>1730406335986</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1730406335988</updated>
+    </task>
+    <option name="localTasksCounter" value="78" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -875,7 +878,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="add REST API Controller central interface" />
     <MESSAGE value="update spring boot 3.1.0" />
     <MESSAGE value="update clean architecure &quot;ports and adapters&quot;" />
     <MESSAGE value="refactoring adapters" />
@@ -900,7 +902,8 @@
     <MESSAGE value="RabbitMq Listener + shared RabbitQueueConfig" />
     <MESSAGE value="Checkin EventPublisher and EventSubscriber!" />
     <MESSAGE value="DDD examples" />
-    <option name="LAST_COMMIT_MESSAGE" value="DDD examples" />
+    <MESSAGE value="fix rabbitMq @RabbitHandler for many payloads for one Queue" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix rabbitMq @RabbitHandler for many payloads for one Queue" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -926,7 +929,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java</url>
-          <line>349</line>
+          <line>342</line>
           <properties class="eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.CheckinUseCaseImpl" method="getStaffbyHotelId">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -940,7 +943,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-field">
           <url>file://$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainApplicationCheckinService/useCase/CheckinUseCaseImpl.java</url>
-          <line>98</line>
+          <line>97</line>
           <properties field="notificationUseCase" class="eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.CheckinUseCaseImpl" />
           <option name="timeStamp" value="4" />
         </line-breakpoint>

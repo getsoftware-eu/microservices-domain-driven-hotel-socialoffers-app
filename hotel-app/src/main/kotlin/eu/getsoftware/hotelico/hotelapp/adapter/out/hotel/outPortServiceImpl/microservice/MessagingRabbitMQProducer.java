@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.mi
 import eu.getsoftware.hotelico.clients.api.amqp.application.producer.RabbitMQMessageProducer;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.CustomerUpdateCommand;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IMessagingProducerService;
@@ -43,7 +43,7 @@ public class MessagingRabbitMQProducer implements IMessagingProducerService<Hote
 		rabbitMQMessageProducer.publish(INTERNAL_EXCHANGE, routingKey, chatMessageCommand);
 	}	
 	
-	public void sendCustomerNotificationCommand(CustomerUpdateCommand command, HotelEvent hotelEvent)
+	public void sendSocketNotificationCommand(SocketNotificationCommand command, HotelEvent hotelEvent)
 	{
 		//only for 1 and 2 Method we have to write this system variables: 
 		String routingKey = getRabbitMQRoutingKeyFrom(hotelEvent);

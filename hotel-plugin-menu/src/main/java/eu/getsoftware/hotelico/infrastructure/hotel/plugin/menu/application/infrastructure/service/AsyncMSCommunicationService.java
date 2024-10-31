@@ -2,8 +2,8 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.inf
 
 import eu.getsoftware.hotelico.clients.api.amqp.application.producer.RabbitMQMessageProducer;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.CustomerUpdateCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.NotificationEvent;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.MenuDTO;
 import eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.service.amqp.MessageProducerWithPersistence;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuItemEntity;
@@ -118,7 +118,7 @@ public class AsyncMSCommunicationService
 	 * @param customerUpdateCommand
 	 */
 	@RabbitListener(queues = "${rabbitmq.queue.customer.update}")
-	public void consumeNotification(CustomerUpdateCommand customerUpdateCommand){
+	public void consumeNotification(SocketNotificationCommand customerUpdateCommand){
 		log.info("Consumed {} from queue", customerUpdateCommand);
 		log.info(customerUpdateCommand.message());
 		
@@ -171,7 +171,7 @@ public class AsyncMSCommunicationService
 	}
 	
 	
-	private void handlePersistCustomerUpdate(CustomerUpdateCommand customerUpdateCommand)
+	private void handlePersistCustomerUpdate(SocketNotificationCommand customerUpdateCommand)
 	{
 		Optional<MenuUserEntity> updatedChatUserOptional = menuUserRepository.findById(customerUpdateCommand.customerId());
 		

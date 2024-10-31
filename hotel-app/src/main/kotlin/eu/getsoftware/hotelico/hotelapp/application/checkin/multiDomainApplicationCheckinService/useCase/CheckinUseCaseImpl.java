@@ -4,7 +4,7 @@ import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerRequestDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.CustomerUpdateCommand;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.JsonError;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging.CheckinMessagePublisher;
@@ -110,7 +110,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		//eu: error: not validate DTO!!! DTO validates itself!!!! 
 		// validateCheckin(customerRequestDto); // UseCase.Primary-flow.step.1
 		
-		validateCustomerGPSLocation(customerRequestDto.customerId(), customerRequestDto.hotelId()); //UseCase.Primary-flow.step.2
+		validateCustomerWithGPSLocationService(customerRequestDto.customerId(), customerRequestDto.hotelId()); //UseCase.Primary-flow.step.2
 
 		ICustomerHotelCheckinEntity newCheckin = createCheckin(customerRequestDto); //UseCase.Primary-flow.step.3
 		
@@ -119,7 +119,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		CheckinDTO checkinResponseDTO = checkinService.getResponseDTO(newCheckin); //UseCase.Primary-flow.step.5
 		
 		//eu: error: create no commands to other domains, they receive event and execute own logik!!!
-		notificateHotelAboutNewGuest(checkinResponseDTO);
+		sendHotelNewGuestSocketNotificationCommand(checkinResponseDTO);
 				
 		return checkinResponseDTO;
 	}
@@ -128,7 +128,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 	 * eu: not manually event, but @Observer repository or Service!!!
 	 * @param checkinResponseDTO
 	 */
-	private void notificateHotelAboutNewGuest(CheckinDTO checkinResponseDTO) {
+	private void sendHotelNewGuestSocketNotificationCommand(CheckinDTO checkinResponseDTO) {
 
 		//eu:1 NOT MANUALLY, BUT WITH Service @OBSERVER!!! with DDD Publisher!
 		// checkinMessagePublisher.publishCheckinCreatedEvent(checkinResponseDTO);
@@ -137,17 +137,17 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		// eu:2 manuell topic exchange
 		// notificatinService.publishEvent(EVENT_CHECKIN, checkinResponseDTO); //UseCase.Primary-flow.step.6
 
-		CustomerUpdateCommand notificationCustomerCommand = new CustomerUpdateCommand(
+		SocketNotificationCommand notificationCustomerCommand = new SocketNotificationCommand(
 				checkinResponseDTO.getCustomerId(),
 				checkinResponseDTO.getHotelId(),
 				"customer-name from DB",
-				"customer-email from DB");
+				"new customer in Hotel");
 
 
-		messagingProducerService.sendCustomerNotificationCommand(notificationCustomerCommand, EVENT_CHECKIN);
+		messagingProducerService.sendSocketNotificationCommand(notificationCustomerCommand, EVENT_CHECKIN);
 	}
 
-	private boolean validateCustomerGPSLocation(long customerId, long hotelId) throws JsonError {
+	private boolean validateCustomerWithGPSLocationService(long customerId, long hotelId) throws JsonError {
 		
 		int distanceKm = AppConfigProperties.checkinDistanceKm;
 		
@@ -317,23 +317,17 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 
 	private void sendInitMessageFromHotelStaffToCustomer(ICustomerHotelCheckinEntity newCheckin) throws JsonError {
+		
 		CustomerDTO initHotelStaff = newCheckin.getHotel().getStaffList().stream().findFirst()
 				.orElseThrow(()-> new JsonError("HotelStaff is not set for hotel" + newCheckin.getHotel().getId()));
 
-		ChatMessageCommand wellcomeChatMessage = new ChatMessageCommand(
+		ChatMessageCommand wellcomeChatMessageCommand = new ChatMessageCommand(
 				initHotelStaff.getId(),
 				newCheckin.getCustomer().getId(), 
 				false,
 				newCheckin.getHotel().getWellcomeMessage());
 		
-		messagingProducerService.sendChatMessageTopicRequest(wellcomeChatMessage); //UseCase.Primary-flow.step.6
-
-//		chatService.sendFirstChatMessageOnDemand(
-//				EVENT_CHECKIN, 
-//				initHotelStaff, 
-//				newCheckin.getCustomer(), 
-//				newCheckin.getHotel().getWellcomeMessage()
-//		);
+		messagingProducerService.sendChatMessageCommand(wellcomeChatMessageCommand); //UseCase.Primary-flow.step.6
 	}
 
 	private ICustomerHotelCheckinEntity updateHotelCheckin(CustomerRequestDTO customerRequestDTO, ICustomerRootEntity customerEntity, ICustomerHotelCheckinEntity nextCheckin, boolean isFullCheckin) {
