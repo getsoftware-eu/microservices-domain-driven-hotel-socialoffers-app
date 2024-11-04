@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.customer.portServiceImpl;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerRequestDTO;
-import eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.NotificationService;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
@@ -16,8 +16,9 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.DealReposit
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.HotelRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.LanguageRepository;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.CustomerAggregate;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerAggregate;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.*;
 import org.modelmapper.ModelMapper;
@@ -83,16 +84,21 @@ public class CustomerPortServiceImpl implements CustomerPortService
     private IMessagingProducerService<HotelEvent> messagingService;
 
 
-    public CustomerAggregate recreateDomainEntityFromDBProjection(UUID customerEntityId)
+    public CustomerRootEntity recreateDomainEntityFromDBProjection(UUID customerEntityId)
     {
         CustomerDBEntity dbProjection = customerRepository.findByDomainEntityIdAndActive(customerEntityId.toString(), true)
                 .orElseThrow(() -> new RuntimeException("no hotel"));
 
-        CustomerAggregate.CustomerBuilder.CustomerBuilderBuilder domain = CustomerAggregate.builder(/*new CustomerEntityId(dbProjection.getCustomerUUID())*/)
-                .firstName(dbProjection.getFirstName());
-                //.build();
-        
-        return CustomerAggregate.buildDomain(domain);
+        //Eugen: try to use external builder, but have to duplicate only fields, not methods (Lombok @Builder make it possible)
+//        CustomerAggregate.CustomerBuilder.CustomerBuilderBuilder domain = CustomerAggregate.builder(/*new CustomerEntityId(dbProjection.getCustomerUUID())*/)
+//                .firstName(dbProjection.getFirstName());
+//                //.build();
+//        
+//        return CustomerAggregate.buildDomain(domain);
+
+        return CustomerAggregate.getEntityBuilder(new CustomerEntityId(dbProjection.getCustomerUUID()))
+                .firstName(dbProjection.getFirstName()) 
+                .build();
     }
     
     @Override

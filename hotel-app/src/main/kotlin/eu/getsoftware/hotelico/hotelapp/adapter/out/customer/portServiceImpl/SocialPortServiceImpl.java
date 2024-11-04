@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.customer.portServiceImpl;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.CustomerAggregate;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerAggregate;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.iPortService.SocialService;
 import org.springframework.transaction.annotation.Transactional;
 

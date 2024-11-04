@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model;
+package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;

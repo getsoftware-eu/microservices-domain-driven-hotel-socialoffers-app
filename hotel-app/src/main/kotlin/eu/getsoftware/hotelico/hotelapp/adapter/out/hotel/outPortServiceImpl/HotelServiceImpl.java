@@ -29,9 +29,9 @@ import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.u
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.HotelDomainEntity;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.HotelGroupAggregate;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelDomainEntity;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelGroupAggregate;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
 import org.modelmapper.ModelMapper;
