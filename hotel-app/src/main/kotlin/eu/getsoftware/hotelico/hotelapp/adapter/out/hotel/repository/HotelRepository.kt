@@ -47,6 +47,8 @@ interface HotelRepository: JpaRepository<HotelRootEntity, Long> {
 	//@Query(FIND_BY_HOTEL_CODE_QUERY)
 	fun findByCurrentHotelAccessCodeAndActive(currentHotelAccessCode: String, active: Boolean = true): Optional<HotelRootEntity>
 	
+	fun findByDomainEntityIdAndActive(domainEntityId: String, active: Boolean = true): Optional<HotelRootEntity>
+	
 	@Query(FIND_ACTIVITY_NUMBER_BY_HOTEL_QUERY)
 	fun getActivityCounter(@Param("hotelId") hotelId: Int): Int
 	

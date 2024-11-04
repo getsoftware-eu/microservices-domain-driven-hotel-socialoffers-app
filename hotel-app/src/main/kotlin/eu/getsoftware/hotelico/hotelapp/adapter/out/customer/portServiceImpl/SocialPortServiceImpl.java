@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.customer.portServiceImpl;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.CustomerAggregate;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.iPortService.SocialService;
@@ -17,7 +17,7 @@ public class SocialPortServiceImpl implements SocialService {
     @Override
     public CustomerDTO addLinkedInCustomer(CustomerDTO customerDto, String linkedInId){
 
-        CustomerRootEntity customerEntity = modelMapper.map(customerDto, CustomerRootEntity.class);
+        CustomerDBEntity customerEntity = modelMapper.map(customerDto, CustomerDBEntity.class);
 
         CustomerAggregate aggregate = customerEntity.getEntityAggregate();
 
@@ -45,7 +45,7 @@ public class SocialPortServiceImpl implements SocialService {
     @Transactional
     @Override
     public CustomerDTO addFacebookCustomer(CustomerDTO customerDto, String facebookId){
-        CustomerRootEntity customerEntity = modelMapper.map(customerDto, CustomerRootEntity.class);
+        CustomerDBEntity customerEntity = modelMapper.map(customerDto, CustomerDBEntity.class);
         customerEntity.getEntityAggregate().setFacebookId(facebookId);
         customerEntity.getEntityAggregate().setProfileImageUrl(customerDto.getProfileImageUrl());
 
@@ -71,7 +71,7 @@ public class SocialPortServiceImpl implements SocialService {
 
     @Override
     public CustomerDTO getByLinkedInId(String linkedInId){
-        List<CustomerRootEntity> customerEntities = customerRepository.findByLinkedInIdAndActive(linkedInId, true);
+        List<CustomerDBEntity> customerEntities = customerRepository.findByLinkedInIdAndActive(linkedInId, true);
 
         if(customerEntities.isEmpty())
         {

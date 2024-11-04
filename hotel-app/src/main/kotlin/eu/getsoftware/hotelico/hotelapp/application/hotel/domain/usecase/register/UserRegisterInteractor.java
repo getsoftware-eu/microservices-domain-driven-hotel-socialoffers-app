@@ -39,4 +39,9 @@ public class UserRegisterInteractor {
         return userOutputApplicationPresenter.prepareSuccessView(accountResponseModel);
     }
 
+    
+    public createHotelFromProjection()
+    {
+        
+    }
 }

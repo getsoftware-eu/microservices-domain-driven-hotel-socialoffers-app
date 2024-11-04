@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model;
 
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelRootEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -63,7 +63,7 @@ public class MenuItemView implements Serializable
 
 	@ManyToOne
 	@JoinColumn(name="creator")
-	private CustomerRootEntity creator;
+	private CustomerDBEntity creator;
 	
 	@Column
 	private Timestamp timestamp;

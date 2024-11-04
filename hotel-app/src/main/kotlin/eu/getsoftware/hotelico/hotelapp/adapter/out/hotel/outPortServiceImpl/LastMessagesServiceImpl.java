@@ -9,7 +9,7 @@ import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNot
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.microservice.MessagingRabbitMQProducer;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.HotelRepository;
@@ -192,17 +192,17 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	}
 	
 	@Override
-	public List<CustomerRootEntity> getOnlineCustomers()
+	public List<CustomerDBEntity> getOnlineCustomers()
 	{
-		List<CustomerRootEntity> resultList = new ArrayList<>();
+		List<CustomerDBEntity> resultList = new ArrayList<>();
 		
 		Set<Long> customerIds = lastCustomerOnlineMap.keySet();
 		
 		if(customerIds.isEmpty())
 		{
-			List<CustomerRootEntity> onlinein24HCustomerEntities =  customerService.getAllIn24hOnline();
+			List<CustomerDBEntity> onlinein24HCustomerEntities =  customerService.getAllIn24hOnline();
 			
-			for (CustomerRootEntity nextOnlineIn24HCustomerRootEntity : onlinein24HCustomerEntities)
+			for (CustomerDBEntity nextOnlineIn24HCustomerRootEntity : onlinein24HCustomerEntities)
 			{
 				lastCustomerOnlineMap.put(nextOnlineIn24HCustomerRootEntity.getId(), nextOnlineIn24HCustomerRootEntity.getLastSeenOnline());
 				
@@ -256,7 +256,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 			return currentConsistencyIdsMap.get(customerId);
 		}
 		
-		CustomerRootEntity customerEntity = customerRepository.getOne(customerId);
+		CustomerDBEntity customerEntity = customerRepository.getOne(customerId);
 		
 		long newConsistencyId = customerEntity !=null? customerEntity.getConsistencyId(): -1;
 
@@ -410,9 +410,9 @@ public class LastMessagesServiceImpl implements LastMessagesService
 		
 		if(customerIds.isEmpty())
 		{
-			List<CustomerRootEntity> onlinein24HCustomerEntities =  customerService.getAllIn24hOnline();
+			List<CustomerDBEntity> onlinein24HCustomerEntities =  customerService.getAllIn24hOnline();
 			
-			for (CustomerRootEntity nextOnlineIn24HCustomerRootEntity : onlinein24HCustomerEntities)
+			for (CustomerDBEntity nextOnlineIn24HCustomerRootEntity : onlinein24HCustomerEntities)
 			{
 				lastCustomerOnlineMap.put(nextOnlineIn24HCustomerRootEntity.getId(), nextOnlineIn24HCustomerRootEntity.getLastSeenOnline());
 				

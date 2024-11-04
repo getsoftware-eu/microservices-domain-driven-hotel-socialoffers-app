@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto;
+package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

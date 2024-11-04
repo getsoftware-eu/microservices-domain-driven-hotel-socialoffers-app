@@ -1,5 +1,22 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+import com.google.common.collect.ImmutableSet;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelEntityId;
+import jakarta.persistence.Id;
+import jakarta.persistence.Version;
+import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Wither;
+
+import java.time.LocalDateTime;
+
+import static kotlin.jvm.internal.Intrinsics.checkNotNull;
+
+@Builder
 public class HotelDomainEntity implements MultitenantDocument, Scoreable {
 
     public static final String TYPE_NAME = "product";
@@ -7,6 +24,14 @@ public class HotelDomainEntity implements MultitenantDocument, Scoreable {
     @Id
     private String id; // UUID can not be used as document ID yet. https://jira.spring.io/browse/DATAES-163
 
+    @Getter
+    private final HotelEntityId hotelEntityId;
+
+    public HotelDomainEntity(HotelEntityId hotelEntityId)
+    {
+        this.hotelEntityId = hotelEntityId;
+    }
+    
     @Version
     private Long version;
 
@@ -154,33 +179,8 @@ public class HotelDomainEntity implements MultitenantDocument, Scoreable {
     public static class HotelBuilder {
     }
 }
-Copy
-        Respository
-@RepositoryRestResource(exported = false)
-public interface HotelRepository extends ElasticsearchRepository<Hotel, String>, HotelRepositoryExtension {
-
-    Optional<Hotel> findVisibleById(String id);
-}
-
-public interface HotelRepositoryExtension {
-
-    Page<Hotel> findVisibleByTags(@NotNull Set<String> tags, @NotNull Pageable pageable);
-
-    Page<Hotel> findVisibleBySearchTerm(@Nullable String searchTerm, @NotNull Pageable pageable);
-
-    Page<Hotel> findVisibleByCategoryQuery(@NotNull CategoryQuery categoryQuery, @NotNull Pageable pageable);
-
-    Optional<Hotel> findOneIgnoringVisibility(@NotNull String id);
-
-    Hotel partialUpdateHotel(@NotNull Hotel product);
-
-    Hotel partialUpdateAttributes(@NotNull Hotel product);
-
-    Hotel partialUpdateImages(@NotNull Hotel product);
-
-    Hotel partialUpdateAvailability(@NotNull Hotel product);
-}
  
+
 
 
 

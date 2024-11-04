@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model;
 
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelWallPost;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -51,7 +51,7 @@ public class HotelWallPost implements IHotelWallPost, Serializable
 	
 	@ManyToOne
 	@JoinColumn(name="senderId")
-	private CustomerRootEntity sender;
+	private CustomerDBEntity sender;
 
 	@ManyToOne
 	@JoinColumn(name="hotelId")
@@ -63,7 +63,7 @@ public class HotelWallPost implements IHotelWallPost, Serializable
 
 	}
 
-	public HotelWallPost(String message, CustomerRootEntity sender, HotelRootEntity hotelRootEntity) {
+	public HotelWallPost(String message, CustomerDBEntity sender, HotelRootEntity hotelRootEntity) {
 
 		this();
 

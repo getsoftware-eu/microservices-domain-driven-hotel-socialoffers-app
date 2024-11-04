@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model;
 
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.DealStatus;
 import jakarta.persistence.*;
@@ -52,7 +52,7 @@ public class MenuOrderView implements Serializable
 
 	@ManyToOne
 	@JoinColumn(name="senderId")
-	private CustomerRootEntity sender;
+	private CustomerDBEntity sender;
 	
 	@Column
 	private Timestamp timestamp = new Timestamp(new Date().getTime());	

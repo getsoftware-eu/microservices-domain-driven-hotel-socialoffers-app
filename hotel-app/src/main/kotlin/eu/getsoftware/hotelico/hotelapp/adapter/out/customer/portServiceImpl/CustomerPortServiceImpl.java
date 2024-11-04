@@ -6,7 +6,7 @@ import eu.getsoftware.hotelico.clients.api.infrastructure.notification.applicati
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.Language;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.domainServiceImpl.CustomerPersistGatewayServiceImpl;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
@@ -81,9 +81,22 @@ public class CustomerPortServiceImpl implements CustomerPortService
     
     @Autowired
     private IMessagingProducerService<HotelEvent> messagingService;
+
+
+    public CustomerAggregate recreateDomainEntityFromDBProjection(UUID customerEntityId)
+    {
+        CustomerDBEntity dbProjection = customerRepository.findByDomainEntityIdAndActive(customerEntityId.toString(), true)
+                .orElseThrow(() -> new RuntimeException("no hotel"));
+
+        CustomerAggregate.CustomerBuilder.CustomerBuilderBuilder domain = CustomerAggregate.builder(/*new CustomerEntityId(dbProjection.getCustomerUUID())*/)
+                .firstName(dbProjection.getFirstName());
+                //.build();
+        
+        return CustomerAggregate.buildDomain(domain);
+    }
     
     @Override
-    public List<CustomerRootEntity> getCustomers() {
+    public List<CustomerDBEntity> getCustomers() {
         return customerRepository.findByActive(true);
     }
     
@@ -104,9 +117,9 @@ public class CustomerPortServiceImpl implements CustomerPortService
     }
     
     @Override
-    public Optional<CustomerRootEntity> getById(long customerId, long dtoRequesterId) {
+    public Optional<CustomerDBEntity> getById(long customerId, long dtoRequesterId) {
         
-        CustomerRootEntity customerEntity = customerPersistGatewayService.findEntityById(customerId);
+        CustomerDBEntity customerEntity = customerPersistGatewayService.findEntityById(customerId);
         
         CustomerDTO out = null;
        
@@ -128,7 +141,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
 
             if(dtoRequesterId >0)
             {
-                CustomerRootEntity requester = getEntityById(dtoRequesterId).orElseThrow(()-> new RuntimeException("no dtoRequesterId"));
+                CustomerDBEntity requester = getEntityById(dtoRequesterId).orElseThrow(()-> new RuntimeException("no dtoRequesterId"));
                 out = setDtoLastMessageWithRequester(requester, out);
             }
         }
@@ -137,7 +150,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
     }
     
     @Override
-    public Optional<CustomerRootEntity> getEntityById(long customerId) {
+    public Optional<CustomerDBEntity> getEntityById(long customerId) {
         return customerRepository.findById(customerId);
     }
 
@@ -151,7 +164,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
             return customerDto;
         }
         
-        CustomerRootEntity customerEntity = modelMapper.map(customerDto, CustomerRootEntity.class);
+        CustomerDBEntity customerEntity = modelMapper.map(customerDto, CustomerDBEntity.class);
 
         fillCustomerFromDto(customerDto, customerEntity);
        
@@ -228,7 +241,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
         //TODO Eugen: ONLY DTO UPDate hier
         if(customerDbConsistencyId > dtoConsistencyId)
         {
-            CustomerRootEntity customerEntity = customerRepository.getOne(dto.getId());
+            CustomerDBEntity customerEntity = customerRepository.getOne(dto.getId());
             
             if(customerEntity ==null)
             {
@@ -254,7 +267,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
     @Transactional
     public CustomerDTO updateCustomer(CustomerRequestDTO customerDto, int updatorId) {
         
-        CustomerRootEntity customerEntity = customerRepository.getOne(customerDto.getId());
+        CustomerDBEntity customerEntity = customerRepository.getOne(customerDto.getId());
     
         CustomerAggregate customerAggregate = new CustomerAggregate(customerEntity);
         
@@ -421,7 +434,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
     }
 
     @Override
-    public boolean relocateGuestDealsToLoggedCustomer(CustomerRootEntity customerEntity, Long guestCustomerId)
+    public boolean relocateGuestDealsToLoggedCustomer(CustomerDBEntity customerEntity, Long guestCustomerId)
     {
         if(customerEntity ==null || guestCustomerId==null)
         {
@@ -440,7 +453,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
         return !(anonymGuestDeals.isEmpty());
     }
 
-    private void fillCustomerFromDto(CustomerDTO customerDto, CustomerRootEntity customerEntity)
+    private void fillCustomerFromDto(CustomerDTO customerDto, CustomerDBEntity customerEntity)
     {
         //NOTE eugen: hier set only different [Entity-Dto] fields
         String[] languageDescriptions = customerDto.getLanguages();
@@ -487,17 +500,17 @@ public class CustomerPortServiceImpl implements CustomerPortService
     }
     
     @Override
-    public CustomerDTO convertCustomerToDto(CustomerRootEntity customerEntity, long hotelId){
+    public CustomerDTO convertCustomerToDto(CustomerDBEntity customerEntity, long hotelId){
         return convertCustomerToDto(customerEntity, hotelId, false, null);
     }
     
     @Override
-    public CustomerDTO convertCustomerToDto(CustomerRootEntity customerEntity, boolean fullSerialization, CustomerHotelCheckin validCheckin){
+    public CustomerDTO convertCustomerToDto(CustomerDBEntity customerEntity, boolean fullSerialization, CustomerHotelCheckin validCheckin){
         return convertCustomerToDto(customerEntity, validCheckin.getHotel().getId(), fullSerialization, validCheckin);
     }
     
     @Override
-    public CustomerDTO convertMyCustomerToFullDto(CustomerRootEntity customerEntity){
+    public CustomerDTO convertMyCustomerToFullDto(CustomerDBEntity customerEntity){
         return convertCustomerToDto(customerEntity, 0, true, null);
     }
     
@@ -513,7 +526,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
      * @param validCheckin
      * @return
      */
-    private CustomerDTO convertCustomerToDto(CustomerRootEntity customerEntity, long hotelId, boolean fullSerialization, CustomerHotelCheckin validCheckin)
+    private CustomerDTO convertCustomerToDto(CustomerDBEntity customerEntity, long hotelId, boolean fullSerialization, CustomerHotelCheckin validCheckin)
     {
         CustomerDTO dto = modelMapper.map(Objects.requireNonNull(customerEntity), CustomerDTO.class);
         
@@ -540,7 +553,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
      * @param dto
      * @return
      */
-    private CustomerDTO fillDtoProfileInfo(CustomerRootEntity customerEntity, CustomerDTO dto, boolean fullSerialization)
+    private CustomerDTO fillDtoProfileInfo(CustomerDBEntity customerEntity, CustomerDTO dto, boolean fullSerialization)
     {
         if(customerEntity !=null && customerEntity.getLanguageSet()!=null)
         {
@@ -594,7 +607,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
     
     
     @Override
-    public String getCustomerAvatarUrl(CustomerRootEntity customerEntity)
+    public String getCustomerAvatarUrl(CustomerDBEntity customerEntity)
     {
 
         String avatar_m = /*isOrange? "angulr/img/build/avatar/incognito-orange-m.png" :*/ "/" + AppConfigProperties.HOST_SUFFIX + "angulr/img/build/avatar/incognito-m.png";
@@ -750,7 +763,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
     @Override
     public Optional<CustomerDTO> getByEmail(String email)
     {
-        CustomerRootEntity customerEntity = customerRepository.findByEmailAndActive(Objects.requireNonNull(email), true)
+        CustomerDBEntity customerEntity = customerRepository.findByEmailAndActive(Objects.requireNonNull(email), true)
                 .stream().findFirst().get();
 
          if(customerEntity != null) {
@@ -789,11 +802,11 @@ public class CustomerPortServiceImpl implements CustomerPortService
     public Set<CustomerDTO> getByCity(long customerId, String city)
     {
         //TODO Eugen: bessere query by active and city
-        List<CustomerRootEntity> allCustomerEntities = customerRepository.findAll();
+        List<CustomerDBEntity> allCustomerEntities = customerRepository.findAll();
 
         Set<CustomerDTO> resultList = new HashSet<>();
         
-        for (CustomerRootEntity nextCustomerRootEntity : allCustomerEntities)
+        for (CustomerDBEntity nextCustomerRootEntity : allCustomerEntities)
         {
             if(nextCustomerRootEntity.isActive() && (nextCustomerRootEntity.getCity()!=null && nextCustomerRootEntity.getCity().equals(city) || city==null && nextCustomerRootEntity.getCity()==null))
             {
@@ -817,7 +830,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
     {
         long requesterId = guestRequesterId;
         
-        CustomerRootEntity requester = customerRepository.getOne(requesterId);
+        CustomerDBEntity requester = customerRepository.getOne(requesterId);
         
 //        if(requester==null)
 //        {
@@ -841,7 +854,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
 
         for(CustomerHotelCheckin nextCheckin : checkins)
         {
-            CustomerRootEntity nextCustomerRootEntity = nextCheckin.getCustomer();
+            CustomerDBEntity nextCustomerRootEntity = nextCheckin.getCustomer();
 
             //eugen: filter guest accounts not active more than 1 day
             if(nextCustomerRootEntity.isGuestAccount() && nextCustomerRootEntity.getLastSeenOnline()!=null && nextCustomerRootEntity.getLastSeenOnline().before(convertToDate(LocalDateTime.now().minusDays(AppConfigProperties.AWAY_GUEST_DAYS_TIMEOUT))))
@@ -883,9 +896,9 @@ public class CustomerPortServiceImpl implements CustomerPortService
         
         if(addStaff && hotelId>0)
         {
-            List<CustomerRootEntity> staffs = checkinRepository.getStaffByHotelId(hotelId);
+            List<CustomerDBEntity> staffs = checkinRepository.getStaffByHotelId(hotelId);
             
-            for(CustomerRootEntity nextCustomerRootEntity : staffs)
+            for(CustomerDBEntity nextCustomerRootEntity : staffs)
             {
                 CustomerDTO dto = convertCustomerToDto(nextCustomerRootEntity, hotelId);
 
@@ -905,15 +918,15 @@ public class CustomerPortServiceImpl implements CustomerPortService
     
 
     @Override
-    public CustomerRootEntity addGetAnonymCustomer()
+    public CustomerDBEntity addGetAnonymCustomer()
     {
-        List<CustomerRootEntity> anonymes = customerRepository.getAnonymeCustomer();
+        List<CustomerDBEntity> anonymes = customerRepository.getAnonymeCustomer();
        
-        CustomerRootEntity anonym = null;
+        CustomerDBEntity anonym = null;
                 
         if(anonymes.isEmpty())
         {
-            anonym = new CustomerRootEntity();
+            anonym = new CustomerDBEntity();
             anonym.setFirstName("[anonym]");
             anonym.setLastName("[anonym]");
             anonym.setEmail("[anonym]");

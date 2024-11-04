@@ -1,8 +1,11 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.domain;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerEntityId;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerDetails;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerPreferences;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
+import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 
 /**
  * TODO DO I  NEED Aggregate DUPLICATION, OR JUST RequestDTO and ResponseDTO?????
@@ -17,229 +20,60 @@ import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICusto
 public class CustomerAggregate
 {
 //	private final CustomerRootEntityBuilder customerBuilder;
-	private final ICustomerRootEntity customerRootEntity;
+	private final CustomerRootEntity customerRootEntity;
 	private final ICustomerDetails customerDetails;
 	private final ICustomerPreferences customerPreferences;
-	
-	public CustomerAggregate(ICustomerRootEntity customerRootEntity){
+	private final CustomerEntityId customerEntityId;
+
+	public CustomerAggregate(CustomerRootEntity customerRootEntity){
 		this.customerRootEntity = customerRootEntity;
+		this.customerEntityId = customerRootEntity.getEntityId();
 //		this.customerBuilder = customerRootEntity.toBuilder();
 		this.customerDetails = customerRootEntity.getCustomerDetails();
 		this.customerPreferences = customerRootEntity.getCustomerPreferences();
 	}
-	
-	// SETTERS for customerPreferences
-	
-//	public void setHideChromePushPopup(boolean hideChromePushPopup)
-//	{
-//		customerPreferences.setHideChromePushPopup(hideChromePushPopup);
+
+	/**
+	 * Entry Point to all Entity setters!!!
+	 * @return
+	 */
+//	public static CustomerRootEntity.CustomerRootEntityBuilder getEntityBuilder(CustomerEntityId customerEntityId){
+//		return CustomerRootEntity.builder();
 //	}
-//	
-//	public void setPrefferedLanguage(String prefferedLanguage)
-//	{
-//		customerPreferences.setPrefferedLanguage(prefferedLanguage);
-//	}
-//	
-//	public void setHideWallPopup(boolean hideWallPopup)
-//	{
-//		customerPreferences.setHideWallPopup(hideWallPopup);
-//	}
-//	
-//	public void setAllowHotelNotification(boolean allowHotelNotification)
-//	{
-//		customerPreferences.setAllowHotelNotification(allowHotelNotification);
-//	}
-//	
-//	public void setHideHotelListPopup(boolean hideHotelListPopup)
-//	{
-//		customerPreferences.setHideHotelListPopup(hideHotelListPopup);
-//	}
-//	
-//	public void setHideCheckinPopup(boolean hideCheckinPopup)
-//	{
-//		customerPreferences.setHideCheckinPopup(hideCheckinPopup);
-//	}
-//	
-//	public String getPrefferedLanguage()
-//	{
-//		return customerPreferences.getPrefferedLanguage();
-//	}
-//	
-//	public boolean isAllowHotelNotification()
-//	{
-//		return customerPreferences.isAllowHotelNotification();
-//	}
-//	
-//	// SETTERS for customerDetails
-//	
-//	public String getCity()
-//	{
-//		return customerDetails.getCity();
-//	}
-//	
-//	public Optional<String> getProfileImageLink()
-//	{
-//		return customerDetails.getProfileImageLink();
-//	}
-//	
-//	public void setProfileImageLink(String link)
-//	{
-//		customerDetails.setProfileImageLink(link);
-//	}
-//	
-//	public void setBirthday(Date birthdayDate)
-//	{
-//		customerDetails.setBirthday(birthdayDate);
-//	}
-//	
-//	public void setProfileImageUrl(String s)
-//	{
-//		customerDetails.setProfileImageUrl(s);
-//	}
-//	
-//	public void setCity(String city)
-//	{
-//		customerDetails.setCity(city);
-//	}
-//	
-//	public void setCompany(String company)
-//	{
-//		customerDetails.setCompany(company);
-//	}
-//	
-//	public void setJobTitle(String jobTitle)
-//	{
-//		customerDetails.setJobTitle(jobTitle);
-//	}
-//	
-//	public void setOriginalCity(String originalCity)
-//	{
-//		customerDetails.setOriginalCity(originalCity);
-//	}
-//	
-//	public void setJobDescriptor(String jobDescriptor)
-//	{
-//		customerDetails.setJobDescriptor(jobDescriptor);
-//	}
-//	
-//	public String getProfileImageUrl()
-//	{
-//		return customerDetails.getProfileImageUrl();
-//	}
-//	
-//	// SETTERS for customerRootEntity
-//	
-//	public void setConsistencyId(long consistencyId)
-//	{
-//		customerRootEntity.setConsistencyId(consistencyId);
-//	}
-//	
-//	public long getId()
-//	{
-//		return customerRootEntity.getId();
-//	}
-//	
-//	public ICustomerRootEntity getCustomerEntity(){
-//		return customerRootEntity;
-//	}
-//	
-//	public void setLatitude(double latitude)
-//	{
-//		customerRootEntity.setLatitude(latitude);
-//	}
-//	
-//	public void setLongitude(double longitude)
-//	{		
-//		customerRootEntity.setLongitude(longitude);
-//	}
-//	
-//	public void setHotelStaff(boolean b)
-//	{
-//		customerRootEntity.setHotelStaff(b);
-//	}
-//	
-//	public void setLogged(boolean b)
-//	{
-//		customerRootEntity.setLogged(b);
-//	}
-//	
-//	public void setPasswordValue(String password)
-//	{
-//		customerRootEntity.setPasswordValue(password);
-//	}
-//	
-//	public void setPasswordHash(long passwordHash)
-//	{
-//		customerRootEntity.setPasswordHash(passwordHash);
-//	}
-//	
-//	public void setGuestAccount(boolean b)
-//	{
-//		customerRootEntity.setGuestAccount(b);
-//	}
-//	
-//	public void setActive(boolean b) 
-//	{
-//		customerRootEntity.setActive(b);
-//	}
-//	
-//	public void setFirstName(String firstName)
-//	{
-//		customerRootEntity.setFirstName(firstName);
-//	}
-//	
-//	public void setLastName(String lastName)
-//	{		
-//		customerRootEntity.setLastName(lastName);
-//	}
-//	
-//	public void setStatus(String status)
-//	{
-//		customerRootEntity.setStatus(status);
-//	}
-//	
-//	public void setSex(String sex)
-//	{
-//		customerRootEntity.setSex(sex);
-//	}
-//	
-//	public void setShowAvatar(boolean showAvatar)
-//	{
-//		customerRootEntity.setShowAvatar(showAvatar);
-//	}
-//	
-//	public void setShowInGuestList(boolean showInGuestList)
-//	{
-//		customerRootEntity.setShowInGuestList(showInGuestList);
-//	}
-//	
-//	public void setEmail(String email)
-//	{
-//		customerRootEntity.setEmail(email);
-//	}
-//	
-//	public void setLinkedInId(String linkedInId)
-//	{
-//		customerRootEntity.setLinkedInId(linkedInId);
-//	}
-//	
-//	public void setFacebookId(String facebookId)
-//	{
-//		customerRootEntity.setFacebookId(facebookId);
-//	}
-//	
-//	public void setPushRegistrationId(String s)
-//	{
-//		customerRootEntity.setPushRegistrationId(s);
-//	}
-//	
-//	public double getLatitude()
-//	{
-//		return customerRootEntity.getLatitude();
-//	}
-//	
-//	public double getLongitude()
-//	{
-//		return customerRootEntity.getLongitude();
-//	}
+
+	public static CustomerAggregate buildDomain(CustomerBuilder.CustomerBuilderBuilder domain) {
+		CustomerRootEntity build = domain.build().rootEntityBuild();
+		return new CustomerAggregate(build);
+	}
+
+	public CustomerEntityId getDomainEntityId() {
+		return customerRootEntity.getEntityId();
+	}
+
+	// Static method to return a new builder instance
+	public static CustomerBuilder.CustomerBuilderBuilder builder(CustomerEntityId customerEntityId) {
+		return new CustomerBuilder(customerEntityId).CustomerBuilderBuilder();
+	}
+
+	// Static inner builder class
+	@Builder
+	@RequiredArgsConstructor
+	public static class CustomerBuilder extends ICustomerRootEntity {
+
+		private final CustomerEntityId customerEntityId;
+
+		private String firstName;
+		private String lastName;
+		private String status;
+
+//		CustomerBuilder(CustomerEntityId customerEntityId)
+//		{
+//			this.customerEntityId = customerEntityId;
+//		}
+		
+		// Build method to return a new Customer instance
+		public CustomerRootEntity rootEntityBuild() {
+			return new CustomerRootEntity(customerEntityId);
+		}
+	}
 }

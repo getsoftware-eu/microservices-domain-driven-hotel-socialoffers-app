@@ -5,7 +5,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model;
  */
 
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelActivity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.ICustomerDealId;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.ManyToOne;
@@ -14,17 +14,17 @@ import lombok.Setter;
 @Embeddable
 class CustomerDealId implements ICustomerDealId {
 
-	private CustomerRootEntity customerEntity;
+	private CustomerDBEntity customerEntity;
 	
 	@Setter
 	private HotelActivity activity;
 
 	@ManyToOne
-	public CustomerRootEntity getCustomer() {
+	public CustomerDBEntity getCustomer() {
 		return customerEntity;
 	}
 
-	public void setCustomer(CustomerRootEntity customerEntity) {
+	public void setCustomer(CustomerDBEntity customerEntity) {
 		this.customerEntity = customerEntity;
 	}
 

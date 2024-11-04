@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.jpa
 
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import jakarta.persistence.PersistenceException;
@@ -37,14 +37,14 @@ class HotelRepositoryTests
 
     @Test
     void existingPaymentCanBeFound() {
-        ICustomerRootEntity customer = new CustomerRootEntity();
+        ICustomerRootEntity customer = new CustomerDBEntity();
         CustomerHotelCheckin checkin = new CustomerHotelCheckin();
 
         // when:
         Long customerId = entityManager.persist(customer).getId();
         entityManager.persist(checkin);
 
-        Optional<CustomerRootEntity> savedCustomer = customerRepository.findById(customerId);
+        Optional<CustomerDBEntity> savedCustomer = customerRepository.findById(customerId);
 
         // then:
         assertThat(savedCustomer).isPresent();
@@ -53,7 +53,7 @@ class HotelRepositoryTests
 
     @Test
     void paymentsAreUniquePerOrder() {
-        CustomerRootEntity order = new CustomerRootEntity();
+        CustomerDBEntity order = new CustomerDBEntity();
         CustomerHotelCheckin first = new CustomerHotelCheckin();
         CustomerHotelCheckin second = new CustomerHotelCheckin();
 

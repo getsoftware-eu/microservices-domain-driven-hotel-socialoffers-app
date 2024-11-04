@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model;
 
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IFileUploadable;
 import jakarta.persistence.*;
@@ -57,7 +57,7 @@ public class HotelActivity implements Serializable, IFileUploadable
 
 	@ManyToOne
 	@JoinColumn(name="senderId")
-	private CustomerRootEntity sender;
+	private CustomerDBEntity sender;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "validFrom", length = 10)
@@ -96,13 +96,13 @@ public class HotelActivity implements Serializable, IFileUploadable
 	@JoinTable(name="CUSTOMER_LIKED_ACTIVITIES",
 			joinColumns={@JoinColumn(name="ACTIVITY_ID")},
 			inverseJoinColumns={@JoinColumn(name="CUSTOMER_ID")}) //TODO Eugen:, nullable = false, updatable = true
-	private Set<CustomerRootEntity> likedCustomerEntities = new HashSet<CustomerRootEntity>();	
+	private Set<CustomerDBEntity> likedCustomerEntities = new HashSet<CustomerDBEntity>();	
 	
 	@ManyToMany(cascade = { CascadeType.ALL})
 	@JoinTable(name="CUSTOMER_SUBSCRIBE_ACTIVITIES",
 			joinColumns={@JoinColumn(name="ACTIVITY_ID")},
 			inverseJoinColumns={@JoinColumn(name="CUSTOMER_ID")}) //TODO Eugen:, nullable = false, updatable = true
-	private Set<CustomerRootEntity> subscribeCustomerEntities = new HashSet<CustomerRootEntity>();
+	private Set<CustomerDBEntity> subscribeCustomerEntities = new HashSet<CustomerDBEntity>();
 	
 	@Column(name = "dealAllowed", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_TRUE)
 	private boolean dealAllowed = true;	

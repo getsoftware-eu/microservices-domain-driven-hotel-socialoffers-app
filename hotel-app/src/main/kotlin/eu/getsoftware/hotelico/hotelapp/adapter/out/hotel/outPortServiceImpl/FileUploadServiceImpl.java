@@ -7,7 +7,7 @@ import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.FileUtils;
 import eu.getsoftware.hotelico.hotel.application.port.in.iService.*;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelActivity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelRootEntity;
@@ -479,7 +479,7 @@ public class FileUploadServiceImpl implements FileUploadService
 //				String model = sendInfo[2];
 //				Integer modelId = Integer.parseInt(sendInfo[3]);
 	
-				CustomerRootEntity sender = customerRepository.getOne(senderId);
+				CustomerDBEntity sender = customerRepository.getOne(senderId);
 	
 				//Eugen: only creation of a new Hotel is allowed without login!!!
 				if (sender == null && !(model.equalsIgnoreCase("hotel") && modelId>9999))
@@ -618,7 +618,7 @@ public class FileUploadServiceImpl implements FileUploadService
 			case "customer":
 			{
 				
-				CustomerRootEntity customerEntity = customerRepository.getOne(entityId);
+				CustomerDBEntity customerEntity = customerRepository.getOne(entityId);
 				
 				pictureUrl = customerEntity.getPictureUrl();
 				

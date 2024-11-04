@@ -91,3 +91,5 @@ Guests can get to know other guests in the hotel. And earn bonus points for hote
 Based on my another GitHub project:
 https://github.com/getsoftware-eu/clean-architecture-hexagonal-my-approach
 
+Practical Event-Driven Microservices Architecture
+https://www.springerprofessional.de/en/practical-event-driven-microservices-architecture/19852048

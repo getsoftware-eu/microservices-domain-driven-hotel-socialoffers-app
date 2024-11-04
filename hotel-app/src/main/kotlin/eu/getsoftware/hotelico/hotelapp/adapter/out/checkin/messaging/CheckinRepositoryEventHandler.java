@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging;
 
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.CustomerHotelCheckin;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto.CheckinDTO;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto.CheckinRequestDTO;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinRequestDTO;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,11 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.domain.model;
 
 import eu.getsoftware.hotelico.clients.common.domain.IDomainEntity;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerEntityId;
 
+/**
+ * Try to entkoppeln domain logik from domainEntity, mabe all actions only with interface :)))))
+ */
 public interface ICustomerRootEntity extends IDomainEntity {
     
     void setConsistencyId(long consistencyId);
@@ -44,8 +48,6 @@ public interface ICustomerRootEntity extends IDomainEntity {
 
     boolean isAdmin();
 
-    ICustomerRootEntity getEntityAggregate();
-
     String getPrefferedLanguage();
 
     String getFirstName();
@@ -63,4 +65,6 @@ public interface ICustomerRootEntity extends IDomainEntity {
     ICustomerDetails getCustomerDetails();
 
     ICustomerPreferences getCustomerPreferences();
+
+    CustomerEntityId getEntityId();
 }

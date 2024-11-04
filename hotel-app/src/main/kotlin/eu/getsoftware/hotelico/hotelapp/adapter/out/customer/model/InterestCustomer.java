@@ -36,7 +36,7 @@ class InterestCustomer implements Serializable
 
 	//eugen: mappedBy entity.field on this Entity!
 	@ManyToMany(mappedBy="interests")
-	private Set<CustomerRootEntity> customerEntities = new HashSet<>();
+	private Set<CustomerDBEntity> customerEntities = new HashSet<>();
 
 	public static long getSerialVersionUID()
 	{

@@ -7,21 +7,21 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import(DomainMessageSubscriberConfiguration.class) // We need this import so this class is recognized as a ImportBeanDefinitionRegistrar and its registerBeanDefinitions method is called
-public class DomainMessageSubscriberConfiguration extends AbstractDomainMessageSubscriberConfiguration {
+public class DomainMessageSubscriberConfiguration /*extends AbstractDomainMessageSubscriberConfiguration*/ {
 
     public static final String REPLY_QUEUE_NAME = "checkin-view.queue";
 
-    @Override
+    //@Override
     public String getServiceName() {
         return "checkin-view";
     }
 
-    @Override
+    //@Override
     public String getVerticalName() {
         return "checkin";
     }
 
-    @Override
+    //@Override
     protected List<SubscriberConfigurationItem> getSubscriberConfigurations() {
         return ImmutableList.of(
                 SubscriberConfigurationItem.builder()

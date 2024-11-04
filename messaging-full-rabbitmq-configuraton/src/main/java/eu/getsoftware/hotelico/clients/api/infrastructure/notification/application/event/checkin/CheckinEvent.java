@@ -1,11 +1,15 @@
-package eu.getsoftware.hotelico.hotelapp.application.checkin.domain.message.event;
+package eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.event.checkin;
+
+import eu.getsoftware.hotelico.clients.api.amqp.application.domain.model.DomainMessagePayload;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerEntityId;
 
 public class CheckinEvent extends DomainMessagePayload {
+    
     private final String userId;
     private final String checkinStatus;
 
-    public CheckinEvent(String userId, String checkinStatus) {
-        this.userId = userId;
+    public CheckinEvent(CustomerEntityId customerEntityId, String checkinStatus) {
+        this.userId = customerEntityId.toString();
         this.checkinStatus = checkinStatus;
     }
 

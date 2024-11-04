@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.common.collect.ImmutableSet;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
@@ -87,7 +87,7 @@ public class CustomerHotelCheckin implements ICustomerHotelCheckinEntity, java.i
 		this.pk = pk;
 	}
 	
-	public void setCustomer(CustomerRootEntity customerEntity) {
+	public void setCustomer(CustomerDBEntity customerEntity) {
 		getPk().setCustomer(customerEntity);
 	}
 

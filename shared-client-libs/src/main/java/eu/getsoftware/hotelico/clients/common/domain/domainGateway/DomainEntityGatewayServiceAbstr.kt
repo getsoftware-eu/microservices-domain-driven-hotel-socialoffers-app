@@ -4,6 +4,7 @@ import eu.getsoftware.hotelico.clients.common.domain.IDomainEntity
 import eu.getsoftware.hotelico.clients.common.error.UserNotFoundException
 import java.util.*
 
+
 /**
  * domain - because only entity service!
  * eu: For example, ON new foreign DOMAIN-EVENT => FIND(!!) AND UPDATE OWN LOCAL DOMAIN-Entity 
@@ -25,7 +26,7 @@ abstract class DomainEntityGatewayServiceAbstr<T: IDomainEntity>(
         val entity: T  
         try {
             entity = createInstance(assetClass);
-            entity.setInitValues(name)
+            entity.setInitValues(hashMapOf(Pair("name", name)))
         } catch (e: Exception) {
             throw RuntimeException(e);
         }

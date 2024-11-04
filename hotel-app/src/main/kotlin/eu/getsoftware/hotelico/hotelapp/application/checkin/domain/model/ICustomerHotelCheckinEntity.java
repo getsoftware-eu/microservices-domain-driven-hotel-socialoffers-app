@@ -1,21 +1,22 @@
 package eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model;
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelRootEntity;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
+import eu.getsoftware.hotelico.clients.common.domain.IDomainEntity;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelEntityId;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 
 /**
  * eu: try all validation put higher, ideally in entity or domain service
+ * 
  */
-public interface ICustomerHotelCheckinEntity {
+public interface ICustomerHotelCheckinEntity extends IDomainEntity {
 
-    default ICustomerHotelCheckinEntity createInstance(@NotNull ICustomerRootEntity customerEntity,  @NotNull IHotelRootEntity hotelRootEntity, @NotNull Date validFrom, @NotNull Date validTo) {
+    default ICustomerHotelCheckinEntity createInstance(@NotNull CustomerEntityId customerEntityId, @NotNull HotelEntityId hotelEntityId, @NotNull Date validFrom, @NotNull Date validTo) {
         setCheckinDates(validFrom, validTo);
-        setCustomer(customerEntity);
-        setHotel(hotelRootEntity);
+        setCustomerEntityId(customerEntityId);
+        setHotelEntityId(hotelEntityId);
         return this;
     }
 
@@ -65,17 +66,16 @@ public interface ICustomerHotelCheckinEntity {
 //        return new ICustomerHotelCheckinEntity(existingCheckinId, customerEntity, hotelRootEntity);
 //    }
     
-    void setCustomer(ICustomerRootEntity customerEntity);
+    void setCustomerEntityId(CustomerEntityId customerEntityId);
+    void setHotelEntityId(HotelEntityId hotelEntityId);
 
-    HotelRootEntity getHotel();
-
-    ICustomerRootEntity getCustomer();
+//    HotelRootEntity getHotel();
+//
+//    CustomerEntityId getCustomer();
     
     boolean isStaffCheckin();
 
     void setStaffCheckin(boolean staffCheckin);
-
-    void setHotel(IHotelRootEntity category);
 
     Date getValidFrom();
 

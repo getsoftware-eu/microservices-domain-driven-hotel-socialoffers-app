@@ -1,5 +1,8 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.messaging;
 
+import eu.getsoftware.hotelico.clients.api.amqp.application.domain.model.DomainMessage;
+import eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.message.CheckinAggregatePayload;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.messaging.service.ChatCheckinProzessManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
@@ -15,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 @RabbitListener(queues = "checkin.queue", id = "listener")
-public class CheckinQueueSubscriber implements DomainMessageSubscriber {
+public class CheckinQueueSubscriber /*implements DomainMessageSubscriber */{
     
     private static final String TYPE = "checkin";
 
@@ -31,7 +34,7 @@ public class CheckinQueueSubscriber implements DomainMessageSubscriber {
 
         {
             log.info("Processing event {}", message.getMessageType());
-            chatCheckinProzessManager.createWellcomeChatMessage(payload.checkinCustomer, payload.hotelId);
+            chatCheckinProzessManager.createWellcomeChatMessage(payload.getCheckinCustomer(), payload.getHotelId());
         }
     }
 
@@ -54,7 +57,7 @@ public class CheckinQueueSubscriber implements DomainMessageSubscriber {
 
         {
             log.info("Processing event {}", message.getMessageType());
-            chatCheckinProzessManager.createClosingChatMessage(payload.checkinCustomer, payload.hotelId);
+            chatCheckinProzessManager.createClosingChatMessage(payload.getCheckinCustomer(), payload.getHotelId());
         }
     }
 
@@ -66,9 +69,9 @@ public class CheckinQueueSubscriber implements DomainMessageSubscriber {
     private CheckinBuilder toCheckin(CheckinAggregatePayload payload) {
         return CheckinDTO.builder()
                 .initId(payload.getId())
-                .from(paylod.getfrom())
-                .to(paylod.getTo())
-                .hotelId(payload.getHoteId())
+                .from(payload.getFrom())
+                .to(payload.getTo())
+                .hotelId(payload.getHotelId())
                 .customerId(payload.getCustomerId());
     }
 

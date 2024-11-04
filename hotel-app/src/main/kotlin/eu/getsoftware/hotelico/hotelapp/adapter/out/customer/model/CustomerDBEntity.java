@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelActivity;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.CustomerAggregate;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerDetails;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerPreferences;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
@@ -12,10 +12,7 @@ import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Root Enity, only one way to get sub Entites
@@ -28,7 +25,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(name = "customer", schema = "customer")
 @DynamicUpdate
-public class CustomerRootEntity implements ICustomerRootEntity, Serializable, IFileUploadable
+public class CustomerDBEntity implements ICustomerRootEntity, Serializable, IFileUploadable
 {
     @Id
     @Setter(AccessLevel.PROTECTED)
@@ -163,6 +160,11 @@ public class CustomerRootEntity implements ICustomerRootEntity, Serializable, IF
         return customerPreferences;
     }
 
+    @Override
+    public CustomerEntityId getEntityId() {
+        return null;
+    }
+
     @Column(name = "points", columnDefinition="Decimal(10,2) default '0.00'")
 	private double points = 0.0;
     
@@ -209,7 +211,7 @@ public class CustomerRootEntity implements ICustomerRootEntity, Serializable, IF
             return false;
         }
 
-        CustomerRootEntity customerRootEntity = (CustomerRootEntity) o;
+        CustomerDBEntity customerRootEntity = (CustomerDBEntity) o;
 
         if (id != customerRootEntity.id)
         {
@@ -241,10 +243,10 @@ public class CustomerRootEntity implements ICustomerRootEntity, Serializable, IF
         return result;
     }
     
-    public CustomerAggregate getEntityAggregate()
-    {
-        return new CustomerAggregate(this);
-    }
+    //public CustomerAggregate getEntityAggregate()
+//    {
+//        return new CustomerAggregate(this);
+//    }
 
     @Override
     public String getPrefferedLanguage() {
@@ -271,9 +273,11 @@ public class CustomerRootEntity implements ICustomerRootEntity, Serializable, IF
 
     }
 
+
     @Override
-    public void setInitValues(String name) {
-        //this.setFirstName(name);
-        //this.setT(LocalDateTime.now());
+    public void setInitValues(Map<String, String> fieldToValues) {
+        
     }
+
+     
 }

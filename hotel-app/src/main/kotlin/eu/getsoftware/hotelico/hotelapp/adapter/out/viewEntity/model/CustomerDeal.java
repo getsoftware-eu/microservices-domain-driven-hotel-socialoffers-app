@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model;
 
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelActivity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.ICustomerDeal;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.DealStatus;
 import jakarta.persistence.*;
@@ -60,12 +60,12 @@ public class CustomerDeal implements ICustomerDeal {
 	public CustomerDeal() {
 	}
 	
-	public CustomerDeal(CustomerRootEntity customerEntity, HotelActivity activity, long initId) {
+	public CustomerDeal(CustomerDBEntity customerEntity, HotelActivity activity, long initId) {
 		this(customerEntity, activity);
 		this.initId = initId;
 	}
 	
-	public CustomerDeal(CustomerRootEntity customerEntity, HotelActivity activity) {
+	public CustomerDeal(CustomerDBEntity customerEntity, HotelActivity activity) {
 		
 		this();
 		
@@ -89,11 +89,11 @@ public class CustomerDeal implements ICustomerDeal {
 	}
 
 	@Transient
-	public CustomerRootEntity getCustomer() {
+	public CustomerDBEntity getCustomer() {
 		return getPk().getCustomer();
 	}
 	
-	public void setCustomer(CustomerRootEntity customerEntity) {
+	public void setCustomer(CustomerDBEntity customerEntity) {
 		getPk().setCustomer(customerEntity);
 	}
 

@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto;
+package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto;
 
 import eu.getsoftware.hotelico.clients.common.domain.IDomainRequestDTO;
 import jakarta.validation.constraints.NotNull;
@@ -8,6 +8,11 @@ import java.util.Date;
 
 /**
  * eu: RequestDTO contains all validation on Parameters (DDD style)
+ * 
+ * Domain and ValueObject contains max own validation information! Not spread to other services!!!
+ *  
+ * client just can't create an invalid request+++ :)
+ *  
  * @param customerId
  * @param hotelId
  * @param checkinFrom
@@ -39,7 +44,7 @@ public record CheckinRequestDTO(
                         throw new IllegalArgumentException("checkin Date is only in next " + MAX_YEAR_OFFSET + " years");
                 }
 
-                if(!validateCheckinDates())
+                if(!checkinDatesAreValid())
                 {
                    throw new IllegalArgumentException("please correct your checkin dates information.");
                 }
@@ -53,7 +58,7 @@ public record CheckinRequestDTO(
                 return checkinTo().before(new Date());
         }
 
-        public boolean validateCheckinDates() {
+        public boolean checkinDatesAreValid() {
                 return checkinFrom.before(checkinTo);
         }
         

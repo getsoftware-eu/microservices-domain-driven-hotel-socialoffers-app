@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.customer.security;
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.IRepository.ICustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.service.FileStore;
@@ -28,7 +28,7 @@ public class UserProfileService
         this.fileStore = fileStore;
     }
 
-    List<CustomerRootEntity> getUserProfiles() {
+    List<CustomerDBEntity> getUserProfiles() {
         return customerRepository.findAll();
     }
     
@@ -48,7 +48,7 @@ public class UserProfileService
         isImage(file);
 
         // 3. The user exists in our database
-        CustomerRootEntity user = customerRepository.findById(userProfileId).orElseThrow(() -> new NoSuchElementException("not found"));
+        CustomerDBEntity user = customerRepository.findById(userProfileId).orElseThrow(() -> new NoSuchElementException("not found"));
 
         // 4. Grab some metadata from file if any
         Map<String, String> metadata = extractMetadata(file);
@@ -72,7 +72,7 @@ public class UserProfileService
      * @return
      */
     byte[] downloadUserProfileImage(long userProfileId) {
-        CustomerRootEntity user = customerRepository.getById(userProfileId);
+        CustomerDBEntity user = customerRepository.getById(userProfileId);
 
         String pathInS3 = String.format("%s/%s",
                 BucketName.PROFILE_IMAGE.getBucketName(),

@@ -2,8 +2,8 @@ package eu.getsoftware.hotelico.hotelapp.application.checkin.port.in;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.JsonError;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto.CheckinDTO;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto.CheckinRequestDTO;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinRequestDTO;
 import org.springframework.transaction.annotation.Transactional;
 
 /**

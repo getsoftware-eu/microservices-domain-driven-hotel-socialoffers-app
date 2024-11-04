@@ -1,7 +1,18 @@
 package eu.getsoftware.hotelico.clients.common.domain;
 
+import java.util.Map;
+
 public interface IDomainEntity {
 
-    void setInitValues(String name);
+    void setInitValues(Map<String, String> fieldToValues);
+
+    /**
+     *     //this.setFirstName(name);
+     *     //this.setTime(LocalDateTime.now());
+     *     
+     * @return
+     * @param <I>
+     */
+    <I extends EntityIdentifier> I getEntityId();
 
 }

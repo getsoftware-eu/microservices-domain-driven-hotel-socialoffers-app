@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase;
+package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerRequestDTO;
@@ -10,8 +10,8 @@ import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging.CheckinMessagePublisher;
 import eu.getsoftware.hotelico.hotelapp.application.chat.port.out.IChatService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto.CheckinDTO;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto.CheckinRequestDTO;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinRequestDTO;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.in.CheckinUseCase;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.GPSValidationHandler;
@@ -171,7 +171,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		boolean isFullCheckin = hotelEntity.isVirtual();
 
 		boolean isDemoCheckin = AppConfigProperties.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelEntity.getCurrentHotelAccessCode());
-		boolean checkinDateIsValid = AppConfigProperties.NO_CHECKOUT_FOR_DEMOHOTEL && isDemoCheckin || checkinRequestDto.checkinTo()!=null && checkinRequestDto.getCheckinTo().after(new Date());
+		boolean checkinDateIsValid = AppConfigProperties.NO_CHECKOUT_FOR_DEMOHOTEL && isDemoCheckin || checkinRequestDto.checkinDatesAreValid();
 
 		isFullCheckin = isFullCheckin || isDemoCheckin;// set id DTO getter! || ControllerUtils.CHECKIN_FULL_ALWAYS;
 
@@ -267,7 +267,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 				checkinService.save(nextCheckin);
 			}
 
-			long wantedHotelId = checkinRequestDto.getHotelId();
+			long wantedHotelId = checkinRequestDto.hotelId();
 
 			long consistencyId = new Date().getTime();
 			customerEntity.getEntityAggregate().setConsistencyId(consistencyId);
@@ -282,7 +282,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 //			{
 				if(wantedHotelId == virtualHotelId && AppConfigProperties.ALLOW_INIT_VIRTUAL_HOTEL)
 				{
-					checkinResponseDto.setHotelId(virtualHotelId);
+					checkinResponseDto = checkinResponseDto.withHotelId(virtualHotelId);
 					checkinResponseDto.setFullCheckin(true);
 				}
 //			}

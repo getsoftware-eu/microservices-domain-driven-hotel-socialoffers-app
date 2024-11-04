@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging;
 
 import eu.getsoftware.hotelico.clients.api.amqp.application.domain.model.DomainMessage;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto.CheckinDTO;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;

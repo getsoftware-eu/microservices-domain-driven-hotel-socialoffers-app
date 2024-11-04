@@ -3,8 +3,8 @@ package eu.getsoftware.hotelico.hotelapp.application.checkin.port.out;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto.CheckinDTO;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainApplicationCheckinService.useCase.dto.CheckinRequestDTO;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinRequestDTO;
 
 import java.util.Date;
 import java.util.List;

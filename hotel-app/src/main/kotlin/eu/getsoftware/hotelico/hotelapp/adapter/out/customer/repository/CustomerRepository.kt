@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository;
 
 import eu.getsoftware.hotelico.clients.common.domain.domainGateway.IDomainEntityGateway
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.repository.JpaRepository
@@ -12,7 +12,7 @@ import java.sql.Timestamp
 import java.util.*
 
 @Repository
-interface CustomerRepository: IDomainEntityGateway<CustomerRootEntity, Long>, JpaRepository<CustomerRootEntity, Long> {
+interface CustomerRepository: IDomainEntityGateway<CustomerDBEntity, Long>, JpaRepository<CustomerDBEntity, Long> {
 	
 	companion object {
 		
@@ -39,37 +39,40 @@ interface CustomerRepository: IDomainEntityGateway<CustomerRootEntity, Long>, Jp
 				"AND c.id = :customerId " 
 	}
 
+	fun findByDomainEntityIdAndActive(domainEntityId: String, active: Boolean = true): Optional<CustomerDBEntity>
+
+
 	/**
 	 * Find user by eMail.
 	 */
-	fun findByEmailAndActive(email: String, active: Boolean): List<CustomerRootEntity>
+	fun findByEmailAndActive(email: String, active: Boolean): List<CustomerDBEntity>
 	
 	/**
 	 * Find user by linkedIn Id.
 	 */
-	fun findByLinkedInIdAndActive(linkedInId: String, active: Boolean): List<CustomerRootEntity>	
+	fun findByLinkedInIdAndActive(linkedInId: String, active: Boolean): List<CustomerDBEntity>	
 	
 	/**
 	 * Find user by facebook Id.
 	 */
-	fun findByFacebookIdAndActive(facebookId: String, active: Boolean): List<CustomerRootEntity>
+	fun findByFacebookIdAndActive(facebookId: String, active: Boolean): List<CustomerDBEntity>
 	
-	fun findByActive(active: Boolean): List<CustomerRootEntity>	
+	fun findByActive(active: Boolean): List<CustomerDBEntity>	
 	
-	fun findByActive(active: Boolean, pageable: Pageable): Page<CustomerRootEntity>	
+	fun findByActive(active: Boolean, pageable: Pageable): Page<CustomerDBEntity>	
 	
-	fun findByLoggedAndActive(logged: Boolean, active: Boolean): List<CustomerRootEntity>
+	fun findByLoggedAndActive(logged: Boolean, active: Boolean): List<CustomerDBEntity>
 	
 	@Query(FIND_ALL_ONLINE)
-	fun findAllOnline(@Param("checkDate") checkDate: Timestamp): List<CustomerRootEntity>
+	fun findAllOnline(@Param("checkDate") checkDate: Timestamp): List<CustomerDBEntity>
 
 	//	@Query(FIND_BY_ID_LIST)
-	fun findByIdIn(ids: List<Long>): List<CustomerRootEntity>
+	fun findByIdIn(ids: List<Long>): List<CustomerDBEntity>
 	
 	fun findByHotelStaffAndActive(hotelStaff: Boolean, active: Boolean): List<String>
 
 	@Query(FIND_ANONYM_CUSTOMER)
-	fun getAnonymeCustomer(): List<CustomerRootEntity>
+	fun getAnonymeCustomer(): List<CustomerDBEntity>
 	
 	@Query(CHECK_STAFF_OR_ADMIN_CUSTOMER)
 	fun checkStaffOrAdmin(@Param("customerId") customerId: Long): Boolean
@@ -77,6 +80,6 @@ interface CustomerRepository: IDomainEntityGateway<CustomerRootEntity, Long>, Jp
 	@Query(FIND_CUSTOMER_CITIES)
 	abstract fun findNotStaffUniueCities(): List<String>
 
-	override fun findByName(name: String?): Optional<CustomerRootEntity>
+	override fun findByName(name: String?): Optional<CustomerDBEntity>
 
 }

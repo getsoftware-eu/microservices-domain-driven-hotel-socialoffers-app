@@ -6,7 +6,7 @@ import eu.getsoftware.hotelico.clients.common.domain.IDomainResponseDTO
 import eu.getsoftware.hotelico.clients.common.domain.mapper.IDomainMapper
 
 /**
- * domain DTO - because only entity service!
+ * domain DTO - because we want separate only entity service from DTO service!
  */
 abstract class DomainEntityDTOServiceAbstr<T: IDomainEntity, I : IDomainRequestDTO, O : IDomainResponseDTO>(
     private val domainMapper: IDomainMapper<T, I, O>,

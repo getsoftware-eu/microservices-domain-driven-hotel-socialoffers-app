@@ -14,6 +14,7 @@ import org.hibernate.annotations.Type;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Getter @Setter
@@ -27,6 +28,9 @@ public class HotelRootEntity implements IHotelRootEntity, Serializable, IFileUpl
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "hotel_id_generator")
     @SequenceGenerator(name="hotel_id_generator", sequenceName = "hotel_id_seq")
     private long id;
+
+    @Column(columnDefinition = "BINARY(16)")
+    private UUID hotelUUID;
     
     @Column(name = "rating", nullable = true)
     private Integer rating;

@@ -5,41 +5,54 @@ import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import kotlin.reflect.jvm.internal.impl.descriptors.PropertyDescriptor;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Set;
 
 import static com.fasterxml.jackson.annotation.JsonInclude.Include.NON_EMPTY;
+import static java.util.Collections.emptyList;
 import static java.util.stream.Collectors.toSet;
+import static org.assertj.core.util.Preconditions.checkNotNull;
 
 @AllArgsConstructor
 public class DomainMessage<T extends DomainMessagePayload> {
     
     @NotNull
+    @Getter
     private final String messageType;
-    private final long messageId;
     
+    @NotNull
+    private final LocalDateTime timestamp;
+
     @Nullable
     private final Long tenantId;
+
+    @NotNull
+    @Getter
+    private final T payload;
+
+    @NotNull
+    @JsonInclude(NON_EMPTY)
+    private Collection<DiffItem> changeSet = emptyList();
+    
+    private final long messageId;
+    
+
 
     //Поля correlationId и causationId поддерживают отслеживание и отладку в распределенных системах.
     private final long correlationId;
     private final long causationId;
     
-    @NotNull
-    private final T payload;
+
     
-    @NotNull
-    @JsonInclude(NON_EMPTY)
-    private Collection<DiffItem> changeSet = Collections.emptyList();
+
     
-    @NotNull
-    private final LocalDateTime timestamp;
+
 
     private DomainMessage() {
         // needed by Jackson
@@ -85,7 +98,7 @@ public class DomainMessage<T extends DomainMessagePayload> {
 
         private final String messageType;
 
-        private Integer tenantId;
+        private Long tenantId;
 
         private LocalDateTime timestamp = LocalDateTime.now();
 
@@ -116,13 +129,14 @@ public class DomainMessage<T extends DomainMessagePayload> {
 
         @NotNull
         public DomainMessage<T> build(@NotNull T payload) {
-            requireJsonTypeInformation(checkNotNull(payload).getClass());
-            final DomainMessage<T> domainMessage = new DomainMessage<>();
-            domainMessage.messageType = this.messageType;
-            domainMessage.timestamp = this.timestamp;
-            domainMessage.tenantId = this.tenantId;
-            domainMessage.payload = payload;
-            domainMessage.changeSet = changeSet;
+            //** requireJsonTypeInformation(checkNotNull(payload).getClass()); **/
+            //final 
+            DomainMessage<T> domainMessage = new DomainMessage<>(messageType, timestamp, tenantId, payload, changeSet, null, null, null);
+//            domainMessage.messageType = this.messageType;
+//            domainMessage.timestamp = this.timestamp;
+//            domainMessage.tenantId = this.tenantId;
+//            domainMessage.payload = payload;
+//            domainMessage.changeSet = changeSet;
             return domainMessage;
         }
 }

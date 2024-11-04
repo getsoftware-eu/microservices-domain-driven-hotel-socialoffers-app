@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.ObjectUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelActivity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.ChatMessageView;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.CustomerDeal;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.IHotelEvent;
@@ -19,9 +19,9 @@ public enum HotelEvent implements IHotelEvent
 	
 	EVENT_ALL_INFO("EVENT_ALL_INFO", null, null, null, null),
 	EVENT_CHECKIN("EVENT_CHECKIN", HotelRootEntity.class, null, null, null),
-	EVENT_REGISTER("EVENT_REGISTER", CustomerRootEntity.class, null, null, null),
+	EVENT_REGISTER("EVENT_REGISTER", CustomerDBEntity.class, null, null, null),
 	EVENT_CHECKOUT("EVENT_CHECKOUT", HotelRootEntity.class, null, null, null),
-	EVENT_LOGIN("EVENT_LOGIN", CustomerRootEntity.class, null, null, null),
+	EVENT_LOGIN("EVENT_LOGIN", CustomerDBEntity.class, null, null, null),
 	EVENT_DEAL_NEW_UPDATE("EVENT_DEAL_NEW_UPDATE", CustomerDeal.class, null, null, null),
 	EVENT_MENU_NEW_UPDATE("EVENT_MENU_NEW_UPDATE", CustomerDeal.class, null, null, null),
 	EVENT_ACTIVITY_NEW_LAST_MINUTE("EVENT_ACTIVITY_NEW_LAST_MINUTE", HotelActivity.class, "/" + AppConfigProperties.HOST_SUFFIX + "#/app/activityList", "Last Minute Offer", null),
@@ -30,7 +30,7 @@ public enum HotelEvent implements IHotelEvent
 	EVENT_CHAT_NEW_MESSAGE("EVENT_CHAT_NEW_MESSAGE", ChatMessageView.class, "/" + AppConfigProperties.HOST_SUFFIX + "#/app/chat/", "New chat Message", AppConfigProperties.PUSH_ICON),
 	EVENT_CHAT_SEND_MESSAGE("EVENT_CHAT_SEND_MESSAGE", ChatMessageView.class, null, null, null),
 	
-	EVENT_LOGO_CUSTOMER_CHANGE_MESSAGE("EVENT_LOGO_CUSTOMER_CHANGE_MESSAGE", CustomerRootEntity.class, null, null, null),
+	EVENT_LOGO_CUSTOMER_CHANGE_MESSAGE("EVENT_LOGO_CUSTOMER_CHANGE_MESSAGE", CustomerDBEntity.class, null, null, null),
 	EVENT_LOGO_ACTIVITY_CHANGE_MESSAGE("EVENT_LOGO_ACTIVITY_CHANGE_MESSAGE", HotelActivity.class, null, null, null),
 	EVENT_LOGO_HOTEL_CHANGE_MESSAGE("EVENT_LOGO_HOTEL_CHANGE_MESSAGE", HotelRootEntity.class, null, null, null),
 	

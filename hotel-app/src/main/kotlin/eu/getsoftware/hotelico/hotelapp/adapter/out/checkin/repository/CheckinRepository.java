@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository;
 
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.CustomerHotelCheckin;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -166,7 +166,7 @@ public interface CheckinRepository extends JpaRepository<CustomerHotelCheckin, L
 	public List<CustomerHotelCheckin> getActiveByHotelId(@Param("hotelId") Long hotelId, @Param("checkDate") Date checkDate);	
 	
 	@Query(FIND_ACTIVE_CUSTOMERS_BY_HOTEL_QUERY)
-	public List<CustomerRootEntity> getActiveCustomersByHotelId(@Param("hotelId") Long hotelId, @Param("checkDate") Date checkDate);	
+	public List<CustomerDBEntity> getActiveCustomersByHotelId(@Param("hotelId") Long hotelId, @Param("checkDate") Date checkDate);	
 	
 	@Query(FIND_ACTIVE_FULL_CHECKIN_BY_HOTEL_QUERY)
 	public List<CustomerHotelCheckin> getActiveFullCheckinByHotelId(@Param("hotelId") Long hotelId, @Param("checkDate") Date checkDate);	
@@ -175,13 +175,13 @@ public interface CheckinRepository extends JpaRepository<CustomerHotelCheckin, L
 	public boolean isFullCheckinForCustomerByHotelId(@Param("customerId") Long customerId, @Param("hotelId") Long hotelId, @Param("checkDate") Date checkDate);
 
 	@Query(FIND_STAFF_BY_HOTEL_QUERY)
-	public List<CustomerRootEntity> getStaffByHotelId(@Param("hotelId") Long hotelId);	
+	public List<CustomerDBEntity> getStaffByHotelId(@Param("hotelId") Long hotelId);	
 	
 	@Query(FIND_STAFF_IDS_BY_HOTEL_QUERY)
 	public List<Integer> getStaffIdsByHotelId(@Param("hotelId") Long hotelId);
 	
 	@Query(FIND_CUSTOMERS_BY_HOTEL_CITY_QUERY)
-	List<CustomerRootEntity> getActiveCustomersByHotelCity(@Param("hotelCity") String hotelCity, @Param("checkDate") Date checkDate);
+	List<CustomerDBEntity> getActiveCustomersByHotelCity(@Param("hotelCity") String hotelCity, @Param("checkDate") Date checkDate);
 	
 	@Query(FIND_CHECKIN_UNIQUE_CITIES_QUERY)
 	List<String> findNotStaffCheckinUniueCities(@Param("checkDate") Date checkDate);

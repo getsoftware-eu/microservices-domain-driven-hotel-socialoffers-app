@@ -33,7 +33,7 @@ public class Language  implements Serializable
 
 	//eugen: mappedBy entity.field on this Entity!
 	@ManyToMany(mappedBy="languageSet")
-	private Set<CustomerRootEntity> customerEntities = new HashSet<>();
+	private Set<CustomerDBEntity> customerEntities = new HashSet<>();
 
 	public static long getSerialVersionUID()
 	{

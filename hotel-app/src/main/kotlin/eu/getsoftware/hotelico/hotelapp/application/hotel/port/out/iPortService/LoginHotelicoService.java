@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +26,7 @@ public interface LoginHotelicoService
 	@Transactional
 	void setLogged(long customerId, boolean logged);
 	
-	long getCryptoHash(CustomerRootEntity customerEntity, String initialPassword);
+	long getCryptoHash(CustomerDBEntity customerEntity, String initialPassword);
 	
 	@Transactional
 	Optional<CustomerDTO> checkBeforeLoginProperties(CustomerDTO loggingCustomer, CustomerDTO dbCustomer);

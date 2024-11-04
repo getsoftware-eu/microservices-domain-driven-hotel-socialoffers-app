@@ -5,7 +5,7 @@ import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotel.application.iService.*;
 import eu.getsoftware.hotelico.hotel.usecase.checkin.app.usecases.impl.CheckinService;
 import eu.getsoftware.hotelico.hotel.usecase.notification.app.usecases.impl.NotificationService;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.DealRepository;
@@ -55,11 +55,11 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 	@Override
 	public CustomerDTO checkLogin(String email, String password){
 		
-		List<CustomerRootEntity> customerEntities = customerRepository.findByEmailAndActive(email, true);
+		List<CustomerDBEntity> customerEntities = customerRepository.findByEmailAndActive(email, true);
 		
 		if(!customerEntities.isEmpty() && password!=null)
 		{
-			CustomerRootEntity customerEntity = customerEntities.get(0);
+			CustomerDBEntity customerEntity = customerEntities.get(0);
 			
 			Long generatedPasswordHash = getCryptoHash(customerEntity, password);
 			
@@ -93,7 +93,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 	{
 		if(customerDto!=null && customerDto.getId()>0)
 		{
-			CustomerRootEntity logoutCustomerRootEntity =  customerRepository.getOne(customerDto.getId());
+			CustomerDBEntity logoutCustomerRootEntity =  customerRepository.getOne(customerDto.getId());
 			logoutCustomerRootEntity.setLogged(false);
 			
 			//eugen: clear seen hotel activities
@@ -116,11 +116,11 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 	{
 		//        ResponseDto response =  new ResponseDto();
 		
-		List<CustomerRootEntity> customerEntities = customerRepository.findByEmailAndActive(email, true);
+		List<CustomerDBEntity> customerEntities = customerRepository.findByEmailAndActive(email, true);
 		
 		if(!customerEntities.isEmpty())
 		{
-			CustomerRootEntity customerEntity = customerEntities.get(0);
+			CustomerDBEntity customerEntity = customerEntities.get(0);
 			
 			Date requestTime = new Date();
 			customerEntity.setLastResetPasswordRequestTime(requestTime.getTime());
@@ -157,11 +157,11 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 	@Override
 	public CustomerDTO resetPassword(String email, String resetCode)
 	{
-		CustomerRootEntity customerEntity = null;
+		CustomerDBEntity customerEntity = null;
 		
 		if (resetCode != null)
 		{
-			List<CustomerRootEntity> customerEntities = customerRepository.findByEmailAndActive(email, true);
+			List<CustomerDBEntity> customerEntities = customerRepository.findByEmailAndActive(email, true);
 			
 			customerEntity = customerEntities.get(0);
 			
@@ -217,7 +217,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 	 *
 	 * @return HTML-complain output string
 	 */
-	private String getEncodedMailWithPasswordCode(CustomerRootEntity customerEntity, String resetLink)
+	private String getEncodedMailWithPasswordCode(CustomerDBEntity customerEntity, String resetLink)
 	{
 		// Create String
 		final StringBuffer sb = new StringBuffer();
@@ -236,7 +236,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 	 * @return
 	 */
 	@Override
-	public long getCryptoHash(CustomerRootEntity customerEntity, String initialPassword)
+	public long getCryptoHash(CustomerDBEntity customerEntity, String initialPassword)
 	{
 		if(initialPassword==null)
 			return -1;
@@ -251,7 +251,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 	@Override
 	public void setLogged(long customerId, boolean logged)
 	{
-		CustomerRootEntity customerEntity = customerRepository.getOne(customerId);
+		CustomerDBEntity customerEntity = customerRepository.getOne(customerId);
 		
 		if(customerEntity !=null)
 		{
@@ -288,7 +288,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 				
 				if(anonymGuestDealsExists)
 				{
-					CustomerRootEntity customerEntity = customerRepository.getOne(dbCustomer.getId());
+					CustomerDBEntity customerEntity = customerRepository.getOne(dbCustomer.getId());
 					
 					customerService.relocateGuestDealsToLoggedCustomer(customerEntity, guestId);
 				}

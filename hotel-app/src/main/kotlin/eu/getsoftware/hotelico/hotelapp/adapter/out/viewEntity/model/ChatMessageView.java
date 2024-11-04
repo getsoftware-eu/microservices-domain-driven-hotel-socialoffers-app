@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model;
 
 import eu.getsoftware.hotelico.clients.api.clients.domain.chat.IChatMessageView;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -62,7 +62,7 @@ public class ChatMessageView implements IChatMessageView, Serializable
     this.timestamp = new Timestamp(new Date().getTime());
   }
   
-  public ChatMessageView(String message, CustomerRootEntity sender, CustomerRootEntity receiver) {
+  public ChatMessageView(String message, CustomerDBEntity sender, CustomerDBEntity receiver) {
     
     this();
     

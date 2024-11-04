@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository;
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelWallPost;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -46,7 +46,7 @@ public interface WallPostRepository extends JpaRepository<HotelWallPost, Long> {
 	List<HotelWallPost> getByHotelId(@Param("hotelId") Long hotelId, @Param("checkDate") Date checkDate);
 
 	@Query(FIND_PARTICIPANTS_BY_HOTEL_QUERY)
-	List<CustomerRootEntity> getParticipantsByHotelId(@Param("hotelId") Long hotelId, @Param("checkDate") Date checkDate);
+	List<CustomerDBEntity> getParticipantsByHotelId(@Param("hotelId") Long hotelId, @Param("checkDate") Date checkDate);
 	
 	@Query(FIND_MESSAGE_BY_INIT_ID)
 	List<HotelWallPost> getMessageByInitId(@Param("initId") Long initId);

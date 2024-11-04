@@ -16,7 +16,7 @@ package eu.getsoftware.hotelico.hotelapp.main.config.adapter;
  * limitations under the License.
  */
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social.SecurityContext;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social.UserCookieGenerator;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,7 +37,7 @@ public final class SimpleSignInAdapter implements SignInAdapter {
 	private final UserCookieGenerator userCookieGenerator = new UserCookieGenerator();
 
 	public String signIn(String userId, Connection<?> connection, NativeWebRequest request) {
-		SecurityContext.setCurrentCustomer((new CustomerRootEntity()));
+		SecurityContext.setCurrentCustomer((new CustomerDBEntity()));
 		userCookieGenerator.addCookie(userId, request.getNativeResponse(HttpServletResponse.class));
 		return null;
 	}

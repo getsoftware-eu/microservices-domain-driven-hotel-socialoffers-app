@@ -8,7 +8,7 @@ import eu.getsoftware.hotelico.hotel.usecase.notification.app.usecases.impl.Noti
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelActivity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.microservice.MessagingRabbitMQProducer;
@@ -138,8 +138,8 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 		
 		//Only if such message not exists in DB! == null
  		
-		CustomerRootEntity sender = customerService.getEntityById(chatMessageDto.getSenderId());
-		CustomerRootEntity receiver = customerService.getEntityById(chatMessageDto.getReceiverId());
+		CustomerDBEntity sender = customerService.getEntityById(chatMessageDto.getSenderId());
+		CustomerDBEntity receiver = customerService.getEntityById(chatMessageDto.getReceiverId());
 
 		ChatMessageView newMessage = new ChatMessageView(chatMessageDto.getMessage(), sender, receiver);
 		newMessage.setInitId(chatMessageDto.getInitId());
@@ -225,7 +225,7 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 				{
 					long customerId = Integer.parseInt(value);
 
-					CustomerRootEntity customerEntity = customerRepository.getOne(customerId);
+					CustomerDBEntity customerEntity = customerRepository.getOne(customerId);
 
 					if(customerEntity !=null)
 					{
@@ -339,7 +339,7 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 	@Override
 	public Set<CustomerDTO> getNotHotelChatPartners(long requesterId, String filterCity, long filterHotelId){
 		
-		CustomerRootEntity customerEntity = customerService.getEntityById(requesterId);
+		CustomerDBEntity customerEntity = customerService.getEntityById(requesterId);
 		
 		Set<CustomerDTO> notHotelChatPartners = new HashSet<>();
 		
@@ -351,12 +351,12 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 			
 			boolean customerIsInHotel = customerHotelId>0 && customerHotelId!=virtualHotelId;
 			
-			Set<CustomerRootEntity> chatPartners = new HashSet<>();
+			Set<CustomerDBEntity> chatPartners = new HashSet<>();
 
 			chatPartners.addAll(chatRepository.getChatSendersByCustomerId(requesterId));
 			chatPartners.addAll(chatRepository.getChatReceiversByCustomerId(requesterId));
 
-			for (CustomerRootEntity nextPartner : chatPartners)
+			for (CustomerDBEntity nextPartner : chatPartners)
 			{
 				//exclude a customer itself and hotelStaff from result
 				if(nextPartner.equals(customerEntity) || nextPartner.isHotelStaff())
@@ -426,7 +426,7 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 		
 		long customerId = guestCustomerId;
 		
-		CustomerRootEntity customerEntity = customerService.getEntityById(customerId);
+		CustomerDBEntity customerEntity = customerService.getEntityById(customerId);
 		
 		Set<CustomerDTO> allContactChatPartners = new HashSet<>();
 		
@@ -436,12 +436,12 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 			
 //			int virtualHotelId = cacheService.getInitHotelId();
 			
-			Set<CustomerRootEntity> allChatPartners = new HashSet<>();
+			Set<CustomerDBEntity> allChatPartners = new HashSet<>();
 
 			allChatPartners.addAll(chatRepository.getChatSendersByCustomerId(customerId));
 			allChatPartners.addAll(chatRepository.getChatReceiversByCustomerId(customerId));
 
-			for (CustomerRootEntity nextPartner : allChatPartners)
+			for (CustomerDBEntity nextPartner : allChatPartners)
 			{
 				//exclude a customer itself and hotelStaff from result
 				if(nextPartner.equals(customerEntity))// || nextPartner.isHotelStaff())
@@ -492,7 +492,7 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 	@Override
 	public Set<CustomerDTO> getAllNotChatPartners(long customerId, String filterCity, long filterHotelId, int pageNumber)
 	{
-		CustomerRootEntity customerEntity = customerService.getEntityById(customerId);
+		CustomerDBEntity customerEntity = customerService.getEntityById(customerId);
 
 		Set<CustomerDTO> allNotChatPartners = new HashSet<>();
 
@@ -501,12 +501,12 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 
 			//TODO Eugen: alles auf notActive Query umschreiben!!!
 			//TODO Eugen: bessere Query!!!
-			Set<CustomerRootEntity> chatPartners = new HashSet<>();
+			Set<CustomerDBEntity> chatPartners = new HashSet<>();
 
 			chatPartners.addAll(chatRepository.getChatSendersByCustomerId(customerId));
 			chatPartners.addAll(chatRepository.getChatReceiversByCustomerId(customerId));
 			
-			List<CustomerRootEntity> allCustomerEntities;
+			List<CustomerDBEntity> allCustomerEntities;
 			
 			if(filterHotelId>0)
 			{
@@ -522,7 +522,7 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
  				PageRequest request =
 						PageRequest.of(pageNumber - 1, PAGE_SIZE, Sort.Direction.DESC, "id");
 				
-				Page<CustomerRootEntity> customerPages = customerRepository.findByActive(true, request);
+				Page<CustomerDBEntity> customerPages = customerRepository.findByActive(true, request);
 
 				allCustomerEntities = customerPages.getContent();
 				
@@ -538,7 +538,7 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 
 			long customerHotelId = customerService.getCustomerHotelId(customerId);
 
-			Set<CustomerRootEntity> inSameHotelCustomerEntities = new HashSet<>();
+			Set<CustomerDBEntity> inSameHotelCustomerEntities = new HashSet<>();
 			
 			if(customerHotelId>0 && customerHotelId!=filterHotelId)
 			{
@@ -564,7 +564,7 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 				inSameHotelCustomerEntities.addAll(allCustomerEntities);
 			}
 
-			Set<CustomerRootEntity> notChatPartners = new HashSet<>(allCustomerEntities);
+			Set<CustomerDBEntity> notChatPartners = new HashSet<>(allCustomerEntities);
 			notChatPartners.removeAll(chatPartners);
 			
 			//TODO Eugen: why remove in same hotel customers????
@@ -572,9 +572,9 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 
 			if(notChatPartners.size()>50 && filterHotelId<=0)
 			{
-				Set<CustomerRootEntity> subList = new HashSet<>();
+				Set<CustomerDBEntity> subList = new HashSet<>();
 
-				Iterator<CustomerRootEntity> it = notChatPartners.iterator();
+				Iterator<CustomerDBEntity> it = notChatPartners.iterator();
 
 				int counter = 0;
 				while (it.hasNext() && counter<50)
@@ -586,7 +586,7 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 				notChatPartners = subList;
 			}
 			
-			for (CustomerRootEntity nextNotPartner : notChatPartners)
+			for (CustomerDBEntity nextNotPartner : notChatPartners)
 			{
 				//exclude a customer itself and hotelStaff from result
 				if(nextNotPartner.equals(customerEntity) || nextNotPartner.isHotelStaff())
