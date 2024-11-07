@@ -26,6 +26,7 @@ public class HotelDTO extends BasicDTO
 //	@Setter(AccessLevel.NONE)
 	private final long creationTime = 0L;
 	
+	@With
 	private final double kmFromMe = 0.0;
 	
 	private final String name = null;

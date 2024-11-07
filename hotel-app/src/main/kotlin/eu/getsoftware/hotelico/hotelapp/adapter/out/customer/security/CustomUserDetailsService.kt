@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.customer.security//package eu.getsoftware.hotelico.clients.infrastructure.service.security.impl
 
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.UserEntity
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.UserRolesRepository
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.infrastructure.security.CustomUserDetails
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IUserService
@@ -27,7 +28,7 @@ class CustomUserDetailsService : UserDetailsService {
 
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(username: String): UserDetails {
-        val user = IUserService.getByUserName(username)
+        val user : UserEntity = IUserService.getByUserName(username)
         if (null == user || user.enabled == 0) {
             throw UsernameNotFoundException("No user present with userName: $username")
         } else {

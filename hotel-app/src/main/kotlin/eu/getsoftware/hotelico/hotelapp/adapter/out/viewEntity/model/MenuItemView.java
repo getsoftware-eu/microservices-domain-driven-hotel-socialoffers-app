@@ -7,7 +7,8 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -86,7 +87,8 @@ public class MenuItemView implements Serializable
 //	private String activityArea;
 	
 	@Column( columnDefinition = "LONGTEXT")
-	@Type(type = "text")
+	@JdbcTypeCode(SqlTypes.LONGVARCHAR) // Use LONGVARCHAR for long text fields
+
 	private String description;	
 	
 	@Column(name = "pictureUrl", nullable = true, length = 250)

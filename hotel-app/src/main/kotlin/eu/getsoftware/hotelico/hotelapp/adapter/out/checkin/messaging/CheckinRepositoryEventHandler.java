@@ -1,15 +1,13 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging;
 
+import eu.getsoftware.hotelico.clients.common.domain.mapper.IDomainMapper;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinRequestDTO;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.rest.core.annotation.HandleAfterCreate;
-import org.springframework.data.rest.core.annotation.HandleAfterDelete;
-import org.springframework.data.rest.core.annotation.HandleAfterSave;
-import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
+import org.springframework.data.rest.core.annotation.*;
 import org.springframework.stereotype.Component;
 
 @Component

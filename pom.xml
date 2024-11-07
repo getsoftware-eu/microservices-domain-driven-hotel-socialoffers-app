@@ -13,8 +13,8 @@
 		<module>hotel-plugin-menu</module>
 		<module>eureka-server-spring-cloud</module>
 		<module>api-gateway-spring-cloud</module>
-		<module>amqp-simple-rabbitmq-configuration</module>
-		<module>messaging-full-rabbitmq-configuraton</module>
+<!--		<module>amqp-simple-rabbitmq-configuration</module>-->
+<!--		<module>messaging-full-rabbitmq-configuraton</module>-->
     </modules>
 	
 	<name>social-hotel-interactions</name>
@@ -26,7 +26,7 @@
 		<!--<mysql.connector.version>5.1.31</mysql.connector.version>-->
 		<java.version>17</java.version>
 		<spring.boot.version>3.1.0</spring.boot.version>
-		<kotlin.version>1.9.0</kotlin.version>
+		<kotlin.version>1.9.10</kotlin.version>
 		<kotlin.compiler.jvmTarget>${java.version}</kotlin.compiler.jvmTarget>
 		<spring.boot.maven.plugin.version>${spring.boot.version}</spring.boot.maven.plugin.version>
 		<spring.boot.dependencies.version>${spring.boot.version}</spring.boot.dependencies.version>
@@ -140,6 +140,52 @@
 							</goals>
 						</execution>
 					</executions>
+				</plugin>
+				<plugin>
+					<groupId>org.jetbrains.kotlin</groupId>
+					<artifactId>kotlin-maven-plugin</artifactId>
+					<!--                <version>${kotlin.version}</version> from dependencyManagement: org.springframework.cloud-->
+
+					<configuration>
+						<compilerPlugins>
+							<!-- Or "spring" for the Spring support -->
+							<!--<plugin>all-open</plugin>-->
+							<plugin>spring</plugin>
+						</compilerPlugins>
+
+					</configuration>
+
+					<executions>
+						<execution>
+							<id>compile</id>
+							<goals> <goal>compile</goal> </goals>
+							<configuration>
+								<sourceDirs>
+									<sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
+									<sourceDir>${project.basedir}/src/main/java</sourceDir>
+								</sourceDirs>
+							</configuration>
+						</execution>
+						<execution>
+							<id>test-compile</id>
+							<goals> <goal>test-compile</goal> </goals>
+							<configuration>
+								<sourceDirs>
+									<sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
+									<sourceDir>${project.basedir}/src/test/java</sourceDir>
+								</sourceDirs>
+							</configuration>
+						</execution>
+					</executions>
+
+					<dependencies>
+						<dependency>
+							<groupId>org.jetbrains.kotlin</groupId>
+							<artifactId>kotlin-maven-allopen</artifactId>
+							<version>${kotlin.version}</version>
+						</dependency>
+					</dependencies>
+
 				</plugin>
 				<plugin>
 					<groupId>com.google.cloud.tools</groupId>

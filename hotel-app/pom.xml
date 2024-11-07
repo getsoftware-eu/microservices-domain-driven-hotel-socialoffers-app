@@ -59,12 +59,11 @@
             </exclusions>
         </dependency>
 
-        <dependency>
-            <groupId>jakarta.sql</groupId>
-            <artifactId>jakarta.sql-api</artifactId>
-            <version>3.0.0</version> <!-- Используйте последнюю стабильную версию -->
-
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>jakarta.sql</groupId>-->
+<!--            <artifactId>jakarta.sql-api</artifactId>-->
+<!--            <version>3.0.0</version> &lt;!&ndash; Используйте последнюю стабильную версию &ndash;&gt;-->
+<!--        </dependency>-->
         
         <dependency>
             <groupId>org.postgresql</groupId>
@@ -117,6 +116,16 @@
          <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-undertow</artifactId>
+        </dependency>
+        
+         <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency> 
+        
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
         </dependency>
         
         <dependency>
@@ -508,12 +517,12 @@
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-core</artifactId>
         </dependency>
-        <dependency>
-            <groupId>eu.getsoftware.hotelico</groupId>
-            <artifactId>messaging</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>eu.getsoftware.hotelico</groupId>-->
+<!--            <artifactId>notification</artifactId>-->
+<!--            <version>0.0.1-SNAPSHOT</version>-->
+<!--            <scope>compile</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>

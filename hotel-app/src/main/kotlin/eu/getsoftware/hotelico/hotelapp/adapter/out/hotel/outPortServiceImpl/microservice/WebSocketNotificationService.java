@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.microservice
+package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.microservice;
 
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;

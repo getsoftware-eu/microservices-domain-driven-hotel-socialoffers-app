@@ -1,10 +1,10 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.chat.messaging;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import eu.getsoftware.hotelico.clients.api.amqp.application.domain.model.DomainMessage;
-import eu.getsoftware.hotelico.clients.api.amqp.application.domain.model.DomainMessagePayload;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessage;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessagePayload;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging.CheckinMessagePublisher;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.service.messaging.KafkaMessagePublisher;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,24 +19,35 @@ import static eu.getsoftware.hotelico.hotelapp.adapter.out.chat.messaging.Messag
 @Slf4j
 @RequiredArgsConstructor
 public class ChatMessagePublisher {
-    
-    private final CheckinMessagePublisher domainMessagePublisher;
-    private final DomainMessageFactory domainMessageFactory;
-    
+
+    private final KafkaMessagePublisher kafkaMessagePublisher;
+
     public void publishChatSentEvent(ChatMsgDTO chatMsgDTO){
         publishMessage("chat.message.sent.event", chatMsgDTO);
     }
-    
+
     private void publishMessage(String messageType, ChatMsgDTO chatMsgDTO) {
 
-        ChatSendEventMessage eventMessage = ChatSendEventMessage.builder()
+        ChatSendEventMessagePayload eventPayload = ChatSendEventMessagePayload.builder()
                 .messageId(chatMsgDTO.initId())
+                .message(chatMsgDTO.message())
                 .status(QUEUED)
                 .build();
 
-        DomainMessage<ChatSendEventMessage> domainMessage = domainChatMessageFactory.create(messageType, eventMessage);
-        domainMessagePublisher.publish(domainMessage);
-        log.info("Published message of type {}", domainMessage.getMessageType());
+//        DomainMessage<?> eventMessage = domainMessageFactory
+//                .prepareDomainMessageForType(messageType)
+//                .withEntity(checkinDTO)
+//                .withEntityAndProjection(checkinEntity, CheckinDTO.class) //eu: create projection for json
+//                .withCurrentTenant()
+//                .withAdditionalProperty("data","test")
+//                .build();
+
+        DomainMessage<?> eventMessage = DomainMessage.builder(messageType)
+                .tenantId(1L)
+                .build(eventPayload);
+
+        kafkaMessagePublisher.publishMessage(eventMessage);
+        log.info("Published message {}", eventMessage);
     }
 
     /**
@@ -46,10 +57,12 @@ public class ChatMessagePublisher {
     @Builder
     @Getter
     @JsonTypeName("chat-send-event")
-    static class ChatSendEventMessage extends DomainMessagePayload {
+    static class ChatSendEventMessagePayload extends DomainMessagePayload {
 
         @JsonProperty
         private long messageId;
+        @JsonProperty 
+        private String message;
         
         private MessageStatus status;
     }

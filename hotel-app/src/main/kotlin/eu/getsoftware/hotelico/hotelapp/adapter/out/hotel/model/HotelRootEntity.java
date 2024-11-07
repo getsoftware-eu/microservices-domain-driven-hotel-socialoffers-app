@@ -9,7 +9,8 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -54,11 +55,13 @@ public class HotelRootEntity implements IHotelRootEntity, Serializable, IFileUpl
     private String wellcomeMessage;
    
     @Column(name = "description", nullable = true, columnDefinition = "LONGTEXT")
-    @Type(type = "text")
+    @JdbcTypeCode(SqlTypes.LONGVARCHAR) // Use LONGVARCHAR for long text fields
+
     private String description;    
     
     @Column(name = "info", nullable = true, columnDefinition = "LONGTEXT")
-    @Type(type = "text")
+    @JdbcTypeCode(SqlTypes.LONGVARCHAR) // Use LONGVARCHAR for long text fields
+
     private String info;
 
     @Column(name = "city", nullable = true)

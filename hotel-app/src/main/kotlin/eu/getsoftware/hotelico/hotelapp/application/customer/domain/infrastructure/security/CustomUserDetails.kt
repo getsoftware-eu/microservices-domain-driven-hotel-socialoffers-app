@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.domain.infrastructure.security//package eu.getsoftware.hotelico.clients.infrastructure.service.security
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.User
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.UserEntity
 import eu.getsoftware.hotelico.hotelapp.application.customer.common.enums.UserRoleEnum
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.AuthorityUtils
@@ -12,12 +12,12 @@ import java.util.*
  * This service is needed for SPRING-SECURITY
  */
 
-class CustomUserDetails : User, UserDetails
+class CustomUserDetails : UserEntity, UserDetails
 {
 
     private val userRoles: List<String>
 
-    constructor(user: User, userRoles: List<String>) : super(user) {
+    constructor(user: UserEntity, userRoles: List<String>) : super(user) {
         this.userRoles = userRoles
     }
 

@@ -1,12 +1,14 @@
 package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
 
 @Getter
+@Builder
 public class CheckinDTO {
 
     long initId;

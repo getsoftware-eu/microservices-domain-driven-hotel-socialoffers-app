@@ -20,7 +20,7 @@ public interface IMenuPortService
 
 	/**
 	 * 
-	 * @param requesterId - either customer or staff: staff becomes all hotel orders!!!
+	 * @param requesterDTO - either customer or staff: staff becomes all hotel orders!!!
 	 * @param hotelId
 	 * @param cafeId
 	 * @return

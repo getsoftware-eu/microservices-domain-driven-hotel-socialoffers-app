@@ -4,12 +4,20 @@ import eu.getsoftware.hotelico.clients.common.domain.EntityIdentifier;
 
 import java.util.UUID;
 
-public class CustomerEntityId extends EntityIdentifier {
-    public CustomerEntityId(String value) {
-        super(value);
+public record CustomerEntityId(
+        String value
+) implements EntityIdentifier {
+    
+    public CustomerEntityId(String value, Boolean checkParam) {
+        this(value);
+        
+        if(checkParam && !EntityIdentifier.super.ensureValidUuid(value))
+        {
+            throw new RuntimeException("not valid param" + value);    
+        }
     }
     
     public CustomerEntityId(UUID value) {
-        super(value.toString());
+        this(value.toString());
     }
 }

@@ -10,17 +10,16 @@
         <module name="hotel-client" />
         <module name="clients" />
         <module name="chat" />
-        <module name="amqp" />
         <module name="shared-client-libs" />
         <module name="hotel-plugin-menu" />
         <module name="hotel-app" />
         <module name="menu" />
         <module name="hotel-plugin-chat" />
         <module name="eureka-server" />
-        <module name="messaging" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="amqp" target="17" />
       <module name="api-gateway" target="17" />
       <module name="common-client-api-libs" target="17" />
       <module name="notification" target="17" />

@@ -28,6 +28,8 @@ spring:
       max-file-size: 512MB # Max file size.
       max-request-size: 512MB # Max request size.
   messages.basename: i18n/messages # Configure MessageSource to lookup any validation/error message in internationalized property files
+  kafka:
+    bootstrap-servers: localhost:19092
   social:
     facebook:
       appId: 383626641847356

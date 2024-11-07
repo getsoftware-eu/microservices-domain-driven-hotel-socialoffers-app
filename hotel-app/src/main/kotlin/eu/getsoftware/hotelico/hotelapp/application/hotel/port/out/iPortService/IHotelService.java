@@ -30,6 +30,8 @@ public interface IHotelService
     HotelDTO getHotelById(long hotelId);
 
     HotelDTO getHotelByCode(String hotelCode);
+    
+    boolean existsHotelByCode(String hotelCode);
 
     String getGpsCity(Point2D.Double latLonPoint);
 

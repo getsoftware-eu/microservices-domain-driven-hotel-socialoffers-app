@@ -4,15 +4,96 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="Domainentity connect only via EntityId ValueObject + builder in Aggregate!">
+    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="Kafka replaced rabbitMQ">
+      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-kafka-craft-3brokers.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/chat/messaging/ChatKafkaListeners.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/checkin/messaging/CheckinKafkaSubscriber.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/checkin/messaging/DomainCheckinMessageFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/service/messaging/KafkaMessagePublisher.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/usecase/register/dto/HotelRegisterRequestDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/main/config/adapter/kafka/KafkaConsumerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/main/config/adapter/kafka/KafkaProducerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/main/config/adapter/kafka/KafkaTopicConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-plugin-chat/hotel-plugin-chat.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/messaging/CheckinKafkaSubscriber.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/main/config/kafka/KafkaConsumerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/main/config/kafka/KafkaProducerConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/main/config/kafka/KafkaTopicConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/customer/portServiceImpl/CustomerPortServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/customer/portServiceImpl/CustomerPortServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/customer/portServiceImpl/SocialPortServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/customer/portServiceImpl/SocialPortServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/amqp-simple-rabbitmq-configuration/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-simple-configuration/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/amqp-simple-rabbitmq-configuration/amqp.iml" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-simple-configuration/amqp.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/amqp-simple-rabbitmq-configuration/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-simple-configuration/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/amqp-simple-rabbitmq-configuration/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/application/domain/model/DomainMessage.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/amqp-simple-rabbitmq-configuration/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/application/domain/model/DomainMessagePayload.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/amqpConsumeNotification/domainMessage/DomainMessagePayload.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/amqp-simple-rabbitmq-configuration/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/application/producer/RabbitMQMessageProducer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-simple-configuration/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/application/producer/RabbitMQMessageProducer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/amqp-simple-rabbitmq-configuration/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/main/config/RabbitMQConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-simple-configuration/src/main/java/eu/getsoftware/hotelico/clients/api/amqp/main/config/RabbitMQConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/in/web/controller/hotel/Hotel2Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/in/web/controller/hotel/Hotel2Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/chat/messaging/ChatMessagePublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/chat/messaging/ChatMessagePublisher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/chat/messaging/MessageStatus.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/chat/messaging/MessageStatus.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/checkin/messaging/CheckinMessagePublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/checkin/messaging/CheckinMessagePublisher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/checkin/messaging/CheckinMessageSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/checkin/messaging/rabbit/CheckinRabbitMessageSubscriber.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/checkin/messaging/CheckinRepositoryEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/checkin/messaging/CheckinRepositoryEventHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/checkin/model/HotelActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/checkin/model/HotelActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/checkin/portServiceImpl/KafkaCheckinProducerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/checkin/portServiceImpl/KafkaWithoutBootCheckinProducerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/customer/model/User.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/customer/model/UserEntity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/customer/security/CustomUserDetailsService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/customer/security/CustomUserDetailsService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/model/HotelRootEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/model/HotelRootEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/outPortServiceImpl/HotelServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/outPortServiceImpl/HotelServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/customer/domain/CustomerAggregate.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/customer/domain/model/customDomainModelImpl/CustomerAggregate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/customer/domain/CustomerRootEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/customer/domain/model/customDomainModelImpl/CustomerRootEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/model/HotelDomainEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/model/customDomainModelImpl/HotelDomainEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/model/HotelGroupAggregate.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/model/customDomainModelImpl/HotelGroupAggregate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/outPortServiceImpl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/outPortServiceImpl/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/outPortServiceImpl/microservice/WebSocketNotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/outPortServiceImpl/microservice/WebSocketNotificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/repository/UserDtoRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/hotel/repository/UserDtoRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/viewEntity/model/MenuItemView.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/viewEntity/model/MenuItemView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainOrchestratorCheckinService/useCase/dto/CheckinDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/multiDomainOrchestratorCheckinService/useCase/dto/CheckinDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/customer/domain/infrastructure/security/CustomUserDetails.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/customer/domain/infrastructure/security/CustomUserDetails.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/deal/domain/infrastructure/dto/CustomerDealDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/deal/domain/infrastructure/dto/CustomerDealDTO.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/usecase/register/UserRegisterInteractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/usecase/register/HotelRegisterInteractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IHotelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IHotelService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/main/config/infrastructure/AuthKeycloakConfig.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/main/config/infrastructure/AuthKeycloakConfig.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-chat/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-chat/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/messaging/CheckinQueueSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/messaging/CheckinRabbitMQQueueSubscriber.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/outPortServiceImpl/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/outPortServiceImpl/ChatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/repository/ChatMessageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/repository/ChatMessageRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/in/web/controller/MenuRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/in/web/controller/MenuRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/out/persistence/model/MenuItemEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/out/persistence/model/MenuItemEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/out/persistence/outPortServiceImpl/MenuPortServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/out/persistence/outPortServiceImpl/MenuPortServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/application/iPortService/IMenuPortService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/application/iPortService/IMenuPortService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/application/infrastructure/service/AsyncMSCommunicationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-plugin-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/application/infrastructure/service/RabbitMQCommunicationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-event-listener-microservice/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/notification-rabbitmq.iml" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-event-listener-microservice/notification-rabbitmq.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-event-listener-microservice/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/in/web/NotificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-event-listener-microservice/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/in/web/NotificationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/out/persistence/MessagePersistServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-event-listener-microservice/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/out/persistence/MessagePersistServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/out/persistence/NotificationRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-event-listener-microservice/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/out/persistence/NotificationRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/out/persistence/model/NotificationEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-event-listener-microservice/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/adapter/out/persistence/model/NotificationEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/event/PartialEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-event-listener-microservice/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/event/PartialEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/event/checkin/CheckinEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/amqpConsumeNotification/domainLayerPayload/CheckinEvent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/message/CheckinAggregatePayload.java" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-event-listener-microservice/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/message/CheckinAggregatePayload.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/service/IMessagePersistService.java" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-event-listener-microservice/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/service/IMessagePersistService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/service/amqp/MessageConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-event-listener-microservice/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/service/amqp/MessageConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/service/amqp/MessageProducerWithPersistence.java" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-event-listener-microservice/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/application/service/amqp/MessageProducerWithPersistence.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/main/NotificationTestApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-event-listener-microservice/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/main/NotificationTestApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/main/config/RabbitMQProducerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-event-listener-microservice/src/main/java/eu/getsoftware/hotelico/clients/api/infrastructure/notification/main/config/RabbitMQProducerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/java/module-info.txt" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-event-listener-microservice/src/main/java/module-info.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/resources/application-docker.properties" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-event-listener-microservice/src/main/resources/application-docker.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/resources/application-kube.properties" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-event-listener-microservice/src/main/resources/application-kube.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/messaging-full-rabbitmq-configuraton/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/rabbitmq-event-listener-microservice/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/common/dto/HotelDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/common/dto/HotelDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/menu/dto/MenuOrderDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/infrastructure/menu/dto/MenuOrderDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/EntityIdentifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/EntityIdentifier.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/IDomainEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/IDomainEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/domainIDs/CheckinEntityId.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/domainIDs/CheckinEntityId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/domainIDs/CustomerEntityId.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/domainIDs/CustomerEntityId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/domainIDs/HotelEntityId.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/domainIDs/HotelEntityId.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,7 +101,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="152627" />
+    <option name="totalTimeSeconds" value="168000" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -96,34 +177,41 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
     &quot;JUnit.CheckinRequestDTOTest.givenCheckinRequestDTO_whenWrongDates_thenError.executor&quot;: &quot;Run&quot;,
     &quot;Maven.apigw [package].executor&quot;: &quot;Run&quot;,
     &quot;Maven.common-client-api-libs [deploy].executor&quot;: &quot;Run&quot;,
     &quot;Maven.common-client-api-libs [package].executor&quot;: &quot;Run&quot;,
     &quot;Maven.hotel-app [compile].executor&quot;: &quot;Run&quot;,
     &quot;Maven.hotel-app [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.hotel-plugin-menu [install].executor&quot;: &quot;Run&quot;,
     &quot;Maven.hotelservices [clean].executor&quot;: &quot;Run&quot;,
     &quot;Maven.hotelservices [install].executor&quot;: &quot;Run&quot;,
     &quot;Maven.hotelservices [test].executor&quot;: &quot;Run&quot;,
     &quot;Maven.notification [deploy].executor&quot;: &quot;Run&quot;,
     &quot;Maven.notification [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.shared-client-libs [install].executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;Spring Boot.MainApplication.executor&quot;: &quot;Debug&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
     &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_directory_selection&quot;: &quot;D:/work/projects/GetSoftw/social-hotel-interactions/hotel-app/src/test/kotlin/eu/getsoftware/hotelico/hotelapp&quot;,
-    &quot;last_opened_file_path&quot;: &quot;F:/project/brickbroker&quot;,
+    &quot;last_directory_selection&quot;: &quot;D:/work/projects/GetSoftw/social-hotel-interactions/kafka-basic-configuration/src&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/work/projects/GetSoftw/social-hotel-interactions/hotel-plugin-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/main/config/kafka&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;,
@@ -136,18 +224,18 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\hotel-plugin-chat\src\main\java\eu\getsoftware\hotelico\infrastructure\hotel\plugin\chat\main\config\kafka" />
+      <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\kafka-basic-configuration" />
+      <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\shared-client-libs\src\main\java\eu\getsoftware\hotelico\clients\api\clients\infrastructure\amqpConsumeNotification\domain" />
+      <recent name="D:\work\projects\GetSoftw\social-hotel-interactions" />
       <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\common-client-api-libs\src\main\java\eu\getsoftware\hotelico\clients\api\clients\domain\user" />
-      <recent name="C:\WORK\projects\GetSoftw\social-hotel-interactions\docs\img" />
-      <recent name="C:\work\GetSoftw\social-hotel-interactions\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\hotel\infrastructure\error" />
-      <recent name="C:\work\GetSoftw\social-hotel-interactions\apigw\src\main\resources" />
-      <recent name="C:\work\GetSoftw\social-hotel-interactions" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\shared-client-libs\src\main\java\eu\getsoftware\hotelico\clients\api\clients\infrastructure\amqpConsumeNotification\domain" />
+      <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\shared-client-libs\src\main\java\eu\getsoftware\hotelico\clients\api\clients\infrastructure\amqpConsumeNotification\domainLayerPayload" />
       <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\amqp\src\main\java\eu\getsoftware\hotelico\clients\api\amqp\application\domain\model" />
       <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\amqp\src\main\java\eu\getsoftware\hotelico\clients\api\amqp\application\producer" />
       <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\shared-client-libs\src\main\java\eu\getsoftware\hotelico\clients\api\clients\infrastructure\messaging\event" />
-      <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\hotelapp\application\checkin\domain\message" />
-      <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\shared-client-libs\src\main\java\eu\getsoftware\hotelico\clients\api\clients\infrastructure\messaging" />
     </key>
     <key name="CreateBuilderDialog.RecentsKey">
       <recent name="eu.getsoftware.hotelico.customer.infrastructure.dto" />
@@ -177,11 +265,11 @@
       <recent name="eu.getsoftware.hotelico.hotelapp.application.hotel.domain.iRepository" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model" />
-      <recent name="eu.getsoftware.hotelico.hotelapp.application.customer.domain" />
+      <recent name="eu.getsoftware.hotelico.hotelapp.application.hotel.domain.usecase.register.dto" />
       <recent name="eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.messaging" />
-      <recent name="eu.getsoftware.hotelico.hotelapp.adapter.out.checkin" />
-      <recent name="eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification" />
+      <recent name="eu.getsoftware.hotelico.hotelapp.adapter.out.chat.messaging" />
+      <recent name="main.java" />
+      <recent name="eu.getsoftware.hotelico.hotelapp.main.config.adapter.kafka" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -236,6 +324,13 @@
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="amqp" />
+      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -380,7 +475,7 @@
       </method>
     </configuration>
     <configuration name="NotificationTestApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <module name="messaging" />
+      <module name="notification" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="eu.getsoftware.hotelico.clients.api.infrastructure.notification.main.NotificationTestApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -498,7 +593,9 @@
       <workItem from="1730066573224" duration="2262000" />
       <workItem from="1730106425820" duration="10244000" />
       <workItem from="1730395637839" duration="11755000" />
-      <workItem from="1730708292612" duration="13451000" />
+      <workItem from="1730708292612" duration="13551000" />
+      <workItem from="1730726531424" duration="19505000" />
+      <workItem from="1730999496696" duration="399000" />
     </task>
     <task id="LOCAL-00001" summary="-CHG: Microservice refactoring(Eureka-server)">
       <created>1655287660110</created>
@@ -674,14 +771,6 @@
       <option name="presentableId" value="LOCAL-00025" />
       <option name="project" value="LOCAL" />
       <updated>1683714777053</updated>
-    </task>
-    <task id="LOCAL-00056" summary="UseCase story">
-      <option name="closed" value="true" />
-      <created>1728244867148</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1728244867148</updated>
     </task>
     <task id="LOCAL-00057" summary="UseCase.steps in interactor">
       <option name="closed" value="true" />
@@ -867,7 +956,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730721437020</updated>
     </task>
-    <option name="localTasksCounter" value="80" />
+    <task id="LOCAL-00080" summary="from db to DomainEntity: builder in Aggregate with EntityId as constructor!">
+      <option name="closed" value="true" />
+      <created>1730722689840</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1730722689840</updated>
+    </task>
+    <option name="localTasksCounter" value="81" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -897,8 +994,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="refactoring adapters" />
-    <MESSAGE value="refactoring out ports" />
     <MESSAGE value="refactoring &quot;in&quot; &quot;out&quot; customer DTO" />
     <MESSAGE value="UseCase story" />
     <MESSAGE value="UseCase.steps in interactor" />
@@ -922,7 +1017,9 @@
     <MESSAGE value="fix rabbitMq @RabbitHandler for many payloads for one Queue" />
     <MESSAGE value="cleaner checkin UseCase" />
     <MESSAGE value="Domainentity connect only via EntityId ValueObject + builder in Aggregate!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Domainentity connect only via EntityId ValueObject + builder in Aggregate!" />
+    <MESSAGE value="from db to DomainEntity: builder in Aggregate with EntityId as constructor!" />
+    <MESSAGE value="Kafka replaced rabbitMQ" />
+    <option name="LAST_COMMIT_MESSAGE" value="Kafka replaced rabbitMQ" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -939,7 +1036,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/port/out/iPortService/IHotelService.java</url>
-          <line>35</line>
+          <line>37</line>
           <properties class="eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService" method="getDistanceKmToHotel">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />

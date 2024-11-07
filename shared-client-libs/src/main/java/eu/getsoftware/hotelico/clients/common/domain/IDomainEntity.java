@@ -6,6 +6,8 @@ public interface IDomainEntity {
 
     void setInitValues(Map<String, String> fieldToValues);
 
+//    boolean enabled();
+    
     /**
      *     //this.setFirstName(name);
      *     //this.setTime(LocalDateTime.now());

@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl;//package de.hotelico.service.impl;
 
 import com.thoughtworks.xstream.mapper.Mapper;
-import eu.getsoftware.hotelico.clients.common.domain.IDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.User;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.UserEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.UserDtoRepository;
 import eu.getsoftware.hotelico.hotelapp.application.customer.common.dto.UserDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IUserService;
@@ -107,7 +107,7 @@ public class UserServiceImpl implements IUserService
 	
 	@Cacheable
     @NotNull
-    public IDomainEntity getByUserName(@NotNull String username) {
+    public UserEntity getByUserName(@NotNull String username) {
 	
 		log.info("getByUserName: username=$username");
 	
@@ -116,7 +116,7 @@ public class UserServiceImpl implements IUserService
 			return null;
 		}
         
-        List<User> findByUserName = userDtoRepository.findByUserName(username);
+        List<UserEntity> findByUserName = userDtoRepository.findByUserName(username);
 		
 		if(findByUserName.size > 1)
 		{

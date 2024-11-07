@@ -20,6 +20,7 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.HotelReposi
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.WallPostRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.CustomerDeal;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.ICustomerDeal;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.dto.CustomerDealDTO;
@@ -179,7 +180,7 @@ public class HotelServiceImpl implements IHotelService
                 {
 	                CustomerDBEntity requester = requesterOptional.get();
                     double kms = getDistanceKmToHotel(new Point2D.Double(requester.getLatitude(), requester.getLongitude()), hotelRootEntity);
-                    hotelDto.setKmFromMe(kms);
+                    hotelDto.withKmFromMe(kms);
                 }
                 out.add(hotelDto);
 
@@ -212,6 +213,11 @@ public class HotelServiceImpl implements IHotelService
 			    .orElseThrow(() -> new ResourceNotFoundException("hotel not found, hotelCode is wrong: " + hotelCode));
         
         return dto;
+    }
+
+    @Override
+    public boolean existsHotelByCode(String hotelCode) {
+        return false;
     }
 
     @Override
@@ -1248,7 +1254,17 @@ public class HotelServiceImpl implements IHotelService
         
         return wallPostDto;
     }
-    
+
+    @Override
+    public int getCustomerDealCounter(long receiverId, int i) {
+        return 0;
+    }
+
+    @Override
+    public IHotelActivity getActivityByIdOrInitId(int activId, int activId1) {
+        return null;
+    }
+
     @Override
     public WallPostDTO updateWallPost(WallPostDTO wallPostDto)
     {
@@ -1741,6 +1757,11 @@ public class HotelServiceImpl implements IHotelService
 
     @Override
     public IHotelRootEntity getOne(long hotelId) {
+        return null;
+    }
+
+    @Override
+    public HotelDTO convertToDTO(IHotelRootEntity hotelEntity) {
         return null;
     }
 
