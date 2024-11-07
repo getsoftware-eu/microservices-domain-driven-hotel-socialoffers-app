@@ -11,7 +11,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-class WebSocketNotificationService implements IWebSocketService {
+public class WebSocketNotificationService implements IWebSocketService {
 
     /**
      * expected the user is the one authenticated with the WebSocket session

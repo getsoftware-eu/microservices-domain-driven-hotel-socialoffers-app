@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.outPortServiceImpl;
 
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.repository.ChatMessageRepository;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.port.out.IChatMessageService;
@@ -30,5 +31,9 @@ public class ChatMessageService implements IChatMessageService {
 	public Optional<ChatMessageEntity> getLastChatMessage(Long fromCustomerId, Long toCustomerId)
 	{
 		return chatMessageRepository.getLastMessageByCustomerAndReceiverIds(fromCustomerId, toCustomerId);
+	}
+
+	public void save(ChatMsgDTO chatMsgDTO) {
+		
 	}
 }

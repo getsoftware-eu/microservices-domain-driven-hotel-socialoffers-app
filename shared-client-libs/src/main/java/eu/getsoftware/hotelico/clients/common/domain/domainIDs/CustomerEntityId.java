@@ -5,7 +5,7 @@ import eu.getsoftware.hotelico.clients.common.domain.EntityIdentifier;
 import java.util.UUID;
 
 public record CustomerEntityId(
-        String value
+        String uuidValue
 ) implements EntityIdentifier {
     
     public CustomerEntityId(String value, Boolean checkParam) {

@@ -279,5 +279,16 @@ public class CustomerDBEntity implements ICustomerRootEntity, Serializable, IFil
         
     }
 
-     
+
+    public void setBirthday(Date birthdayDate) {
+    }
+
+    public void doLogout() {
+    }
+
+    public void doLogged(boolean b) {
+    }
+
+    public void doActive(boolean b) {
+    }
 }

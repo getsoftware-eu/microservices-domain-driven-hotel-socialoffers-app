@@ -20,19 +20,19 @@ public interface CustomerPortService
     
     long getCustomerHotelId(long customerId);
     
-    Optional<? extends ICustomerRootEntity> getByEmail(String email);
+    Optional<CustomerDTO> getByEmail(String email);
     
-    Set<ICustomerRootEntity> getByHotelId(long customerId, long hotelId, boolean addStaff);
+    Set<CustomerDTO> getByHotelId(long customerId, long hotelId, boolean addStaff);
 
     CustomerDTO fillDtoWithHotelInfo(CustomerDTO dto, ICustomerHotelCheckinEntity validCheckin);
    
-    Set<ICustomerRootEntity> getByCity(long customerId, String city);
+    Set<CustomerDTO> getByCity(long customerId, String city);
     
-    Set<ICustomerRootEntity> getCustomerCities(long customerId);
+    Set<CustomerDTO> getCustomerCities(long customerId);
 
-    Optional<? extends ICustomerRootEntity> getById(long customerId, long requesterCustomerId);
+    Optional<CustomerDTO> getById(long customerId, long requesterCustomerId);
     
-    Optional<? extends ICustomerRootEntity> getEntityById(long customerId);
+    Optional<CustomerDTO> getEntityById(long customerId);
  
     ICustomerRootEntity addCustomer(ICustomerRootEntity customerDto, String password);
     

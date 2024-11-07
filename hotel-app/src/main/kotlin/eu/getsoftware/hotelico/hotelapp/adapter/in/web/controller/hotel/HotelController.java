@@ -19,14 +19,11 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.awt.geom.Point2D;
-import java.net.URI;
 import java.util.List;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Timed("sensorMap.controller") //eugen: profiler
@@ -51,29 +48,29 @@ public class HotelController extends BasicController
     }
 
 
-    /**
-     * eu: create a link to created entity :)))
-     * @param inputHotelDTO
-     * @param persistentEntityResourceAssembler
-     * @return
-     */
-    @RequestMapping(method = POST, value = "/hotels")
-    @ResponseBody
-    public ResponseEntity<Resource<HotelDTO>> createNewHotel(@RequestBody HotelDTO inputHotelDTO,
-                                                            PersistentEntityResourceAssembler persistentEntityResourceAssembler
-    ) {
-
-        HotelDTO createdHotel = createWithSkuHandling(inputHotelDTO);
-
-        Resource<HotelDTO> hotelResource = new Resource<>(createdHotel);
-        hotelResource.add(persistentEntityResourceAssembler.getSelfLinkFor(createdHotel));
-        
-        URI location = linkTo(HotelController.class)
-                .slash("/hotels")
-                .slash(createdHotel.getId())
-                .toUri();
-        return ResponseEntity.created(location).body(hotelResource);
-    }
+//    /**
+//     * eu: create a link to created entity :)))
+//     * @param inputHotelDTO
+//     * @param persistentEntityResourceAssembler
+//     * @return
+//     */
+//    @RequestMapping(method = POST, value = "/hotels")
+//    @ResponseBody
+//    public ResponseEntity<Resource<HotelDTO>> createNewHotel(@RequestBody HotelDTO inputHotelDTO,
+//                                                            PersistentEntityResourceAssembler persistentEntityResourceAssembler
+//    ) {
+//
+//        HotelDTO createdHotel = createWithSkuHandling(inputHotelDTO);
+//
+//        Resource<HotelDTO> hotelResource = new Resource<>(createdHotel);
+//        hotelResource.add(persistentEntityResourceAssembler.getSelfLinkFor(createdHotel));
+//        
+//        URI location = linkTo(HotelController.class)
+//                .slash("/hotels")
+//                .slash(createdHotel.getId())
+//                .toUri();
+//        return ResponseEntity.created(location).body(hotelResource);
+//    }
     
     @RequestMapping(value = "/customer/{customerId}/hotel/{hotelId}", method = RequestMethod.GET)
     public HotelDTO get(@PathVariable long customerId, @PathVariable long hotelId, final HttpServletResponse response) {
@@ -93,7 +90,7 @@ public class HotelController extends BasicController
     @RequestMapping(value = "/action/{action}/hotelId/{hotelId}/customer/{guestCustomerId}", method = POST)
     public CustomerDTO addHotelGuestAction(@PathVariable String action, @PathVariable Long hotelId, @PathVariable long guestCustomerId, @RequestBody CustomerDTO guestDto, final HttpServletResponse response) {
 //        response.setHeader("Cache-Control", "no-cache");
-        CustomerDTO out = hotelActivityService.addGuestAction(guestCustomerId, action, hotelId, guestDto);
+        CustomerDTO out = CustomerDTO.builder().build(); //= hotelActivityService.addGuestAction(guestCustomerId, action, hotelId, guestDto);
         return out;
     }   
     

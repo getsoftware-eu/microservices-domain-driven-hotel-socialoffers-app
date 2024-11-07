@@ -6,6 +6,7 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelWallPost;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IWallpostService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -14,6 +15,7 @@ import java.util.List;
 import static eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties.convertToLocalDateTime;
 
 @RequiredArgsConstructor
+@Service
 public class WallPostServiceImpl implements IWallpostService {
 
     private final HotelServiceImpl hotelService;
@@ -39,7 +41,7 @@ public class WallPostServiceImpl implements IWallpostService {
     }
 
     @Override
-    public IHotelWallPost updateWallPost(IHotelWallPost wallPostDto) {
+    public WallPostDTO updateWallPost(WallPostDTO wallPostDto) {
         return null;
     }
 
@@ -54,12 +56,12 @@ public class WallPostServiceImpl implements IWallpostService {
     }
 
     @Override
-    public IHotelWallPost addUpdateWallPost(IHotelWallPost wallPostDto) {
+    public WallPostDTO addUpdateWallPost(WallPostDTO wallPostDto) {
         return null;
     }
 
     @Override
-    public List<IHotelWallPost> getWallPostsByHotelId(long hotelId) {
+    public List<WallPostDTO> getWallPostsByHotelId(long hotelId) {
         return List.of();
     }
 

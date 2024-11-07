@@ -2,6 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.application.chat.domain.infrastructure;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
+import eu.getsoftware.hotelico.hotelapp.application.chat.domain.model.ChatMsgProjection;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
@@ -11,9 +12,9 @@ import java.util.Set;
 
 public interface ChatMSComminicationService
 {
-    List<IChatMsgDomain> getChatMessages();
+    List<ChatMsgDTO> getChatMessages();
     
-    ChatMsgDTO convertMessageToDto(IChatMessageDomain nextMessage);
+    ChatMsgDTO convertMessageToDto(ChatMsgProjection nextMessage);
 
     @Transactional 
     ChatMsgDTO addUpdateChatMessage(ChatMsgDTO chatMessageDto);    

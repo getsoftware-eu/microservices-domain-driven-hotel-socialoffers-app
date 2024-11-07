@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService;
 
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -147,5 +148,6 @@ public interface FileUploadService
 	@Transactional
 	boolean saveFileToOwner(MultipartFile file, long senderId, String model, long modelId, String absolutePath) throws Exception;
 	
-	@Transactional CustomerDTO getEntityImage(long requesterId, String entityType, long entityId);
+	@Transactional
+	CustomerDTO getEntityImage(long requesterId, String entityType, long entityId);
 }

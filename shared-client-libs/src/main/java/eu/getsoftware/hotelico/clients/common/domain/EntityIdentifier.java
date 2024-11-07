@@ -10,7 +10,7 @@ import java.util.UUID;
  */
 public interface EntityIdentifier {
 
-    String value();
+    String uuidValue();
     
     default boolean ensureValidUuid(String value) throws IllegalArgumentException {
         UUID.fromString(value);

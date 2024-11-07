@@ -70,7 +70,7 @@ public class CheckinMessagePublisher {
                 .build(eventPayload);
 
 //        domainMessagePublisher.publishChatSentEvent(messageType, eventMessage);
-        kafkaMessagePublisher.publishMessage(eventMessage);
+        kafkaMessagePublisher.publishMessageToPartition(customerEntityId.uuidValue(), eventMessage);
         log.info("Published message {}", eventMessage);
     }
 

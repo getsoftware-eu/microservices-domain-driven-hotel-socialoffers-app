@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging;
 
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessage;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,11 @@ public class CheckinKafkaSubscriber {
 
         {
             log.info("Processing event {}", message.getMessageType());
-            CheckinDTO checkin = toCheckin(payload).build();
-            checkinRepository.save(checkin);
+            
+            CheckinDTO checkin = toCheckinDTO(payload).build();
+            CustomerHotelCheckin entity = checkinRepository.findById(checkin.getInitId()).orElseThrow(()-> new RuntimeException("not found"));
+
+            checkinRepository.save(entity);
         }
     }
 
@@ -40,8 +44,12 @@ public class CheckinKafkaSubscriber {
 
         {
             log.info("Processing event {}", message.getMessageType());
-            CheckinDTO checkin = toCheckin(payload).build();
-            checkinRepository.partialUpdateCheckin(checkin);
+            CheckinDTO checkin = toCheckinDTO(payload).build();
+//            checkinRepository.partialUpdateCheckin(checkin);
+
+             CustomerHotelCheckin entity = checkinRepository.findById(checkin.getInitId()).orElseThrow(()-> new RuntimeException("not found"));
+            
+            checkinRepository.save(entity);
         }
     }
 
@@ -61,12 +69,12 @@ public class CheckinKafkaSubscriber {
      * @param payload
      * @return
      */
-    private CheckinDTO.CheckinDTOBuilder toCheckin(CheckinMessagePublisher.CheckinSendEventPayload payload) {
+    private CheckinDTO.CheckinDTOBuilder toCheckinDTO(CheckinMessagePublisher.CheckinSendEventPayload payload) {
         return CheckinDTO.builder()
                 .initId(payload.getEntityId())
                 .checkinFrom(payload.getCheckinFrom())
                 .checkinTo(payload.getCheckinTo())
-                .hotelId(payload.getHoteId())
+                .hotelId(payload.getHotelId())
                 .customerId(payload.getCustomerId());
     }
     

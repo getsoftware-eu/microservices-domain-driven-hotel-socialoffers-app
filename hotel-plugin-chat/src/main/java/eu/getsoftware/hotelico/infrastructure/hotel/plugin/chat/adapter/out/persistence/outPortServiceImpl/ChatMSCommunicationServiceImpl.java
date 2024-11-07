@@ -1,25 +1,24 @@
-package eu.getsoftware.hotelico.hotelapp.adapter.out.chat;
+package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.outPortServiceImpl;
 
-import eu.getsoftware.hotelico.chat.domain.ChatMessageView;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import eu.getsoftware.hotelico.hotel.usecase.notification.app.usecases.impl.NotificationService;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.CustomerHotelCheckin;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelActivity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.microservice.MessagingRabbitMQProducer;
-import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.CustomerPortService;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.ChatMessageView;
+import eu.getsoftware.hotelico.hotelapp.application.chat.domain.infrastructure.ChatMSComminicationService;
+import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.INotificationService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IWebSocketService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
-import eu.getsoftware.hotelico.hotelapp.application.service.ChatMSComminicationService;
+import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang.NotImplementedException;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -32,42 +31,32 @@ import java.util.*;
  * Created by Eugen on 16.07.2015.
  */
 @Service
+@RequiredArgsConstructor
 public class ChatMSCommunicationServiceImpl implements ChatMSComminicationService
 {
-	@Autowired
 	private CustomerPortService customerService;		
 	
-	@Autowired
 	private LastMessagesService lastMessagesService;		
 	
-	@Autowired
-	private NotificationService notificationService;	
+	private INotificationService notificationService;	
 	
-	@Autowired
 	private IHotelService hotelService;
 	
-	@Autowired
 	private CustomerRepository customerRepository;	
 	
-	@Autowired
 	private CheckinRepository checkinRepository;
 
-	@Autowired
 	MessagingRabbitMQProducer hotelRabbitMQProducer;
 	
-	@Autowired
 	private ModelMapper modelMapper;
 	
-	@Autowired
 	private IWebSocketService webSocketService;
 
-	@Override
 	public List<ChatMessageView> getChatMessages()
 	{
 		throw new NotImplementedException();
 	}
 	
-	@Override
 	public List<ChatMsgDTO> getMessagesByCustomerId(long customerId, long receiverId)
 	{
 		List<ChatMessageView> list = chatRepository.getMessagesByCustomerIds(customerId, receiverId);
@@ -88,15 +77,15 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 		return out;
 	}
 	
-	@Override
-	public ChatMsgDTO convertMessageToDto(ChatMessageView nextMessage)
-	{
-		ChatMsgDTO nextDto = nextMessage!=null ? modelMapper.map(nextMessage, ChatMsgDTO.class) : null;
-		
-		nextDto = fillDtoFromMessage(nextDto, nextMessage);
-		
-		return nextDto;
-	}
+//	@Override
+//	public ChatMsgDTO convertMessageToDto(ChatMessageView nextMessage)
+//	{
+//		ChatMsgDTO nextDto = nextMessage!=null ? modelMapper.map(nextMessage, ChatMsgDTO.class) : null;
+//		
+//		nextDto = fillDtoFromMessage(nextDto, nextMessage);
+//		
+//		return nextDto;
+//	}
 
 	@Override
 	public ChatMsgDTO addUpdateChatMessage(ChatMsgDTO chatMessageDto)
@@ -172,73 +161,73 @@ public class ChatMSCommunicationServiceImpl implements ChatMSComminicationServic
 		return chatMessageDto;
 	}
 
-	private ChatMsgDTO fillDtoFromMessage(ChatMsgDTO chatDto, ChatMessageView chatMessage)
-	{
-		if(chatMessage==null || chatDto==null)
-		{
-			return null;	
-		}
-		
-		chatDto.setSenderId(chatMessage.getSender().getId());
-
-		chatDto.setReceiverId(chatMessage.getReceiver().getId());
-
-		chatDto.setHotelStaff(chatMessage.getSender().isHotelStaff());
-
-		chatDto.setTimestamp(chatMessage.getTimestamp());
-		
-		chatDto.setCreationTime(chatMessage.getTimestamp().getTime());
-
-		chatDto.setId(chatMessage.getId());
-
-		chatDto.setSeenByReceiver(chatMessage.isSeenByReceiver());
-
-		if(chatMessage.getSpecialChatContent()!=null)
-		{
-			String specContent = chatMessage.getSpecialChatContent();
-
-			String[] split = specContent.replace("{","").replace("}", "").split("=");
-
-			if(split.length>1)
-			{
-				String key = split[0];
-				String value = split[1];
-
-				chatDto.getSpecialContent().put(key, value);
-
-				if(key.equalsIgnoreCase("activityId"))
-				{
-					long activityId = Long.parseLong(value);
-
-					HotelActivity activity = hotelService.getActivityByIdOrInitId((int)activityId, activityId);
-
-					if(activity!=null)
-					{
-						chatDto.getSpecialContent().put("name", activity.getTitle());
-						chatDto.getSpecialContent().put("hotelId", activity.getHotelRootEntity().getId()+"");
-						chatDto.getSpecialContent().put("pictureUrl", activity.getPreviewPictureUrl()!=null?activity.getPreviewPictureUrl() : AppConfigProperties.PREVIEW_ACTIVITY_NOT_AVAILABLE_URL );
-					}
-
-				}
-				else
-				if(key.equalsIgnoreCase("customerId"))
-				{
-					long customerId = Integer.parseInt(value);
-
-					CustomerDBEntity customerEntity = customerRepository.getOne(customerId);
-
-					if(customerEntity !=null)
-					{
-						chatDto.getSpecialContent().put("name", customerEntity.getFirstName() + " " + customerEntity.getLastName());
-						chatDto.getSpecialContent().put("pictureUrl", customerService.getCustomerAvatarUrl(customerEntity));
-					}
-
-				}
-			}
-		}
-		
-		return chatDto; 
-	}
+//	private ChatMsgDTO fillDtoFromMessage(ChatMsgDTO chatDto, ChatMessageView chatMessage)
+//	{
+//		if(chatMessage==null || chatDto==null)
+//		{
+//			return null;	
+//		}
+//		
+//		chatDto.setSenderId(chatMessage.getSender().getId());
+//
+//		chatDto.setReceiverId(chatMessage.getReceiver().getId());
+//
+//		chatDto.setHotelStaff(chatMessage.getSender().isHotelStaff());
+//
+//		chatDto.setTimestamp(chatMessage.getTimestamp());
+//		
+//		chatDto.setCreationTime(chatMessage.getTimestamp().getTime());
+//
+//		chatDto.setId(chatMessage.getId());
+//
+//		chatDto.setSeenByReceiver(chatMessage.isSeenByReceiver());
+//
+//		if(chatMessage.getSpecialChatContent()!=null)
+//		{
+//			String specContent = chatMessage.getSpecialChatContent();
+//
+//			String[] split = specContent.replace("{","").replace("}", "").split("=");
+//
+//			if(split.length>1)
+//			{
+//				String key = split[0];
+//				String value = split[1];
+//
+//				chatDto.getSpecialContent().put(key, value);
+//
+//				if(key.equalsIgnoreCase("activityId"))
+//				{
+//					long activityId = Long.parseLong(value);
+//
+//					HotelActivity activity = hotelService.getActivityByIdOrInitId((int)activityId, activityId);
+//
+//					if(activity!=null)
+//					{
+//						chatDto.getSpecialContent().put("name", activity.getTitle());
+//						chatDto.getSpecialContent().put("hotelId", activity.getHotelRootEntity().getId()+"");
+//						chatDto.getSpecialContent().put("pictureUrl", activity.getPreviewPictureUrl()!=null?activity.getPreviewPictureUrl() : AppConfigProperties.PREVIEW_ACTIVITY_NOT_AVAILABLE_URL );
+//					}
+//
+//				}
+//				else
+//				if(key.equalsIgnoreCase("customerId"))
+//				{
+//					long customerId = Integer.parseInt(value);
+//
+//					CustomerDBEntity customerEntity = customerRepository.getOne(customerId);
+//
+//					if(customerEntity !=null)
+//					{
+//						chatDto.getSpecialContent().put("name", customerEntity.getFirstName() + " " + customerEntity.getLastName());
+//						chatDto.getSpecialContent().put("pictureUrl", customerService.getCustomerAvatarUrl(customerEntity));
+//					}
+//
+//				}
+//			}
+//		}
+//		
+//		return chatDto; 
+//	}
 
 	@Override
 	public ChatMsgDTO getChatMessageById(long chatMessageId)

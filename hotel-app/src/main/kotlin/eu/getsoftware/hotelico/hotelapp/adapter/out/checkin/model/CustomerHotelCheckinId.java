@@ -19,11 +19,11 @@ class CustomerHotelCheckinId implements java.io.Serializable {
 	
 	@Getter
 	@Setter
-	private String customerEntityId;
+	private long customerEntityId;
 	
 	@Getter
 	@Setter
-	private String hotelEntityId;
+	private long hotelEntityId;
 
 //	@ManyToOne //Bad für splitting Microservices!!!
 //	public CustomerRootEntity getCustomer() {

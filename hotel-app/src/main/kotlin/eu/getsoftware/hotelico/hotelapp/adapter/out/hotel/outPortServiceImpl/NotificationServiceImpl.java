@@ -1,27 +1,44 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.microservice.WebSocketNotificationService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.IHotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.INotificationService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
+@RequiredArgsConstructor
 public class NotificationServiceImpl implements INotificationService {
-    
 
-    public void notificateEvent(CustomerDTO dto, CustomerNotificationDTO receiverNotification) {
+    private final WebSocketNotificationService webSocketService;
 
-        if(dto.getHotelId()>0)
-        {
-            receiverNotification.setCustomerEvent(dto.getId(), dto.getHotelId(), event, eventContent, entityId);
+//    public void notificateEvent(CustomerDTO dto, CustomerNotificationDTO receiverNotification) {
+//
+//        if(dto.getHotelId()>0)
+//        {
+//            receiverNotification.setCustomerEvent(dto.getId(), dto.getHotelId(), event, eventContent, entityId);
+//
+//            //                if(event.getPushUrl()!=null)
+//            //                {
+//            //                    receiverNotification.setPushCustomerEvent(event.getPushTitle(), eventContent, event.getPushUrl(), event.getPushIcon());
+//            //                    cacheService.setLastPushNotifiation(nextOnlineCustomerId, receiverNotification);
+//            //                    sendPushRequest(nextOnlineCustomerId);
+//            //                }
+//        }
+//
+//        webSocketService.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + nextOnlineCustomerId, receiverNotification);
+//
+//    }
 
-            //                if(event.getPushUrl()!=null)
-            //                {
-            //                    receiverNotification.setPushCustomerEvent(event.getPushTitle(), eventContent, event.getPushUrl(), event.getPushIcon());
-            //                    cacheService.setLastPushNotifiation(nextOnlineCustomerId, receiverNotification);
-            //                    sendPushRequest(nextOnlineCustomerId);
-            //                }
-        }
+    @Override
+    public void notificateAboutEntityEvent(CustomerDTO dto, IHotelEvent event, String eventContent, long entityId) {
 
-        webSocketService.produceSimpWebsocketMessage(ControllerUtils.SOCKET_NOTIFICATION_TOPIC + nextOnlineCustomerId, receiverNotification);
+        CustomerNotificationDTO notification = new CustomerNotificationDTO(dto.getInitId());
+                
+        webSocketService.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + dto.getInitId(), notification);
 
     }
 }

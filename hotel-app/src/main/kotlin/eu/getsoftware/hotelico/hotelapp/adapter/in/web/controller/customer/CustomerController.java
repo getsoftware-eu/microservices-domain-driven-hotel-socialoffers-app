@@ -1,14 +1,14 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller.customer;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import eu.getsoftware.hotelico.hotel.infrastructure.controller.BasicController;
-import eu.getsoftware.hotelico.hotel.usecase.checkin.app.usecases.impl.CheckinService;
-import eu.getsoftware.hotelico.hotel.usecase.notification.app.usecases.impl.NotificationService;
-import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.CustomerPortService;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
+import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.aspects.NotifyClients;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.INotificationService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LoginHotelicoService;
 import io.swagger.annotations.Api;
@@ -16,6 +16,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -30,23 +31,15 @@ import java.util.Set;
 @RestController
 @RequestMapping("/customers")
 //@SessionAttributes(ControllerUtils.SESSION_CUSTOMER)
+@RequiredArgsConstructor
 public class CustomerController extends BasicController
 {
     
     private final CustomerPortService customerService;
-    private final CheckinService checkinService;
-    private final NotificationService notificationService;
+    private final CheckinPortService checkinService;
+    private final INotificationService notificationService;
     private final LastMessagesService lastMessagesService;
     private final LoginHotelicoService loginService;
-    
-    public CustomerController(CustomerPortService customerService, CheckinService checkinService, NotificationService notificationService, LastMessagesService lastMessagesService, LoginHotelicoService loginService)
-    {
-        this.customerService = customerService;
-        this.checkinService = checkinService;
-        this.notificationService = notificationService;
-        this.lastMessagesService = lastMessagesService;
-        this.loginService = loginService;
-    }
     
     //INIT Session values
     @ModelAttribute(AppConfigProperties.SESSION_CUSTOMER)

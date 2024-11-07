@@ -37,7 +37,8 @@ public class CustomerDTO extends BasicDTO
 
     private final String employer = null;
 
-    private final String city = null;
+    @NonNull
+    private final String city = "";
 
     private final String originalCity = null;
 
@@ -214,6 +215,21 @@ public class CustomerDTO extends BasicDTO
 
     public void setCheckinTo(Date validTo) {
         
+    }
+
+    public void setLanguages(List<String> newLanguages) {
+    }
+
+    public void setAvatarUrl(String customerAvatarUrl) {
+    }
+
+    public void setOnline(boolean customerOnline) {
+    }
+
+    public void setCustomerConsistencyId(long consistencyId) {
+    }
+
+    public void setBirthdayTime(String s) {
     }
 
 //    /**

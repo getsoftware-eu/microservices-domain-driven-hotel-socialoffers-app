@@ -1,18 +1,19 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.common.collect.ImmutableSet;
+import eu.getsoftware.hotelico.clients.common.domain.EntityIdentifier;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Map;
 
 import static lombok.Lombok.checkNotNull;
 
@@ -20,40 +21,41 @@ import static lombok.Lombok.checkNotNull;
 @Data
 @Entity
 @Table(name = "customer_hotel_checkin", schema = "hotel")
-@AssociationOverrides({
-		@AssociationOverride(name = "pk.customer",
-				joinColumns = @JoinColumn(name = "CUSTOMER_ID")),
-		@AssociationOverride(name = "pk.hotel",
-				joinColumns = @JoinColumn(name = "HOTEL_ID")) })
+//@AssociationOverrides({
+//		@AssociationOverride(name = "pk.customer",
+//				joinColumns = @JoinColumn(name = "CUSTOMER_ID")),
+//		@AssociationOverride(name = "pk.hotel",
+//				joinColumns = @JoinColumn(name = "HOTEL_ID")) })
 public class CustomerHotelCheckin implements ICustomerHotelCheckinEntity, java.io.Serializable {
 
 	private static final long serialVersionUID = -2949611288215768311L;
 
-	@JsonView(CheckinPartialUpdateView.class)
+//	@JsonView(CheckinPartialUpdateView.class)
 	private Integer tenantId;
 
-	@JsonView(ProductPartialUpdateView.class)
+//	@JsonView(ProductPartialUpdateView.class)
 	private boolean visible;
 
-	@JsonView(ProductPartialUpdateView.class)
-	private String sku;
+//	@JsonView(ProductPartialUpdateView.class)
+	private String customerUuidValue;
+	private String hotelUuidValue;
 
-	@JsonView(ProductPartialUpdateView.class)
+//	@JsonView(ProductPartialUpdateView.class)
 	private String name;
 
-	@JsonView(ProductPartialUpdateView.class)
+//	@JsonView(ProductPartialUpdateView.class)
 	private String description;
 
-	@JsonView(ProductPartialUpdateView.class)
+//	@JsonView(ProductPartialUpdateView.class)
 	private LocalDateTime createdAt;
 
-	@Singular
-	@JsonView(ProductPartialUpdateView.class)
-	private ImmutableSet<String> tags;
+//	@Singular
+//	@JsonView(ProductPartialUpdateView.class)
+//	private Set<String> tags;
 
-	@Singular
-	@JsonView(AttributePartialUpdateView.class)
-	private ImmutableSet<Attribute> attributes;
+//	@Singular
+//	@JsonView(AttributePartialUpdateView.class)
+//	private ImmutableSet<Attribute> attributes;
 	
 	@Column(name = "active", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_TRUE)
 	private boolean active = true;
@@ -87,22 +89,35 @@ public class CustomerHotelCheckin implements ICustomerHotelCheckinEntity, java.i
 		this.pk = pk;
 	}
 	
-	public void setCustomer(CustomerDBEntity customerEntity) {
-		getPk().setCustomer(customerEntity);
+	public void setCustomer(long customerId) {
+		
+		getPk().setCustomerEntityId(customerId);
 	}
 
-	@Transient
-	public HotelRootEntity getHotel() {
-		return getPk().getHotel();
-	}
+//	@Transient
+//	public long getHotelId() {
+//		
+//		return getPk().getHotelEntityId();
+//	}
 	
-	@Transient
-	public ICustomerRootEntity getCustomer() {
-		return getPk().getCustomer();
-	}
+//	@Transient
+//	public long getCustomerId() {
+//		return getPk().getCustomerEntityId();
+//	}
 	
-	public void setHotel(HotelRootEntity category) {
-		getPk().setHotel(category);
+	public void setHotelId(long hotel) {
+		getPk().setHotelEntityId(hotel);
+	}
+
+	@Override
+	public void setCustomerEntityId(CustomerEntityId customerEntityId) {
+		  customerUuidValue = customerEntityId.uuidValue();
+	}
+
+	@Override
+	public void setHotelEntityId(HotelEntityId hotelEntityId) {
+		hotelUuidValue = hotelEntityId.uuidValue();
+
 	}
 
 	public int hashCode() {
@@ -163,26 +178,36 @@ public class CustomerHotelCheckin implements ICustomerHotelCheckinEntity, java.i
 		return contained;
 	}
 
-	/**
-	 * @param attribute attribute to be added to this product
-	 * @return <tt>true</tt> if this product did not already contain the specified
-	 * attribute
-	 */
-	public boolean addOrReplaceAttribute(@NotNull Attribute attribute) {
-		boolean contained = attributes.contains(checkNotNull(attribute));
-		attributes = remove(attributes, attribute).add(attribute).build();
-		return !contained;
+	@Override
+	public void setInitValues(Map<String, String> fieldToValues) {
+
 	}
 
-	/**
-	 * @param attribute attribute to be removed from this product, if present
-	 * @return <tt>true</tt> if this product contained the specified attribute
-	 */
-	public boolean removeAttribute(@NotNull Attribute attribute) {
-		boolean contained = attributes.contains(checkNotNull(attribute));
-		attributes = remove(attributes, attribute).build();
-		return contained;
+	@Override
+	public <I extends EntityIdentifier> I getEntityId() {
+		return null;
 	}
+
+//	/**
+//	 * @param attribute attribute to be added to this product
+//	 * @return <tt>true</tt> if this product did not already contain the specified
+//	 * attribute
+//	 */
+//	public boolean addOrReplaceAttribute(@NotNull Attribute attribute) {
+//		boolean contained = attributes.contains(checkNotNull(attribute));
+//		attributes = remove(attributes, attribute).add(attribute).build();
+//		return !contained;
+//	}
+
+//	/**
+//	 * @param attribute attribute to be removed from this product, if present
+//	 * @return <tt>true</tt> if this product contained the specified attribute
+//	 */
+//	public boolean removeAttribute(@NotNull Attribute attribute) {
+//		boolean contained = attributes.contains(checkNotNull(attribute));
+//		attributes = remove(attributes, attribute).build();
+//		return contained;
+//	}
 
 	@JsonPOJOBuilder(withPrefix = "")
 	public static class ProductBuilder {

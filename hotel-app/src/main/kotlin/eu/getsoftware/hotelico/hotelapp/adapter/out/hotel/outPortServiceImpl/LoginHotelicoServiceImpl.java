@@ -2,15 +2,14 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import eu.getsoftware.hotelico.hotel.application.iService.*;
-import eu.getsoftware.hotelico.hotel.usecase.checkin.app.usecases.impl.CheckinService;
-import eu.getsoftware.hotelico.hotel.usecase.notification.app.usecases.impl.NotificationService;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.DealRepository;
-import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.CustomerPortService;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
+import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.INotificationService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LoginHotelicoService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.MailService;
@@ -41,10 +40,10 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 	private MailService mailService;
 		
 	@Autowired
-	private NotificationService notificationService;
+	private INotificationService notificationService;
 	
 	@Autowired
-	private CheckinService checkinService;
+	private CheckinPortService checkinService;
 	
 	@Autowired
 	private CustomerRepository customerRepository;
@@ -68,8 +67,8 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 				throw new RuntimeException("Password is not correct.");
 			}
 			
-			customerEntity.setLogged(true);
-			customerEntity.setActive(true);
+			customerEntity.doLogged(true);
+			customerEntity.doActive(true);
 			
 			customerRepository.saveAndFlush(customerEntity);
 			
@@ -93,8 +92,8 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 	{
 		if(customerDto!=null && customerDto.getId()>0)
 		{
-			CustomerDBEntity logoutCustomerRootEntity =  customerRepository.getOne(customerDto.getId());
-			logoutCustomerRootEntity.setLogged(false);
+			CustomerDBEntity logoutCustomerRootEntity =  customerRepository.findById(customerDto.getId()).orElseThrow(()-> new RuntimeException("not found"));
+			logoutCustomerRootEntity.doLogout();
 			
 			//eugen: clear seen hotel activities
 			//            logoutCustomer.getSeenActivities().clear();
@@ -108,7 +107,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 			lastMessagesService.checkCustomerOffline(customerDto.getId());
 			
 		}
-		customerDto.setLogged(false);
+//		customerDto.setLogged(false);
 	}
 	
 	@Override
@@ -123,7 +122,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 			CustomerDBEntity customerEntity = customerEntities.get(0);
 			
 			Date requestTime = new Date();
-			customerEntity.setLastResetPasswordRequestTime(requestTime.getTime());
+//			customerEntity.setLastResetPasswordRequestTime(requestTime.getTime());
 			
 			String saltedPasswordQuery = createPasswordQuery(customerEntity.getLastResetPasswordRequestTime(), customerEntity.getId(), customerEntity.getPasswordHash());
 			//            String newContext = passwordEncoder.encodePassword(saltedPasswordQuery);
@@ -255,7 +254,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 		
 		if(customerEntity !=null)
 		{
-			customerEntity.setLogged(logged);
+			customerEntity.doLogged(logged);
 			
 			customerRepository.saveAndFlush(customerEntity);
 		}
@@ -278,7 +277,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 		if(loggingCustomer.getSystemMessages()!=null && !loggingCustomer.getSystemMessages().isEmpty())
 		{
 			//TODO Eugen: set or just add?
-			dbCustomer.setSystemMessages(loggingCustomer.getSystemMessages());
+//			dbCustomer.setSystemMessages(loggingCustomer.getSystemMessages());
 			
 			if(dbCustomer.getId()>0 && dbCustomer.getSystemMessages().containsKey("guestCustomerId"))
 			{
@@ -295,30 +294,30 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 			}
 		}
 		
-		if(loggingCustomer.getHideCheckinPopup())
-		{
-			dbCustomer.setHideCheckinPopup(true);
-		}
-		
-		if(loggingCustomer.getHideHotelListPopup())
-		{
-			dbCustomer.setHideHotelListPopup(true);
-		}
-		
-		if(loggingCustomer.getHideCheckinPopup())
-		{
-			dbCustomer.setHideCheckinPopup(true);
-		}
-		
+//		if(loggingCustomer.getHideCheckinPopup())
+//		{
+//			dbCustomer.setHideCheckinPopup(true);
+//		}
+//		
+//		if(loggingCustomer.getHideHotelListPopup())
+//		{
+//			dbCustomer.setHideHotelListPopup(true);
+//		}
+//		
+//		if(loggingCustomer.getHideCheckinPopup())
+//		{
+//			dbCustomer.setHideCheckinPopup(true);
+//		}
+//		
 		
 		//CHECKIN, IF NOT LOGGED WAS CHECKINED!!!!!
-		if(!dbCustomer.getCheckedIn() && ( loggingCustomer.getHotelId()>0 || !AppConfigProperties.isEmptyString(loggingCustomer.getHotelCode())))
+		if(!dbCustomer.isCheckedIn() && ( loggingCustomer.getHotelId()>0 || !AppConfigProperties.isEmptyString(loggingCustomer.getHotelCode())))
 		{
-			dbCustomer.setHotelId(loggingCustomer.getHotelId());
-			dbCustomer.setHotelCode(loggingCustomer.getHotelCode());
+//			dbCustomer.setHotelId(loggingCustomer.getHotelId());
+//			dbCustomer.setHotelCode(loggingCustomer.getHotelCode());
 			dbCustomer.setCheckinFrom(loggingCustomer.getCheckinFrom());
 			dbCustomer.setCheckinTo(loggingCustomer.getCheckinTo());
-			dbCustomer = checkinService.updateCheckin(dbCustomer);
+//			dbCustomer = checkinService.updateCheckin(dbCustomer);
 		}
 		
 		return Optional.of(dbCustomer);

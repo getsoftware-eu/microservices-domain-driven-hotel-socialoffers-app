@@ -4,13 +4,14 @@ import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.HotelServiceImpl;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.usecase.register.dto.HotelRegisterRequestDTO;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.in.HotelRegisterUseCase;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class HotelRegisterInteractor {
+public class HotelRegisterInteractorImpl implements HotelRegisterUseCase {
 
     private final IHotelService iHotelService;
     private final HotelServiceImpl hotelServiceImpl;

@@ -46,7 +46,9 @@ public class ChatMessagePublisher {
                 .tenantId(1L)
                 .build(eventPayload);
 
-        kafkaMessagePublisher.publishMessage(eventMessage);
+        String messageKeyForKafkaPartition = String.valueOf(chatMsgDTO.receiverId());
+        
+        kafkaMessagePublisher.publishMessageToPartition(messageKeyForKafkaPartition, eventMessage);
         log.info("Published message {}", eventMessage);
     }
 
