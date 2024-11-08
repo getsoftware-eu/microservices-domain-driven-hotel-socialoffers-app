@@ -60,6 +60,7 @@ The "Clean" (Layered) Architecture is another way to provide <b>separation of co
 
 (This topic name ensures that every subscribing domain can easily interpret and process events, maintaining consistency and clarity across the system.)
 
+![Event Sourcing](/docs/img/eventSourcing.png)
 
 The key for a Kafka-message is the 'receiverId' of the chat-message (to improve Kafka-groupId partitioning).
 
