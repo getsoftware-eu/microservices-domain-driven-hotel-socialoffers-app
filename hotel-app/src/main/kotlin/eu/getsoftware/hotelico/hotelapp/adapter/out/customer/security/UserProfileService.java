@@ -2,8 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.customer.security;
 
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
-import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.IRepository.ICustomerRepository;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.service.FileStore;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.FileStore;
 import eu.getsoftware.hotelico.hotelapp.main.config.BucketName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +17,7 @@ import static org.apache.http.entity.ContentType.*;
 public class UserProfileService
 {
 
-    private ICustomerRepository customerRepository;
+    private CustomerRepository customerRepository;
     private final FileStore fileStore;
 
     @Autowired
@@ -59,7 +58,7 @@ public class UserProfileService
 
         try {
             fileStore.save(path, filename, Optional.of(metadata), file.getInputStream());
-            user.getEntityAggregate().setProfileImageLink(filename);
+            //user.setProfileImageLink(filename);
         } catch (IOException e) {
             throw new IllegalStateException(e);
         }
@@ -76,9 +75,9 @@ public class UserProfileService
 
         String pathInS3 = String.format("%s/%s",
                 BucketName.PROFILE_IMAGE.getBucketName(),
-                user.getEntityAggregate().getProfileImageUrl());
+                user.getProfileImageUrl());
 
-        return user.getEntityAggregate().getProfileImageLink()
+        return user.getProfileImageLink()
                 .map(key -> fileStore.download(pathInS3, key))
                 .orElse(new byte[0]);
 

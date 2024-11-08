@@ -54,7 +54,6 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social.SimpleConnectionSignUp;
 import eu.getsoftware.hotelico.hotelapp.main.config.adapter.SimpleSignInAdapter;
 import jakarta.inject.Inject;
-import jakarta.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -73,6 +72,8 @@ import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.facebook.web.CanvasSignInController;
+
+import javax.sql.DataSource;
 //		import org.springframework.social.linkedin.api.LinkedIn;
 //		import org.springframework.social.linkedin.connect.LinkedInConnectionFactory;
 //		import org.springframework.social.quickstart.user.SecurityContext;

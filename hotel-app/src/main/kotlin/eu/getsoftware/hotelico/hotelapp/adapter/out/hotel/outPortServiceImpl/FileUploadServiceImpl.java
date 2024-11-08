@@ -1,11 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl;
 
-import eu.getsoftware.api.hotelapp.application.hotel.iService.*;
-import eu.getsoftware.hotelico.api.hotelapp.application.hotel.iService.*;
-import eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.NotificationService;
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.FileUtils;
-import eu.getsoftware.hotelico.hotel.application.port.in.iService.*;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelActivity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
@@ -13,7 +10,7 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.ActivityRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.HotelRepository;
-import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.CustomerPortService;
+import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.*;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +40,7 @@ public class FileUploadServiceImpl implements FileUploadService
 	
 	private final IHotelService hotelService;		
 	
-	private final NotificationService notificationService;	
+	private final INotificationService notificationService;	
 		
 	private final CustomerPortService customerService;	
 	
@@ -523,7 +520,7 @@ public class FileUploadServiceImpl implements FileUploadService
 					case "activity":
 					case "activities":
 					{
-						HotelActivity activity = hotelService.getActivityByIdOrInitId((int)modelId, modelId);
+						HotelActivity activity = hotelService.getActivityByIdOrInitId(modelId, modelId);
 	
 						if (activity != null)
 						{

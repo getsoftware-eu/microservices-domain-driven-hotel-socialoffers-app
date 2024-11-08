@@ -1,19 +1,28 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository;
 
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelRootEntity;
+import jakarta.annotation.Nullable;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import java.util.Optional;
+import java.util.Set;
+
 public interface HotelRepositoryExtension {
-    Page<Hotel> findVisibleByTags(@NotNull Set<String> tags, @NotNull Pageable pageable);
+    Page<HotelRootEntity> findVisibleByTags(@NotNull Set<String> tags, @NotNull Pageable pageable);
 
-    Page<Hotel> findVisibleBySearchTerm(@Nullable String searchTerm, @NotNull Pageable pageable);
+    Page<HotelRootEntity> findVisibleBySearchTerm(@Nullable String searchTerm, @NotNull Pageable pageable);
 
-    Page<Hotel> findVisibleByCategoryQuery(@NotNull CategoryQuery categoryQuery, @NotNull Pageable pageable);
+//    Page<HotelRootEntity> findVisibleByCategoryQuery(@NotNull CategoryQuery categoryQuery, @NotNull Pageable pageable);
 
-    Optional<Hotel> findOneIgnoringVisibility(@NotNull String id);
+    Optional<HotelRootEntity> findOneIgnoringVisibility(@NotNull String id);
 
-    Hotel partialUpdateHotel(@NotNull Hotel product);
+    HotelRootEntity partialUpdateHotel(@NotNull HotelRootEntity product);
 
-    Hotel partialUpdateAttributes(@NotNull Hotel product);
+    HotelRootEntity partialUpdateAttributes(@NotNull HotelRootEntity product);
 
-    Hotel partialUpdateImages(@NotNull Hotel product);
+    HotelRootEntity partialUpdateImages(@NotNull HotelRootEntity product);
 
-    Hotel partialUpdateAvailability(@NotNull Hotel product);
+    HotelRootEntity partialUpdateAvailability(@NotNull HotelRootEntity product);
 }

@@ -10,13 +10,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.rest.core.annotation.*;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
+
 @Component
 @RepositoryEventHandler
 @RequiredArgsConstructor
 public class CheckinRepositoryEventHandler {
 
-    @NonNull
-    private ResourceProcessor<Resource<CheckinDTO>> checkinResourceProcessor;
+//    @NonNull
+//    private ResourceProcessor<Resource<CheckinDTO>> checkinResourceProcessor;
 
     @NonNull
     private final CheckinMessagePublisher checkinMessagePublisher;
@@ -45,7 +47,7 @@ public class CheckinRepositoryEventHandler {
     }
 
     @HandleAfterLinkDelete
-    public void onChildEntityDeleted(CustomerHotelCheckin checkin, Object child) {
+    public void onChildEntityDeleted(CheckinDTO checkinDTO, Object child) {
         if (child instanceof Image) {
             // for DELETE on default-image
             checkinMessagePublisher.publishCheckinUpdatedEvent(checkinDTO);

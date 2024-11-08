@@ -29,4 +29,8 @@ public interface CheckinPortService {
     Integer getActiveCountByHotelId(long receiverHotelId, Date date);
 
     CheckinDTO getResponseDTO(ICustomerHotelCheckinEntity newCheckin);
+
+    void deleteAllImagesAndAttachments(CheckinDTO checkinDTO);
+
+    CustomerDTO updateCheckin(CustomerDTO sessionCustomer);
 }

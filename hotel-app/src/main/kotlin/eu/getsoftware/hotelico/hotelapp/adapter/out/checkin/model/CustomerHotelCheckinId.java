@@ -9,10 +9,12 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model;
  */
 
 import jakarta.persistence.Embeddable;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Embeddable
+@EqualsAndHashCode
 class CustomerHotelCheckinId implements java.io.Serializable {
 
 	private static final long serialVersionUID = 552154191271568694L;
@@ -42,25 +44,5 @@ class CustomerHotelCheckinId implements java.io.Serializable {
 //	public void setHotel(HotelRootEntity category) {
 //		this.hotelRootEntity = category;
 //	}
-
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		CustomerHotelCheckinId that = (CustomerHotelCheckinId) o;
-
-		if (customerEntityId != null ? !customerEntityId.equals(that.customerEntityId) : that.customerEntityId != null) return false;
-		if (hotelEntityId != null ? !hotelEntityId.equals(that.hotelEntityId) : that.hotelEntityId != null)
-			return false;
-
-		return true;
-	}
-
-	public int hashCode() {
-		int result;
-		result = (customerEntityId != null ? customerEntityId.hashCode() : 0);
-		result = 31 * result + (hotelEntityId != null ? hotelEntityId.hashCode() : 0);
-		return result;
-	}
 
 }

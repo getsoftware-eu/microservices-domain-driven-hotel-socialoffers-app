@@ -44,7 +44,7 @@ public class CustomerController extends BasicController
     //INIT Session values
     @ModelAttribute(AppConfigProperties.SESSION_CUSTOMER)
     public CustomerDTO initSessionCustomer(HttpSession httpSession) {
-        return httpSession.getAttribute(AppConfigProperties.SESSION_CUSTOMER)!=null? (CustomerDTO) httpSession.getAttribute(AppConfigProperties.SESSION_CUSTOMER) : new CustomerDTO(0); // populates form for the first time if its null
+        return httpSession.getAttribute(AppConfigProperties.SESSION_CUSTOMER)!=null? (CustomerDTO) httpSession.getAttribute(AppConfigProperties.SESSION_CUSTOMER) : CustomerDTO.builder().build(); // populates form for the first time if its null
     }
     
     @RequestMapping(method = RequestMethod.GET)
@@ -95,12 +95,12 @@ public class CustomerController extends BasicController
         try
         {
 //            int sessionId = sessionCustomer!=null && sessionCustomer.getId()>0? sessionCustomer.getId() : 0;
-            out = customerService.getById(id, requesterId);
+            out = customerService.getById(id, requesterId).orElseThrow(()-> new RuntimeException("-"));
         }
         catch (Exception e)
         {
-            out = new CustomerDTO(id);
-            out.setErrorResponse("Connection error:" + e.getMessage());
+            out = CustomerDTO.builder().build();
+//            out.setErrorResponse("Connection error:" + e.getMessage());
         }
         return out;
     }
@@ -112,12 +112,12 @@ public class CustomerController extends BasicController
         try
         {
             //int sessionId = sessionCustomer!=null && sessionCustomer.getId()>0? sessionCustomer.getId() : 0;
-            out = customerService.getById(getId, senderId);
+            out = customerService.getById(getId, senderId).orElseThrow(()-> new RuntimeException("-"));
         }
         catch (Exception e)
         {
-            out = new CustomerDTO(0);
-            out.setErrorResponse("Connection error:" + e.getMessage());
+            out =   CustomerDTO.builder().build();
+//            out.setErrorResponse("Connection error:" + e.getMessage());
         }
         return out;
     }
@@ -131,7 +131,7 @@ public class CustomerController extends BasicController
 
         if(customerDto.isGuestAccount())
         {
-            customerDto.setPassword(customerDto.getFirstName() + "_tempPassword_" + new Random().nextInt());
+            customerDto.withPassword(customerDto.getFirstName() + "_tempPassword_" + new Random().nextInt());
         }
 
 
@@ -142,8 +142,8 @@ public class CustomerController extends BasicController
             out = customerService.addCustomer(customerDto, customerDto.getPassword());
         }catch (Exception e)
         {
-            out = new CustomerDTO(0);
-            out.setErrorResponse("Connection error: " + e.getMessage());
+            out = CustomerDTO.builder().build();
+//            out.setErrorResponse("Connection error: " + e.getMessage());
         }
         //set in session
         httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
@@ -156,7 +156,7 @@ public class CustomerController extends BasicController
     @RequestMapping(value = "/customers/{id}/requesterId/{requesterId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable long id, @PathVariable int requesterId, HttpSession httpSession) {
-        CustomerDTO task = new CustomerDTO(id);
+        CustomerDTO task =   CustomerDTO.builder().build();
         task.setId(id);
         customerService.deleteCustomer(task);
 
@@ -172,7 +172,7 @@ public class CustomerController extends BasicController
 
         if(out!=null)
         {
-            out = loginService.checkBeforeLoginProperties(customerDto, out);
+            out = loginService.checkBeforeLoginProperties(customerDto, out).orElseThrow(()-> new RuntimeException("-"));
         }
         
         httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
@@ -212,7 +212,7 @@ public class CustomerController extends BasicController
 
         if(out!=null)
         {
-            out = loginService.checkBeforeLoginProperties(loginCustomer, out);
+            out = loginService.checkBeforeLoginProperties(loginCustomer, out).orElseThrow(()->new RuntimeException("-"));
 			lastMessagesService.setLastFullNotification(out.getId(), null);
 		}
        
@@ -249,7 +249,7 @@ public class CustomerController extends BasicController
         
         if(sessionCustomer!=null && sessionCustomer.getId()>0 && sessionCustomer.getFirstName()==null)
         {
-            CustomerDTO out = customerService.getById(sessionCustomer.getId(), sessionCustomer.getId());
+            CustomerDTO out = customerService.getById(sessionCustomer.getId(), sessionCustomer.getId()).orElseThrow(()->new RuntimeException("-"));
 			lastMessagesService.setLastFullNotification(out.getId(), null);
 			httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
         }
@@ -281,7 +281,7 @@ public class CustomerController extends BasicController
         }
         if(sessionCustomer!=null && sessionCustomer.getId()>0 && sessionCustomer.getFirstName()==null)
         {
-            CustomerDTO out = customerService.getById(sessionCustomer.getId(), sessionCustomer.getId());
+            CustomerDTO out = customerService.getById(sessionCustomer.getId(), sessionCustomer.getId()).orElseThrow(()->new RuntimeException("-"));
 			lastMessagesService.setLastFullNotification(out.getId(), null);
 			httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
         }
@@ -289,7 +289,7 @@ public class CustomerController extends BasicController
         if(sessionCustomer!=null && sessionCustomer.getId()>0)
         {
             //TODO EUGEN? CHECK HIER SYNCHRONOSATION??? UPDATE consistencyId ?????
-            sessionCustomer.setLogged(true);
+            sessionCustomer.doLogged(true);
             lastMessagesService.checkCustomerOnline(sessionCustomer.getId());
 			lastMessagesService.setLastFullNotification(sessionCustomer.getId(), null);
 			httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, sessionCustomer);
@@ -373,15 +373,15 @@ public class CustomerController extends BasicController
         //        sessionCustomer = out;
         //        //        response.addCookie(new Cookie(ControllerUtils.SESSION_CUSTOMER_ID, out.getId() + ""));
 
-        CustomerDTO test = new CustomerDTO(0);
+        CustomerDTO test = CustomerDTO.builder().build();
 
-        if(response.isError())
-        {
-            test.setErrorResponse(response.getMessage());
-        }
-        else {
-            test.setErrorResponse("ok");
-        }
+//        if(response.isError())
+//        {
+//            test.setErrorResponse(response.getMessage());
+//        }
+//        else {
+//            test.setErrorResponse("ok");
+//        }
         
         return test;
     }

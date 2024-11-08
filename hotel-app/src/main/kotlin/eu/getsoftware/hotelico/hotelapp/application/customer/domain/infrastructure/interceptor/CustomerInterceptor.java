@@ -3,10 +3,10 @@ package eu.getsoftware.hotelico.hotelapp.application.customer.domain.infrastruct
 //import org.springframework.social.linkedin.api.LinkedIn;
 //import org.springframework.social.linkedin.connect.LinkedInConnectionFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
-public class CustomerInterceptor extends HandlerInterceptorAdapter
+public class CustomerInterceptor implements HandlerInterceptor
 {
 ////	@Override
 ////	public boolean preHandle(HttpServletRequest request,

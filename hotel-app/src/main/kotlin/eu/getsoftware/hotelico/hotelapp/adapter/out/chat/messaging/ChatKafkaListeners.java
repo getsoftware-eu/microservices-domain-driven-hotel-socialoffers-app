@@ -9,7 +9,7 @@ public class ChatKafkaListeners {
     
     @KafkaListener(topics = {"checkin.checkin.created.event", 
                              "checkin.checkin.updated.event"}, 
-                   groupId = "eu_group_chat")
+                   groupId = "chat.message.processor.dev")
      void listener(DomainMessage<?> data){
         
         System.out.println("Kafka listener : " + data.toString());

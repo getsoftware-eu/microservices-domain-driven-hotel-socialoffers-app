@@ -13,6 +13,7 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEnt
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.microservice.MessagingRabbitMQProducer;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.HotelRepository;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.ChatMessageView;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;

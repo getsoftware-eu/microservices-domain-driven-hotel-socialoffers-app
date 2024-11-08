@@ -5,7 +5,6 @@ import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatM
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.microservice.MessagingRabbitMQProducer;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.ChatMessageView;
 import eu.getsoftware.hotelico.hotelapp.application.chat.domain.infrastructure.ChatMSComminicationService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
@@ -57,7 +56,6 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 	
 	private final ChatMSComminicationService chatMSComminicationService;
 	
-	private final MessagingRabbitMQProducer hotelRabbitMQProducer;
 	private final INotificationService notificationService;
 	
 	private IWebSocketService webSocketService;

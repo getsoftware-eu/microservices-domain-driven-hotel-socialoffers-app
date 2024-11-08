@@ -8,14 +8,11 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Map;
-
-import static lombok.Lombok.checkNotNull;
 
 
 @Data
@@ -157,26 +154,26 @@ public class CustomerHotelCheckin implements ICustomerHotelCheckinEntity, java.i
 		return builder;
 	}
 
-	/**
-	 * @param tag tag to be added to this product
-	 * @return <tt>true</tt> if this product did not already contain the specified
-	 * tag
-	 */
-	public boolean addOrReplaceTag(@NotNull String tag) {
-		boolean contained = tags.contains(checkNotNull(tag));
-		tags = remove(tags, tag).add(tag).build();
-		return !contained;
-	}
-
-	/**
-	 * @param tag tag to be removed from this product, if present
-	 * @return <tt>true</tt> if this product contained the specified tag
-	 */
-	public boolean removeTag(@NotNull String tag) {
-		boolean contained = tags.contains(checkNotNull(tag));
-		tags = remove(tags, tag).build();
-		return contained;
-	}
+//	/**
+//	 * @param tag tag to be added to this product
+//	 * @return <tt>true</tt> if this product did not already contain the specified
+//	 * tag
+//	 */
+//	public boolean addOrReplaceTag(@NotNull String tag) {
+//		boolean contained = tags.contains(checkNotNull(tag));
+//		tags = remove(tags, tag).add(tag).build();
+//		return !contained;
+//	}
+//
+//	/**
+//	 * @param tag tag to be removed from this product, if present
+//	 * @return <tt>true</tt> if this product contained the specified tag
+//	 */
+//	public boolean removeTag(@NotNull String tag) {
+//		boolean contained = tags.contains(checkNotNull(tag));
+//		tags = remove(tags, tag).build();
+//		return contained;
+//	}
 
 	@Override
 	public void setInitValues(Map<String, String> fieldToValues) {

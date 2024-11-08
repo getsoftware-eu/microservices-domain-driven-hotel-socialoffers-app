@@ -3,14 +3,14 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.MailValidator;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.common.dto.HotelResponseDTO;
+import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.MailService;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
-import jakarta.xml.bind.ValidationException;
+import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -40,7 +40,7 @@ public class MailServiceImpl implements MailService
 	private SimpleMailMessage preConfiguredMessage;
 	
 	@Autowired
-	private ICustomerPortService customerService;	
+	private CustomerPortService customerService;	
 	
 	@Autowired
 	private IHotelService hotelService;
@@ -133,7 +133,7 @@ public class MailServiceImpl implements MailService
 	public void sendMail(String to, String subject, String body, String from)
 	{
 		
-		MimeMessage message = javaMailSender.createMimeMessage();
+		   message = javaMailSender.createMimeMessage();
 
 		try
 		{

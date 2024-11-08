@@ -15,7 +15,7 @@ public interface HotelRepositoryExtension {
 
     Page<HotelRootEntity> findVisibleBySearchTerm(@Nullable String searchTerm, @NotNull Pageable pageable);
 
-    Page<HotelRootEntity> findVisibleByCategoryQuery(@NotNull CategoryQuery categoryQuery, @NotNull Pageable pageable);
+//    Page<HotelRootEntity> findVisibleByCategoryQuery(@NotNull CategoryQuery categoryQuery, @NotNull Pageable pageable);
 
     Optional<HotelRootEntity> findOneIgnoringVisibility(@NotNull String id);
 

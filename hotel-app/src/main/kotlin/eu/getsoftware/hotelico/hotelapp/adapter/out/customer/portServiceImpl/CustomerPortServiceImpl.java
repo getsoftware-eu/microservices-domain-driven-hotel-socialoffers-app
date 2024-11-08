@@ -434,7 +434,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
     }
 
     @Override
-    public void deleteCustomer(ICustomerRootEntity customerDto) {
+    public void deleteCustomer(CustomerDTO customerDto) {
 
     }
 

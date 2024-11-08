@@ -1,6 +1,5 @@
 package eu.getsoftware.hotelico.hotelapp.main.config;
 
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.aspects.NotifyAspect;
 import io.micrometer.core.aop.TimedAspect;
 import io.micrometer.core.instrument.MeterRegistry;
 import org.modelmapper.ModelMapper;
@@ -27,10 +26,10 @@ public class AppConfig {
         return modelMapper;
     }
     
-    @Bean
-    public NotifyAspect notifyAspect() {
-        return new NotifyAspect();
-    }
+//    @Bean
+//    public RabbitMQNotifyAspect notifyAspect() {
+//        return new RabbitMQNotifyAspect();
+//    }
     
     @Bean
     public TimedAspect timedAspect(MeterRegistry registry) {

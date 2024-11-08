@@ -3,7 +3,6 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.BasicHotelException;
-import eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.NotificationService;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.ReorderAction;
@@ -34,6 +33,7 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRoo
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelGroupAggregate;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.INotificationService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +55,7 @@ public class HotelServiceImpl implements IHotelService
 	private CustomerPortService customerService;
 	
 	@Autowired
-	private NotificationService notificationService;	
+	private INotificationService notificationService;	
 	
     @Autowired
 	private CheckinPortService checkinService;

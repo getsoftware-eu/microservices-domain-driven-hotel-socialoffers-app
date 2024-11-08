@@ -13,7 +13,6 @@ The "Clean" (Layered) Architecture is another way to provide <b>separation of co
 
 ![DDD in Hexagon Architecture](/docs/img/adapterMultiDomain.JPG)
 ![Agregates is only one entry to domain entities](/docs/img/diagramm1.png)
-![Aggregate root](/docs/img/ddd.webp)
 
 ### Layer Structure:
 
@@ -48,7 +47,24 @@ The "Clean" (Layered) Architecture is another way to provide <b>separation of co
     - SpringConfig classes are divided separately for the 'application', 'useCases' and 'infrastructure' layers.
 
 
-### TODO: event driven interaction
+### Event driven interaction (with Kafka)
+
+#### In our domain-driven system, I use for Kafka-topics following naming convention:
+
+"aggregate.entity.action.event"
+
+##### Example Topics:
+"chat.message.created.event"
+
+"chat.message.deleted.event" 
+
+(This topic name ensures that every subscribing domain can easily interpret and process events, maintaining consistency and clarity across the system.)
+
+
+The key for a Kafka-message is the 'receiverId' of the chat-message (to improve Kafka-groupId partitioning).
+
+![Aggregate root](/docs/img/ddd.webp)
+
 ![event-driven](/docs/img/cca-event-driven.JPG)
 
 

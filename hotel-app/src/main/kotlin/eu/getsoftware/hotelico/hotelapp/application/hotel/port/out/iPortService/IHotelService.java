@@ -5,6 +5,8 @@ import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.BasicHotelException;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.ICustomerDeal;
+import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.dto.CustomerDealDTO;
+import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.DealAction;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
@@ -58,9 +60,17 @@ public interface IHotelService
 
     int getCustomerDealCounter(long receiverId, int i);
 
-    IHotelActivity getActivityByIdOrInitId(int activId, int activId1);
+    IHotelActivity getActivityByIdOrInitId(long activId, long activId1);
 
     List<WallPostDTO> getWallPostsByHotelId(long hotelId);
 
     List<CustomerDTO> getWallPostParticipantsByHotelId(long requesterId, long hotelId);
+
+    List<CustomerDealDTO> getDealsByActivityOrHotelId(long customerId, long hotelId, int activityId, boolean onlyRequesterDeals, boolean showClosed);
+
+    CustomerDealDTO addDealAction(long customerId, long activityId, long dealId, DealAction dealAction, String tablePosition, double totalMoney);
+
+    ResponseDTO deleteDeal(long customerId, long activityId, int dealId);
+
+    CustomerDealDTO addUpdateDeal(long guestCustomerId, long activityId, CustomerDealDTO dealDto);
 }

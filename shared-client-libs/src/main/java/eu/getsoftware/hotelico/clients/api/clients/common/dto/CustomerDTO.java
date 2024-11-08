@@ -232,6 +232,13 @@ public class CustomerDTO extends BasicDTO
     public void setBirthdayTime(String s) {
     }
 
+    public String getPassword() {
+        return "";
+    }
+
+    public void doLogged(boolean b) {
+    }
+
 //    /**
 //     * CustomerDTO dto = new CustomerBuilder(reuiredParams).setOptional1("user").setOptional2(true).build();
 //     */

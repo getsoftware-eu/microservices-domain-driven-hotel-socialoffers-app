@@ -35,6 +35,7 @@
 		<!--		//schould be in bom dependency management automaticly-->
 		<keycloak.version>21.0.1</keycloak.version> 
 		<mapstruct.version>1.5.5.Final</mapstruct.version> 
+		<aws.s3.version>2.5.5</aws.s3.version> 
 
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
@@ -68,6 +69,16 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+<!--			<dependency>-->
+<!--				<groupId>software.amazon.awssdk</groupId>-->
+<!--				<artifactId>s3</artifactId>-->
+<!--				<version>${aws.s3.version}</version>-->
+<!--			</dependency>			-->
+<!--			<dependency>-->
+<!--				<groupId>software.amazon.awssdk</groupId>-->
+<!--				<artifactId>auth</artifactId>-->
+<!--				<version>${aws.s3.version}</version>-->
+<!--			</dependency>-->
 			<dependency>
 				<groupId>org.keycloak.bom</groupId>
 				<artifactId>keycloak-adapter-bom</artifactId>

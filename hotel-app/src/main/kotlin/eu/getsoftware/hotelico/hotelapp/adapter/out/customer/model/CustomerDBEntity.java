@@ -291,4 +291,13 @@ public class CustomerDBEntity implements ICustomerRootEntity, Serializable, IFil
 
     public void doActive(boolean b) {
     }
+
+    public String getProfileImageUrl() {
+        return null;
+    }
+
+    public Optional<String> getProfileImageLink() {
+        return Optional.of(null);
+    }
+    
 }

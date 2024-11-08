@@ -14,7 +14,7 @@ import java.util.Set;
  */
 public interface CustomerPortService
 {
-    List<? extends ICustomerRootEntity> getCustomers();
+    List<CustomerDTO> getCustomers();
     
     List<CustomerDTO> getCustomerDTOs();
     
@@ -33,10 +33,10 @@ public interface CustomerPortService
     Optional<CustomerDTO> getById(long customerId, long requesterCustomerId);
     
     Optional<CustomerDTO> getEntityById(long customerId);
- 
-    ICustomerRootEntity addCustomer(ICustomerRootEntity customerDto, String password);
-    
-    ICustomerRootEntity updateCustomer(ICustomerRootEntity customerDto, int requesterId);
+
+    CustomerDTO addCustomer(CustomerDTO customerDto, String password);
+
+    CustomerDTO updateCustomer(CustomerDTO customerDto, int requesterId);
     
 //    @Transactional
     boolean relocateGuestDealsToLoggedCustomer(ICustomerRootEntity customerEntity, Long guestCustomerId);
@@ -48,10 +48,10 @@ public interface CustomerPortService
 		
     ICustomerRootEntity serializeCustomerHotelInfo(ICustomerRootEntity dto, long hotelId, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin);
 
-    CustomerDTO synchronizeCustomerToDto(ICustomerRootEntity customerDto);
+    CustomerDTO synchronizeCustomerToDto(CustomerDTO customerDto);
     
     @Transactional
-    void deleteCustomer(ICustomerRootEntity customerDto);
+    void deleteCustomer(CustomerDTO customerDto);
     
     String getCustomerAvatarUrl(ICustomerRootEntity customerEntity);
 
@@ -66,4 +66,6 @@ public interface CustomerPortService
     ICustomerRootEntity save(ICustomerRootEntity customerEntity);
 
     Optional<ICustomerRootEntity> getOne(Long id);
+
+    void setCustomerPing(long customerId);
 }
