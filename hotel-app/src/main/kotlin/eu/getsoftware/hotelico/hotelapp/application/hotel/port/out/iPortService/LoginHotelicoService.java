@@ -14,7 +14,7 @@ import java.util.Optional;
  */
 public interface LoginHotelicoService
 {
-	@Transactional CustomerDTO checkLogin(String email, String password);
+	@Transactional CustomerDTO checkLogin(String email, String password) throws Throwable;
 	
 	@Transactional
 	void logoutCustomer(CustomerDTO customerDto);

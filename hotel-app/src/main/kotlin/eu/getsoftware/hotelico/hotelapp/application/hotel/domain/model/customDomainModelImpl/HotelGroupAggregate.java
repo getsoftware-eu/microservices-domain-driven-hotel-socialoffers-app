@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl;
 
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.innerDomainService.domainEvents.DomainEventRequestDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.innerDomainService.domainEvents.IDomainEventsProducerService;
@@ -25,7 +25,7 @@ public class HotelGroupAggregate
      * muss enter hotelEntityId as parameter
      * @return
      */
-    public static HotelDomainEntity.HotelDomainEntityBuilder getEntityBuilder(HotelEntityId hotelEntityId){
+    public static HotelDomainEntity.HotelDomainEntityBuilder getEntityBuilder(HotelDomainEntityId hotelEntityId){
         return HotelDomainEntity.builder().hotelEntityId(hotelEntityId);
     }
 }

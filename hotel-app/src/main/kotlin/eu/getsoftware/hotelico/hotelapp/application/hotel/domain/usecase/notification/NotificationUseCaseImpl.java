@@ -4,12 +4,14 @@ import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.ChatMessageView;
 import eu.getsoftware.hotelico.hotelapp.application.chat.domain.infrastructure.ChatMSComminicationService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.DealStatus;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.IHotelEvent;
@@ -21,6 +23,7 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.
 import eu.getsoftware.hotelico.hotelapp.application.menu.infrastructure.service.MenuMSCommunicationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -59,8 +62,9 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 	private final INotificationService notificationService;
 	
 	private IWebSocketService webSocketService;
+	private ModelMapper modelMapper;
 
-	@Override
+	//	@Override
 	public void notificateAboutEntityEventWebSocket(CustomerDTO dto, IHotelEvent event, String eventContent, long entityId)
 	{
 		Objects.requireNonNull(dto);
@@ -80,7 +84,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 		}
 	}
 	
-	@Override
+//	@Override
 	public CustomerNotificationDTO getCustomerNotification(long receiverId, IHotelEvent event)
 	{
 		CustomerNotificationDTO nextNotification = new CustomerNotificationDTO();
@@ -211,7 +215,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 			// - Если очередь настроена как персистентная (то есть при создании указано свойство durable = true), то она сохраняется после перезапуска сервера.
 			// - - При отправке сообщения нужно установить флаг deliveryMode = 2 (Persistent). Только в этом случае сообщения сохраняются на диск и будут восстановлены после перезапуска сервера.
 			// - - Аварийное завершение работы RabbitMQ: Если сообщения не подтверждены (ACK) клиентом или не записаны на диск до сбоя, они могут быть потеряны.
-			Map<Long, List<ChatMessageView>> unreadChatsBySenders = lastMessagesService.getCustomerUnreadChatsBySenders(receiverId);
+			Map<Long, List<ChatMsgDTO>> unreadChatsBySenders = lastMessagesService.getCustomerUnreadChatsBySenders(receiverId);
 			
 			Map<Long, Integer> unreadChatBySenderCounter = new HashMap<>();
 			
@@ -222,22 +226,24 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 				//TODO Eugen: soll ich Staff von anderen Hotels ausschliessen???? ja
 				if (nextUnreadSenderId != receiverId /*&& !hotelStaffIdList.contains(nextUnreadSenderId)*/)
 				{
-					List<ChatMessageView> unreadChatMessages = unreadChatsBySenders.get(nextUnreadSenderId);
+					List<ChatMsgDTO> unreadChatMessages = unreadChatsBySenders.get(nextUnreadSenderId);
 					
 					if (!unreadChatMessages.isEmpty() && AppConfigProperties.CHAT_NOTIFICATE_DELIEVERY_INDIVIDUAL_CHAT)
 					{
-						ChatMessageView lastUnreadMessage = unreadChatMessages.get(unreadChatMessages.size() - 1);
+						ChatMessageView lastUnreadMessage = null;
 						
 						if (!lastUnreadMessage.isDelieveredToReceiver() && !lastUnreadMessage.isSeenByReceiver() && lastUnreadMessage.getReceiverId() == receiverId && allOnlineCustomersIds.contains(receiverId))
 						{
 							if (!lastUnreadMessage.isDelieveredToReceiver()) //Eugen: ONLY 1 Time, then it will be marked as delivered!!!
 							{
 								lastUnreadMessage.setDelieveredToReceiver(true);
-								chatMSComminicationService.addUpdateChatMessage(lastUnreadMessage);
 								
 								//Eugen: notificate Sender, that his message was delievered
 								ChatMsgDTO chatMessageDto = chatMSComminicationService.convertMessageToDto(lastUnreadMessage);
-								simpMessagingTemplate.convertAndSend(AppConfigProperties.SOCKET_CHAT_TOPIC + lastUnreadMessage.getSenderId() + "", chatMessageDto);
+//		
+								chatMSComminicationService.addUpdateChatMessage(chatMessageDto);
+								
+//								simpMessagingTemplate.convertAndSend(AppConfigProperties.SOCKET_CHAT_TOPIC + lastUnreadMessage.getSenderId() + "", chatMessageDto);
 							}
 							
 						}
@@ -325,8 +331,8 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 		return nextNotification;
 	}
 	
-	@Override
-	public void createAndSendWebSocketNotification(long receiverId, IHotelEvent event){
+//	@Override
+	public void createAndSendWebSocketNotification(long receiverId, IHotelEvent event) throws Throwable {
 		
 		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 		
@@ -347,8 +353,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 		
 	}
 	
-	public void sendFeedMessage(CustomerDTO customerEntity, Map<String, String> systemMessages)
-	{
+	public void sendFeedMessage(CustomerDTO customerEntity, Map<String, String> systemMessages) throws Throwable {
 		String feedMessage = systemMessages.get("hotelFeedMessage");
 		
 		String customerIds = systemMessages.get("hotelFeedCustomerIds");
@@ -373,8 +378,8 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 			for(String nextCustomerId: feedCustomersArray)
 			{
 				long nextId = Integer.parseInt(nextCustomerId.trim());
-				
-				CustomerDTO nextFeedCustomerRootEntity = customerService.getOne(nextId);
+
+				CustomerRootEntity nextFeedCustomerRootEntity = (CustomerRootEntity) customerService.getEntityById(nextId).orElseThrow(() -> new RuntimeException("not found"));
 				
 				if(nextFeedCustomerRootEntity !=null && nextFeedCustomerRootEntity.isAllowHotelNotification())
 				{
@@ -420,12 +425,32 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 			if(sendToUnLogged)
 			{
 				int activId = Integer.parseInt(inviteActivityId);
-				IHotelActivity hotelActivity = hotelService.getActivityByIdOrInitId(activId, activId);
+				HotelDbActivity hotelActivity = (HotelDbActivity) hotelService.getActivityByIdOrInitId(activId, activId).orElseThrow(()->new RuntimeException());
 				
 				//SEND GUEST PUSH!!!
-				this.sendPushToAllNotLoggedInHotel(hotelActivity);
+				this.sendPushToAllNotLoggedInHotel(modelMapper.map(hotelActivity, HotelActivityDTO.class));
 			}
 		}
+	}
+
+	@Override
+	public void createAndSendWebSocketNotification_Chat(long receiverId, HotelEvent event, long senderId, String message) {
+
+	}
+
+	@Override
+	public void createAndSendWebSocketNotification_Activity(long receiverId, HotelEvent event, IHotelActivity activity, String message) {
+
+	}
+
+	@Override
+	public CustomerNotificationDTO getCustomerNotification(long receiverId, HotelEvent event) {
+		return null;
+	}
+
+	@Override
+	public void notificateAboutEntityEventWebSocket(CustomerDTO dto, HotelEvent event, String eventContent, long entityId) {
+
 	}
 
 	@Transactional
@@ -487,10 +512,9 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 		}
 	}
 	
-	@Override
+//	@Override
 	@Transactional
-	public void createAndSendWebSocketNotification_Chat(long receiverId, IHotelEvent event, long senderId, String message)
-	{
+	public void createAndSendWebSocketNotification_Chat(long receiverId, IHotelEvent event, long senderId, String message) throws Throwable {
 		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 
 		String webSocketTopic = AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + receiverId + "";
@@ -512,10 +536,8 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 		}
 	}
 	
-	@Override
 	@Transactional
-	public void createAndSendWebSocketNotification_Activity(long receiverId, IHotelEvent event, IHotelActivity activity, String message)
-	{
+	public void createAndSendWebSocketNotification_Activity(long receiverId, IHotelEvent event, IHotelActivity activity, String message) throws Throwable {
 		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 
 		String webSocketTopic = AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + receiverId + "";
@@ -525,9 +547,9 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 		{
 			if(activity!=null)
 			{
-				String pushUrlPostfix = "//" + activity.getHotelRootEntity().getId() + "/" + activity.getId();
+				String pushUrlPostfix = "//" + activity.getHotel().getId() + "/" + activity.getId();
 
-				receiverNotification.setSocketPushCustomerEvent(event.getPushTitle(), message, event.getPushUrl()+pushUrlPostfix, event.getPushIcon(), activity.getSender().getId()+"");
+				receiverNotification.setSocketPushCustomerEvent(event.getPushTitle(), message, event.getPushUrl()+pushUrlPostfix, event.getPushIcon(), activity.senderId()+"");
 				lastMessagesService.setLastPushNotifiation(receiverId, receiverNotification);
 				sendPushRequest(receiverId);
 			}		
@@ -558,21 +580,23 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 		
 		return dto;
 	}
-	
+
 	@Override
-	public void sendPushRequest(long customerId)
-	{
+	public void createAndSendWebSocketNotification(long receiverId, HotelEvent event) {
+		
+	}
+
+	@Override
+	public void sendPushRequest(long customerId) throws Throwable {
 		if(customerId<=0)
 		{
 			return;
 		}
 
-		Optional<ICustomerRootEntity> customerEntityOpt = customerService.getOne(customerId);
+		  CustomerRootEntity  customerEntity = (CustomerRootEntity) customerService.getEntityById(customerId).orElseThrow(()-> new RuntimeException());
 		
-		if(customerEntityOpt.isPresent()) {
 			String pushRegistrationId = customerEntity.getPushRegistrationId();
 			sendPush(pushRegistrationId);
-		}
 	}
 	
 	@Override
@@ -625,7 +649,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 		
 //		List<CustomerHotelCheckin> allActiveInHotel = checkinService.getActiveByHotelId(hotelActivity.getHotel().getId(), new Date());
 
-		Map<Long, String> notLoggedGuestPushIdsByHotel= hotelService.getNotLoggedGuestPushIdsByHotel(hotelActivity.getHotelRootEntity());
+		Map<Long, String> notLoggedGuestPushIdsByHotel= new HashMap<>();//hotelService.getNotLoggedGuestPushIdsByHotel(hotelActivity.getHotelId());
 
 		String notificationMessage = "new last minute deal";
 
@@ -633,7 +657,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 
 		Set<String> loggedGuestPushIds = new HashSet<>();
 		
-		List<CustomerDTO> allActiveInHotel = checkinService.getActiveCustomersByHotelId(hotelActivity.getHotelRootEntity().getId(), new Date());
+		List<CustomerDTO> allActiveInHotel = checkinService.getActiveCustomersByHotelId(hotelActivity.getHotelId(), new Date());
 		
 		for (CustomerDTO nextActiveCustomerRootEntity : allActiveInHotel)
 		{
@@ -656,11 +680,11 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 			//Eugen: if a user (with given pushId) has checkin in a hotel, so it is not anonyme push Guest!!!
 			if(hotelActivity!=null && !loggedGuestPushIds.contains(pushId))
 			{
-				String pushUrlPostfix = "//" + hotelActivity.getHotelRootEntity().getId() + "/" + hotelActivity.getId();
+				String pushUrlPostfix = "//" + hotelActivity.getHotelId() + "/" + hotelActivity.getId();
 
 				CustomerNotificationDTO receiverNotification = new CustomerNotificationDTO();
 
-				receiverNotification.setSocketPushCustomerEvent(eventActivityNewLastMinute.getPushTitle(), notificationMessage, eventActivityNewLastMinute.getPushUrl()+pushUrlPostfix, eventActivityNewLastMinute.getPushIcon(), hotelActivity.getSender().getId()+"");
+				receiverNotification.setSocketPushCustomerEvent(eventActivityNewLastMinute.getPushTitle(), notificationMessage, eventActivityNewLastMinute.getPushUrl()+pushUrlPostfix, eventActivityNewLastMinute.getPushIcon(), hotelActivity.getSenderId()+"");
 				lastMessagesService.setLastPushNotifiation((int)nextGuestId, receiverNotification);
 				this.sendPush(pushId);
 			}
@@ -669,9 +693,8 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 		return notLoggedGuestPushIdsByHotel.size()>0;
 	}
 	
-	@Override
-	public void sendNotificationToCustomerOrGuest(CustomerDTO receiver, long guestCustomerId, IHotelEvent event)
-	{
+//	@Override
+	public void sendNotificationToCustomerOrGuest(CustomerDTO receiver, long guestCustomerId, HotelEvent event) {
 		if(receiver!=null)
 		{
 			this.createAndSendWebSocketNotification(receiver.getId(), event);

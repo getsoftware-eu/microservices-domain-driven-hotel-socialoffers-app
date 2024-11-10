@@ -22,6 +22,7 @@
       <module name="amqp" target="17" />
       <module name="api-gateway" target="17" />
       <module name="common-client-api-libs" target="17" />
+      <module name="messaging" target="17" />
       <module name="notification" target="17" />
       <module name="notification-rabbitmq" target="17" />
     </bytecodeTargetLevel>

@@ -2,17 +2,15 @@ package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDo
 
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.common.collect.ImmutableSet;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import jakarta.persistence.Id;
 import jakarta.persistence.Version;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.With;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Builder
+@RequiredArgsConstructor
 public class HotelDomainEntity /*implements MultitenantDocument, Scoreable*/ {
 
     public static final String TYPE_NAME = "product";
@@ -21,12 +19,7 @@ public class HotelDomainEntity /*implements MultitenantDocument, Scoreable*/ {
     private String id; // UUID can not be used as document ID yet. https://jira.spring.io/browse/DATAES-163
 
     @Getter
-    private final HotelEntityId hotelEntityId;
-
-    public HotelDomainEntity(HotelEntityId hotelEntityId)
-    {
-        this.hotelEntityId = hotelEntityId;
-    }
+    private final HotelDomainEntityId hotelEntityId;
     
     @Version
     private Long version;

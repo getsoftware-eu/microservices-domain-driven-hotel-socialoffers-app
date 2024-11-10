@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model;
 
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelActivity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.ICustomerDeal;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.DealStatus;
@@ -60,12 +60,12 @@ public class CustomerDeal implements ICustomerDeal {
 	public CustomerDeal() {
 	}
 	
-	public CustomerDeal(CustomerDBEntity customerEntity, HotelActivity activity, long initId) {
+	public CustomerDeal(CustomerDBEntity customerEntity, HotelDbActivity activity, long initId) {
 		this(customerEntity, activity);
 		this.initId = initId;
 	}
 	
-	public CustomerDeal(CustomerDBEntity customerEntity, HotelActivity activity) {
+	public CustomerDeal(CustomerDBEntity customerEntity, HotelDbActivity activity) {
 		
 		this();
 		
@@ -98,11 +98,11 @@ public class CustomerDeal implements ICustomerDeal {
 	}
 
 	@Transient
-	public HotelActivity getActivity() {
+	public HotelDbActivity getActivity() {
 		return getPk().getActivity();
 	}
 
-	public void setActivity(HotelActivity activity) {
+	public void setActivity(HotelDbActivity activity) {
 		getPk().setActivity(activity);
 	}
 

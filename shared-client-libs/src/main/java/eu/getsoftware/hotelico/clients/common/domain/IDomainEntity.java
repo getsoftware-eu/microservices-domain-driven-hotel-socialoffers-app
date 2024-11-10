@@ -15,6 +15,6 @@ public interface IDomainEntity {
      * @return
      * @param <I>
      */
-    <I extends EntityIdentifier> I getEntityId();
+    <I extends EntityIdentifier> I getDomainEntityId();
 
 }

@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.deal.domain;
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelActivity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 
 public interface ICustomerDeal {
@@ -9,9 +9,9 @@ public interface ICustomerDeal {
 
     void setCustomer(CustomerDBEntity customerEntity);
     
-    HotelActivity getActivity();
+    HotelDbActivity getActivity();
 
-    void setActivity(HotelActivity activity);
+    void setActivity(HotelDbActivity activity);
     
     void generateCode();
 

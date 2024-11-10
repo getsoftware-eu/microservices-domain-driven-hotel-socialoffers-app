@@ -348,7 +348,7 @@ public class SocialAuthenticatorController extends BasicController
 
 		session.setAttribute("facebookUserId", facebookUserId);
 
-		Optional<CustomerDTO> foundFacebookCustomer = customerService.getByFacebookId(facebookUserId);
+		Optional<CustomerDTO> foundFacebookCustomer = Optional.empty(); //customerService.getByFacebookId(facebookUserId);
 
 		UserProfile userProfile = connection.fetchUserProfile();
 
@@ -385,19 +385,20 @@ public class SocialAuthenticatorController extends BasicController
 		}
 		
 		// ########################################
-		CustomerDTO foundFacebookCustomerDTO = (foundFacebookCustomer.isEmpty())? new CustomerDTO(0) : foundFacebookCustomer.get();
+		CustomerDTO foundFacebookCustomerDTO = (foundFacebookCustomer.isEmpty())? CustomerDTO.builder().build()  : foundFacebookCustomer.get();
 		
 		if(foundFacebookCustomerDTO.getFirstName()==null)
 		{
+
 			if (userProfile.getFirstName() != null)
 			{
-				foundFacebookCustomerDTO.setFirstName(userProfile.getFirstName());
-				foundFacebookCustomerDTO.setLastName(userProfile.getLastName());
+//				foundFacebookCustomerDTO.setFirstName(userProfile.getFirstName());
+//				foundFacebookCustomerDTO.setLastName(userProfile.getLastName());
 			}
 			else if(profile!=null && profile.getFirstName()!=null)
 			{
-				foundFacebookCustomerDTO.setFirstName(userProfile.getFirstName());
-				foundFacebookCustomerDTO.setLastName(userProfile.getLastName());
+//				foundFacebookCustomerDTO.setFirstName(userProfile.getFirstName());
+//				foundFacebookCustomerDTO.setLastName(userProfile.getLastName());
 			}
 			else{
 
@@ -410,29 +411,29 @@ public class SocialAuthenticatorController extends BasicController
 					String lastName = split[split.length - 1];
 					String firstName = fullName.replace(lastName,"").trim();
 					
-					foundFacebookCustomerDTO.setFirstName(firstName);
-					foundFacebookCustomerDTO.setLastName(lastName);
+//					foundFacebookCustomerDTO.setFirstName(firstName);
+//					foundFacebookCustomerDTO.setLastName(lastName);
 				}
 			}
 
 			if(facebookEmail!=null)
-				foundFacebookCustomerDTO.setEmail(userProfile.getEmail());			
+//				foundFacebookCustomerDTO.setEmail(userProfile.getEmail());			
 			
 			if(profile!=null && Locale.GERMAN.equals(profile.getLocale()))
 			{
 				if(!AppConfigProperties.isEmptyString(profile.getLocale().getLanguage()))
 				{
-					foundFacebookCustomerDTO.setPrefferedLanguage(profile.getLocale().getLanguage().toLowerCase());
+//					foundFacebookCustomerDTO.setPrefferedLanguage(profile.getLocale().getLanguage().toLowerCase());
 				}
 			}
 
 			if(profile!=null && profile.getGender()!=null)
 			{
 				String gender = "female".equalsIgnoreCase(profile.getGender())? "f" : "m";
-				foundFacebookCustomerDTO.setSex(gender);
+//				foundFacebookCustomerDTO.setSex(gender);
 			}
 			else
-				foundFacebookCustomerDTO.setSex("m");
+//				foundFacebookCustomerDTO.setSex("m");
 
 			//			if(profile2!=null)
 			//			{
@@ -456,18 +457,18 @@ public class SocialAuthenticatorController extends BasicController
 			//			}
 
 			if(connection.getImageUrl()!=null)
-				foundFacebookCustomerDTO.setProfileImageUrl(connection.getImageUrl());
+//				foundFacebookCustomerDTO.setProfileImageUrl(connection.getImageUrl());
 			
-			foundFacebookCustomerDTO.setLogged(true);
+//			foundFacebookCustomerDTO.setLogged(true);
 			
-			 customerService.addFacebookCustomer(foundFacebookCustomerDTO, facebookUserId);
+//			 customerService.addFacebookCustomer(foundFacebookCustomerDTO, facebookUserId);
 
 			redirectUrl = "#/app/me/checkin";
 		}
 
 		if(foundFacebookCustomerDTO != null)
 		{
-			foundFacebookCustomerDTO.setLogged(true);
+//			foundFacebookCustomerDTO.setLogged(true);
 			lastMessagesService.checkCustomerOnline(foundFacebookCustomerDTO.getId());
 
 			//			customerService.getEntityById(foundFacebookCustomer.getId());
@@ -475,7 +476,7 @@ public class SocialAuthenticatorController extends BasicController
 
 			if(foundFacebookCustomerDTO.getEmail()==null || foundFacebookCustomerDTO.getEmail().isEmpty())
 			{
-				foundFacebookCustomerDTO.setEmail("");
+//				foundFacebookCustomerDTO.setEmail("");
 			}
 
 			loginService.setLogged(foundFacebookCustomerDTO.getId(), true);

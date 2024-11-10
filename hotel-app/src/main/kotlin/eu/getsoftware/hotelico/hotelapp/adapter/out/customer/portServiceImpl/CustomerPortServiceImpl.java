@@ -1,7 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.customer.portServiceImpl;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerEntityId;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
@@ -9,6 +10,7 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEnt
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.Language;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.domainServiceImpl.CustomerPersistGatewayServiceImpl;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelDbEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.DealRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.HotelRepository;
@@ -16,24 +18,27 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.LanguageRep
 import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.CustomerDeal;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerAggregate;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Type;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
+import static eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties.convertToDate;
 import static eu.getsoftware.hotelico.hotelapp.adapter.out.customer.portServiceImpl.OnlineServiceImpl.isCustomerOnline;
 
 @Service
 @RequiredArgsConstructor
-public class CustomerPortServiceImpl implements CustomerPortService 
+public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEntity> 
 {
     private final IHotelService hotelService;
     
@@ -75,25 +80,23 @@ public class CustomerPortServiceImpl implements CustomerPortService
 //        
 //        return CustomerAggregate.buildDomain(domain);
 
-        return CustomerAggregate.getEntityBuilder(new CustomerEntityId(dbProjection.getCustomerUUID()))
+        return CustomerAggregate.getEntityBuilder(new CustomerDomainEntityId(dbProjection.getCustomerUUID()))
                 .firstName(dbProjection.getFirstName()) 
                 .build();
     }
     
     @Override
-    public List<CustomerDBEntity> getCustomers() {
+    public List<CustomerDBEntity> getCustomerEntities() {
         return customerRepository.findByActive(true);
     }
     
     public List<CustomerDTO> getCustomerDTOs() {
 
-        return getCustomers().stream().map((nextObj) -> {
-            //TODO Eugen: get all customer hotelId with one query!
-            long hotelId = getCustomerHotelId(nextObj.getId());
-            return convertCustomerToDto(nextObj, hotelId);
-        }
-        ).collect(Collectors.toCollection(ArrayList::new));
-        
+        List<CustomerDBEntity> entities = getCustomerEntities();
+
+        Type listType = new TypeToken<List<CustomerDTO>>() {}.getType();
+
+        return modelMapper.map(entities, listType);
     }
     
     @Override
@@ -136,89 +139,84 @@ public class CustomerPortServiceImpl implements CustomerPortService
     
     @Override
     public Optional<CustomerDBEntity> getEntityById(long customerId) {
-        return customerRepository.findById(customerId);
+        return customerRepository.findById(customerId);//.orElseThrow(()->new RuntimeException("not found"));
+//        return Optional.of(modelMapper.map(entity, CustomerDTO.class));
     }
 
+    @Transactional
     @Override
-    public ICustomerRootEntity addCustomer(ICustomerRootEntity customerDto, String password) {
-        return null;
-    }
+    public CustomerDTO addCustomer(CustomerDTO customerDto, String password) {
 
-    @Override
-    public ICustomerRootEntity updateCustomer(ICustomerRootEntity customerDto, int requesterId) {
-        return null;
-    }
-
-//    @Transactional
-//    @Override
-//    public CustomerDTO addCustomer(CustomerDTO customerDto, String password) {
-//                
-//        if(getByEmail(customerDto.getEmail()).isPresent())
-//        {
-//            customerDto.setErrorResponse("Email already registered");
+        if(getByEmail(customerDto.getEmail()).isPresent())
+        {
+            throw new RuntimeException("Email already registered");
 //            return customerDto;
-//        }
-//        
-//        CustomerDBEntity customerEntity = modelMapper.map(customerDto, CustomerDBEntity.class);
-//
-//        fillCustomerFromDto(customerDto, customerEntity);
-//       
-//        customerEntity = customerRepository.saveAndFlush(customerEntity);
-//    
-//        long initHotelId = lastMessagesService.getInitHotelId();
-//
-//        if(customerDto.getHotelId()>0)
-//        {
-//            HotelRootEntity hotelRootEntity = hotelRepository.findById(customerDto.getHotelId()).orElseThrow(()-> new RuntimeException("hotel not found"));
-//          
-//            if(hotelRootEntity !=null && customerDto.isHotelStaff())
-//            {
-//                customerDto.setCheckinFrom(new Date());
-//                customerDto.setCheckinTo(convertToDate(LocalDateTime.now().plusYears(10)));
-//                checkinService.setCustomerCheckin(customerDto, customerEntity);
-//
-//                if (customerDto.getEmail() != null)
-//                {
-//                    mailService.sendMail(customerDto.getEmail(), "HoteliCo staff registration", "You have now a staff account for '" + hotelRootEntity.getName() + "' hotel in Hotelico. Your password is: '" + customerDto.getPassword() + "'. \nYour HoteliCo team.", null);
-//                }
-//                
-//                customerEntity.setHotelStaff(true);
-//                customerEntity = customerRepository.saveAndFlush(customerEntity);
-//
-//                initHotelId = hotelRootEntity.getId();
-//            }
-//        }
-//
-//
-//        if(customerDto.getPassword()!=null)
-//        {
-//            password = customerDto.getPassword();
-//        }
-//        
-//        long passwordHash = loginService.getCryptoHash(customerEntity, password);
-//    
+        }
+
+        CustomerDBEntity customerEntity = modelMapper.map(customerDto, CustomerDBEntity.class);
+
+        fillCustomerFromDto(customerDto, customerEntity);
+
+        customerEntity = customerRepository.saveAndFlush(customerEntity);
+
+        long initHotelId = lastMessagesService.getInitHotelId();
+
+        if(customerDto.getHotelId()>0)
+        {
+            HotelDbEntity hotelRootEntity = hotelRepository.findById(customerDto.getHotelId()).orElseThrow(()-> new RuntimeException("hotel not found"));
+
+            if(hotelRootEntity !=null && customerDto.isHotelStaff())
+            {
+                customerDto.setCheckinFrom(new Date());
+                customerDto.setCheckinTo(convertToDate(LocalDateTime.now().plusYears(10)));
+//                checkinService.createCheckin(CheckinRequestDTO(customerDto.getInitId(), customerDto.getHotelId(), ));
+
+                if (customerDto.getEmail() != null)
+                {
+                    mailService.sendMail(customerDto.getEmail(), "HoteliCo staff registration", "You have now a staff account for '" + hotelRootEntity.getName() + "' hotel in Hotelico. Your password is: '" + customerDto.getPassword() + "'. \nYour HoteliCo team.", null);
+                }
+
+                customerEntity.setHotelStaff(true);
+                customerEntity = customerRepository.saveAndFlush(customerEntity);
+
+                initHotelId = hotelRootEntity.getId();
+            }
+        }
+
+
+        if(customerDto.getPassword()!=null)
+        {
+            password = customerDto.getPassword();
+        }
+
+        long passwordHash = loginService.getCryptoHash(customerEntity, password);
+
 //        CustomerAggregate aggregate = customerEntity.getEntityAggregate();
-//    
+//
 //        aggregate.setPasswordHash(passwordHash);
 //        aggregate.setPasswordValue(password);
 //        aggregate.setLogged(true);
-//        //customer.updateLastSeenOnline();
-//        
-//		CustomerDTO dto =  convertMyCustomerToFullDto(customerRepository.saveAndFlush(customerEntity));
-//    
-//        messagingService.sendSocketNotificationCommand(dto, hotelEvent);
-//        
-//        //// NOTIFICATE OTHERS!!!!
-//
-//        if(!dto.isHotelStaff() && !dto.isAdmin())
-//        {
-//            notificationService.notificateAboutEntityEvent(dto, HotelEvent.EVENT_REGISTER, "Now Registered!", dto.getId());
-//        }
-//
-//        return dto;
-//    }
-    
-    
+        //customer.updateLastSeenOnline();
+
+		CustomerDTO dto =  convertMyCustomerToFullDto(customerRepository.saveAndFlush(customerEntity));
+
+        messagingService.sendSocketNotificationCommand(new SocketNotificationCommand(customerDto.getInitId(), customerDto.getHotelId(), customerDto.getLastName(), "message" ), HotelEvent.EVENT_REGISTER);
+
+        //// NOTIFICATE OTHERS!!!!
+
+        if(!dto.isHotelStaff() && !dto.isAdmin())
+        {
+            notificationService.notificateAboutEntityEvent(dto, HotelEvent.EVENT_REGISTER, "Now Registered!", dto.getId());
+        }
+
+        return dto;
+    }
+
+    @Override
+    public CustomerDTO updateCustomer(CustomerDTO customerDto, int requesterId) {
+        return null;
+    }
+
 
 //    @Override
 //    @Transactional
@@ -403,42 +401,16 @@ public class CustomerPortServiceImpl implements CustomerPortService
 //    }
 
     @Override
-    public boolean relocateGuestDealsToLoggedCustomer(ICustomerRootEntity customerEntity, Long guestCustomerId) {
-        return false;
-    }
-
-    @Override
-    public CustomerDTO convertCustomerToDto(ICustomerRootEntity customerEntity, long hotelId) {
+    public CustomerDTO serializeCustomerHotelInfo(CustomerDTO dto, long hotelId, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin) {
         return null;
     }
 
     @Override
-    public CustomerDTO convertCustomerToDto(ICustomerRootEntity customerEntity, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin) {
+    public CustomerDTO synchronizeCustomerToDto(CustomerDTO customerDto) {
         return null;
     }
 
-
-    @Override
-    public CustomerDTO convertMyCustomerToFullDto(ICustomerRootEntity customerEntity) {
-        return null;
-    }
-
-    @Override
-    public ICustomerRootEntity serializeCustomerHotelInfo(ICustomerRootEntity dto, long hotelId, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin) {
-        return null;
-    }
-
-    @Override
-    public CustomerDTO synchronizeCustomerToDto(ICustomerRootEntity customerDto) {
-        return null;
-    }
-
-    @Override
-    public void deleteCustomer(CustomerDTO customerDto) {
-
-    }
-
-//    @Override
+    //    @Override
     public boolean relocateGuestDealsToLoggedCustomer(CustomerDBEntity customerEntity, Long guestCustomerId)
     {
         if(customerEntity ==null || guestCustomerId==null)
@@ -500,7 +472,12 @@ public class CustomerPortServiceImpl implements CustomerPortService
     public CustomerDTO convertCustomerToDto(CustomerDBEntity customerEntity, long hotelId){
         return convertCustomerToDto(customerEntity, hotelId, false, null);
     }
-    
+
+    @Override
+    public CustomerDTO convertCustomerToDto(CustomerDBEntity customerEntity, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin) {
+        return null;
+    }
+
     public CustomerDTO convertCustomerToDto(CustomerDBEntity customerEntity, boolean fullSerialization, CustomerHotelCheckin validCheckin){
         return convertCustomerToDto(customerEntity, validCheckin.getPk().getHotelEntityId(), fullSerialization, validCheckin);
     }
@@ -590,8 +567,8 @@ public class CustomerPortServiceImpl implements CustomerPortService
                 //dto.setBirthday(null);
                 dto.setCheckinFrom(null);
                 dto.setCheckinTo(null);
-                dto.setEmail(null);
-                dto.setPassword(null);
+//                dto.setEmail(null);
+//                dto.setPassword(null);
             }
             
         }
@@ -749,10 +726,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
         customerRepository.deleteById(customerDto.getId());
     }
 
-    @Override
-    public String getCustomerAvatarUrl(ICustomerRootEntity customerEntity) {
-        return null;
-    }
+  
 
 
     @Override
@@ -786,7 +760,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
         for (String nextCity: citiesList)
         {
             CustomerDTO dto = CustomerDTO.builder()
-                    .city(nextCity)
+                    .initId(customerId)
                     .build();
             
             resultCustomerList.add(dto);
@@ -810,7 +784,7 @@ public class CustomerPortServiceImpl implements CustomerPortService
         
         for (CustomerDBEntity nextCustomerRootEntity : allCustomerEntities)
         {
-            if(nextCustomerRootEntity.isActive() && (nextCustomerRootEntity.getCity()!=null && nextCustomerRootEntity.getCity().equals(city) || city==null && nextCustomerRootEntity.getCity()==null))
+            if(nextCustomerRootEntity.isActive() && (nextCustomerRootEntity.getCustomerDetails().getCity()!=null && nextCustomerRootEntity.getCustomerDetails().getCity().equals(city) || city==null && nextCustomerRootEntity.getCustomerDetails().getCity()==null))
             {
                 //TODO Eugen: create global convert method to dto...
                 long hotelId = getCustomerHotelId(nextCustomerRootEntity.getId());
@@ -933,10 +907,12 @@ public class CustomerPortServiceImpl implements CustomerPortService
                 
         if(anonymes.isEmpty())
         {
-            anonym = new CustomerDBEntity();
-            anonym.setFirstName("[anonym]");
-            anonym.setLastName("[anonym]");
-            anonym.setEmail("[anonym]");
+            anonym = CustomerDBEntity.builder()
+                    .firstName("[anonym]")
+                    .lastName("[anonym]")
+                    .email("[anonym]")
+                    .build();
+            
             customerRepository.saveAndFlush(anonym);
         }
         else {
@@ -953,13 +929,29 @@ public class CustomerPortServiceImpl implements CustomerPortService
     }
 
     @Override
-    public ICustomerRootEntity save(ICustomerRootEntity customerEntity) {
-        return null;
+    public void save(CustomerDBEntity customerEntity) {
+
+    }
+
+
+    @Override
+    public Optional<CustomerDBEntity> getOne(Long id) {
+        return Optional.empty();
     }
 
     @Override
-    public Optional<ICustomerRootEntity> getOne(Long id) {
-        return Optional.empty();
+    public void setCustomerPing(long customerId) {
+
+    }
+
+    @Override
+    public List<CustomerDTO> findAllOnline(Timestamp timestamp) {
+        return List.of();
+    }
+
+    @Override
+    public List<CustomerDBEntity> getAllIn24hOnline() {
+        return List.of();
     }
 
 }

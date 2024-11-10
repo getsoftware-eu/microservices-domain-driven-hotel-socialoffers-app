@@ -1,7 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerRequestDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
@@ -12,10 +11,12 @@ import eu.getsoftware.hotelico.hotelapp.application.chat.port.out.IChatService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinRequestDTO;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.handler.CreateHotelCheckinHandler;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.in.CheckinUseCase;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.GPSValidationHandler;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.in.NotificationUseCase;
@@ -24,6 +25,7 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IWallpostService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
@@ -81,7 +83,7 @@ import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEven
 @RequiredArgsConstructor
 class CheckinUseCaseImpl implements CheckinUseCase
 {
-	private CustomerPortService customerService;
+	private CustomerPortService<CustomerRootEntity> customerService;
 	
 	private IMessagingProducerService messagingProducerService;		
 	
@@ -100,10 +102,11 @@ class CheckinUseCaseImpl implements CheckinUseCase
 	private GPSValidationHandler gpsValidationHandler;
 	
 	private CheckinMessagePublisher checkinMessagePublisher;
+	private ModelMapper modelMapper;
 
 	@Transactional
 	@Override
-	public CheckinDTO validateAndCreateCustomerCheckin(@Validated CheckinRequestDTO customerRequestDto) throws JsonError {
+	public CheckinDTO validateAndCreateCustomerCheckin(@Validated CheckinRequestDTO customerRequestDto) throws Throwable {
 
 		// UseCase : Primary-flow
 
@@ -122,6 +125,11 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		sendHotelNewGuestSocketNotificationCommand(checkinResponseDTO);
 				
 		return checkinResponseDTO;
+	}
+
+	@Override
+	public CheckinDTO updateOwnDtoCheckinInfo(CheckinRequestDTO dto) throws JsonError {
+		return null;
 	}
 
 	/**
@@ -160,9 +168,9 @@ class CheckinUseCaseImpl implements CheckinUseCase
 	}
 	
 
-	private ICustomerHotelCheckinEntity createCheckin(CheckinRequestDTO checkinRequestDto) throws JsonError {
+	private ICustomerHotelCheckinEntity createCheckin(CheckinRequestDTO checkinRequestDto) throws Throwable {
 		
-		ICustomerRootEntity customerEntity = customerService.getEntityById(checkinRequestDto.customerId())
+		CustomerRootEntity customerEntity = customerService.getEntityById(checkinRequestDto.customerId())
 				.orElseThrow(() -> new JsonError("Customer not found"));
 		
 		var hotelEntity = getHotelEntityFromCheckinRequest(checkinRequestDto)				
@@ -177,7 +185,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 //		CheckinDTO checkinResponseDto = new CheckinDTO(checkinRequestDto.getCustomerId(), checkinRequestDto.getHotelId());
 
-		ICustomerHotelCheckinEntity newCheckinEntity = checkinService.createCheckinEntity(customerEntity, hotelEntity, isFullCheckin); //TODO persist now or later??
+		ICustomerHotelCheckinEntity newCheckinEntity = checkinService.createCheckin(modelMapper.map(customerEntity, CustomerDTO.class), modelMapper.map(hotelEntity, HotelDTO.class), isFullCheckin); //TODO persist now or later??
 
 		List<ICustomerHotelCheckinEntity> activeCustomerCheckins = checkinService.getActiveByCustomerId(customerEntity.getId(), new Date());
 
@@ -193,15 +201,15 @@ class CheckinUseCaseImpl implements CheckinUseCase
 			//if no checkin exists, create a new one
 			if(activeCustomerCheckins.isEmpty())
 			{
-				nowGoodCheckin = CreateHotelCheckinHandler().handle(checkinRequestDto, customerEntity, hotelEntity, isFullCheckin);
+				nowGoodCheckin =  new CreateHotelCheckinHandler().handle(checkinRequestDto, modelMapper.map(customerEntity, CustomerDTO.class), modelMapper.map(hotelEntity, HotelDTO.class), isFullCheckin);
 
-				checkinResponseDto.setErrorResponse("");
+//				checkinResponseDto.setErrorResponse("");
 
 				//Inform others!!!
 				if(!customerEntity.isHotelStaff() && !customerEntity.isAdmin())
 				{
-					checkinResponseDto.setHotelId(hotelEntity.getId());
-					notificationUseCase.notificateAboutEntityEventWebSocket(checkinResponseDto, hotelEvent.getEventCheckin(), "New check-in in your hotel", hotelRootEntity.getId());
+//					checkinResponseDto.setHotelId(hotelEntity.getId());
+//					notificationUseCase.notificateAboutEntityEventWebSocket(checkinResponseDto, hotelEvent.getEventCheckin(), "New check-in in your hotel", hotelRootEntity.getId());
 				}
 
 				//sent wellcome message to new fullCheckin customers
@@ -230,23 +238,23 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 				for (ICustomerHotelCheckinEntity nextCheckin : activeCustomerCheckins)
 				{
-					if(hotelEntity.equals(nextCheckin.getHotel())) //if the checkin of actual hotel, NO HOTEL EVENT!
+					if(hotelEntity.equals(nextCheckin.getHotelId())) //if the checkin of actual hotel, NO HOTEL EVENT!
 					{
-						nowGoodCheckin = updateHotelCheckin(checkinRequestDto, customerEntity, nextCheckin, isFullCheckin);
-						checkinResponseDto.setErrorResponse("");
+						updateHotelCheckin(checkinRequestDto, customerEntity, nextCheckin, isFullCheckin);
+//						checkinResponseDto.setErrorResponse("");
 						break;
 					}
 				}
 			}
 
 			long consistencyId = new Date().getTime();
-			customerEntity.getEntityAggregate().setConsistencyId(consistencyId);
+			customerEntity.setConsistencyId(consistencyId);
 
 			lastMessagesService.updateCustomerConsistencyId(customerEntity.getId(), consistencyId);
 
-			ICustomerRootEntity iCustomerRootEntity = customerService.save(customerEntity);
+			customerService.save(customerEntity);
 
-			var customerDto = customerService.convertCustomerToDto(iCustomerRootEntity, true, nowGoodCheckin);
+			var customerDto = customerService.convertCustomerToDto(customerEntity, true, nowGoodCheckin);
 
 		}
 		else{ //if no hotel more, maybe cancel actual checkin
@@ -258,11 +266,11 @@ class CheckinUseCaseImpl implements CheckinUseCase
 				//                    if(nextCheckin.getCustomer().getSeenActivities()!=null)
 				//                        nextCheckin.getCustomer().getSeenActivities().clear();
 
-				customerService.save(nextCheckin.getCustomer());
+//				customerService.save(nextCheckin.getCustomerId());
 
 				//TODO eu: how to implement domain events, without  low level entity .class ??
 
-				notificationUseCase.notificateAboutEntityEventWebSocket(checkinResponseDto, hotelEvent.getEventCheckout(), "Checkout from your hotel", nextCheckin.getHotel().getId());
+//				notificationUseCase.notificateAboutEntityEventWebSocket(checkinResponseDto, hotelEvent.getEventCheckout(), "Checkout from your hotel", nextCheckin.getHotel().getId());
 
 				checkinService.save(nextCheckin);
 			}
@@ -270,26 +278,27 @@ class CheckinUseCaseImpl implements CheckinUseCase
 			long wantedHotelId = checkinRequestDto.hotelId();
 
 			long consistencyId = new Date().getTime();
-			customerEntity.getEntityAggregate().setConsistencyId(consistencyId);
+			customerEntity.setConsistencyId(consistencyId);
 			lastMessagesService.updateCustomerConsistencyId(customerEntity.getId(), consistencyId);
 
-			var customerDto = customerService.convertMyCustomerToFullDto(customerService.save(customerEntity));
+			customerService.save(customerEntity);
+			var customerDto = customerService.convertMyCustomerToFullDto(customerEntity);
 
 //			if(wantedHotelId>0 && (checkinRequestDto.getCheckinTo()==null || checkinRequestDto.getCheckinTo().before(new Date()))) {
 //				checkinResponseDto.setErrorResponse("Checkin Date is wrong or in past");
 //			}
 //			else
 //			{
-				if(wantedHotelId == virtualHotelId && AppConfigProperties.ALLOW_INIT_VIRTUAL_HOTEL)
-				{
-					checkinResponseDto = checkinResponseDto.withHotelId(virtualHotelId);
-					checkinResponseDto.setFullCheckin(true);
-				}
+//				if(wantedHotelId == virtualHotelId && AppConfigProperties.ALLOW_INIT_VIRTUAL_HOTEL)
+//				{
+//					checkinResponseDto = checkinResponseDto.withHotelId(virtualHotelId);
+//					checkinResponseDto.setFullCheckin(true);
+//				}
 //			}
 		}
 
 		//Eugen: every time update customer current hotelId!!!
-		lastMessagesService.updateCustomerHotelId(newCheckinEntity.getCustomer().getId(), newCheckinEntity.getHotel().getId());
+		lastMessagesService.updateCustomerHotelId(newCheckinEntity.getCustomerId(), newCheckinEntity.getHotelId().getId());
 		
 		return newCheckinEntity;
 	}
@@ -302,15 +311,15 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 		Optional<IHotelRootEntity> hotelEntityOpt = Optional.empty();
 		
-		if(checkinRequestDto.getHotelCode()!=null && !(checkinRequestDto.getHotelCode().equals(virtualHotelCode) ))
-		{
-			hotelEntityOpt = hotelService.findByCurrentHotelAccessCodeAndActive(checkinRequestDto.getHotelCode(), true);
-		}
+//		if(checkinRequestDto.getHotelCode()!=null && !(checkinRequestDto.getHotelCode().equals(virtualHotelCode) ))
+//		{
+//			hotelEntityOpt = hotelService.findByCurrentHotelAccessCodeAndActive(checkinRequestDto.getHotelCode(), true);
+//		}
 		
-		if(hotelEntityOpt.isEmpty() && checkinRequestDto.getHotelId()>0 && (!AppConfigProperties.ALLOW_INIT_VIRTUAL_HOTEL || checkinRequestDto.getHotelId() != virtualHotelId))
-		{
-			hotelEntityOpt = hotelService.getOne(checkinRequestDto.getHotelId());
-		}
+//		if(hotelEntityOpt.isEmpty() && checkinRequestDto.getHotelId()>0 && (!AppConfigProperties.ALLOW_INIT_VIRTUAL_HOTEL || checkinRequestDto.getHotelId() != virtualHotelId))
+//		{
+//			hotelEntityOpt = hotelService.getOne(checkinRequestDto.getHotelId());
+//		}
 		
 		return hotelEntityOpt;
 	}
@@ -318,25 +327,25 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 	private void sendInitMessageFromHotelStaffToCustomer(ICustomerHotelCheckinEntity newCheckin) throws JsonError {
 		
-		CustomerDTO initHotelStaff = newCheckin.getHotel().getStaffList().stream().findFirst()
-				.orElseThrow(()-> new JsonError("HotelStaff is not set for hotel" + newCheckin.getHotel().getId()));
+		CustomerDTO initHotelStaff = newCheckin.getHotelId().getStaffList().stream().findFirst()
+				.orElseThrow(()-> new JsonError("HotelStaff is not set for hotel" + newCheckin.getHotelId()));
 
 		ChatMessageCommand wellcomeChatMessageCommand = new ChatMessageCommand(
 				initHotelStaff.getId(),
-				newCheckin.getCustomer().getId(), 
+				newCheckin.getCustomerId(), 
 				false,
-				newCheckin.getHotel().getWellcomeMessage());
+				newCheckin.getHotelId()+"getWellcomeMessage()");
 		
 		messagingProducerService.sendChatMessageCommand(wellcomeChatMessageCommand); //UseCase.Primary-flow.step.6
 	}
 
-	private ICustomerHotelCheckinEntity updateHotelCheckin(CustomerRequestDTO customerRequestDTO, ICustomerRootEntity customerEntity, ICustomerHotelCheckinEntity nextCheckin, boolean isFullCheckin) {
+	private void updateHotelCheckin(CheckinRequestDTO checkinRequestDTO, ICustomerRootEntity customerEntity, ICustomerHotelCheckinEntity nextCheckin, boolean isFullCheckin) {
 		//update the values of checkin
-		nextCheckin.setValidFrom(customerRequestDTO.getCheckinFrom());
-		nextCheckin.setValidTo(customerRequestDTO.getCheckinTo());
+		nextCheckin.setValidFrom(checkinRequestDTO.checkinFrom());
+		nextCheckin.setValidTo(checkinRequestDTO.checkinTo());
 		nextCheckin.setStaffCheckin(customerEntity.isHotelStaff());
 		nextCheckin.setFullCheckin(isFullCheckin);
-		return checkinService.save(nextCheckin);
+		  checkinService.save(nextCheckin);
 	}
 	
 	@Override
@@ -384,7 +393,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		
 		if(validCheckin!=null) // if checkin exists and valid
 		{
-			ICustomerRootEntity checkinCustomerRootEntity = validCheckin.getCustomer();
+//			ICustomerRootEntity checkinCustomerRootEntity = validCheckin.getCustomer();
 			
 			//TODO Eugen: cannot set logged automaticly
 			//TODO Eugen: checkinCustomerRootEntity.setActive(true)? update entity?
@@ -392,7 +401,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 			//checkinCustomerRootEntity.setActive(true);
 			dto.setActive(true);
 			
-			dto.setFullCheckin(validCheckin.isFullCheckin());
+//			dto.setFullCheckin(validCheckin.isFullCheckin());
 			
 			dto.setCheckinFrom(validCheckin.getValidFrom());
 			dto.setCheckinTo(validCheckin.getValidTo());
@@ -406,8 +415,8 @@ class CheckinUseCaseImpl implements CheckinUseCase
 			
 			if(initHotelId>0)
 			{
-				dto.setHotelId(initHotelId);
-				dto.setFullCheckin(true);
+//				dto.setHotelId(initHotelId);
+//				dto.setFullCheckin(true);
 			}
 		}
 		

@@ -3,11 +3,11 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.FileUtils;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelActivity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelDbEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelRootEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.ActivityRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.HotelRepository;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
@@ -454,7 +454,7 @@ public class FileUploadServiceImpl implements FileUploadService
 //	}
 	
 	@Override
-	public boolean saveFileToOwner(MultipartFile file, long senderId, String model, long modelId, String absolutePath) throws Exception
+	public boolean saveFileToOwner(MultipartFile file, long senderId, String model, long modelId, String absolutePath) throws Throwable
 	{
 		
 			String mimeType = file.getContentType();
@@ -520,7 +520,7 @@ public class FileUploadServiceImpl implements FileUploadService
 					case "activity":
 					case "activities":
 					{
-						HotelActivity activity = hotelService.getActivityByIdOrInitId(modelId, modelId);
+						HotelDbActivity activity = (HotelDbActivity) hotelService.getActivityByIdOrInitId(modelId, modelId).orElseThrow(()->new RuntimeException("not found"));
 	
 						if (activity != null)
 						{
@@ -545,7 +545,7 @@ public class FileUploadServiceImpl implements FileUploadService
 							
 							notificationService.broadcastActivityNotification(activityDto);
 
-							notificationService.notificateAboutEntityEvent(customerService.convertCustomerToDto(sender, activity.getHotelRootEntity().getId()), HotelEvent.EVENT_LOGO_ACTIVITY_CHANGE_MESSAGE, activity.getPictureUrl(), activity.getInitId());
+							notificationService.notificateAboutEntityEvent(customerService.convertCustomerToDto(sender, activity.getHotel().getId()), HotelEvent.EVENT_LOGO_ACTIVITY_CHANGE_MESSAGE, activity.getPictureUrl(), activity.getInitId());
 
 						}
 	
@@ -554,12 +554,12 @@ public class FileUploadServiceImpl implements FileUploadService
 					case "hotel":
 					{
 						long hotelId =  modelId;
-						HotelRootEntity hotelRootEntity = hotelRepository.getOne(hotelId);
+						HotelDbEntity hotelRootEntity = hotelRepository.getOne(hotelId);
 
 						if(hotelRootEntity ==null)
 						{
 							long hotelCreationTime = modelId;
-							Optional<HotelRootEntity> hotelOptional = hotelRepository.findByCreationTimeAndActive(hotelCreationTime, true).stream().findAny();
+							Optional<HotelDbEntity> hotelOptional = hotelRepository.findByCreationTimeAndActive(hotelCreationTime, true).stream().findAny();
 						
 							if(hotelOptional.isPresent())
 							{
@@ -602,9 +602,8 @@ public class FileUploadServiceImpl implements FileUploadService
 	}
 	
 	@Override
-	public CustomerDTO getEntityImage(long requesterId, String entityType, long entityId)
-	{
-		CustomerDTO answerObj = new CustomerDTO();
+	public CustomerDTO getEntityImage(long requesterId, String entityType, long entityId) throws Throwable {
+		CustomerDTO answerObj =   CustomerDTO.builder().build();
 		
 		String pictureUrl = "";
 		
@@ -625,7 +624,7 @@ public class FileUploadServiceImpl implements FileUploadService
 			case "activities":
 			{
 //				List<HotelActivity> activities = activityRepository.getByInitId(entityId);
-				 HotelActivity  activity = hotelService.getActivityByIdOrInitId((int)entityId, entityId);
+				 HotelDbActivity activity = (HotelDbActivity) hotelService.getActivityByIdOrInitId((int)entityId, entityId).orElseThrow(()->new RuntimeException("not found"));
 				
 				if (activity != null)
 				{
@@ -637,12 +636,12 @@ public class FileUploadServiceImpl implements FileUploadService
 			case "hotel":
 			{
 				long hotelId = entityId;
-				HotelRootEntity hotelRootEntity = hotelRepository.getOne(hotelId);
+				HotelDbEntity hotelRootEntity = hotelRepository.getOne(hotelId);
 				
 				if(hotelRootEntity ==null)
 				{
 					long hotelCreationTime = entityId;
-					Optional<HotelRootEntity> hotelOptional = hotelRepository.findByCreationTimeAndActive(hotelCreationTime, true).stream().findAny();
+					Optional<HotelDbEntity> hotelOptional = hotelRepository.findByCreationTimeAndActive(hotelCreationTime, true).stream().findAny();
 				
 					if(hotelOptional.isPresent())
 					{

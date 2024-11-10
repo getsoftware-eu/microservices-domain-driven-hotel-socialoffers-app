@@ -24,7 +24,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
-import java.util.Random;
 import java.util.Set;
 
 @Api(value = "CustomerController") //add to swagger
@@ -54,7 +53,7 @@ public class CustomerController extends BasicController
 
     @RequestMapping(value = "/customers", method = RequestMethod.GET)
     public @ResponseBody List<CustomerDTO> getCustomers() {
-        return customerService.getCustomers();
+        return customerService.getCustomerEntities();
     }
 
     @RequestMapping(value = "/customers/{customerId}/cities", method = RequestMethod.GET)
@@ -89,13 +88,13 @@ public class CustomerController extends BasicController
     }
     
     @RequestMapping(value = "/customers/{id}/requesterId/{requesterId}", method = RequestMethod.GET)
-    public @ResponseBody CustomerDTO getById(@PathVariable int id, @PathVariable int requesterId) {
+    public @ResponseBody CustomerDTO getById(@PathVariable int id, @PathVariable int requesterId) throws Throwable {
         CustomerDTO out;
         
         try
         {
 //            int sessionId = sessionCustomer!=null && sessionCustomer.getId()>0? sessionCustomer.getId() : 0;
-            out = customerService.getById(id, requesterId).orElseThrow(()-> new RuntimeException("-"));
+            out = (CustomerDTO) customerService.getById(id, requesterId).orElseThrow(()-> new RuntimeException("-"));
         }
         catch (Exception e)
         {
@@ -106,13 +105,13 @@ public class CustomerController extends BasicController
     }
 
     @RequestMapping(value = "/customerwithmessage/{getId}/sender/{senderId}", method = RequestMethod.GET)
-    public @ResponseBody CustomerDTO getCustomerWithLastMessageById(@PathVariable int getId, @PathVariable int senderId) {
+    public @ResponseBody CustomerDTO getCustomerWithLastMessageById(@PathVariable int getId, @PathVariable int senderId) throws Throwable {
         CustomerDTO out;
 
         try
         {
             //int sessionId = sessionCustomer!=null && sessionCustomer.getId()>0? sessionCustomer.getId() : 0;
-            out = customerService.getById(getId, senderId).orElseThrow(()-> new RuntimeException("-"));
+            out = (CustomerDTO) customerService.getById(getId, senderId).orElseThrow(()-> new RuntimeException("-"));
         }
         catch (Exception e)
         {
@@ -131,7 +130,7 @@ public class CustomerController extends BasicController
 
         if(customerDto.isGuestAccount())
         {
-            customerDto.withPassword(customerDto.getFirstName() + "_tempPassword_" + new Random().nextInt());
+//            customerDto.withPassword(customerDto.getFirstName() + "_tempPassword_" + new Random().nextInt());
         }
 
 
@@ -240,7 +239,7 @@ public class CustomerController extends BasicController
     }
 
     @RequestMapping(value = "/validSessionCustomer", method = RequestMethod.GET)
-    public @ResponseBody CustomerDTO getValidSessionCustomer(/*@CookieValue(value = ControllerUtils.SESSION_CUSTOMER_ID, required = false) String sessionCustomerCookie ,*/ @ModelAttribute(AppConfigProperties.SESSION_CUSTOMER) CustomerDTO sessionCustomer, BindingResult result, SessionStatus sessionStatus, HttpSession httpSession) {
+    public @ResponseBody CustomerDTO getValidSessionCustomer(/*@CookieValue(value = ControllerUtils.SESSION_CUSTOMER_ID, required = false) String sessionCustomerCookie ,*/ @ModelAttribute(AppConfigProperties.SESSION_CUSTOMER) CustomerDTO sessionCustomer, BindingResult result, SessionStatus sessionStatus, HttpSession httpSession) throws Throwable {
         sessionStatus.setComplete();
 
         if (result.hasErrors()) {
@@ -249,7 +248,7 @@ public class CustomerController extends BasicController
         
         if(sessionCustomer!=null && sessionCustomer.getId()>0 && sessionCustomer.getFirstName()==null)
         {
-            CustomerDTO out = customerService.getById(sessionCustomer.getId(), sessionCustomer.getId()).orElseThrow(()->new RuntimeException("-"));
+            CustomerDTO out = (CustomerDTO) customerService.getById(sessionCustomer.getId(), sessionCustomer.getId()).orElseThrow(()->new RuntimeException("-"));
 			lastMessagesService.setLastFullNotification(out.getId(), null);
 			httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
         }
@@ -273,7 +272,7 @@ public class CustomerController extends BasicController
     }
     
     @RequestMapping(value = "/validSessionCustomer", method = RequestMethod.POST)
-    public @ResponseBody CustomerDTO setValidSessionCustomer(/*@CookieValue(value = ControllerUtils.SESSION_CUSTOMER_ID, required = false) String sessionCustomerCookie ,*/ @ModelAttribute(AppConfigProperties.SESSION_CUSTOMER) CustomerDTO sessionCustomer, BindingResult result, SessionStatus sessionStatus, HttpSession httpSession) {
+    public @ResponseBody CustomerDTO setValidSessionCustomer(/*@CookieValue(value = ControllerUtils.SESSION_CUSTOMER_ID, required = false) String sessionCustomerCookie ,*/ @ModelAttribute(AppConfigProperties.SESSION_CUSTOMER) CustomerDTO sessionCustomer, BindingResult result, SessionStatus sessionStatus, HttpSession httpSession) throws Throwable {
         sessionStatus.setComplete();
 
         if (result.hasErrors()) {
@@ -281,7 +280,7 @@ public class CustomerController extends BasicController
         }
         if(sessionCustomer!=null && sessionCustomer.getId()>0 && sessionCustomer.getFirstName()==null)
         {
-            CustomerDTO out = customerService.getById(sessionCustomer.getId(), sessionCustomer.getId()).orElseThrow(()->new RuntimeException("-"));
+            CustomerDTO out = (CustomerDTO) customerService.getById(sessionCustomer.getId(), sessionCustomer.getId()).orElseThrow(()->new RuntimeException("-"));
 			lastMessagesService.setLastFullNotification(out.getId(), null);
 			httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
         }

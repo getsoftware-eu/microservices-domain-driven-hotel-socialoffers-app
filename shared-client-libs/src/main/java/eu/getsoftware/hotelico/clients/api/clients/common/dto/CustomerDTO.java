@@ -3,6 +3,7 @@ package eu.getsoftware.hotelico.clients.api.clients.common.dto;
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.With;
 import lombok.experimental.SuperBuilder;
 import org.springframework.lang.NonNull;
@@ -91,6 +92,7 @@ public class CustomerDTO extends BasicDTO
     
     public final boolean hotelStaff = false;
     
+    @Setter
     private final boolean fullCheckin = false;
     
     private final boolean allowHotelNotification = true;
@@ -237,6 +239,22 @@ public class CustomerDTO extends BasicDTO
     }
 
     public void doLogged(boolean b) {
+    }
+
+    public Date getLastSeenOnline() {
+        return null;
+    }
+
+    public void updateLastSeenOnline() {
+        
+    }
+
+    public String getHotelCode() {
+        return "-";
+    }
+
+    public String getPushRegistrationId() {
+        return null;
     }
 
 //    /**

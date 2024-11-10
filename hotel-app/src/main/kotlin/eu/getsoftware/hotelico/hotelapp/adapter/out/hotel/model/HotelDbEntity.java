@@ -1,8 +1,9 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model;
 
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.CustomerHotelCheckin;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelActivity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IFileUploadable;
 import jakarta.persistence.*;
@@ -13,14 +14,16 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.Collection;
+import java.util.List;
 import java.util.Set;
-import java.util.UUID;
+
+import static org.hibernate.internal.util.collections.CollectionHelper.listOf;
 
 @Entity
 @Getter @Setter
 @Table(name = "hotel", schema = "hotel")
-public class HotelRootEntity implements IHotelRootEntity, Serializable, IFileUploadable
+public class HotelDbEntity implements IHotelRootEntity, Serializable, IFileUploadable
 {
     private static final long serialVersionUID = -4429239383913774205L;
 	
@@ -30,8 +33,9 @@ public class HotelRootEntity implements IHotelRootEntity, Serializable, IFileUpl
     @SequenceGenerator(name="hotel_id_generator", sequenceName = "hotel_id_seq")
     private long id;
 
-    @Column(columnDefinition = "BINARY(16)")
-    private UUID hotelUUID;
+//    @Column(columnDefinition = "BINARY(16)")
+    @Embedded
+    private HotelDomainEntityId hotelDomainEntityId;
     
     @Column(name = "rating", nullable = true)
     private Integer rating;
@@ -107,21 +111,22 @@ public class HotelRootEntity implements IHotelRootEntity, Serializable, IFileUpl
 	@Column(name = "unsubscribeNotificationPushIds", nullable = true, columnDefinition="LONGTEXT")
     private String unsubscribeNotificationPushIds = "";
 
-    @ElementCollection(targetClass= CustomerHotelCheckin.class)
-    @OneToMany(/*fetch = FetchType.LAZY,*/ mappedBy = "pk.hotel")
-    private Set<CustomerHotelCheckin> customerHotelHistories = new HashSet<CustomerHotelCheckin>(0);
+//    @ElementCollection(targetClass= CustomerHotelCheckin.class)
+//    @OneToMany(/*fetch = FetchType.LAZY,*/ mappedBy = "pk.hotel")
+    @ElementCollection
+    private List<Long> customerHotelHistories = listOf();
 
 //    @ElementCollection(targetClass=WallPost.class)
 //    @OneToMany(/*fetch = FetchType.LAZY,*/ mappedBy = "pkw.hotel")
 //    private Set<WallPost> wallPosts = new HashSet<WallPost>(0);
 
     //eugen: mappedBy entity!
-    @OneToMany(mappedBy= "hotelRootEntity")
+    @OneToMany(mappedBy= "hotel")
     private Set<HotelWallPost> hotelWallPosts;
     
     //eugen: mappedBy entity!
     @OneToMany(mappedBy= "hotelRootEntity")
-    private Set<HotelActivity> hotelActivities;
+    private Set<HotelDbActivity> hotelActivities;
 
     @Column(name = "mediaUploaded", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
     private boolean mediaUploaded = false;
@@ -144,8 +149,18 @@ public class HotelRootEntity implements IHotelRootEntity, Serializable, IFileUpl
 	//	@Validate("min=0, max=180")
 	private double longitude = LOWER_BOUND_LONGITUDE;
     
-    public HotelRootEntity() {
+    public HotelDbEntity() {
         super();
+    }
+
+    @Override
+    public Set<HotelWallPost> hotelWallPosts() {
+        return Set.of();
+    }
+
+    @Override
+    public Set<HotelDbActivity> hotelActivities() {
+        return Set.of();
     }
 
     public long getId() {
@@ -163,8 +178,13 @@ public class HotelRootEntity implements IHotelRootEntity, Serializable, IFileUpl
     {
         this.mediaUploaded = mediaUploaded;
     }
-	
-	/**
+
+    @Override
+    public Collection<CustomerDTO> getStaffList() {
+        return List.of();
+    }
+
+    /**
 	 * -180
 	 */
 	public static final double LOWER_BOUND_LONGITUDE = -180d;

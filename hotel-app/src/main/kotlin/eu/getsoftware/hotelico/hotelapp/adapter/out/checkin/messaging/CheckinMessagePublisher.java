@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessage;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessagePayload;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.chat.messaging.MessageStatus;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.service.messaging.KafkaMessagePublisher;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
@@ -50,7 +50,7 @@ public class CheckinMessagePublisher {
      */
     private void publishMessage(String messageType, CheckinDTO checkinDTO) {
 
-        CustomerEntityId customerEntityId = new CustomerEntityId(String.valueOf(checkinDTO.getCustomerId()));
+        CustomerDomainEntityId customerEntityId = new CustomerDomainEntityId(String.valueOf(checkinDTO.getCustomerId()));
 
         CheckinSendEventPayload eventPayload = CheckinSendEventPayload.builder()
                 .messageId(checkinDTO.getInitId())

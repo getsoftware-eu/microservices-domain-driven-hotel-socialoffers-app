@@ -3,7 +3,6 @@ package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.ChatMessageView;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +40,7 @@ public interface LastMessagesService
 	 * @return NULL if OFFLINE!
 	 */
 	@Transactional
-	Optional<Date> getLastCustomerOnlineTime(long customerId);
+	Optional<Date> getLastCustomerOnlineTime(long customerId) throws Throwable;
 
 	/**
 	 * get still online customerList. DB QUERY!!!
@@ -58,7 +57,7 @@ public interface LastMessagesService
 	void checkCustomerOffline(long offlineId);
 
 	@Transactional
-	void checkCustomerOnline(long onlineId);
+	void checkCustomerOnline(long onlineId) throws Throwable;
 
 	@Transactional
 	void updateCustomerConsistencyId(long customerId, long consustencyId);
@@ -67,26 +66,26 @@ public interface LastMessagesService
 	long getCustomerConsistencyId(long customerId);
 
 	@Transactional
-	Map<Long, List<ChatMessageView>> getCustomerUnreadChatsBySenders(long receiverId);
+	Map<Long, List<ChatMsgDTO>> getCustomerUnreadChatsBySenders(long receiverId);
 
 	@Transactional
-	void updateUnreadMessagesToCustomer(ChatMessageView newMessage);
+	void updateUnreadMessagesToCustomer(ChatMsgDTO newMessage);
 
 	/**
 	 * for every receiver, we collect messages, that was not read by ihm.
 	 * So if a receiver reads a new message, we have to delete it from here!
 	 * @param readMessage
 	 */
-	void markMessageRead(ChatMessageView readMessage);
+	void markMessageRead(ChatMsgDTO readMessage);
 
 	void markChatRead(long receiverId, long senderId);
 
 	ChatMsgDTO getLastMessageBetweenCustomers(long senderId, long receiverId);
 	
-	void markLastMessageBetweenCustomers(ChatMessageView seenMessage);
+	void markLastMessageBetweenCustomers(ChatMsgDTO seenMessage);
 	
 	@Transactional
-	void setLastMessageBetweenCustomers(ChatMessageView lastMessage);
+	void setLastMessageBetweenCustomers(ChatMsgDTO lastMessage);
 
 	void addWaitingSocialDto(String sessionState, CustomerDTO socialCustomer);
 

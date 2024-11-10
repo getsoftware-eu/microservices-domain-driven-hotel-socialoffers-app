@@ -2,7 +2,6 @@ package eu.getsoftware.hotelico.hotelapp.application.customer.domain.model;
 
 import java.util.Date;
 import java.util.Optional;
-import java.util.zip.ZipEntry;
 
 public interface ICustomerDetails {
 
@@ -28,5 +27,5 @@ public interface ICustomerDetails {
 
     String getProfileImageUrl();
 
-    ZipEntry getBirthday();
+    Date getBirthday();
 }

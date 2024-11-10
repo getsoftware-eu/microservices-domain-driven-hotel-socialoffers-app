@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.usecase.register;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelDbEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.HotelServiceImpl;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.usecase.register.dto.HotelRegisterRequestDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.in.HotelRegisterUseCase;
@@ -53,7 +53,7 @@ public class HotelRegisterInteractorImpl implements HotelRegisterUseCase {
     }
 
 
-    public HotelRootEntity createHotelFromProjection()
+    public HotelDbEntity createHotelFromProjection()
     {
         return null;
     }

@@ -1,8 +1,9 @@
 package eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model;
 
 import eu.getsoftware.hotelico.clients.common.domain.IDomainEntity;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerEntityId;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
@@ -13,10 +14,10 @@ import java.util.Date;
  */
 public interface ICustomerHotelCheckinEntity extends IDomainEntity {
 
-    default ICustomerHotelCheckinEntity createInstance(@NotNull CustomerEntityId customerEntityId, @NotNull HotelEntityId hotelEntityId, @NotNull Date validFrom, @NotNull Date validTo) {
+    default ICustomerHotelCheckinEntity createInstance(@NotNull CustomerDomainEntityId customerDomainEntityId, @NotNull HotelDomainEntityId hotelDomainEntityId, @NotNull Date validFrom, @NotNull Date validTo) {
         setCheckinDates(validFrom, validTo);
-        setCustomerEntityId(customerEntityId);
-        setHotelEntityId(hotelEntityId);
+        setCustomerDomainEntityId(customerDomainEntityId);
+        setHotelDomainEntityId(hotelDomainEntityId);
         return this;
     }
 
@@ -66,13 +67,9 @@ public interface ICustomerHotelCheckinEntity extends IDomainEntity {
 //        return new ICustomerHotelCheckinEntity(existingCheckinId, customerEntity, hotelRootEntity);
 //    }
     
-    void setCustomerEntityId(CustomerEntityId customerEntityId);
-    void setHotelEntityId(HotelEntityId hotelEntityId);
+    void setCustomerDomainEntityId(CustomerDomainEntityId customerEntityId);
+    void setHotelDomainEntityId(HotelDomainEntityId hotelEntityId);
 
-//    HotelRootEntity getHotel();
-//
-//    CustomerEntityId getCustomer();
-    
     boolean isStaffCheckin();
 
     void setStaffCheckin(boolean staffCheckin);
@@ -95,4 +92,7 @@ public interface ICustomerHotelCheckinEntity extends IDomainEntity {
 
     void setFullCheckin(boolean fullCheckin);
 
+    IHotelRootEntity getHotelId();
+
+    Long getCustomerId();
 }

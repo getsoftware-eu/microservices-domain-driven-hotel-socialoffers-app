@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl;
 
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerDetails;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerPreferences;
 
@@ -20,11 +20,11 @@ public class CustomerAggregate
 	private final CustomerRootEntity customerRootEntity;
 	private final ICustomerDetails customerDetails;
 	private final ICustomerPreferences customerPreferences;
-	private final CustomerEntityId customerEntityId;
+	private final CustomerDomainEntityId customerEntityId;
 
 	public CustomerAggregate(CustomerRootEntity customerRootEntity){
 		this.customerRootEntity = customerRootEntity;
-		this.customerEntityId = customerRootEntity.getEntityId();
+		this.customerEntityId = customerRootEntity.getDomainEntityId();
 //		this.customerBuilder = customerRootEntity.toBuilder();
 		this.customerDetails = customerRootEntity.getCustomerDetails();
 		this.customerPreferences = customerRootEntity.getCustomerPreferences();
@@ -34,7 +34,7 @@ public class CustomerAggregate
 	 * Entry Point to all Entity setters!!!
 	 * @return
 	 */
-	public static CustomerRootEntity.CustomerRootEntityBuilder getEntityBuilder(CustomerEntityId customerEntityId){
+	public static CustomerRootEntity.CustomerRootEntityBuilder getEntityBuilder(CustomerDomainEntityId customerEntityId){
 		return CustomerRootEntity.builder().customerEntityId(customerEntityId);
 	}
 

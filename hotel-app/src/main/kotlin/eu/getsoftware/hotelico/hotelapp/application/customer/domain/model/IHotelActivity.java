@@ -1,5 +1,10 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.domain.model;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
+
+import java.util.Collection;
+
 public interface IHotelActivity {
     
     long getId();
@@ -8,5 +13,15 @@ public interface IHotelActivity {
 
     void setMediaUploaded(boolean mediaUploaded);
 
-    ICustomerRootEntity getHotelRootEntity();
+    <T extends IHotelRootEntity> T getHotel();
+
+    String senderId();
+
+    Collection<CustomerDomainEntityId> getLikedCustomerDomainEntityIds();
+
+    Collection<CustomerDomainEntityId> getSubscribeCustomerDomainEntityIds();
+
+    void setLikedCustomerDomainEntityIds(Collection<CustomerDomainEntityId> likedBy);
+
+    void setSubscribeCustomerDomainEntityIds(Collection<CustomerDomainEntityId> subscribeBy);
 }

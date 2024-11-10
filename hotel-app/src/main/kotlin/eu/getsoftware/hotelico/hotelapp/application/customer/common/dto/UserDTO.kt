@@ -1,10 +1,14 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.common.dto;
 
+import lombok.Getter
+
 /**
  * for serialisation to JSON!
  */
+@Getter
 class UserDTO
 {
+   
     private var id: Int = 0
 
     private var title: String? = null

@@ -3,10 +3,11 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.common.collect.ImmutableSet;
 import eu.getsoftware.hotelico.clients.common.domain.EntityIdentifier;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerEntityId;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -34,8 +35,11 @@ public class CustomerHotelCheckin implements ICustomerHotelCheckinEntity, java.i
 	private boolean visible;
 
 //	@JsonView(ProductPartialUpdateView.class)
-	private String customerUuidValue;
-	private String hotelUuidValue;
+	@Embedded
+	private CustomerDomainEntityId customerDomainEntityId;
+
+	@Embedded
+	private HotelDomainEntityId hotelDomainEntityId;
 
 //	@JsonView(ProductPartialUpdateView.class)
 	private String name;
@@ -106,21 +110,20 @@ public class CustomerHotelCheckin implements ICustomerHotelCheckinEntity, java.i
 		getPk().setHotelEntityId(hotel);
 	}
 
-	@Override
-	public void setCustomerEntityId(CustomerEntityId customerEntityId) {
-		  customerUuidValue = customerEntityId.uuidValue();
-	}
-
-	@Override
-	public void setHotelEntityId(HotelEntityId hotelEntityId) {
-		hotelUuidValue = hotelEntityId.uuidValue();
-
-	}
-
 	public int hashCode() {
 		return (getPk() != null ? getPk().hashCode() : 0);
 	}
-	
+
+	@Override
+	public IHotelRootEntity getHotelId() {
+		return null;
+	}
+
+	@Override
+	public Long getCustomerId() {
+		return 0L;
+	}
+
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;
@@ -181,7 +184,7 @@ public class CustomerHotelCheckin implements ICustomerHotelCheckinEntity, java.i
 	}
 
 	@Override
-	public <I extends EntityIdentifier> I getEntityId() {
+	public <I extends EntityIdentifier> I getDomainEntityId() {
 		return null;
 	}
 

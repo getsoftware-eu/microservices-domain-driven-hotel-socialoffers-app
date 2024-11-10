@@ -5,24 +5,21 @@ import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 import com.google.common.collect.Sets;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.microservice.MessagingRabbitMQProducer;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.HotelRepository;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.ChatMessageView;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
-import org.springframework.util.concurrent.ListenableFutureCallback;
 
 import java.awt.geom.Point2D.Double;
 import java.time.LocalDateTime;
@@ -42,11 +39,12 @@ import static eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties.c
  */
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class LastMessagesServiceImpl implements LastMessagesService
 {
 	
-	@Autowired
-	private MessagingRabbitMQProducer hotelRabbitMQProducer;
+//	@Autowired
+//	private MessagingRabbitMQProducer hotelRabbitMQProducer;
 	
 	private final CustomerPortService customerService;	
 	
@@ -82,15 +80,10 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	 * anonymGuests id to GPS point
 	 */
 	private HashMap<Long, Double> guestToGpsPointMap = new HashMap<>();
-	
-	public LastMessagesServiceImpl(CustomerPortService customerService, CheckinRepository checkinRepository, HotelRepository hotelRepository, ChatService chatService, CustomerRepository customerRepository)
-	{
-		this.customerService = customerService;
-		this.checkinService = checkinService;
-		this.hotelService = hotelService;
-		this.chatService = chatService;
-	}
-	
+	private ModelMapper modelMapper;
+	private ChatService chatService;
+
+
 	@PostConstruct
 	public void init() {
 		unreadChatsForReceiverFromSendersMap = new HashMap<>();
@@ -129,20 +122,19 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	}
 	
 	@Override
-	public Optional<Date> getLastCustomerOnlineTime(long customerId)
-	{
+	public Optional<Date> getLastCustomerOnlineTime(long customerId) throws Throwable {
 		Optional<Date> lastCustomerOnlineTime = lastCustomerOnlineMap.entrySet().stream().filter(e -> e.getKey() == customerId).map(Entry::getValue).findFirst();
 				
  		if(!lastCustomerOnlineTime.isPresent())
 		{
-			Optional<ICustomerRootEntity> customerEntityOpt = customerService.getEntityById(customerId);
+			CustomerDTO customerEntityOpt = (CustomerDTO) customerService.getEntityById(customerId).orElseThrow(() -> new RuntimeException("not found"));
 			
-			if(customerEntityOpt.isEmpty() || !customerEntityOpt.get().isLogged())
+			if(!customerEntityOpt.isLogged())
 			{
 				return Optional.empty();
 			}
 			
-			Date lastSeenOnline = customerEntityOpt.get().getLastSeenOnline();
+			Date lastSeenOnline = customerEntityOpt.getLastSeenOnline();
 			
 			if(lastSeenOnline != null)
 			{
@@ -161,8 +153,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	}
 	
 //	@Override
-	private void updateLastOnlineTime(long customerId)
-	{
+	private void updateLastOnlineTime(long customerId) throws Throwable {
 		boolean updateCustomerRootEntity = true;
 		
 		if(lastCustomerOnlineMap.keySet().contains(customerId))
@@ -182,13 +173,10 @@ public class LastMessagesServiceImpl implements LastMessagesService
 		
 		if(updateCustomerRootEntity)
 		{
-			Optional<ICustomerRootEntity> customerEntityOpt = customerService.getEntityById(customerId);
+			CustomerDTO customerEntityOpt = (CustomerDTO) customerService.getEntityById(customerId).orElseThrow(() -> new RuntimeException("not found"));
 			
-			if(customerEntityOpt.isPresent())
-			{
-				customerEntityOpt.get().updateLastSeenOnline();
-				lastCustomerOnlineMap.put(customerId, new Date());
-			}
+			customerEntityOpt.updateLastSeenOnline();
+			lastCustomerOnlineMap.put(customerId, new Date());
 		}
 	}
 	
@@ -244,8 +232,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	}
 	
 	@Override
-	public void checkCustomerOnline(long onlineId)	
-	{
+	public void checkCustomerOnline(long onlineId) throws Throwable {
 		updateLastOnlineTime(onlineId);
 	}
 	
@@ -280,26 +267,26 @@ public class LastMessagesServiceImpl implements LastMessagesService
 
 		if(unreadForReceiver!=null)
 		{
-			unreadMsgQueue.stream().filter(chatMessage -> chatMessage.getReceiver().getId() == receiverId).forEach(chatMessage -> chatMessage.re);
+//			unreadMsgQueue.stream().filter(chatMessage -> chatMessage.receiverId() == receiverId).forEach(chatMessage -> chatMessage.re);
 			unreadChatsForReceiverFromSendersMap.get(receiverId).remove(senderId);
 		}
 	}
 	
 	@Override
-	public void markMessageRead(ChatMessageView readMessage)
+	public void markMessageRead(ChatMsgDTO readMessage)
 	{
-		Map<Long, List<ChatMessageView>> unreadForeReceiver = unreadChatsForReceiverFromSendersMap.get(readMessage.getReceiver().getId());
+		Map<Long, List<ChatMsgDTO>> unreadForeReceiver = unreadChatsForReceiverFromSendersMap.get(readMessage.receiverId());
 
 		if(unreadForeReceiver==null)
 		{
 			unreadForeReceiver = new HashMap<>();
 
 			//TODO Eugen: who is receiver hier????
-			List<ChatMessageView> unreadMessagesByReceiver = chatRepository.getUnreadChatMessagesForCustomer(readMessage.getReceiver().getId());
+			List<ChatMsgDTO> unreadMessagesByReceiver = chatService.getUnreadChatMessagesForCustomer(readMessage.receiverId());
 			
-			for (ChatMessageView nextUnreadMessageByReceiver: unreadMessagesByReceiver)
+			for (ChatMsgDTO nextUnreadMessageByReceiver: unreadMessagesByReceiver)
 			{
-				List<ChatMessageView> unreadMessagesForSenderByReceiver = unreadForeReceiver.get(readMessage.getSender().getId());
+				List<ChatMsgDTO> unreadMessagesForSenderByReceiver = unreadForeReceiver.get(readMessage.senderId());
 				
 				if(unreadMessagesForSenderByReceiver==null)
 				{
@@ -308,13 +295,13 @@ public class LastMessagesServiceImpl implements LastMessagesService
 
 				unreadMessagesForSenderByReceiver.add(nextUnreadMessageByReceiver);
 
-				unreadForeReceiver.put(readMessage.getSender().getId(), unreadMessagesForSenderByReceiver);
+				unreadForeReceiver.put(readMessage.senderId(), unreadMessagesForSenderByReceiver);
 			}
 			
-			unreadChatsForReceiverFromSendersMap.put(readMessage.getReceiver().getId(), unreadForeReceiver);
+			unreadChatsForReceiverFromSendersMap.put(readMessage.receiverId(), unreadForeReceiver);
 		}
 		
-		List<ChatMessageView> unreadSenderReceiver = unreadForeReceiver.get(readMessage.getSender().getId());
+		List<ChatMsgDTO> unreadSenderReceiver = unreadForeReceiver.get(readMessage.senderId());
 		
 		if(unreadSenderReceiver!=null && unreadSenderReceiver.contains(readMessage))
 		{
@@ -323,34 +310,34 @@ public class LastMessagesServiceImpl implements LastMessagesService
 			if(unreadSenderReceiver.isEmpty())
 			{
 				//remove empty Lists from Map!!! sonst unread chat!!!
-				unreadForeReceiver.remove(readMessage.getSender().getId());
+				unreadForeReceiver.remove(readMessage.senderId());
 			}
 			else{
-				unreadForeReceiver.put(readMessage.getSender().getId(), unreadSenderReceiver);
+				unreadForeReceiver.put(readMessage.senderId(), unreadSenderReceiver);
 			}
 			
-			unreadChatsForReceiverFromSendersMap.put(readMessage.getReceiver().getId(), unreadForeReceiver);
+			unreadChatsForReceiverFromSendersMap.put(readMessage.receiverId(), unreadForeReceiver);
 		}
 		
 	}
 	
 	@Override
-	public void updateUnreadMessagesToCustomer(ChatMessageView newUnreadMessage)
+	public void updateUnreadMessagesToCustomer(ChatMsgDTO newUnreadMessage)
 	{
 		//If there is no unreadMessages for this receiver, create it from DB
-		long receiverId = newUnreadMessage.getReceiver().getId();
+		long receiverId = newUnreadMessage.receiverId();
 		if(!unreadChatsForReceiverFromSendersMap.containsKey(receiverId))
 		{
-			Map<Long, List<ChatMessageView>> unreadMessagesForReceiver = getUnreadChatsBySender(receiverId);
+			Map<Long, List<ChatMsgDTO>> unreadMessagesForReceiver = getUnreadChatsBySender(receiverId);
 			
 			unreadChatsForReceiverFromSendersMap.put(receiverId, unreadMessagesForReceiver);
 		}
 		
-		long newSenderId = newUnreadMessage.getSender().getId();
+		long newSenderId = newUnreadMessage.senderId();
 		
-		Map<Long, List<ChatMessageView>> unreadByReceiver = unreadChatsForReceiverFromSendersMap.get(receiverId);
+		Map<Long, List<ChatMsgDTO>> unreadByReceiver = unreadChatsForReceiverFromSendersMap.get(receiverId);
 
-		List<ChatMessageView> unreadForSender = new ArrayList<>();
+		List<ChatMsgDTO> unreadForSender = new ArrayList<>();
 
 		//ADD new ChatMessage to List on demand, if it is not constains there
 		if(unreadByReceiver!=null && unreadByReceiver.containsKey(newSenderId))
@@ -366,12 +353,12 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	}	
 	
 	@Override
-	public Map<Long, List<ChatMessageView>> getCustomerUnreadChatsBySenders(long receiverId)
+	public Map<Long, List<ChatMsgDTO>> getCustomerUnreadChatsBySenders(long receiverId)
 	{
 		//set from DB is not exists
 		if(!unreadChatsForReceiverFromSendersMap.containsKey(receiverId))
 		{
-			Map<Long, List<ChatMessageView>> unreadMessagesForReceiver = getUnreadChatsBySender(receiverId);
+			Map<Long, List<ChatMsgDTO>> unreadMessagesForReceiver = getUnreadChatsBySender(receiverId);
 			
 			unreadChatsForReceiverFromSendersMap.put(receiverId, unreadMessagesForReceiver);
 		}
@@ -380,23 +367,25 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	}
 	
 	
-	private Map<Long, List<ChatMessageView>> getUnreadChatsBySender(long receiverId)
+	private Map<Long, List<ChatMsgDTO>> getUnreadChatsBySender(long receiverId)
 	{
-		List<ChatMessageView> allUnreadChatsForReceiver = chatRepository.getUnreadChatMessagesForCustomer(receiverId);
+		List<ChatMsgDTO> allUnreadChatsForReceiver = chatService.getUnreadChatMessagesForCustomer(receiverId);
 		
-		Map<Long, List<ChatMessageView>> unreadMessagesForReceiver = new HashMap<>();
+		Map<Long, List<ChatMsgDTO>> unreadMessagesForReceiver = new HashMap<>();
 		
 		if(allUnreadChatsForReceiver!=null)
 		{
-			for(ChatMessageView nextUnreadChatmessage: allUnreadChatsForReceiver)
+			for(ChatMsgDTO nextUnreadChatmessage: allUnreadChatsForReceiver)
 			{
-				long nextSenderId = nextUnreadChatmessage.getSender().getId();
+				long nextSenderId = nextUnreadChatmessage.senderId();
 
-				List<ChatMessageView> unreadFromSender = unreadMessagesForReceiver.containsKey(nextSenderId)? unreadMessagesForReceiver.get(nextSenderId) : new ArrayList<ChatMessageView>();
+				List<ChatMsgDTO> unreadFromSender = unreadMessagesForReceiver.containsKey(nextSenderId)? unreadMessagesForReceiver.get(nextSenderId) : new ArrayList<ChatMsgDTO>();
 
 				unreadFromSender.add(nextUnreadChatmessage);
 
-				unreadMessagesForReceiver.put(nextSenderId, unreadFromSender);
+				List<ChatMsgDTO> unreadFromSenderDtos = modelMapper.map(unreadFromSender, new TypeToken<List<ChatMsgDTO>>() {}.getType());
+
+				unreadMessagesForReceiver.put(nextSenderId, unreadFromSenderDtos);
 			}
 		}
 		return unreadMessagesForReceiver;
@@ -439,21 +428,26 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	
 	private boolean isNowStillOnline(long customerId)
 	{
-		Optional<Date> lastOnline = getLastCustomerOnlineTime(customerId);
-		
-		return lastOnline.isPresent() && lastOnline.get().after(convertToDate(LocalDateTime.now().minusMinutes(ONLINE_DELAY_MINUTES)));
+        Optional<Date> lastOnline = null;
+        try {
+            lastOnline = getLastCustomerOnlineTime(customerId);
+        } catch (Throwable e) {
+            throw new RuntimeException(e);
+        }
+
+        return lastOnline.isPresent() && lastOnline.get().after(convertToDate(LocalDateTime.now().minusMinutes(ONLINE_DELAY_MINUTES)));
 	}
 	
 	@Override
-	public void setLastMessageBetweenCustomers(ChatMessageView lastMessage)
+	public void setLastMessageBetweenCustomers(ChatMsgDTO lastMessage)
 	{
-		long senderId = lastMessage.getSender().getId();
-		long receiverId = lastMessage.getReceiver().getId();
+		long senderId = lastMessage.senderId();
+		long receiverId = lastMessage.receiverId();
 		
 		long fromMin = senderId < receiverId? senderId : receiverId;
 		long toMax = senderId > receiverId? senderId : receiverId;
 		
-		Map<Long, ChatMessageView> newLastMsgMap = lastMessageBetweenCustomersMap.get(fromMin);
+		Map<Long, ChatMsgDTO> newLastMsgMap = lastMessageBetweenCustomersMap.get(fromMin);
 				
 		if(newLastMsgMap==null)
 		{
@@ -564,15 +558,15 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	}
 	
 	@Override
-	public void markLastMessageBetweenCustomers(ChatMessageView seenMessage)
+	public void markLastMessageBetweenCustomers(ChatMsgDTO seenMessage)
 	{
-		long senderId = seenMessage.getSender().getId();
-		long receiverId = seenMessage.getReceiver().getId();
+		long senderId = seenMessage.senderId();
+		long receiverId = seenMessage.receiverId();
 
 		long fromMin = senderId < receiverId? senderId : receiverId;
 		long toMax = senderId > receiverId? senderId : receiverId;
 
-		Map<Long, ChatMessageView> newLastMsgMap = lastMessageBetweenCustomersMap.get(fromMin);
+		Map<Long, ChatMsgDTO> newLastMsgMap = lastMessageBetweenCustomersMap.get(fromMin);
 
 		if(newLastMsgMap==null)
 		{
@@ -600,20 +594,20 @@ public class LastMessagesServiceImpl implements LastMessagesService
 			// ChatMessage dbLastMessage = chatRepository.getLastMessageByCustomerAndReceiverIds(fromMin, toMax);
 			
 			//TODO asynchron request chat microService
-			RabbitConverterFuture<ChatMsgDTO> chatMsgOptFuture = hotelRabbitMQProducer.sendAsynchDirectExchangeMethodCall(new ChatMessageCommand(senderId, receiverId, true, ""));
-			
-			chatMsgOptFuture.addCallback(new ListenableFutureCallback<>() {
-				@Override
-				public void onFailure(Throwable ex) {
-					// ...
-				}
-				
-				@Override
-				public void onSuccess(ChatMsgDTO chatMsgDTO) {
-					log.info("chatMsgDTO received {}", chatMsgDTO);
-					updateAsynchLastMessageFromCustomer(chatMsgDTO, fromMin, toMax);
-				}
-			});
+//			RabbitConverterFuture<ChatMsgDTO> chatMsgOptFuture = hotelRabbitMQProducer.sendAsynchDirectExchangeMethodCall(new ChatMessageCommand(senderId, receiverId, true, ""));
+//			
+//			chatMsgOptFuture.addCallback(new ListenableFutureCallback<>() {
+//				@Override
+//				public void onFailure(Throwable ex) {
+//					// ...
+//				}
+//				
+//				@Override
+//				public void onSuccess(ChatMsgDTO chatMsgDTO) {
+//					log.info("chatMsgDTO received {}", chatMsgDTO);
+//					updateAsynchLastMessageFromCustomer(chatMsgDTO, fromMin, toMax);
+//				}
+//			});
 		}
 		
 		return lastMsgMap!=null? lastMsgMap.get(toMax) : null;

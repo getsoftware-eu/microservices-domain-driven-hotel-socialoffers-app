@@ -1,5 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl;
 
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.MailValidator;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
@@ -7,8 +9,6 @@ import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortServi
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.MailService;
-import jakarta.mail.internet.InternetAddress;
-import jakarta.mail.internet.MimeMessage;
 import jakarta.transaction.Transactional;
 import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,35 +132,34 @@ public class MailServiceImpl implements MailService
 	@Transactional
 	public void sendMail(String to, String subject, String body, String from)
 	{
-		
-		   message = javaMailSender.createMimeMessage();
+//		javax.mail.internet.MimeMessage message = javaMailSender.createMimeMessage();
 
 		try
 		{
-			message.addRecipient(MimeMessage.RecipientType.TO, new InternetAddress(to));
-					
-			//		message.setTo(to);
-			message.setSubject(subject, "UTF-8");
-			message.setHeader("Content-Type", "text/html");
-			message.setHeader("charset", "UTF-8");
-
-			//			message.setText(body, "UTF-8");
-			message.setContent(body, "text/html; charset=utf-8");
-			//		message.setReplyTo("noreply@hotelico.de");
-			
-			if(AppConfigProperties.isEmptyString(from))
-			{
-				message.addFrom(new InternetAddress[] { new InternetAddress("noreply@hotelico.de") });
-			}
-			else{	
-				message.addFrom(new InternetAddress[] { new InternetAddress(from) });
-			}
+//			message.addRecipient(MimeMessage.RecipientType.TO, new InternetAddress(to));
+//					
+//			//		message.setTo(to);
+//			message.setSubject(subject, "UTF-8");
+//			message.setHeader("Content-Type", "text/html");
+//			message.setHeader("charset", "UTF-8");
+//
+//			//			message.setText(body, "UTF-8");
+//			message.setContent(body, "text/html; charset=utf-8");
+//			//		message.setReplyTo("noreply@hotelico.de");
+//			
+//			if(AppConfigProperties.isEmptyString(from))
+//			{
+//				message.addFrom(new InternetAddress[] { new InternetAddress("noreply@hotelico.de") });
+//			}
+//			else{	
+//				message.addFrom(new InternetAddress[] { new InternetAddress(from) });
+//			}
 		}
 		catch (Exception e)
 		{
 			
 		}
-		javaMailSender.send(message);
+//		javaMailSender.send(message);
 	}
 
 	/**
@@ -174,8 +173,13 @@ public class MailServiceImpl implements MailService
 		mailMessage.setText(message);
 		mailSender.send(mailMessage);
 	}
-	
+
 	@Override
+	public String getWellcomeMailBody(CustomerDTO customerEntity) {
+		return "";
+	}
+
+//	@Override
 	public String getWellcomeMailBody(ICustomerRootEntity customerEntity)
 	{
 		String mailContent = "";
@@ -265,7 +269,7 @@ public class MailServiceImpl implements MailService
 		
 		long hotelId = customerService.getCustomerHotelId(customerEntity.getId());
 		
-		HotelResponseDTO hotel = hotelService.getHotelById(hotelId);
+		HotelDTO hotel = hotelService.getHotelById(hotelId);
 		
 		if(hotel!=null)
 		{

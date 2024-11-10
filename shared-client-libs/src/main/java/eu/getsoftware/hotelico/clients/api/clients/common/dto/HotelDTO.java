@@ -83,4 +83,12 @@ public class HotelDTO extends BasicDTO
 		
 		return AppConfigProperties.addHostPrefixOnDemand(picUrl);
 	}
+
+	public void setKmFromMe(double kms) {
+		
+	}
+
+	public void withKmFromMe(double kms) {
+		
+	}
 }

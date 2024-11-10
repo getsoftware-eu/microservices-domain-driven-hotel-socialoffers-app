@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model;
 
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelActivity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerDetails;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerPreferences;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
@@ -34,9 +34,11 @@ public class CustomerDBEntity implements ICustomerRootEntity, Serializable, IFil
     @SequenceGenerator(name="customer_id_generator", sequenceName = "customer_id_seq")
     private long id;
     
-    @Column(columnDefinition = "BINARY(16)")
-    private UUID customerUUID;
+//    @Column(columnDefinition = "BINARY(16)")
+    @Embedded  //Аннотирует DomainId как ValueObject,  Вам не нужно явно маппить строковое поле DomainId вручную.
+    private CustomerDomainEntityId customerDomainEntityId; // Ваш Value Object
     
+    @Setter
     @Column(name = "active", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_TRUE)
     private boolean active = true;
     
@@ -110,6 +112,7 @@ public class CustomerDBEntity implements ICustomerRootEntity, Serializable, IFil
     @Column
     private String facebookId;
    
+    @Setter
     @Column(name = "hotelStaff", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
     private boolean hotelStaff = false;
     
@@ -123,10 +126,10 @@ public class CustomerDBEntity implements ICustomerRootEntity, Serializable, IFil
     private String pushRegistrationId;
     
     @ManyToMany(mappedBy= "likedCustomerEntities")
-    private Set<HotelActivity> likedActivities = new HashSet<HotelActivity>();
+    private Set<HotelDbActivity> likedActivities = new HashSet<HotelDbActivity>();
     
     @ManyToMany(mappedBy= "subscribeCustomerEntities")
-    private Set<HotelActivity> subscribeActivities = new HashSet<HotelActivity>();
+    private Set<HotelDbActivity> subscribeActivities = new HashSet<HotelDbActivity>();
     
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name="INTEREST_CUSTOMER_MAP",
@@ -161,7 +164,7 @@ public class CustomerDBEntity implements ICustomerRootEntity, Serializable, IFil
     }
 
     @Override
-    public CustomerEntityId getEntityId() {
+    public CustomerDomainEntityId getDomainEntityId() {
         return null;
     }
 

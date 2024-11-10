@@ -3,7 +3,6 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.ImageService;
 import org.springframework.stereotype.Service;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
 
@@ -28,37 +27,37 @@ public class ImageServiceImpl implements ImageService
 	
 	public int getImageType(String imageType){
 		
-		int res = ImageUtils.IMAGE_UNKNOWN;
+//		int res = ImageUtils.IMAGE_UNKNOWN;
+//		
+//		switch (imageType.toLowerCase()){
+//			case "jpeg": {
+//				res = ImageUtils.IMAGE_JPEG;
+//				break;
+//			}
+//			case "png": {
+//				res = ImageUtils.IMAGE_PNG;
+//				break;
+//			}
+//			case "gif": {
+//				res = ImageUtils.IMAGE_GIF;
+//				break;
+//			}
+//			default: {
+//				res = ImageUtils.IMAGE_UNKNOWN;
+//				break;
+//			}
+//		}
 		
-		switch (imageType.toLowerCase()){
-			case "jpeg": {
-				res = ImageUtils.IMAGE_JPEG;
-				break;
-			}
-			case "png": {
-				res = ImageUtils.IMAGE_PNG;
-				break;
-			}
-			case "gif": {
-				res = ImageUtils.IMAGE_GIF;
-				break;
-			}
-			default: {
-				res = ImageUtils.IMAGE_UNKNOWN;
-				break;
-			}
-		}
-		
-		return res;
+		return 0;
 	}
 	
 	public boolean saveLogo(InputStream imageInputStream, File emptyFileToWrite, String imageType){
 
 		int imageTypeValue = getImageType(imageType);
 		
-		BufferedImage resizedImage = ImageUtils.resizeAndCropImage(imageInputStream, imageTypeValue, logoMaxWidth, logoMaxHeight, LOGO);
-
-		ImageUtils.saveCompressedImage(resizedImage, emptyFileToWrite, imageTypeValue);
+//		BufferedImage resizedImage = ImageUtils.resizeAndCropImage(imageInputStream, imageTypeValue, logoMaxWidth, logoMaxHeight, LOGO);
+//
+//		ImageUtils.saveCompressedImage(resizedImage, emptyFileToWrite, imageTypeValue);
 		
 		return true;
 	}
@@ -67,9 +66,9 @@ public class ImageServiceImpl implements ImageService
 
 		int imageTypeValue = getImageType(imageType);
 
-		BufferedImage resizedImage = ImageUtils.resizeAndCropImage(imageInputStream, imageTypeValue, avatarMaxWidth, avatarMaxHeight, AVATAR);
-		
-		ImageUtils.saveCompressedImage(resizedImage, emptyFileToWrite, imageTypeValue);
+//		BufferedImage resizedImage = ImageUtils.resizeAndCropImage(imageInputStream, imageTypeValue, avatarMaxWidth, avatarMaxHeight, AVATAR);
+//		
+//		ImageUtils.saveCompressedImage(resizedImage, emptyFileToWrite, imageTypeValue);
 
 		return true;
 	}
@@ -78,9 +77,9 @@ public class ImageServiceImpl implements ImageService
 
 		int imageTypeValue = getImageType(imageType);
 
-		BufferedImage resizedImage = ImageUtils.resizeAndCropImage(imageInputStream, imageTypeValue, previewMaxWidth, previewMaxHeight, PREVIEW);
-		
-		ImageUtils.saveCompressedImage(resizedImage, emptyFileToWrite, imageTypeValue);
+//		BufferedImage resizedImage = ImageUtils.resizeAndCropImage(imageInputStream, imageTypeValue, previewMaxWidth, previewMaxHeight, PREVIEW);
+//		
+//		ImageUtils.saveCompressedImage(resizedImage, emptyFileToWrite, imageTypeValue);
 
 		return true;
 	}

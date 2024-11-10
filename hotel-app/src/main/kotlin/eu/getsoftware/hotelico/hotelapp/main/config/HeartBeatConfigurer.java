@@ -1,12 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.main.config;
 
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.microservice.ActiveCustomerPinger;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
-import jakarta.inject.Inject;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
@@ -32,11 +28,11 @@ public class HeartBeatConfigurer implements SchedulingConfigurer
 	 * This is setting up a scheduled bean which will see which users are active
 	 * http://www.theotherian.com/2014/03/spring-boot-websockets-stomp-chat.html?m=1
 	 */
-	@Bean
-	@Inject
-	public ActiveCustomerPinger activeUserPinger(SimpMessagingTemplate template, LastMessagesService lastMessagesService) {
-		return new ActiveCustomerPinger(template, lastMessagesService);
-	}
+//	@Bean
+//	@Inject
+//	public ActiveCustomerPinger activeUserPinger(SimpMessagingTemplate template, LastMessagesService lastMessagesService) {
+//		return new ActiveCustomerPinger(template, lastMessagesService);
+//	}
 	
 	@Override
 	public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {

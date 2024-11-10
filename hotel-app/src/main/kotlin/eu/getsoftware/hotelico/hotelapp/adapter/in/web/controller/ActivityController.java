@@ -84,14 +84,14 @@ public class ActivityController extends BasicController
   @NotifyClients
   @RequestMapping(value = "/customer/{customerId}/activity/{activityId}", method = RequestMethod.DELETE)
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public @ResponseBody ResponseDTO deleteHotelActivity(@PathVariable long customerId, @PathVariable long activityId) {
+  public @ResponseBody ResponseDTO deleteHotelActivity(@PathVariable long customerId, @PathVariable long activityId) throws Throwable {
     
     return hotelService.deleteHotelActivity(customerId, activityId);
   }
 
   @RequestMapping(value = "/customer/{customerId}/activity/{activityId}", method = RequestMethod.POST)//, headers ="Accept:*/*")
   public @ResponseBody
-  HotelActivityDTO addUpdateActivity(@PathVariable long customerId, @PathVariable long activityId, @RequestBody HotelActivityDTO activityDto) {
+  HotelActivityDTO addUpdateActivity(@PathVariable long customerId, @PathVariable long activityId, @RequestBody HotelActivityDTO activityDto) throws Throwable {
 
 //    activityDto.setInitId(activityId);
     HotelActivityDTO out = hotelService.addUpdateHotelActivity(customerId, activityDto);

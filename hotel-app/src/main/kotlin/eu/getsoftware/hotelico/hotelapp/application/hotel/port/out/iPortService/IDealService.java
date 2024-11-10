@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService;
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelActivity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.CustomerDeal;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.dto.CustomerDealDTO;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.DealAction;
@@ -28,7 +28,7 @@ public interface IDealService {
     int getCustomerDealCounter(long customerId, long guestId);
 
     @Transactional
-    Optional<HotelActivity> getActivityByIdOrInitId(long id, long initId);
+    Optional<HotelDbActivity> getActivityByIdOrInitId(long id, long initId);
 
     @Transactional
     Optional<CustomerDeal> getDealByIdOrInitId(long id, long initId);

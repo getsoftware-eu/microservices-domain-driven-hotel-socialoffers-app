@@ -2,6 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.application.checkin.port.out;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinRequestDTO;
@@ -33,4 +34,8 @@ public interface CheckinPortService {
     void deleteAllImagesAndAttachments(CheckinDTO checkinDTO);
 
     CustomerDTO updateCheckin(CustomerDTO sessionCustomer);
+
+    CustomerDBEntity getStaffbyHotelId(Long hotelId);
+
+    List<CustomerDTO> getActiveCustomersByHotelId(Long hotelId, Date date);
 }

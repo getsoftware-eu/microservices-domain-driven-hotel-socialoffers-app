@@ -23,7 +23,7 @@ public interface NotificationUseCase<E extends HotelEvent>
 
 	void sendMailList(CustomerDTO customerEntity, Map<String, String> systemMessages);
 	
-	void sendFeedMessage(CustomerDTO customerEntity, Map<String, String> systemMessages);
+	void sendFeedMessage(CustomerDTO customerEntity, Map<String, String> systemMessages) throws Throwable;
 	
 	void createAndSendWebSocketNotification_Chat(long receiverId, E event, long senderId, String message);
 
@@ -39,7 +39,7 @@ public interface NotificationUseCase<E extends HotelEvent>
 	
 	void notificateAboutEntityEventWebSocket(CustomerDTO dto, E event, String eventContent, long entityId);
 	
-	void sendPushRequest(long customerId);
+	void sendPushRequest(long customerId) throws Throwable;
 	
 	void sendPush(String pushId);
 	

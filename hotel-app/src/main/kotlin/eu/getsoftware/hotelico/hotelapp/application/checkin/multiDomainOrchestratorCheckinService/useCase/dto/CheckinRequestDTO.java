@@ -2,7 +2,6 @@ package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestr
 
 import eu.getsoftware.hotelico.clients.common.domain.IDomainRequestDTO;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
 
 import java.util.Date;
 
@@ -20,7 +19,6 @@ import java.util.Date;
  * @param requesterId
  * @param name
  */
-@Getter
 public record CheckinRequestDTO(
         @NotNull long customerId,
         @NotNull long hotelId,

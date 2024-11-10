@@ -55,7 +55,7 @@ public class HotelWallPost implements IHotelWallPost, Serializable
 
 	@ManyToOne
 	@JoinColumn(name="hotelId")
-	private HotelRootEntity hotelRootEntity;
+	private HotelDbEntity hotel;
 
 	public HotelWallPost()
 	{
@@ -63,13 +63,13 @@ public class HotelWallPost implements IHotelWallPost, Serializable
 
 	}
 
-	public HotelWallPost(String message, CustomerDBEntity sender, HotelRootEntity hotelRootEntity) {
+	public HotelWallPost(String message, CustomerDBEntity sender, HotelDbEntity hotel) {
 
 		this();
 
 		this.message = message;
 		this.sender = sender;
-		this.hotelRootEntity = hotelRootEntity;
+		this.hotel = hotel;
 	}
 
 	public long getId()

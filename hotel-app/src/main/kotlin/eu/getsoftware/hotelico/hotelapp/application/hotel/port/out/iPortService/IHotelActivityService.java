@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.utils.ReorderAction;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelActivity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
@@ -18,7 +18,7 @@ public interface IHotelActivityService {
     CustomerDTO addGuestAction(long guestCustomerId, String action, Long hotelId, CustomerDTO guestDto);
 
     @Transactional
-    void reorderActivitiesInHotel(ReorderAction action, HotelActivity activity);
+    void reorderActivitiesInHotel(ReorderAction action, HotelDbActivity activity);
 
     @Transactional
     HotelActivityDTO addActivityAction(long customerId, long activityId, String action);
@@ -30,7 +30,7 @@ public interface IHotelActivityService {
     List<HotelActivityDTO> getHotelActivitiesByHotelId(long requesterId, long hotelId);
 
     @Transactional
-    HotelActivityDTO convertActivityToDto(HotelActivity hotelActivity, CustomerDBEntity requester);
+    HotelActivityDTO convertActivityToDto(HotelDbActivity hotelActivity, CustomerDBEntity requester);
 
     @Transactional
     List<HotelActivityDTO> getHotelActivitiesBySenderAndHotelId(long senderId, long hotelId);

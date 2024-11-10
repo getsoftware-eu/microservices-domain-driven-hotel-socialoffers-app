@@ -1,8 +1,9 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelDbEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IFileUploadable;
 import jakarta.persistence.*;
@@ -13,9 +14,11 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Created by Eugen on 16.07.2015.
@@ -23,7 +26,7 @@ import java.util.Set;
 @Entity
 @Getter @Setter
 @Table(name = "hotel_activity", schema = "hotel")
-public class HotelActivity implements IHotelActivity, Serializable, IFileUploadable
+public class HotelDbActivity implements IHotelActivity, Serializable, IFileUploadable
 {
 
 	private static final long serialVersionUID = -3552760230942289778L;
@@ -55,7 +58,7 @@ public class HotelActivity implements IHotelActivity, Serializable, IFileUploada
 	
 	@ManyToOne
 	@JoinColumn(name="hotelId")
-	private HotelRootEntity hotelRootEntity;
+	private HotelDbEntity hotel;
 
 	@ManyToOne
 	@JoinColumn(name="senderId")
@@ -94,18 +97,24 @@ public class HotelActivity implements IHotelActivity, Serializable, IFileUploada
 	
 	@Column(name = "mediaUploaded", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
 	private boolean mediaUploaded = false;
-
-	@ManyToMany(cascade = { CascadeType.ALL})
-	@JoinTable(name="CUSTOMER_LIKED_ACTIVITIES",
-			joinColumns={@JoinColumn(name="ACTIVITY_ID")},
-			inverseJoinColumns={@JoinColumn(name="CUSTOMER_ID")}) //TODO Eugen:, nullable = false, updatable = true
-	private Set<CustomerDBEntity> likedCustomerEntities = new HashSet<CustomerDBEntity>();	
 	
-	@ManyToMany(cascade = { CascadeType.ALL})
-	@JoinTable(name="CUSTOMER_SUBSCRIBE_ACTIVITIES",
-			joinColumns={@JoinColumn(name="ACTIVITY_ID")},
-			inverseJoinColumns={@JoinColumn(name="CUSTOMER_ID")}) //TODO Eugen:, nullable = false, updatable = true
-	private Set<CustomerDBEntity> subscribeCustomerEntities = new HashSet<CustomerDBEntity>();
+//	@ManyToMany(cascade = { CascadeType.ALL})
+//	@JoinTable(name="CUSTOMER_LIKED_ACTIVITIES",
+//			joinColumns={@JoinColumn(name="ACTIVITY_ID")},
+//			inverseJoinColumns={@JoinColumn(name="CUSTOMER_ID")}) //TODO Eugen:, nullable = false, updatable = true
+	@ElementCollection
+	@CollectionTable(name = "liked_customer_domain_ids")
+	@Column(name = "value")
+	private Set<String> likedCustomerDomainEntityIds = new HashSet<>();	
+	
+//	@ManyToMany(cascade = { CascadeType.ALL})
+//	@JoinTable(name="CUSTOMER_SUBSCRIBE_ACTIVITIES",
+//			joinColumns={@JoinColumn(name="ACTIVITY_ID")},
+//			inverseJoinColumns={@JoinColumn(name="CUSTOMER_ID")}) //TODO Eugen:, nullable = false, updatable = true
+	@ElementCollection
+	@CollectionTable(name = "subscribe_customer_domain_ids")
+	@Column(name = "value")
+	private Set<String> subscribeCustomerDomainEntityIds = new HashSet<>();
 	
 	@Column(name = "dealAllowed", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_TRUE)
 	private boolean dealAllowed = true;	
@@ -124,7 +133,42 @@ public class HotelActivity implements IHotelActivity, Serializable, IFileUploada
 	 */
 	@Column(name = "limitDealNumber", nullable = false, columnDefinition = "int default 1")
 	private int limitDealNumber = 1;
+
+	/**
+	 * we can not map Set<CustomerDomainEntityId> , only if set @Embeddable in Domain ValueObject. But we did not want to pollute domain Layer!
+	 * @return
+	 */
+	public void setLikedCustomerDomainEntityIds(Collection<CustomerDomainEntityId> domainIds) {
+
+        this.likedCustomerDomainEntityIds = domainIds.stream()
+				.map(CustomerDomainEntityId::uuidValue)
+				.collect(Collectors.toSet());
+	}
 	
+	public Set<CustomerDomainEntityId> getLikedCustomerDomainEntityIds() {
+		return likedCustomerDomainEntityIds.stream()
+					.map(CustomerDomainEntityId::new)
+					.collect(Collectors.toSet());
+	}
+	
+	/**
+	 * we can not map Set<CustomerDomainEntityId> , only if set @Embeddable in Domain ValueObject. But we did not want to pollute domain Layer!
+	 * @return
+	 */
+	public void setSubscribeCustomerDomainEntityIds(Collection<CustomerDomainEntityId> domainIds) {
+
+		this.subscribeCustomerDomainEntityIds = domainIds.stream()
+				.map(CustomerDomainEntityId::uuidValue)
+				.collect(Collectors.toSet());
+	}
+	
+	public Set<CustomerDomainEntityId> getSubscribeCustomerDomainEntityIds() {
+		return subscribeCustomerDomainEntityIds.stream()
+					.map(CustomerDomainEntityId::new)
+					.collect(Collectors.toSet());
+	}
+
+
 	public static long getSerialVersionUID()
 	{
 		return serialVersionUID;
@@ -146,5 +190,10 @@ public class HotelActivity implements IHotelActivity, Serializable, IFileUploada
 	{
 		this.mediaUploaded = mediaUploaded;
 	}
-	
+
+	@Override
+	public String senderId() {
+		return "";
+	}
+
 }

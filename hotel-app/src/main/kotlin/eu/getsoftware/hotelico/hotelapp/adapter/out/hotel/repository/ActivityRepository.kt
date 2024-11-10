@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository;
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelActivity
+import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface ActivityRepository: JpaRepository<HotelActivity, Long> {
+interface ActivityRepository: JpaRepository<HotelDbActivity, Long> {
 
 	companion object {
 
@@ -64,7 +64,7 @@ interface ActivityRepository: JpaRepository<HotelActivity, Long> {
 	 * Find activity by hotel.
 	 */
 	@Query(FIND_ALL_BY_HOTEL_QUERY)
-	fun getAllTimesByHotelId(@Param("hotelId") hotelId: Long): MutableList<HotelActivity>		
+	fun getAllTimesByHotelId(@Param("hotelId") hotelId: Long): MutableList<HotelDbActivity>		
 	
 	/**
 	 * count activities by hotel.
@@ -76,7 +76,7 @@ interface ActivityRepository: JpaRepository<HotelActivity, Long> {
 	 * Find activity by hotel.
 	 */
 	@Query(FIND_TIME_VALID_BY_HOTEL_QUERY)
-	fun getTimeValidByHotelId(@Param("hotelId") hotelId: Long, @Param("checkDate") checkDate: Date): MutableList<HotelActivity>	
+	fun getTimeValidByHotelId(@Param("hotelId") hotelId: Long, @Param("checkDate") checkDate: Date): MutableList<HotelDbActivity>	
 	
 	/**
 	 * Find activity by hotel.
@@ -88,14 +88,14 @@ interface ActivityRepository: JpaRepository<HotelActivity, Long> {
 	 * Find activity by creator and hotel.
 	 */
 	@Query(FIND_BY_CREATOR_AND_HOTEL_QUERY)
-	fun getByCreatorAndHotelId(@Param("creatorId") creatorId: Long, @Param("hotelId") hotelId: Long): MutableList<HotelActivity>
+	fun getByCreatorAndHotelId(@Param("creatorId") creatorId: Long, @Param("hotelId") hotelId: Long): MutableList<HotelDbActivity>
 	
 	//@Query(FIND_BY_ACTIVITY_ID_QUERY)
-	fun findByInitIdAndActive(initId: Long, active: Boolean = true): MutableList<HotelActivity>
+	fun findByInitIdAndActive(initId: Long, active: Boolean = true): MutableList<HotelDbActivity>
 	
 	@Query(FIND_ALL_ACTIVE_QUERY)
-	fun findAllTimesActive(): MutableList<HotelActivity>	
+	fun findAllTimesActive(): MutableList<HotelDbActivity>	
 	
 	@Query(FIND_ALL_TIME_VALID_ACTIVE_QUERY)
-	fun findTimeValidActive(@Param("checkDate") checkDate: Date): MutableList<HotelActivity>
+	fun findTimeValidActive(@Param("checkDate") checkDate: Date): MutableList<HotelDbActivity>
 }

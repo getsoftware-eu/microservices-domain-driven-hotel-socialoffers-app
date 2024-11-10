@@ -2,7 +2,6 @@ package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.usecase.regist
 
 import eu.getsoftware.hotelico.clients.common.domain.IDomainRequestDTO;
 import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
 
 import java.util.Date;
 
@@ -16,7 +15,6 @@ import java.util.Date;
  * @param requesterId
  * @param name
  */
-@Getter
 public record HotelRegisterRequestDTO(
         @NotNull String hotelCode,
         @NotNull long requesterId,
@@ -28,7 +26,7 @@ public record HotelRegisterRequestDTO(
         //eu: ensure that the record objects are created in a VALID STATE.
         public HotelRegisterRequestDTO
         {
-                if(hotelCode()<=0)
+                if(hotelCode().isEmpty())
                 {
                    throw new IllegalArgumentException("no code.");
                 }

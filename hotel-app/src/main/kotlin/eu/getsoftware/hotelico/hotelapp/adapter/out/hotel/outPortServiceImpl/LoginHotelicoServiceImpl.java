@@ -52,7 +52,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 	private DealRepository dealRepository;
 	
 	@Override
-	public CustomerDTO checkLogin(String email, String password){
+	public CustomerDTO checkLogin(String email, String password) throws Throwable {
 		
 		List<CustomerDBEntity> customerEntities = customerRepository.findByEmailAndActive(email, true);
 		

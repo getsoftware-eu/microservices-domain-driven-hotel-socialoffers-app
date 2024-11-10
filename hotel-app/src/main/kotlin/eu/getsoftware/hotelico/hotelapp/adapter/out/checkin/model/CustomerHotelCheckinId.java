@@ -15,7 +15,7 @@ import lombok.Setter;
 
 @Embeddable
 @EqualsAndHashCode
-class CustomerHotelCheckinId implements java.io.Serializable {
+public class CustomerHotelCheckinId implements java.io.Serializable {
 
 	private static final long serialVersionUID = 552154191271568694L;
 	

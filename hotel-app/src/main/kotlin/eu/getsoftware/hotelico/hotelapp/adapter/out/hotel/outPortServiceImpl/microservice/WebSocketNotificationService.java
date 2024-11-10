@@ -1,7 +1,11 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.microservice;
 
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.IHotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IWebSocketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -18,10 +22,20 @@ public class WebSocketNotificationService implements IWebSocketService {
      */
     private final SimpMessagingTemplate simpMessagingTemplate;
 
+    @Override
+    public String produceSimpWebsocketMessage(String destination, HotelActivityDTO dto) {
+        return "";
+    }
+
     public String produceSimpWebsocketMessage(String destination, CustomerNotificationDTO dto) {
 
         simpMessagingTemplate.convertAndSend(destination, dto);
         return "WebSocketMessage(" + dto + ")" + " has been produced.";
+    }
+
+    @Override
+    public String produceSimpWebsocketMessage(String destination, WallPostDTO dto) {
+        return "";
     }
 
     public String produceSimpWebsocketMessage(String destination, List<? extends Object> list) {
@@ -34,5 +48,10 @@ public class WebSocketNotificationService implements IWebSocketService {
 
         simpMessagingTemplate.convertAndSend(destination, dto);
         return "WebSocketMessage(" + dto + ")" + " has been produced.";
+    }
+
+    @Override
+    public void notificateAboutEntityEvent(CustomerDTO dto, CustomerNotificationDTO receiverNotification, IHotelEvent event) {
+
     }
 }

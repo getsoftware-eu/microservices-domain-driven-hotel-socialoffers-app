@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository;
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelRootEntity
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelDbEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository
 import java.util.*
 
 @Repository
-interface HotelRepository: JpaRepository<HotelRootEntity, Long> {
+interface HotelRepository: JpaRepository<HotelDbEntity, Long> {
 
 	companion object {
 		
@@ -45,9 +45,9 @@ interface HotelRepository: JpaRepository<HotelRootEntity, Long> {
 	 * Find hotel by hotelCode.
 	 */
 	//@Query(FIND_BY_HOTEL_CODE_QUERY)
-	fun findByCurrentHotelAccessCodeAndActive(currentHotelAccessCode: String, active: Boolean = true): Optional<HotelRootEntity>
+	fun findByCurrentHotelAccessCodeAndActive(currentHotelAccessCode: String, active: Boolean = true): Optional<HotelDbEntity>
 	
-	fun findByDomainEntityIdAndActive(domainEntityId: String, active: Boolean = true): Optional<HotelRootEntity>
+	fun findByDomainEntityIdAndActive(domainEntityId: String, active: Boolean = true): Optional<HotelDbEntity>
 	
 	@Query(FIND_ACTIVITY_NUMBER_BY_HOTEL_QUERY)
 	fun getActivityCounter(@Param("hotelId") hotelId: Int): Int
@@ -56,20 +56,20 @@ interface HotelRepository: JpaRepository<HotelRootEntity, Long> {
 	fun getVirtualHotelId(): Int
 	
 	//@Query(FIND_ACTIVE_NOT_VIRTUAL_HOTELS_QUERY)
-	fun findByVirtualAndActive(virtual: Boolean = false, active: Boolean = true): List<HotelRootEntity>
+	fun findByVirtualAndActive(virtual: Boolean = false, active: Boolean = true): List<HotelDbEntity>
 	
 	@Query(FIND_VIRTUAL_HOTEL_CODE_QUERY)
 	fun getVirtualHotelCode(): String
 	
 	//@Query(FIND_HOTEL_BY_CREATION_TIME_QUERY)
-	fun findByCreationTimeAndActive(creationTime: Long, active: Boolean = true): List<HotelRootEntity>
+	fun findByCreationTimeAndActive(creationTime: Long, active: Boolean = true): List<HotelDbEntity>
 	
 	@Query(FIND_DEMO_HOTEL_ID_QUERY)
 	fun getDemoHotelId(): Int
 
 	@Query(FIND_ACTIVE_GPS_HOTELS_QUERY)
-	fun findActiveGpsHotels(): List<HotelRootEntity>
+	fun findActiveGpsHotels(): List<HotelDbEntity>
 	
 //	@Query(FIND_HOTEL_BY_MAIL_QUERY)
-	fun findByEmailAndActive(email: String, active: Boolean = true): List<HotelRootEntity>
+	fun findByEmailAndActive(email: String, active: Boolean = true): List<HotelDbEntity>
 }

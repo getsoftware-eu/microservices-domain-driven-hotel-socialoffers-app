@@ -4,7 +4,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model;
  * Created by Eugen on 16.07.2015.
  */
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelActivity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.ICustomerDealId;
 import jakarta.persistence.Embeddable;
@@ -17,7 +17,7 @@ class CustomerDealId implements ICustomerDealId {
 	private CustomerDBEntity customerEntity;
 	
 	@Setter
-	private HotelActivity activity;
+	private HotelDbActivity activity;
 
 	@ManyToOne
 	public CustomerDBEntity getCustomer() {
@@ -29,7 +29,7 @@ class CustomerDealId implements ICustomerDealId {
 	}
 
 	@ManyToOne
-	public HotelActivity getActivity() {
+	public HotelDbActivity getActivity() {
 		return activity;
 	}
 

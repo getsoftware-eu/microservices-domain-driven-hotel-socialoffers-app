@@ -46,6 +46,11 @@ public class UserServiceImpl implements IUserService
         return out;
     }
 
+    @Override
+    public List<UserDTO> getByHotelId(int userId) {
+        return List.of();
+    }
+
     public List<UserDTO> getByHotelId(long hotelId) {
         List<UserEntity> dtoList = userDtoRepository.findByHotelId(hotelId);
         List<UserDTO> out = new ArrayList<UserDTO>();
@@ -59,7 +64,7 @@ public class UserServiceImpl implements IUserService
     @Override
     public UserDTO addUser(UserDTO userDto, String password) {
         UserEntity dto = mapper.map(userDto, UserEntity.class);
-        dto.setPassword(password);
+//        dto.setPassword(password);
         return mapper.map(userDtoRepository.saveAndFlush(dto), UserDTO.class);
     }
 
@@ -67,19 +72,19 @@ public class UserServiceImpl implements IUserService
     public UserDTO checkLogin(String email, String password){
         UserEntity dto = userDtoRepository.findByEMail(email);
 
-        if(dto != null && dto.getPassword().equals(password))
+//        if(dto != null && dto.getPassword().equals(password))
         {
             UserDTO out = (mapper.map(dto, UserDTO.class));
             return out;
         }
-        else
-            return null;
+//        else
+//            return null;
     }
 
     @Transactional
     @Override
     public UserDTO updateUser(UserDTO userDto) {
-        UserEntity dto = userDtoRepository.getOne(userDto.id);
+        UserEntity dto = userDtoRepository.findBy(userDto.id).or;
         if(dto!=null)
         {
 //            dto.setHotelId(userDto.getHotelId());

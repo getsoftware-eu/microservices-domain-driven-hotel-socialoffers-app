@@ -47,22 +47,22 @@ The "Clean" (Layered) Architecture is another way to provide <b>separation of co
     - SpringConfig classes are divided separately for the 'application', 'useCases' and 'infrastructure' layers.
 
 
-### Event driven interaction (with Kafka)
+### Event-driven interaction (with Kafka)
 
 #### In our domain-driven system, I use for Kafka-topics following naming convention:
 
-"aggregate.entity.action.event"
+"aggregate_entity_action_event"
 
 ##### Example Topics:
-"chat.message.created.event"
+"hotel_offers_requested_event"
 
-"chat.message.deleted.event" 
+"chat_message_deleted_event" 
 
 (This topic name ensures that every subscribing domain can easily interpret and process events, maintaining consistency and clarity across the system.)
 
 ![Event Sourcing](/docs/img/eventSourcing.png)
 
-The key for a Kafka-message is the 'receiverId' of the chat-message (to improve Kafka-groupId partitioning).
+The key for a Kafka-message is the 'receiverId' (to improve Kafka-groupId partitioning).
 
 ![Aggregate root](/docs/img/ddd.webp)
 

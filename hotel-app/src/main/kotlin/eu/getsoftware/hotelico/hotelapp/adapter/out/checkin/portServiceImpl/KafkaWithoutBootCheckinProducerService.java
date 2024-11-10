@@ -29,7 +29,7 @@ public class KafkaWithoutBootCheckinProducerService {
         // Логика создания заказа (например, сохранение в базе данных)
 
         CheckinMessagePublisher.CheckinSendEventPayload eventPayload = CheckinMessagePublisher.CheckinSendEventPayload.builder()
-                .entityId(Long.parseLong(checkinEntityId.value()))
+                .entityId(Long.parseLong(checkinEntityId.uuidValue()))
                 .status(QUEUED)
                 .build();
 
@@ -39,7 +39,7 @@ public class KafkaWithoutBootCheckinProducerService {
         
         // Публикация события
 //        CheckinCreatedEvent event = new CheckinCreatedEvent(checkinEntityId);
-        String KEY_FOR_KAFKA_MESSAGE_SAME_PARTITION = checkinEntityId.value();
+        String KEY_FOR_KAFKA_MESSAGE_SAME_PARTITION = checkinEntityId.uuidValue();
         
         producer.send(new ProducerRecord<>(eventMessage.getMessageType(), KEY_FOR_KAFKA_MESSAGE_SAME_PARTITION, eventMessage));
     }

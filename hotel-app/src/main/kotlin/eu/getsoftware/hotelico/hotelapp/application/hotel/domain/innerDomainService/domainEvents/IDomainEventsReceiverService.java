@@ -16,7 +16,7 @@ public class IDomainEventsReceiverService<T extends IDomainEntity, E extends IHo
         switch (domainEvent.getValue()){
             case "CHECKIN_NEW" -> {
                 T hotelDomain = domainEntityInnerGatewayService.findEntityById(eventBody.hashCode());
-                hotelDomain.getEntityId();
+                hotelDomain.getDomainEntityId();
                 break;
             }
         }

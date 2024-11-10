@@ -5,6 +5,7 @@ import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustom
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -12,10 +13,12 @@ import java.util.Set;
 /**
  * All methods of this class throws NullPoinrerException if a required argument is null
  */
-public interface CustomerPortService
+public interface CustomerPortService<T extends ICustomerRootEntity>
 {
-    List<CustomerDTO> getCustomers();
-    
+    List<T> getCustomerEntities();
+
+    Optional<T> getEntityById(long customerId);
+
     List<CustomerDTO> getCustomerDTOs();
     
     long getCustomerHotelId(long customerId);
@@ -32,40 +35,40 @@ public interface CustomerPortService
 
     Optional<CustomerDTO> getById(long customerId, long requesterCustomerId);
     
-    Optional<CustomerDTO> getEntityById(long customerId);
-
     CustomerDTO addCustomer(CustomerDTO customerDto, String password);
 
     CustomerDTO updateCustomer(CustomerDTO customerDto, int requesterId);
     
 //    @Transactional
-    boolean relocateGuestDealsToLoggedCustomer(ICustomerRootEntity customerEntity, Long guestCustomerId);
+    boolean relocateGuestDealsToLoggedCustomer(T customerEntity, Long guestCustomerId);
 
-    CustomerDTO convertCustomerToDto(ICustomerRootEntity customerEntity, long hotelId);
+    CustomerDTO convertCustomerToDto(T customerEntity, long hotelId);
 
-    CustomerDTO convertCustomerToDto(ICustomerRootEntity customerEntity, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin);
-    CustomerDTO convertMyCustomerToFullDto(ICustomerRootEntity customerEntity);
+    CustomerDTO convertCustomerToDto(T customerEntity, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin);
+    CustomerDTO convertMyCustomerToFullDto(T customerEntity);
 		
-    ICustomerRootEntity serializeCustomerHotelInfo(ICustomerRootEntity dto, long hotelId, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin);
+    CustomerDTO serializeCustomerHotelInfo(CustomerDTO dto, long hotelId, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin);
 
     CustomerDTO synchronizeCustomerToDto(CustomerDTO customerDto);
     
     @Transactional
     void deleteCustomer(CustomerDTO customerDto);
     
-    String getCustomerAvatarUrl(ICustomerRootEntity customerEntity);
+    String getCustomerAvatarUrl(T customerEntity);
 
     /**
      * sometimes we need anonym customer entity
      * @return
      */
-    ICustomerRootEntity addGetAnonymCustomer();
+    T addGetAnonymCustomer();
 
     boolean isStaffOrAdminId(long receiverId);
 
-    ICustomerRootEntity save(ICustomerRootEntity customerEntity);
-
-    Optional<ICustomerRootEntity> getOne(Long id);
+    void save(T customerEntity);
 
     void setCustomerPing(long customerId);
+
+    List<CustomerDTO> findAllOnline(Timestamp timestamp);
+
+    List<T> getAllIn24hOnline();
 }

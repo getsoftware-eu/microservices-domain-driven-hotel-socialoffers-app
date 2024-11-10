@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.domain.model;
 
 import eu.getsoftware.hotelico.clients.common.domain.IDomainEntity;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 
 /**
  * Try to entkoppeln domain logik from domainEntity, mabe all actions only with interface :)))))
@@ -66,5 +66,5 @@ public interface ICustomerRootEntity extends IDomainEntity {
 
     ICustomerPreferences getCustomerPreferences();
 
-    CustomerEntityId getEntityId();
+    CustomerDomainEntityId getDomainEntityId();
 }

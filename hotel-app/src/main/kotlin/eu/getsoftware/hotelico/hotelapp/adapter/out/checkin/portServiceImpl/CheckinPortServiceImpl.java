@@ -2,6 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.portServiceImpl;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinRequestDTO;
@@ -52,5 +53,25 @@ public class CheckinPortServiceImpl implements CheckinPortService {
     @Override
     public CheckinDTO getResponseDTO(ICustomerHotelCheckinEntity newCheckin) {
         return null;
+    }
+
+    @Override
+    public void deleteAllImagesAndAttachments(CheckinDTO checkinDTO) {
+        
+    }
+
+    @Override
+    public CustomerDTO updateCheckin(CustomerDTO sessionCustomer) {
+        return null;
+    }
+
+    @Override
+    public CustomerDBEntity getStaffbyHotelId(Long hotelId) {
+        return null;
+    }
+
+    @Override
+    public List<CustomerDTO> getActiveCustomersByHotelId(Long hotelId, Date date) {
+        return List.of();
     }
 }

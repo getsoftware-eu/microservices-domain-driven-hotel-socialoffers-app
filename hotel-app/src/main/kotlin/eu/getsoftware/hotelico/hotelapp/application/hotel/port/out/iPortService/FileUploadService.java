@@ -146,8 +146,8 @@ public interface FileUploadService
 	public FileSystem createZipFileSystem(String fileName) throws IOException;
 
 	@Transactional
-	boolean saveFileToOwner(MultipartFile file, long senderId, String model, long modelId, String absolutePath) throws Exception;
+	boolean saveFileToOwner(MultipartFile file, long senderId, String model, long modelId, String absolutePath) throws Throwable;
 	
 	@Transactional
-	CustomerDTO getEntityImage(long requesterId, String entityType, long entityId);
+	CustomerDTO getEntityImage(long requesterId, String entityType, long entityId) throws Throwable;
 }
