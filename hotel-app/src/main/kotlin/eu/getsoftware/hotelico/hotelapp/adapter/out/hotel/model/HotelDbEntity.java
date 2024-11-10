@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model;
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
@@ -33,10 +33,12 @@ public class HotelDbEntity implements IHotelRootEntity, Serializable, IFileUploa
     @SequenceGenerator(name="hotel_id_generator", sequenceName = "hotel_id_seq")
     private long id;
 
-//    @Column(columnDefinition = "BINARY(16)")
     @Embedded
-    private HotelDomainEntityId hotelDomainEntityId;
-    
+    private HotelDomainEntityId domainEntityId;
+
+    @Embedded
+    public DBAddress address;
+
     @Column(name = "rating", nullable = true)
     private Integer rating;
 
@@ -149,6 +151,9 @@ public class HotelDbEntity implements IHotelRootEntity, Serializable, IFileUploa
 	//	@Validate("min=0, max=180")
 	private double longitude = LOWER_BOUND_LONGITUDE;
     
+    @ElementCollection
+    private Collection<String> getStaffIdList;
+
     public HotelDbEntity() {
         super();
     }
@@ -180,8 +185,8 @@ public class HotelDbEntity implements IHotelRootEntity, Serializable, IFileUploa
     }
 
     @Override
-    public Collection<CustomerDTO> getStaffList() {
-        return List.of();
+    public Collection<CustomerDomainEntityId> getStaffIdList() {
+        return getStaffIdList.stream().map(CustomerDomainEntityId::new).toList();
     }
 
     /**
