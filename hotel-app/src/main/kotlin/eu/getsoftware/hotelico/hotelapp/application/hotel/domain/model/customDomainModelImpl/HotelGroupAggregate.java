@@ -26,6 +26,6 @@ public class HotelGroupAggregate
      * @return
      */
     public static HotelDomainEntity.HotelDomainEntityBuilder getEntityBuilder(HotelDomainEntityId hotelEntityId){
-        return HotelDomainEntity.builder().hotelEntityId(hotelEntityId);
+        return HotelDomainEntity.builder().domainEntityId(hotelEntityId);
     }
 }

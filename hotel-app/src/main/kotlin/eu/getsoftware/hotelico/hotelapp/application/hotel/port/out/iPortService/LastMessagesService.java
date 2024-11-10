@@ -2,7 +2,8 @@ package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,14 +25,14 @@ public interface LastMessagesService
 	 *
 	 * @return
 	 */
-	long getInitHotelId();	
+	HotelDomainEntityId getInitHotelId();	
 	
 	/**
 	 * get cashed id of virtual hotel
 	 *
 	 * @return
 	 */
-	long getDemoHotelId();
+	HotelDomainEntityId getDemoHotelId();
 
 	/**
 	 * lastOnlineSeenTime for customer id
@@ -48,10 +49,10 @@ public interface LastMessagesService
 	 * @return
 	 */
 	@Transactional
-	List<CustomerDBEntity> getOnlineCustomers();
+	List<CustomerDomainEntityId> getOnlineCustomers();
 
 	@Transactional
-	List<Long> getOnlineCustomerIds();
+	List<CustomerDomainEntityId> getOnlineCustomerIds();
 
 	//	@Transactional
 	void checkCustomerOffline(long offlineId);
@@ -60,7 +61,7 @@ public interface LastMessagesService
 	void checkCustomerOnline(long onlineId) throws Throwable;
 
 	@Transactional
-	void updateCustomerConsistencyId(long customerId, long consustencyId);
+	void updateCustomerConsistencyId(CustomerDomainEntityId customerId, long consustencyId);
 
 	@Transactional
 	long getCustomerConsistencyId(long customerId);
@@ -114,7 +115,7 @@ public interface LastMessagesService
 
 	long getCustomerHotelId(long customerId);
 	
-	void updateCustomerHotelId(long customerId, long hotelId);
+	void updateCustomerHotelId(CustomerDomainEntityId customerId, HotelDomainEntityId hotelId);
 	
 	void addGuestGpsPosition(long requesterId, Double latLonPoint);
 	

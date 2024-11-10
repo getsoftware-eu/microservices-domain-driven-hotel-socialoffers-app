@@ -1,6 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,7 +23,7 @@ public interface CustomerPortService<T extends ICustomerRootEntity>
 
     List<CustomerDTO> getCustomerDTOs();
     
-    long getCustomerHotelId(long customerId);
+    HotelDomainEntityId getCustomerHotelId(CustomerDomainEntityId customerId);
     
     Optional<CustomerDTO> getByEmail(String email);
     
@@ -66,7 +68,7 @@ public interface CustomerPortService<T extends ICustomerRootEntity>
 
     void save(T customerEntity);
 
-    void setCustomerPing(long customerId);
+    void setCustomerPing(CustomerDomainEntityId customerId);
 
     List<CustomerDTO> findAllOnline(Timestamp timestamp);
 

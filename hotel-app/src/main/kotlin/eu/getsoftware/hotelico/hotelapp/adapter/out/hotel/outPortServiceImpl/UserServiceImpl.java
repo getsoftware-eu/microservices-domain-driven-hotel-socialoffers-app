@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl;//package de.hotelico.service.impl;
 
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.UserEntity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.UserDtoRepository;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.UserRepository;
 import eu.getsoftware.hotelico.hotelapp.application.customer.common.dto.UserDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IUserService;
 import jakarta.validation.constraints.NotNull;
@@ -20,19 +20,19 @@ import java.util.List;
 @CacheConfig(cacheNames = {"userCache"})
 public class UserServiceImpl implements IUserService
 {
-    private UserDtoRepository userDtoRepository; //eu ask: How to use adapter.repository in serviceImpl??? wo soll serviceImpl???
+    private UserRepository userRepository; //eu ask: How to use adapter.repository in serviceImpl??? wo soll serviceImpl???
     private ModelMapper mapper;
 
     UserServiceImpl(
-            UserDtoRepository userDtoRepository,
+            UserRepository userRepository,
             ModelMapper mapper
     ){
-        this.userDtoRepository = userDtoRepository;
+        this.userRepository = userRepository;
         this.mapper = mapper;
     }
     
     public List<UserDTO> getUsers() {
-        List<UserEntity> list = userDtoRepository.findAll();
+        List<UserEntity> list = userRepository.findAll();
         List<UserDTO> out = new ArrayList<UserDTO>();
         for (UserEntity dto : list) {
             out.add(mapper.map(dto, UserDTO.class));
@@ -41,7 +41,7 @@ public class UserServiceImpl implements IUserService
     }
 
     public UserDTO getById(int userId) {
-        UserEntity dto = userDtoRepository.getOne(userId);
+        UserEntity dto = userRepository.getOne(userId);
         UserDTO out = dto==null? null : (mapper.map(dto, UserDTO.class));
         return out;
     }
@@ -52,7 +52,7 @@ public class UserServiceImpl implements IUserService
     }
 
     public List<UserDTO> getByHotelId(long hotelId) {
-        List<UserEntity> dtoList = userDtoRepository.findByHotelId(hotelId);
+        List<UserEntity> dtoList = userRepository.findByHotelId(hotelId);
         List<UserDTO> out = new ArrayList<UserDTO>();
         for (UserEntity dto : dtoList) {
             out.add(mapper.map(dto, UserDTO.class));
@@ -65,12 +65,12 @@ public class UserServiceImpl implements IUserService
     public UserDTO addUser(UserDTO userDto, String password) {
         UserEntity dto = mapper.map(userDto, UserEntity.class);
 //        dto.setPassword(password);
-        return mapper.map(userDtoRepository.saveAndFlush(dto), UserDTO.class);
+        return mapper.map(userRepository.saveAndFlush(dto), UserDTO.class);
     }
 
     @Override
     public UserDTO checkLogin(String email, String password){
-        UserEntity dto = userDtoRepository.findByEMail(email);
+        UserEntity dto = userRepository.findByEMail(email);
 
 //        if(dto != null && dto.getPassword().equals(password))
         {
@@ -84,7 +84,7 @@ public class UserServiceImpl implements IUserService
     @Transactional
     @Override
     public UserDTO updateUser(UserDTO userDto) {
-        UserEntity dto = userDtoRepository.findBy(userDto.id).or;
+        UserEntity dto = userRepository.findBy(userDto.getDomainEntityId()).or;
         if(dto!=null)
         {
 //            dto.setHotelId(userDto.getHotelId());
@@ -93,20 +93,20 @@ public class UserServiceImpl implements IUserService
 //            dto.setCompany(userDto.getCompany());
 //            dto.setEmail(userDto.getEmail());
         }
-        return mapper.map(userDtoRepository.saveAndFlush(dto), UserDTO.class);
+        return mapper.map(userRepository.saveAndFlush(dto), UserDTO.class);
     }
 
     @Transactional
     @Override
     public void deleteUser(UserDTO userDto) {
-        userDtoRepository.delete(userDto.getId());
+        userRepository.deleteByDomainEntityId(userDto.getDomainEntityId());
     }
 
     @Override
     public boolean isEmailExists(String email)
     {
         //TODO extra query
-       return userDtoRepository.findByEMail(email)!=null;
+       return userRepository.findByEMail(email)!=null;
     }
 	
 	@Cacheable
@@ -120,13 +120,13 @@ public class UserServiceImpl implements IUserService
 			return null;
 		}
         
-        List<UserEntity> findByUserName = userDtoRepository.findByUserName(username);
+        List<UserEntity> findByUserName = userRepository.findByUserName(username);
 		
-		if(findByUserName.size > 1)
+		if(findByUserName.size() > 1)
 		{
 			log.error("$username: findByUserName.size > 1 ");
 		}
 		
-		return findByUserName.lastOrNull();
+		return findByUserName.stream().findAny().orElse(null);
 	}
 }

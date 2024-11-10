@@ -36,7 +36,10 @@ public class CustomerDBEntity implements ICustomerRootEntity, Serializable, IFil
     
 //    @Column(columnDefinition = "BINARY(16)")
     @Embedded  //Аннотирует DomainId как ValueObject,  Вам не нужно явно маппить строковое поле DomainId вручную.
-    private CustomerDomainEntityId customerDomainEntityId; // Ваш Value Object
+    private CustomerDomainEntityId domainEntityId; // Ваш Value Object
+
+    @Version
+    private Long version;
     
     @Setter
     @Column(name = "active", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_TRUE)
@@ -161,11 +164,6 @@ public class CustomerDBEntity implements ICustomerRootEntity, Serializable, IFil
 
     public ICustomerPreferences getCustomerPreferences() {
         return customerPreferences;
-    }
-
-    @Override
-    public CustomerDomainEntityId getDomainEntityId() {
-        return null;
     }
 
     @Column(name = "points", columnDefinition="Decimal(10,2) default '0.00'")

@@ -4,7 +4,6 @@ import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.BasicHotelException;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.ReorderAction;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
@@ -87,7 +86,7 @@ public class HotelServiceImpl implements IHotelService
         HotelDbEntity dbProjection = hotelRepository.findByDomainEntityIdAndActive(hotelEntityId.toString(), true)
                 .orElseThrow(() -> new RuntimeException("no hotel"));
 
-        return HotelGroupAggregate.getEntityBuilder(new HotelDomainEntityId(dbProjection.getHotelUUID().toString()))
+        return HotelGroupAggregate.getEntityBuilder( dbProjection.getDomainEntityId() )
                 .description(dbProjection.getDescription())
                 .name(dbProjection.getName())
                 .build();
@@ -243,7 +242,7 @@ public class HotelServiceImpl implements IHotelService
             {
                 Collection<CustomerDomainEntityId> likedBy = activity.getLikedCustomerDomainEntityIds();
                 likedBy.add(sender.getDomainEntityId());
-                activity.setLikedCustomerEntities(likedBy);
+                activity.setLikedCustomerDomainEntityIds(likedBy);
                 activityRepository.saveAndFlush(activity);
                 
                 break;
@@ -253,7 +252,7 @@ public class HotelServiceImpl implements IHotelService
             {
                 Collection<CustomerDomainEntityId> likedBy = activity.getLikedCustomerDomainEntityIds();
                 likedBy.remove(sender.getDomainEntityId());
-                activity.setLikedCustomerEntities(likedBy);
+                activity.setLikedCustomerDomainEntityIds(likedBy);
                 activityRepository.saveAndFlush(activity);
                 
                 break;
@@ -1377,7 +1376,7 @@ public class HotelServiceImpl implements IHotelService
         HotelActivityDTO activityDto = modelMapper.map(hotelActivity, HotelActivityDTO.class);
         
         activityDto.setLikeCounter(hotelActivity.getLikedCustomerDomainEntityIds().size());
-        activityDto.setSubscribeCounter(hotelActivity.getSubscribeCustomerEntities().size());
+        activityDto.setSubscribeCounter(hotelActivity.getSubscribeCustomerDomainEntityIds().size());
         
 //        activityDto.setLikedByMe(hotelActivity.getLikedCustomers().contains(requester));
 //        activityDto.setSubscribeByMe(hotelActivity.getSubscribeCustomers().contains(requester));

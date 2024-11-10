@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserDtoRepository extends JpaRepository<UserEntity, Integer> {
+public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
 	public final static String FIND_BY_EMAIL_QUERY = "SELECT u " +
 			"FROM UserEntity u " +
@@ -27,6 +27,8 @@ public interface UserDtoRepository extends JpaRepository<UserEntity, Integer> {
 	public UserEntity findByEMail(@Param("email") String eMail);
 	
 	public List<UserEntity> findByUserName(@Param("userName") String userName);
+	
+	public void deleteByDomainEntityId(@Param("domainEntityId") String domainEntityId);
 
 	/**
 	 * Find user by hotelId.

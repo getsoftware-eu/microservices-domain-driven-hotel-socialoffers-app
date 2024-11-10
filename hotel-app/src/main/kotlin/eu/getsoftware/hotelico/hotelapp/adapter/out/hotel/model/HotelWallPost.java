@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.WallPostDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelWallPost;
@@ -26,6 +27,9 @@ public class HotelWallPost implements IHotelWallPost, Serializable
 	@Setter(AccessLevel.PROTECTED)
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
+
+	@Embedded
+	private WallPostDomainEntityId domainEntityId;
 
 	@Column(name = "active", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_TRUE)
 	private boolean active = true;

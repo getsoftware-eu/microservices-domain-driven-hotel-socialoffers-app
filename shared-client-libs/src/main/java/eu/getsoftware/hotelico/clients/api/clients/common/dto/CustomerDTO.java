@@ -30,6 +30,8 @@ public class CustomerDTO extends BasicDTO
     private final String firstName = null;
 
     private final String lastName = "";
+    
+    private final String domainEntityId = "";
 
     @NonNull
     private final String email = null;

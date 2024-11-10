@@ -3,6 +3,7 @@ package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.BasicHotelException;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.ReorderAction;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
@@ -35,8 +36,10 @@ public interface IHotelService<T extends IHotelRootEntity>
     Map<Long, String> getUnsubscribeGuestPushIds();
 
     Optional<T> getEntityById(long hotelId);
+    Optional<T> getEntityByDomainId(HotelDomainEntityId hotelId);
 
-    HotelDTO getHotelById(long hotelId);
+    HotelDTO getHotelById(HotelDomainEntityId hotelId);
+    HotelDTO getHotelByDomainId(HotelDomainEntityId hotelId);
 
     HotelDTO getHotelByCode(String hotelCode);
     

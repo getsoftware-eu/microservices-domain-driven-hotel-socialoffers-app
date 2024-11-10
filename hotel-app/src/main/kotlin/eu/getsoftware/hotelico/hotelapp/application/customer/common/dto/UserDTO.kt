@@ -9,7 +9,9 @@ import lombok.Getter
 class UserDTO
 {
    
-    private var id: Int = 0
+//    private var id: Long = 0
+    
+    private var domainEntityId: String = ""
 
     private var title: String? = null
 
@@ -27,5 +29,5 @@ class UserDTO
 
 //    private boolean authLinkedIn;
 
-    private var hotelId: Int? = null
+    private var hotelDomainId: String? = null
 }

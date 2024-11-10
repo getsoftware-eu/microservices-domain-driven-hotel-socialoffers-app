@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelDbEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
@@ -53,7 +54,7 @@ interface HotelRepository: JpaRepository<HotelDbEntity, Long> {
 	fun getActivityCounter(@Param("hotelId") hotelId: Int): Int
 	
 	@Query(FIND_VIRTUAL_HOTEL_ID_QUERY)
-	fun getVirtualHotelId(): Int
+	fun getVirtualHotelId(): HotelDomainEntityId
 	
 	//@Query(FIND_ACTIVE_NOT_VIRTUAL_HOTELS_QUERY)
 	fun findByVirtualAndActive(virtual: Boolean = false, active: Boolean = true): List<HotelDbEntity>

@@ -3,6 +3,8 @@ package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.usecase.notifi
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
@@ -69,14 +71,14 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 	{
 		Objects.requireNonNull(dto);
 		
-		List<Long> allOnlineCustomerIds = lastMessagesService.getOnlineCustomerIds();
+		List<CustomerDomainEntityId> allOnlineCustomerIds = lastMessagesService.getOnlineCustomerIds();
 		
 		if(HotelEvent.EVENT_LOGO_CUSTOMER_CHANGE_MESSAGE.equals(event) && !allOnlineCustomerIds.contains(dto.getId()))
 		{
-			allOnlineCustomerIds.add(dto.getId());
+			allOnlineCustomerIds.add(new CustomerDomainEntityId(dto.getDomainEntityId()));
 		}
 		
-		for(Long nextOnlineCustomerId: allOnlineCustomerIds)
+		for( CustomerDomainEntityId nextOnlineCustomerId: allOnlineCustomerIds)
 		{
 			CustomerNotificationDTO receiverNotification = this.getCustomerNotification(nextOnlineCustomerId, event);
 
@@ -85,38 +87,38 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 	}
 	
 //	@Override
-	public CustomerNotificationDTO getCustomerNotification(long receiverId, IHotelEvent event)
+	public CustomerNotificationDTO getCustomerNotification(CustomerDomainEntityId receiverId, IHotelEvent event)
 	{
 		CustomerNotificationDTO nextNotification = new CustomerNotificationDTO();
 		
 		nextNotification.setCreationTime(new Date().getTime());
 		
 		//######################### 
-		
-		long receiverHotelId = customerService.getCustomerHotelId(receiverId);
+
+		HotelDomainEntityId receiverHotelId = customerService.getCustomerHotelId(receiverId);
 		
 		nextNotification.setId(new Date().getTime());
 		
-		nextNotification.setReceiverId((long)receiverId);
+		nextNotification.setReceiverId(receiverId.uuidValue());
 		
 		///#########################################################################
 		
 		///###########   CHECK ALL ONLINE //////////////
+
+		List<CustomerDomainEntityId> allOnlineCustomersIds = lastMessagesService.getOnlineCustomerIds();
 		
-		List<Long> allOnlineCustomersIds = lastMessagesService.getOnlineCustomerIds();
+		Set<CustomerDomainEntityId> onlineGuestIds = new HashSet<>();
 		
-		Set<Long> onlineGuests = new HashSet<>();
-		
-		for (Long nextOnlineCustomerId: allOnlineCustomersIds)
+		for ( var nextOnlineCustomerId: allOnlineCustomersIds)
 		{
 			if(nextOnlineCustomerId!=receiverId)
 			{
-				onlineGuests.add(nextOnlineCustomerId);
+				onlineGuestIds.add(nextOnlineCustomerId);
 			}
 		}
 		/////////// 1 ONLINE - SET RESULTS TO MAP
 		
-		nextNotification.setHotelOnlineGuestIds(onlineGuests.toArray(new Integer[onlineGuests.size()]));
+		nextNotification.setHotelOnlineGuestIds(onlineGuestIds.toArray(new Integer[onlineGuestIds.size()]));
 		
 		if(HotelEvent.EVENT_ONLINE_CUSTOMERS.equals(event))
 		{
@@ -522,7 +524,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 		
 		if(event.getPushUrl()!=null)
 		{
-			Optional<ICustomerRootEntity> senderOpt = customerService.getOne(senderId);
+			Optional<ICustomerRootEntity> senderOpt = customerService.getEntityById(senderId);
 			
 			if(senderOpt.isPresent())
 			{
@@ -694,7 +696,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 	}
 	
 //	@Override
-	public void sendNotificationToCustomerOrGuest(CustomerDTO receiver, long guestCustomerId, HotelEvent event) {
+	public void sendNotificationToCustomerOrGuest(CustomerDTO receiver, CustomerDomainEntityId guestCustomerId, HotelEvent event) {
 		if(receiver!=null)
 		{
 			this.createAndSendWebSocketNotification(receiver.getId(), event);
@@ -702,7 +704,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 		else{
 			CustomerNotificationDTO receiverNotification = new CustomerNotificationDTO();
 			receiverNotification.setCustomerEvent(0, 0, event, "new event", 0);
-			receiverNotification.setReceiverId(guestCustomerId);
+			receiverNotification.setReceiverId(guestCustomerId.uuidValue());
 			webSocketService.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + guestCustomerId + "", receiverNotification);
 		}
 	}

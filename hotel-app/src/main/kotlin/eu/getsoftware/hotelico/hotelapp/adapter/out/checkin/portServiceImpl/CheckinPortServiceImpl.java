@@ -2,6 +2,8 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.portServiceImpl;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
@@ -21,7 +23,7 @@ public class CheckinPortServiceImpl implements CheckinPortService {
     }
 
     @Override
-    public Date getLastByCustomerAndHotelId(long id, long id1) {
+    public Date getLastByCustomerAndHotelId(CustomerDomainEntityId id, HotelDomainEntityId id1) {
         return null;
     }
 
@@ -31,7 +33,7 @@ public class CheckinPortServiceImpl implements CheckinPortService {
     }
 
     @Override
-    public List<CustomerDTO> getStaffByHotelId(long hotelId) {
+    public List<CustomerDTO> getStaffByHotelId(HotelDomainEntityId hotelId) {
         return null;
     }
 

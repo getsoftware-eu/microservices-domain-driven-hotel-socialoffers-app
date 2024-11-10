@@ -3,7 +3,6 @@ package eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model;
 import eu.getsoftware.hotelico.clients.common.domain.IDomainEntity;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
@@ -92,7 +91,7 @@ public interface ICustomerHotelCheckinEntity extends IDomainEntity {
 
     void setFullCheckin(boolean fullCheckin);
 
-    IHotelRootEntity getHotelId();
+    HotelDomainEntityId getHotelDomainId();
 
-    Long getCustomerId();
+    CustomerDomainEntityId getCustomerDomainId();
 }

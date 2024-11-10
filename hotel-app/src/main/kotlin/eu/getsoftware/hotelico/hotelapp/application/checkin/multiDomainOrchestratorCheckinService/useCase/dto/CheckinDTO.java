@@ -23,10 +23,10 @@ public class CheckinDTO implements IDomainResponseDTO {
     Date checkinFrom;
     Date checkinTo;
 
-    public CheckinDTO(long customerId, long hotelId) {
-        this.customerId = customerId;
-        this.hotelId = hotelId;
-    }
+//    public CheckinDTO(long customerId, long hotelId) {
+//        this.customerId = customerId;
+//        this.hotelId = hotelId;
+//    }
 
     @Override
     public long entityId() {

@@ -115,12 +115,12 @@ public class CustomerHotelCheckin implements ICustomerHotelCheckinEntity, java.i
 	}
 
 	@Override
-	public IHotelRootEntity getHotelId() {
+	public IHotelRootEntity getHotelDomainId() {
 		return null;
 	}
 
 	@Override
-	public Long getCustomerId() {
+	public Long getCustomerDomainId() {
 		return 0L;
 	}
 

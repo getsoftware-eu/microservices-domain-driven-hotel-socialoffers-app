@@ -35,7 +35,7 @@ public class CustomerAggregate
 	 * @return
 	 */
 	public static CustomerRootEntity.CustomerRootEntityBuilder getEntityBuilder(CustomerDomainEntityId customerEntityId){
-		return CustomerRootEntity.builder().customerEntityId(customerEntityId);
+		return CustomerRootEntity.builder().domainEntityId(customerEntityId);
 	}
 
 	

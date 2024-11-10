@@ -80,7 +80,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 //        
 //        return CustomerAggregate.buildDomain(domain);
 
-        return CustomerAggregate.getEntityBuilder(new CustomerDomainEntityId(dbProjection.getCustomerUUID()))
+        return CustomerAggregate.getEntityBuilder(dbProjection.getDomainEntityId())
                 .firstName(dbProjection.getFirstName()) 
                 .build();
     }
@@ -933,14 +933,8 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 
     }
 
-
     @Override
-    public Optional<CustomerDBEntity> getOne(Long id) {
-        return Optional.empty();
-    }
-
-    @Override
-    public void setCustomerPing(long customerId) {
+    public void setCustomerPing(CustomerDomainEntityId customerId) {
 
     }
 

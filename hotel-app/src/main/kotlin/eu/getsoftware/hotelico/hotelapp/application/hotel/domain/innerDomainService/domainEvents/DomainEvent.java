@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.innerDomainSer
 import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.IHotelEvent;
 
 public enum DomainEvent implements IHotelEvent {
-    ;
+    TEST;
 
     @Override
     public String getValue() {

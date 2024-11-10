@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.checkin.domain;
 
+import eu.getsoftware.hotelico.clients.common.domain.EntityIdentifier;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CheckinEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
@@ -46,12 +47,17 @@ public class CheckinRootEntity implements ICustomerHotelCheckinEntity {
     }
 
     @Override
-    public IHotelRootEntity getHotelId() {
+    public <I extends EntityIdentifier> I getDomainEntityId() {
         return null;
     }
 
     @Override
-    public Long getCustomerId() {
+    public IHotelRootEntity getHotelDomainId() {
+        return null;
+    }
+
+    @Override
+    public Long getCustomerDomainId() {
         return 0L;
     }
 

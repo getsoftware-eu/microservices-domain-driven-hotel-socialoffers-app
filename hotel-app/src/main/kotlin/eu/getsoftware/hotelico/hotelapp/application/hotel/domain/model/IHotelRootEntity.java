@@ -34,4 +34,6 @@ public interface IHotelRootEntity {
     double getLongitude();
 
     String getGuestPushIds();
+
+    Collection<CustomerDomainEntityId> getStaffList();
 }

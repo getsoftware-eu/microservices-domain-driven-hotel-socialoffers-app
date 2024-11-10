@@ -8,7 +8,7 @@ import java.util.Map
  */
 data class CustomerNotificationDTO (var id: Long = 0)
 {
-    var receiverId: Long? = null
+    var receiverId: String? = null
 
     var creationTime: Long = 0
 

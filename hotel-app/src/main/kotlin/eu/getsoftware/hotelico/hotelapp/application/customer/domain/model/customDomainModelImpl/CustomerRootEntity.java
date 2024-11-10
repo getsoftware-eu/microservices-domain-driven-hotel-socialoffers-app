@@ -17,7 +17,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CustomerRootEntity implements ICustomerRootEntity {
 
-    private final CustomerDomainEntityId customerEntityId;
+    private final CustomerDomainEntityId domainEntityId;
     
     private final long id;
     private final boolean hotelStaff;
@@ -141,15 +141,7 @@ public class CustomerRootEntity implements ICustomerRootEntity {
 
     }
 
-    @Override
-    public void setFacebookId(String facebookId) {
-
-    }
-
-    @Override
-    public void setPushRegistrationId(String s) {
-
-    }
+ 
 
     @Override
     public void setLatitude(double latitude) {
@@ -171,10 +163,7 @@ public class CustomerRootEntity implements ICustomerRootEntity {
         return null;
     }
 
-    @Override
-    public CustomerDomainEntityId getDomainEntityId() {
-        return null;
-    }
+    
 
     @Override
     public void setInitValues(Map<String, String> fieldToValues) {

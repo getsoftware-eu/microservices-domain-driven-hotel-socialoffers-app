@@ -6,6 +6,8 @@ import com.google.common.cache.LoadingCache;
 import com.google.common.collect.Sets;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
@@ -70,11 +72,11 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	
 	private Map<Long, CustomerNotificationDTO> lastFullNotifications =  new HashMap<>();
 	
-	private long virtualHotelId = 0L;
+	private HotelDomainEntityId virtualHotelId = null;
 	
 	private long demoHotelId = 0L;
 	
-	private HashMap<Long, Long> customersToHotelIdMap =  new HashMap<>();
+	private HashMap<CustomerDomainEntityId, HotelDomainEntityId> customersToHotelIdMap =  new HashMap<>();
 	
 	/**
 	 * anonymGuests id to GPS point
@@ -91,14 +93,14 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	}
 	
 	@Override
-	public long getInitHotelId()
+	public HotelDomainEntityId getInitHotelId()
 	{
 		if(!AppConfigProperties.ALLOW_INIT_VIRTUAL_HOTEL)
 		{
-			return 0;	
+			return null;	
 		}
 		
-		return virtualHotelId>0 ? virtualHotelId: getRepositoryVirtualHotelId();
+		return virtualHotelId!=null ? virtualHotelId: getRepositoryVirtualHotelId();
 	}
 	
 	@Override
@@ -107,11 +109,11 @@ public class LastMessagesServiceImpl implements LastMessagesService
 		return demoHotelId>0? demoHotelId: getRepositoryDemoHotelId();
 	}
 
-	private int getRepositoryVirtualHotelId()
+	private HotelDomainEntityId getRepositoryVirtualHotelId()
 	{
-		Integer virtualHotelId = hotelRepository.getVirtualHotelId();
+		HotelDomainEntityId virtualHotelId = hotelRepository.getVirtualHotelId();
 
-		return  virtualHotelId==null? 0 : virtualHotelId;
+		return  virtualHotelId==null? null : virtualHotelId;
 	}
 	
 	private int getRepositoryDemoHotelId()
@@ -535,12 +537,12 @@ public class LastMessagesServiceImpl implements LastMessagesService
 			customersToHotelIdMap.put(customerId, checkinRepository.getCustomerHotelId(customerId, new Date()));
 		}
 
-		Long hotelId = customersToHotelIdMap.get(customerId);
+		HotelDomainEntityId hotelId = customersToHotelIdMap.get(customerId);
 		return hotelId!=null? hotelId : getInitHotelId();
 	}
 
 	@Override
-	public void updateCustomerHotelId(long customerId, long hotelId)
+	public void updateCustomerHotelId(CustomerDomainEntityId customerId, HotelDomainEntityId hotelId)
 	{
 		customersToHotelIdMap.put(customerId, hotelId);
 	}

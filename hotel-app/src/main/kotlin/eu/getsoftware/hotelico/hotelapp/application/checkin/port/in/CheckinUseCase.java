@@ -2,6 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.application.checkin.port.in;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.JsonError;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinRequestDTO;
@@ -27,8 +28,9 @@ public interface CheckinUseCase
 	@Transactional
 	CheckinDTO updateOwnDtoCheckinInfo(CheckinRequestDTO dto) throws JsonError;
 	
+	//eu: here domainId, no just id!!!
 	@Transactional
-	CustomerDTO getStaffbyHotelId(long hotelId);
+	CustomerDTO getStaffbyHotelId(HotelDomainEntityId hotelId);
 
 	public CustomerDTO updateOwnDtoCheckinInfo(CustomerDTO dto, ICustomerHotelCheckinEntity validCheckin);
 

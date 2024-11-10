@@ -2,6 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller.customer;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
@@ -319,22 +320,22 @@ public class CustomerController extends BasicController
     
     @RequestMapping(value = "/{customerId}/customerPing", method = RequestMethod.GET)
     public @ResponseBody
-    CustomerNotificationDTO getCustomerPing(@PathVariable("customerId") long customerId, @ModelAttribute(AppConfigProperties.SESSION_CUSTOMER) CustomerDTO sessionCustomer, BindingResult result, SessionStatus sessionStatus, HttpSession httpSession) {
+    CustomerNotificationDTO getCustomerPing(@PathVariable("customerDomainId") String customerDomainId, @ModelAttribute(AppConfigProperties.SESSION_CUSTOMER) CustomerDTO sessionCustomer, BindingResult result, SessionStatus sessionStatus, HttpSession httpSession) {
         sessionStatus.setComplete();
 
         if (result.hasErrors()) {
             result.getTarget();
         }
                 
-        if(sessionCustomer!=null && sessionCustomer.getId()>0 && sessionCustomer.getId()==customerId)// && sessionCustomer.getHotelId()>0)
+        if(sessionCustomer!=null && sessionCustomer.getId()>0 && sessionCustomer.getDomainEntityId()==customerDomainId)// && sessionCustomer.getHotelId()>0)
         {
             //TODO Eugen: socket ConnectException: Connection timed out: connect
-            customerService.setCustomerPing(sessionCustomer.getId());//, httpSession.getId());
+            customerService.setCustomerPing(new CustomerDomainEntityId(sessionCustomer.getDomainEntityId()));//, httpSession.getId());
         }
         else{
-//            CustomerDto dto = customerService.getById(customerId, 0);
+//            Optional dto = customerService.getById(customerDomainId, 0);
 
-            customerService.setCustomerPing(customerId);//, httpSession.getId());
+            customerService.setCustomerPing(new CustomerDomainEntityId(customerDomainId));//, httpSession.getId());
         }
         
         return null;

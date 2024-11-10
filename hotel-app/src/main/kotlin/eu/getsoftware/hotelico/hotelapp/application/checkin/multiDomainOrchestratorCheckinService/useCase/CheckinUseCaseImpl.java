@@ -5,6 +5,8 @@ import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.JsonError;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging.CheckinMessagePublisher;
 import eu.getsoftware.hotelico.hotelapp.application.chat.port.out.IChatService;
@@ -18,6 +20,7 @@ import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.GPSValidati
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.innerDomainService.domainEvents.DomainEvent;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.in.NotificationUseCase;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
@@ -31,8 +34,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import java.util.*;
-
-import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent.EVENT_CHECKIN;
 
 /**
  * Architecture: Application Service that uses multiply domain services (is portService = domainService?)
@@ -85,11 +86,11 @@ class CheckinUseCaseImpl implements CheckinUseCase
 {
 	private CustomerPortService<CustomerRootEntity> customerService;
 	
-	private IMessagingProducerService messagingProducerService;		
+	private IMessagingProducerService<DomainEvent> messagingProducerService;		
 	
 	private LastMessagesService lastMessagesService;	
 			
-	private IHotelService hotelService;			
+	private IHotelService<IHotelRootEntity> hotelService;			
 	
 	private CheckinPortService checkinService;		
 	
@@ -152,7 +153,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 				"new customer in Hotel");
 
 
-		messagingProducerService.sendSocketNotificationCommand(notificationCustomerCommand, EVENT_CHECKIN);
+		messagingProducerService.sendSocketNotificationCommand(notificationCustomerCommand, DomainEvent.TEST);
 	}
 
 	private boolean validateCustomerWithGPSLocationService(long customerId, long hotelId) throws JsonError {
@@ -192,9 +193,9 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		//If checkin exists, 
 		if(!hotelEntity.isVirtual() && checkinDateIsValid)
 		{
-			Date lastSameHotelCheckinDate = checkinService.getLastByCustomerAndHotelId(customerEntity.getId(), hotelEntity.getId());
+			Date lastSameHotelCheckinDate = checkinService.getLastByCustomerAndHotelId(customerEntity.getDomainEntityId(), hotelEntity.getDomainEntityId());
 
-			var hotelDto = hotelService.getHotelById(hotelEntity.getId()); //checkinRequestDto.setHotelId(hotelRootEntity.getId()); //eu: NO setters for parameter!!!!
+			var hotelDto = hotelService.getHotelById(hotelEntity.getDomainEntityId()); //checkinRequestDto.setHotelId(hotelRootEntity.getId()); //eu: NO setters for parameter!!!!
 
 			ICustomerHotelCheckinEntity nowGoodCheckin = null;
 			
@@ -215,7 +216,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 				//sent wellcome message to new fullCheckin customers
 				if(!customerEntity.isHotelStaff() && !customerEntity.isAdmin())
 				{
-					CustomerDTO staffSender = this.getStaffbyHotelId(hotelEntity.getId());
+					CustomerDTO staffSender = this.getStaffbyHotelId(hotelEntity.getDomainEntityId());
 
 					if (staffSender!=null)
 					{
@@ -225,7 +226,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 						CustomerDTO customerDTO = customerService.convertCustomerToDto(customerEntity, customerEntity.getId());
 						chatService.sendFirstChatMessageOnDemand(customerDTO, staffSender, isFullCheckin);
 
-						HotelDTO hotelDTO = hotelService.getHotelById(hotelEntity.getId());
+						HotelDTO hotelDTO = hotelService.getHotelByDomainId(hotelEntity.getDomainEntityId());
 						wallpostService.sendNotificationWallpostOnDemand(customerDTO, lastSameHotelCheckinDate, hotelDto, staffSender);
 
 					}
@@ -238,7 +239,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 				for (ICustomerHotelCheckinEntity nextCheckin : activeCustomerCheckins)
 				{
-					if(hotelEntity.equals(nextCheckin.getHotelId())) //if the checkin of actual hotel, NO HOTEL EVENT!
+					if(hotelEntity.equals(nextCheckin.getHotelDomainId())) //if the checkin of actual hotel, NO HOTEL EVENT!
 					{
 						updateHotelCheckin(checkinRequestDto, customerEntity, nextCheckin, isFullCheckin);
 //						checkinResponseDto.setErrorResponse("");
@@ -250,7 +251,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 			long consistencyId = new Date().getTime();
 			customerEntity.setConsistencyId(consistencyId);
 
-			lastMessagesService.updateCustomerConsistencyId(customerEntity.getId(), consistencyId);
+			lastMessagesService.updateCustomerConsistencyId(customerEntity.getDomainEntityId(), consistencyId);
 
 			customerService.save(customerEntity);
 
@@ -279,7 +280,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 			long consistencyId = new Date().getTime();
 			customerEntity.setConsistencyId(consistencyId);
-			lastMessagesService.updateCustomerConsistencyId(customerEntity.getId(), consistencyId);
+			lastMessagesService.updateCustomerConsistencyId(customerEntity.getDomainEntityId(), consistencyId);
 
 			customerService.save(customerEntity);
 			var customerDto = customerService.convertMyCustomerToFullDto(customerEntity);
@@ -298,14 +299,14 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		}
 
 		//Eugen: every time update customer current hotelId!!!
-		lastMessagesService.updateCustomerHotelId(newCheckinEntity.getCustomerId(), newCheckinEntity.getHotelId().getId());
+		lastMessagesService.updateCustomerHotelId(newCheckinEntity.getDomainEntityId(), newCheckinEntity.getHotelDomainId());
 		
 		return newCheckinEntity;
 	}
 
 	private Optional<IHotelRootEntity> getHotelEntityFromCheckinRequest(CheckinRequestDTO checkinRequestDto) {
 
-		long virtualHotelId = lastMessagesService.getInitHotelId();
+		HotelDomainEntityId virtualHotelId = lastMessagesService.getInitHotelId();
 
 		String virtualHotelCode = AppConfigProperties.ALLOW_INIT_VIRTUAL_HOTEL ? hotelService.getVirtualHotelCode() : null;
 
@@ -326,15 +327,19 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 
 	private void sendInitMessageFromHotelStaffToCustomer(ICustomerHotelCheckinEntity newCheckin) throws JsonError {
-		
-		CustomerDTO initHotelStaff = newCheckin.getHotelId().getStaffList().stream().findFirst()
-				.orElseThrow(()-> new JsonError("HotelStaff is not set for hotel" + newCheckin.getHotelId()));
+
+		HotelDomainEntityId hotelId = newCheckin.getHotelDomainId();
+
+		IHotelRootEntity hotel = hotelService.getEntityByDomainId(hotelId).orElseThrow(() -> new RuntimeException("not found"));
+
+		CustomerDomainEntityId initHotelStaffId = hotel.getStaffList().stream().findFirst()
+				.orElseThrow(() -> new JsonError("HotelStaff is not set for hotel" + newCheckin.getHotelDomainId()));
 
 		ChatMessageCommand wellcomeChatMessageCommand = new ChatMessageCommand(
-				initHotelStaff.getId(),
-				newCheckin.getCustomerId(), 
+				initHotelStaffId,
+				newCheckin.getCustomerDomainId(), 
 				false,
-				newCheckin.getHotelId()+"getWellcomeMessage()");
+				newCheckin.getHotelDomainId()+"getWellcomeMessage()");
 		
 		messagingProducerService.sendChatMessageCommand(wellcomeChatMessageCommand); //UseCase.Primary-flow.step.6
 	}
@@ -349,7 +354,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 	}
 	
 	@Override
-	public CustomerDTO getStaffbyHotelId(long hotelId)
+	public CustomerDTO getStaffbyHotelId(HotelDomainEntityId hotelId)
 	{
 		return checkinService.getStaffByHotelId(hotelId).stream().findFirst().orElseThrow(() -> new RuntimeException("staff not found for hotel " + hotelId));
 	}
@@ -411,9 +416,9 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		
 		if(validCheckin==null)
 		{
-			long initHotelId = lastMessagesService.getInitHotelId();
+			HotelDomainEntityId initHotelId = lastMessagesService.getInitHotelId();
 			
-			if(initHotelId>0)
+			if(initHotelId!=null)
 			{
 //				dto.setHotelId(initHotelId);
 //				dto.setFullCheckin(true);

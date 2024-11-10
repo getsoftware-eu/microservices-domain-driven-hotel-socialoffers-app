@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model;
 
 import eu.getsoftware.hotelico.clients.api.clients.domain.chat.IChatMessageView;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import jakarta.persistence.*;
@@ -52,7 +53,7 @@ public class ChatMessageView implements IChatMessageView, Serializable
 //  @JoinColumn(name="receiverId")
 //  private CustomerRootEntity receiver;
   @Column
-  private long receiverId;
+  private CustomerDomainEntityId receiverId;
 
   @Column
   private String specialChatContent;

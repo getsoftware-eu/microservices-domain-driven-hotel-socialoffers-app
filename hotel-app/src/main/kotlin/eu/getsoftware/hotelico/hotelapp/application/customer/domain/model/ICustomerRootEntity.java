@@ -7,7 +7,9 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEnt
  * Try to entkoppeln domain logik from domainEntity, mabe all actions only with interface :)))))
  */
 public interface ICustomerRootEntity extends IDomainEntity {
-    
+
+    CustomerDomainEntityId getDomainEntityId();
+
     void setConsistencyId(long consistencyId);
 
     long getId();
@@ -40,10 +42,8 @@ public interface ICustomerRootEntity extends IDomainEntity {
 
     void setLinkedInId(String linkedInId);
 
-    void setFacebookId(String facebookId);
-
-    void setPushRegistrationId(String s);
-
+//    void setFacebookId(String facebookId);
+    
     boolean isHotelStaff();
 
     boolean isAdmin();
@@ -66,5 +66,4 @@ public interface ICustomerRootEntity extends IDomainEntity {
 
     ICustomerPreferences getCustomerPreferences();
 
-    CustomerDomainEntityId getDomainEntityId();
 }

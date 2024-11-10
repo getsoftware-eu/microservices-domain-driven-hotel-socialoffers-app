@@ -39,6 +39,9 @@ public class HotelDbEntity implements IHotelRootEntity, Serializable, IFileUploa
     @Embedded
     public DBAddress address;
 
+    @Version
+    private Long version;
+    
     @Column(name = "rating", nullable = true)
     private Integer rating;
 
