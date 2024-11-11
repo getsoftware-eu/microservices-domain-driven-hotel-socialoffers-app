@@ -3,13 +3,11 @@ package eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto;
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
 import lombok.Getter;
 import lombok.With;
-import lombok.experimental.SuperBuilder;
 
 import java.sql.Timestamp;
 
 @With
 @Getter
-@SuperBuilder
 public class MenuItemDTO extends BasicDTO{
 
      private final long orderId = 0L;

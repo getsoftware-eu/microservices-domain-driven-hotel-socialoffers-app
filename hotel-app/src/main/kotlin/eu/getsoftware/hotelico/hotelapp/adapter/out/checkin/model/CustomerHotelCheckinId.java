@@ -8,6 +8,8 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model;
  * Thus we cannot run DB queries, without depending on other class
  */
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import jakarta.persistence.Embeddable;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -21,11 +23,11 @@ public class CustomerHotelCheckinId implements java.io.Serializable {
 	
 	@Getter
 	@Setter
-	private long customerEntityId;
+	private CustomerDomainEntityId customerEntityId;
 	
 	@Getter
 	@Setter
-	private long hotelEntityId;
+	private HotelDomainEntityId hotelEntityId;
 
 //	@ManyToOne //Bad für splitting Microservices!!!
 //	public CustomerRootEntity getCustomer() {

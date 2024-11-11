@@ -7,7 +7,6 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEnt
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -90,7 +89,7 @@ public class CustomerHotelCheckin implements ICustomerHotelCheckinEntity, java.i
 		this.pk = pk;
 	}
 	
-	public void setCustomer(long customerId) {
+	public void setCustomer(CustomerDomainEntityId customerId) {
 		
 		getPk().setCustomerEntityId(customerId);
 	}
@@ -106,7 +105,7 @@ public class CustomerHotelCheckin implements ICustomerHotelCheckinEntity, java.i
 //		return getPk().getCustomerEntityId();
 //	}
 	
-	public void setHotelId(long hotel) {
+	public void setHotelId(HotelDomainEntityId hotel) {
 		getPk().setHotelEntityId(hotel);
 	}
 
@@ -115,13 +114,13 @@ public class CustomerHotelCheckin implements ICustomerHotelCheckinEntity, java.i
 	}
 
 	@Override
-	public IHotelRootEntity getHotelDomainId() {
+	public HotelDomainEntityId getHotelDomainEntityId() {
 		return null;
 	}
 
 	@Override
-	public Long getCustomerDomainId() {
-		return 0L;
+	public CustomerDomainEntityId getCustomerDomainEntityId() {
+		return null;
 	}
 
 	public boolean equals(Object o) {

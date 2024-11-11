@@ -1,5 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.dto;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties
 import java.util.*
@@ -19,9 +21,9 @@ data class CustomerDealDTO(val initId: Long): BasicDTO(/*initId*/)
 
     var closed = false
 
-    var hotelId: Long? = 0L
+    var hotelDomainId: HotelDomainEntityId? = null
 
-    var senderId: Long? = 0L
+    var senderDomainId: CustomerDomainEntityId? = null
 
     var dealDaysDuration = 0
 

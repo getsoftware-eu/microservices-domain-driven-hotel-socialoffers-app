@@ -48,9 +48,10 @@ public class CheckinPortServiceImpl implements CheckinPortService {
     }
 
     @Override
-    public Integer getActiveCountByHotelId(long receiverHotelId, Date date) {
+    public Integer getActiveCountByHotelId(HotelDomainEntityId receiverHotelId, Date date) {
         return null;
     }
+
 
     @Override
     public CheckinDTO getResponseDTO(ICustomerHotelCheckinEntity newCheckin) {
@@ -68,12 +69,13 @@ public class CheckinPortServiceImpl implements CheckinPortService {
     }
 
     @Override
-    public CustomerDBEntity getStaffbyHotelId(Long hotelId) {
+    public CustomerDBEntity getStaffbyHotelId(HotelDomainEntityId hotelId) {
         return null;
     }
 
     @Override
-    public List<CustomerDTO> getActiveCustomersByHotelId(Long hotelId, Date date) {
-        return List.of();
+    public List<CustomerDTO> getActiveCustomersByHotelId(HotelDomainEntityId hotelId, Date date) {
+        return null;
     }
+
 }

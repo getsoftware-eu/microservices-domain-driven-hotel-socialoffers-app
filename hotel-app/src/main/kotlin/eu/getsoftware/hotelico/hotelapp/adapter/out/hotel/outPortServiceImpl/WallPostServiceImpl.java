@@ -21,17 +21,15 @@ public class WallPostServiceImpl implements IWallpostService {
     private final HotelServiceImpl hotelService;
     
     @Override
-    public void sendNotificationWallpostOnDemand(CustomerDTO customerEntity, Date lastSameHotelCheckin, HotelDTO hotelRootEntity, CustomerDTO staffSender) {
+    public void sendNotificationWallpostOnDemand(CustomerDTO customerEntity, Date lastSameHotelCheckin, HotelDTO hotelRootEntity, CustomerDTO staffSender) throws Throwable {
         
         // ### Notificate Wall
         if(lastSameHotelCheckin ==null || convertToLocalDateTime(lastSameHotelCheckin).getDayOfYear() != LocalDateTime.now().getDayOfYear() )
         {
 
-            WallPostDTO checkinNotificationWallDto = new WallPostDTO();
+            WallPostDTO checkinNotificationWallDto = new WallPostDTO(hotelRootEntity.getDomainId(), staffSender.getDomainId());
 
             checkinNotificationWallDto.getSpecialContent().put("customerId", String.valueOf(customerEntity.getId()));
-            checkinNotificationWallDto.setHotelId(hotelRootEntity.getId());
-            checkinNotificationWallDto.setSenderId(staffSender.getId());
 //								checkinNotificationWallDto.setsetValidUntil(new DateTime().plusDays(1).toDate());
             checkinNotificationWallDto.setInitId(new Date().getTime());
             checkinNotificationWallDto.setMessage("New guest at our hotel:");

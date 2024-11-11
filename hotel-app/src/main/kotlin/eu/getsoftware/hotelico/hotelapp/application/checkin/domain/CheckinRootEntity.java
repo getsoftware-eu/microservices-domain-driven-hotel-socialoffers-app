@@ -5,7 +5,6 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CheckinEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -18,10 +17,10 @@ import java.util.Map;
 public class CheckinRootEntity implements ICustomerHotelCheckinEntity {
 
     @Setter
-    private HotelDomainEntityId hotelEntityId;
+    private HotelDomainEntityId hotelDomainEntityId;
     
     @Setter
-    private CustomerDomainEntityId customerEntityId;
+    private CustomerDomainEntityId customerDomainEntityId;
     
     @Getter
     private final CheckinEntityId entityId;
@@ -51,15 +50,7 @@ public class CheckinRootEntity implements ICustomerHotelCheckinEntity {
         return null;
     }
 
-    @Override
-    public IHotelRootEntity getHotelDomainId() {
-        return null;
-    }
-
-    @Override
-    public Long getCustomerDomainId() {
-        return 0L;
-    }
+    
 
 //    //TODO ???? between domain objects??
 //    @Override

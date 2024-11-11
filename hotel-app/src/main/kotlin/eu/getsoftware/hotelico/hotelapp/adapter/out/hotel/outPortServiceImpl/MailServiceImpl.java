@@ -2,6 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.MailValidator;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
@@ -265,9 +266,9 @@ public class MailServiceImpl implements MailService
 		}
 		
 		// ##########################################
-		
-		
-		long hotelId = customerService.getCustomerHotelId(customerEntity.getId());
+
+
+		HotelDomainEntityId hotelId = customerService.getCustomerHotelId(customerEntity.getDomainEntityId());
 		
 		HotelDTO hotel = hotelService.getHotelById(hotelId);
 		
@@ -286,7 +287,7 @@ public class MailServiceImpl implements MailService
 			}
 			mailContent = mailContent.replace("#[customer.mail]", customerEntity.getEmail());
 			
-			List<HotelActivityDTO> hotelActivities = hotelService.getHotelActivitiesByHotelId(-1, hotel.getId());
+			List<HotelActivityDTO> hotelActivities = hotelService.getHotelActivitiesByHotelId(null, hotel.getDomainId());
 			
 			//sort by orderIndex!!!
 			if (hotelActivities.size() > 0) {
@@ -314,7 +315,7 @@ public class MailServiceImpl implements MailService
 					temp_activity = temp_activity.replace("#[activity.pictureUrl]", "http://hotelico.de/" + nextActivity.getPictureUrl());
 					temp_activity = temp_activity.replace("#[activity.shortDescription]", URLDecoder.decode(nextActivity.getShortDescription(), "UTF-8"));
 					temp_activity = temp_activity.replace("#[activity.description]", URLDecoder.decode(nextActivity.getDescription(), "UTF-8"));
-					temp_activity = temp_activity.replace("#[activity.url]", "https://hotelico.de/" + AppConfigProperties.HOST_SUFFIX + "#/app/activityList//" + hotelId + "/" + nextActivity.getId());
+					temp_activity = temp_activity.replace("#[activity.url]", "https://hotelico.de/" + AppConfigProperties.HOST_SUFFIX + "#/app/activityList//" + hotelId + "/" + nextActivity.getSenderDomainId());
 				}
 				catch (UnsupportedEncodingException e)
 				{

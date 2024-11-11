@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.clients.api.clients.common.dto;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder()
-public class HotelDTO extends BasicDTO
+public class HotelDTO extends BasicDTO<HotelDomainEntityId>
 {
 	private final int rating = 0;
 	

@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.microservice.WebSocketNotificationService;
@@ -56,9 +57,10 @@ public class NotificationServiceImpl implements INotificationService {
     }
 
     @Override
-    public void sendNotificationToCustomerOrGuest(Object o, long id, HotelEvent hotelEvent) {
-
+    public void sendNotificationToCustomerOrGuest(Object o, CustomerDomainEntityId id, HotelEvent hotelEvent) {
+        
     }
+
 
     @Override
     public void broadcastActivityNotification(HotelActivityDTO hotelActivityDto) {

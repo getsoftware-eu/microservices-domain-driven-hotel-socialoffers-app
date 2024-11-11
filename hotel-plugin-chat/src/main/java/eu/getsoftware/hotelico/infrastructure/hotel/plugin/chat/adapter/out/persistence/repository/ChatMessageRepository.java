@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.repository;
 
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatUserEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -120,40 +121,40 @@ public interface ChatMessageRepository extends MongoRepository<ChatMessageEntity
 	 * Eugen: generate DTO messagesDTO by customer ids direct from DB.
 	 */
 	@Query(FIND_DTO_MESSAGES_BY_CUSTOMER_IDS)
-	public List<ChatMsgDTO>getMessagesDTOByCustomerIds(@Param("customerId") Long customerId, @Param("receiverId") Long receiverId);
+	public List<ChatMsgDTO>getMessagesDTOByCustomerIds(@Param("customerId") CustomerDomainEntityId customerId, @Param("receiverDomainId") Long receiverId);
 	
 	/**
 	 * Find messages by customer ids.
 	 */
 	@Query(FIND_MESSAGES_BY_CUSTOMER_IDS)
-	public List<ChatMessageEntity> getMessagesByCustomerIds(@Param("customerId") Long customerId, @Param("receiverId") Long receiverId);
+	public List<ChatMessageEntity> getMessagesByCustomerIds(@Param("customerId") CustomerDomainEntityId customerId, @Param("receiverDomainId") Long receiverId);
 	
 	@Query(FIND_LAST_MESSAGE_BY_CUSTOMER_AND_RECEIVER_IDS)
-	public Optional<ChatMessageEntity> getLastMessageByCustomerAndReceiverIds(@Param("customerId") Long customerId, @Param("receiverId") Long receiverId);
+	public Optional<ChatMessageEntity> getLastMessageByCustomerAndReceiverIds(@Param("customerId") CustomerDomainEntityId customerId, @Param("receiverDomainId") CustomerDomainEntityId receiverId);
 	
 	@Query(FIND_LAST_MESSAGE_BY_CUSTOMER_ID)
-	public List<ChatMessageEntity> getLastMessageOnlyByCustomerId(@Param("customerId") Long customerId);
+	public List<ChatMessageEntity> getLastMessageOnlyByCustomerId(@Param("customerId") CustomerDomainEntityId customerId);
 	
 	@Query(FIND_CHAT_SENDER_BY_CUSTOMER_ID)
-	public List<ChatUserEntity> getChatSendersByCustomerId(@Param("customerId") Long customerId);
+	public List<ChatUserEntity> getChatSendersByCustomerId(@Param("customerId") CustomerDomainEntityId customerId);
 	
 	@Query(FIND_CHAT_RECEIVER_BY_CUSTOMER_ID)
-	public List<ChatUserEntity> getChatReceiversByCustomerId(@Param("customerId") Long customerId);
+	public List<ChatUserEntity> getChatReceiversByCustomerId(@Param("customerId") CustomerDomainEntityId customerId);
 	
 	@Query(FIND_NOT_READ_MESSAGE_COUNTER_BY_RECEIVER_IDS)
-	public Integer getNotReadMessageCountBySenderId(@Param("customerId") Long customerId, @Param("senderId") Integer senderId);
+	public Integer getNotReadMessageCountBySenderId(@Param("customerId") CustomerDomainEntityId customerId, @Param("senderDomainId") Integer senderId);
 	
 	@Query(FIND_NOT_READ_CHATS_BY_CUSTOMER_ID)
-	public Integer getNotReadSenderByCustomerId(@Param("customerId") Long customerId);
+	public Integer getNotReadSenderByCustomerId(@Param("customerId") CustomerDomainEntityId customerId);
 	
 	@Query(FIND_NOT_READ_MESSAGES_BY_RECEIVER_ID)
-	List<ChatMessageEntity> getUnreadChatMessagesForCustomer(@Param("customerId") Long customerId);
+	List<ChatMessageEntity> getUnreadChatMessagesForCustomer(@Param("customerId") CustomerDomainEntityId customerId);
 	
 	@Query(FIND_NOT_READ_MESSAGES_BY_SENDER_AND_RECEIVER_ID)
-	List<ChatMessageEntity> getUnreadChatMessagesForCustomerBySender(@Param("customerId") Long customerId, @Param("senderId") Long senderId);
+	List<ChatMessageEntity> getUnreadChatMessagesForCustomerBySender(@Param("customerId") CustomerDomainEntityId customerId, @Param("senderDomainId") Long senderId);
 	
 	@Query(FIND_MESSAGE_BY_ID_AND_CUSTOMER_ID)
-	List<ChatMessageEntity> getMessageByCustomerAndInitId(@Param("customerId") Long customerId, @Param("initId") Long initId);
+	List<ChatMessageEntity> getMessageByCustomerAndInitId(@Param("customerId") CustomerDomainEntityId customerId, @Param("initId") Long initId);
 	
 	@Query(FIND_MESSAGE_BY_MESSAGE_ID)
 	List<ChatMessageEntity> getMessageByInitId(@Param("initId") Long initId);

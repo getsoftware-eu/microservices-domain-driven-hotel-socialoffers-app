@@ -183,7 +183,7 @@ public class CustomerController extends BasicController
     
 
     @RequestMapping(value = "/login/email/{email:.+}/password/{password}", method = RequestMethod.GET)
-    public @ResponseBody CustomerDTO checkLogin(@ModelAttribute(AppConfigProperties.SESSION_CUSTOMER) CustomerDTO sessionCustomer, @PathVariable String email, @PathVariable String password, SessionStatus sessionStatus, HttpSession httpSession/*, HttpServletResponse response*/) {
+    public @ResponseBody CustomerDTO checkLogin(@ModelAttribute(AppConfigProperties.SESSION_CUSTOMER) CustomerDTO sessionCustomer, @PathVariable String email, @PathVariable String password, SessionStatus sessionStatus, HttpSession httpSession/*, HttpServletResponse response*/) throws Throwable {
 
         sessionStatus.setComplete();
         
@@ -191,7 +191,7 @@ public class CustomerController extends BasicController
 
 		if(out!=null)
 		{
-			lastMessagesService.setLastFullNotification(out.getId(), null);
+			lastMessagesService.setLastFullNotification(out.getDomainEntityId(), null);
 		}
 		
         httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
@@ -204,7 +204,7 @@ public class CustomerController extends BasicController
     
 
     @RequestMapping(value = "/login/email/{email}/password/{password}", method = RequestMethod.PUT)
-    public @ResponseBody CustomerDTO checkPutLogin(@PathVariable String email, @PathVariable String password, @RequestBody /*@ModelAttribute(ControllerUtils.SESSION_CUSTOMER)*/ CustomerDTO loginCustomer, HttpSession httpSession) {
+    public @ResponseBody CustomerDTO checkPutLogin(@PathVariable String email, @PathVariable String password, @RequestBody /*@ModelAttribute(ControllerUtils.SESSION_CUSTOMER)*/ CustomerDTO loginCustomer, HttpSession httpSession) throws Throwable {
 
 //        sessionStatus.setComplete();
         
@@ -213,7 +213,7 @@ public class CustomerController extends BasicController
         if(out!=null)
         {
             out = loginService.checkBeforeLoginProperties(loginCustomer, out).orElseThrow(()->new RuntimeException("-"));
-			lastMessagesService.setLastFullNotification(out.getId(), null);
+			lastMessagesService.setLastFullNotification(out.getDomainEntityId(), null);
 		}
        
         
@@ -250,13 +250,13 @@ public class CustomerController extends BasicController
         if(sessionCustomer!=null && sessionCustomer.getId()>0 && sessionCustomer.getFirstName()==null)
         {
             CustomerDTO out = (CustomerDTO) customerService.getById(sessionCustomer.getId(), sessionCustomer.getId()).orElseThrow(()->new RuntimeException("-"));
-			lastMessagesService.setLastFullNotification(out.getId(), null);
+			lastMessagesService.setLastFullNotification(out.getDomainEntityId(), null);
 			httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
         }
         else if(sessionCustomer!=null && sessionCustomer.getId()>0)
         {
             CustomerDTO out = customerService.synchronizeCustomerToDto(sessionCustomer);
-			lastMessagesService.setLastFullNotification(out.getId(), null);
+			lastMessagesService.setLastFullNotification(out.getDomainEntityId(), null);
 			httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
 
             return out;
@@ -282,7 +282,7 @@ public class CustomerController extends BasicController
         if(sessionCustomer!=null && sessionCustomer.getId()>0 && sessionCustomer.getFirstName()==null)
         {
             CustomerDTO out = (CustomerDTO) customerService.getById(sessionCustomer.getId(), sessionCustomer.getId()).orElseThrow(()->new RuntimeException("-"));
-			lastMessagesService.setLastFullNotification(out.getId(), null);
+			lastMessagesService.setLastFullNotification(out.getDomainEntityId(), null);
 			httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
         }
         else 
@@ -290,8 +290,8 @@ public class CustomerController extends BasicController
         {
             //TODO EUGEN? CHECK HIER SYNCHRONOSATION??? UPDATE consistencyId ?????
             sessionCustomer.doLogged(true);
-            lastMessagesService.checkCustomerOnline(sessionCustomer.getId());
-			lastMessagesService.setLastFullNotification(sessionCustomer.getId(), null);
+            lastMessagesService.checkCustomerOnline(sessionCustomer.getDomainEntityId());
+			lastMessagesService.setLastFullNotification(sessionCustomer.getDomainEntityId(), null);
 			httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, sessionCustomer);
 
         }
@@ -320,7 +320,7 @@ public class CustomerController extends BasicController
     
     @RequestMapping(value = "/{customerId}/customerPing", method = RequestMethod.GET)
     public @ResponseBody
-    CustomerNotificationDTO getCustomerPing(@PathVariable("customerDomainId") String customerDomainId, @ModelAttribute(AppConfigProperties.SESSION_CUSTOMER) CustomerDTO sessionCustomer, BindingResult result, SessionStatus sessionStatus, HttpSession httpSession) {
+    CustomerNotificationDTO getCustomerPing(@PathVariable("customerDomainId") CustomerDomainEntityId customerDomainId, @ModelAttribute(AppConfigProperties.SESSION_CUSTOMER) CustomerDTO sessionCustomer, BindingResult result, SessionStatus sessionStatus, HttpSession httpSession) {
         sessionStatus.setComplete();
 
         if (result.hasErrors()) {
@@ -330,12 +330,12 @@ public class CustomerController extends BasicController
         if(sessionCustomer!=null && sessionCustomer.getId()>0 && sessionCustomer.getDomainEntityId()==customerDomainId)// && sessionCustomer.getHotelId()>0)
         {
             //TODO Eugen: socket ConnectException: Connection timed out: connect
-            customerService.setCustomerPing(new CustomerDomainEntityId(sessionCustomer.getDomainEntityId()));//, httpSession.getId());
+            customerService.setCustomerPing(sessionCustomer.getDomainEntityId());//, httpSession.getId());
         }
         else{
 //            Optional dto = customerService.getById(customerDomainId, 0);
 
-            customerService.setCustomerPing(new CustomerDomainEntityId(customerDomainId));//, httpSession.getId());
+            customerService.setCustomerPing(customerDomainId);//, httpSession.getId());
         }
         
         return null;
@@ -348,7 +348,7 @@ public class CustomerController extends BasicController
         {
             loginService.logoutCustomer(customerDto);
             httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, customerDto);
-            lastMessagesService.setLastFullNotification(customerDto.getId(), null);
+            lastMessagesService.setLastFullNotification(customerDto.getDomainEntityId(), null);
     
             status.setComplete();
             response.addCookie(new Cookie(AppConfigProperties.SESSION_CUSTOMER_ID, null));

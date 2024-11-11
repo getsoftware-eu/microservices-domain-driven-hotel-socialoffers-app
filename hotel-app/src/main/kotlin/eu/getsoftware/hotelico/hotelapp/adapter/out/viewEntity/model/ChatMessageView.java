@@ -38,10 +38,11 @@ public class ChatMessageView implements IChatMessageView, Serializable
   private Timestamp timestamp;
 
 //  @ManyToOne
-//  @JoinColumn(name="senderId")
+//  @JoinColumn(name="senderDomainId")
 //  private CustomerRootEntity sender;
-  @Column
-  private long senderId;
+//  @Column
+  @Embedded
+  private CustomerDomainEntityId senderId;
   
   @Column(name = "seenByReceiver", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
   private boolean seenByReceiver = false;  
@@ -50,9 +51,9 @@ public class ChatMessageView implements IChatMessageView, Serializable
   private boolean delieveredToReceiver = false;
   
 //  @ManyToOne
-//  @JoinColumn(name="receiverId")
+//  @JoinColumn(name="receiverDomainId")
 //  private CustomerRootEntity receiver;
-  @Column
+  @Embedded
   private CustomerDomainEntityId receiverId;
 
   @Column
@@ -68,8 +69,8 @@ public class ChatMessageView implements IChatMessageView, Serializable
     this();
     
     this.message = message;
-    this.senderId = sender.getId();
-    this.receiverId = receiver.getId();
+    this.senderId = sender.getDomainEntityId();
+    this.receiverId = receiver.getDomainEntityId();
   }
   
   @Override

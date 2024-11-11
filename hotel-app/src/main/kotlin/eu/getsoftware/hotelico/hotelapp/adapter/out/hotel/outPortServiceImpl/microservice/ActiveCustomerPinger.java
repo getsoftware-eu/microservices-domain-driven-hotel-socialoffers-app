@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.microservice;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IWebSocketService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ public class ActiveCustomerPinger
 
   @Scheduled(fixedDelay = 2000)
   public void pingUsers() {
-    List<Long> activeUsers = lastMessagesService.getOnlineCustomerIds();
+    List<CustomerDomainEntityId> activeUsers = lastMessagesService.getOnlineCustomerIds();
     
     String webSocketTopic = "/topic/active";
     webSocketService.produceSimpWebsocketMessage(webSocketTopic, activeUsers);

@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
@@ -16,7 +17,7 @@ public class ChatUserEntity implements Serializable
   @Id
   private long id;
   
-  private long userId;
+  private CustomerDomainEntityId userId;
   
   private String firstName;
   
@@ -24,7 +25,7 @@ public class ChatUserEntity implements Serializable
   
   private String email;
   
-  public ChatUserEntity(long userId) 
+  public ChatUserEntity(CustomerDomainEntityId userId) 
   {
     this.userId = userId;
   }

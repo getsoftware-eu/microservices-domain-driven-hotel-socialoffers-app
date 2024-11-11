@@ -1,11 +1,16 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.ActivityDomainEntityId
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties
 import java.util.*
 
-data class HotelActivityDTO(var hotelId: Long? = 0L): BasicDTO()
+data class HotelActivityDTO(var hotelId: HotelDomainEntityId): BasicDTO<ActivityDomainEntityId>()
 {
+    val initId: Long = 0
+    
     var dealDaysDuration = 0
 
     var likeCounter = 0
@@ -42,7 +47,7 @@ data class HotelActivityDTO(var hotelId: Long? = 0L): BasicDTO()
 
     var lastMinute = false
     
-    var senderId: Long? = 0L
+    var senderDomainId: CustomerDomainEntityId? = null
 
     var validFrom: Date? = null
 
@@ -92,4 +97,6 @@ data class HotelActivityDTO(var hotelId: Long? = 0L): BasicDTO()
     fun setPreviewPictureUrl(previewPictureUrl: String) {
         this.previewPictureUrl = previewPictureUrl
     }
+    
+    constructor(param: Long) : this(HotelDomainEntityId(param.toString()))
 }

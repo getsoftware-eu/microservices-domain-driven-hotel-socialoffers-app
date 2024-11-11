@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent
 import java.util.Map
 
@@ -15,9 +16,9 @@ data class CustomerNotificationDTO (var id: Long = 0)
     /**
      * number of unread message from every sender
      */
-    var unreadChatProSenderCount: Map<Long, Integer>? = null
+    var unreadChatProSenderCount: Map<CustomerDomainEntityId, Integer>? = null
 
-    var lastSeenOnlineHotelGuests: Map<Long, String>? = null
+    var lastSeenOnlineHotelGuests: Map<CustomerDomainEntityId, String>? = null
 
     var unreadChatsCounter: String? = null
 
@@ -66,7 +67,7 @@ data class CustomerNotificationDTO (var id: Long = 0)
 
     fun setCustomerEvent(customerId: Long, hotelId: Long, event: HotelEvent, message: String, entityId: Long) {
 
-        this.customerEvent["senderId"] = customerId.toString() 
+        this.customerEvent["senderDomainId"] = customerId.toString() 
         this.customerEvent["hotelId"] = hotelId.toString() 
         this.customerEvent["event"] = event.value
         this.customerEvent["message"] = message

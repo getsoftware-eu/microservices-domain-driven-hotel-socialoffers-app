@@ -1,6 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
@@ -74,7 +76,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 			
 			notificationService.createAndSendNotification(customerEntity.getId(), HotelEvent.EVENT_LOGIN);
 			
-			lastMessagesService.checkCustomerOnline(customerEntity.getId());
+			lastMessagesService.checkCustomerOnline(customerEntity.getDomainEntityId());
 			
 			//            int hotelId = getCustomerHotelId(customer.getId());
 			
@@ -104,7 +106,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 			
 			customerRepository.saveAndFlush(logoutCustomerRootEntity);
 			
-			lastMessagesService.checkCustomerOffline(customerDto.getId());
+			lastMessagesService.checkCustomerOffline(customerDto.getDomainEntityId());
 			
 		}
 //		customerDto.setLogged(false);
@@ -185,19 +187,19 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 			}
 		}
 		
-		long customerHotelId = 0L;
+		HotelDomainEntityId customerHotelId = null;
 		
 		if(customerEntity !=null)
 		{
-			Long hotelIdObj = customerService.getCustomerHotelId(customerEntity.getId()); // checkinRepository.getCustomerHotelId(customer.getId());
+			HotelDomainEntityId hotelIdObj = customerService.getCustomerHotelId(customerEntity.getDomainEntityId()); // checkinRepository.getCustomerHotelId(customer.getId());
 			
-			if(hotelIdObj!=null && hotelIdObj>0)
+			if(hotelIdObj!=null)
 			{
 				customerHotelId = hotelIdObj;
 			}
 		}
 		
-		CustomerDTO dto = customerService.convertCustomerToDto(customerEntity, customerHotelId);
+		CustomerDTO dto = customerService.convertCustomerWithHotelToDto(customerEntity, customerHotelId);
 		
 		return dto;
 	}
@@ -281,7 +283,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 			
 			if(dbCustomer.getId()>0 && dbCustomer.getSystemMessages().containsKey("guestCustomerId"))
 			{
-				Long guestId = Long.parseLong(String.valueOf(dbCustomer.getSystemMessages().get("guestCustomerId")));
+				CustomerDomainEntityId guestId = new CustomerDomainEntityId(String.valueOf(dbCustomer.getSystemMessages().get("guestCustomerId")));
 				
 				boolean anonymGuestDealsExists = dealRepository.existAnonymDelasByGuestId(guestId);
 				

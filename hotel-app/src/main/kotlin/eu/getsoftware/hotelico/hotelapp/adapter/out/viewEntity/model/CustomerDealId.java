@@ -4,28 +4,32 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model;
  * Created by Eugen on 16.07.2015.
  */
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.ICustomerDealId;
 import jakarta.persistence.Embeddable;
+import jakarta.persistence.Embedded;
 import jakarta.persistence.ManyToOne;
 import lombok.Setter;
 
-@Embeddable
-class CustomerDealId implements ICustomerDealId {
+import java.io.Serializable;
 
-	private CustomerDBEntity customerEntity;
+@Embeddable
+class CustomerDealId implements ICustomerDealId, Serializable {
+
+	private CustomerDomainEntityId customerEntityId;
 	
 	@Setter
 	private HotelDbActivity activity;
 
-	@ManyToOne
-	public CustomerDBEntity getCustomer() {
-		return customerEntity;
+//	@ManyToOne
+	@Embedded
+	public CustomerDomainEntityId getCustomerId() {
+		return customerEntityId;
 	}
 
-	public void setCustomer(CustomerDBEntity customerEntity) {
-		this.customerEntity = customerEntity;
+	public void setCustomerId(CustomerDomainEntityId customerEntity) {
+		this.customerEntityId = customerEntity;
 	}
 
 	@ManyToOne
@@ -39,7 +43,7 @@ class CustomerDealId implements ICustomerDealId {
 
 		CustomerDealId that = (CustomerDealId) o;
 
-		if (customerEntity != null ? !customerEntity.equals(that.customerEntity) : that.customerEntity != null) return false;
+		if (customerEntityId != null ? !customerEntityId.equals(that.customerEntityId) : that.customerEntityId != null) return false;
 		if (activity != null ? !activity.equals(that.activity) : that.activity != null)
 			return false;
 
@@ -48,7 +52,7 @@ class CustomerDealId implements ICustomerDealId {
 
 	public int hashCode() {
 		int result;
-		result = (customerEntity != null ? customerEntity.hashCode() : 0);
+		result = (customerEntityId != null ? customerEntityId.hashCode() : 0);
 		result = 31 * result + (activity != null ? activity.hashCode() : 0);
 		return result;
 	}

@@ -35,7 +35,7 @@ public interface ICustomerHotelCheckinEntity extends IDomainEntity {
     }
 
 
-//    default ICustomerHotelCheckinEntity createInstance(CheckinId checkinId,ICustomerRootEntity customerEntity, IHotelRootEntity hotelRootEntity, boolean isFullCheckin) {
+//    default ICustomerHotelCheckinEntity createInstance(CheckinId checkinId,ICustomerRootEntity customerEntity, HotelDomainEntity hotelRootEntity, boolean isFullCheckin) {
 //        setCheckinId(checkinId);
 //        createInstance(customerEntity, hotelRootEntity, isFullCheckin);
 //        return this;
@@ -47,7 +47,7 @@ public interface ICustomerHotelCheckinEntity extends IDomainEntity {
 //     */
 //    public static ICustomerHotelCheckinEntity withoutId(
 //            ICustomerRootEntity customerEntity,
-//            IHotelRootEntity hotelRootEntity) {
+//            HotelDomainEntity hotelRootEntity) {
 //        return new ICustomerHotelCheckinEntity(null, customerEntity, hotelRootEntity);
 //    }
 //
@@ -62,7 +62,7 @@ public interface ICustomerHotelCheckinEntity extends IDomainEntity {
 //    public static ICustomerHotelCheckinEntity withId(
 //            CheckinId existingCheckinId,
 //            ICustomerRootEntity customerEntity,
-//            IHotelRootEntity hotelRootEntity) {
+//            HotelDomainEntity hotelRootEntity) {
 //        return new ICustomerHotelCheckinEntity(existingCheckinId, customerEntity, hotelRootEntity);
 //    }
     
@@ -91,7 +91,7 @@ public interface ICustomerHotelCheckinEntity extends IDomainEntity {
 
     void setFullCheckin(boolean fullCheckin);
 
-    HotelDomainEntityId getHotelDomainId();
+    HotelDomainEntityId getHotelDomainEntityId();
 
-    CustomerDomainEntityId getCustomerDomainId();
+    CustomerDomainEntityId getCustomerDomainEntityId();
 }

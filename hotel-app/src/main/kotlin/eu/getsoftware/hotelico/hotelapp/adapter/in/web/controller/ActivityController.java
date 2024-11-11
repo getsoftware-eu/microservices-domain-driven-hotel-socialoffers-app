@@ -1,6 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller;
 
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.aspects.NotifyClients;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
@@ -34,36 +36,36 @@ public class ActivityController extends BasicController
   @MessageMapping("/activity")
   //who should recieve result of this method
   @SendTo("/activitytopic/message")
-  public HotelActivityDTO sendActivity(HotelActivityDTO activityDto) {
+  public HotelActivityDTO sendActivity(HotelActivityDTO activityDto) throws Throwable {
     logger.info("Activity sent");
 
-    HotelActivityDTO savedActivity = hotelService.addUpdateHotelActivity(activityDto.getSenderId(), activityDto);
+    HotelActivityDTO savedActivity = hotelService.addUpdateHotelActivity(activityDto.getSenderDomainId(), activityDto);
     
     return activityDto;
   }
 
   @RequestMapping(value = "/activities/customer/{customerId}/hotel/{hotelId}", method = RequestMethod.GET)
   public @ResponseBody
-  List<HotelActivityDTO> getActivitiesByHotelId(@PathVariable long customerId, @PathVariable long hotelId) {
+  List<HotelActivityDTO> getActivitiesByHotelId(@PathVariable CustomerDomainEntityId customerId, @PathVariable HotelDomainEntityId hotelId) {
     //TODO Eugen: socket ConnectException: Connection timed out: connect
     return hotelService.getHotelActivitiesByHotelId(customerId, hotelId);
   }
   
   @RequestMapping(value = "/action/{action}/customer/{customerId}/activityId/{activityId}", method = RequestMethod.GET)
   public @ResponseBody
-  HotelActivityDTO addActivityAction(@PathVariable String action, @PathVariable long customerId, @PathVariable long activityId) {
+  HotelActivityDTO addActivityAction(@PathVariable String action, @PathVariable CustomerDomainEntityId customerId, @PathVariable long activityId) {
     return hotelService.addActivityAction(customerId, activityId, action);
   }
   
   @RequestMapping(value = "/activities/sender/{senderId}/hotel/{hotelId}", method = RequestMethod.GET)
   public @ResponseBody
-  List<HotelActivityDTO> getActivitiesByCreatorAndHotelId(@PathVariable long senderId, @PathVariable long hotelId) {
+  List<HotelActivityDTO> getActivitiesByCreatorAndHotelId(@PathVariable CustomerDomainEntityId senderId, @PathVariable HotelDomainEntityId hotelId) {
     return hotelService.getHotelActivitiesBySenderAndHotelId(senderId, hotelId);
   }  
   
   @RequestMapping(value = "/activities/customer/{customerId}/activityId/{activityId}", method = RequestMethod.GET)
   public @ResponseBody
-  HotelActivityDTO getActivityById(@PathVariable long customerId, @PathVariable long activityId) {
+  HotelActivityDTO getActivityById(@PathVariable CustomerDomainEntityId customerId, @PathVariable long activityId) {
     return hotelService.getHotelActivityById(customerId, activityId);
   }
 //  
@@ -84,14 +86,14 @@ public class ActivityController extends BasicController
   @NotifyClients
   @RequestMapping(value = "/customer/{customerId}/activity/{activityId}", method = RequestMethod.DELETE)
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public @ResponseBody ResponseDTO deleteHotelActivity(@PathVariable long customerId, @PathVariable long activityId) throws Throwable {
+  public @ResponseBody ResponseDTO deleteHotelActivity(@PathVariable CustomerDomainEntityId customerId, @PathVariable long activityId) throws Throwable {
     
     return hotelService.deleteHotelActivity(customerId, activityId);
   }
 
   @RequestMapping(value = "/customer/{customerId}/activity/{activityId}", method = RequestMethod.POST)//, headers ="Accept:*/*")
   public @ResponseBody
-  HotelActivityDTO addUpdateActivity(@PathVariable long customerId, @PathVariable long activityId, @RequestBody HotelActivityDTO activityDto) throws Throwable {
+  HotelActivityDTO addUpdateActivity(@PathVariable CustomerDomainEntityId customerId, @PathVariable long activityId, @RequestBody HotelActivityDTO activityDto) throws Throwable {
 
 //    activityDto.setInitId(activityId);
     HotelActivityDTO out = hotelService.addUpdateHotelActivity(customerId, activityDto);

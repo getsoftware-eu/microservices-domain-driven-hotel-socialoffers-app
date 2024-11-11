@@ -1,33 +1,33 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.common.dto;
 
-import lombok.Getter
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId
 
 /**
  * for serialisation to JSON!
  */
-@Getter
-class UserDTO
-{
+data class UserDTO (
    
-//    private var id: Long = 0
+//    var id: Long = 0
     
-    private var domainEntityId: String = ""
+    var domainEntityId: CustomerDomainEntityId,
 
-    private var title: String? = null
+    var title: String? = null,
 
-    private var firstName: String? = null
+    var firstName: String? = null,
 
-    private var lastName: String? = null
+    var lastName: String? = null,
 
-    private var email: String? = null
+    var email: String? = null,
 
-    private var company: String? = null
+    var company: String? = null,
 
-    private var jobTitle: String? = null
+    var jobTitle: String? = null,
 
-//    private List<String> languages;
+//    List<String> languages;
 
-//    private boolean authLinkedIn;
+//    boolean authLinkedIn;
 
-    private var hotelDomainId: String? = null
+    var hotelDomainId: String? = null
+) { 
+    
 }

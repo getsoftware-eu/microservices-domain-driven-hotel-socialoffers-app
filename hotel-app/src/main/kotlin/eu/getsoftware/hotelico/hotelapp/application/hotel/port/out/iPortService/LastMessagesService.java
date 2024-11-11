@@ -41,7 +41,7 @@ public interface LastMessagesService
 	 * @return NULL if OFFLINE!
 	 */
 	@Transactional
-	Optional<Date> getLastCustomerOnlineTime(long customerId) throws Throwable;
+	Optional<Date> getLastCustomerOnlineTime(CustomerDomainEntityId customerId) throws Throwable;
 
 	/**
 	 * get still online customerList. DB QUERY!!!
@@ -55,19 +55,19 @@ public interface LastMessagesService
 	List<CustomerDomainEntityId> getOnlineCustomerIds();
 
 	//	@Transactional
-	void checkCustomerOffline(long offlineId);
+	void checkCustomerOffline(CustomerDomainEntityId offlineId);
 
 	@Transactional
-	void checkCustomerOnline(long onlineId) throws Throwable;
+	void checkCustomerOnline(CustomerDomainEntityId onlineId) throws Throwable;
 
 	@Transactional
 	void updateCustomerConsistencyId(CustomerDomainEntityId customerId, long consustencyId);
 
 	@Transactional
-	long getCustomerConsistencyId(long customerId);
+	long getCustomerConsistencyId(CustomerDomainEntityId customerId);
 
 	@Transactional
-	Map<Long, List<ChatMsgDTO>> getCustomerUnreadChatsBySenders(long receiverId);
+	Map<CustomerDomainEntityId, List<ChatMsgDTO>> getCustomerUnreadChatsBySenders(CustomerDomainEntityId receiverId);
 
 	@Transactional
 	void updateUnreadMessagesToCustomer(ChatMsgDTO newMessage);
@@ -79,9 +79,9 @@ public interface LastMessagesService
 	 */
 	void markMessageRead(ChatMsgDTO readMessage);
 
-	void markChatRead(long receiverId, long senderId);
+	void markChatRead(CustomerDomainEntityId receiverId, CustomerDomainEntityId senderId);
 
-	ChatMsgDTO getLastMessageBetweenCustomers(long senderId, long receiverId);
+	ChatMsgDTO getLastMessageBetweenCustomers(CustomerDomainEntityId senderId, CustomerDomainEntityId receiverId);
 	
 	void markLastMessageBetweenCustomers(ChatMsgDTO seenMessage);
 	
@@ -98,28 +98,28 @@ public interface LastMessagesService
 	 * @throws IllegalArgumentException if customerId < 0                     
 	 * @return
 	 */
-	CustomerNotificationDTO getLastPushNotifiation(long customerId);
+	CustomerNotificationDTO getLastPushNotifiation(CustomerDomainEntityId customerId);
 	
-	void setLastPushNotifiation(long customerId, CustomerNotificationDTO lastNotification);
+	void setLastPushNotifiation(CustomerDomainEntityId customerId, CustomerNotificationDTO lastNotification);
 	
-	void setLastFullNotification(long receiverId, CustomerNotificationDTO nextNotification);
+	void setLastFullNotification(CustomerDomainEntityId receiverId, CustomerNotificationDTO nextNotification);
 	
-	CustomerNotificationDTO getLastFullNotification(long receiverId);
+	CustomerNotificationDTO getLastFullNotification(CustomerDomainEntityId receiverId);
 	
 	/**
 	 * send periodical notification max every 5 min!
 	 * @param sessionCustomerId
 	 * @return
 	 */
-	boolean isNotificationDelayReady(long sessionCustomerId);
+	boolean isNotificationDelayReady(CustomerDomainEntityId sessionCustomerId);
 
-	long getCustomerHotelId(long customerId);
+	HotelDomainEntityId getCustomerHotelId(CustomerDomainEntityId customerId);
 	
 	void updateCustomerHotelId(CustomerDomainEntityId customerId, HotelDomainEntityId hotelId);
 	
-	void addGuestGpsPosition(long requesterId, Double latLonPoint);
+	void addGuestGpsPosition(CustomerDomainEntityId requesterId, Double latLonPoint);
 	
-	Double getGuestGpsPosition(long requesterId);
+	Double getGuestGpsPosition(CustomerDomainEntityId requesterId);
 	
 	static final int ONLINE_DELAY_MINUTES = 25;
 }

@@ -2,6 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.chat;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.ChatMessageView;
 import eu.getsoftware.hotelico.hotelapp.application.chat.domain.infrastructure.ChatMSComminicationService;
 import org.springframework.stereotype.Service;
@@ -89,12 +90,12 @@ public class ChatMSComminicationServiceImpl implements ChatMSComminicationServic
     }
 
     @Override
-    public Collection<? extends CustomerDTO> getChatSendersByCustomerId(long receiverId) {
+    public Collection<? extends CustomerDTO> getChatSendersByCustomerDomainId(CustomerDomainEntityId receiverId) {
         return List.of();
     }
 
     @Override
-    public Collection<? extends CustomerDTO> getChatReceiversByCustomerId(long receiverId) {
+    public Collection<? extends CustomerDTO> getChatReceiversByCustomerDomainId(CustomerDomainEntityId receiverId) {
         return List.of();
     }
 }

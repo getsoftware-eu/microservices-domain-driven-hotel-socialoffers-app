@@ -136,10 +136,10 @@ public class CustomerRootEntity implements ICustomerRootEntity {
 
     }
 
-    @Override
-    public void setLinkedInId(String linkedInId) {
-
-    }
+//    @Override
+//    public void setLinkedInId(String linkedInId) {
+//
+//    }
 
  
 

@@ -23,7 +23,12 @@ interface HotelRepository: JpaRepository<HotelDbEntity, Long> {
 		"WHERE h.active = TRUE "+
 		"AND h.virtual = TRUE ";
 
-		const val FIND_DEMO_HOTEL_ID_QUERY = "SELECT (h.id) " +
+		const val FIND_DEMO_HOTEL_ID_QUERY = "SELECT (h.domainId) " +
+		"FROM Hotel h " +
+		"WHERE h.active = TRUE "+
+		"AND h.currentHotelAccessCode = 'demo' ";	
+		
+		const val FIND_DEMO_HOTEL_DOMAIN_ID_QUERY = "SELECT (h.domainEntityId) " +
 		"FROM Hotel h " +
 		"WHERE h.active = TRUE "+
 		"AND h.currentHotelAccessCode = 'demo' ";
@@ -48,7 +53,7 @@ interface HotelRepository: JpaRepository<HotelDbEntity, Long> {
 	//@Query(FIND_BY_HOTEL_CODE_QUERY)
 	fun findByCurrentHotelAccessCodeAndActive(currentHotelAccessCode: String, active: Boolean = true): Optional<HotelDbEntity>
 	
-	fun findByDomainEntityIdAndActive(domainEntityId: String, active: Boolean = true): Optional<HotelDbEntity>
+	fun findByDomainEntityIdAndActive(domainEntityId: HotelDomainEntityId, active: Boolean = true): Optional<HotelDbEntity>
 	
 	@Query(FIND_ACTIVITY_NUMBER_BY_HOTEL_QUERY)
 	fun getActivityCounter(@Param("hotelId") hotelId: Int): Int
@@ -66,7 +71,10 @@ interface HotelRepository: JpaRepository<HotelDbEntity, Long> {
 	fun findByCreationTimeAndActive(creationTime: Long, active: Boolean = true): List<HotelDbEntity>
 	
 	@Query(FIND_DEMO_HOTEL_ID_QUERY)
-	fun getDemoHotelId(): Int
+	fun getDemoHotelId(): HotelDomainEntityId
+	
+	@Query(FIND_DEMO_HOTEL_DOMAIN_ID_QUERY)
+	fun getDemoHotelDomainId(): HotelDomainEntityId
 
 	@Query(FIND_ACTIVE_GPS_HOTELS_QUERY)
 	fun findActiveGpsHotels(): List<HotelDbEntity>

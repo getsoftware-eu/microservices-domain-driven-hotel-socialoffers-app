@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
@@ -37,8 +38,9 @@ public class CustomerDeal implements ICustomerDeal {
 	@Column(name = "initId", columnDefinition = "BIGINT(20) DEFAULT 0")
 	private long initId;
 	
-	@Column(name = "guestCustomerId", columnDefinition = "BIGINT(20) DEFAULT 0")
-	private long guestCustomerId;
+//	@Column(name = "guestCustomerId", columnDefinition = "BIGINT(20) DEFAULT 0")
+	@Embedded
+	private CustomerDomainEntityId guestCustomerId;
 
 	@Column(name = "totalMoney", columnDefinition = "Decimal(6,2) default 0")
 	private Double totalMoney;
@@ -89,12 +91,12 @@ public class CustomerDeal implements ICustomerDeal {
 	}
 
 	@Transient
-	public CustomerDBEntity getCustomer() {
-		return getPk().getCustomer();
+	public CustomerDomainEntityId getCustomerId() {
+		return getPk().getCustomerId();
 	}
 	
-	public void setCustomer(CustomerDBEntity customerEntity) {
-		getPk().setCustomer(customerEntity);
+	public void setCustomerId(CustomerDomainEntityId customerEntityId) {
+		getPk().setCustomerId(customerEntityId);
 	}
 
 	@Transient

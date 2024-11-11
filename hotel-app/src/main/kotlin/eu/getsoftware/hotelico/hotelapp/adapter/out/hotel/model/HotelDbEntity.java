@@ -4,7 +4,7 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEnt
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IFileUploadable;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -23,7 +23,8 @@ import static org.hibernate.internal.util.collections.CollectionHelper.listOf;
 @Entity
 @Getter @Setter
 @Table(name = "hotel", schema = "hotel")
-public class HotelDbEntity implements IHotelRootEntity, Serializable, IFileUploadable
+//@RequiredArgsConstructor - eu: NEVER FOR ENTITY
+public class HotelDbEntity extends HotelDomainEntity implements Serializable, IFileUploadable
 {
     private static final long serialVersionUID = -4429239383913774205L;
 	
@@ -33,12 +34,15 @@ public class HotelDbEntity implements IHotelRootEntity, Serializable, IFileUploa
     @SequenceGenerator(name="hotel_id_generator", sequenceName = "hotel_id_seq")
     private long id;
 
-    @Embedded
-    private HotelDomainEntityId domainEntityId;
+    @Embedded @Column(name = "domain_entity_id", length = 50)
+    public HotelDomainEntityId getDomainEntityId() {return domainEntityId;};
 
-    @Embedded
-    public DBAddress address;
+    @Embedded @Column(name = "address", length = 50)
+    public DBAddress getAddress() { return address; };
 
+    @Column(name = "name", nullable = false)
+    String getName(){ return name; };
+    
     @Version
     private Long version;
     
@@ -56,9 +60,6 @@ public class HotelDbEntity implements IHotelRootEntity, Serializable, IFileUploa
     
     @Column(name = "virtual", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
     private boolean virtual = false;
-    
-    @Column(name = "name", nullable = false)
-    private String name;    
     
     @Column(name = "wellcomeMessage", nullable = false)
     private String wellcomeMessage;
@@ -157,16 +158,12 @@ public class HotelDbEntity implements IHotelRootEntity, Serializable, IFileUploa
     @ElementCollection
     private Collection<String> getStaffIdList;
 
-    public HotelDbEntity() {
-        super();
-    }
-
-    @Override
+//    @Override
     public Set<HotelWallPost> hotelWallPosts() {
         return Set.of();
     }
 
-    @Override
+//    @Override
     public Set<HotelDbActivity> hotelActivities() {
         return Set.of();
     }
@@ -187,7 +184,7 @@ public class HotelDbEntity implements IHotelRootEntity, Serializable, IFileUploa
         this.mediaUploaded = mediaUploaded;
     }
 
-    @Override
+//    @Override
     public Collection<CustomerDomainEntityId> getStaffIdList() {
         return getStaffIdList.stream().map(CustomerDomainEntityId::new).toList();
     }

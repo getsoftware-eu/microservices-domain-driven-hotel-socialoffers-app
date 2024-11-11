@@ -51,7 +51,7 @@ public class MenuOrderView implements Serializable
 	private HotelDbEntity hotelRootEntity;
 
 	@ManyToOne
-	@JoinColumn(name="senderId")
+	@JoinColumn(name="senderDomainId")
 	private CustomerDBEntity sender;
 	
 	@Column

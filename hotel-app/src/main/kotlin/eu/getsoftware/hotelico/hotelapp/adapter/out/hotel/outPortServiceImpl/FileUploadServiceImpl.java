@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.FileUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
@@ -472,7 +473,7 @@ public class FileUploadServiceImpl implements FileUploadService
 //			if(sendInfo.length>3)
 			{
 //				Integer hotelId = Integer.parseInt(sendInfo[0]);
-//				Integer senderId = Integer.parseInt(sendInfo[1]);
+//				Integer senderDomainId = Integer.parseInt(sendInfo[1]);
 //				String model = sendInfo[2];
 //				Integer modelId = Integer.parseInt(sendInfo[3]);
 	
@@ -485,7 +486,7 @@ public class FileUploadServiceImpl implements FileUploadService
 					return false;
 				}
 	
-				//					newFile.setCreatorId(senderId);
+				//					newFile.setCreatorId(senderDomainId);
 	
 				switch (model)
 				{
@@ -510,10 +511,10 @@ public class FileUploadServiceImpl implements FileUploadService
 							long newConsistencyId = new Date().getTime();
 							
 							sender.setConsistencyId(newConsistencyId);
-							lastMessagesService.updateCustomerConsistencyId(sender.getId(), newConsistencyId);
+							lastMessagesService.updateCustomerConsistencyId(sender.getDomainEntityId(), newConsistencyId);
 						}
 						customerRepository.saveAndFlush(sender);
-						notificationService.notificateAboutEntityEvent(customerService.convertCustomerToDto(sender, 0), HotelEvent.EVENT_LOGO_CUSTOMER_CHANGE_MESSAGE, sender.getPictureUrl(), sender.getId());
+						notificationService.notificateAboutEntityEvent(customerService.convertCustomerWithHotelToDto(sender, new HotelDomainEntityId("-")), HotelEvent.EVENT_LOGO_CUSTOMER_CHANGE_MESSAGE, sender.getPictureUrl(), sender.getId());
 
 						break;
 					}
@@ -545,7 +546,7 @@ public class FileUploadServiceImpl implements FileUploadService
 							
 							notificationService.broadcastActivityNotification(activityDto);
 
-							notificationService.notificateAboutEntityEvent(customerService.convertCustomerToDto(sender, activity.getHotel().getId()), HotelEvent.EVENT_LOGO_ACTIVITY_CHANGE_MESSAGE, activity.getPictureUrl(), activity.getInitId());
+							notificationService.notificateAboutEntityEvent(customerService.convertCustomerWithHotelToDto(sender, activity.getHotel().getDomainEntityId()), HotelEvent.EVENT_LOGO_ACTIVITY_CHANGE_MESSAGE, activity.getPictureUrl(), activity.getInitId());
 
 						}
 	
@@ -586,7 +587,7 @@ public class FileUploadServiceImpl implements FileUploadService
 							hotelRepository.saveAndFlush(hotelRootEntity);
 
 							//TODO Eugen: send hotel image notification
-							notificationService.notificateAboutEntityEvent(customerService.convertCustomerToDto(sender, hotelRootEntity.getId()), HotelEvent.EVENT_LOGO_HOTEL_CHANGE_MESSAGE, hotelRootEntity.getPictureUrl(), hotelRootEntity.getId());
+							notificationService.notificateAboutEntityEvent(customerService.convertCustomerWithHotelToDto(sender, hotelRootEntity.getDomainEntityId()), HotelEvent.EVENT_LOGO_HOTEL_CHANGE_MESSAGE, hotelRootEntity.getPictureUrl(), hotelRootEntity.getId());
 						}
 
 						break;

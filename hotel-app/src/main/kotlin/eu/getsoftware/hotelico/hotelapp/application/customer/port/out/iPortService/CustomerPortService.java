@@ -19,7 +19,7 @@ public interface CustomerPortService<T extends ICustomerRootEntity>
 {
     List<T> getCustomerEntities();
 
-    Optional<T> getEntityById(long customerId);
+    Optional<T> getEntityById(CustomerDomainEntityId customerId);
 
     List<CustomerDTO> getCustomerDTOs();
     
@@ -27,29 +27,29 @@ public interface CustomerPortService<T extends ICustomerRootEntity>
     
     Optional<CustomerDTO> getByEmail(String email);
     
-    Set<CustomerDTO> getByHotelId(long customerId, long hotelId, boolean addStaff);
+    Set<CustomerDTO> getByHotelId(CustomerDomainEntityId customerId, HotelDomainEntityId hotelId, boolean addStaff);
 
     CustomerDTO fillDtoWithHotelInfo(CustomerDTO dto, ICustomerHotelCheckinEntity validCheckin);
    
-    Set<CustomerDTO> getByCity(long customerId, String city);
+    Set<CustomerDTO> getByCity(CustomerDomainEntityId customerId, String city);
     
-    Set<CustomerDTO> getCustomerCities(long customerId);
+    Set<CustomerDTO> getCustomerCities(CustomerDomainEntityId customerId);
 
-    Optional<CustomerDTO> getById(long customerId, long requesterCustomerId);
+    Optional<CustomerDTO> getById(CustomerDomainEntityId customerId, long requesterCustomerId);
     
     CustomerDTO addCustomer(CustomerDTO customerDto, String password);
 
     CustomerDTO updateCustomer(CustomerDTO customerDto, int requesterId);
     
 //    @Transactional
-    boolean relocateGuestDealsToLoggedCustomer(T customerEntity, Long guestCustomerId);
+    boolean relocateGuestDealsToLoggedCustomer(T customerEntity, CustomerDomainEntityId guestCustomerId);
 
-    CustomerDTO convertCustomerToDto(T customerEntity, long hotelId);
+    CustomerDTO convertCustomerWithHotelToDto(T customerEntity, HotelDomainEntityId hotelId);
 
-    CustomerDTO convertCustomerToDto(T customerEntity, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin);
+    CustomerDTO convertCustomerWithHotelToDto(T customerEntity, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin);
     CustomerDTO convertMyCustomerToFullDto(T customerEntity);
 		
-    CustomerDTO serializeCustomerHotelInfo(CustomerDTO dto, long hotelId, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin);
+    CustomerDTO serializeCustomerHotelInfo(CustomerDTO dto, HotelDomainEntityId hotelId, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin);
 
     CustomerDTO synchronizeCustomerToDto(CustomerDTO customerDto);
     
@@ -64,7 +64,7 @@ public interface CustomerPortService<T extends ICustomerRootEntity>
      */
     T addGetAnonymCustomer();
 
-    boolean isStaffOrAdminId(long receiverId);
+    boolean isStaffOrAdminId(CustomerDomainEntityId receiverId);
 
     void save(T customerEntity);
 
@@ -73,4 +73,6 @@ public interface CustomerPortService<T extends ICustomerRootEntity>
     List<CustomerDTO> findAllOnline(Timestamp timestamp);
 
     List<T> getAllIn24hOnline();
+
+    Optional<T> getByDomainId(CustomerDomainEntityId customerId);
 }

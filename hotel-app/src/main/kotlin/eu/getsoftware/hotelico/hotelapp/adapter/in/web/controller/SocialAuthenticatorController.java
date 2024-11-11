@@ -314,7 +314,7 @@ public class SocialAuthenticatorController extends BasicController
 	}
 
 	@RequestMapping("/auth/facebook/callback")
-	public RedirectView callBack(@RequestParam(required=false) String code, @RequestParam("state") String state, HttpSession session) {
+	public RedirectView callBack(@RequestParam(required=false) String code, @RequestParam("state") String state, HttpSession session) throws Throwable {
 
 		//		String stateFromSession = (String) session.getAttribute(STATE);
 		//		session.removeAttribute(STATE);
@@ -469,7 +469,7 @@ public class SocialAuthenticatorController extends BasicController
 		if(foundFacebookCustomerDTO != null)
 		{
 //			foundFacebookCustomerDTO.setLogged(true);
-			lastMessagesService.checkCustomerOnline(foundFacebookCustomerDTO.getId());
+			lastMessagesService.checkCustomerOnline(foundFacebookCustomerDTO.getDomainEntityId());
 
 			//			customerService.getEntityById(foundFacebookCustomer.getId());
 			//			customerRepository.saveAndFlush(foundFacebookCustomer);

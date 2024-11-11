@@ -2,26 +2,34 @@ package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDo
 
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.common.collect.ImmutableSet;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.DBAddress;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelWallPost;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
+import java.util.Set;
 
 @Builder
-@RequiredArgsConstructor
+//@NoArgsConstructor
+//@RequiredArgsConstructor - NEVER for Entity
 public class HotelDomainEntity /*implements MultitenantDocument, Scoreable*/ {
-
-    public static final String TYPE_NAME = "product";
+    
+    public static final String TYPE_NAME = "hotel";
 
 //    @Id
 //    private String id; // UUID can not be used as document ID yet. https://jira.spring.io/browse/DATAES-163
 
     @Getter
-    private final HotelDomainEntityId domainEntityId;
+    protected HotelDomainEntityId domainEntityId;
 
+    @Getter
+    protected DBAddress address;
+    
 //    @With
     private LocalDateTime indexedAt;
 
@@ -35,29 +43,56 @@ public class HotelDomainEntity /*implements MultitenantDocument, Scoreable*/ {
     private boolean visible;
 
 //    @JsonView(HotelPartialUpdateView.class)
-    private String sku;
+//    private String sku;
 
 //    @JsonView(HotelPartialUpdateView.class)
-    private String name;
+    protected String name;
 
 //    @JsonView(HotelPartialUpdateView.class)
     private String description;
 
 //    @JsonView(HotelPartialUpdateView.class)
-    private String manufacturer;
+//    private String manufacturer;
 
 //    @JsonView(HotelPartialUpdateView.class)
-    private String essentialFeatures;
+//    private String essentialFeatures;
 
 //    @JsonView(HotelPartialUpdateView.class)
-    private String defaultImageRelUri;
+//    private String defaultImageRelUri;
 
 //    @JsonView(HotelPartialUpdateView.class)
     private LocalDateTime createdAt;
 
+    //eugen: mappedBy entity!
+    Set<? extends IHotelWallPost> hotelWallPosts;
+
+    //eugen: mappedBy entity!
+    Set<HotelDomainEntity> hotelActivities;
+
+    public String getPlainFilePath(final int upperOrderId){
+        return null;
+    };
+
+    public void setMediaUploaded(boolean mediaUploaded){
+        
+    };
+
+    boolean isVirtual;
+
+    String getCurrentHotelAccessCode;
+
+    Collection<CustomerDomainEntityId> getStaffIdList;
+
+    double latitude;
+
+    double longitude;
+
+    String guestPushIds;
+
+    public HotelDomainEntity(){}
 
 //    @JsonView(HotelPartialUpdateView.class)
-    private boolean onSale;
+//    private boolean onSale;
 
 
 //    @Singular
@@ -80,6 +115,12 @@ public class HotelDomainEntity /*implements MultitenantDocument, Scoreable*/ {
             }
         });
         return builder;
+    }
+
+    public String getCurrentHotelAccessCode() { return null;
+    }
+
+    public Collection<Object> getStaffIdList() { return null;
     }
 
 //    /**

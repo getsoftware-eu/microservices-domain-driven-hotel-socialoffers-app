@@ -25,5 +25,5 @@ public interface IWallpostService {
 
     List<CustomerDTO> getWallPostParticipantsByHotelId(long requesterId, long hotelId);
 
-    void sendNotificationWallpostOnDemand(CustomerDTO customerEntity, Date lastSameHotelCheckin, HotelDTO hotelRootEntity, CustomerDTO staffSender);
+    void sendNotificationWallpostOnDemand(CustomerDTO customerEntity, Date lastSameHotelCheckin, HotelDTO hotelRootEntity, CustomerDTO staffSender) throws Throwable;
 }

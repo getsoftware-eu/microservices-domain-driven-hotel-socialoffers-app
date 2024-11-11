@@ -35,7 +35,7 @@ public class MenuOrder implements Serializable
 	
 	//Eugen: not RootEntity, but its id
 	//	@ManyToOne
-	@JoinColumn(name="senderId")
+	@JoinColumn(name="senderDomainId")
 	private long senderId;
 	
 	@Column(name = "initId", columnDefinition = HibernateUtils.ColumnDefinition.LONG_20_DEFAULT_0)

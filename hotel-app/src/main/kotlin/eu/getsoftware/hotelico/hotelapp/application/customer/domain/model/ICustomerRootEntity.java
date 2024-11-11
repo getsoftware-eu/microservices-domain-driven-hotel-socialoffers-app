@@ -40,7 +40,7 @@ public interface ICustomerRootEntity extends IDomainEntity {
 
     void setEmail(String email);
 
-    void setLinkedInId(String linkedInId);
+//    void setLinkedInId(String linkedInId);
 
 //    void setFacebookId(String facebookId);
     

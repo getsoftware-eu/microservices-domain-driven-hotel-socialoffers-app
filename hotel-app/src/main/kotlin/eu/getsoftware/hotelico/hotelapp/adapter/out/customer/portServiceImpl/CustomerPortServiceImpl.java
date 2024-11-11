@@ -3,6 +3,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.customer.portServiceImpl;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
@@ -100,7 +101,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
     }
     
     @Override
-    public long getCustomerHotelId(long customerId){
+    public HotelDomainEntityId getCustomerHotelId(CustomerDomainEntityId customerId){
         return lastMessagesService.getCustomerHotelId(customerId);
     }
     
@@ -138,8 +139,8 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 //    }
     
     @Override
-    public Optional<CustomerDBEntity> getEntityById(long customerId) {
-        return customerRepository.findById(customerId);//.orElseThrow(()->new RuntimeException("not found"));
+    public Optional<CustomerDBEntity> getEntityById(CustomerDomainEntityId customerId) {
+        return customerRepository.findByDomainId(customerId);//.orElseThrow(()->new RuntimeException("not found"));
 //        return Optional.of(modelMapper.map(entity, CustomerDTO.class));
     }
 
@@ -159,7 +160,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 
         customerEntity = customerRepository.saveAndFlush(customerEntity);
 
-        long initHotelId = lastMessagesService.getInitHotelId();
+        HotelDomainEntityId initHotelId = lastMessagesService.getInitHotelId();
 
         if(customerDto.getHotelId()>0)
         {
@@ -179,7 +180,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
                 customerEntity.setHotelStaff(true);
                 customerEntity = customerRepository.saveAndFlush(customerEntity);
 
-                initHotelId = hotelRootEntity.getId();
+                initHotelId = hotelRootEntity.getDomainEntityId();
             }
         }
 
@@ -401,7 +402,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 //    }
 
     @Override
-    public CustomerDTO serializeCustomerHotelInfo(CustomerDTO dto, long hotelId, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin) {
+    public CustomerDTO serializeCustomerHotelInfo(CustomerDTO dto, HotelDomainEntityId hotelId, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin) {
         return null;
     }
 
@@ -411,7 +412,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
     }
 
     //    @Override
-    public boolean relocateGuestDealsToLoggedCustomer(CustomerDBEntity customerEntity, Long guestCustomerId)
+    public boolean relocateGuestDealsToLoggedCustomer(CustomerDBEntity customerEntity, CustomerDomainEntityId guestCustomerId)
     {
         if(customerEntity ==null || guestCustomerId==null)
         {
@@ -422,7 +423,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
         
         for (CustomerDeal next: anonymGuestDeals)
         {
-            next.setCustomer(customerEntity);
+            next.setCustomerId(customerEntity.getDomainEntityId());
 //            next.setGuestCustomerId(0);
             dealRepository.saveAndFlush(next);
         }
@@ -469,12 +470,12 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
         
     }
     
-    public CustomerDTO convertCustomerToDto(CustomerDBEntity customerEntity, long hotelId){
+    public CustomerDTO convertCustomerToDto(CustomerDBEntity customerEntity, HotelDomainEntityId hotelId){
         return convertCustomerToDto(customerEntity, hotelId, false, null);
     }
 
     @Override
-    public CustomerDTO convertCustomerToDto(CustomerDBEntity customerEntity, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin) {
+    public CustomerDTO convertCustomerWithHotelToDto(CustomerDBEntity customerEntity, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin) {
         return null;
     }
 
@@ -483,7 +484,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
     }
     
     public CustomerDTO convertMyCustomerToFullDto(CustomerDBEntity customerEntity){
-        return convertCustomerToDto(customerEntity, 0, true, null);
+        return convertCustomerToDto(customerEntity, new HotelDomainEntityId("-"), true, null);
     }
     
     
@@ -498,7 +499,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
      * @param validCheckin
      * @return
      */
-    private CustomerDTO convertCustomerToDto(CustomerDBEntity customerEntity, long hotelId, boolean fullSerialization, CustomerHotelCheckin validCheckin)
+    private CustomerDTO convertCustomerToDto(CustomerDBEntity customerEntity, HotelDomainEntityId hotelId, boolean fullSerialization, CustomerHotelCheckin validCheckin)
     {
         CustomerDTO dto = modelMapper.map(Objects.requireNonNull(customerEntity), CustomerDTO.class);
         
@@ -745,7 +746,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
     }
 
     @Override
-    public Set<CustomerDTO> getCustomerCities(long customerId)
+    public Set<CustomerDTO> getCustomerCities(CustomerDomainEntityId customerId)
     {
         //TODO Eugen: bessere query by active and city
         List<String> allCustomersCities = customerRepository.findNotStaffUniueCities();
@@ -760,7 +761,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
         for (String nextCity: citiesList)
         {
             CustomerDTO dto = CustomerDTO.builder()
-                    .initId(customerId)
+                    .domainId(customerId)
                     .build();
             
             resultCustomerList.add(dto);
@@ -770,12 +771,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
     }
 
     @Override
-    public Optional<CustomerDTO> getById(long customerId, long requesterCustomerId) {
-        return Optional.empty();
-    }
-
-    @Override
-    public Set<CustomerDTO> getByCity(long customerId, String city)
+    public Set<CustomerDTO> getByCity(CustomerDomainEntityId customerId, String city)
     {
         //TODO Eugen: bessere query by active and city
         List<CustomerDBEntity> allCustomerEntities = customerRepository.findAll();
@@ -787,7 +783,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
             if(nextCustomerRootEntity.isActive() && (nextCustomerRootEntity.getCustomerDetails().getCity()!=null && nextCustomerRootEntity.getCustomerDetails().getCity().equals(city) || city==null && nextCustomerRootEntity.getCustomerDetails().getCity()==null))
             {
                 //TODO Eugen: create global convert method to dto...
-                long hotelId = getCustomerHotelId(nextCustomerRootEntity.getId());
+                HotelDomainEntityId hotelId = getCustomerHotelId(nextCustomerRootEntity.getDomainEntityId());
                 CustomerDTO dto = convertCustomerToDto(nextCustomerRootEntity, hotelId);
 
 //                boolean isPartnerInMyHotelWithFullCheckin = customerHotelId>0 && customerHotelId==dto.getHotelId() && checkinRepository.isFullCheckinForCustomerByHotelId(dto.getId(), dto.getHotelId(), new Date());
@@ -802,9 +798,9 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 
     @Override
     @Transactional
-    public Set<CustomerDTO> getByHotelId(long guestRequesterId, long hotelId, boolean addStaff)
+    public Set<CustomerDTO> getByHotelId(CustomerDomainEntityId guestRequesterId, HotelDomainEntityId hotelId, boolean addStaff)
     {
-                Set<CustomerDTO> customerDtoSet =  new HashSet<>();
+        Set<CustomerDTO> customerDtoSet =  new HashSet<>();
 
 //        long requesterId = guestRequesterId;
 //        
@@ -923,7 +919,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
     }
 
     @Override
-    public boolean isStaffOrAdminId(long receiverId)
+    public boolean isStaffOrAdminId(CustomerDomainEntityId receiverId)
     {
         return customerRepository.checkStaffOrAdmin(receiverId);
     }

@@ -84,16 +84,16 @@ public class UserServiceImpl implements IUserService
     @Transactional
     @Override
     public UserDTO updateUser(UserDTO userDto) {
-        UserEntity dto = userRepository.findBy(userDto.getDomainEntityId()).or;
-        if(dto!=null)
+        UserEntity entity = userRepository.findByDomainId(userDto.getDomainEntityId());
+        if(entity!=null)
         {
-//            dto.setHotelId(userDto.getHotelId());
-//            dto.setFirstName(userDto.getFirstName());
-//            dto.setLastName(userDto.getLastName());
-//            dto.setCompany(userDto.getCompany());
-//            dto.setEmail(userDto.getEmail());
+//            entity.setHotelId(userDto.getHotelId());
+//            entity.setFirstName(userDto.getFirstName());
+//            entity.setLastName(userDto.getLastName());
+//            entity.setCompany(userDto.getCompany());
+//            entity.setEmail(userDto.getEmail());
         }
-        return mapper.map(userRepository.saveAndFlush(dto), UserDTO.class);
+        return mapper.map(userRepository.saveAndFlush(entity), UserDTO.class);
     }
 
     @Transactional

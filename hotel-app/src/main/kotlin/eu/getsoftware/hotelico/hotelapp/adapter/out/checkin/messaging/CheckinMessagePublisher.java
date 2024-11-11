@@ -1,10 +1,10 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainLayerPayload.MessageStatus;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessage;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessagePayload;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.chat.messaging.MessageStatus;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.service.messaging.KafkaMessagePublisher;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
 import lombok.*;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-import static eu.getsoftware.hotelico.hotelapp.adapter.out.chat.messaging.MessageStatus.QUEUED;
+import static eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainLayerPayload.MessageStatus.QUEUED;
 
 @Slf4j
 @Component

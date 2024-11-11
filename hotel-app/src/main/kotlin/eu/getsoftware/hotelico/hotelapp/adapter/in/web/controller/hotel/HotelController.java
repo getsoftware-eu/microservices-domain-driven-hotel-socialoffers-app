@@ -4,6 +4,8 @@ import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.BasicHotelException;
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.aspects.NotifyClients;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
@@ -73,9 +75,9 @@ public class HotelController extends BasicController
 //    }
     
     @RequestMapping(value = "/customer/{customerId}/hotel/{hotelId}", method = RequestMethod.GET)
-    public HotelDTO get(@PathVariable long customerId, @PathVariable long hotelId, final HttpServletResponse response) {
+    public HotelDTO get(@PathVariable long customerId, @PathVariable HotelDomainEntityId hotelId, final HttpServletResponse response) {
         response.setHeader("Cache-Control", "no-cache");
-        HotelDTO out = hotelService.getHotelById(hotelId);
+        HotelDTO out = hotelService.getHotelByDomainId(hotelId);
         return out;
     }
     
@@ -111,7 +113,7 @@ public class HotelController extends BasicController
     }  
     
     @RequestMapping(value = "/customer/hotel/{hotelId}", method = RequestMethod.GET)
-    public HotelDTO getWithoutCustomer(@PathVariable long hotelId, final HttpServletResponse response) {
+    public HotelDTO getWithoutCustomer(@PathVariable HotelDomainEntityId hotelId, final HttpServletResponse response) {
         response.setHeader("Cache-Control", "no-cache");
         HotelDTO out = hotelService.getHotelById(hotelId);
         return out;
@@ -178,7 +180,7 @@ public class HotelController extends BasicController
 
     @RequestMapping(value = "/getGpsHotelCity/requesterId/{requesterId}/lat/{lat}/lon/{lon}", method = RequestMethod.GET)
     public @ResponseBody
-    CustomerNotificationDTO getGpsHotelCity(@PathVariable long requesterId, @PathVariable String lat, @PathVariable String lon, HttpSession httpSession) {
+    CustomerNotificationDTO getGpsHotelCity(@PathVariable CustomerDomainEntityId requesterId, @PathVariable String lat, @PathVariable String lon, HttpSession httpSession) {
 
         double latPoint = Double.parseDouble(lat);
         double lonPoint = Double.parseDouble(lon);

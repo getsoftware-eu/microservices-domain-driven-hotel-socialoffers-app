@@ -37,7 +37,7 @@ public interface CheckinPortService {
 
     CustomerDTO updateCheckin(CustomerDTO sessionCustomer);
 
-    CustomerDBEntity getStaffbyHotelId(Long hotelId);
+    CustomerDBEntity getStaffbyHotelId(HotelDomainEntityId hotelId);
 
-    List<CustomerDTO> getActiveCustomersByHotelId(Long hotelId, Date date);
+    List<CustomerDTO> getActiveCustomersByHotelId(HotelDomainEntityId hotelId, Date date);
 }

@@ -3,7 +3,9 @@ package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.BasicHotelException;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.WallPostDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.ReorderAction;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
@@ -14,20 +16,20 @@ import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.u
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelDomainEntity;
 
 import java.awt.geom.Point2D;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public interface IHotelService<T extends IHotelRootEntity>
+public interface IHotelService<T extends HotelDomainEntity>
 {
     List<HotelDTO> getHotels();
 
-    List<HotelDTO> getHotelCities(long requesterId);
+    List<HotelDTO> getHotelCities(CustomerDomainEntityId requesterId);
 
-    List<HotelDTO> getHotelsByCity(long customerId, String city) throws BasicHotelException;
+    List<HotelDTO> getHotelsByCity(CustomerDomainEntityId customerId, String city) throws BasicHotelException;
 
     HotelActivityDTO updateHotelActivity(HotelActivityDTO hotelActivityDto);
 
@@ -35,7 +37,7 @@ public interface IHotelService<T extends IHotelRootEntity>
 
     Map<Long, String> getUnsubscribeGuestPushIds();
 
-    Optional<T> getEntityById(long hotelId);
+    Optional<T> getEntityById(HotelDomainEntityId hotelId);
     Optional<T> getEntityByDomainId(HotelDomainEntityId hotelId);
 
     HotelDTO getHotelById(HotelDomainEntityId hotelId);
@@ -45,7 +47,7 @@ public interface IHotelService<T extends IHotelRootEntity>
     
     boolean existsHotelByCode(String hotelCode);
 
-    HotelActivityDTO addActivityAction(long customerId, long activityId, ActivityAction action);
+    HotelActivityDTO addActivityAction(CustomerDomainEntityId customerId, long activityId, ActivityAction action) throws Throwable;
 
     void reorderActivitiesInHotel(ReorderAction action, HotelDbActivity activity);
 
@@ -53,7 +55,7 @@ public interface IHotelService<T extends IHotelRootEntity>
 
     double getDistanceKmToHotel(Point2D.Double from, T hotelRootEntity);
 
-    WallPostDTO getWallPostById(long wallPostId);
+    WallPostDTO getWallPostById(WallPostDomainEntityId wallPostId);
 
     HotelDTO addHotel(HotelDTO hotelDto);
 
@@ -63,56 +65,56 @@ public interface IHotelService<T extends IHotelRootEntity>
 
     HotelDTO updateHotel(HotelDTO hotelDto);
 
-    CustomerDTO addGuestAction(long guestCustomerId, String action, Long hotelId, CustomerDTO guestDto);
+    CustomerDTO addGuestAction(CustomerDomainEntityId guestCustomerId, String action, Long hotelId, CustomerDTO guestDto);
 
-    ResponseDTO deleteHotel(long hotelId, long customerId);
+    ResponseDTO deleteHotel(HotelDomainEntityId hotelId, CustomerDomainEntityId customerId);
 
     String getVirtualHotelCode();
 
     Optional<T> findByCurrentHotelAccessCodeAndActive(String hotelCode, boolean active);
 
-    Optional<T> getOne(long hotelId);
+    Optional<T> getOne(HotelDomainEntityId hotelId);
     
     HotelDTO convertToDTO(T hotelEntity);
 
     WallPostDTO addUpdateWallPost(WallPostDTO checkinNotificationWallDto) throws Throwable;
 
-    int getCustomerDealCounter(long receiverId, int i);
+    int getCustomerDealCounter(CustomerDomainEntityId receiverId, int i);
 
     public WallPostDTO updateWallPost(WallPostDTO wallPostDto);
     
-    public HotelActivityDTO addUpdateHotelActivity(long customerId, HotelActivityDTO hotelActivityDto) throws Throwable;
+    public HotelActivityDTO addUpdateHotelActivity(CustomerDomainEntityId customerId, HotelActivityDTO hotelActivityDto) throws Throwable;
 
     Optional<T> getActivityByIdOrInitId(long activId, long activId1);
 
-    List<WallPostDTO> getWallPostsByHotelId(long hotelId);
+    List<WallPostDTO> getWallPostsByHotelId(HotelDomainEntityId hotelId);
 
-    List<CustomerDTO> getWallPostParticipantsByHotelId(long requesterId, long hotelId);
+    List<CustomerDTO> getWallPostParticipantsByHotelId(CustomerDomainEntityId requesterId, HotelDomainEntityId hotelId);
 
-    List<CustomerDealDTO> getDealsByActivityOrHotelId(long customerId, long hotelId, int activityId, boolean onlyRequesterDeals, boolean showClosed);
+    List<CustomerDealDTO> getDealsByActivityOrHotelId(CustomerDomainEntityId customerId, HotelDomainEntityId hotelId, int activityId, boolean onlyRequesterDeals, boolean showClosed);
 
-    CustomerDealDTO addDealAction(long customerId, long activityId, long dealId, DealAction dealAction, String tablePosition, double totalMoney);
+    CustomerDealDTO addDealAction(CustomerDomainEntityId customerId, long activityId, long dealId, DealAction dealAction, String tablePosition, double totalMoney);
 
-    List<CustomerDealDTO> getDealsByActivityOrHotelId(long customerId, long hotelId, long activityId, boolean onlyDealsOfRequester, boolean closed);
+    List<CustomerDealDTO> getDealsByActivityOrHotelId(CustomerDomainEntityId customerId, HotelDomainEntityId hotelId, long activityId, boolean onlyDealsOfRequester, boolean closed);
 
-    ResponseDTO deleteDeal(long customerId, long activityId, int dealId);
+    ResponseDTO deleteDeal(CustomerDomainEntityId customerId, long activityId, int dealId);
 
-    CustomerDealDTO addUpdateDeal(long guestCustomerId, long activityId, CustomerDealDTO dealDto);
+    CustomerDealDTO addUpdateDeal(CustomerDomainEntityId guestCustomerId, long activityId, CustomerDealDTO dealDto);
 
-    HotelActivityDTO addUpdateHotelActivity(Long senderId, HotelActivityDTO activityDto);
+//    HotelActivityDTO addUpdateHotelActivity(CustomerDomainEntityId senderId, HotelActivityDTO activityDto);
 
-    List<HotelActivityDTO> getHotelActivitiesByHotelId(long customerId, long hotelId);
+    List<HotelActivityDTO> getHotelActivitiesByHotelId(CustomerDomainEntityId customerId, HotelDomainEntityId hotelId);
 
-    HotelActivityDTO addActivityAction(long customerId, long activityId, String action);
+    HotelActivityDTO addActivityAction(CustomerDomainEntityId customerId, long activityId, String action);
 
 
-    List<HotelActivityDTO> getHotelActivitiesBySenderAndHotelId(long senderId, long hotelId);
+    List<HotelActivityDTO> getHotelActivitiesBySenderAndHotelId(CustomerDomainEntityId senderId, HotelDomainEntityId hotelId);
 
-    HotelActivityDTO getHotelActivityById(long customerId, long activityId);
+    HotelActivityDTO getHotelActivityById(CustomerDomainEntityId customerId, long activityId) throws Throwable;
 
-    ResponseDTO deleteHotelActivity(long customerId, long activityId) throws Throwable;
+    ResponseDTO deleteHotelActivity(CustomerDomainEntityId customerId, long activityId) throws Throwable;
 
-    int getCustomerDealCounter(long customerId, long guestId);
+    int getCustomerDealCounter(CustomerDomainEntityId customerId, CustomerDomainEntityId guestId);
 
     HotelActivityDTO convertActivityToDto(HotelDbActivity activity, CustomerDBEntity sender);
 }

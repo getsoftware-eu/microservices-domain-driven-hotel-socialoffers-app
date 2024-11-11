@@ -1,13 +1,15 @@
 package eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+
 import java.sql.Timestamp;
 import java.util.Map;
 
 public record ChatMsgDTO(
 		long initId,
 		String message,
-		long senderId,
-		long receiverId,
+		CustomerDomainEntityId senderDomainId,
+		CustomerDomainEntityId receiverDomainId,
 		boolean hotelStaff,
 		boolean seenByReceiver,
 		boolean deliveredToReceiver,
@@ -18,7 +20,7 @@ public record ChatMsgDTO(
 //		String specialChatContent
     ) /*implements IChatMessageView*/
 {
-	
+
 
 //    Map specialContent = HashMap<String, String>();
 //	

@@ -1,9 +1,9 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model;
 
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelDbEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IFileUploadable;
 import jakarta.persistence.*;
@@ -56,12 +56,13 @@ public class HotelDbActivity implements IHotelActivity, Serializable, IFileUploa
 	@Column(name = "active", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_TRUE)
 	private boolean active = true;
 	
-	@ManyToOne
-	@JoinColumn(name="hotelId")
-	private HotelDbEntity hotel;
+//	@ManyToOne
+//	@JoinColumn(name="hotelId")
+	@Embedded
+	private HotelDomainEntityId hotelId;
 
 	@ManyToOne
-	@JoinColumn(name="senderId")
+	@JoinColumn(name="senderDomainId")
 	private CustomerDBEntity sender;
 
 	@Temporal(TemporalType.DATE)

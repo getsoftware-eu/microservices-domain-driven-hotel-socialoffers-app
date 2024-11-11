@@ -1,10 +1,13 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.WallPostDomainEntityId
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO
 import java.sql.Timestamp
 import java.util.*
 
-data class WallPostDTO(var hotelId : Long = 0L): BasicDTO()
+data class WallPostDTO(var hotelId : HotelDomainEntityId, var senderId: CustomerDomainEntityId): BasicDTO<WallPostDomainEntityId>()
 {
     var creationTime = 0L
 
@@ -18,8 +21,6 @@ data class WallPostDTO(var hotelId : Long = 0L): BasicDTO()
 
     var hotelStaff = false
     
-    var senderId = 0L
-
     var specialContent = mutableMapOf<String, String>()
 
     fun getSendTime(): Date? {

@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository;//package de.hotelico.repository;
 //
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -28,11 +29,13 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 	
 	public List<UserEntity> findByUserName(@Param("userName") String userName);
 	
-	public void deleteByDomainEntityId(@Param("domainEntityId") String domainEntityId);
+	public void deleteByDomainEntityId(@Param("domainEntityId") CustomerDomainEntityId domainEntityId);
 
 	/**
 	 * Find user by hotelId.
 	 */
 	@Query(FIND_BY_HOTEL_ID_QUERY)
 	public List<UserEntity> findByHotelId(@Param("hotelId") Long hotelId);
+
+	UserEntity findByDomainId(CustomerDomainEntityId domainEntityId);
 }

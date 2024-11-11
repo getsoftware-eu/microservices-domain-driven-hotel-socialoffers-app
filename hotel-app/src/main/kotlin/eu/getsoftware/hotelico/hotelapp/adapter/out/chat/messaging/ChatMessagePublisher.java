@@ -1,19 +1,14 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.chat.messaging;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainLayerPayload.ChatSendEventMessagePayload;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessage;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessagePayload;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.service.messaging.KafkaMessagePublisher;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.codehaus.jackson.annotate.JsonTypeName;
 import org.springframework.stereotype.Component;
 
-import static eu.getsoftware.hotelico.hotelapp.adapter.out.chat.messaging.MessageStatus.QUEUED;
+import static eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainLayerPayload.MessageStatus.QUEUED;
 
 @Component
 @Slf4j
@@ -46,27 +41,12 @@ public class ChatMessagePublisher {
                 .tenantId(1L)
                 .build(eventPayload);
 
-        String messageKeyForKafkaPartition = String.valueOf(chatMsgDTO.receiverId());
+        String messageKeyForKafkaPartition = String.valueOf(chatMsgDTO.receiverDomainId());
         
         kafkaMessagePublisher.publishMessageToPartition(messageKeyForKafkaPartition, eventMessage);
         log.info("Published message {}", eventMessage);
     }
 
-    /**
-     * Payload have to be send in Queue in JSON - FORM
-     */
-    @AllArgsConstructor
-    @Builder
-    @Getter
-    @JsonTypeName("chat-send-event")
-    static class ChatSendEventMessagePayload extends DomainMessagePayload {
-
-        @JsonProperty
-        private long messageId;
-        @JsonProperty 
-        private String message;
-        
-        private MessageStatus status;
-    }
+    
     
 }

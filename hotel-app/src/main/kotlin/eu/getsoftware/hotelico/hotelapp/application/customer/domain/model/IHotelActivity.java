@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.domain.model;
 
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelRootEntity;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.HotelDomainEntity;
 
 import java.util.Collection;
 
@@ -13,7 +13,7 @@ public interface IHotelActivity {
 
     void setMediaUploaded(boolean mediaUploaded);
 
-    <T extends IHotelRootEntity> T getHotel();
+    <T extends HotelDomainEntity> T getHotel();
 
     String senderId();
 

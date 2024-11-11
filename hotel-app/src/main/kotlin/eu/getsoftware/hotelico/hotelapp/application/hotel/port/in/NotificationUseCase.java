@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.port.in;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
@@ -17,17 +18,17 @@ import java.util.Map;
  */
 public interface NotificationUseCase<E extends HotelEvent>
 {
-	CustomerNotificationDTO getLastNotification(long customerId, boolean pushRequest);
+	CustomerNotificationDTO getLastNotification(CustomerDomainEntityId customerId, boolean pushRequest);
 	
-	void createAndSendWebSocketNotification(long receiverId, E event);
+	void createAndSendWebSocketNotification(CustomerDomainEntityId receiverId, E event);
 
 	void sendMailList(CustomerDTO customerEntity, Map<String, String> systemMessages);
 	
 	void sendFeedMessage(CustomerDTO customerEntity, Map<String, String> systemMessages) throws Throwable;
 	
-	void createAndSendWebSocketNotification_Chat(long receiverId, E event, long senderId, String message);
+	void createAndSendWebSocketNotification_Chat(CustomerDomainEntityId receiverId, E event, CustomerDomainEntityId senderId, String message);
 
-	void createAndSendWebSocketNotification_Activity(long receiverId, E event, IHotelActivity activity, String message);
+	void createAndSendWebSocketNotification_Activity(CustomerDomainEntityId receiverId, E event, IHotelActivity activity, String message);
 	
 	/**
 	 * returns null, if there is no changes between last Notification and timeDifference is not over 5 min!
@@ -35,11 +36,11 @@ public interface NotificationUseCase<E extends HotelEvent>
 	 * @param event
 	 * @return
 	 */
-	CustomerNotificationDTO getCustomerNotification(long receiverId, E event);
+	CustomerNotificationDTO getCustomerNotification(CustomerDomainEntityId receiverId, E event);
 	
 	void notificateAboutEntityEventWebSocket(CustomerDTO dto, E event, String eventContent, long entityId);
 	
-	void sendPushRequest(long customerId) throws Throwable;
+	void sendPushRequest(CustomerDomainEntityId customerId) throws Throwable;
 	
 	void sendPush(String pushId);
 	
@@ -49,5 +50,5 @@ public interface NotificationUseCase<E extends HotelEvent>
 	
 	void broadcastWallNotification(WallPostDTO wallPostDto);
 
-	void sendNotificationToCustomerOrGuest(CustomerDTO receiver, long guestCustomerId, E eventDealNewUpdate);
+	void sendNotificationToCustomerOrGuest(CustomerDTO receiver, CustomerDomainEntityId guestCustomerId, E eventDealNewUpdate);
 }

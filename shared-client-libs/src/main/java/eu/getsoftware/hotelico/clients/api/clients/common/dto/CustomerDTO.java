@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.clients.api.clients.common.dto;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import lombok.Getter;
@@ -22,7 +23,7 @@ import java.util.Map;
 @With
 @Getter
 @SuperBuilder //eu:  will inherit the builder capabilities from the abstract class, allowing you to set fields from both the abstract class and the subclass.
-public class CustomerDTO extends BasicDTO
+public class CustomerDTO extends BasicDTO<CustomerDomainEntityId>
         
         //all fields are final!!!
 {
@@ -31,7 +32,7 @@ public class CustomerDTO extends BasicDTO
 
     private final String lastName = "";
     
-    private final String domainEntityId = "";
+    private final CustomerDomainEntityId domainEntityId = new CustomerDomainEntityId("");
 
     @NonNull
     private final String email = null;

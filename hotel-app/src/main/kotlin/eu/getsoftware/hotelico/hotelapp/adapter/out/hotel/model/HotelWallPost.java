@@ -54,7 +54,7 @@ public class HotelWallPost implements IHotelWallPost, Serializable
 	private Date validUntil;
 	
 	@ManyToOne
-	@JoinColumn(name="senderId")
+	@JoinColumn(name="senderDomainId")
 	private CustomerDBEntity sender;
 
 	@ManyToOne

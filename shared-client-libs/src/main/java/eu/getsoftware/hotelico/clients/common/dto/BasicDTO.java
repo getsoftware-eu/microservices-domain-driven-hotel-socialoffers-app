@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.clients.common.dto;
 
+import eu.getsoftware.hotelico.clients.common.domain.EntityIdentifier;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -13,9 +14,11 @@ import java.io.Serializable;
 @Getter
 @SuperBuilder
 @NoArgsConstructor
-public abstract class BasicDTO implements Serializable
+public abstract class BasicDTO<D extends EntityIdentifier> implements Serializable
 {
 	Long id = 0L;
+
+	D domainId = null;
 	
 	@NonNull
 	Long initId = null;

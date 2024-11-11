@@ -1,5 +1,7 @@
 package eu.getsoftware.hotelico.clients.common.utils;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+
 import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -237,7 +239,7 @@ public class AppConfigProperties
 		return null;
 	}
 	
-	public static long getTryEntityId(long requesterInitId)
+	public static CustomerDomainEntityId getTryEntityId(CustomerDomainEntityId requesterInitId)
 	{
 		int customerId = 0;
 		

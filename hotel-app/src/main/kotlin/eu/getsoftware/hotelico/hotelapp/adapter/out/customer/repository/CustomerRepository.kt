@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository;
 
 import eu.getsoftware.hotelico.clients.common.domain.domainGateway.IDomainEntityGateway
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -39,7 +40,7 @@ interface CustomerRepository: IDomainEntityGateway<CustomerDBEntity, Long>, JpaR
 				"AND c.id = :customerId " 
 	}
 
-	fun findByDomainEntityIdAndActive(domainEntityId: String, active: Boolean = true): Optional<CustomerDBEntity>
+	fun findByDomainEntityIdAndActive(domainEntityId: CustomerDomainEntityId, active: Boolean = true): Optional<CustomerDBEntity>
 
 
 	/**
@@ -68,6 +69,7 @@ interface CustomerRepository: IDomainEntityGateway<CustomerDBEntity, Long>, JpaR
 
 	//	@Query(FIND_BY_ID_LIST)
 	fun findByIdIn(ids: List<Long>): List<CustomerDBEntity>
+	fun findByDomainIdIn(ids: List<CustomerDomainEntityId>): List<CustomerDBEntity>
 	
 	fun findByHotelStaffAndActive(hotelStaff: Boolean, active: Boolean): List<String>
 
@@ -75,11 +77,12 @@ interface CustomerRepository: IDomainEntityGateway<CustomerDBEntity, Long>, JpaR
 	fun getAnonymeCustomer(): List<CustomerDBEntity>
 	
 	@Query(CHECK_STAFF_OR_ADMIN_CUSTOMER)
-	fun checkStaffOrAdmin(@Param("customerId") customerId: Long): Boolean
+	fun checkStaffOrAdmin(@Param("customerId") customerId: CustomerDomainEntityId): Boolean
 
 	@Query(FIND_CUSTOMER_CITIES)
 	abstract fun findNotStaffUniueCities(): List<String>
 
 	override fun findByName(name: String?): Optional<CustomerDBEntity>
+	fun findByDomainId(customerId: CustomerDomainEntityId): Optional<CustomerDBEntity> 
 
 }
