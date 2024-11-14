@@ -7,8 +7,7 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.ActivityDomainEnt
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.WallPostDomainEntityId;
-import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import eu.getsoftware.hotelico.clients.common.utils.ReorderAction;
+import eu.getsoftware.hotelico.clients.common.utils.*;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
@@ -24,9 +23,6 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.CustomerDea
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.dto.CustomerDealDTO;
-import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.ActivityAction;
-import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.DealAction;
-import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.DealStatus;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;

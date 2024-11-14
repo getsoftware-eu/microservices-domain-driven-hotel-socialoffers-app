@@ -1,12 +1,12 @@
 spring:
-  config.activate.on-profile: development
+#  config.activate.on-profile: development
   datasource:
     # HikariCP
 #    type: com.zaxxer.hikari.HikariDataSource
 #    driver-class-name: com.mysql.jdbc.Driver
 #    hikari.idle-timeout: 10000
-    password: postgres
     url: jdbc:postgresql://localhost:5432/hotel
+    password: postgres
     username: eu_user
   jpa:
     hibernate:

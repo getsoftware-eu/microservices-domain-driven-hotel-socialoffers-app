@@ -14,11 +14,9 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IWallpostService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
 import io.micrometer.core.annotation.Timed;
-import io.swagger.annotations.ApiOperation;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +26,8 @@ import java.util.List;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @Timed("sensorMap.controller") //eugen: profiler
-@RepositoryRestController
+//@RepositoryRestController
+@RestController
 @RequestMapping("/api/v1/hotels")
 @RequiredArgsConstructor
 public class HotelController extends BasicController
@@ -79,7 +78,7 @@ public class HotelController extends BasicController
         return out;
     }
     
-    @ApiOperation(value = "every hotel has its unique code", produces = "application/json")
+//    @ApiOperation(value = "every hotel has its unique code", produces = "application/json")
     @RequestMapping(value = "/customer/{customerId}/hotelCode/{hotelCode}", method = RequestMethod.GET)
     public HotelDTO getHotelByCode(@PathVariable long customerId, @PathVariable String hotelCode, final HttpServletResponse response) {
 //        response.setHeader("Cache-Control", "no-cache");

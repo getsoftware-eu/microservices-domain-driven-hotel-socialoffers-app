@@ -2,8 +2,8 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository;
 
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.CustomerDeal;
-import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.DealStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

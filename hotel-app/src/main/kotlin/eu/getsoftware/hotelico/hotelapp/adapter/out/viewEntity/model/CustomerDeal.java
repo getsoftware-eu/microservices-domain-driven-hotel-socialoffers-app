@@ -1,11 +1,12 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model;
 
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityIdConverter;
+import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.ICustomerDeal;
-import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.DealStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,7 +40,8 @@ public class CustomerDeal implements ICustomerDeal {
 	private long initId;
 	
 //	@Column(name = "guestCustomerId", columnDefinition = "BIGINT(20) DEFAULT 0")
-	@Embedded
+//	@Embedded
+	@Convert(converter = CustomerDomainEntityIdConverter.class)
 	private CustomerDomainEntityId guestCustomerId;
 
 	@Column(name = "totalMoney", columnDefinition = "Decimal(6,2) default 0")

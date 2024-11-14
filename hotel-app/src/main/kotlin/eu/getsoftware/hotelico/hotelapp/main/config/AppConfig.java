@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 @Configuration
-//@ComponentScan(basePackages = { "eu.getsoftware.hotelico.hotel" }, excludeFilters = { 
+//@ComponentScan(basePackages = { "eu.getsoftware.hotelico" }, excludeFilters = { 
 //        @ComponentScan.Filter(value = Controller.class, type = FilterType.ANNOTATION), 
 //        @ComponentScan.Filter(value = Configuration.class, type = FilterType.ANNOTATION)
 //})

@@ -13,7 +13,6 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.INotificationService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LoginHotelicoService;
-import io.swagger.annotations.Api;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -28,7 +27,7 @@ import org.springframework.web.context.request.WebRequest;
 import java.util.List;
 import java.util.Set;
 
-@Api(value = "CustomerController") //add to swagger
+//@Api(value = "CustomerController") //add to swagger
 @RestController
 @RequestMapping("/customers")
 //@SessionAttributes(ControllerUtils.SESSION_CUSTOMER)

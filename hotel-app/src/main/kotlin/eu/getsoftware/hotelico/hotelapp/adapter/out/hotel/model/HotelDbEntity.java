@@ -2,6 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model;
 
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityIdConverter;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelDomainEntity;
@@ -15,6 +16,7 @@ import org.hibernate.type.SqlTypes;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -38,10 +40,14 @@ public class HotelDbEntity extends HotelDomainEntity implements Serializable
     @SequenceGenerator(name="hotel_id_generator", sequenceName = "hotel_id_seq")
     private long hotel_id;
 
-    @Embedded @Column(name = "domain_entity_id", length = 50)
+//    @Embedded
+    @Convert(converter = HotelDomainEntityIdConverter.class)
+    @Column(name = "domain_entity_id", length = 50)
     public HotelDomainEntityId getDomainEntityId() {return domainEntityId;};
 
-    @Embedded @Column(name = "address", length = 50)
+    @Embedded
+//    @Convert(converter = DomainEntityIdConverter.class)
+    @Column(name = "address", length = 50)
     public DBAddress getAddress() { return address; };
 
     @Column(name = "name", nullable = false)
@@ -123,7 +129,7 @@ public class HotelDbEntity extends HotelDomainEntity implements Serializable
 
 //    @ElementCollection(targetClass= CheckinRootDomainEntity.class)
 //    @OneToMany(/*fetch = FetchType.LAZY,*/ mappedBy = "pk.hotel")
-    @ElementCollection
+    @Column @ElementCollection
     private List<Long> customerHotelHistories = listOf();
 
 //    @ElementCollection(targetClass=WallPost.class)
@@ -131,13 +137,19 @@ public class HotelDbEntity extends HotelDomainEntity implements Serializable
 //    private Set<WallPost> wallPosts = new HashSet<WallPost>(0);
 
     //eugen: mappedBy entity!
-    @OneToMany(mappedBy= "hotel")
-    private Set<HotelWallPost> hotelWallPosts;
+//    @OneToMany(mappedBy= "hotel")
+//    private Set<HotelWallPost> hotelWallPosts;
+    
+    @Column @ElementCollection
+    private Set<String> hotelWallPostIds = new HashSet<String>();
     
     //eugen: mappedBy entity!
-    @OneToMany(mappedBy= "hotelRootEntity")
-    private Set<HotelDbActivity> hotelActivities;
+//    @OneToMany(mappedBy= "hotelRootEntity")
+//    private Set<HotelDbActivity> hotelActivities;
 
+    @Column @ElementCollection
+    private Set<String> hotelActivityIds = new HashSet<String>();
+    
     @Column(name = "mediaUploaded", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
     private boolean mediaUploaded = false;
 	

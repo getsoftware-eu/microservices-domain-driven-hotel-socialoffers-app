@@ -2,9 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.common.collect.ImmutableSet;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CheckinDomainEntityId;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.*;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
 import jakarta.persistence.*;
@@ -38,14 +36,18 @@ public class CheckinDbEntity extends CheckinRootDomainEntity implements java.io.
 	@SequenceGenerator(name="hotel_id_generator", sequenceName = "hotel_id_seq")
 	private long checkin_id;
 
-	@Embedded @Column(name = "domain_id", length = 50)
+//	@Embedded
+	@Convert(converter = CheckinDomainEntityIdConverter.class)
+	@Column(name = "domain_id", length = 50)
 	public CheckinDomainEntityId getDomainEntityId() {return domainEntityId;};
 	
-	//	@JsonView(ProductPartialUpdateView.class)
-	@Embedded @Column(name = "customer_domain_id", length = 50)
+//	@Embedded
+	@Convert(converter = CustomerDomainEntityIdConverter.class)
 	public CustomerDomainEntityId getCustomerDomainEntityId() {return customerDomainEntityId;};
 
-	@Embedded @Column(name = "hotel_domain_id", length = 50)
+//	@Embedded
+	@Convert(converter = HotelDomainEntityIdConverter.class)
+	@Column(name = "hotel_domain_id", length = 50)
 	public HotelDomainEntityId getHotelDomainEntityId() {return hotelDomainEntityId;};
 
 	@Version

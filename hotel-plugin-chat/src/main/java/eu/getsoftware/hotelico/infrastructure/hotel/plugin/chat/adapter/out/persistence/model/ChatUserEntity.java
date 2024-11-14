@@ -3,6 +3,7 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.per
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import lombok.Getter;
 import lombok.Setter;
+import org.junit.jupiter.params.shadow.com.univocity.parsers.annotations.Convert;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,7 +18,8 @@ public class ChatUserEntity implements Serializable
   @Id
   private long id;
   
-  private CustomerDomainEntityId userId;
+  @Convert(converter = CustomerDomainEntityId.class)
+  private CustomerDomainEntityId userDomainId;
   
   private String firstName;
   
@@ -25,8 +27,8 @@ public class ChatUserEntity implements Serializable
   
   private String email;
   
-  public ChatUserEntity(CustomerDomainEntityId userId) 
+  public ChatUserEntity(CustomerDomainEntityId userDomainId) 
   {
-    this.userId = userId;
+    this.userDomainId = userDomainId;
   }
 }

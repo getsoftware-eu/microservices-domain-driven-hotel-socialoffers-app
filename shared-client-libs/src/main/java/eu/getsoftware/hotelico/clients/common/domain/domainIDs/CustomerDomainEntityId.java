@@ -33,4 +33,6 @@ public record CustomerDomainEntityId(
     public String toString() {
         return uuidValue;
     }
+    
+    
 }

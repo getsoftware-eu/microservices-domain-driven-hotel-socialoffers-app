@@ -2,6 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model;
 
 import eu.getsoftware.hotelico.clients.api.clients.domain.chat.IChatMessageView;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityIdConverter;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import jakarta.persistence.*;
@@ -41,7 +42,10 @@ public class ChatMessageView implements IChatMessageView, Serializable
 //  @JoinColumn(name="senderDomainId")
 //  private CustomerRootEntity sender;
 //  @Column
-  @Embedded @Column
+  
+//  @Embedded
+  @Convert(converter = CustomerDomainEntityIdConverter.class)
+  @Column
   private CustomerDomainEntityId senderId;
   
   @Column(name = "seenByReceiver", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
@@ -53,7 +57,10 @@ public class ChatMessageView implements IChatMessageView, Serializable
 //  @ManyToOne
 //  @JoinColumn(name="receiverDomainId")
 //  private CustomerRootEntity receiver;
-  @Embedded @Column
+  
+//  @Embedded
+  @Convert(converter = CustomerDomainEntityIdConverter.class)
+  @Column
   public CustomerDomainEntityId receiverId;
 
   @Column

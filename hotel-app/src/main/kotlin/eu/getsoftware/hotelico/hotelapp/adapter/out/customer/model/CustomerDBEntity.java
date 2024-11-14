@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model;
 
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityIdConverter;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerPreferences;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import jakarta.persistence.*;
@@ -41,7 +41,9 @@ public class CustomerDBEntity extends CustomerRootDomainEntity implements Serial
 //        super();
 //    }
 
-    @Embedded @Column(name = "domain_id", length = 50) //Аннотирует DomainId как ValueObject,  Вам не нужно явно маппить строковое поле DomainId вручную.
+//    @Embedded 
+    @Convert(converter = CustomerDomainEntityIdConverter.class)
+    @Column(name = "domain_id", length = 50) //Аннотирует DomainId как ValueObject,  Вам не нужно явно маппить строковое поле DomainId вручную.
     public CustomerDomainEntityId getDomainEntityId() {return domainEntityId;} // Ваш Value Object
 
     @Version
@@ -134,11 +136,13 @@ public class CustomerDBEntity extends CustomerRootDomainEntity implements Serial
     @Column(name = "pushRegistrationId")
     private String pushRegistrationId;
     
-    @ManyToMany(mappedBy= "likedCustomerEntities")
-    private Set<HotelDbActivity> likedActivities = new HashSet<HotelDbActivity>();
+//    @ManyToMany(mappedBy= "likedCustomerEntities")
+    @Column @ElementCollection
+    private Set<String> likedActivityIds = new HashSet<String>();
     
-    @ManyToMany(mappedBy= "subscribeCustomerEntities")
-    private Set<HotelDbActivity> subscribeActivities = new HashSet<HotelDbActivity>();
+//    @ManyToMany(mappedBy= "subscribeCustomerEntities")
+    @Column @ElementCollection
+    private Set<String> subscribeActivityIds = new HashSet<String>();
     
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name="INTEREST_CUSTOMER_MAP",

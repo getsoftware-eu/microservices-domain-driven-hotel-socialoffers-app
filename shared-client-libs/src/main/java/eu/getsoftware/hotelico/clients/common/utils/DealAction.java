@@ -1,6 +1,5 @@
-package eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils;
+package eu.getsoftware.hotelico.clients.common.utils;
 
-import eu.getsoftware.hotelico.clients.common.utils.ObjectUtils;
 import lombok.Getter;
 
 /**
