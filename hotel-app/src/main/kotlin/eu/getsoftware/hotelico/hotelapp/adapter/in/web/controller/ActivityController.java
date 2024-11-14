@@ -76,7 +76,7 @@ public class ActivityController extends BasicController
 //  }
 
 //  @NotifyClients
-//  @RequestMapping(value = "/activity/{id}", method = RequestMethod.PUT)
+//  @RequestMapping(value = "/activity/{id}", method = HttpMethod.PUT)
 //  public HotelActivityDto updateHotelActivity(@PathVariable int id, @RequestBody HotelActivityDto hotelActivityDto) {
 //    hotelActivityDto.setId(id);
 //    HotelActivityDto out = hotelService.updateHotelActivity(hotelActivityDto);
@@ -102,7 +102,7 @@ public class ActivityController extends BasicController
 
 //  @NotifyClients
 //  @SendTo("/activitytopic/message")
-//  @RequestMapping(value = "/customer/activity", method = RequestMethod.PUT, headers ="Accept:*/*")
+//  @RequestMapping(value = "/customer/activity", method = HttpMethod.PUT, headers ="Accept:*/*")
 //  public @ResponseBody HotelActivityDto addActivity(@RequestBody HotelActivityDto activityDto) {
 ////    activityDto.setInitId(activityId);
 //    HotelActivityDto out = hotelService.addUpdateHotelActivity(activityDto.getSenderId(), activityDto);

@@ -11,8 +11,8 @@
 		<module>hotel-app</module>
 		<module>hotel-plugin-chat</module>
 		<module>hotel-plugin-menu</module>
-		<module>eureka-server-spring-cloud</module>
-		<module>api-gateway-spring-cloud</module>
+<!--		<module>eureka-server-spring-cloud</module>-->
+<!--		<module>api-gateway-spring-cloud</module>-->
 <!--		<module>amqp-simple-rabbitmq-configuration</module>-->
 <!--		<module>messaging-full-rabbitmq-configuraton</module>-->
     </modules>
@@ -31,7 +31,7 @@
 		<spring.boot.maven.plugin.version>${spring.boot.version}</spring.boot.maven.plugin.version>
 		<spring.boot.dependencies.version>${spring.boot.version}</spring.boot.dependencies.version>
 		<!--		//schould be in bom dependency management automaticly-->
-		<spring.cloud-version>2023.0.3</spring.cloud-version>
+<!--		<spring.cloud-version>2023.0.3</spring.cloud-version>-->
 		<!--		//schould be in bom dependency management automaticly-->
 		<keycloak.version>21.0.1</keycloak.version> 
 		<mapstruct.version>1.5.5.Final</mapstruct.version> 
@@ -62,13 +62,13 @@
 				<scope>import</scope>
 				<type>pom</type>
 			</dependency>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring.cloud-version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
+<!--			<dependency>-->
+<!--				<groupId>org.springframework.cloud</groupId>-->
+<!--				<artifactId>spring-cloud-dependencies</artifactId>-->
+<!--				<version>${spring.cloud-version}</version>-->
+<!--				<type>pom</type>-->
+<!--				<scope>import</scope>-->
+<!--			</dependency>-->
 <!--			<dependency>-->
 <!--				<groupId>software.amazon.awssdk</groupId>-->
 <!--				<artifactId>s3</artifactId>-->
@@ -102,10 +102,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-openfeign</artifactId>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.cloud</groupId>-->
+<!--			<artifactId>spring-cloud-starter-openfeign</artifactId>-->
+<!--		</dependency>-->
 	</dependencies>
 
 	<profiles>

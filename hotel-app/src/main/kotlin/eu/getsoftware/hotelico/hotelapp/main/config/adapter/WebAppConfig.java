@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.main.config.adapter;
 
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.infrastructure.interceptor.CustomerInterceptor;
+//import eu.getsoftware.hotelico.hotelapp.application.customer.domain.infrastructure.interceptor.CustomerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -90,12 +90,12 @@ public class WebAppConfig implements WebMvcConfigurer
         return interceptor;
     }
     
-    @Bean
-    public CustomerInterceptor customerInterceptor() {
-        CustomerInterceptor customerInterceptor = new CustomerInterceptor(/*usersConnectionRepository*/);
-        
-        return customerInterceptor;
-    }
+//    @Bean
+//    public CustomerInterceptor customerInterceptor() {
+//        CustomerInterceptor customerInterceptor = new CustomerInterceptor(/*usersConnectionRepository*/);
+//        
+//        return customerInterceptor;
+//    }
 
     /**
      * static content???

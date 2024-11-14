@@ -51,7 +51,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller;//package de.
 //
 //
 //    // @NotifyClients
-//    @RequestMapping(value = "/users/{id}", method = RequestMethod.PUT)
+//    @RequestMapping(value = "/users/{id}", method = HttpMethod.PUT)
 //    public @ResponseBody
 //    UserDto update(@PathVariable int id, @RequestBody UserDto userDto) {
 //        userDto.setId(id);
@@ -95,7 +95,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller;//package de.
 ////    } 
 //
 //    //@NotifyClients
-//    @RequestMapping(value = "/users", method = RequestMethod.POST)
+//    @RequestMapping(value = "/users", method = HttpMethod.POST)
 //    public @ResponseBody
 //    UserDto add(@RequestBody UserDto userDto) {
 //        UserDto out = service.addUser(userDto, "password");
@@ -103,7 +103,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller;//package de.
 //    }
 //    
 //    @NotifyClients
-//    @RequestMapping(value = "/users", method = RequestMethod.PUT)
+//    @RequestMapping(value = "/users", method = HttpMethod.PUT)
 //    public/* @ResponseBody*/
 //    UserDto put(@RequestBody UserDto userDto) {
 //        UserDto out = service.addUser(userDto, "password");
@@ -111,7 +111,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller;//package de.
 //    }
 //
 //    @NotifyClients
-//    @RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
+//    @RequestMapping(value = "/users/{id}", method = HttpMethod.DELETE)
 //    @ResponseStatus(HttpStatus.NO_CONTENT)
 //    public void delete(@PathVariable int id) {
 //        UserDto task = new UserDto();

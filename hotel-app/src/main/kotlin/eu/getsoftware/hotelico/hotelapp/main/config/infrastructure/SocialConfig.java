@@ -53,7 +53,6 @@ package eu.getsoftware.hotelico.hotelapp.main.config.infrastructure;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social.SecurityContext;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social.SimpleConnectionSignUp;
 import eu.getsoftware.hotelico.hotelapp.main.config.adapter.SimpleSignInAdapter;
-import jakarta.inject.Inject;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -88,7 +87,6 @@ import javax.sql.DataSource;
 @EnableSocial
 public class SocialConfig implements SocialConfigurer {
 
-	@Inject
 	private DataSource dataSource;
 
 	//

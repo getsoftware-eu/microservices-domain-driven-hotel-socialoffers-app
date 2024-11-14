@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: zipkin
+  labels:
+    app: zipkin
+spec:
+  serviceName: zipkinService
+  replicas: 1 #1 instance
+  template:
+    metadata:
+      name: zipkin
+      labels:
+        app: zipkin
+    spec:
+      volumes:
+        - name: zipkin
+#          persistentVolumeClaim:
+#            claimName: zipkin-pc-volume-claim
+      containers: #mount a volume
+        - name: zipkin
+          image: zipkin
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - mountPath: /var/lib/zipkin/data
+              name: zipkin
+          envFrom:
+            - configMapRef:
+                name: zipkin-config #name configmap.yml
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi              
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: zipkin

@@ -87,7 +87,7 @@ public class HotelController extends BasicController
         return out;
     }    
     
-    @RequestMapping(value = "/action/{action}/hotelId/{hotelId}/customer/{guestCustomerId}", method = POST)
+    @RequestMapping(value = "/action/{action}/hotelId/{hotelId}/customer/{guestCustomerId}", method = RequestMethod.POST)
     public CustomerDTO addHotelGuestAction(@PathVariable String action, @PathVariable Long hotelId, @PathVariable long guestCustomerId, @RequestBody CustomerDTO guestDto, final HttpServletResponse response) {
 //        response.setHeader("Cache-Control", "no-cache");
         CustomerDTO out = CustomerDTO.builder().build(); //= hotelActivityService.addGuestAction(guestCustomerId, action, hotelId, guestDto);

@@ -11,14 +11,11 @@
     <packaging>jar</packaging>
 
     <properties>
-        <kotlin.version>1.9.0</kotlin.version>
+        <kotlin.version>1.9.10</kotlin.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-        </dependency>        
+           
        
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>

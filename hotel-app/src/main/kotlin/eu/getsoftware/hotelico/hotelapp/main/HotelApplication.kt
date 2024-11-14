@@ -1,4 +1,4 @@
-//package eu.getsoftware.hotelico
+//package eu.getsoftware.hotelico.hotelapp.main
 //
 //import org.springframework.boot.autoconfigure.SpringBootApplication
 //import org.springframework.cache.annotation.EnableCaching

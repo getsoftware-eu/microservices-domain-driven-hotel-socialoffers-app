@@ -1,8 +1,6 @@
-package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto;
+package eu.getsoftware.hotelico.clients.common.domain.domainIDs;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinRequestDTO;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;

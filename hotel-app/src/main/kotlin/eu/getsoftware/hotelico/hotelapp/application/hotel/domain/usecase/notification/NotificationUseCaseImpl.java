@@ -622,7 +622,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 
 		RestTemplate restTemplate = new RestTemplate();
 
-		//        ResponseEntity<String> result = restTemplate.exchange(url, HttpMethod.GET, request, String.class);
+		//        ResponseEntity<String> result = restTemplate.exchange(url, RequestMethod.GET, request, String.class);
 		String result = restTemplate.postForObject(url, request, String.class);
 
 		System.out.println(result);

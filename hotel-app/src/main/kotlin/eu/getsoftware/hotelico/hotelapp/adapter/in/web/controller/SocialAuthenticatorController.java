@@ -7,7 +7,6 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.Customer
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LoginHotelicoService;
-import jakarta.inject.Inject;
 import jakarta.servlet.http.HttpSession;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +41,6 @@ public class SocialAuthenticatorController extends BasicController
 
 	private Facebook facebook;
 
-	@Inject
 	public SocialAuthenticatorController(Facebook facebook) {
 		this.facebook = facebook;
 	}
@@ -153,7 +151,7 @@ public class SocialAuthenticatorController extends BasicController
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping(value ="/login/auth/{socialType}/{loginId}", method = RequestMethod.POST)
+	@RequestMapping(value ="/login/auth/{socialType}/{loginId}", method = HttpMethod.POST)
 	public @ResponseBody CustomerDTO postSocialAuthentication(@RequestBody /*@ModelAttribute(ControllerUtils.SESSION_CUSTOMER)*/ CustomerDTO sessionCustomer, @PathVariable String socialType, @PathVariable String loginId, HttpSession session)
 	{
 		lastMessagesService.addWaitingSocialDto(loginId, sessionCustomer);

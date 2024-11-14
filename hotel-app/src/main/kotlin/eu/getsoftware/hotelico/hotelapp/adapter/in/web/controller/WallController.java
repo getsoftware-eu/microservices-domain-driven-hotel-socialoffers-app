@@ -54,13 +54,13 @@ public class WallController  extends BasicController
     return hotelService.getWallPostParticipantsByHotelId(requesterId, hotelId);
   }
   
-  @RequestMapping(value = "/messages/{messageId}", method = RequestMethod.POST)
+  @RequestMapping(value = "/messages/{messageId}", method = HttpMethod.POST)
   @SendTo("/walltopic/message")
   public @ResponseBody
   WallPostDTO addMessagesByMessageId(@PathVariable long messageId, @RequestBody WallPostDTO dto) throws Throwable {
     return hotelService.addUpdateWallPost(dto);
   }
-//  @RequestMapping(value = "/messages/{messageId}", method = RequestMethod.PUT)
+//  @RequestMapping(value = "/messages/{messageId}", method = HttpMethod.PUT)
 //  public @ResponseBody
 //  WallPostDto putMessagesByMessageId(@RequestBody WallPostDto dto) {
 //    return null;

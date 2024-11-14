@@ -77,7 +77,7 @@
 //	
 //	@RequestMapping(
 //			value = "/upload/avatar",
-//			method = RequestMethod.POST, consumes = "multipart/form-data", produces="application/json"
+//			method = HttpMethod.POST, consumes = "multipart/form-data", produces="application/json"
 //	)
 //	public ResponseEntity uploadFile(DefaultMultipartHttpServletRequest request, @RequestParam(value = "file") MultipartFile file, HttpServletResponse response) {
 //
@@ -114,7 +114,7 @@
 //		
 //	@RequestMapping(
 //			value = "/upload/customer/{customerId}/model/{modelStr}/{modelId}",
-//			method = RequestMethod.POST, consumes = "multipart/form-data", produces="application/json"
+//			method = HttpMethod.POST, consumes = "multipart/form-data", produces="application/json"
 //	)
 //	public ResponseEntity uploadFormFile(@PathVariable("customerId") long customerId, @PathVariable("modelStr") String modelStr, @PathVariable("modelId") long modelId, MultipartHttpServletRequest request) {
 //

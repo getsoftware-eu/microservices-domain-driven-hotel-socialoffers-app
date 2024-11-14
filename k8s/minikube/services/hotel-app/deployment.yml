@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hotel-client
+  name: hotel-app
   labels:
-    app: hotel-client
+    app: hotel-app
 spec:
   replicas: 1 #achtung
   template:
     metadata:
-      name: hotel-client
+      name: hotel-app
       labels:
-        app: hotel-client
+        app: hotel-app
     spec:
       containers:
-        - name: hotel-client
-          image: getsoftware-eu/hotel-client:latest
+        - name: hotel-app
+          image: getsoftware-eu/hotel-app:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080
@@ -24,4 +24,4 @@ spec:
       restartPolicy: Always
   selector:
     matchLabels:
-      app: hotel-client
+      app: hotel-app

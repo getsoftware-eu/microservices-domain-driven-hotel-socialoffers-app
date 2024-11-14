@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto;
+package eu.getsoftware.hotelico.clients.api.clients.common.dto;
 
 import eu.getsoftware.hotelico.clients.common.domain.IDomainRequestDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;

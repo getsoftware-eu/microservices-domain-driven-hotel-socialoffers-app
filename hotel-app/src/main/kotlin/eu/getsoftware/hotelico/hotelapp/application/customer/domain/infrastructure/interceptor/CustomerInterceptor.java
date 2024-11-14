@@ -1,13 +1,18 @@
-package eu.getsoftware.hotelico.hotelapp.application.customer.domain.infrastructure.interceptor;
-
-//import org.springframework.social.linkedin.api.LinkedIn;
-//import org.springframework.social.linkedin.connect.LinkedInConnectionFactory;
-import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.HandlerInterceptor;
-
-@Component
-public class CustomerInterceptor implements HandlerInterceptor
-{
+//package eu.getsoftware.hotelico.hotelapp.application.customer.domain.infrastructure.interceptor;
+//
+////import org.springframework.social.linkedin.api.LinkedIn;
+////import org.springframework.social.linkedin.connect.LinkedInConnectionFactory;
+//import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
+//import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social.SecurityContext;
+//import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social.UserCookieGenerator;
+//import jakarta.servlet.http.HttpServletRequest;
+//import jakarta.servlet.http.HttpServletResponse;
+//import org.springframework.stereotype.Component;
+//import org.springframework.web.servlet.HandlerInterceptor;
+//
+//@Component
+//public class CustomerInterceptor implements HandlerInterceptor
+//{
 ////	@Override
 ////	public boolean preHandle(HttpServletRequest request,
 ////			HttpServletResponse response, Object handler) throws Exception
@@ -35,7 +40,7 @@ public class CustomerInterceptor implements HandlerInterceptor
 ////	public CustomerInterceptor(UsersConnectionRepository connectionRepository) {
 ////		this.connectionRepository = connectionRepository;
 ////	}
-//	
+//
 ////	public CustomerInterceptor() {
 //////		this.connectionRepository = connectionRepository;
 ////	}
@@ -65,7 +70,7 @@ public class CustomerInterceptor implements HandlerInterceptor
 //			userCookieGenerator.removeCookie(response);
 //			return;
 //		}
-//		SecurityContext.setCurrentCustomer(new Customer(userId));
+//		SecurityContext.setCurrentCustomer(new CustomerDBEntity(userId));
 //	}
 //
 //	private void handleSignOut(HttpServletRequest request, HttpServletResponse response) {
@@ -82,7 +87,7 @@ public class CustomerInterceptor implements HandlerInterceptor
 //
 //	private boolean requireSignIn(HttpServletRequest request, HttpServletResponse response) throws Exception {
 //		//new RedirectView("/signin", true).render(null, request, response);
-//		
+//
 //		String uri = request.getRequestURI();
 ////		if(uri.endsWith("linkedIn"))
 ////		{
@@ -99,7 +104,7 @@ public class CustomerInterceptor implements HandlerInterceptor
 ////			response.sendRedirect(authorizeUrl);
 ////			return false;
 ////		}
-//		
+//
 //		return true;
 //	}
 //
@@ -108,4 +113,4 @@ public class CustomerInterceptor implements HandlerInterceptor
 ////		return connectionRepository.createConnectionRepository(userId).findPrimaryConnection(LinkedIn.class) != null;
 //		return true;
 //	}
-}
+//}

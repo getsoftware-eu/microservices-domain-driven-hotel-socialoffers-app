@@ -11,12 +11,12 @@ import lombok.Getter;
  */
 @Builder
 @Getter
-public class Address {
-    String city;
-    String street;
-    Integer houseNumber;
+public class AddressDomainValue {
+    protected String city;
+    protected String street;
+    protected Integer houseNumber;
 
-    public Address(String street, String city, Integer houseNumber) {
+    public AddressDomainValue(String street, String city, Integer houseNumber) {
         this.street = street;
         this.city = city;
         this.houseNumber = houseNumber;
