@@ -17,11 +17,11 @@ import java.util.concurrent.ThreadLocalRandom;
 @Entity
 @Getter @Setter
 @Table(name = "customer_activity_deal", schema = "deal")
-@AssociationOverrides({
-		@AssociationOverride(name = "pk.customer",
-				joinColumns = @JoinColumn(name = "CUSTOMER_ID")),
-		@AssociationOverride(name = "pk.activity",
-				joinColumns = @JoinColumn(name = "ACTIVITY_ID")) })
+//@AssociationOverrides({
+//		@AssociationOverride(name = "pk.customer",
+//				joinColumns = @JoinColumn(name = "CUSTOMER_ID")),
+//		@AssociationOverride(name = "pk.activity",
+//				joinColumns = @JoinColumn(name = "ACTIVITY_ID")) })
 public class CustomerDeal implements ICustomerDeal {
 	
 	@Column(name = "active", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_TRUE)
@@ -71,7 +71,7 @@ public class CustomerDeal implements ICustomerDeal {
 		
 		this();
 		
-		setCustomer(customerEntity);
+		setCustomerId(customerEntity.getDomainEntityId());
 		setActivity(activity);
 		generateCode();
 

@@ -1,7 +1,8 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.messaging;
 
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainLayerPayload.CheckinSendEventPayload;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessage;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -20,36 +21,36 @@ public class CheckinKafkaSubscriber {
     }
 
     @KafkaListener(topics = {"checkin.checkin.created.event"}, groupId = "eu_group_1")
-    public void createCheckin(DomainMessage<CheckinMessagePublisher.CheckinSendEventPayload> message) {
-        CheckinMessagePublisher.CheckinSendEventPayload payload = message.getPayload();
+    public void createCheckin(DomainMessage<CheckinSendEventPayload> message) {
+        CheckinSendEventPayload payload = message.getPayload();
 
         {
             log.info("Processing event {}", message.getMessageType());
             CheckinDTO checkin = toCheckin(payload).build();
-            checkinRepository.save(checkin);
+//            checkinRepository.save(checkin);
         }
     }
 
     //    @DomainMessageHandler("checkin.checkin.updated.event")
     @KafkaListener(topics = {"checkin.checkin.updated.event"}, groupId = "eu_group_1")
-    public void updateCheckin(DomainMessage<CheckinMessagePublisher.CheckinSendEventPayload> message) {
-        CheckinMessagePublisher.CheckinSendEventPayload payload = message.getPayload();
+    public void updateCheckin(DomainMessage<CheckinSendEventPayload> message) {
+        CheckinSendEventPayload payload = message.getPayload();
 
         {
             log.info("Processing event {}", message.getMessageType());
             CheckinDTO checkin = toCheckin(payload).build();
-            checkinRepository.partialUpdateCheckin(checkin);
+//            checkinRepository.partialUpdateCheckin(checkin);
         }
     }
 
     //    @DomainMessageHandler("checkin.checkin.deleted.event")
     @KafkaListener(topics = {"checkin.checkin.deleted.event"}, groupId = "eu_group_1")
-    public void deleteCheckin(DomainMessage<CheckinMessagePublisher.CheckinSendEventPayload> message) {
-        CheckinMessagePublisher.CheckinSendEventPayload payload = message.getPayload();
+    public void deleteCheckin(DomainMessage<CheckinSendEventPayload> message) {
+        CheckinSendEventPayload payload = message.getPayload();
 
         {
             log.info("Processing event {}", message.getMessageType());
-            checkinRepository.deleteById(payload.getEntityId());
+//            checkinRepository.deleteById(payload.getEntityId());
         }
     }
 
@@ -58,12 +59,12 @@ public class CheckinKafkaSubscriber {
      * @param payload
      * @return
      */
-    private CheckinDTO.CheckinDTOBuilder toCheckin(CheckinMessagePublisher.CheckinSendEventPayload payload) {
+    private CheckinDTO.CheckinDTOBuilder toCheckin(CheckinSendEventPayload payload) {
         return CheckinDTO.builder()
                 .initId(payload.getEntityId())
                 .checkinFrom(payload.getCheckinFrom())
                 .checkinTo(payload.getCheckinTo())
-                .hotelId(payload.getHoteId())
+                .hotelId(payload.getHotelId())
                 .customerId(payload.getCustomerId());
     }
     

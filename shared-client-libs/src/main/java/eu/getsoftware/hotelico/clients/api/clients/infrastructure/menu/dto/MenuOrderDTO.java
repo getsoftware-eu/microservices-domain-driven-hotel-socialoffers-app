@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.MenuDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ import java.util.List;
 @Getter
 @SuperBuilder
 @AllArgsConstructor
-public class MenuOrderDTO extends BasicDTO{
+public class MenuOrderDTO extends BasicDTO<MenuDomainEntityId> {
     
     @With
     private final long hotelId = 0L;

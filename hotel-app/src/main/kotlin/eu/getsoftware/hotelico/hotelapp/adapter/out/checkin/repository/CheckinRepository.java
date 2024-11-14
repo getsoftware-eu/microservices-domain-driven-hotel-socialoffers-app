@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository;
 
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.CustomerHotelCheckin;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.CheckinDbEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,17 +13,17 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface CheckinRepository extends JpaRepository<CustomerHotelCheckin, Long> {
+public interface CheckinRepository extends JpaRepository<CheckinDbEntity, Long> {
 
 	public final static String FIND_ACTIVE_BY_CUSTOMER_QUERY = "SELECT c " +
-			"FROM CustomerHotelCheckin c " +
+			"FROM CheckinDbEntity c " +
 			"WHERE c.active = true " +
 			"AND c.pk.customer.id = :customerId " +
 			"AND c.validFrom <= :checkDate " +
 			"AND c.validTo >= :checkDate ";	
 	
 	public final static String FIND_HOTEL_BY_CUSTOMER_QUERY = "SELECT c.pk.hotel.id " +
-			"FROM CustomerHotelCheckin c " +
+			"FROM CheckinDbEntity c " +
 			"WHERE c.active = true " +
 			"AND c.pk.customer.id = :customerId " +
 			"AND ( " +
@@ -35,19 +35,19 @@ public interface CheckinRepository extends JpaRepository<CustomerHotelCheckin, L
 			")";	
 	
 	public final static String FIND_STAFF_BY_HOTEL_QUERY = "SELECT c.pk.customer " +
-			"FROM CustomerHotelCheckin c " +
+			"FROM CheckinDbEntity c " +
 			"WHERE c.active = true " +
 			"AND c.pk.hotel.id = :hotelId " +
 			"AND c.pk.customer.hotelStaff = true ";	
 	
 	public final static String FIND_STAFF_IDS_BY_HOTEL_QUERY = "SELECT c.pk.customer.id " +
-			"FROM CustomerHotelCheckin c " +
+			"FROM CheckinDbEntity c " +
 			"WHERE c.active = true " +
 			"AND c.pk.hotel.id = :hotelId " +
 			"AND c.pk.customer.hotelStaff = true ";	
 	
 	public final static String FIND_CUSTOMERS_BY_HOTEL_CITY_QUERY = "SELECT c.pk.customer " +
-			"FROM CustomerHotelCheckin c " +
+			"FROM CheckinDbEntity c " +
 			"WHERE c.active = true " +
 			"AND c.pk.customer.active = true " +
 			"AND (" 
@@ -59,7 +59,7 @@ public interface CheckinRepository extends JpaRepository<CustomerHotelCheckin, L
 	
 	
 	public final static String FIND_CHECKIN_UNIQUE_CITIES_QUERY = "SELECT DISTINCT c.pk.hotel.city " +
-			"FROM CustomerHotelCheckin c " +
+			"FROM CheckinDbEntity c " +
 			"WHERE c.active = true " +
 			"AND c.pk.customer.active = true " +
 			"AND c.pk.hotel.active = true " +
@@ -67,14 +67,14 @@ public interface CheckinRepository extends JpaRepository<CustomerHotelCheckin, L
 			"AND c.validTo >= :checkDate ";
 	
 	public final static String FIND_ACTIVE_BY_HOTEL_QUERY = "SELECT c " +
-			"FROM CustomerHotelCheckin c " +
+			"FROM CheckinDbEntity c " +
 			"WHERE c.active = true " +
 			"AND c.pk.hotel.id = :hotelId " +
 			"AND c.validFrom <= :checkDate " +
 			"AND c.validTo >= :checkDate ";
 	
 	public final static String FIND_ACTIVE_CUSTOMERS_BY_HOTEL_QUERY = "SELECT c.pk.customer " +
-			"FROM CustomerHotelCheckin c " +
+			"FROM CheckinDbEntity c " +
 			"WHERE c.active = true " +
 			"AND c.pk.hotel.id = :hotelId " +	
 			"AND c.pk.customer.active = true " +
@@ -82,7 +82,7 @@ public interface CheckinRepository extends JpaRepository<CustomerHotelCheckin, L
 			"AND c.validTo >= :checkDate ";	
 	
 	public final static String FIND_ACTIVE_FULL_CHECKIN_BY_HOTEL_QUERY = "SELECT c " +
-			"FROM CustomerHotelCheckin c " +
+			"FROM CheckinDbEntity c " +
 			"WHERE c.active = true " +
 			"AND c.fullCheckin = true " +
 			"AND c.pk.hotel.id = :hotelId " +
@@ -90,12 +90,12 @@ public interface CheckinRepository extends JpaRepository<CustomerHotelCheckin, L
 			"AND c.validTo >= :checkDate ";		
 	
 	public final static String FIND_LAST_CHECKIN_BY_HOTEL_QUERY = "SELECT max(c.validFrom) " +
-			"FROM CustomerHotelCheckin c " +
+			"FROM CheckinDbEntity c " +
 			"WHERE c.pk.customer.id = :customerId " +
 			"AND c.pk.hotel.id = :hotelId ";	
 	
 	public final static String IS_ACTIVE_FULL_CHECKIN_FOR_CUSTOMER_BY_HOTEL_QUERY = "SELECT count(c)>0 " +
-			"FROM CustomerHotelCheckin c " +
+			"FROM CheckinDbEntity c " +
 			"WHERE c.active = true " +
 			"AND c.pk.hotel.id = :hotelId " +
 			"AND c.pk.customer.id = :customerId " +
@@ -109,14 +109,14 @@ public interface CheckinRepository extends JpaRepository<CustomerHotelCheckin, L
 			+ " ) ";
 	
 	public final static String COUNT_ACTIVE_BY_HOTEL_QUERY = "SELECT count(c) " +
-			"FROM CustomerHotelCheckin c " +
+			"FROM CheckinDbEntity c " +
 			"WHERE c.active = true " +
 			"AND c.pk.hotel.id = :hotelId "+
 			"AND c.validFrom <= :checkDate " +
 			"AND c.validTo >= :checkDate ";
 	
 	public final static String COUNT_NOT_STAFF_ACTIVE_BY_HOTEL_QUERY = "SELECT count(c) " +
-			"FROM CustomerHotelCheckin c " +
+			"FROM CheckinDbEntity c " +
 			"WHERE c.active = true " +
 			"AND c.pk.customer.hotelStaff = false " +
 			"AND c.pk.hotel.id = :hotelId " +
@@ -124,7 +124,7 @@ public interface CheckinRepository extends JpaRepository<CustomerHotelCheckin, L
 			"AND c.validTo >= :checkDate ";
 	
 	public final static String COUNT_NOT_STAFF_FULL_CHECKIN_ACTIVE_BY_HOTEL_QUERY = "SELECT count(c) " +
-			"FROM CustomerHotelCheckin c " +
+			"FROM CheckinDbEntity c " +
 			"WHERE c.active = true " +
 			"AND c.fullCheckin = true " +
 			"AND c.pk.customer.hotelStaff = false " +
@@ -136,7 +136,7 @@ public interface CheckinRepository extends JpaRepository<CustomerHotelCheckin, L
 	 * Find customer active checkIn.
 	 */
 	@Query(FIND_ACTIVE_BY_CUSTOMER_QUERY)
-	public List<CustomerHotelCheckin> getActiveByCustomerId(@Param("customerId") CustomerDomainEntityId customerId, @Param("checkDate") Date checkDate);	
+	public List<CheckinDbEntity> getActiveByCustomerId(@Param("customerId") CustomerDomainEntityId customerId, @Param("checkDate") Date checkDate);	
 	
 	/**
 	 * Find customer active checkIn.
@@ -165,13 +165,13 @@ public interface CheckinRepository extends JpaRepository<CustomerHotelCheckin, L
 	 * Find customers active checkIn by hotel.
 	 */
 	@Query(FIND_ACTIVE_BY_HOTEL_QUERY)
-	public List<CustomerHotelCheckin> getActiveByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);	
+	public List<CheckinDbEntity> getActiveByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);	
 	
 	@Query(FIND_ACTIVE_CUSTOMERS_BY_HOTEL_QUERY)
 	public List<CustomerDBEntity> getActiveCustomersByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);	
 	
 	@Query(FIND_ACTIVE_FULL_CHECKIN_BY_HOTEL_QUERY)
-	public List<CustomerHotelCheckin> getActiveFullCheckinByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);	
+	public List<CheckinDbEntity> getActiveFullCheckinByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);	
 	
 	@Query(IS_ACTIVE_FULL_CHECKIN_FOR_CUSTOMER_BY_HOTEL_QUERY)
 	public boolean isFullCheckinForCustomerByHotelId(@Param("customerId") CustomerDomainEntityId customerId, @Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);

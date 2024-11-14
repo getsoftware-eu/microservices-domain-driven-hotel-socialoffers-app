@@ -17,12 +17,12 @@ import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICusto
 public class CustomerAggregate
 {
 //	private final CustomerRootEntityBuilder customerBuilder;
-	private final CustomerRootEntity customerRootEntity;
+	private final CustomerRootDomainEntity customerRootEntity;
 	private final ICustomerDetails customerDetails;
 	private final ICustomerPreferences customerPreferences;
 	private final CustomerDomainEntityId customerEntityId;
 
-	public CustomerAggregate(CustomerRootEntity customerRootEntity){
+	public CustomerAggregate(CustomerRootDomainEntity customerRootEntity){
 		this.customerRootEntity = customerRootEntity;
 		this.customerEntityId = customerRootEntity.getDomainEntityId();
 //		this.customerBuilder = customerRootEntity.toBuilder();
@@ -34,8 +34,8 @@ public class CustomerAggregate
 	 * Entry Point to all Entity setters!!!
 	 * @return
 	 */
-	public static CustomerRootEntity.CustomerRootEntityBuilder getEntityBuilder(CustomerDomainEntityId customerEntityId){
-		return CustomerRootEntity.builder().domainEntityId(customerEntityId);
+	public static CustomerRootDomainEntity.CustomerRootDomainEntityBuilder getEntityBuilder(CustomerDomainEntityId customerEntityId){
+		return CustomerRootDomainEntity.builder().domainEntityId(customerEntityId);
 	}
 
 	
@@ -57,7 +57,7 @@ public class CustomerAggregate
 //	 */
 //	// Static inner builder class
 //	@Builder
-//	public static class CustomerBuilder extends ICustomerRootEntity {
+//	public static class CustomerBuilder extends CustomerRootDomainEntity {
 //
 //		private final CustomerEntityId customerEntityId;
 //

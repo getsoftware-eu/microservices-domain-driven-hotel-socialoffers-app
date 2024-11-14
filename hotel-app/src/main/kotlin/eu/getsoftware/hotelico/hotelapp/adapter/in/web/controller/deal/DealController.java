@@ -1,6 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller.deal;
 
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.dto.CustomerDealDTO;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.DealAction;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.aspects.NotifyClients;
@@ -43,14 +45,14 @@ public class DealController extends BasicController
 
   @RequestMapping(value = "/deals/customer/{customerId}/activity/{activityId}/hotel/{hotelId}/limitByRequester/{onlyRequesterDeals}/showClosed/{showClosed}", method = RequestMethod.GET)
   public @ResponseBody
-  List<CustomerDealDTO> getDeals(@PathVariable long customerId, @PathVariable int activityId, @PathVariable long hotelId, @PathVariable boolean onlyRequesterDeals, @PathVariable boolean showClosed) {
+  List<CustomerDealDTO> getDeals(@PathVariable CustomerDomainEntityId customerId, @PathVariable int activityId, @PathVariable HotelDomainEntityId hotelId, @PathVariable boolean onlyRequesterDeals, @PathVariable boolean showClosed) {
     //TODO Eugen: socket ConnectException: Connection timed out: connect
     return hotelService.getDealsByActivityOrHotelId(customerId, hotelId, activityId, onlyRequesterDeals, showClosed);
   }
   
   @RequestMapping(value = "/action/{action}/customer/{customerId}/activityId/{activityId}/dealId/{dealId}/tablePosition/{tablePosition}/totalMoney/{totalMoney}", method = RequestMethod.GET)
   public @ResponseBody
-  CustomerDealDTO addDealAction(@PathVariable String action, @PathVariable long customerId, @PathVariable long activityId, @PathVariable long dealId, @PathVariable String tablePosition, @PathVariable double totalMoney) {
+  CustomerDealDTO addDealAction(@PathVariable String action, @PathVariable CustomerDomainEntityId customerId, @PathVariable long activityId, @PathVariable long dealId, @PathVariable String tablePosition, @PathVariable double totalMoney) {
     return hotelService.addDealAction(customerId, activityId, dealId, DealAction.parseByName(action), tablePosition, totalMoney);
   }
 	
@@ -58,17 +60,17 @@ public class DealController extends BasicController
   @NotifyClients
   @RequestMapping(value = "/customer/{customerId}/activityId/{activityId}/deal/{dealId}", method = RequestMethod.DELETE)
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public @ResponseBody ResponseDTO deleteDeal(@PathVariable long customerId, @PathVariable long activityId, @PathVariable int dealId) {
+  public @ResponseBody ResponseDTO deleteDeal(@PathVariable CustomerDomainEntityId customerId, @PathVariable long activityId, @PathVariable int dealId) {
     
     return hotelService.deleteDeal(customerId, activityId, dealId);
   }
 
   @RequestMapping(value = "/customer/{customerId}/activityId/{activityId}/deal/{dealId}", method = RequestMethod.POST)//, headers ="Accept:*/*")
   public @ResponseBody
-  CustomerDealDTO addUpdateDeal(@PathVariable long guestCustomerId, @PathVariable long activityId, @PathVariable long dealId, @RequestBody CustomerDealDTO dealDto) {
+  CustomerDealDTO addUpdateDeal(@PathVariable CustomerDomainEntityId guestCustomerId, @PathVariable long activityId, @PathVariable long dealId, @RequestBody CustomerDealDTO dealDto) {
 
 //    activityDto.setInitId(activityId);
-	  CustomerDealDTO out = hotelService.addUpdateDeal(guestCustomerId,activityId,dealDto);
+	  CustomerDealDTO out = hotelService.addUpdateDeal(guestCustomerId, activityId, dealDto);
     return out;
   }
 

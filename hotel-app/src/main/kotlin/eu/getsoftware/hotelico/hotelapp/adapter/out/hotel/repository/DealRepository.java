@@ -179,5 +179,5 @@ public interface DealRepository extends JpaRepository<CustomerDeal, Long> {
 
     Optional<CustomerDeal> findByHotelDomainId(HotelDomainEntityId id);
 
-    Optional<CustomerDeal> findByHotelId(long id);
+    Optional<CustomerDeal> findByHotelId(HotelDomainEntityId id);
 }

@@ -2,52 +2,72 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.common.collect.ImmutableSet;
-import eu.getsoftware.hotelico.clients.common.domain.EntityIdentifier;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CheckinDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import java.io.Serial;
 import java.time.LocalDateTime;
 import java.util.Date;
-import java.util.Map;
 
 
 @Data
+@NoArgsConstructor
 @Entity
-@Table(name = "customer_hotel_checkin", schema = "hotel")
+@Table(name = "checkin", schema = "hotel")
 //@AssociationOverrides({
 //		@AssociationOverride(name = "pk.customer",
 //				joinColumns = @JoinColumn(name = "CUSTOMER_ID")),
 //		@AssociationOverride(name = "pk.hotel",
 //				joinColumns = @JoinColumn(name = "HOTEL_ID")) })
-public class CustomerHotelCheckin implements ICustomerHotelCheckinEntity, java.io.Serializable {
+public class CheckinDbEntity extends CheckinRootDomainEntity implements java.io.Serializable {
 
+	@Serial
 	private static final long serialVersionUID = -2949611288215768311L;
 
+	@Id
+	@Setter(AccessLevel.PROTECTED)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "hotel_id_generator")
+	@SequenceGenerator(name="hotel_id_generator", sequenceName = "hotel_id_seq")
+	private long checkin_id;
+
+	@Embedded @Column(name = "domain_id", length = 50)
+	public CheckinDomainEntityId getDomainEntityId() {return domainEntityId;};
+	
+	//	@JsonView(ProductPartialUpdateView.class)
+	@Embedded @Column(name = "customer_domain_id", length = 50)
+	public CustomerDomainEntityId getCustomerDomainEntityId() {return customerDomainEntityId;};
+
+	@Embedded @Column(name = "hotel_domain_id", length = 50)
+	public HotelDomainEntityId getHotelDomainEntityId() {return hotelDomainEntityId;};
+
+	@Version
+	private Long version;
+	
+	//	@JsonView(ProductPartialUpdateView.class)
+	private LocalDateTime createdAt;
+	
 //	@JsonView(CheckinPartialUpdateView.class)
 	private Integer tenantId;
 
 //	@JsonView(ProductPartialUpdateView.class)
 	private boolean visible;
 
-//	@JsonView(ProductPartialUpdateView.class)
-	@Embedded
-	private CustomerDomainEntityId customerDomainEntityId;
 
-	@Embedded
-	private HotelDomainEntityId hotelDomainEntityId;
+////	@JsonView(ProductPartialUpdateView.class)
+//	private String name;
+//
+////	@JsonView(ProductPartialUpdateView.class)
+//	private String description;
 
-//	@JsonView(ProductPartialUpdateView.class)
-	private String name;
 
-//	@JsonView(ProductPartialUpdateView.class)
-	private String description;
-
-//	@JsonView(ProductPartialUpdateView.class)
-	private LocalDateTime createdAt;
 
 //	@Singular
 //	@JsonView(ProductPartialUpdateView.class)
@@ -60,7 +80,7 @@ public class CustomerHotelCheckin implements ICustomerHotelCheckinEntity, java.i
 	@Column(name = "active", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_TRUE)
 	private boolean active = true;
 
-	private CustomerHotelCheckinId pk = new CustomerHotelCheckinId();
+//	private CheckinRootDomainEntityId pk = new CheckinRootDomainEntityId();
 	
 	@Column(name = "fullCheckin", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
 	private boolean fullCheckin = false;	
@@ -76,23 +96,23 @@ public class CustomerHotelCheckin implements ICustomerHotelCheckinEntity, java.i
 	@Column(name = "validTo", nullable = false, length = 10)
 	private Date validTo;
 	
-	public CustomerHotelCheckin() {
-		super();
-	}
+//	public CheckinDbEntity() {
+//		super();
+//	}
 
-	@EmbeddedId
-	public CustomerHotelCheckinId getPk() {
-		return pk;
-	}
-
-	public void setPk(CustomerHotelCheckinId pk) {
-		this.pk = pk;
-	}
-	
-	public void setCustomer(CustomerDomainEntityId customerId) {
-		
-		getPk().setCustomerEntityId(customerId);
-	}
+//	@EmbeddedId
+//	public CheckinRootDomainEntityId getPk() {
+//		return pk;
+//	}
+//
+//	public void setPk(CheckinRootDomainEntityId pk) {
+//		this.pk = pk;
+//	}
+//	
+//	public void setCustomer(CustomerDomainEntityId customerId) {
+//		
+//		getPk().setCustomerEntityId(customerId);
+//	}
 
 //	@Transient
 //	public long getHotelId() {
@@ -104,39 +124,30 @@ public class CustomerHotelCheckin implements ICustomerHotelCheckinEntity, java.i
 //	public long getCustomerId() {
 //		return getPk().getCustomerEntityId();
 //	}
-	
-	public void setHotelId(HotelDomainEntityId hotel) {
-		getPk().setHotelEntityId(hotel);
-	}
+//	
+//	public void setHotelId(HotelDomainEntityId hotel) {
+//		getPk().setHotelEntityId(hotel);
+//	}
+//
+//	public int hashCode() {
+//		return (getPk() != null ? getPk().hashCode() : 0);
+//	}
+// 
 
-	public int hashCode() {
-		return (getPk() != null ? getPk().hashCode() : 0);
-	}
-
-	@Override
-	public HotelDomainEntityId getHotelDomainEntityId() {
-		return null;
-	}
-
-	@Override
-	public CustomerDomainEntityId getCustomerDomainEntityId() {
-		return null;
-	}
-
-	public boolean equals(Object o) {
-		if (this == o)
-			return true;
-		if (o == null || getClass() != o.getClass())
-			return false;
-		
-		CustomerHotelCheckin that = (CustomerHotelCheckin) o;
-		
-		if (getPk() != null ? !getPk().equals(that.getPk())
-				: that.getPk() != null)
-			return false;
-		
-		return true;
-	}
+//	public boolean equals(Object o) {
+//		if (this == o)
+//			return true;
+//		if (o == null || getClass() != o.getClass())
+//			return false;
+//		
+//		CheckinDbEntity that = (CheckinDbEntity) o;
+//		
+//		if (getPk() != null ? !getPk().equals(that.getPk())
+//				: that.getPk() != null)
+//			return false;
+//		
+//		return true;
+//	}
 
 	/**
 	 * eu: entity options!
@@ -176,16 +187,6 @@ public class CustomerHotelCheckin implements ICustomerHotelCheckinEntity, java.i
 //		tags = remove(tags, tag).build();
 //		return contained;
 //	}
-
-	@Override
-	public void setInitValues(Map<String, String> fieldToValues) {
-
-	}
-
-	@Override
-	public <I extends EntityIdentifier> I getDomainEntityId() {
-		return null;
-	}
 
 //	/**
 //	 * @param attribute attribute to be added to this product

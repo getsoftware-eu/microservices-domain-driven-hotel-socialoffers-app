@@ -1,7 +1,7 @@
 //package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iRepository;
 //
 //import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerRootEntity
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.model.CustomerHotelCheckin
+//import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.model.CheckinRootDomainEntity
 //import org.springframework.data.repository.query.Param
 //import java.util.*
 //
@@ -13,7 +13,7 @@
 //    fun getActiveByCustomerId(
 //        @Param("customerId") customerId: Long?,
 //        @Param("checkDate") checkDate: Date?
-//    ): List<CustomerHotelCheckin?>?
+//    ): List<CheckinRootDomainEntity?>?
 //
 //    /**
 //     * Find customer active checkIn.
@@ -46,7 +46,7 @@
 //    fun getActiveByHotelId(
 //        @Param("hotelId") hotelId: Long?,
 //        @Param("checkDate") checkDate: Date?
-//    ): List<CustomerHotelCheckin?>?
+//    ): List<CheckinRootDomainEntity?>?
 //
 //    fun getActiveCustomersByHotelId(
 //        @Param("hotelId") hotelId: Long?,
@@ -56,7 +56,7 @@
 //    fun getActiveFullCheckinByHotelId(
 //        @Param("hotelId") hotelId: Long?,
 //        @Param("checkDate") checkDate: Date?
-//    ): List<CustomerHotelCheckin?>?
+//    ): List<CheckinRootDomainEntity?>?
 //
 //    fun isFullCheckinForCustomerByHotelId(
 //        @Param("customerId") customerId: Long?,

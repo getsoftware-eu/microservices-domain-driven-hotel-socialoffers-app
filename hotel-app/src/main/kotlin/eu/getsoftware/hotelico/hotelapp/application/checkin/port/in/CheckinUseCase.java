@@ -1,10 +1,9 @@
 package eu.getsoftware.hotelico.hotelapp.application.checkin.port.in;
 
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.JsonError;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinRequestDTO;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,18 +19,18 @@ public interface CheckinUseCase
 	
 	CheckinDTO validateAndCreateCustomerCheckin(CheckinRequestDTO customerRequestDto) throws Throwable;
 	
-	/**
-	 * check the current checkin of logging user. It will find the current hotel of user
-	 * @param dto
-	 * @return
-	 */
-	@Transactional
-	CheckinDTO updateOwnDtoCheckinInfo(CheckinRequestDTO dto) throws JsonError;
+//	/**
+//	 * check the current checkin of logging user. It will find the current hotel of user
+//	 * @param dto
+//	 * @return
+//	 */
+//	@Transactional
+//	CheckinDTO updateOwnDtoCheckinInfo(CheckinRequestDTO dto) throws JsonError;
 	
 	//eu: here domainId, no just id!!!
 	@Transactional
 	CustomerDTO getStaffbyHotelId(HotelDomainEntityId hotelId);
 
-	public CustomerDTO updateOwnDtoCheckinInfo(CustomerDTO dto, ICustomerHotelCheckinEntity validCheckin);
+	public CustomerDTO updateOwnDtoCheckinInfo(CustomerDTO dto, CheckinRootDomainEntity validCheckin);
 
 }

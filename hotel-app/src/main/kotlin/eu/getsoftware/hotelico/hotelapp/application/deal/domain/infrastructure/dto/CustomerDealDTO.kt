@@ -6,7 +6,7 @@ import eu.getsoftware.hotelico.clients.common.dto.BasicDTO
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties
 import java.util.*
 
-data class CustomerDealDTO(val initId: Long): BasicDTO(/*initId*/)
+data class CustomerDealDTO(val initId: Long): BasicDTO<CustomerDomainEntityId>(/*initId*/)
 {
     /**
      * owner activity

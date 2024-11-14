@@ -1,29 +1,28 @@
 package eu.getsoftware.hotelico.hotelapp.application.checkin.domain;
 
-import eu.getsoftware.hotelico.clients.common.domain.EntityIdentifier;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CheckinEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.IRootDomainEntity;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CheckinDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 import java.util.Map;
 
+@Builder
 @Getter
-@RequiredArgsConstructor
-public class CheckinRootEntity implements ICustomerHotelCheckinEntity {
+@NoArgsConstructor
+@AllArgsConstructor
+public class CheckinRootDomainEntity implements IRootDomainEntity {
 
     @Setter
-    private HotelDomainEntityId hotelDomainEntityId;
+    protected HotelDomainEntityId hotelDomainEntityId;
     
     @Setter
-    private CustomerDomainEntityId customerDomainEntityId;
+    protected CustomerDomainEntityId customerDomainEntityId;
     
     @Getter
-    private final CheckinEntityId entityId;
+    protected CheckinDomainEntityId domainEntityId;
 
     @Setter
     private Date validFrom;
@@ -39,18 +38,11 @@ public class CheckinRootEntity implements ICustomerHotelCheckinEntity {
     
     @Setter
     boolean active;
-    
+
     @Override
     public void setInitValues(Map<String, String> fieldToValues) {
         
     }
-
-    @Override
-    public <I extends EntityIdentifier> I getDomainEntityId() {
-        return null;
-    }
-
-    
 
 //    //TODO ???? between domain objects??
 //    @Override

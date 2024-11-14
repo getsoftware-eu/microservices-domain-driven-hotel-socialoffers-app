@@ -1,14 +1,14 @@
 package eu.getsoftware.hotelico.clients.common.domain.domainGateway
 
-import eu.getsoftware.hotelico.clients.common.domain.IDomainEntity
 import eu.getsoftware.hotelico.clients.common.domain.IDomainRequestDTO
 import eu.getsoftware.hotelico.clients.common.domain.IDomainResponseDTO
+import eu.getsoftware.hotelico.clients.common.domain.IRootDomainEntity
 import eu.getsoftware.hotelico.clients.common.domain.mapper.IDomainMapper
 
 /**
  * domain DTO - because we want separate only entity service from DTO service!
  */
-abstract class DomainEntityDTOServiceAbstr<T: IDomainEntity, I : IDomainRequestDTO, O : IDomainResponseDTO>(
+abstract class DomainEntityDTOServiceAbstr<T: IRootDomainEntity, I : IDomainRequestDTO, O : IDomainResponseDTO>(
     private val domainMapper: IDomainMapper<T, I, O>,
     private val domainRegisterDTOGateway: DomainEntityGatewayServiceAbstr<T>,
 ) 

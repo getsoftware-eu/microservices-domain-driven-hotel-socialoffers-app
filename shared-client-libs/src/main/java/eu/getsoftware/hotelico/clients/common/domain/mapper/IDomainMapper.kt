@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.clients.common.domain.mapper
 
-import eu.getsoftware.hotelico.clients.common.domain.IDomainEntity
 import eu.getsoftware.hotelico.clients.common.domain.IDomainRequestDTO
 import eu.getsoftware.hotelico.clients.common.domain.IDomainResponseDTO
+import eu.getsoftware.hotelico.clients.common.domain.IRootDomainEntity
 import org.mapstruct.Mapping
 import org.mapstruct.MappingTarget
 import org.mapstruct.Named
@@ -10,7 +10,7 @@ import org.mapstruct.Named
 /**
  * central generic Interface for mapping Entity to Dto in lower layers 
  */
-interface IDomainMapper<T: IDomainEntity, I : IDomainRequestDTO, O : IDomainResponseDTO>{
+interface IDomainMapper<T: IRootDomainEntity, I : IDomainRequestDTO, O : IDomainResponseDTO>{
 
     fun toEntityById(id: Long?): T
 

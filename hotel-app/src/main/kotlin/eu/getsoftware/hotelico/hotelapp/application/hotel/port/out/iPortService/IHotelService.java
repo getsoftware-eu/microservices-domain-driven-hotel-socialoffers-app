@@ -59,7 +59,7 @@ public interface IHotelService<T extends HotelDomainEntity>
 
     HotelDTO addHotel(HotelDTO hotelDto);
 
-    Optional<CustomerDeal> getDealByIdOrInitId(long id, long initId);
+    Optional<CustomerDeal> getDealByIdOrInitId(HotelDomainEntityId id, long initId);
 
     WallPostDTO addWallPost(WallPostDTO wallPostDto) throws Throwable;
 
@@ -106,7 +106,6 @@ public interface IHotelService<T extends HotelDomainEntity>
     List<HotelActivityDTO> getHotelActivitiesByHotelId(CustomerDomainEntityId customerId, HotelDomainEntityId hotelId);
 
     HotelActivityDTO addActivityAction(CustomerDomainEntityId customerId, long activityId, String action);
-
 
     List<HotelActivityDTO> getHotelActivitiesBySenderAndHotelId(CustomerDomainEntityId senderId, HotelDomainEntityId hotelId);
 

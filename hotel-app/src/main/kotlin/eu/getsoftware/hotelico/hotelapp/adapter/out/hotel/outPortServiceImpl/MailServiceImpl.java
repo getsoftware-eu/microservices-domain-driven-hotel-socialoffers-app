@@ -5,7 +5,7 @@ import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.MailValidator;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
@@ -181,7 +181,7 @@ public class MailServiceImpl implements MailService
 	}
 
 //	@Override
-	public String getWellcomeMailBody(ICustomerRootEntity customerEntity)
+	public String getWellcomeMailBody(CustomerDBEntity customerEntity)
 	{
 		String mailContent = "";
 		String mailHotelicoContent = "";

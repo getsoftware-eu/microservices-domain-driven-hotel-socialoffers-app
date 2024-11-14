@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestr
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinRequestDTO;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import jakarta.validation.constraints.NotNull;
@@ -16,23 +16,23 @@ public class CreateHotelCheckinHandler {
 
     @NotNull
     @Transactional
-    public ICustomerHotelCheckinEntity handle(CheckinRequestDTO checkinRequestDTO, CustomerDTO customerEntity, HotelDTO hotelRootEntity, boolean isFullCheckin) {
+    public CheckinRootDomainEntity handle(CheckinRequestDTO checkinRequestDTO, CustomerDTO customerEntity, HotelDTO hotelRootEntity, boolean isFullCheckin) {
         
-        ICustomerHotelCheckinEntity customerHotelCheckin = checkinService.createCheckin(customerEntity, hotelRootEntity, true);
-//        customerHotelCheckin.setCustomer(customerEntity);
-//        customerHotelCheckin.setHotel(hotelRootEntity);
+        CheckinRootDomainEntity CheckinRootDomainEntity = checkinService.createCheckin(customerEntity, hotelRootEntity, true);
+//        CheckinRootDomainEntity.setCustomer(customerEntity);
+//        CheckinRootDomainEntity.setHotel(hotelRootEntity);
 
 
-        customerHotelCheckin.setStaffCheckin(customerEntity.isHotelStaff());
-        customerHotelCheckin.setFullCheckin(isFullCheckin);
+        CheckinRootDomainEntity.setStaffCheckin(customerEntity.isHotelStaff());
+        CheckinRootDomainEntity.setFullCheckin(isFullCheckin);
 
         CustomerDTO.builder().build();
 
 
-        customerHotelCheckin.setValidFrom(checkinRequestDTO.checkinFrom());
-        customerHotelCheckin.setValidTo(checkinRequestDTO.checkinTo());
-        checkinService.save(customerHotelCheckin);
+        CheckinRootDomainEntity.setValidFrom(checkinRequestDTO.checkinFrom());
+        CheckinRootDomainEntity.setValidTo(checkinRequestDTO.checkinTo());
+        checkinService.save(CheckinRootDomainEntity);
         
-        return customerHotelCheckin;
+        return CheckinRootDomainEntity;
     }
 }

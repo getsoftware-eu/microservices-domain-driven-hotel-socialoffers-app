@@ -11,9 +11,8 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.ChatMessageView;
 import eu.getsoftware.hotelico.hotelapp.application.chat.domain.infrastructure.ChatMSComminicationService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.utils.DealStatus;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.IHotelEvent;
@@ -381,7 +380,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 			{
 				CustomerDomainEntityId nextId = new CustomerDomainEntityId(nextCustomerId.trim());
 
-				CustomerRootEntity nextFeedCustomerRootEntity = (CustomerRootEntity) customerService.getEntityById(nextId).orElseThrow(() -> new RuntimeException("not found"));
+				CustomerRootDomainEntity nextFeedCustomerRootEntity = (CustomerRootDomainEntity) customerService.getEntityById(nextId).orElseThrow(() -> new RuntimeException("not found"));
 				
 				if(nextFeedCustomerRootEntity !=null && nextFeedCustomerRootEntity.isAllowHotelNotification())
 				{
@@ -524,7 +523,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 		
 		if(event.getPushUrl()!=null)
 		{
-			Optional<ICustomerRootEntity> senderOpt = customerService.getEntityById(senderId);
+			Optional<CustomerRootDomainEntity> senderOpt = customerService.getEntityById(senderId);
 			
 			if(senderOpt.isPresent())
 			{
@@ -549,7 +548,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 		{
 			if(activity!=null)
 			{
-				String pushUrlPostfix = "//" + activity.getHotel().getDomainEntityId() + "/" + activity.getId();
+				String pushUrlPostfix = "//" + activity.getHotelDomainId() + "/" + activity.getId();
 
 				receiverNotification.setSocketPushCustomerEvent(event.getPushTitle(), message, event.getPushUrl()+pushUrlPostfix, event.getPushIcon(), activity.senderId()+"");
 				lastMessagesService.setLastPushNotifiation(receiverId, receiverNotification);
@@ -595,7 +594,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 			return;
 		}
 
-		  CustomerRootEntity  customerEntity = (CustomerRootEntity) customerService.getByDomainId(customerId).orElseThrow(()-> new RuntimeException());
+		  CustomerRootDomainEntity customerEntity = (CustomerRootDomainEntity) customerService.getByDomainId(customerId).orElseThrow(()-> new RuntimeException());
 		
 			String pushRegistrationId = customerEntity.getPushRegistrationId();
 			sendPush(pushRegistrationId);
@@ -649,7 +648,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 			return false;
 		}
 		
-//		List<CustomerHotelCheckin> allActiveInHotel = checkinService.getActiveByHotelId(hotelActivity.getHotel().getId(), new Date());
+//		List<CheckinRootDomainEntity> allActiveInHotel = checkinService.getActiveByHotelId(hotelActivity.getHotel().getId(), new Date());
 
 		Map<CustomerDomainEntityId, String> notLoggedGuestPushIdsByHotel= new HashMap<>();//hotelService.getNotLoggedGuestPushIdsByHotel(hotelActivity.getHotelId());
 

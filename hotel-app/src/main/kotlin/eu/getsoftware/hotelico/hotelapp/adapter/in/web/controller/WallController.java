@@ -2,6 +2,8 @@ package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
 import org.slf4j.Logger;
@@ -32,7 +34,7 @@ public class WallController  extends BasicController
   @MessageMapping("/wall")
   //who should recieve result of this method
 //  @SendTo("/walltopic/message")
-  public WallPostDTO sendMessage(WallPostDTO wallPostDto) {
+  public WallPostDTO sendMessage(WallPostDTO wallPostDto) throws Throwable {
     logger.info("Message sent");
 
     WallPostDTO savedMessage = hotelService.addUpdateWallPost(wallPostDto);
@@ -42,20 +44,20 @@ public class WallController  extends BasicController
 
   @RequestMapping(value = "/messages/customer/{requesterId}/hotel/{hotelId}", method = RequestMethod.GET)
   public @ResponseBody
-  List<WallPostDTO> getMessagesByHotelId(@PathVariable long hotelId, @PathVariable long requesterId) {
+  List<WallPostDTO> getMessagesByHotelId(@PathVariable HotelDomainEntityId hotelId, @PathVariable long requesterId) {
     return hotelService.getWallPostsByHotelId(hotelId);
   }
   
   @RequestMapping(value = "/customers/{requesterId}/hotel/{hotelId}", method = RequestMethod.GET)
   public @ResponseBody
-  List<CustomerDTO> getWallParticipantsByHotelId(@PathVariable long requesterId, @PathVariable long hotelId) {
+  List<CustomerDTO> getWallParticipantsByHotelId(@PathVariable CustomerDomainEntityId requesterId, @PathVariable HotelDomainEntityId hotelId) {
     return hotelService.getWallPostParticipantsByHotelId(requesterId, hotelId);
   }
   
   @RequestMapping(value = "/messages/{messageId}", method = RequestMethod.POST)
   @SendTo("/walltopic/message")
   public @ResponseBody
-  WallPostDTO addMessagesByMessageId(@PathVariable long messageId, @RequestBody WallPostDTO dto) {
+  WallPostDTO addMessagesByMessageId(@PathVariable long messageId, @RequestBody WallPostDTO dto) throws Throwable {
     return hotelService.addUpdateWallPost(dto);
   }
 //  @RequestMapping(value = "/messages/{messageId}", method = RequestMethod.PUT)

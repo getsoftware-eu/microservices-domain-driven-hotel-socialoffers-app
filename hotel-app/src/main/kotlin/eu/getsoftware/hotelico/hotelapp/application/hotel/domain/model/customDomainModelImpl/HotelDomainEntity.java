@@ -2,22 +2,23 @@ package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDo
 
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.common.collect.ImmutableSet;
+import eu.getsoftware.hotelico.clients.common.domain.IRootDomainEntity;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.DBAddress;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelWallPost;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Set;
 
-@Builder
-//@NoArgsConstructor
+@Builder(toBuilder = true)
+@AllArgsConstructor
+@NoArgsConstructor
 //@RequiredArgsConstructor - NEVER for Entity
-public class HotelDomainEntity /*implements MultitenantDocument, Scoreable*/ {
+public class HotelDomainEntity implements IRootDomainEntity /*MultitenantDocument, Scoreable*/ {
     
     public static final String TYPE_NAME = "hotel";
 
@@ -46,6 +47,7 @@ public class HotelDomainEntity /*implements MultitenantDocument, Scoreable*/ {
 //    private String sku;
 
 //    @JsonView(HotelPartialUpdateView.class)
+    @Setter
     protected String name;
 
 //    @JsonView(HotelPartialUpdateView.class)
@@ -77,7 +79,7 @@ public class HotelDomainEntity /*implements MultitenantDocument, Scoreable*/ {
         
     };
 
-    boolean isVirtual;
+    public boolean isVirtual;
 
     String getCurrentHotelAccessCode;
 
@@ -89,7 +91,6 @@ public class HotelDomainEntity /*implements MultitenantDocument, Scoreable*/ {
 
     String guestPushIds;
 
-    public HotelDomainEntity(){}
 
 //    @JsonView(HotelPartialUpdateView.class)
 //    private boolean onSale;
@@ -120,7 +121,12 @@ public class HotelDomainEntity /*implements MultitenantDocument, Scoreable*/ {
     public String getCurrentHotelAccessCode() { return null;
     }
 
-    public Collection<Object> getStaffIdList() { return null;
+    public Collection<CustomerDomainEntityId> getStaffIdList() { return null;
+    }
+
+    @Override
+    public void setInitValues(Map<String, String> fieldToValues) {
+        
     }
 
 //    /**

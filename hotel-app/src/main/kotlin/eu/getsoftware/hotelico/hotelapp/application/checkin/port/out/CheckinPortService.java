@@ -1,12 +1,12 @@
 package eu.getsoftware.hotelico.hotelapp.application.checkin.port.out;
 
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinRequestDTO;
 
 import java.util.Date;
@@ -17,21 +17,21 @@ import java.util.List;
  */
 public interface CheckinPortService {
     
-    List<ICustomerHotelCheckinEntity> getActiveByCustomerId(long id, Date date);
+    List<CheckinRootDomainEntity> getActiveByCustomerId(CustomerDomainEntityId id, Date date);
 
     Date getLastByCustomerAndHotelId(CustomerDomainEntityId id, HotelDomainEntityId id1);
 
-    void save(ICustomerHotelCheckinEntity customerHotelCheckin);
+    void save(CheckinRootDomainEntity CheckinRootDomainEntity);
 
     List<CustomerDTO> getStaffByHotelId(HotelDomainEntityId hotelId);
 
-    ICustomerHotelCheckinEntity createCheckin(CheckinRequestDTO customerRequestDto);
+    CheckinRootDomainEntity createCheckin(CheckinRequestDTO customerRequestDto);
 
-    ICustomerHotelCheckinEntity createCheckin(CustomerDTO customer, HotelDTO hotel, boolean isFullCheckin);
+    CheckinRootDomainEntity createCheckin(CustomerDTO customer, HotelDTO hotel, boolean isFullCheckin);
 
     Integer getActiveCountByHotelId(HotelDomainEntityId receiverHotelId, Date date);
 
-    CheckinDTO getResponseDTO(ICustomerHotelCheckinEntity newCheckin);
+    CheckinDTO getResponseDTO(CheckinRootDomainEntity newCheckin);
 
     void deleteAllImagesAndAttachments(CheckinDTO checkinDTO);
 

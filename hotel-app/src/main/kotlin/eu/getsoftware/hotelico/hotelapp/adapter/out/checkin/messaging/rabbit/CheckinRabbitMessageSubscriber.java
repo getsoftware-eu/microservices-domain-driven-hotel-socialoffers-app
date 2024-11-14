@@ -3,7 +3,7 @@
 //import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessage;
 //import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging.CheckinMessagePublisher;
 //import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
-//import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
+//import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinDTO;
 //import lombok.RequiredArgsConstructor;
 //import lombok.extern.slf4j.Slf4j;
 //import org.springframework.amqp.rabbit.annotation.RabbitHandler;
@@ -26,8 +26,8 @@
 //    
 ////    @DomainMessageHandler("checkin.checkin.created.event")
 //    @RabbitHandler //to consume multiple data type payloads from the same queue
-//    public void createCheckin(DomainMessage<CheckinMessagePublisher.CheckinSendEventPayload> message) {
-//        CheckinMessagePublisher.CheckinSendEventPayload payload = message.getPayload();
+//    public void createCheckin(DomainMessage<CheckinSendEventPayload> message) {
+//        CheckinSendEventPayload payload = message.getPayload();
 //
 //        {
 //            log.info("Processing event {}", message.getMessageType());
@@ -38,8 +38,8 @@
 //
 ////    @DomainMessageHandler("checkin.checkin.updated.event")
 //    @RabbitHandler //eu:to consume multiple data type payloads from the same queue
-//    public void updateCheckin(DomainMessage<CheckinMessagePublisher.CheckinSendEventPayload> message) {
-//        CheckinMessagePublisher.CheckinSendEventPayload payload = message.getPayload();
+//    public void updateCheckin(DomainMessage<CheckinSendEventPayload> message) {
+//        CheckinSendEventPayload payload = message.getPayload();
 //
 //        {
 //            log.info("Processing event {}", message.getMessageType());
@@ -50,8 +50,8 @@
 //    
 ////    @DomainMessageHandler("checkin.checkin.deleted.event")
 //    @RabbitHandler
-//    public void deleteCheckin(DomainMessage<CheckinMessagePublisher.CheckinSendEventPayload> message) {
-//        CheckinMessagePublisher.CheckinSendEventPayload payload = message.getPayload();
+//    public void deleteCheckin(DomainMessage<CheckinSendEventPayload> message) {
+//        CheckinSendEventPayload payload = message.getPayload();
 //
 //        {
 //            log.info("Processing event {}", message.getMessageType());
@@ -64,7 +64,7 @@
 //     * @param payload
 //     * @return
 //     */
-//    private CheckinDTO.CheckinDTOBuilder toCheckin(CheckinMessagePublisher.CheckinSendEventPayload payload) {
+//    private CheckinDTO.CheckinDTOBuilder toCheckin(CheckinSendEventPayload payload) {
 //        return CheckinDTO.builder()
 //                .initId(payload.getId())
 //                .from(paylod.getfrom())

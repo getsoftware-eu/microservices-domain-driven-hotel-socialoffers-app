@@ -1,6 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto;
 
 import eu.getsoftware.hotelico.clients.common.domain.IDomainRequestDTO;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
@@ -20,8 +22,8 @@ import java.util.Date;
  * @param name
  */
 public record CheckinRequestDTO(
-        @NotNull long customerId,
-        @NotNull long hotelId,
+        @NotNull CustomerDomainEntityId customerId,
+        @NotNull HotelDomainEntityId hotelId,
         Date checkinFrom,
         Date checkinTo,
         @NotNull long requesterId,
@@ -33,7 +35,7 @@ public record CheckinRequestDTO(
         //eu: ensure that the record objects are created in a VALID STATE.
         public CheckinRequestDTO
         {
-                if(customerId()<=0)
+                if(customerId()==null)
                 {
                    throw new IllegalArgumentException("no user for checkin.");
                 }
@@ -47,7 +49,7 @@ public record CheckinRequestDTO(
                    throw new IllegalArgumentException("please correct your checkin dates information.");
                 }
 
-                if(hotelId>0 && (checkinTo==null || checkinToIsInPast())) {
+                if(hotelId!=null && (checkinTo==null || checkinToIsInPast())) {
                         throw new IllegalArgumentException("Checkin Date is wrong or in past");
                 }
         }

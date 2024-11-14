@@ -5,10 +5,10 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntity
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelDomainEntity;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IFileUploadable;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -20,11 +20,15 @@ import java.util.Set;
 
 import static org.hibernate.internal.util.collections.CollectionHelper.listOf;
 
+//@Builder
+//@AllArgsConstructor
+
+@NoArgsConstructor
 @Entity
 @Getter @Setter
 @Table(name = "hotel", schema = "hotel")
 //@RequiredArgsConstructor - eu: NEVER FOR ENTITY
-public class HotelDbEntity extends HotelDomainEntity implements Serializable, IFileUploadable
+public class HotelDbEntity extends HotelDomainEntity implements Serializable
 {
     private static final long serialVersionUID = -4429239383913774205L;
 	
@@ -32,7 +36,7 @@ public class HotelDbEntity extends HotelDomainEntity implements Serializable, IF
     @Setter(AccessLevel.PROTECTED)
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "hotel_id_generator")
     @SequenceGenerator(name="hotel_id_generator", sequenceName = "hotel_id_seq")
-    private long id;
+    private long hotel_id;
 
     @Embedded @Column(name = "domain_entity_id", length = 50)
     public HotelDomainEntityId getDomainEntityId() {return domainEntityId;};
@@ -41,7 +45,7 @@ public class HotelDbEntity extends HotelDomainEntity implements Serializable, IF
     public DBAddress getAddress() { return address; };
 
     @Column(name = "name", nullable = false)
-    String getName(){ return name; };
+    public String getName(){ return name; };
     
     @Version
     private Long version;
@@ -117,7 +121,7 @@ public class HotelDbEntity extends HotelDomainEntity implements Serializable, IF
 	@Column(name = "unsubscribeNotificationPushIds", nullable = true, columnDefinition="LONGTEXT")
     private String unsubscribeNotificationPushIds = "";
 
-//    @ElementCollection(targetClass= CustomerHotelCheckin.class)
+//    @ElementCollection(targetClass= CheckinRootDomainEntity.class)
 //    @OneToMany(/*fetch = FetchType.LAZY,*/ mappedBy = "pk.hotel")
     @ElementCollection
     private List<Long> customerHotelHistories = listOf();
@@ -169,7 +173,7 @@ public class HotelDbEntity extends HotelDomainEntity implements Serializable, IF
     }
 
     public long getId() {
-        return id;
+        return hotel_id;
     }
     
     @Override

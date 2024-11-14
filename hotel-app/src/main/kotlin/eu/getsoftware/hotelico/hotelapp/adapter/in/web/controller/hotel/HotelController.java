@@ -10,7 +10,6 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelActivityService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IWallpostService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.LastMessagesService;
@@ -35,7 +34,6 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
 public class HotelController extends BasicController
 {
     private final IHotelService hotelService;    
-    private final IHotelActivityService hotelActivityService;    
     private final IWallpostService hotelWallpostService;
     private final LastMessagesService lastMessagesService;
     
@@ -102,12 +100,12 @@ public class HotelController extends BasicController
     }   
     
     @RequestMapping(value = "/customer/{customerId}/hotelCities", method = RequestMethod.GET)
-    public List<HotelDTO> getHotelCities(@PathVariable long customerId, final HttpServletResponse response) {
+    public List<HotelDTO> getHotelCities(@PathVariable CustomerDomainEntityId customerId, final HttpServletResponse response) {
         return hotelService.getHotelCities(customerId);
     } 
     
     @RequestMapping(value = "/customer/{customerId}/hotel/city/{city}", method = RequestMethod.GET)
-    public List<HotelDTO> getHotelCities(@PathVariable long customerId, @PathVariable String city, final HttpServletResponse response) throws BasicHotelException
+    public List<HotelDTO> getHotelCities(@PathVariable CustomerDomainEntityId customerId, @PathVariable String city, final HttpServletResponse response) throws BasicHotelException
     {
         return hotelService.getHotelsByCity(customerId, city);
     }  
@@ -172,7 +170,7 @@ public class HotelController extends BasicController
     @NotifyClients
     @RequestMapping(value = "customer/{customerId}/hotel/{hotelId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseDTO delete(@PathVariable long customerId, @PathVariable long hotelId) {
+    public ResponseDTO delete(@PathVariable CustomerDomainEntityId customerId, @PathVariable HotelDomainEntityId hotelId) {
         
 		return hotelService.deleteHotel(hotelId, customerId);
     }

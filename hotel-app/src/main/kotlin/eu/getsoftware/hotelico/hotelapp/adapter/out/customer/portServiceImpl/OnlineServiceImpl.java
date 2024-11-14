@@ -1,8 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.customer.portServiceImpl;
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.iPortService.OnlineService;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class OnlineServiceImpl implements OnlineService {
 
-    private CustomerPortService<CustomerRootEntity> customerPortService;
+    private CustomerPortService<CustomerRootDomainEntity> customerPortService;
     
     @Override
     public List<CustomerDTO> getAllOnline()
@@ -36,7 +35,7 @@ public class OnlineServiceImpl implements OnlineService {
         return customerPortService.findAllOnline(new Timestamp(milis));
     }
 
-    public static boolean isCustomerOnline(ICustomerRootEntity customerEntity)
+    public static boolean isCustomerOnline(CustomerRootDomainEntity customerEntity)
     {
         return customerEntity !=null && (customerEntity.isHotelStaff() 
 //                || customerEntity.getLastSeenOnline()!=null && customerEntity.getLastSeenOnline().after(convertToDate(LocalDateTime.now().minusMinutes(25)))

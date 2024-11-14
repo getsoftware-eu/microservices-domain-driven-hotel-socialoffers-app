@@ -1,10 +1,11 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.persistence.hotel.jpaTests;
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.CustomerHotelCheckin;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import jakarta.persistence.PersistenceException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +38,14 @@ class HotelRepositoryTests
 
     @Test
     void existingPaymentCanBeFound() {
-        ICustomerRootEntity customer = new CustomerDBEntity();
-        CustomerHotelCheckin checkin = new CustomerHotelCheckin();
+        CustomerRootDomainEntity customer = new CustomerDBEntity();
+        CheckinRootDomainEntity checkin = new CheckinRootDomainEntity();
 
         // when:
-        Long customerId = entityManager.persist(customer).getId();
+        CustomerDomainEntityId customerId = entityManager.persist(customer).getDomainEntityId();
         entityManager.persist(checkin);
 
-        Optional<CustomerDBEntity> savedCustomer = customerRepository.findById(customerId);
+        Optional<CustomerDBEntity> savedCustomer = customerRepository.findByDomainId(customerId);
 
         // then:
         assertThat(savedCustomer).isPresent();
@@ -54,8 +55,8 @@ class HotelRepositoryTests
     @Test
     void paymentsAreUniquePerOrder() {
         CustomerDBEntity order = new CustomerDBEntity();
-        CustomerHotelCheckin first = new CustomerHotelCheckin();
-        CustomerHotelCheckin second = new CustomerHotelCheckin();
+        CheckinRootDomainEntity first = new CheckinRootDomainEntity();
+        CheckinRootDomainEntity second = new CheckinRootDomainEntity();
 
         // when:
         entityManager.persist(order);

@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase;
 
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
@@ -10,15 +11,13 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntity
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging.CheckinMessagePublisher;
 import eu.getsoftware.hotelico.hotelapp.application.chat.port.out.IChatService;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinRequestDTO;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.handler.CreateHotelCheckinHandler;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.in.CheckinUseCase;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.GPSValidationHandler;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.innerDomainService.domainEvents.DomainEvent;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelDomainEntity;
@@ -84,7 +83,7 @@ import java.util.*;
 @RequiredArgsConstructor
 class CheckinUseCaseImpl implements CheckinUseCase
 {
-	private CustomerPortService<CustomerRootEntity> customerService;
+	private CustomerPortService<CustomerRootDomainEntity> customerService;
 	
 	private IMessagingProducerService<DomainEvent> messagingProducerService;		
 	
@@ -116,7 +115,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		
 		validateCustomerWithGPSLocationService(customerRequestDto.customerId(), customerRequestDto.hotelId()); //UseCase.Primary-flow.step.2
 
-		ICustomerHotelCheckinEntity newCheckin = createCheckin(customerRequestDto); //UseCase.Primary-flow.step.3
+		CheckinRootDomainEntity newCheckin = createCheckin(customerRequestDto); //UseCase.Primary-flow.step.3
 		
 		sendInitMessageFromHotelStaffToCustomer(newCheckin); //UseCase.Primary-flow.step.4
 		
@@ -128,10 +127,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		return checkinResponseDTO;
 	}
 
-	@Override
-	public CheckinDTO updateOwnDtoCheckinInfo(CheckinRequestDTO dto) throws JsonError {
-		return null;
-	}
+	 
 
 	/**
 	 * eu: not manually event, but @Observer repository or Service!!!
@@ -156,7 +152,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		messagingProducerService.sendSocketNotificationCommand(notificationCustomerCommand, DomainEvent.TEST);
 	}
 
-	private boolean validateCustomerWithGPSLocationService(long customerId, long hotelId) throws JsonError {
+	private boolean validateCustomerWithGPSLocationService(CustomerDomainEntityId customerId, HotelDomainEntityId hotelId) throws JsonError {
 		
 		int distanceKm = AppConfigProperties.checkinDistanceKm;
 		
@@ -169,15 +165,15 @@ class CheckinUseCaseImpl implements CheckinUseCase
 	}
 	
 
-	private ICustomerHotelCheckinEntity createCheckin(CheckinRequestDTO checkinRequestDto) throws Throwable {
+	private CheckinRootDomainEntity createCheckin(CheckinRequestDTO checkinRequestDto) throws Throwable {
 		
-		CustomerRootEntity customerEntity = customerService.getEntityById(checkinRequestDto.customerId())
+		CustomerRootDomainEntity customerDomainEntity = customerService.getEntityById(checkinRequestDto.customerId())
 				.orElseThrow(() -> new JsonError("Customer not found"));
 		
 		var hotelEntity = getHotelEntityFromCheckinRequest(checkinRequestDto)				
 				.orElseThrow(() -> new JsonError("Hotel wurde nicht gefunden"));
 		
-		boolean isFullCheckin = hotelEntity.isVirtual();
+		boolean isFullCheckin = hotelEntity.isVirtual;
 
 		boolean isDemoCheckin = AppConfigProperties.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelEntity.getCurrentHotelAccessCode());
 		boolean checkinDateIsValid = AppConfigProperties.NO_CHECKOUT_FOR_DEMOHOTEL && isDemoCheckin || checkinRequestDto.checkinDatesAreValid();
@@ -186,35 +182,35 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 //		CheckinDTO checkinResponseDto = new CheckinDTO(checkinRequestDto.getCustomerId(), checkinRequestDto.getHotelId());
 
-		ICustomerHotelCheckinEntity newCheckinEntity = checkinService.createCheckin(modelMapper.map(customerEntity, CustomerDTO.class), modelMapper.map(hotelEntity, HotelDTO.class), isFullCheckin); //TODO persist now or later??
+		CheckinRootDomainEntity newCheckinEntity = checkinService.createCheckin(modelMapper.map(customerDomainEntity, CustomerDTO.class), modelMapper.map(hotelEntity, HotelDTO.class), isFullCheckin); //TODO persist now or later??
 
-		List<ICustomerHotelCheckinEntity> activeCustomerCheckins = checkinService.getActiveByCustomerId(customerEntity.getId(), new Date());
+		List<CheckinRootDomainEntity> activeCustomerCheckins = checkinService.getActiveByCustomerId(customerDomainEntity.getDomainEntityId(), new Date());
 
 		//If checkin exists, 
-		if(!hotelEntity.isVirtual() && checkinDateIsValid)
+		if(!hotelEntity.isVirtual && checkinDateIsValid)
 		{
-			Date lastSameHotelCheckinDate = checkinService.getLastByCustomerAndHotelId(customerEntity.getDomainEntityId(), hotelEntity.getDomainEntityId());
+			Date lastSameHotelCheckinDate = checkinService.getLastByCustomerAndHotelId(customerDomainEntity.getDomainEntityId(), hotelEntity.getDomainEntityId());
 
 			var hotelDto = hotelService.getHotelById(hotelEntity.getDomainEntityId()); //checkinRequestDto.setHotelId(hotelRootEntity.getId()); //eu: NO setters for parameter!!!!
 
-			ICustomerHotelCheckinEntity nowGoodCheckin = null;
+			CheckinRootDomainEntity nowGoodCheckin = null;
 			
 			//if no checkin exists, create a new one
 			if(activeCustomerCheckins.isEmpty())
 			{
-				nowGoodCheckin =  new CreateHotelCheckinHandler().handle(checkinRequestDto, modelMapper.map(customerEntity, CustomerDTO.class), modelMapper.map(hotelEntity, HotelDTO.class), isFullCheckin);
+				nowGoodCheckin =  new CreateHotelCheckinHandler().handle(checkinRequestDto, modelMapper.map(customerDomainEntity, CustomerDTO.class), modelMapper.map(hotelEntity, HotelDTO.class), isFullCheckin);
 
 //				checkinResponseDto.setErrorResponse("");
 
 				//Inform others!!!
-				if(!customerEntity.isHotelStaff() && !customerEntity.isAdmin())
+				if(!customerDomainEntity.isHotelStaff() && !customerDomainEntity.isAdmin())
 				{
 //					checkinResponseDto.setHotelId(hotelEntity.getId());
 //					notificationUseCase.notificateAboutEntityEventWebSocket(checkinResponseDto, hotelEvent.getEventCheckin(), "New check-in in your hotel", hotelRootEntity.getId());
 				}
 
 				//sent wellcome message to new fullCheckin customers
-				if(!customerEntity.isHotelStaff() && !customerEntity.isAdmin())
+				if(!customerDomainEntity.isHotelStaff() && !customerDomainEntity.isAdmin())
 				{
 					CustomerDTO staffSender = this.getStaffbyHotelId(hotelEntity.getDomainEntityId());
 
@@ -223,7 +219,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 						//TODO EUGEN: Check here if I already sent a message to him
 						// ### SEND WELLCOME MESSAGE
 
-						CustomerDTO customerDTO = customerService.convertCustomerWithHotelToDto(customerEntity, customerEntity.getDomainEntityId());
+						CustomerDTO customerDTO = customerService.convertCustomerWithHotelToDto(customerDomainEntity, hotelEntity.getDomainEntityId());
 						chatService.sendFirstChatMessageOnDemand(customerDTO, staffSender, isFullCheckin);
 
 						HotelDTO hotelDTO = hotelService.getHotelByDomainId(hotelEntity.getDomainEntityId());
@@ -237,11 +233,11 @@ class CheckinUseCaseImpl implements CheckinUseCase
 			{
 				//EUGEN: only update checkin, no event
 
-				for (ICustomerHotelCheckinEntity nextCheckin : activeCustomerCheckins)
+				for (CheckinRootDomainEntity nextCheckin : activeCustomerCheckins)
 				{
 					if(hotelEntity.equals(nextCheckin.getHotelDomainEntityId())) //if the checkin of actual hotel, NO HOTEL EVENT!
 					{
-						updateHotelCheckin(checkinRequestDto, customerEntity, nextCheckin, isFullCheckin);
+						updateHotelCheckin(checkinRequestDto, customerDomainEntity, nextCheckin, isFullCheckin);
 //						checkinResponseDto.setErrorResponse("");
 						break;
 					}
@@ -249,18 +245,18 @@ class CheckinUseCaseImpl implements CheckinUseCase
 			}
 
 			long consistencyId = new Date().getTime();
-			customerEntity.setConsistencyId(consistencyId);
+//			customerDomainEntity.setConsistencyId(consistencyId);
 
-			lastMessagesService.updateCustomerConsistencyId(customerEntity.getDomainEntityId(), consistencyId);
+			lastMessagesService.updateCustomerConsistencyId(customerDomainEntity.getDomainEntityId(), consistencyId);
 
-			customerService.save(customerEntity);
+			customerService.save(customerDomainEntity);
 
-			var customerDto = customerService.convertCustomerWithHotelToDto(customerEntity, true, nowGoodCheckin);
+			var customerDto = customerService.convertCustomerWithHotelToDto(customerDomainEntity, true, nowGoodCheckin);
 
 		}
 		else{ //if no hotel more, maybe cancel actual checkin
 
-			for (ICustomerHotelCheckinEntity nextCheckin : activeCustomerCheckins)
+			for (CheckinRootDomainEntity nextCheckin : activeCustomerCheckins)
 			{
 				nextCheckin.setActive(false);
 
@@ -276,14 +272,14 @@ class CheckinUseCaseImpl implements CheckinUseCase
 				checkinService.save(nextCheckin);
 			}
 
-			long wantedHotelId = checkinRequestDto.hotelId();
+			var wantedHotelId = checkinRequestDto.hotelId();
 
 			long consistencyId = new Date().getTime();
-			customerEntity.setConsistencyId(consistencyId);
-			lastMessagesService.updateCustomerConsistencyId(customerEntity.getDomainEntityId(), consistencyId);
+//			customerDomainEntity.setConsistencyId(consistencyId);
+			lastMessagesService.updateCustomerConsistencyId(customerDomainEntity.getDomainEntityId(), consistencyId);
 
-			customerService.save(customerEntity);
-			var customerDto = customerService.convertMyCustomerToFullDto(customerEntity);
+			customerService.save(customerDomainEntity);
+			var customerDto = customerService.convertMyCustomerToFullDto(customerDomainEntity);
 
 //			if(wantedHotelId>0 && (checkinRequestDto.getCheckinTo()==null || checkinRequestDto.getCheckinTo().before(new Date()))) {
 //				checkinResponseDto.setErrorResponse("Checkin Date is wrong or in past");
@@ -299,7 +295,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		}
 
 		//Eugen: every time update customer current hotelId!!!
-		lastMessagesService.updateCustomerHotelId(newCheckinEntity.getDomainEntityId(), newCheckinEntity.getHotelDomainEntityId());
+		lastMessagesService.updateCustomerHotelId(newCheckinEntity.getCustomerDomainEntityId(), newCheckinEntity.getHotelDomainEntityId());
 		
 		return newCheckinEntity;
 	}
@@ -326,7 +322,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 	}
 
 
-	private void sendInitMessageFromHotelStaffToCustomer(ICustomerHotelCheckinEntity newCheckin) throws JsonError {
+	private void sendInitMessageFromHotelStaffToCustomer(CheckinRootDomainEntity newCheckin) throws JsonError {
 
 		HotelDomainEntityId hotelId = newCheckin.getHotelDomainEntityId();
 
@@ -344,11 +340,11 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		messagingProducerService.sendChatMessageCommand(wellcomeChatMessageCommand); //UseCase.Primary-flow.step.6
 	}
 
-	private void updateHotelCheckin(CheckinRequestDTO checkinRequestDTO, ICustomerRootEntity customerEntity, ICustomerHotelCheckinEntity nextCheckin, boolean isFullCheckin) {
+	private void updateHotelCheckin(CheckinRequestDTO checkinRequestDTO, CustomerRootDomainEntity customerEntity, CheckinRootDomainEntity nextCheckin, boolean isFullCheckin) {
 		//update the values of checkin
 		nextCheckin.setValidFrom(checkinRequestDTO.checkinFrom());
 		nextCheckin.setValidTo(checkinRequestDTO.checkinTo());
-		nextCheckin.setStaffCheckin(customerEntity.isHotelStaff());
+//		nextCheckin.setStaffCheckin(customerEntity.isHotelStaff);
 		nextCheckin.setFullCheckin(isFullCheckin);
 		  checkinService.save(nextCheckin);
 	}
@@ -360,8 +356,8 @@ class CheckinUseCaseImpl implements CheckinUseCase
 	}
 	
 
-	@Override
-	public CustomerDTO updateOwnDtoCheckinInfo(CustomerDTO dto, ICustomerHotelCheckinEntity validCheckin)
+//	@Override
+	public CustomerDTO updateOwnDtoCheckinInfo(CustomerDTO dto, CheckinRootDomainEntity validCheckin)
 	{
 		if(dto==null || dto.getId()<=0){
 			return  null;
@@ -370,17 +366,17 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		//Reset dto only if consistencyId too old!!!
 		//        dto = synchronizeCustomerToDto(dto);
 		
-		List<ICustomerHotelCheckinEntity> activeCheckins = validCheckin!=null ? new ArrayList<ICustomerHotelCheckinEntity>() : checkinService.getActiveByCustomerId(dto.getId(), new Date());
+		List<CheckinRootDomainEntity> activeCheckins = validCheckin!=null ? new ArrayList<CheckinRootDomainEntity>() : checkinService.getActiveByCustomerId(dto.getDomainEntityId(), new Date());
 		
-		//        CustomerHotelCheckin validCheckin = null;
+		//        CheckinRootDomainEntity validCheckin = null;
 		
 		if(!activeCheckins.isEmpty() || validCheckin!=null) //exists active checkin
 		{
-			Iterator<ICustomerHotelCheckinEntity> iterator = activeCheckins.iterator();
+			Iterator<CheckinRootDomainEntity> iterator = activeCheckins.iterator();
 			
 			while(iterator.hasNext() && validCheckin==null)
 			{
-				ICustomerHotelCheckinEntity customerCheckin = iterator.next();
+				CheckinRootDomainEntity customerCheckin = iterator.next();
 				
 				//If checkin is old, set it not active
 				if(new Date().after(customerCheckin.getValidTo()))
@@ -398,7 +394,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		
 		if(validCheckin!=null) // if checkin exists and valid
 		{
-//			ICustomerRootEntity checkinCustomerRootEntity = validCheckin.getCustomer();
+//			CustomerRootDomainEntity checkinCustomerRootEntity = validCheckin.getCustomer();
 			
 			//TODO Eugen: cannot set logged automaticly
 			//TODO Eugen: checkinCustomerRootEntity.setActive(true)? update entity?

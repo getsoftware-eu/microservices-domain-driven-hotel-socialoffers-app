@@ -41,7 +41,7 @@ public class ChatMessageView implements IChatMessageView, Serializable
 //  @JoinColumn(name="senderDomainId")
 //  private CustomerRootEntity sender;
 //  @Column
-  @Embedded
+  @Embedded @Column
   private CustomerDomainEntityId senderId;
   
   @Column(name = "seenByReceiver", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
@@ -53,8 +53,8 @@ public class ChatMessageView implements IChatMessageView, Serializable
 //  @ManyToOne
 //  @JoinColumn(name="receiverDomainId")
 //  private CustomerRootEntity receiver;
-  @Embedded
-  private CustomerDomainEntityId receiverId;
+  @Embedded @Column
+  public CustomerDomainEntityId receiverId;
 
   @Column
   private String specialChatContent;

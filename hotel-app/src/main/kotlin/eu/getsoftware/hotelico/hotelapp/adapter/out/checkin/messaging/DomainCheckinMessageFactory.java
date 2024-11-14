@@ -1,10 +1,10 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging;
 
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainLayerPayload.CheckinEvent;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessage;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessagePayload;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

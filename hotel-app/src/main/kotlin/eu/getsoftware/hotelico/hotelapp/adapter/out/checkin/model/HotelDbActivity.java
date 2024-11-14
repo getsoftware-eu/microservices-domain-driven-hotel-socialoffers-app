@@ -5,7 +5,6 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntity
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IFileUploadable;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -26,7 +25,7 @@ import java.util.stream.Collectors;
 @Entity
 @Getter @Setter
 @Table(name = "hotel_activity", schema = "hotel")
-public class HotelDbActivity implements IHotelActivity, Serializable, IFileUploadable
+public class HotelDbActivity implements IHotelActivity, Serializable
 {
 
 	private static final long serialVersionUID = -3552760230942289778L;
@@ -59,7 +58,7 @@ public class HotelDbActivity implements IHotelActivity, Serializable, IFileUploa
 //	@ManyToOne
 //	@JoinColumn(name="hotelId")
 	@Embedded
-	private HotelDomainEntityId hotelId;
+	private HotelDomainEntityId hotelDomainId;
 
 	@ManyToOne
 	@JoinColumn(name="senderDomainId")

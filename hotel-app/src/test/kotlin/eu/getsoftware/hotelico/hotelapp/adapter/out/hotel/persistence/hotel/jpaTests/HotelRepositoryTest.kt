@@ -21,7 +21,7 @@ class BankAccountRepositoryUnitTest {
     @Test
     fun WhenFindById_thenReturnEntity() {
         val hotelResponseDto =
-            HotelDTO(123);
+            HotelDTO.builder().build();
         
         // when:
         entityManager.persist(hotelResponseDto)

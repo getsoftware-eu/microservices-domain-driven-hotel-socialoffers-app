@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging;
 
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinDTO;
 import eu.getsoftware.hotelico.clients.common.domain.mapper.IDomainMapper;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.CustomerHotelCheckin;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinRequestDTO;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import lombok.NonNull;
@@ -26,22 +26,22 @@ public class CheckinRepositoryEventHandler {
     @NonNull
     private final CheckinPortService checkinService;
 
-    private final IDomainMapper<CustomerHotelCheckin, CheckinRequestDTO, CheckinDTO> checkinDomainMapper;
+    private final IDomainMapper<CheckinRootDomainEntity, CheckinRequestDTO, CheckinDTO> checkinDomainMapper;
 
     @HandleAfterCreate //выполнить определенные действия сразу после создания нового объекта в базе данных
-    public void sendCreatedEvent(CustomerHotelCheckin checkin) {
+    public void sendCreatedEvent(CheckinRootDomainEntity checkin) {
         CheckinDTO checkinDTO = checkinDomainMapper.toResponseDTO(checkin);
         checkinMessagePublisher.publishCheckinCreatedEvent(checkinDTO);
     }
 
     @HandleAfterSave //выполнить определенные действия сразу после update объекта в базе данных
-    public void sendUpdatedEvent(CustomerHotelCheckin checkin) {
+    public void sendUpdatedEvent(CheckinRootDomainEntity checkin) {
         CheckinDTO checkinDTO = checkinDomainMapper.toResponseDTO(checkin);
         checkinMessagePublisher.publishCheckinUpdatedEvent(checkinDTO);
     }
 
     @HandleAfterLinkSave
-    public void onDefaultImageSavedEvent(CustomerHotelCheckin checkin, Object image) {
+    public void onDefaultImageSavedEvent(CheckinRootDomainEntity checkin, Object image) {
         CheckinDTO checkinDTO = checkinDomainMapper.toResponseDTO(checkin);
         checkinMessagePublisher.publishCheckinUpdatedEvent(checkinDTO);
     }
@@ -55,13 +55,13 @@ public class CheckinRepositoryEventHandler {
     }
 
     @HandleBeforeDelete
-    public void deleteImagesAndAttachmentsBeforeCheckinDeletion(CustomerHotelCheckin checkin){
+    public void deleteImagesAndAttachmentsBeforeCheckinDeletion(CheckinRootDomainEntity checkin){
         CheckinDTO checkinDTO = checkinDomainMapper.toResponseDTO(checkin);
         checkinService.deleteAllImagesAndAttachments(checkinDTO);
     }
 
     @HandleAfterDelete
-    public void sendDeletedEvent(CustomerHotelCheckin checkin) {
+    public void sendDeletedEvent(CheckinRootDomainEntity checkin) {
         CheckinDTO checkinDTO = checkinDomainMapper.toResponseDTO(checkin);
         checkinMessagePublisher.publishCheckinDeletedEvent(checkinDTO);
     }

@@ -30,7 +30,7 @@ import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.u
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.HotelDomainEntity;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelGroupAggregate;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.INotificationService;
@@ -60,7 +60,7 @@ public class HotelServiceImpl implements IHotelService<HotelDbEntity>
 	
 	private LastMessagesService lastMessagesService;
 	
-    private HotelRepository hotelRepository;     
+    private final HotelRepository hotelRepository;     
     
     private CustomerRepository customerRepository;    
     
@@ -317,12 +317,12 @@ public class HotelServiceImpl implements IHotelService<HotelDbEntity>
 	@Override
     public void reorderActivitiesInHotel(ReorderAction action, HotelDbActivity activity)
 	{
-		if(activity.getHotel()==null)
+		if(activity.getHotelDomainId()==null)
 		{
 			return;
 		}
 		
-		List<HotelDbActivity> hotelActivities = activityRepository.getAllTimesByHotelId(activity.getHotel().getDomainEntityId());
+		List<HotelDbActivity> hotelActivities = activityRepository.getAllTimesByHotelId(activity.getHotelDomainId());
 		
 		//sort by orderIndex!!!
 		if (hotelActivities.size() > 0) {
@@ -519,7 +519,7 @@ public class HotelServiceImpl implements IHotelService<HotelDbEntity>
 		HotelDbActivity dealActivity = deal.getActivity();
 		
 		dto.setActivityId(dealActivity.getId());
-        dto.setHotelDomainId(dealActivity.getHotel().getDomainEntityId());
+        dto.setHotelDomainId(dealActivity.getHotelDomainId());
        
         dto.setTitle(dealActivity.getTitle());
         dto.setDescription(dealActivity.getDescription());
@@ -908,7 +908,7 @@ public class HotelServiceImpl implements IHotelService<HotelDbEntity>
 			//TODO Eugen: Last Minute!!!!
 			if(hotelActivityDto.getLastMinute())
 			{
-				WallPostDTO checkinNotificationWall = new WallPostDTO(hotelActivity.getHotel().getDomainEntityId(), hotelActivity.getSender().getDomainEntityId());
+				WallPostDTO checkinNotificationWall = new WallPostDTO(hotelActivity.getHotelDomainId(), hotelActivity.getSender().getDomainEntityId());
 		
 				checkinNotificationWall.getSpecialContent().put("activityId", String.valueOf(hotelActivityDto.getId()));
 				checkinNotificationWall.setInitId(new Date().getTime());
@@ -927,7 +927,7 @@ public class HotelServiceImpl implements IHotelService<HotelDbEntity>
         return Optional.empty();
     }
 
-    @Override
+//    @Override
     public Optional<HotelDbActivity> getActivityByIdOrInitId(ActivityDomainEntityId id, long initId)
     {
         if(initId>0)
@@ -940,7 +940,7 @@ public class HotelServiceImpl implements IHotelService<HotelDbEntity>
     }
     
     @Override
-    public Optional<CustomerDeal> getDealByIdOrInitId(long id, long initId)
+    public Optional<CustomerDeal> getDealByIdOrInitId(HotelDomainEntityId hotelId, long initId)
     {
         if(initId>0)
         {
@@ -948,7 +948,7 @@ public class HotelServiceImpl implements IHotelService<HotelDbEntity>
 		            .stream().findFirst();
         }    
         
-        return dealRepository.findByHotelId(id);
+        return dealRepository.findByHotelId(hotelId);
     }
 
     private HotelDbActivity createHotelActivity(HotelActivityDTO hotelActivityDto)
@@ -973,7 +973,7 @@ public class HotelServiceImpl implements IHotelService<HotelDbEntity>
 
         if(hotelRootEntity !=null)
 		{
-			hotelActivity.setHotel(hotelRootEntity);
+			hotelActivity.setHotelDomainId(hotelRootEntity.getDomainEntityId());
 		}
 		
         if(sender!=null)
@@ -1108,11 +1108,6 @@ public class HotelServiceImpl implements IHotelService<HotelDbEntity>
         return convertHotelToDto(hotelRootEntity);
     }
 
-    @Override
-    public CustomerDTO addGuestAction(CustomerDomainEntityId guestCustomerId, String action, Long hotelId, CustomerDTO guestDto) {
-        return null;
-    }
-
     private HotelDTO convertHotelToDto(HotelDbEntity hotelRootEntity)
     {
         if(hotelRootEntity == null)
@@ -1127,7 +1122,7 @@ public class HotelServiceImpl implements IHotelService<HotelDbEntity>
         
         try{
             activityNumber = activityRepository.getTimeValidCounterByHotelId(hotelRootEntity.getDomainEntityId(), new Date());
-            customerNumber = checkinRepository.getFullCheckinCountExcludingStaffByHotelId(hotelRootEntity.getId(), new Date());
+            customerNumber = checkinRepository.getFullCheckinCountExcludingStaffByHotelId(hotelRootEntity.getDomainEntityId(), new Date());
         }
         catch (Exception e){
             ;//TODO Eugen.
@@ -1169,24 +1164,25 @@ public class HotelServiceImpl implements IHotelService<HotelDbEntity>
         return null;
     }
 
-    @Override
-	public Map<Long,String> getNotLoggedGuestPushIdsByHotel(HotelDomainEntity hotelRootEntity)
-	{
-		Map<Long, String> guestsToPushId = new HashMap<>();
-		
-		if(hotelRootEntity == null)
-		{
-			return guestsToPushId;
-		}
-		
-		//TODO convert string data to own structure
-		
-		String hotelPushIds = hotelRootEntity.getGuestPushIds()!=null?  hotelRootEntity.getGuestPushIds() : "";
-		
-		splitPushIds(guestsToPushId, hotelPushIds);
-		
-		return guestsToPushId;
-	}
+
+////    @Override
+//	public Map<Long,String> getNotLoggedGuestPushIdsByHotel(HotelDomainEntity hotelRootEntity)
+//	{
+//		Map<Long, String> guestsToPushId = new HashMap<>();
+//		
+//		if(hotelRootEntity == null)
+//		{
+//			return guestsToPushId;
+//		}
+//		
+//		//TODO convert string data to own structure
+//		
+////		String hotelPushIds = hotelRootEntity.getGuestPushIds()!=null?  hotelRootEntity.getGuestPushIds() : "";
+////		
+////		splitPushIds(guestsToPushId, hotelPushIds);
+//		
+//		return guestsToPushId;
+//	}
 	
 	/**
 	 * TODO convert string to own data structire
@@ -1426,21 +1422,21 @@ public class HotelServiceImpl implements IHotelService<HotelDbEntity>
             activityDto.setValidDealId(activityDeals.get(0).getInitId());
         }
 
-        HotelDbEntity hotelRootEntity = hotelActivity.getHotel();
+        HotelDomainEntityId hotelRootEntityId = hotelActivity.getHotelDomainId();
 
         int otherActivityNumber = 0;
         int hotelCustomerNumber = 0;
         
-        if(hotelRootEntity !=null)
+        if(hotelRootEntityId !=null)
         {
-            activityDto.setHotelId(hotelRootEntity.getDomainEntityId());
-            activityDto.setHotelName(hotelRootEntity.getName());
-            activityDto.setHotelCity(hotelRootEntity.getCity());
+            activityDto.setHotelId(hotelRootEntityId);
+//            activityDto.setHotelName(hotelRootEntity.getName());
+//            activityDto.setHotelCity(hotelRootEntity.getCity());
 
             try
             {
-                otherActivityNumber = activityRepository.getTimeValidCounterByHotelId(hotelRootEntity.getDomainEntityId(), new Date());
-                hotelCustomerNumber = checkinRepository.getFullCheckinCountExcludingStaffByHotelId(hotelRootEntity.getDomainEntityId(), new Date());
+                otherActivityNumber = activityRepository.getTimeValidCounterByHotelId(hotelRootEntityId, new Date());
+                hotelCustomerNumber = checkinRepository.getFullCheckinCountExcludingStaffByHotelId(hotelRootEntityId, new Date());
             }
             catch (Exception e)
             {
@@ -1556,7 +1552,7 @@ public class HotelServiceImpl implements IHotelService<HotelDbEntity>
                     {
 	                    HotelDbActivity activity = activityOpt.get();
                         dto.getSpecialContent().put("name", activity.getTitle());
-                        dto.getSpecialContent().put("hotelId", activity.getHotel().getId()+"");
+                        dto.getSpecialContent().put("hotelId", activity.getHotelDomainId()+"");
                         dto.getSpecialContent().put("pictureUrl", activity.getPreviewPictureUrl()!=null?activity.getPreviewPictureUrl() : AppConfigProperties.PREVIEW_ACTIVITY_NOT_AVAILABLE_URL );
                     }
 
@@ -1601,7 +1597,7 @@ public class HotelServiceImpl implements IHotelService<HotelDbEntity>
     }
 
 	@Override
-    public CustomerDTO addGuestAction(long guestCustomerId, String action, Long hotelId, CustomerDTO guestDto)
+    public CustomerDTO addGuestAction(CustomerDomainEntityId guestCustomerId, String action, Long hotelId, CustomerDTO guestDto)
 	{
 		Objects.requireNonNull(guestDto);
 		

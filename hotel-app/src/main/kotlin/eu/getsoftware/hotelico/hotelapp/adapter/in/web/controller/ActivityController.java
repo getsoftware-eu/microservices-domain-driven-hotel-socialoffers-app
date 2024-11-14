@@ -65,7 +65,7 @@ public class ActivityController extends BasicController
   
   @RequestMapping(value = "/activities/customer/{customerId}/activityId/{activityId}", method = RequestMethod.GET)
   public @ResponseBody
-  HotelActivityDTO getActivityById(@PathVariable CustomerDomainEntityId customerId, @PathVariable long activityId) {
+  HotelActivityDTO getActivityById(@PathVariable CustomerDomainEntityId customerId, @PathVariable long activityId) throws Throwable {
     return hotelService.getHotelActivityById(customerId, activityId);
   }
 //  

@@ -1,6 +1,5 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model;
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.CustomerHotelCheckin;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerDetails;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -44,8 +43,10 @@ public class CustomerDetails implements ICustomerDetails
 	@Column
 	private String profileImageLink; // S3 key
 	
-	@OneToMany(/*fetch = FetchType.LAZY,*/ mappedBy = "pk.customer", cascade= CascadeType.ALL)
-	private Set<CustomerHotelCheckin> customerHotelHistories = new HashSet<CustomerHotelCheckin>(0);
+//	@OneToMany(/*fetch = FetchType.LAZY,*/ mappedBy = "pk.customer", cascade= CascadeType.ALL)
+	@Column
+	@ElementCollection
+	private Set<String> customerHotelIdHistories = new HashSet<String>(0);
 	
 	public CustomerDetails()
 	{

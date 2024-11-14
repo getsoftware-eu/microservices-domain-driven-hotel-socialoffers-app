@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus
 
 
 @SpringBootTest(
-		classes = arrayOf(MainApplication::class),
+		classes = [MainApplication::class],
 		webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class KotlinTestingDemoApplicationIntegrationTest {
 	
@@ -22,7 +22,7 @@ class KotlinTestingDemoApplicationIntegrationTest {
 	fun whePostCalled_thenShouldReturnBankObject() {
 		// when:
 		val result = restTemplate.postForEntity("/api/v1/hotels",
-			HotelDTO(123), HotelDTO::class.java);
+			HotelDTO.builder().build(), HotelDTO::class.java);
 
 		// then:
 		Assertions.assertNotNull(result)

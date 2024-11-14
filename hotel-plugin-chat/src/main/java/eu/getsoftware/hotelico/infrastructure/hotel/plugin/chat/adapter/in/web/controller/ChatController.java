@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.in.web.
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
-import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.outPortServiceImpl.ChatService;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.port.out.IChatService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ public class ChatController extends BasicController
   private Logger logger = LoggerFactory.getLogger(getClass());
   
   @Autowired
-  private ChatService chatService;
+  private IChatService chatService;
   
   @RequestMapping(method = RequestMethod.GET)
   public String viewApplication() {

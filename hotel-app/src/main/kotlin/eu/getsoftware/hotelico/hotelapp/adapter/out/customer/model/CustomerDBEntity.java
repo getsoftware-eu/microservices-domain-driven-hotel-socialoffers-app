@@ -3,29 +3,32 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerDetails;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerPreferences;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IFileUploadable;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Root Enity, only one way to get sub Entites
  * main data, will be fetched with every query
  */
 @Entity
-@Getter @Setter(value = AccessLevel.PACKAGE)
-@Builder(toBuilder = true)
-@AllArgsConstructor(access = AccessLevel.PACKAGE)
 @NoArgsConstructor
+@Getter 
+//@Setter(value = AccessLevel.PACKAGE)
+//@Builder(toBuilder = true)
+//@AllArgsConstructor(access = AccessLevel.PACKAGE)
+//@NoArgsConstructor
 @Table(name = "customer", schema = "customer")
 @DynamicUpdate
-public class CustomerDBEntity implements ICustomerRootEntity, Serializable, IFileUploadable
+public class CustomerDBEntity extends CustomerRootDomainEntity implements Serializable
 {
     @Id
     @Setter(AccessLevel.PROTECTED)
@@ -33,10 +36,13 @@ public class CustomerDBEntity implements ICustomerRootEntity, Serializable, IFil
     @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "customer_id_generator")
     @SequenceGenerator(name="customer_id_generator", sequenceName = "customer_id_seq")
     private long id;
-    
-//    @Column(columnDefinition = "BINARY(16)")
-    @Embedded  //Аннотирует DomainId как ValueObject,  Вам не нужно явно маппить строковое поле DomainId вручную.
-    private CustomerDomainEntityId domainEntityId; // Ваш Value Object
+
+//    public CustomerDBEntity() {
+//        super();
+//    }
+
+    @Embedded @Column(name = "domain_id", length = 50) //Аннотирует DomainId как ValueObject,  Вам не нужно явно маппить строковое поле DomainId вручную.
+    public CustomerDomainEntityId getDomainEntityId() {return domainEntityId;} // Ваш Value Object
 
     @Version
     private Long version;
@@ -46,10 +52,10 @@ public class CustomerDBEntity implements ICustomerRootEntity, Serializable, IFil
     private boolean active = true;
     
     @Column(name = "logged", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
-    private boolean logged = false;
+    boolean getLogged() {return logged;};
     
     @Column(name = "showAvatar", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_TRUE)
-    private boolean showAvatar = true;
+    private boolean getShowAvatar() {return showAvatar;};
     
     @Column(name = "guestAccount", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
     private boolean guestAccount = false;
@@ -78,7 +84,7 @@ public class CustomerDBEntity implements ICustomerRootEntity, Serializable, IFil
     private String status;
     
     @Column(name = "passwordHash")
-    private Long passwordHash;
+    public long getPasswordHash() {return passwordHash;};
     
     @Column(name = "passwordValue", nullable = true)
     private String passwordValue;
@@ -150,9 +156,6 @@ public class CustomerDBEntity implements ICustomerRootEntity, Serializable, IFil
     @JoinColumn(name = "details_id")
     private CustomerDetails customerDetails;
 
-    public ICustomerDetails getCustomerDetails() {
-        return customerDetails;
-    }
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id")
@@ -170,20 +173,19 @@ public class CustomerDBEntity implements ICustomerRootEntity, Serializable, IFil
 	private double points = 0.0;
     
     //####################################################
-    
-    @Override
-    public void setPasswordHash(long passwordHash) {
-        
-    }
 
+//    public CustomerDBEntity{
+//        super();
+//    }
+    
     public void updateLastSeenOnline()
     {
         this.lastSeenOnline = new Date();
     }
     
     //################### 1:n:1 ###################################
-    
-//    @Override
+
+    //    @Override
     public String getPlainFilePath(final int upperOrderId)
     {
 //        if (getId() < upperOrderId)
@@ -232,7 +234,7 @@ public class CustomerDBEntity implements ICustomerRootEntity, Serializable, IFil
     @Override
     public int hashCode()
     {
-        int result = (int)id;
+        int result = (int) id;
         result = 31 * result + (active ? 1 : 0);
         result = 31 * result + (showAvatar ? 1 : 0);
         result = 31 * result + (int) (lastResetPasswordRequestTime ^ (lastResetPasswordRequestTime >>> 32));
@@ -263,26 +265,7 @@ public class CustomerDBEntity implements ICustomerRootEntity, Serializable, IFil
     public double getLongitude() {
         return 0;
     }
-
-    @Override
-    public void setLatitude(double latitude) {
-
-    }
-
-    @Override
-    public void setLongitude(double longitude) {
-
-    }
-
-
-    @Override
-    public void setInitValues(Map<String, String> fieldToValues) {
-        
-    }
-
-
-    public void setBirthday(Date birthdayDate) {
-    }
+    
 
     public void doLogout() {
     }

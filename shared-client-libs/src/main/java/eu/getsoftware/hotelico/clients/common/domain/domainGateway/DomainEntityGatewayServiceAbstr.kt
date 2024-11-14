@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.clients.common.domain.domainGateway
 
-import eu.getsoftware.hotelico.clients.common.domain.IDomainEntity
+import eu.getsoftware.hotelico.clients.common.domain.IRootDomainEntity
 import eu.getsoftware.hotelico.clients.common.error.UserNotFoundException
 import java.util.*
 
@@ -15,7 +15,7 @@ import java.util.*
  * 
  * its internal business conditions, that have to be internal treaten
  */
-abstract class DomainEntityGatewayServiceAbstr<T: IDomainEntity>(
+abstract class DomainEntityGatewayServiceAbstr<T: IRootDomainEntity>(
     private val domainRepository: IDomainEntityGateway<T, Long>,
 ) 
 {

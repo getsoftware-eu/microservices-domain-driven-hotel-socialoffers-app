@@ -10,13 +10,14 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
 public class ChatServiceImpl implements IChatService {
 
-    
     private final ChatMessageService chatService;
 
     public void sendFirstChatMessageOnDemand(CustomerDTO customerDTO, CustomerDTO staffSender, boolean isFullCheckin) {
@@ -43,7 +44,7 @@ public class ChatServiceImpl implements IChatService {
             var initId = (new Date().getTime());
             var timestamp = (new Timestamp(new Date().getTime()));
 
-            ChatMsgDTO chatMsgDTO = new ChatMsgDTO(initId, msg, sender.getId(), receiver.getId(), true, false, false, 123, null, null, true);
+            ChatMsgDTO chatMsgDTO = new ChatMsgDTO(initId, msg, sender.getDomainEntityId(), receiver.getDomainId(), true, false, false, 123, null, null, true);
             
             chatService.save(chatMsgDTO);
         }
@@ -76,6 +77,37 @@ public class ChatServiceImpl implements IChatService {
 
     @Override
     public ChatUserEntity updateCustomerFromDTO(CustomerDTO customerDTO) {
+        return null;
+    }
+
+	public ChatMsgDTO addChatMessage(ChatMsgDTO chatMessageDto) {
+		return null;
+	}
+
+	public List<ChatMsgDTO> getMessagesByCustomerId(long customerId, int receiverId) {
+		return List.of();
+	}
+
+	public Set<CustomerDTO> getNotHotelChatPartners(long customerId, String city, long hotelId) {
+		return Set.of();
+	}
+
+	public Set<CustomerDTO> getAllContactChatPartners(long customerId, String city, long hotelId) {
+		return Set.of();
+	}
+
+	public Set<CustomerDTO> getAllNotChatPartners(long customerId, String city, long hotelId, int pageNumber) {
+		return Set.of();
+	}
+
+	public void markMessageRead(long customerId, String messageIds) {
+	}
+
+	public void markChatRead(long customerId, int senderId, long maxSeenChatMessageId) {
+	}
+
+    @Override
+    public ChatMsgDTO addUpdateChatMessage(ChatMsgDTO dto) {
         return null;
     }
 }

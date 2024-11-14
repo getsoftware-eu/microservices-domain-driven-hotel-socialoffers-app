@@ -3,6 +3,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller.customer;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
@@ -59,19 +60,19 @@ public class CustomerController extends BasicController
 
     @RequestMapping(value = "/customers/{customerId}/cities", method = RequestMethod.GET)
     public @ResponseBody
-    Set<CustomerDTO> getCustomerCities(@PathVariable int customerId) {
+    Set<CustomerDTO> getCustomerCities(@PathVariable CustomerDomainEntityId customerId) {
         return customerService.getCustomerCities(customerId);
     }
     
     @RequestMapping(value = "/customers/{customerId}/hotel/{hotelId}/addStaff/{addStaff}", method = RequestMethod.GET)
     public @ResponseBody
-    Set<CustomerDTO> getByHotelId(@PathVariable long customerId, @PathVariable long hotelId, @PathVariable boolean addStaff) {
+    Set<CustomerDTO> getByHotelId(@PathVariable CustomerDomainEntityId customerId, @PathVariable HotelDomainEntityId hotelId, @PathVariable boolean addStaff) {
         return customerService.getByHotelId(customerId, hotelId, addStaff);
     }
     
     @RequestMapping(value = "/customers/{customerId}/city/{city}", method = RequestMethod.GET)
     public @ResponseBody
-    Set<CustomerDTO> getByCity(@PathVariable long customerId, @PathVariable String city) {
+    Set<CustomerDTO> getByCity(@PathVariable CustomerDomainEntityId customerId, @PathVariable String city) {
         return customerService.getByCity(customerId, city);
     }
     
@@ -89,7 +90,7 @@ public class CustomerController extends BasicController
     }
     
     @RequestMapping(value = "/customers/{id}/requesterId/{requesterId}", method = RequestMethod.GET)
-    public @ResponseBody CustomerDTO getById(@PathVariable int id, @PathVariable int requesterId) throws Throwable {
+    public @ResponseBody CustomerDTO getById(@PathVariable CustomerDomainEntityId id, @PathVariable int requesterId) throws Throwable {
         CustomerDTO out;
         
         try
@@ -106,7 +107,7 @@ public class CustomerController extends BasicController
     }
 
     @RequestMapping(value = "/customerwithmessage/{getId}/sender/{senderId}", method = RequestMethod.GET)
-    public @ResponseBody CustomerDTO getCustomerWithLastMessageById(@PathVariable int getId, @PathVariable int senderId) throws Throwable {
+    public @ResponseBody CustomerDTO getCustomerWithLastMessageById(@PathVariable CustomerDomainEntityId getId, @PathVariable int senderId) throws Throwable {
         CustomerDTO out;
 
         try
@@ -249,7 +250,7 @@ public class CustomerController extends BasicController
         
         if(sessionCustomer!=null && sessionCustomer.getId()>0 && sessionCustomer.getFirstName()==null)
         {
-            CustomerDTO out = (CustomerDTO) customerService.getById(sessionCustomer.getId(), sessionCustomer.getId()).orElseThrow(()->new RuntimeException("-"));
+            CustomerDTO out = (CustomerDTO) customerService.getById(sessionCustomer.getDomainEntityId(), sessionCustomer.getId()).orElseThrow(()->new RuntimeException("-"));
 			lastMessagesService.setLastFullNotification(out.getDomainEntityId(), null);
 			httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
         }
@@ -281,7 +282,7 @@ public class CustomerController extends BasicController
         }
         if(sessionCustomer!=null && sessionCustomer.getId()>0 && sessionCustomer.getFirstName()==null)
         {
-            CustomerDTO out = (CustomerDTO) customerService.getById(sessionCustomer.getId(), sessionCustomer.getId()).orElseThrow(()->new RuntimeException("-"));
+            CustomerDTO out = (CustomerDTO) customerService.getById(sessionCustomer.getDomainEntityId(), sessionCustomer.getId()).orElseThrow(()->new RuntimeException("-"));
 			lastMessagesService.setLastFullNotification(out.getDomainEntityId(), null);
 			httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
         }

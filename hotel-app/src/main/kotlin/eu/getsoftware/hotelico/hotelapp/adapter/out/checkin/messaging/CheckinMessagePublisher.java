@@ -1,18 +1,14 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainLayerPayload.MessageStatus;
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainLayerPayload.CheckinSendEventPayload;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessage;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessagePayload;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.service.messaging.KafkaMessagePublisher;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto.CheckinDTO;
-import lombok.*;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.codehaus.jackson.annotate.JsonTypeName;
 import org.springframework.stereotype.Component;
-
-import java.util.Date;
 
 import static eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainLayerPayload.MessageStatus.QUEUED;
 
@@ -76,30 +72,7 @@ public class CheckinMessagePublisher {
 
     
     
-    /**
-     * Payload have to be send in Queue in JSON - FORM
-     */
-    @AllArgsConstructor
-    @Builder
-    @Getter
-    @JsonTypeName("checkin-send-event")
-    public static class CheckinSendEventPayload extends DomainMessagePayload {
-
-      
-        @JsonProperty
-        private long entityId;
-        @JsonProperty
-        private long messageId;        
-        @JsonProperty
-        private long hotelId;        
-        @JsonProperty
-        private long customerId;
-        
-        private Date checkinFrom;
-        private Date checkinTo;
-
-        private MessageStatus status;
-    }
+    
 
 //    public void publishProductUpdatedEvent(CheckinDTO checkinDTO) {
 //        boolean temporarilyExcludeChangeSetAsHotFix = false;

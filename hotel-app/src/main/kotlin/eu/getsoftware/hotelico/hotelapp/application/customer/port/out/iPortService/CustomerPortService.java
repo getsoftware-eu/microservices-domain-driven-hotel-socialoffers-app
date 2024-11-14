@@ -3,8 +3,8 @@ package eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortServ
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.ICustomerHotelCheckinEntity;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.ICustomerRootEntity;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
+import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
@@ -15,7 +15,7 @@ import java.util.Set;
 /**
  * All methods of this class throws NullPoinrerException if a required argument is null
  */
-public interface CustomerPortService<T extends ICustomerRootEntity>
+public interface CustomerPortService<T extends CustomerRootDomainEntity>
 {
     List<T> getCustomerEntities();
 
@@ -29,7 +29,7 @@ public interface CustomerPortService<T extends ICustomerRootEntity>
     
     Set<CustomerDTO> getByHotelId(CustomerDomainEntityId customerId, HotelDomainEntityId hotelId, boolean addStaff);
 
-    CustomerDTO fillDtoWithHotelInfo(CustomerDTO dto, ICustomerHotelCheckinEntity validCheckin);
+    CustomerDTO fillDtoWithHotelInfo(CustomerDTO dto, CheckinRootDomainEntity validCheckin);
    
     Set<CustomerDTO> getByCity(CustomerDomainEntityId customerId, String city);
     
@@ -46,10 +46,10 @@ public interface CustomerPortService<T extends ICustomerRootEntity>
 
     CustomerDTO convertCustomerWithHotelToDto(T customerEntity, HotelDomainEntityId hotelId);
 
-    CustomerDTO convertCustomerWithHotelToDto(T customerEntity, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin);
+    CustomerDTO convertCustomerWithHotelToDto(T customerEntity, boolean fullSerialization, CheckinRootDomainEntity validCheckin);
     CustomerDTO convertMyCustomerToFullDto(T customerEntity);
 		
-    CustomerDTO serializeCustomerHotelInfo(CustomerDTO dto, HotelDomainEntityId hotelId, boolean fullSerialization, ICustomerHotelCheckinEntity validCheckin);
+    CustomerDTO serializeCustomerHotelInfo(CustomerDTO dto, HotelDomainEntityId hotelId, boolean fullSerialization, CheckinRootDomainEntity validCheckin);
 
     CustomerDTO synchronizeCustomerToDto(CustomerDTO customerDto);
     
