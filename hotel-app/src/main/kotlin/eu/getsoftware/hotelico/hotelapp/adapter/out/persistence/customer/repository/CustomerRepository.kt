@@ -1,6 +1,5 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository;
 
-import eu.getsoftware.hotelico.clients.common.domain.domainGateway.IDomainEntityGateway
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity
 import org.springframework.data.domain.Page
@@ -13,7 +12,7 @@ import java.sql.Timestamp
 import java.util.*
 
 @Repository
-interface CustomerRepository: IDomainEntityGateway<CustomerDBEntity, Long>, JpaRepository<CustomerDBEntity, Long> {
+interface CustomerRepository: JpaRepository<CustomerDBEntity, Long> {
 	
 	companion object {
 		
@@ -82,7 +81,7 @@ interface CustomerRepository: IDomainEntityGateway<CustomerDBEntity, Long>, JpaR
 	@Query(FIND_CUSTOMER_CITIES)
 	abstract fun findNotStaffUniueCities(): List<String>
 
-	override fun findByName(name: String?): Optional<CustomerDBEntity>
+//	override fun findByName(name: String?): Optional<CustomerDBEntity>
 	fun findByDomainId(customerId: CustomerDomainEntityId): Optional<CustomerDBEntity> 
 
 }

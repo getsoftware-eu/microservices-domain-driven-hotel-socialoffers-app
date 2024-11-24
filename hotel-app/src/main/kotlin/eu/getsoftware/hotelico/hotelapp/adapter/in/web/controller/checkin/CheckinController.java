@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller.checkin;
 
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinDTO;
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinRequestDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinRequestDTO;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.in.CheckinUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

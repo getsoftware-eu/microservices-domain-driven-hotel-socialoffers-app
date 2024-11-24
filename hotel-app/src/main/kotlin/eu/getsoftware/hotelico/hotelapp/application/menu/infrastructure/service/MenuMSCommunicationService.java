@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.menu.infrastructure.service;
 
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.menu.MenuOrderDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import org.springframework.stereotype.Service;

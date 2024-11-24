@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService;
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
 
 /**
  * Created by Eugen on 31.07.2015.

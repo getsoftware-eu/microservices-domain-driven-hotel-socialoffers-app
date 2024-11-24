@@ -1,10 +1,9 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.messaging;
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainLayerPayload.CheckinEvent;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessage;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessagePayload;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.CheckinUpdatedEventPayload;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessage;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessagePayload;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -14,10 +13,11 @@ public class DomainCheckinMessageFactory {
     
     public DomainMessage<?> create(String messageType, CheckinDTO checkinDTO) {
 
-        CustomerDomainEntityId customerEntityId = new CustomerDomainEntityId(String.valueOf(checkinDTO.getCustomerId()));
-
-        DomainMessagePayload payload = new CheckinEvent(customerEntityId, "QUEUED");
-
+        DomainMessagePayload payload = CheckinUpdatedEventPayload.builder()
+                .customerId(checkinDTO.getCustomerId())
+                .hotelId(checkinDTO.getHotelId())
+                .build();
+                
         return DomainMessage.builder(messageType)
                 .tenantId(1L)
                 .timestamp(LocalDateTime.now())

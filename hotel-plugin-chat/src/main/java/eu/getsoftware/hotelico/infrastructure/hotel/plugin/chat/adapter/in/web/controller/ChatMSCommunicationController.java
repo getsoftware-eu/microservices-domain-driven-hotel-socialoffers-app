@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.in.web.controller;
 
 import eu.getsoftware.hotelico.clients.api.adapter.in.web.controller.IChatApiController;
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageMappedEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatUserMappedEntity;

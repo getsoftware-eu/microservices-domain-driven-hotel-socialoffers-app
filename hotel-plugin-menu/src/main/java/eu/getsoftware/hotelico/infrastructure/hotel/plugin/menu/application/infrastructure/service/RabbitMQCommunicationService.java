@@ -3,7 +3,7 @@
 //import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 //import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.NotificationEvent;
 //import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
-//import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.MenuDTO;
+//import eu.getsoftware.hotelico.clients.api.clients.entity.dto.menu.MenuDTO;
 //import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuItemEntity;
 //import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuUserEntity;
 //import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.repository.MenuUserRepository;

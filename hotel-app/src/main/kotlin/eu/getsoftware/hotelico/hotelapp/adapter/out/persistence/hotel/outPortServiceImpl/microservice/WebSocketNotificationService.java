@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortServiceImpl.microservice;
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.IHotelEvent;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.innerEvents.InnerDomainEvent;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
@@ -51,7 +51,7 @@ public class WebSocketNotificationService implements IWebSocketService {
     }
 
     @Override
-    public void notificateAboutEntityEvent(CustomerDTO dto, CustomerNotificationDTO receiverNotification, IHotelEvent event) {
+    public void notificateAboutEntityEvent(CustomerDTO dto, CustomerNotificationDTO receiverNotification, InnerDomainEvent event) {
 
     }
 }

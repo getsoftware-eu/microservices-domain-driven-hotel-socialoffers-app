@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.portServiceImpl;
 
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainLayerPayload.CheckinSendEventPayload;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessage;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.CheckinUpdatedEventPayload;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessage;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CheckinDomainEntityId;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -11,7 +11,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
 
-import static eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainLayerPayload.MessageStatus.QUEUED;
+import static eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessagePayloadStatus.QUEUED;
 
 public class KafkaWithoutBootCheckinProducerService {
     private Producer<String, DomainMessage<?>> producer;
@@ -28,8 +28,8 @@ public class KafkaWithoutBootCheckinProducerService {
     public void createCheckin(CheckinDomainEntityId checkinEntityId) {
         // Логика создания заказа (например, сохранение в базе данных)
 
-        CheckinSendEventPayload eventPayload = CheckinSendEventPayload.builder()
-                .entityId(Long.parseLong(checkinEntityId.uuidValue()))
+        CheckinUpdatedEventPayload eventPayload = CheckinUpdatedEventPayload.builder()
+                .entityId(checkinEntityId)
                 .status(QUEUED)
                 .build();
 

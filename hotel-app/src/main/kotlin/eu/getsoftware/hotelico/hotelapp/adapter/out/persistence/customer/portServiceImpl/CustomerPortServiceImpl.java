@@ -1,18 +1,18 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.portServiceImpl;
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.eventConsumeNotification.SocketNotificationCommand;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.model.CheckinDbEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.model.CheckinDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.Language;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.domainServiceImpl.CustomerPersistGatewayServiceImpl;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelDbEntity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelEvent;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelDBEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.InnerHotelEvent;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.DealRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.HotelRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.LanguageRepository;
@@ -67,7 +67,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 	
     private final CustomerPersistGatewayServiceImpl customerPersistGatewayService;
     
-    private final IMessagingProducerService<HotelEvent> messagingService;
+    private final IMessagingProducerService<InnerHotelEvent> messagingService;
 
     public CustomerRootDomainEntity recreateDomainEntityFromDBProjection(CustomerDomainEntityId customerEntityId)
     {
@@ -164,7 +164,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 
         if(customerDto.getHotelId()>0)
         {
-            HotelDbEntity hotelRootEntity = hotelRepository.findById(customerDto.getHotelId()).orElseThrow(()-> new RuntimeException("hotel not found"));
+            HotelDBEntity hotelRootEntity = hotelRepository.findById(customerDto.getHotelId()).orElseThrow(()-> new RuntimeException("hotel not found"));
 
             if(hotelRootEntity !=null && customerDto.isHotelStaff())
             {
@@ -201,13 +201,13 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 
 		CustomerDTO dto =  convertMyCustomerToFullDto(customerRepository.saveAndFlush(customerEntity));
 
-        messagingService.sendSocketNotificationCommand(new SocketNotificationCommand(customerDto.getInitId(), customerDto.getHotelId(), customerDto.getLastName(), "message" ), HotelEvent.EVENT_REGISTER);
+        messagingService.sendSocketNotificationCommand(new SocketNotificationCommand(customerDto.getSequenceId(), customerDto.getHotelId(), customerDto.getLastName(), "message" ), InnerHotelEvent.EVENT_REGISTER);
 
         //// NOTIFICATE OTHERS!!!!
 
         if(!dto.isHotelStaff() && !dto.isAdmin())
         {
-            notificationService.notificateAboutEntityEvent(dto, HotelEvent.EVENT_REGISTER, "Now Registered!", dto.getId());
+            notificationService.notificateAboutEntityEvent(dto, InnerHotelEvent.EVENT_REGISTER, "Now Registered!", dto.getId());
         }
 
         return dto;
@@ -480,7 +480,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
     }
 
 
-    public CustomerDTO convertCustomerToDto(CustomerDBEntity customerEntity, boolean fullSerialization, CheckinDbEntity validCheckin){
+    public CustomerDTO convertCustomerToDto(CustomerDBEntity customerEntity, boolean fullSerialization, CheckinDBEntity validCheckin){
         return convertCustomerToDto(customerEntity, validCheckin.getHotelDomainEntityId(), fullSerialization, validCheckin);
     }
     
@@ -505,7 +505,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
      * @param validCheckin
      * @return
      */
-    private CustomerDTO convertCustomerToDto(CustomerDBEntity customerEntity, HotelDomainEntityId hotelId, boolean fullSerialization, CheckinDbEntity validCheckin)
+    private CustomerDTO convertCustomerToDto(CustomerDBEntity customerEntity, HotelDomainEntityId hotelId, boolean fullSerialization, CheckinDBEntity validCheckin)
     {
         CustomerDTO dto = modelMapper.map(Objects.requireNonNull(customerEntity), CustomerDTO.class);
         
@@ -767,7 +767,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
         for (String nextCity: citiesList)
         {
             CustomerDTO dto = CustomerDTO.builder()
-                    .domainId(customerId)
+                    .domainEntityId(customerId)
                     .build();
             
             resultCustomerList.add(dto);

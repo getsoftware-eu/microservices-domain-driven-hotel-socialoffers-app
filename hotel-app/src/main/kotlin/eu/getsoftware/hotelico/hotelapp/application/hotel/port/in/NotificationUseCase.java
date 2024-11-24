@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.port.in;
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelEvent;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.InnerHotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
@@ -16,7 +16,7 @@ import java.util.Map;
  * Created by e.fanshil
  * At 05.02.2016 12:10
  */
-public interface NotificationUseCase<E extends HotelEvent>
+public interface NotificationUseCase<E extends InnerHotelEvent>
 {
 	CustomerNotificationDTO getLastNotification(CustomerDomainEntityId customerId, boolean pushRequest);
 	

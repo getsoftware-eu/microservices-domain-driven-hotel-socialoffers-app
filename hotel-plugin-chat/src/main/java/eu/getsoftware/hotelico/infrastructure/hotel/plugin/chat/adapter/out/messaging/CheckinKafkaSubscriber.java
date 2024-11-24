@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.messaging;
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainLayerPayload.CheckinSendEventPayload;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessage;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.CheckinUpdatedEventPayload;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -21,8 +21,8 @@ public class CheckinKafkaSubscriber {
     }
 
     @KafkaListener(topics = {"checkin.checkin.created.event"}, groupId = "eu_group_1")
-    public void createCheckin(DomainMessage<CheckinSendEventPayload> message) {
-        CheckinSendEventPayload payload = message.getPayload();
+    public void createCheckin(DomainMessage<CheckinUpdatedEventPayload> message) {
+        CheckinUpdatedEventPayload payload = message.getPayload();
 
         {
             log.info("Processing event {}", message.getMessageType());
@@ -33,8 +33,8 @@ public class CheckinKafkaSubscriber {
 
     //    @DomainMessageHandler("checkin.checkin.updated.event")
     @KafkaListener(topics = {"checkin.checkin.updated.event"}, groupId = "eu_group_1")
-    public void updateCheckin(DomainMessage<CheckinSendEventPayload> message) {
-        CheckinSendEventPayload payload = message.getPayload();
+    public void updateCheckin(DomainMessage<CheckinUpdatedEventPayload> message) {
+        CheckinUpdatedEventPayload payload = message.getPayload();
 
         {
             log.info("Processing event {}", message.getMessageType());
@@ -45,8 +45,8 @@ public class CheckinKafkaSubscriber {
 
     //    @DomainMessageHandler("checkin.checkin.deleted.event")
     @KafkaListener(topics = {"checkin.checkin.deleted.event"}, groupId = "eu_group_1")
-    public void deleteCheckin(DomainMessage<CheckinSendEventPayload> message) {
-        CheckinSendEventPayload payload = message.getPayload();
+    public void deleteCheckin(DomainMessage<CheckinUpdatedEventPayload> message) {
+        CheckinUpdatedEventPayload payload = message.getPayload();
 
         {
             log.info("Processing event {}", message.getMessageType());
@@ -59,7 +59,7 @@ public class CheckinKafkaSubscriber {
      * @param payload
      * @return
      */
-    private CheckinDTO.CheckinDTOBuilder toCheckin(CheckinSendEventPayload payload) {
+    private CheckinDTO.CheckinDTOBuilder toCheckin(CheckinUpdatedEventPayload payload) {
         return CheckinDTO.builder()
                 .initId(payload.getEntityId())
                 .checkinFrom(payload.getCheckinFrom())

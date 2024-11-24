@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.mapper;
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

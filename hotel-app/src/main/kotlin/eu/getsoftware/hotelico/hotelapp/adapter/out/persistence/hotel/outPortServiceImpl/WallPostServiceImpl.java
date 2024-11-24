@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortServiceImpl;
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.HotelDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelWallPost;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IWallpostService;
@@ -27,11 +27,11 @@ public class WallPostServiceImpl implements IWallpostService {
         if(lastSameHotelCheckin ==null || convertToLocalDateTime(lastSameHotelCheckin).getDayOfYear() != LocalDateTime.now().getDayOfYear() )
         {
 
-            WallPostDTO checkinNotificationWallDto = new WallPostDTO(hotelRootEntity.getDomainId(), staffSender.getDomainId());
+            WallPostDTO checkinNotificationWallDto = new WallPostDTO(hotelRootEntity.getDomainEntityId(), staffSender.getDomainEntityId());
 
             checkinNotificationWallDto.getSpecialContent().put("customerId", String.valueOf(customerEntity.getId()));
 //								checkinNotificationWallDto.setsetValidUntil(new DateTime().plusDays(1).toDate());
-            checkinNotificationWallDto.setInitId(new Date().getTime());
+            checkinNotificationWallDto.setSequenceId(new Date().getTime());
             checkinNotificationWallDto.setMessage("New guest at our hotel:");
 
             hotelService.addUpdateWallPost(checkinNotificationWallDto);

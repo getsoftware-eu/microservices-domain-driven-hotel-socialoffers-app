@@ -2,8 +2,8 @@
 //
 //import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 //import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
-//import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuItemDTO;
-//import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
+//import eu.getsoftware.hotelico.clients.api.clients.entity.dto.menu.MenuItemDTO;
+//import eu.getsoftware.hotelico.clients.api.clients.entity.dto.menu.MenuOrderDTO;
 //import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 //import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
 //import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuItemEntity;

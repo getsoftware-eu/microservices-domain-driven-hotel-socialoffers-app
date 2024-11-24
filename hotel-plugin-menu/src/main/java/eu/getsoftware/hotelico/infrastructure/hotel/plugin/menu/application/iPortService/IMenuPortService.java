@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.iPortService;
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuItemDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.menu.MenuItemDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.menu.MenuOrderDTO;
 
 import java.util.List;
 

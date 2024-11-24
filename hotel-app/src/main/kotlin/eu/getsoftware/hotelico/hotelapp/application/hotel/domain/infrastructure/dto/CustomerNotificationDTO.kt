@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto;
 
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelEvent
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.InnerHotelEvent
 import java.util.Map
 
 /**
@@ -65,7 +65,7 @@ data class CustomerNotificationDTO (var id: Long = 0)
      */
     var wallMessageCounter: Int? = null
 
-    fun setCustomerEvent(customerId: Long, hotelId: Long, event: HotelEvent, message: String, entityId: Long) {
+    fun setCustomerEvent(customerId: Long, hotelId: Long, event: InnerHotelEvent, message: String, entityId: Long) {
 
         this.customerEvent["senderDomainId"] = customerId.toString() 
         this.customerEvent["hotelId"] = hotelId.toString() 

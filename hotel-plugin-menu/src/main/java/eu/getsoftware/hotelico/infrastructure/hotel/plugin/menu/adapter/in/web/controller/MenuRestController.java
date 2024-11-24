@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.in.web.controller;
 
 import eu.getsoftware.hotelico.clients.api.adapter.in.web.controller.IMenuApiController;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.MenuDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.menu.MenuDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

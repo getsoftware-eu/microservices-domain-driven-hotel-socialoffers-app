@@ -1,13 +1,13 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortServiceImpl;
 
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelEvent;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.eventConsumeNotification.ChatMessageCommand;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.eventConsumeNotification.SocketNotificationCommand;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.InnerHotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IMessagingProducerService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MessagingProducerService implements IMessagingProducerService<HotelEvent> {
+public class MessagingProducerService implements IMessagingProducerService<InnerHotelEvent> {
     
     @Override
     public void sendChatMessageCommand(ChatMessageCommand chatMessageRequest) {
@@ -15,7 +15,7 @@ public class MessagingProducerService implements IMessagingProducerService<Hotel
     }
 
     @Override
-    public void sendSocketNotificationCommand(SocketNotificationCommand requestDTO, HotelEvent hotelEvent) {
+    public void sendSocketNotificationCommand(SocketNotificationCommand requestDTO, InnerHotelEvent hotelEvent) {
         
     }
 

@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.outPortServiceImpl;
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageMappedEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatUserMappedEntity;
@@ -44,7 +44,7 @@ public class ChatServiceImpl implements ChatService {
             var initId = (new Date().getTime());
             var timestamp = (new Timestamp(new Date().getTime()));
 
-            ChatMsgDTO chatMsgDTO = new ChatMsgDTO(initId, msg, sender.getDomainEntityId(), receiver.getDomainId(), true, false, false, 123, null, null, true);
+            ChatMsgDTO chatMsgDTO = new ChatMsgDTO(initId, msg, sender.getDomainEntityId(), receiver.getDomainEntityId(), true, false, false, 123, null, null, true);
             
             chatService.save(chatMsgDTO);
         }

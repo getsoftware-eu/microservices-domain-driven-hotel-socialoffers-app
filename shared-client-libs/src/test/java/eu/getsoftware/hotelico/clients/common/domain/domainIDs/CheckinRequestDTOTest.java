@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.clients.common.domain.domainIDs;
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinRequestDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinRequestDTO;
 import org.junit.jupiter.api.Test;
 
 import java.util.Date;

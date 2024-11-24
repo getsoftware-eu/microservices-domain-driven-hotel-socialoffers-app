@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.clients.api.adapter.`in`.web.controller
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody

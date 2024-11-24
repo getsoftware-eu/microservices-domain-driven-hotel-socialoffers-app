@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller.hotel;
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.BasicHotelException;
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
@@ -145,7 +145,7 @@ public class HotelController extends BasicController
     @NotifyClients
     @RequestMapping(value = "/wall/{id}", method = RequestMethod.PUT)
     public WallPostDTO updateWallPost(@PathVariable long id, @RequestBody WallPostDTO wallPostDto) {
-        wallPostDto.setInitId(id);
+        wallPostDto.setSequenceId(id);
         WallPostDTO out = hotelWallpostService.updateWallPost(wallPostDto);
         return out;
     }

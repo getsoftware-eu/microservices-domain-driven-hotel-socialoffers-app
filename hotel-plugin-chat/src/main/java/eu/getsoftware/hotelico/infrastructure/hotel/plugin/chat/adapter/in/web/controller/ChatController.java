@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.in.web.controller;
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.port.out.ChatService;

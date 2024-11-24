@@ -1,9 +1,9 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.portServiceImpl;
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinDTO;
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinRequestDTO;
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinRequestDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.HotelDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity;
@@ -49,12 +49,6 @@ public class CheckinPortServiceImpl implements CheckinPortService {
 
     @Override
     public Integer getActiveCountByHotelId(HotelDomainEntityId receiverHotelId, Date date) {
-        return null;
-    }
-
-
-    @Override
-    public CheckinDTO getResponseDTO(CheckinRootDomainEntity newCheckin) {
         return null;
     }
 

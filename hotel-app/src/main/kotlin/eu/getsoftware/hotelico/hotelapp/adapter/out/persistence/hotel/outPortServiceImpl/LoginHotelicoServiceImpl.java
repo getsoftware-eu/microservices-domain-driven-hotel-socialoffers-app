@@ -1,12 +1,12 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortServiceImpl;
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelEvent;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.InnerHotelEvent;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.DealRepository;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
@@ -74,7 +74,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 			
 			customerRepository.saveAndFlush(customerEntity);
 			
-			notificationService.createAndSendNotification(customerEntity.getId(), HotelEvent.EVENT_LOGIN);
+			notificationService.createAndSendNotification(customerEntity.getId(), InnerHotelEvent.EVENT_LOGIN);
 			
 			lastMessagesService.checkCustomerOnline(customerEntity.getDomainEntityId());
 			

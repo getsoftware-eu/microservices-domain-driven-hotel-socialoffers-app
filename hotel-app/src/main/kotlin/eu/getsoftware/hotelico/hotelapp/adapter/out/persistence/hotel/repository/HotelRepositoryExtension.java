@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository;
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelDbEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelDBEntity;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;
@@ -10,19 +10,19 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface HotelRepositoryExtension {
-    Page<HotelDbEntity> findVisibleByTags(@NotNull Set<String> tags, @NotNull Pageable pageable);
+    Page<HotelDBEntity> findVisibleByTags(@NotNull Set<String> tags, @NotNull Pageable pageable);
 
-    Page<HotelDbEntity> findVisibleBySearchTerm(@Nullable String searchTerm, @NotNull Pageable pageable);
+    Page<HotelDBEntity> findVisibleBySearchTerm(@Nullable String searchTerm, @NotNull Pageable pageable);
 
 //    Page<HotelRootEntity> findVisibleByCategoryQuery(@NotNull CategoryQuery categoryQuery, @NotNull Pageable pageable);
 
-    Optional<HotelDbEntity> findOneIgnoringVisibility(@NotNull String id);
+    Optional<HotelDBEntity> findOneIgnoringVisibility(@NotNull String id);
 
-    HotelDbEntity partialUpdateHotel(@NotNull HotelDbEntity product);
+    HotelDBEntity partialUpdateHotel(@NotNull HotelDBEntity product);
 
-    HotelDbEntity partialUpdateAttributes(@NotNull HotelDbEntity product);
+    HotelDBEntity partialUpdateAttributes(@NotNull HotelDBEntity product);
 
-    HotelDbEntity partialUpdateImages(@NotNull HotelDbEntity product);
+    HotelDBEntity partialUpdateImages(@NotNull HotelDBEntity product);
 
-    HotelDbEntity partialUpdateAvailability(@NotNull HotelDbEntity product);
+    HotelDBEntity partialUpdateAvailability(@NotNull HotelDBEntity product);
 }

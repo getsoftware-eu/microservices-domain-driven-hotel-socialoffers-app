@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortServiceImpl;
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.HotelDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.MailValidator;
@@ -287,7 +287,7 @@ public class MailServiceImpl implements MailService
 			}
 			mailContent = mailContent.replace("#[customer.mail]", customerEntity.getEmail());
 			
-			List<HotelActivityDTO> hotelActivities = hotelService.getHotelActivitiesByHotelId(null, hotel.getDomainId());
+			List<HotelActivityDTO> hotelActivities = hotelService.getHotelActivitiesByHotelId(null, hotel.getDomainEntityId());
 			
 			//sort by orderIndex!!!
 			if (hotelActivities.size() > 0) {

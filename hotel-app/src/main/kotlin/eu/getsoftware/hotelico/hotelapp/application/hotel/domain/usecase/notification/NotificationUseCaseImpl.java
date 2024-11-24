@@ -1,21 +1,21 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.usecase.notification;
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.menu.MenuOrderDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.menu.dto.MenuOrderDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.innerEvents.InnerDomainEvent;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.model.HotelDbActivity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelEvent;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.InnerHotelEvent;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.ChatMessageView;
 import eu.getsoftware.hotelico.hotelapp.application.chat.domain.infrastructure.ChatMSComminicationService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils.IHotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
@@ -45,7 +45,7 @@ import java.util.*;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
+public class NotificationUseCaseImpl implements NotificationUseCase<InnerHotelEvent>
 {
 	private final IHotelService hotelService;
 	
@@ -66,13 +66,13 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 	private ModelMapper modelMapper;
 
 	//	@Override
-	public void notificateAboutEntityEventWebSocket(CustomerDTO dto, IHotelEvent event, String eventContent, long entityId)
+	public void notificateAboutEntityEventWebSocket(CustomerDTO dto, InnerDomainEvent event, String eventContent, long entityId)
 	{
 		Objects.requireNonNull(dto);
 		
 		List<CustomerDomainEntityId> allOnlineCustomerIds = lastMessagesService.getOnlineCustomerIds();
 		
-		if(HotelEvent.EVENT_LOGO_CUSTOMER_CHANGE_MESSAGE.equals(event) && !allOnlineCustomerIds.contains(dto.getId()))
+		if(InnerHotelEvent.EVENT_LOGO_CUSTOMER_CHANGE_MESSAGE.equals(event) && !allOnlineCustomerIds.contains(dto.getId()))
 		{
 			allOnlineCustomerIds.add(dto.getDomainEntityId());
 		}
@@ -86,7 +86,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 	}
 	
 //	@Override
-	public CustomerNotificationDTO getCustomerNotification(CustomerDomainEntityId receiverId, IHotelEvent event)
+	public CustomerNotificationDTO getCustomerNotification(CustomerDomainEntityId receiverId, InnerDomainEvent event)
 	{
 		CustomerNotificationDTO nextNotification = new CustomerNotificationDTO();
 		
@@ -119,7 +119,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 		
 		nextNotification.setHotelOnlineGuestIds(onlineGuestIds.toArray(new Integer[onlineGuestIds.size()]));
 		
-		if(HotelEvent.EVENT_ONLINE_CUSTOMERS.equals(event))
+		if(InnerHotelEvent.EVENT_ONLINE_CUSTOMERS.equals(event))
 		{
 			//Eugen: short notification only about online users! only if it has changes!!!
 			
@@ -175,7 +175,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 			boolean isStaffOrAdmin = customerService.isStaffOrAdminId(receiverId);
 			
 			//TODO Eugen: Menu orders of customer: Problem one time ausführung
-			if(isStaffOrAdmin || HotelEvent.EVENT_MENU_NEW_UPDATE.equals(event))
+			if(isStaffOrAdmin || InnerHotelEvent.EVENT_MENU_NEW_UPDATE.equals(event))
 			{
 				List<MenuOrderDTO> menusOfCustomer = menuMSCommunicationService.getActiveMenusByCustomerId(receiverId, receiverHotelId, 0, -1, false);
 				
@@ -333,7 +333,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 	}
 	
 //	@Override
-	public void createAndSendWebSocketNotification(CustomerDomainEntityId receiverId, IHotelEvent event) throws Throwable {
+	public void createAndSendWebSocketNotification(CustomerDomainEntityId receiverId, InnerDomainEvent event) throws Throwable {
 		
 		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 		
@@ -435,22 +435,22 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 	}
 
 	@Override
-	public void createAndSendWebSocketNotification_Chat(CustomerDomainEntityId receiverId, HotelEvent event, CustomerDomainEntityId senderId, String message) {
+	public void createAndSendWebSocketNotification_Chat(CustomerDomainEntityId receiverId, InnerHotelEvent event, CustomerDomainEntityId senderId, String message) {
 
 	}
 
 	@Override
-	public void createAndSendWebSocketNotification_Activity(CustomerDomainEntityId receiverId, HotelEvent event, IHotelActivity activity, String message) {
+	public void createAndSendWebSocketNotification_Activity(CustomerDomainEntityId receiverId, InnerHotelEvent event, IHotelActivity activity, String message) {
 
 	}
 
 	@Override
-	public CustomerNotificationDTO getCustomerNotification(CustomerDomainEntityId receiverId, HotelEvent event) {
+	public CustomerNotificationDTO getCustomerNotification(CustomerDomainEntityId receiverId, InnerHotelEvent event) {
 		return null;
 	}
 
 	@Override
-	public void notificateAboutEntityEventWebSocket(CustomerDTO dto, HotelEvent event, String eventContent, long entityId) {
+	public void notificateAboutEntityEventWebSocket(CustomerDTO dto, InnerHotelEvent event, String eventContent, long entityId) {
 
 	}
 
@@ -515,7 +515,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 	
 //	@Override
 	@Transactional
-	public void createAndSendWebSocketNotification_Chat(CustomerDomainEntityId receiverId, IHotelEvent event, CustomerDomainEntityId senderId, String message) throws Throwable {
+	public void createAndSendWebSocketNotification_Chat(CustomerDomainEntityId receiverId, InnerDomainEvent event, CustomerDomainEntityId senderId, String message) throws Throwable {
 		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 
 		String webSocketTopic = AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + receiverId + "";
@@ -538,7 +538,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 	}
 	
 	@Transactional
-	public void createAndSendWebSocketNotification_Activity(CustomerDomainEntityId receiverId, IHotelEvent event, IHotelActivity activity, String message) throws Throwable {
+	public void createAndSendWebSocketNotification_Activity(CustomerDomainEntityId receiverId, InnerDomainEvent event, IHotelActivity activity, String message) throws Throwable {
 		CustomerNotificationDTO receiverNotification = this.getCustomerNotification(receiverId, event);
 
 		String webSocketTopic = AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + receiverId + "";
@@ -583,7 +583,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 	}
 
 	@Override
-	public void createAndSendWebSocketNotification(CustomerDomainEntityId receiverId, HotelEvent event) {
+	public void createAndSendWebSocketNotification(CustomerDomainEntityId receiverId, InnerHotelEvent event) {
 		
 	}
 
@@ -654,7 +654,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 
 		String notificationMessage = "new last minute deal";
 
-		IHotelEvent eventActivityNewLastMinute = HotelEvent.EVENT_ACTIVITY_NEW_LAST_MINUTE;
+		InnerDomainEvent eventActivityNewLastMinute = InnerHotelEvent.EVENT_ACTIVITY_NEW_LAST_MINUTE;
 
 		Set<String> loggedGuestPushIds = new HashSet<>();
 		
@@ -695,7 +695,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 	}
 	
 //	@Override
-	public void sendNotificationToCustomerOrGuest(CustomerDTO receiver, CustomerDomainEntityId guestCustomerId, HotelEvent event) {
+	public void sendNotificationToCustomerOrGuest(CustomerDTO receiver, CustomerDomainEntityId guestCustomerId, InnerHotelEvent event) {
 		if(receiver!=null)
 		{
 			this.createAndSendWebSocketNotification(receiver.getDomainEntityId(), event);

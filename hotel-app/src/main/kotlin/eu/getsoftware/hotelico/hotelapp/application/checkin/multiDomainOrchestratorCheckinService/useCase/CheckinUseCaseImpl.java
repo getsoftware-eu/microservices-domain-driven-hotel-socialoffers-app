@@ -1,11 +1,12 @@
 package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase;
 
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinDTO;
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinRequestDTO;
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinRequestDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.HotelDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.innerEvents.InnerDomainEventImpl;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.eventConsumeNotification.ChatMessageCommand;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.eventConsumeNotification.SocketNotificationCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.domain.BusinessException;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
@@ -25,8 +26,7 @@ import eu.getsoftware.hotelico.hotelapp.application.checkin.port.in.CheckinUseCa
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.GPSValidationHandler;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.innerDomainService.domainEvents.DomainEvent;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelDomainEntity;
+import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelRootDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.in.NotificationUseCase;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IMessagingProducerService;
@@ -93,11 +93,11 @@ class CheckinUseCaseImpl implements CheckinUseCase
 	private final CustomerGatewayService customerGatewayService;
 	private final CustomerEntityMapper customerEntityMapper;
 
-	private IMessagingProducerService<DomainEvent> messagingProducerService;		
+	private IMessagingProducerService<InnerDomainEventImpl> messagingProducerService;		
 	
 	private LastMessagesService lastMessagesService;	
 			
-	private IHotelService<HotelDomainEntity> hotelService;			
+	private IHotelService<HotelRootDomainEntity> hotelService;			
 	
 	private CheckinPortService checkinService;		
 	
@@ -292,7 +292,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 				"new customer in Hotel");
 
 
-		messagingProducerService.sendSocketNotificationCommand(notificationCustomerCommand, DomainEvent.TEST);
+		messagingProducerService.sendSocketNotificationCommand(notificationCustomerCommand, InnerDomainEventImpl.TEST);
 	}
 
 	private boolean validateCustomerWithGPSLocationService(CustomerDomainEntityId customerId, HotelDomainEntityId hotelId) throws BusinessException {
@@ -310,13 +310,13 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 	
 
-	private Optional<HotelDomainEntity> getHotelEntityFromCheckinRequest(CheckinRequestDTO checkinRequestDto) {
+	private Optional<HotelRootDomainEntity> getHotelEntityFromCheckinRequest(CheckinRequestDTO checkinRequestDto) {
 
 		HotelDomainEntityId virtualHotelId = lastMessagesService.getInitHotelId();
 
 		String virtualHotelCode = AppConfigProperties.ALLOW_INIT_VIRTUAL_HOTEL ? hotelService.getVirtualHotelCode() : null;
 
-		Optional<HotelDomainEntity> hotelEntityOpt = Optional.empty();
+		Optional<HotelRootDomainEntity> hotelEntityOpt = Optional.empty();
 		
 //		if(checkinRequestDto.getHotelCode()!=null && !(checkinRequestDto.getHotelCode().equals(virtualHotelCode) ))
 //		{
@@ -336,7 +336,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 		HotelDomainEntityId hotelId = newCheckin.getHotelDomainEntityId();
 
-		HotelDomainEntity hotel = hotelService.getEntityByDomainId(hotelId).orElseThrow(() -> new BusinessException("hotel not found"));
+		HotelRootDomainEntity hotel = hotelService.getEntityByDomainId(hotelId).orElseThrow(() -> new BusinessException("hotel not found"));
 
 		lastMessagesService.updateCustomerConsistencyId(newCheckin.getCustomerDomainEntityId());
 

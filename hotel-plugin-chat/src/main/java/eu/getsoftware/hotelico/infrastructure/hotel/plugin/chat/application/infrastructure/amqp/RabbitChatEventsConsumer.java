@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.infrastructure.amqp;
 
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainLayerPayload.ChatSendEventMessagePayload;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessage;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.HotelUpdateEventMessagePayload;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessage;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.eventConsumeNotification.ChatMessageCommand;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageMappedEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatUserMappedEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.outPortServiceImpl.ChatMessageService;
@@ -24,7 +24,7 @@ public class RabbitChatEventsConsumer
 	 * @param customerUpdateRequest
 	 */
 	@RabbitListener(queues = "${rabbitmq.queue.customer.update}")
-	public void consumeCustomerUpdateNotification(DomainMessage<ChatSendEventMessagePayload> customerUpdateRequest){
+	public void consumeCustomerUpdateNotification(DomainMessage<HotelUpdateEventMessagePayload> customerUpdateRequest){
 		log.info("Consumed {} from queue", customerUpdateRequest);
 		log.info(customerUpdateRequest.getPayload().getMessage());
 		

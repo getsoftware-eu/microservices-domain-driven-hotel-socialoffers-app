@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.reposit
 
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.model.CheckinDbEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.model.CheckinDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface CheckinRepository extends JpaRepository<CheckinDbEntity, Long> {
+public interface CheckinRepository extends JpaRepository<CheckinDBEntity, Long> {
 
 	public final static String FIND_ACTIVE_BY_CUSTOMER_QUERY = "SELECT c " +
 			"FROM CheckinDbEntity c " +
@@ -136,7 +136,7 @@ public interface CheckinRepository extends JpaRepository<CheckinDbEntity, Long> 
 	 * Find customer active checkIn.
 	 */
 	@Query(FIND_ACTIVE_BY_CUSTOMER_QUERY)
-	public List<CheckinDbEntity> getActiveByCustomerId(@Param("customerId") CustomerDomainEntityId customerId, @Param("checkDate") Date checkDate);	
+	public List<CheckinDBEntity> getActiveByCustomerId(@Param("customerId") CustomerDomainEntityId customerId, @Param("checkDate") Date checkDate);	
 	
 	/**
 	 * Find customer active checkIn.
@@ -165,13 +165,13 @@ public interface CheckinRepository extends JpaRepository<CheckinDbEntity, Long> 
 	 * Find customers active checkIn by hotel.
 	 */
 	@Query(FIND_ACTIVE_BY_HOTEL_QUERY)
-	public List<CheckinDbEntity> getActiveByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);	
+	public List<CheckinDBEntity> getActiveByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);	
 	
 	@Query(FIND_ACTIVE_CUSTOMERS_BY_HOTEL_QUERY)
 	public List<CustomerDBEntity> getActiveCustomersByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);	
 	
 	@Query(FIND_ACTIVE_FULL_CHECKIN_BY_HOTEL_QUERY)
-	public List<CheckinDbEntity> getActiveFullCheckinByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);	
+	public List<CheckinDBEntity> getActiveFullCheckinByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);	
 	
 	@Query(IS_ACTIVE_FULL_CHECKIN_FOR_CUSTOMER_BY_HOTEL_QUERY)
 	public boolean isFullCheckinForCustomerByHotelId(@Param("customerId") CustomerDomainEntityId customerId, @Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);

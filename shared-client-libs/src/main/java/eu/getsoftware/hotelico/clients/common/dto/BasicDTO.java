@@ -18,10 +18,10 @@ public abstract class BasicDTO<D extends EntityIdentifier> implements Serializab
 {
 	Long id = 0L;
 
-	D domainId = null;
+	D domainEntityId = null;
 	
 	@NonNull
-	Long initId = null;
+	Long sequenceId = null;
 	
 	Boolean active = true;
 	
@@ -36,9 +36,9 @@ public abstract class BasicDTO<D extends EntityIdentifier> implements Serializab
 		this.id = id;
 	}
 	
-	public void setInitId(Long initId)
+	public void setSequenceId(Long initId)
 	{
-		this.initId = initId;
+		this.sequenceId = initId;
 	}
 	
 	public void setActive(boolean active)

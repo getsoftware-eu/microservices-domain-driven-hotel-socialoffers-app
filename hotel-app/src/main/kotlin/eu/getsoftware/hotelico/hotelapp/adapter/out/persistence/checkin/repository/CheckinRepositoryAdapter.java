@@ -1,18 +1,17 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.repository;
 
 import eu.getsoftware.hotelico.clients.common.adapter.out.persistence.GenericRepositoryAdapter;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.mapper.CustomerEntityMapper;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CheckinDomainEntityId;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.mapper.CheckinEntityMapper;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.model.CheckinDBEntity;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CheckinRepositoryAdapter
-        extends GenericRepositoryAdapter<CustomerRootDomainEntity, CustomerDBEntity, CustomerDomainEntityId> {
+        extends GenericRepositoryAdapter<CheckinRootDomainEntity, CheckinDBEntity, CheckinDomainEntityId> {
 
-    public CheckinRepositoryAdapter(CustomerRepository repository, CustomerEntityMapper mapper) {
+    public CheckinRepositoryAdapter(CheckinRepository repository, CheckinEntityMapper mapper) {
         super(repository, mapper);
     }
 }
