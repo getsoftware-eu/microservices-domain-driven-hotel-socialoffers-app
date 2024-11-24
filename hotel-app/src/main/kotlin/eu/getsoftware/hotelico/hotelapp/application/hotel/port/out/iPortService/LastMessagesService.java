@@ -61,7 +61,7 @@ public interface LastMessagesService
 	void checkCustomerOnline(CustomerDomainEntityId onlineId) throws Throwable;
 
 	@Transactional
-	void updateCustomerConsistencyId(CustomerDomainEntityId customerId, long consustencyId);
+	void updateCustomerConsistencyId(CustomerDomainEntityId customerId);
 
 	@Transactional
 	long getCustomerConsistencyId(CustomerDomainEntityId customerId);

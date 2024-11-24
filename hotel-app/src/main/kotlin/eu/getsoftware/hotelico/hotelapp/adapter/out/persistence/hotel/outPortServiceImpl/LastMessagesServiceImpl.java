@@ -149,9 +149,9 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	}
 	
 	@Override
-	public void updateCustomerConsistencyId(CustomerDomainEntityId customerId, long consustencyId)
+	public void updateCustomerConsistencyId(CustomerDomainEntityId customerId)
 	{
-		currentConsistencyIdsMap.put(customerId, consustencyId);
+		currentConsistencyIdsMap.put(customerId, new Date().getTime());
 	}
 	
 //	@Override
