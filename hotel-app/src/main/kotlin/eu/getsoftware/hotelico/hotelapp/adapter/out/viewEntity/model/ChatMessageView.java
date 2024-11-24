@@ -1,10 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model;
 
 import eu.getsoftware.hotelico.clients.api.clients.domain.chat.IChatMessageView;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityIdConverter;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -13,7 +11,7 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Date;
-import java.util.Objects;
+
 @Entity
 @Getter @Setter
 @Table(name = "chat_message", schema = "chat")
@@ -44,9 +42,9 @@ public class ChatMessageView implements IChatMessageView, Serializable
 //  @Column
   
 //  @Embedded
-  @Convert(converter = CustomerDomainEntityIdConverter.class)
-  @Column
-  private CustomerDomainEntityId senderId;
+//  @Convert(converter = CustomerDomainEntityIdConverter.class)
+//  @Column
+//  private CustomerDomainEntityId senderId;
   
   @Column(name = "seenByReceiver", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
   private boolean seenByReceiver = false;  
@@ -59,9 +57,9 @@ public class ChatMessageView implements IChatMessageView, Serializable
 //  private CustomerRootEntity receiver;
   
 //  @Embedded
-  @Convert(converter = CustomerDomainEntityIdConverter.class)
-  @Column
-  public CustomerDomainEntityId receiverId;
+//  @Convert(converter = CustomerDomainEntityIdConverter.class)
+//  @Column
+//  public CustomerDomainEntityId receiverId;
 
   @Column
   private String specialChatContent;
@@ -76,8 +74,8 @@ public class ChatMessageView implements IChatMessageView, Serializable
     this();
     
     this.message = message;
-    this.senderId = sender.getDomainEntityId();
-    this.receiverId = receiver.getDomainEntityId();
+//    this.senderId = sender.getDomainEntityId();
+//    this.receiverId = receiver.getDomainEntityId();
   }
   
   @Override
@@ -104,11 +102,12 @@ public class ChatMessageView implements IChatMessageView, Serializable
       return false;
     }
 
-    if (!Objects.equals(senderId, that.senderId))
-    {
+//    if (!Objects.equals(senderId, that.senderId))
+//    {
+//      return false;
+//    }
+//    return !(!Objects.equals(receiverId, that.receiverId));
       return false;
-    }
-    return !(!Objects.equals(receiverId, that.receiverId));
 
   }
 
@@ -122,4 +121,14 @@ public class ChatMessageView implements IChatMessageView, Serializable
     result = 31 * result + (seenByReceiver ? 1 : 0);
     return result;
   }
+
+//  @Override
+//  public CustomerDomainEntityId getSenderId() {
+//    return null;
+//  }
+//
+//  @Override
+//  public CustomerDomainEntityId getReceiverId() {
+//    return null;
+//  }
 }

@@ -35,9 +35,14 @@ public record CheckinRequestDTO(
         //eu: ensure that the record objects are created in a VALID STATE.
         public CheckinRequestDTO
         {
+                validateBusinessLogic();
+        }
+
+        public void validateBusinessLogic() {
+               
                 if(customerId()==null)
                 {
-                   throw new IllegalArgumentException("no user for checkin.");
+                        throw new IllegalArgumentException("no user for checkin.");
                 }
 
                 if (checkinTo.after(getMaxDate(MAX_YEAR_OFFSET))) {
@@ -46,14 +51,14 @@ public record CheckinRequestDTO(
 
                 if(!checkinDatesAreValid())
                 {
-                   throw new IllegalArgumentException("please correct your checkin dates information.");
+                        throw new IllegalArgumentException("please correct your checkin dates information.");
                 }
 
                 if(hotelId!=null && (checkinTo==null || checkinToIsInPast())) {
                         throw new IllegalArgumentException("Checkin Date is wrong or in past");
                 }
         }
-
+        
         public boolean checkinToIsInPast() {
                 return checkinTo().before(new Date());
         }

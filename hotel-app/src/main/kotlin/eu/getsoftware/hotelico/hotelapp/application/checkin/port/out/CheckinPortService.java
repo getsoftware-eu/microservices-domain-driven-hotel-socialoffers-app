@@ -6,7 +6,7 @@ import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
 
 import java.util.Date;

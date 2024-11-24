@@ -9,13 +9,33 @@
         <module name="apigw" />
         <module name="hotel-client" />
         <module name="clients" />
-        <module name="chat" />
-        <module name="shared-client-libs" />
-        <module name="hotel-plugin-menu" />
-        <module name="hotel-app" />
         <module name="menu" />
-        <module name="hotel-plugin-chat" />
         <module name="eureka-server" />
+        <module name="chat" />
+      </profile>
+      <profile name="Annotation profile for social-hotel-interactions" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
+        </processorPath>
+        <module name="hotel-plugin-menu" />
+        <module name="hotel-plugin-chat" />
+        <module name="shared-client-libs" />
+      </profile>
+      <profile name="Annotation profile for hotel-app" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
+          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
+        </processorPath>
+        <module name="hotel-app" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

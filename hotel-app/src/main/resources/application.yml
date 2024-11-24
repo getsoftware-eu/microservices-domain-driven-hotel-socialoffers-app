@@ -22,6 +22,9 @@ spring:
 #    base-url: http://localhost:9411
 #  rabbitmq:
 #    addresses: localhost:5672
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    enabled: true
   http: #http: boot1 | #servlet: boot2
     multipart:
       location: ${java.io.tmpdir}
@@ -65,6 +68,9 @@ server:
   error:
     whitelabel.enabled: false
 
+
+
+    
 eureka:
   client:
     service-url:

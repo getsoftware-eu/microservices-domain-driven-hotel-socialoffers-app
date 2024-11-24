@@ -15,7 +15,7 @@
  */
 package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social;
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity;
 
 /**
  * Simple SecurityContext that stores the currently signed-in connection in a thread local.

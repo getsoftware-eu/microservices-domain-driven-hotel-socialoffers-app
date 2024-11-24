@@ -16,4 +16,5 @@ public interface EntityIdentifier {
         UUID.fromString(value);
         return true;
     }
+    
 }

@@ -1,11 +1,10 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model;
 
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityIdConverter;
 import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.model.HotelDbActivity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.ICustomerDeal;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -41,8 +40,8 @@ public class CustomerDeal implements ICustomerDeal {
 	
 //	@Column(name = "guestCustomerId", columnDefinition = "BIGINT(20) DEFAULT 0")
 //	@Embedded
-	@Convert(converter = CustomerDomainEntityIdConverter.class)
-	private CustomerDomainEntityId guestCustomerId;
+//	@Convert(converter = CustomerDomainEntityIdConverter.class)
+//	private CustomerDomainEntityId guestCustomerId;
 
 	@Column(name = "totalMoney", columnDefinition = "Decimal(6,2) default 0")
 	private Double totalMoney;
@@ -92,11 +91,16 @@ public class CustomerDeal implements ICustomerDeal {
 		return pk;
 	}
 
-	@Transient
+//	@Transient
+//	public CustomerDomainEntityId getCustomerId() {
+//		return getPk().getCustomerId();
+//	}
+
+	@Override
 	public CustomerDomainEntityId getCustomerId() {
-		return getPk().getCustomerId();
+		return null;
 	}
-	
+
 	public void setCustomerId(CustomerDomainEntityId customerEntityId) {
 		getPk().setCustomerId(customerEntityId);
 	}

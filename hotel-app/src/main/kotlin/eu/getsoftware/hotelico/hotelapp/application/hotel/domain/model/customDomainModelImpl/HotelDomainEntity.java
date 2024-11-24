@@ -3,14 +3,12 @@ package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDo
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.common.collect.ImmutableSet;
 import eu.getsoftware.hotelico.clients.common.domain.IRootDomainEntity;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.DBAddress;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.DBAddress;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelWallPost;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
@@ -83,7 +81,7 @@ public class HotelDomainEntity implements IRootDomainEntity /*MultitenantDocumen
 
     String getCurrentHotelAccessCode;
 
-    Collection<CustomerDomainEntityId> getStaffIdList;
+//    Collection<CustomerDomainEntityId> getStaffIdList;
 
     double latitude;
 
@@ -121,8 +119,8 @@ public class HotelDomainEntity implements IRootDomainEntity /*MultitenantDocumen
     public String getCurrentHotelAccessCode() { return null;
     }
 
-    public Collection<CustomerDomainEntityId> getStaffIdList() { return null;
-    }
+//    public Collection<CustomerDomainEntityId> getStaffIdList() { return null;
+//    }
 
     @Override
     public void setInitValues(Map<String, String> fieldToValues) {

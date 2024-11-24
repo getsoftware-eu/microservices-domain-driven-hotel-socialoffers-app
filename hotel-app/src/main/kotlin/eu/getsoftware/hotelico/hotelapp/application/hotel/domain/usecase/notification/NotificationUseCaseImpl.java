@@ -7,8 +7,8 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEnt
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.model.HotelDbActivity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.ChatMessageView;
 import eu.getsoftware.hotelico.hotelapp.application.chat.domain.infrastructure.ChatMSComminicationService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
@@ -233,7 +233,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<HotelEvent>
 					{
 						ChatMessageView lastUnreadMessage = null;
 						
-						if (!lastUnreadMessage.isDelieveredToReceiver() && !lastUnreadMessage.isSeenByReceiver() && lastUnreadMessage.getReceiverId() == receiverId && allOnlineCustomersIds.contains(receiverId))
+						if (!lastUnreadMessage.isDelieveredToReceiver() && !lastUnreadMessage.isSeenByReceiver() &&  allOnlineCustomersIds.contains(receiverId))
 						{
 							if (!lastUnreadMessage.isDelieveredToReceiver()) //Eugen: ONLY 1 Time, then it will be marked as delivered!!!
 							{

@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.repository;
 
-import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuItemEntity;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuItemMappedEntity;
 import jakarta.persistence.metamodel.Attribute;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,23 +19,23 @@ import java.util.stream.Stream;
  */
 
 @RepositoryRestResource
-public interface MenuItemRepository extends JpaRepository<MenuItemEntity, Long> {
+public interface MenuItemRepository extends JpaRepository<MenuItemMappedEntity, Long> {
 
 	@RestResource(exported = false)
-	@Query("select p from MenuItemEntity p")
-	Stream<MenuItemEntity> streamAll();
+	@Query("select p from MenuItemMappedEntity p")
+	Stream<MenuItemMappedEntity> streamAll();
 
 	@RestResource(exported = false)
-	List<MenuItemEntity> findByRefPriceNull();
+	List<MenuItemMappedEntity> findByRefPriceNull();
 
 	@RestResource(exported = false)
-	List<MenuItemEntity> findByLastModifiedAtBefore(@Param("lastModifiedAt") LocalDateTime lastModifiedAt);
+	List<MenuItemMappedEntity> findByLastModifiedAtBefore(@Param("lastModifiedAt") LocalDateTime lastModifiedAt);
 
 	@RestResource(rel = "find-by-sku", path = "find-by-sku")
-	Optional<MenuItemEntity> findBySku(@Param("sku") String sku);
+	Optional<MenuItemMappedEntity> findBySku(@Param("sku") String sku);
 
 	@RestResource(exported = false)
-	@Query("Select distinct value(a) from MenuItemEntity p join p.attrs a " +
+	@Query("Select distinct value(a) from MenuItemMappedEntity p join p.attrs a " +
 			"where key(a).namespace = :namespace " +
 			"and key(a).name = :attributeName " +
 			"and value(a).attributeType = com.epages.entity.attributes.AttributeType.STRING " +
@@ -45,14 +45,14 @@ public interface MenuItemRepository extends JpaRepository<MenuItemEntity, Long> 
 																  @Param("query") String query, Pageable pageable);
 
 	@RestResource(exported = false)
-	@Query("Select count(p) from MenuItemEntity p join p.attrs a " +
+	@Query("Select count(p) from MenuItemMappedEntity p join p.attrs a " +
 			"where key(a).namespace = :namespace " +
 			"and key(a).name = :name ")
 	int countByAttributeNamespaceAndAttributeName(@Param("namespace") String namespace,
 												  @Param("name") String attributeName);
 
 	@RestResource(exported = false)
-	@Query("Select count(p) from MenuItemEntity p where p.sku = :sku")
+	@Query("Select count(p) from MenuItemMappedEntity p where p.sku = :sku")
 	int countBySku(@Param("sku") String sku);
 	
 	public final static String FIND_BY_ORDER_ID_QUERY = " SELECT m " +
@@ -86,14 +86,14 @@ public interface MenuItemRepository extends JpaRepository<MenuItemEntity, Long> 
 	 * Find language by name.
 	 */
 	@Query(FIND_BY_ORDER_ID_QUERY)
-	public List<MenuItemEntity> findByOrderId(@Param("orderId") long orderId);
+	public List<MenuItemMappedEntity> findByOrderId(@Param("orderId") long orderId);
 	
 	@Query(FIND_BY_HOTEL_OR_CAFE_ID_QUERY)
-	public List<MenuItemEntity> getMenuItemsByHotelOrCafeId(@Param("hotelId") Long hotelId, @Param("cafeId") long cafeId);
+	public List<MenuItemMappedEntity> getMenuItemsByHotelOrCafeId(@Param("hotelId") Long hotelId, @Param("cafeId") long cafeId);
 	
 	@Query(FIND_BY_INIT_ID_QUERY)
-	 List<MenuItemEntity> getByInitId(@Param("initId") long initId);
+	 List<MenuItemMappedEntity> getByInitId(@Param("initId") long initId);
 	
 	@Query(FIND_BY_ORDER_ID_AND_ITEM_INIT_ID_QUERY)
-	MenuItemEntity findByOrderAndInitId(@Param("initId") long initId, @Param("orderId") long orderId);
+    MenuItemMappedEntity findByOrderAndInitId(@Param("initId") long initId, @Param("orderId") long orderId);
 }

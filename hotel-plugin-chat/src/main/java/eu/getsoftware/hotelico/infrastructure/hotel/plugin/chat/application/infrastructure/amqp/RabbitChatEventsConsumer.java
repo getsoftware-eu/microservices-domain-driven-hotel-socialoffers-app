@@ -3,8 +3,8 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.inf
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainLayerPayload.ChatSendEventMessagePayload;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessage;
-import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageEntity;
-import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatUserEntity;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageMappedEntity;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatUserMappedEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.outPortServiceImpl.ChatMessageService;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.repository.ChatUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -28,24 +28,24 @@ public class RabbitChatEventsConsumer
 		log.info("Consumed {} from queue", customerUpdateRequest);
 		log.info(customerUpdateRequest.getPayload().getMessage());
 		
-		Optional<ChatUserEntity> updatedChatUserOptional = chatUserRepository.findById(customerUpdateRequest.getPayload().getMessageId());
+		Optional<ChatUserMappedEntity> updatedChatUserOptional = chatUserRepository.findById(customerUpdateRequest.getPayload().getMessageId());
 		
-		ChatUserEntity entity;
+		ChatUserMappedEntity entity;
 		
 		if(updatedChatUserOptional.isEmpty())
 		{
-			entity = new ChatUserEntity(customerUpdateRequest.getPayload().getSenderId());
+			entity = new ChatUserMappedEntity(customerUpdateRequest.getPayload().getSenderId());
 			entity.setFirstName(customerUpdateRequest.getPayload().getSenderName());
 		}
 		else {
-			ChatUserEntity updatedChatUser = updatedChatUserOptional.get();
+			ChatUserMappedEntity updatedChatUser = updatedChatUserOptional.get();
 			entity = chatUserRepository.findByUserId(updatedChatUser.getId());
 			
 //			entity.setEmail(updatedChatUser.getEmail());
 			entity.setFirstName(updatedChatUser.getFirstName());
 		}
 		
-		ChatUserEntity persistedEntity = chatUserRepository.save(entity);
+		ChatUserMappedEntity persistedEntity = chatUserRepository.save(entity);
 		
 	}
 	
@@ -54,7 +54,7 @@ public class RabbitChatEventsConsumer
 		log.info("Consumed {} from queue", chatMessageRequest);
 		log.info(chatMessageRequest.customMsg());
 		
-		Optional<ChatMessageEntity> chatMsgOpt;
+		Optional<ChatMessageMappedEntity> chatMsgOpt;
 		
 		if(chatMessageRequest.lastMessage())
 		{

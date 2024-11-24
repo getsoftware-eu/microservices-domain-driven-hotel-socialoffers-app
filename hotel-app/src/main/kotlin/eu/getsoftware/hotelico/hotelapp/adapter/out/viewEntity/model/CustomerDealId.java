@@ -5,10 +5,8 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model;
  */
 
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityIdConverter;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.ICustomerDealId;
-import jakarta.persistence.Convert;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.ManyToOne;
 import lombok.Setter;
@@ -25,10 +23,10 @@ class CustomerDealId implements ICustomerDealId, Serializable {
 
 //	@ManyToOne
 //	@Embedded
-	@Convert(converter = CustomerDomainEntityIdConverter.class)
-	public CustomerDomainEntityId getCustomerId() {
-		return customerEntityId;
-	}
+//	@Convert(converter = CustomerDomainEntityIdConverter.class)
+//	public CustomerDomainEntityId getCustomerId() {
+//		return customerEntityId;
+//	}
 
 	public void setCustomerId(CustomerDomainEntityId customerEntity) {
 		this.customerEntityId = customerEntity;

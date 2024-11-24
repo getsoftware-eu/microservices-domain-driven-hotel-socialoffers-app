@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService;
 
 import eu.getsoftware.hotelico.clients.common.utils.DealAction;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model.HotelDbActivity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.CustomerDeal;
 import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.dto.CustomerDealDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;

@@ -1,12 +1,12 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.port.out;
 
-import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageEntity;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageMappedEntity;
 
 import java.util.Optional;
 
 public interface IChatMessageService {
     
-    Optional<ChatMessageEntity> getLastMessageByCustomerAndReceiverIds(long customerId, long receiverId);
+    Optional<ChatMessageMappedEntity> getLastMessageByCustomerAndReceiverIds(long customerId, long receiverId);
 
-    Optional<ChatMessageEntity> getLastChatMessage(Long fromCustomerId, Long toCustomerId);
+    Optional<ChatMessageMappedEntity> getLastChatMessage(Long fromCustomerId, Long toCustomerId);
 }

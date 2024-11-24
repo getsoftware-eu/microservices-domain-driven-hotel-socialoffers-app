@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl;
 
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.innerDomainService.domainEvents.DomainEventRequestDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.innerDomainService.domainEvents.IDomainEventsProducerService;
 import org.modelmapper.ModelMapper;

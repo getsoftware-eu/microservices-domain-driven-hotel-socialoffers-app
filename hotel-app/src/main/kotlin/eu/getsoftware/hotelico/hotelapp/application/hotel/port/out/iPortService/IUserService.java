@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService;
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.UserEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.UserEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.common.dto.UserDTO;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.transaction.annotation.Transactional;

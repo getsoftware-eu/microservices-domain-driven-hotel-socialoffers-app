@@ -2,9 +2,9 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.per
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
-import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageEntity;
-import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatUserEntity;
-import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.port.out.IChatService;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageMappedEntity;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatUserMappedEntity;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.port.out.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,13 +16,13 @@ import java.util.Set;
 
 @RequiredArgsConstructor
 @Service
-public class ChatServiceImpl implements IChatService {
+public class ChatServiceImpl implements ChatService {
 
     private final ChatMessageService chatService;
 
     public void sendFirstChatMessageOnDemand(CustomerDTO customerDTO, CustomerDTO staffSender, boolean isFullCheckin) {
 
-        Optional<ChatMessageEntity> lastMessageFromStaff = chatService.getLastMessageByCustomerAndReceiverIds(staffSender.getId(), customerDTO.getId());
+        Optional<ChatMessageMappedEntity> lastMessageFromStaff = chatService.getLastMessageByCustomerAndReceiverIds(staffSender.getId(), customerDTO.getId());
 
         //Send only first staffSender message!    
         if(lastMessageFromStaff.isEmpty())
@@ -51,32 +51,32 @@ public class ChatServiceImpl implements IChatService {
     }
 
     @Override
-    public ChatMessageEntity convertFromDTO(ChatMsgDTO msgDTO) {
+    public ChatMessageMappedEntity convertFromDTO(ChatMsgDTO msgDTO) {
         return null;
     }
 
     @Override
-    public ChatUserEntity convertFromDTO(CustomerDTO msgDTO) {
+    public ChatUserMappedEntity convertFromDTO(CustomerDTO msgDTO) {
         return null;
     }
 
     @Override
-    public ChatMsgDTO convertToDTO(ChatMessageEntity entity) {
+    public ChatMsgDTO convertToDTO(ChatMessageMappedEntity entity) {
         return null;
     }
 
     @Override
-    public CustomerDTO convertToDTO(ChatUserEntity entity) {
+    public CustomerDTO convertToDTO(ChatUserMappedEntity entity) {
         return null;
     }
 
     @Override
-    public ChatMessageEntity createChatMessageFromDTO(ChatMsgDTO msgDTO) {
+    public ChatMessageMappedEntity createChatMessageFromDTO(ChatMsgDTO msgDTO) {
         return null;
     }
 
     @Override
-    public ChatUserEntity updateCustomerFromDTO(CustomerDTO customerDTO) {
+    public ChatUserMappedEntity updateCustomerFromDTO(CustomerDTO customerDTO) {
         return null;
     }
 

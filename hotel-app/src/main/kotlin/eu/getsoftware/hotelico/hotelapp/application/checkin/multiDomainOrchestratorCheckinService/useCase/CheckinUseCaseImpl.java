@@ -6,11 +6,11 @@ import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.JsonError;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.domain.BusinessException;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging.CheckinMessagePublisher;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.messaging.CheckinMessagePublisher;
 import eu.getsoftware.hotelico.hotelapp.application.chat.port.out.IChatService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.handler.CreateHotelCheckinHandler;
@@ -106,9 +106,10 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 	@Transactional
 	@Override
-	public CheckinDTO validateAndCreateCustomerCheckin(@Validated CheckinRequestDTO customerRequestDto) throws Throwable {
+	public CheckinDTO createCustomerCheckin(@Validated CheckinRequestDTO customerRequestDto) {
 
 		// UseCase : Primary-flow
+		customerRequestDto.validateBusinessLogic();
 
 		//eu: error: not validate DTO!!! DTO validates itself!!!! 
 		// validateCheckin(customerRequestDto); // UseCase.Primary-flow.step.1
@@ -123,7 +124,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		
 		//eu: error: create no commands to other domains, they receive event and execute own logik!!!
 		sendHotelNewGuestSocketNotificationCommand(checkinResponseDTO);
-				
+		
 		return checkinResponseDTO;
 	}
 
@@ -152,26 +153,26 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		messagingProducerService.sendSocketNotificationCommand(notificationCustomerCommand, DomainEvent.TEST);
 	}
 
-	private boolean validateCustomerWithGPSLocationService(CustomerDomainEntityId customerId, HotelDomainEntityId hotelId) throws JsonError {
+	private boolean validateCustomerWithGPSLocationService(CustomerDomainEntityId customerId, HotelDomainEntityId hotelId) throws BusinessException {
 		
 		int distanceKm = AppConfigProperties.checkinDistanceKm;
 		
 		if(! gpsValidationHandler.checkLastCustomerLocationDiffToHotelById(customerId, hotelId, distanceKm))
 		{
-			throw new JsonError("Checkin will be activated only in area of " + distanceKm + "km. near the hotel.");
+			throw new BusinessException("Checkin will be activated only in area of " + distanceKm + "km. near the hotel.");
 		}
 		
 		return true;
 	}
 	
 
-	private CheckinRootDomainEntity createCheckin(CheckinRequestDTO checkinRequestDto) throws Throwable {
+	private CheckinRootDomainEntity createCheckin(CheckinRequestDTO checkinRequestDto) {
 		
 		CustomerRootDomainEntity customerDomainEntity = customerService.getEntityById(checkinRequestDto.customerId())
-				.orElseThrow(() -> new JsonError("Customer not found"));
+				.orElseThrow(() -> new BusinessException("Customer " + checkinRequestDto.customerId()+ " not found"));
 		
 		var hotelEntity = getHotelEntityFromCheckinRequest(checkinRequestDto)				
-				.orElseThrow(() -> new JsonError("Hotel wurde nicht gefunden"));
+				.orElseThrow(() -> new BusinessException("Hotel " + checkinRequestDto + " wurde nicht gefunden"));
 		
 		boolean isFullCheckin = hotelEntity.isVirtual;
 
@@ -322,14 +323,16 @@ class CheckinUseCaseImpl implements CheckinUseCase
 	}
 
 
-	private void sendInitMessageFromHotelStaffToCustomer(CheckinRootDomainEntity newCheckin) throws JsonError {
+	private void sendInitMessageFromHotelStaffToCustomer(CheckinRootDomainEntity newCheckin) {
 
 		HotelDomainEntityId hotelId = newCheckin.getHotelDomainEntityId();
 
-		HotelDomainEntity hotel = hotelService.getEntityByDomainId(hotelId).orElseThrow(() -> new RuntimeException("not found"));
+		HotelDomainEntity hotel = hotelService.getEntityByDomainId(hotelId).orElseThrow(() -> new BusinessException("hotel not found"));
 
-		CustomerDomainEntityId initHotelStaffId = hotel.getStaffIdList().stream().findFirst()
-				.orElseThrow(() -> new JsonError("HotelStaff is not set for hotel" + newCheckin.getHotelDomainEntityId()));
+		CustomerDomainEntityId initHotelStaffId = null;
+				
+//				hotel.getStaffIdList().stream().findFirst()
+//				.orElseThrow(() -> new JsonError("HotelStaff is not set for hotel" + newCheckin.getHotelDomainEntityId()));
 
 		ChatMessageCommand wellcomeChatMessageCommand = new ChatMessageCommand(
 				initHotelStaffId,

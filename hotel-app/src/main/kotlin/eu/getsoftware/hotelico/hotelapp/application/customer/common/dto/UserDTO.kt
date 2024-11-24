@@ -8,7 +8,7 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEnt
 data class UserDTO (
    
 //    var id: Long = 0
-    
+
     var domainEntityId: CustomerDomainEntityId,
 
     var title: String? = null,

@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.domain.infrastructure.security//package eu.getsoftware.hotelico.clients.infrastructure.service.security
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.UserEntity
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.UserEntity
 import eu.getsoftware.hotelico.hotelapp.application.customer.common.enums.UserRoleEnum
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.AuthorityUtils

@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model;
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelDbEntity;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelDbEntity;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;

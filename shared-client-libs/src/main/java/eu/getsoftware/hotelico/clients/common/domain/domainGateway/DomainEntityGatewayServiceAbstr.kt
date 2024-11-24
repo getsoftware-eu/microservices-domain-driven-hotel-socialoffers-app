@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.clients.common.domain.domainGateway
 
 import eu.getsoftware.hotelico.clients.common.domain.IRootDomainEntity
-import eu.getsoftware.hotelico.clients.common.error.UserNotFoundException
+import jakarta.persistence.EntityNotFoundException
 import java.util.*
 
 
@@ -57,7 +57,9 @@ abstract class DomainEntityGatewayServiceAbstr<T: IRootDomainEntity>(
 //            val dto: Z? = entityMapper.toDsRequestDTO(user)
             //            return new UserDsRequestApplicationModelDTO(user.getName(), user.getPassword(), user.getCreationTime());
             return user
-        } else throw UserNotFoundException(id)
+        } else throw EntityNotFoundException(
+            "entity id: $id"
+        )
     }
 
     //override 

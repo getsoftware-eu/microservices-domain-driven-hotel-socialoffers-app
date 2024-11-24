@@ -2,9 +2,10 @@ package eu.getsoftware.hotelico.hotelapp.application.customer.domain.usecase.mes
 
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerRequestDTO;
+import eu.getsoftware.hotelico.clients.api.clients.common.dto.UserRegisterRequestUseCaseDTO;
 import eu.getsoftware.hotelico.clients.api.clients.domain.chat.IChatMessageView;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.ChatService;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortServiceImpl.ChatService;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.in.CustomerDtoUseCase;
 
 import java.sql.Timestamp;
@@ -15,6 +16,27 @@ public class CustomerDtoUseCaseImpl implements CustomerDtoUseCase
 
 //	@Autowired
 //	private IChatService chatService;
+
+	public CustomerDTO registerCustomer(UserRegisterRequestUseCaseDTO requestUserDto) {
+
+		requestUserDto.validateBusinessLogic();
+
+		if (userGatewayService.findByField("name", requestUserDto.name()).isPresent()) {
+			return userResponseDTOPortPresenter.prepareFailView("User with name " + requestUserDto.name() + " already exists.");
+		}
+
+		UserRootDomainEntity userDomainEntity = userDomainFactory.create(requestUserDto.name(), requestUserDto.email() , requestUserDto.password());
+
+		if (!userDomainEntity.isPasswordValid())
+			return userResponseDTOPortPresenter.prepareFailView("User password must have more than 5 characters.");
+
+		//A3 domain is correct, we can send it to lower layer for persist
+		userGatewayService.saveToDb(userDomainEntity);
+
+		return userDtoMapper.toDto(userDomainEntity);
+
+//        return formatModelDTOForClientView(clientResponseDTO);
+	}
 	
 	@Override
 	public CustomerDTO setDtoLastMessageWithRequester(CustomerRequestDTO requester, CustomerDTO dto) {

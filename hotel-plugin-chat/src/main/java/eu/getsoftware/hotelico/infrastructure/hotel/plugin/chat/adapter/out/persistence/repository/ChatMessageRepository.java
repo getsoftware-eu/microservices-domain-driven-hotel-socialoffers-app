@@ -2,8 +2,8 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.per
 
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
-import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageEntity;
-import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatUserEntity;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageMappedEntity;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatUserMappedEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
-public interface ChatMessageRepository extends MongoRepository<ChatMessageEntity, Long> {
+public interface ChatMessageRepository extends MongoRepository<ChatMessageMappedEntity, Long> {
 	
 	public final static String FIND_DTO_MESSAGES_BY_CUSTOMER_IDS = "SELECT new eu.getsoftware.hotelico.chat.infrastructure.dto.ChatMessageDTO(m.name, m.title, m.composer) " +
 			"FROM ChatMessage m " +
@@ -127,19 +127,19 @@ public interface ChatMessageRepository extends MongoRepository<ChatMessageEntity
 	 * Find messages by customer ids.
 	 */
 	@Query(FIND_MESSAGES_BY_CUSTOMER_IDS)
-	public List<ChatMessageEntity> getMessagesByCustomerIds(@Param("customerId") CustomerDomainEntityId customerId, @Param("receiverDomainId") Long receiverId);
+	public List<ChatMessageMappedEntity> getMessagesByCustomerIds(@Param("customerId") CustomerDomainEntityId customerId, @Param("receiverDomainId") Long receiverId);
 	
 	@Query(FIND_LAST_MESSAGE_BY_CUSTOMER_AND_RECEIVER_IDS)
-	public Optional<ChatMessageEntity> getLastMessageByCustomerAndReceiverIds(@Param("customerId") CustomerDomainEntityId customerId, @Param("receiverDomainId") CustomerDomainEntityId receiverId);
+	public Optional<ChatMessageMappedEntity> getLastMessageByCustomerAndReceiverIds(@Param("customerId") CustomerDomainEntityId customerId, @Param("receiverDomainId") CustomerDomainEntityId receiverId);
 	
 	@Query(FIND_LAST_MESSAGE_BY_CUSTOMER_ID)
-	public List<ChatMessageEntity> getLastMessageOnlyByCustomerId(@Param("customerId") CustomerDomainEntityId customerId);
+	public List<ChatMessageMappedEntity> getLastMessageOnlyByCustomerId(@Param("customerId") CustomerDomainEntityId customerId);
 	
 	@Query(FIND_CHAT_SENDER_BY_CUSTOMER_ID)
-	public List<ChatUserEntity> getChatSendersByCustomerId(@Param("customerId") CustomerDomainEntityId customerId);
+	public List<ChatUserMappedEntity> getChatSendersByCustomerId(@Param("customerId") CustomerDomainEntityId customerId);
 	
 	@Query(FIND_CHAT_RECEIVER_BY_CUSTOMER_ID)
-	public List<ChatUserEntity> getChatReceiversByCustomerId(@Param("customerId") CustomerDomainEntityId customerId);
+	public List<ChatUserMappedEntity> getChatReceiversByCustomerId(@Param("customerId") CustomerDomainEntityId customerId);
 	
 	@Query(FIND_NOT_READ_MESSAGE_COUNTER_BY_RECEIVER_IDS)
 	public Integer getNotReadMessageCountBySenderId(@Param("customerId") CustomerDomainEntityId customerId, @Param("senderDomainId") Integer senderId);
@@ -148,16 +148,16 @@ public interface ChatMessageRepository extends MongoRepository<ChatMessageEntity
 	public Integer getNotReadSenderByCustomerId(@Param("customerId") CustomerDomainEntityId customerId);
 	
 	@Query(FIND_NOT_READ_MESSAGES_BY_RECEIVER_ID)
-	List<ChatMessageEntity> getUnreadChatMessagesForCustomer(@Param("customerId") CustomerDomainEntityId customerId);
+	List<ChatMessageMappedEntity> getUnreadChatMessagesForCustomer(@Param("customerId") CustomerDomainEntityId customerId);
 	
 	@Query(FIND_NOT_READ_MESSAGES_BY_SENDER_AND_RECEIVER_ID)
-	List<ChatMessageEntity> getUnreadChatMessagesForCustomerBySender(@Param("customerId") CustomerDomainEntityId customerId, @Param("senderDomainId") Long senderId);
+	List<ChatMessageMappedEntity> getUnreadChatMessagesForCustomerBySender(@Param("customerId") CustomerDomainEntityId customerId, @Param("senderDomainId") Long senderId);
 	
 	@Query(FIND_MESSAGE_BY_ID_AND_CUSTOMER_ID)
-	List<ChatMessageEntity> getMessageByCustomerAndInitId(@Param("customerId") CustomerDomainEntityId customerId, @Param("initId") Long initId);
+	List<ChatMessageMappedEntity> getMessageByCustomerAndInitId(@Param("customerId") CustomerDomainEntityId customerId, @Param("initId") Long initId);
 	
 	@Query(FIND_MESSAGE_BY_MESSAGE_ID)
-	List<ChatMessageEntity> getMessageByInitId(@Param("initId") Long initId);
+	List<ChatMessageMappedEntity> getMessageByInitId(@Param("initId") Long initId);
 	
 	@Query(EXIST_MESSAGE_BY_MESSAGE_ID)
 	boolean existMessageWithInitId(@Param("initId") Long initId);

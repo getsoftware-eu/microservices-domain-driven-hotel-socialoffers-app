@@ -17,9 +17,9 @@ public interface IHotelActivity {
 
     String senderId();
 
-    Collection<CustomerDomainEntityId> getLikedCustomerDomainEntityIds();
+//    Collection<CustomerDomainEntityId> getLikedCustomerDomainEntityIds();
 
-    Collection<CustomerDomainEntityId> getSubscribeCustomerDomainEntityIds();
+//    Collection<CustomerDomainEntityId> getSubscribeCustomerDomainEntityIds();
 
     void setLikedCustomerDomainEntityIds(Collection<CustomerDomainEntityId> likedBy);
 

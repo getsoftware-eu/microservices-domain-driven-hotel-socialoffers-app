@@ -1,36 +1,39 @@
 package eu.getsoftware.hotelico.clients.common.domain.domainIDs;
 
 import eu.getsoftware.hotelico.clients.common.domain.EntityIdentifier;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
 //@Embeddable
 public record ActivityDomainEntityId(
-        String uuidValue
+        @NotEmpty String uuidValue
 ) implements EntityIdentifier {
 
-    public ActivityDomainEntityId { //Eu: primary constructor!!! without parameters
-        if (uuidValue == null || uuidValue.isBlank()) {
-            throw new IllegalArgumentException("uuidValue cannot be null or blank");
+    public static ActivityDomainEntityId from(@NotEmpty String value) {
+        if (value == null || value.isEmpty()) {
+            throw new IllegalArgumentException("ActivityDomainEntityId cannot be null or empty");
         }
+        return new ActivityDomainEntityId(value);
+    }
+
+    public static ActivityDomainEntityId from(@NotNull UUID uuid) {
+        if (uuid == null) {
+            throw new IllegalArgumentException("ActivityDomainEntityId cannot be null or empty");
+        }
+        return new ActivityDomainEntityId(uuid.toString());
+    }
+
+    public static ActivityDomainEntityId generate() {
+        return new ActivityDomainEntityId(UUID.randomUUID().toString());
     }
     
-    public ActivityDomainEntityId(String value, Boolean checkParam) { //Eu: additional constructor!!!
-        this(value);
+    public void validateBusinessConditions(String value, Boolean checkParam) { //Eu: additional constructor!!!
         
         if(checkParam && !EntityIdentifier.super.ensureValidUuid(value))
         {
             throw new RuntimeException("not valid param" + value);    
         }
-    }
-    
-    public ActivityDomainEntityId(UUID value) {
-        this(value.toString());
-    } //Eu: additional constructor!!!
-
-
-    @Override
-    public String toString() {
-        return uuidValue;
     }
 }

@@ -18,6 +18,6 @@ public class BasicController
 	//Eugen: all Exceptions have only the same HttpCode = INTERNAL_SERVER_ERROR ????
 	@ResponseStatus (HttpStatus.INTERNAL_SERVER_ERROR)
 	public ModelAndView handleAllExceptions(Exception ex) {
-		return new JsonError(ex.getMessage()).asModelAndView();
+		return new JsonError("Internal Error", ex.getMessage()).asModelAndView();
 	}
 }

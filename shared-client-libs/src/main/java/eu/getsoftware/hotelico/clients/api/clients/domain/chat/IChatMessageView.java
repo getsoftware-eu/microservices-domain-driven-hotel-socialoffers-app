@@ -1,7 +1,5 @@
 package eu.getsoftware.hotelico.clients.api.clients.domain.chat;
 
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
-
 import java.sql.Timestamp;
 
 public interface IChatMessageView {
@@ -13,13 +11,13 @@ public interface IChatMessageView {
 
     Timestamp getTimestamp();
 
-    CustomerDomainEntityId getSenderId();
+//    CustomerDomainEntityId getSenderId();
 
     boolean isSeenByReceiver();
 
     boolean isDelieveredToReceiver();
 
-    CustomerDomainEntityId getReceiverId();
+//    CustomerDomainEntityId getReceiverId();
 
     String getSpecialChatContent();
 }
