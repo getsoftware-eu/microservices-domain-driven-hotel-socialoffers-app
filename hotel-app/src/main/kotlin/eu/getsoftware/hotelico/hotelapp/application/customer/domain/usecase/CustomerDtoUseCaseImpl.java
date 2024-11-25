@@ -17,8 +17,6 @@ public class CustomerDtoUseCaseImpl implements CustomerDtoUseCase
 
 	public CustomerDTO registerCustomer(CustomerRegisterRequestUseCaseDTO requestCustomerDto) {
 
-		requestCustomerDto.validateBusinessLogic();
-
 		if (customerGatewayService.findByField("name", requestCustomerDto.name()).isPresent()) {
 //			return customerResponseDTOPortPresenter.prepareFailView("Customer with name " + requestCustomerDto.name() + " already exists.");
 			throw new BusinessException("Customer with name " + requestCustomerDto.name() + " already exists.");

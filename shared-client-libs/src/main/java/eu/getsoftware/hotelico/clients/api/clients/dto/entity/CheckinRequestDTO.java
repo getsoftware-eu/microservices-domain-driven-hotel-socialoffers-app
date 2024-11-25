@@ -35,35 +35,32 @@ public record CheckinRequestDTO(
         //eu: ensure that the record objects are created in a VALID STATE.
         public CheckinRequestDTO
         {
-                validateBusinessLogic();
+                validateBusinessLogic(checkinFrom, checkinTo);
         }
 
-        public void validateBusinessLogic() {
+        public void validateBusinessLogic(Date checkinFrom, Date checkinTo) {
                
-                if(customerId()==null)
-                {
-                        throw new IllegalArgumentException("no user for checkin.");
-                }
-
                 if (checkinTo.after(getMaxDate(MAX_YEAR_OFFSET))) {
                         throw new IllegalArgumentException("checkin Date is only in next " + MAX_YEAR_OFFSET + " years");
                 }
-
-                if(!checkinDatesAreValid())
+                // eu: Pre-Constructor : use here only constructor params!!, fields are not available (checkinFrom, checkinTo)
+                if(!checkinDatesAreValid(checkinFrom, checkinTo))
                 {
                         throw new IllegalArgumentException("please correct your checkin dates information.");
                 }
 
-                if(hotelId!=null && (checkinTo==null || checkinToIsInPast())) {
+                if(checkinTo==null || checkinToIsInPast(checkinTo)) {
                         throw new IllegalArgumentException("Checkin Date is wrong or in past");
                 }
         }
         
-        public boolean checkinToIsInPast() {
-                return checkinTo().before(new Date());
+        //only get param from constructor, no field access
+        public boolean checkinToIsInPast(Date checkinTo) {
+                return checkinTo.before(new Date());
         }
 
-        public boolean checkinDatesAreValid() {
+        //only get param from constructor, no field access
+        public boolean checkinDatesAreValid(Date checkinFrom, Date checkinTo) {
                 return checkinFrom.before(checkinTo);
         }
         

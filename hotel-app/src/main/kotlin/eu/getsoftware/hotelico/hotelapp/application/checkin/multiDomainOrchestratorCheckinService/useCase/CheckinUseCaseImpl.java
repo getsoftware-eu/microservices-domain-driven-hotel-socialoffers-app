@@ -123,8 +123,6 @@ class CheckinUseCaseImpl implements CheckinUseCase
 	public CheckinDTO createCustomerCheckin(@Validated CheckinRequestDTO customerRequestDto) {
 
 		// UseCase : Primary-flow
-		customerRequestDto.validateBusinessLogic();
-
 		//eu: error: not validate DTO!!! DTO validates itself!!!! 
 		// validateCheckin(customerRequestDto); // UseCase.Primary-flow.step.1
 		

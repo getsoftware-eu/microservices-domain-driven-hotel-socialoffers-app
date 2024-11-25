@@ -110,3 +110,6 @@ https://github.com/getsoftware-eu/clean-architecture-hexagonal-my-approach
 
 Practical Event-Driven Microservices Architecture
 https://www.springerprofessional.de/en/practical-event-driven-microservices-architecture/19852048
+
+DDD
+https://drive.google.com/drive/u/0/folders/1Esy5fINcub-vABnkysnP1u-OyKktbl5T?sort=13&direction=a
