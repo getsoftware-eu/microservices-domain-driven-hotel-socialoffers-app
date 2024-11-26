@@ -10,7 +10,6 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
 
 @Entity
 @Getter @Setter
@@ -66,7 +65,7 @@ public class ChatMessageView implements IChatMessageView, Serializable
   
   public ChatMessageView() 
   {
-    this.timestamp = new Timestamp(new Date().getTime());
+    this.timestamp = new Timestamp(System.currentTimeMillis());
   }
   
   public ChatMessageView(String message, CustomerDBEntity sender, CustomerDBEntity receiver) {

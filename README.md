@@ -98,9 +98,9 @@ Guests can get to know other guests in the hotel. And earn bonus points for hote
 ![Special offers on guests](/docs/img/appInfo.jpg)
 
 ## Architecture details
-- According to the "Building Microservices" book by Sam Newman, all microservice should have its own DB (and for example its own view of a central user entity).
-- Messaging will be persisted by preconfigured (Jackson serialisation and route) through a central preconfigured 'messaging' module, which uses a 'notification'-RabbitMQ-queue for message passing and has its own database.
-- When a user update occurs, it will be propagated to all microservices through a 'system' RabbitMQ queue, ensuring that each microservice updates its user-view in its own database.
+- According to the "Building Microservices" book by Sam Newman, all microservice should have its own DB (and for example its own projection-view of a central user entity).
+- Messaging will be persisted by preconfigured (Jackson serialisation and route) through a central preconfigured 'messaging' module, which uses a 'notification'-Kafka-queue for message passing and has its own database.
+- When a user update occurs, it will be propagated to other microservices through a 'DDD-compliant-named' Kafka queue, ensuring that each microservice updates its user-view in its own database.
 
 ## Used Projects as a basis:
 
@@ -111,5 +111,5 @@ https://github.com/getsoftware-eu/clean-architecture-hexagonal-my-approach
 Practical Event-Driven Microservices Architecture
 https://www.springerprofessional.de/en/practical-event-driven-microservices-architecture/19852048
 
-DDD
+DDD video
 https://drive.google.com/drive/u/0/folders/1Esy5fINcub-vABnkysnP1u-OyKktbl5T?sort=13&direction=a

@@ -508,7 +508,7 @@
 //						{
 //							sender.setPictureUrl(AppConfigProperties.getRelativePath(fileAdded));
 //							
-//							long newConsistencyId = new Date().getTime();
+//							long newConsistencyId = System.currentTimeMillis();
 //							
 //							sender.setConsistencyId(newConsistencyId);
 //							lastMessagesService.updateCustomerConsistencyId(sender.getDomainEntityId(), newConsistencyId);
@@ -531,13 +531,13 @@
 //							if (fileAdded != null)
 //							{
 //								activity.setPictureUrl(AppConfigProperties.getRelativePath(fileAdded));
-//								activity.setConsistencyId(new Date().getTime());
+//								activity.setConsistencyId(System.currentTimeMillis());
 //							}
 //							
 //							if (previewAdded != null)
 //							{
 //								activity.setPreviewPictureUrl(AppConfigProperties.getRelativePath(previewAdded));
-//								activity.setConsistencyId(new Date().getTime());
+//								activity.setConsistencyId(System.currentTimeMillis());
 //							}
 //							activityRepository.saveAndFlush(activity);
 //							
@@ -576,13 +576,13 @@
 //							if (fileAdded != null)
 //							{
 //								hotelRootEntity.setPictureUrl(AppConfigProperties.getRelativePath(fileAdded));
-//								hotelRootEntity.setConsistencyId(new Date().getTime());
+//								hotelRootEntity.setConsistencyId(System.currentTimeMillis());
 //							}
 //							
 //							if (previewAdded != null)
 //							{
 //								hotelRootEntity.setPreviewPictureUrl(AppConfigProperties.getRelativePath(previewAdded));
-//								hotelRootEntity.setConsistencyId(new Date().getTime());
+//								hotelRootEntity.setConsistencyId(System.currentTimeMillis());
 //							}
 //							hotelRepository.saveAndFlush(hotelRootEntity);
 //

@@ -19,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.*;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -123,7 +122,6 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 		{
 			CustomerDBEntity customerEntity = customerEntities.get(0);
 			
-			Date requestTime = new Date();
 //			customerEntity.setLastResetPasswordRequestTime(requestTime.getTime());
 			
 			String saltedPasswordQuery = createPasswordQuery(customerEntity.getLastResetPasswordRequestTime(), customerEntity.getId(), customerEntity.getPasswordHash());

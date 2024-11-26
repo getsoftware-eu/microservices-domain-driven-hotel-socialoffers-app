@@ -346,7 +346,7 @@
 //			return menuItem;
 //		}
 //		
-//		menuItem.setConsistencyId(new Date().getTime());
+//		menuItem.setConsistencyId(System.currentTimeMillis());
 //
 //		menuItem.setTitle(dto.getTitle());
 //		menuItem.setAmount(dto.getAmount());
@@ -396,7 +396,7 @@
 //			menuOrder.setValidTo(AppConfigProperties.convertToDate(LocalDateTime.now().withHour(0).withMinute(0).plusDays(1).plusHours(3)));
 //			menuOrder.setStatus(DealStatus.ACCEPTED);
 //
-//			menuOrder.setTimestamp(new Timestamp(new Date().getTime()));
+//			menuOrder.setTimestamp(new Timestamp(System.currentTimeMillis()));
 //		}
 //		
 //		//TODO Eugen: action
@@ -415,11 +415,11 @@
 //			menuOrder.setGuestCustomerId(menuOrderDto.getSenderId());
 //		}
 //		
-//		menuOrder.setConsistencyId(new Date().getTime());
+//		menuOrder.setConsistencyId(System.currentTimeMillis());
 //		
 //		if(menuOrder.getInitId()<=0)
 //		{
-//			menuOrder.setInitId(new Date().getTime());
+//			menuOrder.setInitId(System.currentTimeMillis());
 //
 //			menuOrder.setOrderCode(AppConfigProperties.generateCode());
 //		}

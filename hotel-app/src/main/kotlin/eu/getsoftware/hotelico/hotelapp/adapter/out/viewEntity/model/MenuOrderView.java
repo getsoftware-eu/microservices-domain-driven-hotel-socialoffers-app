@@ -55,7 +55,7 @@ public class MenuOrderView implements Serializable
 	private CustomerDBEntity sender;
 	
 	@Column
-	private Timestamp timestamp = new Timestamp(new Date().getTime());	
+	private Timestamp timestamp = new Timestamp(System.currentTimeMillis());	
 	
 	@Column
 	private String customerComment;

@@ -41,6 +41,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.awt.geom.Point2D;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -220,7 +221,7 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
     @Override
     public List<CustomerDTO> getWallPostParticipantsByHotelId(CustomerDomainEntityId requesterId, HotelDomainEntityId hotelId)
     {
-        List<CustomerDBEntity> participantsList = wallPostRepository.getParticipantsByHotelId(hotelId, new Date());
+        List<CustomerDBEntity> participantsList = wallPostRepository.getParticipantsByHotelId(hotelId, LocalDate.now());
 
         List<CustomerDTO> out = new ArrayList<CustomerDTO>();
 
@@ -452,8 +453,8 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
 
         Optional<CustomerDBEntity> requester = customerRepository.findByDomainId(customerEntityId);
 		
-		Date filterDateFrom = closed? null: new Date();
-		Date filterDateTo = closed? null: new Date();
+		LocalDate filterDateFrom = closed? null: LocalDate.now();
+        LocalDate filterDateTo = closed? null: LocalDate.now();
 		
 		List<DealStatus> filterDealStatusList = DealStatus.getFilterStatusList(closed);
 		
@@ -494,9 +495,9 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
         {
 			//Eugen: ignore closed!!!
             resultList =  requester!=null?
-                          dealRepository.getActiveByCustomerId(requester.get().getDomainEntityId(), new Date())
+                          dealRepository.getActiveByCustomerId(requester.get().getDomainEntityId(), LocalDate.now())
                           :
-                          dealRepository.getActiveByGuestId(customerId, new Date());
+                          dealRepository.getActiveByGuestId(customerId, LocalDate.now());
         }
 		
 		for (CustomerDeal nextDeal: resultList)
@@ -724,9 +725,9 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
 					
 					//Eugen: cannot edit closed deals!
                     editDeals = sender!=null?
-                                dealRepository.getActiveByCustomerAndActivityId(sender.getDomainEntityId(), activityOptional.get().getId(), filterStatusList, new Date(), new Date())
+                                dealRepository.getActiveByCustomerAndActivityId(sender.getDomainEntityId(), activityOptional.get().getId(), filterStatusList, LocalDate.now(), LocalDate.now())
                                 :
-                                dealRepository.getActiveByGuestAndActivityId(customerId, activityOptional.get().getId(), filterStatusList, new Date(), new Date());
+                                dealRepository.getActiveByGuestAndActivityId(customerId, activityOptional.get().getId(), filterStatusList, LocalDate.now(), LocalDate.now());
 
                     if(editDeals.size()>1)
                     {
@@ -872,7 +873,7 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
 		
         HotelDBEntity hotelRootEntity = modelMapper.map(hotelDto, HotelDBEntity.class);
 
-        hotelRootEntity.setConsistencyId(new Date().getTime());
+        hotelRootEntity.setConsistencyId(System.currentTimeMillis());
 
         return convertHotelToDto(hotelRepository.saveAndFlush(hotelRootEntity));
     }
@@ -908,7 +909,7 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
 				WallPostDTO checkinNotificationWall = new WallPostDTO(hotelActivity.getHotelDomainId(), hotelActivity.getSender().getDomainEntityId());
 		
 				checkinNotificationWall.getSpecialContent().put("activityId", String.valueOf(hotelActivityDto.getId()));
-				checkinNotificationWall.setSequenceId(new Date().getTime());
+				checkinNotificationWall.setSequenceId(System.currentTimeMillis());
 				checkinNotificationWall.setMessage("New last minute deal:");
 				this.addUpdateWallPost(checkinNotificationWall);
 			}
@@ -998,17 +999,17 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
 
         if(hotelActivity.getValidFrom()==null)
 		{
-			hotelActivity.setValidFrom(new Date());
+			hotelActivity.setValidFrom(LocalDate.now());
 		}
 
         hotelActivity.setActive(true);
 
         if(hotelActivity.getValidTo()==null)
 		{
-			hotelActivity.setValidTo(AppConfigProperties.convertToDate(LocalDateTime.now().plusDays(7)));
+			hotelActivity.setValidTo(LocalDate.now().plusDays(7));
 		}
 
-        hotelActivity.setConsistencyId(new Date().getTime());
+        hotelActivity.setConsistencyId(System.currentTimeMillis());
         
         return hotelActivity;
     }
@@ -1025,7 +1026,7 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
         
         if(wallPostDto.getCreationTime()<=0)
         {
-            wallPostDto.setCreationTime(new Date().getTime());
+            wallPostDto.setCreationTime(System.currentTimeMillis());
         }
         
         HotelDBEntity hotelRootEntity = this.getEntityById(wallPostDto.getHotelId()).orElseThrow(()-> new BusinessException("wallpost not found"));
@@ -1039,10 +1040,10 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
         //wallPost is valid only 1 day | 1 Month for DEMO...
         if(AppConfigProperties.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelRootEntity.getCurrentHotelAccessCode()))
         {
-            newMessage.setValidUntil(AppConfigProperties.convertToDate(LocalDateTime.now().plusMonths(6)));
+            newMessage.setValidUntil(LocalDate.now().plusMonths(6));
         }
         else {
-            newMessage.setValidUntil(AppConfigProperties.convertToDate(LocalDateTime.now().plusDays(3)));
+            newMessage.setValidUntil(LocalDate.now().plusDays(3));
         }
 
         wallPostRepository.saveAndFlush(newMessage);
@@ -1087,7 +1088,7 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
 //            hotel.setPictureUrl(hotelDto.getPictureUrl());
 
 			//Eugen: important, consistencyId only here to create!
-            hotelRootEntity.setConsistencyId(new Date().getTime());
+            hotelRootEntity.setConsistencyId(System.currentTimeMillis());
             
             if(hotelDto.getCreationTime()>0)
             {
@@ -1118,8 +1119,8 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
         int customerNumber = 0;
         
         try{
-            activityNumber = activityRepository.getTimeValidCounterByHotelId(hotelRootEntity.getDomainEntityId(), new Date());
-            customerNumber = checkinRepository.getFullCheckinCountExcludingStaffByHotelId(hotelRootEntity.getDomainEntityId(), new Date());
+            activityNumber = activityRepository.getTimeValidCounterByHotelId(hotelRootEntity.getDomainEntityId(), LocalDate.now());
+            customerNumber = checkinRepository.getFullCheckinCountExcludingStaffByHotelId(hotelRootEntity.getDomainEntityId(), LocalDate.now());
         }
         catch (Exception e){
             ;//TODO Eugen.
@@ -1234,7 +1235,7 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
         //IMPORTANT Eugen: not here
         //            hotelActivity.setPictureUrl(hotelActivityDto.getPictureUrl());
 
-        hotelActivity.setValidFrom(hotelActivityDto.getValidFrom() != null ? hotelActivityDto.getValidFrom() : new Date());
+        hotelActivity.setValidFrom(hotelActivityDto.getValidFrom() != null ? hotelActivityDto.getValidFrom() : LocalDate.now());
 
         hotelActivity.setValidTo(hotelActivityDto.getValidTo() != null && !hotelActivityDto.getLastMinute() ? hotelActivityDto.getValidTo() : hotelActivityDto.getLastMinute() ? AppConfigProperties.convertToDate(LocalDateTime.now().plusDays(1).withHour(4)) : AppConfigProperties.convertToDate(LocalDateTime.now().plusDays(7)));
 
@@ -1242,7 +1243,7 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
         hotelActivity.setLastMinute(hotelActivityDto.getLastMinute());
          
 
-        hotelActivity.setConsistencyId(new Date().getTime());
+        hotelActivity.setConsistencyId(System.currentTimeMillis());
         
         return hotelActivity;
     }
@@ -1314,7 +1315,7 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
             }
             else {
                 //add only time valid activities to customers
-                list = activityRepository.findTimeValidActive(new Date());
+                list = activityRepository.findTimeValidActive(LocalDate.now());
             }
         }
         else{
@@ -1328,7 +1329,7 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
 		        }
             }
             else {
-                list = activityRepository.getTimeValidByHotelId(hotelId, new Date());
+                list = activityRepository.getTimeValidByHotelId(hotelId, LocalDate.now());
             }
         }
         
@@ -1343,7 +1344,7 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
             
             if(requesterOpt.isEmpty() && requesterId!=null)
             {
-                List<CustomerDeal> guestDealsList = dealRepository.getActiveByGuestId(requesterId, new Date());
+                List<CustomerDeal> guestDealsList = dealRepository.getActiveByGuestId(requesterId, LocalDate.now());
 
                 if(!guestDealsList.isEmpty())
                 {
@@ -1388,7 +1389,7 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
     @Override
     public int getCustomerDealCounter(CustomerDomainEntityId customerId, CustomerDomainEntityId guestId)
 	{
-		Integer count = dealRepository.countActiveDealsByCustomerOrGuest(customerId, guestId, new Date());
+		Integer count = dealRepository.countActiveDealsByCustomerOrGuest(customerId, guestId, LocalDate.now());
 	
 		return count!=null? count : 0;
 	}
@@ -1411,7 +1412,7 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
         if(requester != null)
         {
 			List<DealStatus> filterStatuslist = DealStatus.getFilterStatusList(false);
-            activityDeals = dealRepository.getActiveByCustomerAndActivityId(requester.getDomainEntityId(), hotelActivity.getId(), filterStatuslist, new Date(), new Date());
+            activityDeals = dealRepository.getActiveByCustomerAndActivityId(requester.getDomainEntityId(), hotelActivity.getId(), filterStatuslist, LocalDate.now(), LocalDate.now());
         }
         
         if(!activityDeals.isEmpty())
@@ -1432,8 +1433,8 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
 
             try
             {
-                otherActivityNumber = activityRepository.getTimeValidCounterByHotelId(hotelRootEntityId, new Date());
-                hotelCustomerNumber = checkinRepository.getFullCheckinCountExcludingStaffByHotelId(hotelRootEntityId, new Date());
+                otherActivityNumber = activityRepository.getTimeValidCounterByHotelId(hotelRootEntityId, LocalDate.now());
+                hotelCustomerNumber = checkinRepository.getFullCheckinCountExcludingStaffByHotelId(hotelRootEntityId, LocalDate.now());
             }
             catch (Exception e)
             {
@@ -1444,7 +1445,7 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
 //        activityDto.setLikeCounter(5);
         activityDto.setOtherActivityNumber(otherActivityNumber>0? otherActivityNumber-1 : 0);
         
-        boolean isActivityTimeValid = hotelActivity.getValidTo()!=null && hotelActivity.getValidFrom()!=null && hotelActivity.getValidTo().after(new Date()) && hotelActivity.getValidFrom().before(new Date());
+        boolean isActivityTimeValid = hotelActivity.getValidTo()!=null && hotelActivity.getValidFrom()!=null && hotelActivity.getValidTo().isAfter(LocalDate.now()) && hotelActivity.getValidFrom().isBefore(LocalDate.now());
         activityDto.setTimeValid(isActivityTimeValid);
 
         if(activityDto.getInitId() ==0)
@@ -1468,7 +1469,7 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
             list = activityRepository.getAllTimesByHotelId(hotelId);
         }
         else{
-            list = activityRepository.getTimeValidByHotelId(hotelId, new Date());
+            list = activityRepository.getTimeValidByHotelId(hotelId, LocalDate.now());
         }
         
         List<HotelActivityDTO> out = new ArrayList<HotelActivityDTO>();
@@ -1483,7 +1484,7 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
     @Override
     public List<WallPostDTO> getWallPostsByHotelId(HotelDomainEntityId hotelId)
     {
-        List<HotelWallPost> list = wallPostRepository.getByHotelId(hotelId, new Date());
+        List<HotelWallPost> list = wallPostRepository.getByHotelId(hotelId, LocalDate.now());
        
         List<WallPostDTO> out = new ArrayList<WallPostDTO>();
 
@@ -1491,7 +1492,7 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
         
         for (HotelWallPost wallPost : list) {
 
-            if(wallIsDemoValid || wallPost.getValidUntil().after(new Date()))
+            if(wallIsDemoValid || wallPost.getValidUntil().isAfter(LocalDate.now()))
             {
                 WallPostDTO dto = convertWallToDto(wallPost);
                 out.add(dto);

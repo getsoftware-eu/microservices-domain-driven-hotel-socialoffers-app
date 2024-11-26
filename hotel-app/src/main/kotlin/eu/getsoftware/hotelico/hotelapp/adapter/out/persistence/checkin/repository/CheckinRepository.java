@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -136,19 +137,19 @@ public interface CheckinRepository extends JpaRepository<CheckinDBEntity, Long> 
 	 * Find customer active checkIn.
 	 */
 	@Query(FIND_ACTIVE_BY_CUSTOMER_QUERY)
-	public List<CheckinDBEntity> getActiveByCustomerId(@Param("customerId") CustomerDomainEntityId customerId, @Param("checkDate") Date checkDate);	
+	public List<CheckinDBEntity> getActiveByCustomerId(@Param("customerId") CustomerDomainEntityId customerId, @Param("checkDate") LocalDate checkDate);	
 	
 	/**
 	 * Find customer active checkIn.
 	 */
 	@Query(FIND_HOTEL_BY_CUSTOMER_QUERY)
-	public Long getCustomerHotelId(@Param("customerId") CustomerDomainEntityId customerId, @Param("checkDate") Date checkDate);	
+	public Long getCustomerHotelId(@Param("customerId") CustomerDomainEntityId customerId, @Param("checkDate") LocalDate checkDate);	
 
 	/**
 	 * Find customer active checkIn.
 	 */
 	@Query(COUNT_ACTIVE_BY_HOTEL_QUERY)
-	public Integer getActiveCountByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);
+	public Integer getActiveCountByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") LocalDate checkDate);
 
 	/**
 	 * Find NOT STAFF active Checkin counter
@@ -156,25 +157,25 @@ public interface CheckinRepository extends JpaRepository<CheckinDBEntity, Long> 
 	 * @return
 	 */
 	@Query(COUNT_NOT_STAFF_ACTIVE_BY_HOTEL_QUERY)
-	public Integer getActiveCountExcludingStaffByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);	
+	public Integer getActiveCountExcludingStaffByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") LocalDate checkDate);	
 	
 	@Query(COUNT_NOT_STAFF_FULL_CHECKIN_ACTIVE_BY_HOTEL_QUERY)
-	public Integer getFullCheckinCountExcludingStaffByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);
+	public Integer getFullCheckinCountExcludingStaffByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") LocalDate checkDate);
 	
 	/**
 	 * Find customers active checkIn by hotel.
 	 */
 	@Query(FIND_ACTIVE_BY_HOTEL_QUERY)
-	public List<CheckinDBEntity> getActiveByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);	
+	public List<CheckinDBEntity> getActiveByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") LocalDate checkDate);	
 	
 	@Query(FIND_ACTIVE_CUSTOMERS_BY_HOTEL_QUERY)
-	public List<CustomerDBEntity> getActiveCustomersByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);	
+	public List<CustomerDBEntity> getActiveCustomersByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") LocalDate checkDate);	
 	
 	@Query(FIND_ACTIVE_FULL_CHECKIN_BY_HOTEL_QUERY)
-	public List<CheckinDBEntity> getActiveFullCheckinByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);	
+	public List<CheckinDBEntity> getActiveFullCheckinByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") LocalDate checkDate);	
 	
 	@Query(IS_ACTIVE_FULL_CHECKIN_FOR_CUSTOMER_BY_HOTEL_QUERY)
-	public boolean isFullCheckinForCustomerByHotelId(@Param("customerId") CustomerDomainEntityId customerId, @Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);
+	public boolean isFullCheckinForCustomerByHotelId(@Param("customerId") CustomerDomainEntityId customerId, @Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") LocalDate checkDate);
 
 	@Query(FIND_STAFF_BY_HOTEL_QUERY)
 	public List<CustomerDBEntity> getStaffByHotelId(@Param("hotelId") HotelDomainEntityId hotelId);	
@@ -183,13 +184,13 @@ public interface CheckinRepository extends JpaRepository<CheckinDBEntity, Long> 
 	public List<Integer> getStaffIdsByHotelId(@Param("hotelId") HotelDomainEntityId hotelId);
 	
 	@Query(FIND_CUSTOMERS_BY_HOTEL_CITY_QUERY)
-	List<CustomerDBEntity> getActiveCustomersByHotelCity(@Param("hotelCity") String hotelCity, @Param("checkDate") Date checkDate);
+	List<CustomerDBEntity> getActiveCustomersByHotelCity(@Param("hotelCity") String hotelCity, @Param("checkDate") LocalDate checkDate);
 	
 	@Query(FIND_CHECKIN_UNIQUE_CITIES_QUERY)
-	List<String> findNotStaffCheckinUniueCities(@Param("checkDate") Date checkDate);
+	List<String> findNotStaffCheckinUniueCities(@Param("checkDate") LocalDate checkDate);
 	
 	@Query(FIND_LAST_CHECKIN_BY_HOTEL_QUERY)
 	Date getLastByCustomerAndHotelId(@Param("customerId") CustomerDomainEntityId customerId, @Param("hotelId") HotelDomainEntityId hotelId);
 
-	HotelDomainEntityId getCustomerHotelDomainId(CustomerDomainEntityId customerId, Date date);
+	HotelDomainEntityId getCustomerHotelDomainId(CustomerDomainEntityId customerId, LocalDate date);
 }

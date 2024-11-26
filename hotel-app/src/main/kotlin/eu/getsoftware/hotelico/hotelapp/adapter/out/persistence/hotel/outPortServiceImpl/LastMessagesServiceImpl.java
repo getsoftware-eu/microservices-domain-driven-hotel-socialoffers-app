@@ -24,6 +24,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
 import java.awt.geom.Point2D.Double;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.Map.Entry;
@@ -56,7 +57,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	
 	private final CustomerRepository customerRepository;
 	
-	private Map<CustomerDomainEntityId, Date> lastCustomerOnlineMap = new HashMap<>();
+	private Map<CustomerDomainEntityId, LocalDate> lastCustomerOnlineMap = new HashMap<>();
 	private Map<CustomerDomainEntityId, Long> currentConsistencyIdsMap = new HashMap<>();
 	
 	private BlockingQueue<ChatMsgDTO> lastUnreadMsgQueue = new ArrayBlockingQueue<>(10);
@@ -124,8 +125,8 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	}
 	
 	@Override
-	public Optional<Date> getLastCustomerOnlineTime(CustomerDomainEntityId customerId) throws Throwable {
-		Optional<Date> lastCustomerOnlineTime = lastCustomerOnlineMap.entrySet().stream().filter(e -> e.getKey() == customerId).map(Entry::getValue).findFirst();
+	public Optional<LocalDate> getLastCustomerOnlineTime(CustomerDomainEntityId customerId) throws Throwable {
+		Optional<LocalDate> lastCustomerOnlineTime = lastCustomerOnlineMap.entrySet().stream().filter(e -> e.getKey() == customerId).map(Entry::getValue).findFirst();
 				
  		if(!lastCustomerOnlineTime.isPresent())
 		{
@@ -136,7 +137,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 				return Optional.empty();
 			}
 			
-			Date lastSeenOnline = customerEntityOpt.getLastSeenOnline();
+			LocalDate lastSeenOnline = customerEntityOpt.getLastSeenOnline();
 			
 			if(lastSeenOnline != null)
 			{
@@ -151,7 +152,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	@Override
 	public void updateCustomerConsistencyId(CustomerDomainEntityId customerId)
 	{
-		currentConsistencyIdsMap.put(customerId, new Date().getTime());
+		currentConsistencyIdsMap.put(customerId, System.currentTimeMillis());
 	}
 	
 //	@Override
@@ -170,7 +171,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 				updateCustomerRootEntity = true;
 			}
 			
-			lastCustomerOnlineMap.put(customerId, new Date());
+			lastCustomerOnlineMap.put(customerId, LocalDate.now());
 		}
 		
 		if(updateCustomerRootEntity)
@@ -178,7 +179,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 			CustomerDTO customerEntityOpt = (CustomerDTO) customerService.getByDomainId(customerId).orElseThrow(() -> new RuntimeException("not found"));
 			
 			customerEntityOpt.updateLastSeenOnline();
-			lastCustomerOnlineMap.put(customerId, new Date());
+			lastCustomerOnlineMap.put(customerId, LocalDate.now());
 		}
 	}
 	
@@ -430,14 +431,14 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	
 	private boolean isNowStillOnline(CustomerDomainEntityId customerId)
 	{
-        Optional<Date> lastOnline = null;
+        Optional<LocalDate> lastOnline = null;
         try {
             lastOnline = getLastCustomerOnlineTime(customerId);
         } catch (Throwable e) {
             throw new RuntimeException(e);
         }
 
-        return lastOnline.isPresent() && lastOnline.get().after(convertToDate(LocalDateTime.now().minusMinutes(ONLINE_DELAY_MINUTES)));
+        return lastOnline.isPresent() && lastOnline.get().isAfter(convertToDate(LocalDate.now().minus(ONLINE_DELAY_MINUTES)));
 	}
 	
 	@Override
@@ -534,7 +535,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	{
 		if(!customersToHotelIdMap.containsKey(customerId))
 		{
-			customersToHotelIdMap.put(customerId, checkinRepository.getCustomerHotelDomainId(customerId, new Date()));
+			customersToHotelIdMap.put(customerId, checkinRepository.getCustomerHotelDomainId(customerId, LocalDate.now()));
 		}
 
 		HotelDomainEntityId hotelId = customersToHotelIdMap.get(customerId);

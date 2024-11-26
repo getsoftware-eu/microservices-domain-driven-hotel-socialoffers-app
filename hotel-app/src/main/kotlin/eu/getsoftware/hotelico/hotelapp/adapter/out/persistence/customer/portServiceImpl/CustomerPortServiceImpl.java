@@ -386,7 +386,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 //                customerAggregate.setGuestAccount(false);
 //            }
 //            
-//            long consistencyId = new Date().getTime();
+//            long consistencyId = System.currentTimeMillis();
 //            customerAggregate.setConsistencyId(consistencyId);
 //
 //            lastMessagesService.updateCustomerConsistencyId(customerEntity.getId(), consistencyId);

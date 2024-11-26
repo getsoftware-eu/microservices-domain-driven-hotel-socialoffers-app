@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
+import java.time.LocalDate
 import java.util.*
 
 @Repository
@@ -79,13 +80,13 @@ interface ActivityRepository: JpaRepository<HotelDbActivity, Long> {
 	 * Find activity by hotel.
 	 */
 	@Query(FIND_TIME_VALID_BY_HOTEL_QUERY)
-	fun getTimeValidByHotelId(@Param("hotelId") hotelId: HotelDomainEntityId, @Param("checkDate") checkDate: Date): MutableList<HotelDbActivity>	
+	fun getTimeValidByHotelId(@Param("hotelId") hotelId: HotelDomainEntityId, @Param("checkDate") checkDate: LocalDate): MutableList<HotelDbActivity>	
 	
 	/**
 	 * Find activity by hotel.
 	 */
 	@Query(FIND_TIME_VALID_BY_HOTEL_COUNTER_QUERY)
-	fun getTimeValidCounterByHotelId(@Param("hotelId") hotelId: HotelDomainEntityId, @Param("checkDate") checkDate: Date): Int		 
+	fun getTimeValidCounterByHotelId(@Param("hotelId") hotelId: HotelDomainEntityId, @Param("checkDate") checkDate: LocalDate): Int		 
 	 
 	/**
 	 * Find activity by creator and hotel.
@@ -100,7 +101,7 @@ interface ActivityRepository: JpaRepository<HotelDbActivity, Long> {
 	fun findAllTimesActive(): MutableList<HotelDbActivity>	
 	
 	@Query(FIND_ALL_TIME_VALID_ACTIVE_QUERY)
-	fun findTimeValidActive(@Param("checkDate") checkDate: Date): MutableList<HotelDbActivity>
+	fun findTimeValidActive(@Param("checkDate") checkDate: LocalDate): MutableList<HotelDbActivity>
 	fun findByHotelDomainId(id: HotelDomainEntityId): Optional<HotelDbActivity> {
 		return Optional.empty<HotelDbActivity>()
 	}

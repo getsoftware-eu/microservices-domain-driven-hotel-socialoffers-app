@@ -121,7 +121,7 @@
 //		
 //		if (chatMessageDto.getCreationTime()<=0)
 //		{
-//			chatMessageDto.setCreationTime(new Date().getTime());
+//			chatMessageDto.setCreationTime(System.currentTimeMillis());
 //		}
 //		
 //		newMessage.setTimestamp(new Timestamp(chatMessageDto.getCreationTime()));

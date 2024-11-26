@@ -50,7 +50,7 @@ public class CustomerDeal implements ICustomerDeal {
 	private DealStatus status;
 
 	@Column(name = "consistencyId", columnDefinition = "BIGINT(20) DEFAULT 0")
-	private long consistencyId = new Date().getTime();
+	private long consistencyId = System.currentTimeMillis();
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "validFrom", nullable = false, length = 10)

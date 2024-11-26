@@ -8,11 +8,9 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-
-import static eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties.convertToLocalDateTime;
 
 @RequiredArgsConstructor
 @Service
@@ -21,17 +19,17 @@ public class WallPostServiceImpl implements IWallpostService {
     private final HotelServiceImpl hotelService;
     
     @Override
-    public void sendNotificationWallpostOnDemand(CustomerDTO customerEntity, Date lastSameHotelCheckin, HotelDTO hotelRootEntity, CustomerDTO staffSender) {
+    public void sendNotificationWallpostOnDemand(CustomerDTO customerEntity, LocalDate lastSameHotelCheckin, HotelDTO hotelRootEntity, CustomerDTO staffSender) {
         
         // ### Notificate Wall
-        if(lastSameHotelCheckin ==null || convertToLocalDateTime(lastSameHotelCheckin).getDayOfYear() != LocalDateTime.now().getDayOfYear() )
+        if(lastSameHotelCheckin ==null || lastSameHotelCheckin.getDayOfYear() != LocalDateTime.now().getDayOfYear() )
         {
 
             WallPostDTO checkinNotificationWallDto = new WallPostDTO(hotelRootEntity.getDomainEntityId(), staffSender.getDomainEntityId());
 
             checkinNotificationWallDto.getSpecialContent().put("customerId", String.valueOf(customerEntity.getId()));
 //								checkinNotificationWallDto.setsetValidUntil(new DateTime().plusDays(1).toDate());
-            checkinNotificationWallDto.setSequenceId(new Date().getTime());
+            checkinNotificationWallDto.setSequenceId(System.currentTimeMillis());
             checkinNotificationWallDto.setMessage("New guest at our hotel:");
 
             hotelService.addUpdateWallPost(checkinNotificationWallDto);

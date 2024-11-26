@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -41,8 +40,8 @@ public class ChatServiceImpl implements ChatService {
 
             var sender = (staffSender);
             var receiver = (customerDTO);
-            var initId = (new Date().getTime());
-            var timestamp = (new Timestamp(new Date().getTime()));
+            var initId = (System.currentTimeMillis());
+            var timestamp = (new Timestamp(System.currentTimeMillis()));
 
             ChatMsgDTO chatMsgDTO = new ChatMsgDTO(initId, msg, sender.getDomainEntityId(), receiver.getDomainEntityId(), true, false, false, 123, null, null, true);
             

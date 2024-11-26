@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -46,10 +46,10 @@ public interface WallPostRepository extends JpaRepository<HotelWallPost, Long> {
 			" AND w.sender.id = :senderDomainId ";
 	 
 	@Query(FIND_BY_HOTEL_QUERY)
-	List<HotelWallPost> getByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);
+	List<HotelWallPost> getByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") LocalDate checkDate);
 
 	@Query(FIND_PARTICIPANTS_BY_HOTEL_QUERY)
-	List<CustomerDBEntity> getParticipantsByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") Date checkDate);
+	List<CustomerDBEntity> getParticipantsByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") LocalDate checkDate);
 	
 	@Query(FIND_MESSAGE_BY_INIT_ID)
 	List<HotelWallPost> getMessageByInitId(@Param("initId") WallPostDomainEntityId initId);

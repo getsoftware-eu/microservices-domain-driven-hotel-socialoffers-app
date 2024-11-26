@@ -14,8 +14,8 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -68,11 +68,11 @@ public class HotelDbActivity implements IHotelActivity, Serializable
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "validFrom", length = 10)
-	private Date validFrom;
+	private LocalDate validFrom;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name = "validTo", length = 10)
-	private Date validTo;
+	private LocalDate validTo;
 	
 	@Column
 	private String title;

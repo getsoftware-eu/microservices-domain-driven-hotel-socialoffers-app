@@ -90,13 +90,13 @@ public class NotificationUseCaseImpl implements NotificationUseCase<InnerHotelEv
 	{
 		CustomerNotificationDTO nextNotification = new CustomerNotificationDTO();
 		
-		nextNotification.setCreationTime(new Date().getTime());
+		nextNotification.setCreationTime(System.currentTimeMillis());
 		
 		//######################### 
 
 		HotelDomainEntityId receiverHotelId = customerService.getCustomerHotelId(receiverId);
 		
-		nextNotification.setId(new Date().getTime());
+		nextNotification.setId(System.currentTimeMillis());
 		
 		nextNotification.setReceiverId(receiverId.uuidValue());
 		
@@ -384,7 +384,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<InnerHotelEv
 				
 				if(nextFeedCustomerRootEntity !=null && nextFeedCustomerRootEntity.isAllowHotelNotification())
 				{
-					long time = new Date().getTime();
+					long time = System.currentTimeMillis();
 
 					var senderId=(customerEntity.getDomainEntityId());
 					var receiverId=(nextFeedCustomerRootEntity.getDomainEntityId());

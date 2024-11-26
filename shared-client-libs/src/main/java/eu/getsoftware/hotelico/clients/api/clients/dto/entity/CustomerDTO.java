@@ -126,9 +126,9 @@ public class CustomerDTO extends BasicDTO<CustomerDomainEntityId>
     
     private final boolean inMyHotel = false;
     
-    private final Date checkinFrom = null;
+    private final LocalDate checkinFrom = null;
     
-    private final Date checkinTo = null;
+    private final LocalDate checkinTo = null;
     
     private final List<String> languages  = null;
 
@@ -244,7 +244,7 @@ public class CustomerDTO extends BasicDTO<CustomerDomainEntityId>
     public void doLogged(boolean b) {
     }
 
-    public Date getLastSeenOnline() {
+    public LocalDate getLastSeenOnline() {
         return null;
     }
 
@@ -328,8 +328,8 @@ public class CustomerDTO extends BasicDTO<CustomerDomainEntityId>
 //        private final boolean  hideWallPopup = false;
 //        private final boolean  chatWithMe = false;
 //        private final boolean  inMyHotel = false;
-//        private Date checkinFrom = null;
-//        private Date checkinTo = null;
+//        private LocalDate checkinFrom = null;
+//        private LocalDate checkinTo = null;
 //    
 //        public CustomerBuilder(long initId) {
 //            this.initId = initId;

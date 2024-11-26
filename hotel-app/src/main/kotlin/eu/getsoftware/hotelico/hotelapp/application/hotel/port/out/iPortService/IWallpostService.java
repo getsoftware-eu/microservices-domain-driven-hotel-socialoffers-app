@@ -6,7 +6,7 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelWallPost;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IWallpostService {
@@ -25,5 +25,5 @@ public interface IWallpostService {
 
     List<CustomerDTO> getWallPostParticipantsByHotelId(long requesterId, long hotelId);
 
-    void sendNotificationWallpostOnDemand(CustomerDTO customerEntity, Date lastSameHotelCheckin, HotelDTO hotelRootEntity, CustomerDTO staffSender);
+    void sendNotificationWallpostOnDemand(CustomerDTO customerEntity, LocalDate lastSameHotelCheckin, HotelDTO hotelRootEntity, CustomerDTO staffSender);
 }

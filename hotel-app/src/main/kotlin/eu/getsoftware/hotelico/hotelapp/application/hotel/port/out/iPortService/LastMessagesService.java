@@ -8,7 +8,7 @@ import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.
 import org.springframework.transaction.annotation.Transactional;
 
 import java.awt.geom.Point2D.Double;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -41,7 +41,7 @@ public interface LastMessagesService
 	 * @return NULL if OFFLINE!
 	 */
 	@Transactional
-	Optional<Date> getLastCustomerOnlineTime(CustomerDomainEntityId customerId) throws Throwable;
+	Optional<LocalDate> getLastCustomerOnlineTime(CustomerDomainEntityId customerId) throws Throwable;
 
 	/**
 	 * get still online customerList. DB QUERY!!!

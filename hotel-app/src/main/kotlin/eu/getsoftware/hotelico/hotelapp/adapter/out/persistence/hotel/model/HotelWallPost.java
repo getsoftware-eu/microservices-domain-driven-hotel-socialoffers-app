@@ -12,7 +12,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Created by Eugen on 16.07.2015.
@@ -53,7 +53,7 @@ public class HotelWallPost implements IHotelWallPost, Serializable
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "validUntil", nullable = true, length = 10)
-	private Date validUntil;
+	private LocalDate validUntil;
 	
 	@ManyToOne
 	@JoinColumn(name="senderDomainId")
@@ -65,7 +65,7 @@ public class HotelWallPost implements IHotelWallPost, Serializable
 
 	public HotelWallPost()
 	{
-		this.timestamp = new Timestamp(new Date().getTime());
+		this.timestamp = new Timestamp(System.currentTimeMillis());
 
 	}
 

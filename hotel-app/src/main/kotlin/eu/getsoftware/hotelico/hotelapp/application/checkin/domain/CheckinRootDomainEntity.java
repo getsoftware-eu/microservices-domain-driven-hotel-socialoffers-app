@@ -6,7 +6,7 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEnt
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import lombok.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Map;
 
 @Builder
@@ -25,10 +25,10 @@ public class CheckinRootDomainEntity implements IRootDomainEntity {
     protected CheckinDomainEntityId domainEntityId;
 
     @Setter
-    private Date validFrom;
+    private LocalDate validFrom;
     
     @Setter
-    private Date validTo;
+    private LocalDate validTo;
     
     @Setter
     boolean staffCheckin;      
