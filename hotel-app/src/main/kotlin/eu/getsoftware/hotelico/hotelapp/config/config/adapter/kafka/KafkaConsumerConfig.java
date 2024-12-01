@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.main.config.kafka;
+package eu.getsoftware.hotelico.hotelapp.config.config.adapter.kafka;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.protocol.Message;

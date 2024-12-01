@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.main.config;
+package eu.getsoftware.hotelico.hotelapp.config.config;
 
 import io.micrometer.core.aop.TimedAspect;
 import io.micrometer.core.instrument.MeterRegistry;

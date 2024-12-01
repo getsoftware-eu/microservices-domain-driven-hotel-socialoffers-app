@@ -1,11 +1,12 @@
+#LoadBalancer Service: eu: BUT in cloud use MANAGED-LoadBalancer! Don't create such LoadBalancer for production!!!
 apiVersion: v1
 kind: Service
 metadata:
-  name: hotel-app-service
+  name: hotel-app-service #eu:service
 spec:
   selector:
     app: hotel-app
   ports:
-    - port: 80
-      targetPort: 8080
-  type: LoadBalancer #Eugen: LoadBalancer for our POD
+    - port: 80 #eu: external port
+      targetPort: 8080 #eu: internal port?
+  type: LoadBalancer #Eugen: LoadBalancer for our POD. not for production 

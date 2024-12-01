@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.securi
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortServiceImpl.FileStore;
-import eu.getsoftware.hotelico.hotelapp.main.config.BucketName;
+import eu.getsoftware.hotelico.hotelapp.config.config.BucketName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

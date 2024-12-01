@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.main.config.adapter;
+package eu.getsoftware.hotelico.hotelapp.config.config.adapter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

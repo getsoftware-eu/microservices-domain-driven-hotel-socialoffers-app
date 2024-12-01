@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.main.config.infrastructure;
+package eu.getsoftware.hotelico.hotelapp.config.config.infrastructure;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Configuration;

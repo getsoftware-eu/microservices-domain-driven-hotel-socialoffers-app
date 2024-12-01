@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.main.config.infrastructure.resolver
+package eu.getsoftware.hotelico.hotelapp.config.config.infrastructure.resolver
 
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties.FILTER_PATH_MULTITENANT
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties.PARAM_DEFAULT_REALM

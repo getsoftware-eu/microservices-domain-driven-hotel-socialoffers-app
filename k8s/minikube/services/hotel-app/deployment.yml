@@ -5,22 +5,22 @@ metadata:
   labels:
     app: hotel-app
 spec:
-  replicas: 1 #achtung
+  replicas: 1 #achtung, how much instances for "LoadBalancer"
   template:
     metadata:
       name: hotel-app
       labels:
-        app: hotel-app
+        app: hotel-app #app name
     spec:
       containers:
         - name: hotel-app
-          image: getsoftware-eu/hotel-app:latest
+          image: getsoftware-eu/hotelico/hotel-app:latest
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8080
+            - containerPort: 8080 #eu: internal port of a pod???
           env:
             - name: SPRING_PROFILES_ACTIVE
-              value: kube #//application-kube.properties will be seleced
+              value: kube #//application-KUBE.properties will be seleced
       restartPolicy: Always
   selector:
     matchLabels:

@@ -1,33 +1,34 @@
+# eu: instantiate the instance from image or gitHub Repository!! 
 apiVersion: apps/v1
-kind: StatefulSet # not ephirical clones, but stable singleton instance
+kind: StatefulSet # not 'Deployment' epherecal clones, but 1-stable singleton instance
 metadata:
   name: postgres
   labels:
     app: postgres
 spec:
-  serviceName: postgresService
-  replicas: 1 #1 instance
+  serviceName: postgresService # eu: reference the named service, that defined in other file!!
+  replicas: 1 #1 instance, only one!
   template:
     metadata:
       name: postgres
       labels:
-        app: postgres
+        app: postgres # name of my app
     spec:
       volumes:
         - name: postgres
           persistentVolumeClaim:
-            claimName: postgres-pc-volume-claim
+            claimName: postgres-pc-volume-claim #I-reference named from volume.yml file
       containers: #mount a volume
         - name: postgres
           image: postgres
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: IfNotPresent # pull image to this new container
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgres
           envFrom:
             - configMapRef:
-                name: postgres-config #name configmap.yml
-          resources:
+                name: postgres-config #eu: my named in other file configmap.yml
+          resources: # eu: limit resources verbrauch
             requests:
               cpu: 100m
               memory: 256Mi

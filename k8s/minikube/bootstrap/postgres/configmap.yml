@@ -1,3 +1,4 @@
+# "kcm" - snapshot-command (config-map): configuration of worker-node?
 apiVersion: v1
 kind: ConfigMap
 metadata:

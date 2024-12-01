@@ -1,21 +1,22 @@
+# store data in minicube : "kser" shortcud (ressource)
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: postgres-pc-volume
   labels:
     type: local
-    app: postgres
+    app: postgres # app-name
 spec:
   storageClassName: manual
   capacity:
     storage: 5Gi
   accessModes:
-    - ReadWriteMany
+    - ReadWriteMany # clents can read and write
   hostPath:
-    path: /mnt/data
+    path: /mnt/data #inside minicube
 ---
 apiVersion: v1
-kind: PersistentVolumeClaim #reference extern volume inside of pod. Claim = требовать
+kind: PersistentVolumeClaim # I-reference extern volume inside of pod. Claim = требовать
 metadata:
   name: postgres-pc-volume-claim
   labels:

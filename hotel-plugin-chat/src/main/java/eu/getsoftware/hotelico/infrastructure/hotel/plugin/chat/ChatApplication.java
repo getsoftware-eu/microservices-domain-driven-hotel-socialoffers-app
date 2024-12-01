@@ -5,13 +5,15 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 
 @SpringBootApplication//(scanBasePackages = {"eu.getsoftware.hotelico"})
 //@EnableEurekaClient
 //@EnableFeignClients(basePackages = "eu.getsoftware.hotelico.clients")
-//PropertySources( //in case of K8s
-//  @PropertySource("classpath:clients-${spring.profiles.active}.properties") //use client-default.properties or client-k8s.properties für feign client properties!
-//})
+@PropertySources( //in case of K8s: from shared-client-lib module
+		@PropertySource("classpath:client-${spring.profiles.active}.properties") //use client-default.properties or client-k8s.properties für feign client properties!
+)
 @EnableCaching
 public class ChatApplication
 {

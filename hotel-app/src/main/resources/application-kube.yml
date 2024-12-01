@@ -1,0 +1,153 @@
+spring:
+  #  config.activate.on-profile: development
+  datasource:
+    # HikariCP
+    #    type: com.zaxxer.hikari.HikariDataSource
+    #    driver-class-name: com.mysql.jdbc.Driver
+    #    hikari.idle-timeout: 10000
+    url: jdbc:postgresql://localhost:5432/hotel
+    password: postgres_password #from k8s postgres config
+    username: eu_user
+  jpa:
+    hibernate:
+      ddl-auto: create-drop #eugen, not for production: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+    show-sql: true
+    #    generate-ddl: true
+    #  naming.implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+  #  zipkin:
+  #    base-url: http://localhost:9411
+  #  rabbitmq:
+  #    addresses: localhost:5672
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    enabled: true
+  http: #http: boot1 | #servlet: boot2
+    multipart:
+      location: ${java.io.tmpdir}
+      max-file-size: 512MB # Max file size.
+      max-request-size: 512MB # Max request size.
+  messages.basename: i18n/messages # Configure MessageSource to lookup any validation/error message in internationalized property files
+  kafka:
+    bootstrap-servers: localhost:19092
+  social:
+    facebook:
+      appId: 383626641847356
+      appSecret: f492cdd7e0d9aee36ce8446c5caa440d
+    linkedIn:
+      clientId: 77rxbh8n0ta2fc
+      clientSecret: aW3L9r9racGYIV5I
+  cache:
+    cache-names: userCache, propertyCache
+    caffeine:
+      spec: maximumSize=500, expireAfterAccess=300s
+  mail:
+    host: smtp.gmail.com #smtp.strato.de
+    port: 587
+    username: eugen.wi83@gmail.com #sergej.neustadt@hotelico.de
+    password: FaRsHuLeGe
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+  main: #eugen kastil, delete it
+    allow-bean-definition-overriding: true
+  application:
+    name: hotel-client
+#entitymanager:
+#  packagesToScan: de.betterbits.smsbridge.model      
+security:
+  basic.enabled: false #eugen: not in spring boot 2.x      
+#liquibase.change-log: classpath:/db/changelog/db.changelog-master.xml #boot2: liquibase.change-log: classpath:/db/changelog/db.changelog-master.xml
+server:
+  port: 5000
+  error:
+    whitelabel.enabled: false
+
+
+
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+---
+
+spring:
+  config.activate.on-profile: development
+  datasource:
+    url: jdbc:postgresql://localhost:5434/hotel
+    username: eu_user
+    password: postgres
+  jpa:
+    show-sql: true
+  thymeleaf:
+    cache: false
+
+logging:
+  level.org.springframework.security: INFO
+  level.org.springframework.boot.actuate.audit.listener.AuditListener: DEBUG
+
+keycloak:
+  enabled: false
+  #config.file: classpath:static/backend-keycloak.json
+  realm: EugenRealm
+  auth_server_url: http://keycloakintern.getSoftware.eu:8080/auth
+  #credentials.secret: 5251920c-edb0-4d51-8ddb-48cb9a0136b4
+
+server:
+  port: 8088
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: testing
+  datasource:
+    url: jdbc:postgresql://localhost:5434/customer
+    username: postgres
+    password: postgres
+keycloak:
+  enabled: false
+  #config.file: classpath:static/backend-keycloak.json
+  realm: Betterbits
+  auth_server_url: http://keycloakintern.getSoftware.eu:8080/auth
+  #credentials.secret: 5251920c-edb0-4d51-8ddb-48cb9a0136b4
+
+server:
+  port: 8084
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: production
+  datasource:
+    url: #EXTERNALIZED
+    username: hotelico
+    password: frankfurt_2015
+
+keycloak:
+  enabled: false
+  #config.file: classpath:static/backend-keycloak.json
+  realm: Betterbits
+  auth_server_url:
+  #credentials.secret: 5251920c-edb0-4d51-8ddb-48cb9a0136b4
+
+server:
+  port: 8080
+
+
+#jdbc.driverClassName = com.mysql.jdbc.Driver
+#jdbc.url = jdbc:mysql://localhost:3306/hotel
+#jdbc.username = root
+#hibernate.dialect = org.hibernate.dialect.MySQLDialect
+#hibernate.show_sql = false
+#hibernate.format_sql = false
+

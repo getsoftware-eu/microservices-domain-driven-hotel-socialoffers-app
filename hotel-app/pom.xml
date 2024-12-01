@@ -590,7 +590,7 @@
                         <!-- Or "spring" for the Spring support -->
                         <!--<plugin>all-open</plugin>-->
                         <plugin>spring</plugin>
-<!--                        <mainClass>eu.getsoftware.hotelico.hotelapp.main.MainApplication</mainClass>-->
+<!--                        <mainClass>eu.getsoftware.hotelico.hotelapp.config.MainApplication</mainClass>-->
 
                     </compilerPlugins>
         

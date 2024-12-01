@@ -1,3 +1,4 @@
+# kser shortcat: a (stable ip) service to my ephemeral ipode or stableSet! 
 apiVersion: v1
 kind: Service # loadbalancer is a service
 metadata:
@@ -6,6 +7,6 @@ spec:
   selector:
     app: postgres
   ports:
-    - port: 5432
+    - port: 5432 # stable ip with this port dont change
       targetPort: 5432
   type: ClusterIP #uccessible only within cluster
