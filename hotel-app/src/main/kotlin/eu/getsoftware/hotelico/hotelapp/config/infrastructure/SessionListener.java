@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.config.config.infrastructure;
+package eu.getsoftware.hotelico.hotelapp.config.infrastructure;
 
 /**
  * Created by Eugen on 14.07.2015.

@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.config.config;
+package eu.getsoftware.hotelico.hotelapp.config.adapter.s3;
 
 public enum BucketName
 {

@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.config.config.infrastructure;
+package eu.getsoftware.hotelico.hotelapp.config.infrastructure;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

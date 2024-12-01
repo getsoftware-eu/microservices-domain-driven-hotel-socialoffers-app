@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.config.config.adapter;
+package eu.getsoftware.hotelico.hotelapp.config.adapter.s3;
 
 
 import org.springframework.context.annotation.Configuration;

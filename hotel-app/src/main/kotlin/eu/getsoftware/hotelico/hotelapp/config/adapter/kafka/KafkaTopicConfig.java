@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.config.config.adapter.kafka;
+package eu.getsoftware.hotelico.hotelapp.config.adapter.kafka;
 
 import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.context.annotation.Bean;

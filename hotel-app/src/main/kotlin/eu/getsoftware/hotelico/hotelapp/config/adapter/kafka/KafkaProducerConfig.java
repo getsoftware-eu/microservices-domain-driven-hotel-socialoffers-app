@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.config.config.adapter.kafka;
+package eu.getsoftware.hotelico.hotelapp.config.adapter.kafka;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.protocol.Message;

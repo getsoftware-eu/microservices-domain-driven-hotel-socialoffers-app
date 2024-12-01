@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.config.config;
+package eu.getsoftware.hotelico.hotelapp.config.adapter;
 
 
 import org.springframework.context.annotation.Bean;
