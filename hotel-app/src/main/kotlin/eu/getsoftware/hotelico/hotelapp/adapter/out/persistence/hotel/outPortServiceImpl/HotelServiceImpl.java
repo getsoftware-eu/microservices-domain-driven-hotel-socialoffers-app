@@ -27,7 +27,6 @@ import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.d
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelAggregateBuilder;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelRootDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.INotificationService;
@@ -86,7 +85,7 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
         HotelDBEntity dbProjection = hotelRepository.findByDomainEntityIdAndActive(hotelEntityId, true)
                 .orElseThrow(() -> new RuntimeException("no hotel"));
 
-        return HotelAggregateBuilder.getEntityBuilder( dbProjection.getDomainEntityId() )
+        return HotelRootDomainEntity.builder().domainEntityId(dbProjection.getDomainEntityId())
                 .description(dbProjection.getDescription())
                 .name(dbProjection.getName())
                 .build();

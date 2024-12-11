@@ -4,7 +4,6 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEnt
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.model.HotelDbActivity;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelRootDomainEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -29,7 +28,7 @@ import static org.hibernate.internal.util.collections.CollectionHelper.listOf;
 @Getter @Setter
 @Table(name = "hotel", schema = "hotel")
 //@RequiredArgsConstructor - eu: NEVER FOR ENTITY
-public class HotelDBEntity extends HotelRootDomainEntity implements Serializable
+public class HotelDBEntity /*extends HotelRootDomainEntity*/ implements Serializable
 {
     private static final long serialVersionUID = -4429239383913774205L;
 	
@@ -42,15 +41,14 @@ public class HotelDBEntity extends HotelRootDomainEntity implements Serializable
 //    @Embedded
 //    @Convert(converter = HotelDomainEntityIdConverter.class)
     @Embedded @Column(name = "domain_entity_id", length = 50)
-    public HotelDomainEntityId getDomainEntityId() {return domainEntityId;};
+    public HotelDomainEntityId domainEntityId;
 
-  
 //    @Convert(converter = DomainEntityIdConverter.class)
     @Embedded @Column(name = "address", length = 50)
-    public AddressDBEmbeddable getAddress() { return address; };
+    public AddressDBEmbeddable address;
 
     @Column(name = "name", nullable = false)
-    public String getName(){ return name; };
+    public String name;
     
     @Version
     private Long version;
@@ -187,13 +185,11 @@ public class HotelDBEntity extends HotelRootDomainEntity implements Serializable
         return hotel_id;
     }
     
-    @Override
     public String getPlainFilePath(final int upperOrderId)
     {
         return "hotel/" + getId() + "";
     }
 
-    @Override
     public void setMediaUploaded(boolean mediaUploaded)
     {
         this.mediaUploaded = mediaUploaded;

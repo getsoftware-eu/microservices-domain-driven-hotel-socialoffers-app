@@ -18,7 +18,6 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository
 import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.CustomerDeal;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerAggregate;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.*;
@@ -80,7 +79,9 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 //        
 //        return CustomerAggregate.buildDomain(domain);
 
-        return CustomerAggregate.getEntityBuilder(dbProjection.getDomainEntityId())
+        return //CustomerAggregate.getEntityBuilder()
+                CustomerRootDomainEntity.builder()
+                .domainEntityId(dbProjection.getDomainEntityId())
                 .firstName(dbProjection.getFirstName()) 
                 .build();
     }

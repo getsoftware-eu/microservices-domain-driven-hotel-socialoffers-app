@@ -56,21 +56,21 @@ public class MenuController extends BasicController
 	
   
 //  @NotifyClients
-  @RequestMapping(value = "/order/customer/{customerId}/hotelId/{hotelId}/cafeId/{cafeId}/orderId/{orderId}/showClosed/{showClosed}", method = HttpMethod.DELETE)
+  @RequestMapping(value = "/order/customer/{customerId}/hotelId/{hotelId}/cafeId/{cafeId}/orderId/{orderId}/showClosed/{showClosed}", method = RequestMethod.DELETE)
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public @ResponseBody MenuOrderDTO deleteMenu(@PathVariable long customerId, @PathVariable long hotelId, @PathVariable long cafeId, @PathVariable long orderId, @PathVariable boolean showClosed) {
     
      return menuService.deleteMenuOrder(customerId, orderId);
   }  
 	
-	@RequestMapping(value = "/item/customer/{customerId}/hotelId/{hotelId}/cafeId/{cafeId}/menuItemId/{menuItemId}", method = HttpMethod.DELETE)
+	@RequestMapping(value = "/item/customer/{customerId}/hotelId/{hotelId}/cafeId/{cafeId}/menuItemId/{menuItemId}", method = RequestMethod.DELETE)
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public @ResponseBody MenuItemDTO deleteMenuItem(@PathVariable long customerId, @PathVariable long hotelId, @PathVariable long cafeId, @PathVariable int menuItemId) {
     
     return  menuService.deleteMenuItem(customerId, menuItemId);
   }
 
-  @RequestMapping(value = "/order/customer/{customerId}/hotelId/{hotelId}/cafeId/{cafeId}/orderId/{orderId}/showClosed/{showClosed}", method = HttpMethod.POST)//, headers ="Accept:*/*")
+  @RequestMapping(value = "/order/customer/{customerId}/hotelId/{hotelId}/cafeId/{cafeId}/orderId/{orderId}/showClosed/{showClosed}", method = RequestMethod.POST)//, headers ="Accept:*/*")
   public @ResponseBody MenuOrderDTO addUpdateMenu(@PathVariable long customerId, @PathVariable long hotelId, @PathVariable long cafeId, @PathVariable long orderId, @PathVariable boolean showClosed, @RequestBody MenuOrderDTO menuOrderDto) {
 
 //    activityDto.setInitId(activityId);
@@ -78,7 +78,7 @@ public class MenuController extends BasicController
     return out;
   }  
 	
-  @RequestMapping(value = "/item/customer/{customerId}/hotelId/{hotelId}/cafeId/{cafeId}/menuItemId/{itemId}", method = HttpMethod.POST)//, headers ="Accept:*/*")
+  @RequestMapping(value = "/item/customer/{customerId}/hotelId/{hotelId}/cafeId/{cafeId}/menuItemId/{itemId}", method = RequestMethod.POST)//, headers ="Accept:*/*")
   public @ResponseBody
   MenuItemDTO addUpdateMenuItem(@PathVariable long customerId, @PathVariable long hotelId, @PathVariable long cafeId, @PathVariable int itemId, @RequestBody MenuItemDTO menuItemDto) {
 
@@ -90,7 +90,7 @@ public class MenuController extends BasicController
 
 //  @NotifyClients
 //  @SendTo("/activitytopic/message")
-//  @RequestMapping(value = "/customer/activity", method = HttpMethod.PUT, headers ="Accept:*/*")
+//  @RequestMapping(value = "/customer/activity", method = RequestMethod.PUT, headers ="Accept:*/*")
 //  public @ResponseBody HotelActivityDto addActivity(@RequestBody HotelActivityDto activityDto) {
 ////    activityDto.setInitId(activityId);
 //    HotelActivityDto out = hotelService.addUpdateHotelActivity(activityDto.getSenderId(), activityDto);

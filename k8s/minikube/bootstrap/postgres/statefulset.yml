@@ -1,5 +1,5 @@
 # eu: instantiate the instance from image or gitHub Repository!! 
-apiVersion: apps/v1
+apiVersion: apps/v1 #eu: other apiVersion!!!!! not v1
 kind: StatefulSet # not 'Deployment' epherecal clones, but 1-stable singleton instance
 metadata:
   name: postgres

@@ -4,7 +4,6 @@ import eu.getsoftware.hotelico.clients.common.domain.mapper.EntityGenericMapper;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuOrderMappedEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.domain.model.MenuOrderRootDomainEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 /**
@@ -19,8 +18,8 @@ public interface MenuEntityMapper extends EntityGenericMapper<MenuOrderRootDomai
     
     // Специальный метод с @Named для частичного маппинга
     @Named("mapWithoutData")
-    @Mapping(target = "email", ignore = true)
-    @Mapping(target = "password", ignore = true)
+//    @Mapping(target = "email", ignore = true)
+//    @Mapping(target = "password", ignore = true)
     MenuOrderRootDomainEntity mapWithoutData(MenuOrderMappedEntity entity);
 
 //    @Mapping(source = "addressJson", target = "address", qualifiedByName = "dbToAddress")

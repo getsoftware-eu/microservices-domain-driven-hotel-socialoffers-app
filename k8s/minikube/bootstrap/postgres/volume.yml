@@ -14,7 +14,7 @@ spec:
     - ReadWriteMany # clents can read and write
   hostPath:
     path: /mnt/data #inside minicube
----
+--- #--- is next yaml document
 apiVersion: v1
 kind: PersistentVolumeClaim # I-reference extern volume inside of pod. Claim = требовать
 metadata:

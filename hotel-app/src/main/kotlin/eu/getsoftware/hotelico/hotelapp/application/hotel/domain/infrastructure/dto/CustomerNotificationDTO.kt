@@ -69,9 +69,9 @@ data class CustomerNotificationDTO (var id: Long = 0)
 
         this.customerEvent["senderDomainId"] = customerId.toString() 
         this.customerEvent["hotelId"] = hotelId.toString() 
-        this.customerEvent["event"] = event.value
+//        this.customerEvent["event"] = event.value
         this.customerEvent["message"] = message
-        this.customerEvent["entity"] = event.entityString
+//        this.customerEvent["entity"] = event.entityString
         this.customerEvent["entityId"] = entityId.toString() 
     }
 

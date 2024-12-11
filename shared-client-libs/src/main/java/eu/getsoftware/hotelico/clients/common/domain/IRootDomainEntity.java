@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.clients.common.domain;
 
 import java.util.Map;
 
-public interface IRootDomainEntity {
+public interface IRootDomainEntity<ID extends EntityIdentifier> {
 
     /**
      * One setter of internal state!
@@ -11,5 +11,5 @@ public interface IRootDomainEntity {
      */
     void setInitValues(Map<String, String> fieldToValues);
 
-    <I extends EntityIdentifier> I getDomainEntityId();
+    ID getDomainEntityId();
 }

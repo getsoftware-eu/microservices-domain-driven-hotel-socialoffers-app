@@ -34,9 +34,9 @@ public class CustomerAggregate
 	 * Entry Point to all Entity setters!!!
 	 * @return
 	 */
-	public static CustomerRootDomainEntity.CustomerRootDomainEntityBuilder getEntityBuilder(CustomerDomainEntityId customerEntityId){
-		return CustomerRootDomainEntity.builder().domainEntityId(customerEntityId);
-	}
+//	public static CustomerRootDomainEntity.CustomerRootDomainEntityBuilder getEntityBuilder(CustomerDomainEntityId customerEntityId){
+//		return CustomerRootDomainEntity.builder().domainEntityId(customerEntityId);
+//	}
 
 	
 //	public static CustomerAggregate buildDomain(CustomerBuilder.CustomerBuilderBuilder domain) {

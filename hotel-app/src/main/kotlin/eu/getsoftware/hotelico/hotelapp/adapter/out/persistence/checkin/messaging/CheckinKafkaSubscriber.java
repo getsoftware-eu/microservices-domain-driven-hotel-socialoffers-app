@@ -34,7 +34,7 @@ public class CheckinKafkaSubscriber {
         {
             log.info("Processing event {}", message.getMessageType());
             
-            CheckinDTO checkinDTO = toCheckinDTO(payload).build();
+            CheckinDTO checkinDTO = toCheckinDTO(payload);//.build();
             
             if(checkinRepository.existsByDomainEntityId(checkinDTO.getInitId()))
                 throw new RuntimeException("not found");
@@ -52,7 +52,7 @@ public class CheckinKafkaSubscriber {
 
         {
             log.info("Processing event {}", message.getMessageType());
-            CheckinDTO checkinDTO = toCheckinDTO(payload).build();
+            CheckinDTO checkinDTO = toCheckinDTO(payload);//.build();
 //            checkinRepository.partialUpdateCheckin(checkinDTO);
 
              CheckinDBEntity entity = checkinRepository.findByDomainEntityId(checkinDTO.getInitId()).orElseThrow(()-> new RuntimeException("not found"));
@@ -80,16 +80,18 @@ public class CheckinKafkaSubscriber {
 
     /**
      * Re-create an entity from received Event-Payload
+     *
      * @param payload
      * @return
      */
-    private CheckinDTO.CheckinDTOBuilder toCheckinDTO(CheckinUpdatedEventPayload payload) {
+    private CheckinDTO toCheckinDTO(CheckinUpdatedEventPayload payload) {
         return CheckinDTO.builder()
                 .initId(payload.getEntityId())
                 .checkinFrom(payload.getCheckinFrom())
                 .checkinTo(payload.getCheckinTo())
                 .hotelId(payload.getHotelId())
-                .customerId(payload.getCustomerId());
+                .customerId(payload.getCustomerId())
+                .build();
     }
     
 }

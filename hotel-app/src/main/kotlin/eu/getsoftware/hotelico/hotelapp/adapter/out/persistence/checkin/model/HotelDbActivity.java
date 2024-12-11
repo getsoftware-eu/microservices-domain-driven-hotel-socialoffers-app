@@ -57,10 +57,10 @@ public class HotelDbActivity implements IHotelActivity, Serializable
 	
 //	@ManyToOne
 //	@JoinColumn(name="hotelId")
-	@Embedded @Column
+	@Embedded @Column  
 //	@Convert(converter = HotelDomainEntityIdConverter.class)
-	private HotelDomainEntityId hotelDomainId;
-
+	public HotelDomainEntityId hotelDomainId;
+	
 	@ManyToOne
 	@JoinColumn(name="senderDomainId")
 	private CustomerDBEntity sender;

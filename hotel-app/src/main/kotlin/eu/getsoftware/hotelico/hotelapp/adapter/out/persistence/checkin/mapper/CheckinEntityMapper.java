@@ -15,6 +15,8 @@ public interface CheckinEntityMapper extends EntityGenericMapper<CheckinRootDoma
     @Override
 //    @Mapping(target = "password", ignore = true)
     CheckinRootDomainEntity toDomain(CheckinDBEntity entity);
+
+    CheckinDBEntity toDb(CheckinRootDomainEntity entity);
     
     // Специальный метод с @Named для частичного маппинга
     @Named("mapWithoutData")

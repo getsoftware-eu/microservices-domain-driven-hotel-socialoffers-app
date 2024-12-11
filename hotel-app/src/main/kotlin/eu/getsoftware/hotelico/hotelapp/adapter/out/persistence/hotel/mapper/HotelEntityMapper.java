@@ -1,5 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.mapper;
 
+import eu.getsoftware.hotelico.clients.common.domain.EntityIdentifier;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.mapper.EntityGenericMapper;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelRootDomainEntity;
@@ -9,12 +11,16 @@ import org.mapstruct.Named;
 /**
  * unmappedTargetPolicy = ReportingPolicy.IGNORE - eu: не забудешь новый field
  */
-@Mapper//(uses = AddressValueObjectMapper.class)
+@Mapper(uses = AddressValueObjectMapper.class)
 public interface HotelEntityMapper extends EntityGenericMapper<HotelRootDomainEntity, HotelDBEntity> {
 
     @Override
 //    @Mapping(target = "password", ignore = true)
     HotelRootDomainEntity toDomain(HotelDBEntity entity);
+
+    @Override
+//    @Mapping(target = "sourceDomainEntityId", source = "domainEntityId")
+    HotelDBEntity toDb(HotelRootDomainEntity entity);
     
     // Специальный метод с @Named для частичного маппинга
     @Named("mapWithoutData")
@@ -34,6 +40,10 @@ public interface HotelEntityMapper extends EntityGenericMapper<HotelRootDomainEn
 //    static AddressValueObject dbToAddress(AddressDBEmbeddable json) {
 //        return json != null ? AddressValueObject.fromDb(json) : null;
 //    }
+
+    default <I extends EntityIdentifier> HotelDomainEntityId map( I value) {
+        return HotelDomainEntityId.from(value.toString());
+    }
 }
 
  

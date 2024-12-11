@@ -18,15 +18,12 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 //@RequiredArgsConstructor - NEVER for Entity
-public class HotelRootDomainEntity implements IRootDomainEntity /*MultitenantDocument, Scoreable*/ {
+public class HotelRootDomainEntity implements IRootDomainEntity<HotelDomainEntityId> /*MultitenantDocument, Scoreable*/ {
     
     public static final String TYPE_NAME = "hotel";
 
-//    @Id
-//    private String id; // UUID can not be used as document ID yet. https://jira.spring.io/browse/DATAES-163
-
-    @Getter
-    protected HotelDomainEntityId domainEntityId;
+    @NonNull  
+    public HotelDomainEntityId domainEntityId;
 
     @Getter
     protected AddressValueObject address;
@@ -133,6 +130,11 @@ public class HotelRootDomainEntity implements IRootDomainEntity /*MultitenantDoc
     @Override
     public void setInitValues(Map<String, String> fieldToValues) {
         
+    }
+
+    @Override
+    public HotelDomainEntityId getDomainEntityId() {
+        return domainEntityId;
     }
 
     public void addHotelGuest(CustomerDomainEntityId customerId) {

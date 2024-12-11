@@ -41,7 +41,7 @@ public class HotelAggregateBuilder
      * muss enter hotelEntityId as parameter
      * @return
      */
-    public static HotelRootDomainEntity.HotelRootDomainEntityBuilder getEntityBuilder(HotelDomainEntityId hotelEntityId){
-        return HotelRootDomainEntity.builder().domainEntityId(hotelEntityId);
-    }
+//    public static HotelRootDomainEntity.HotelRootDomainEntityBuilder getEntityBuilder(HotelDomainEntityId hotelEntityId){
+//        return HotelRootDomainEntity.builder().domainEntityId(hotelEntityId);
+//    }
 }

@@ -28,4 +28,8 @@ public record HotelDomainEntityId(
         return new HotelDomainEntityId(UUID.randomUUID().toString());
     }
 
+//    HotelDomainEntityId map(I value){
+//        
+//    }
+
 }

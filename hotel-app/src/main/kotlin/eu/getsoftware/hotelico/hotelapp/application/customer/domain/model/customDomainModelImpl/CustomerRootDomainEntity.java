@@ -14,9 +14,11 @@ import java.util.Map;
 @Setter
 @Getter
 @NoArgsConstructor
+//@RequiredArgsConstructor
 @AllArgsConstructor
 public class CustomerRootDomainEntity implements IRootDomainEntity {
 
+    @NonNull //Обязательные параметры должны быть отмечены аннотацией @NonNull, чтобы Lombok автоматически генерировал проверки и исключения, если значение не предоставлено.
     protected CustomerDomainEntityId domainEntityId;
 
     protected boolean hotelStaff;

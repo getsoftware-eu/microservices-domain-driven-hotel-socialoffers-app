@@ -27,14 +27,14 @@ public class CustomerDTO extends BasicDTO<CustomerDomainEntityId>
         
         //all fields are final!!!
 {
-    @NonNull
+    @NonNull @Setter
     private final String firstName = null;
 
     private final String lastName = "";
     
     private final CustomerDomainEntityId domainEntityId = new CustomerDomainEntityId("");
 
-    @NonNull
+    @NonNull @Setter
     private final String email = null;
 
     private final String company = null;
