@@ -24,6 +24,7 @@ import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
 import java.awt.geom.Point2D.Double;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -31,9 +32,6 @@ import java.util.Map.Entry;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.atomic.AtomicLong;
-
-import static eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties.convertToDate;
-import static eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties.convertToLocalDateTime;
 
 /**
  * <br/>
@@ -162,11 +160,11 @@ public class LastMessagesServiceImpl implements LastMessagesService
 		if(lastCustomerOnlineMap.keySet().contains(customerId))
 		{
 			updateCustomerRootEntity = false;
-			
-			Date lastDate = lastCustomerOnlineMap.get(customerId);
+
+			LocalDate lastDate = lastCustomerOnlineMap.get(customerId);
 			
 			//if it was online yesterday
-			if(convertToLocalDateTime(lastDate).getDayOfYear()!= LocalDateTime.now().getDayOfYear())
+			if(lastDate.getDayOfYear()!= LocalDateTime.now().getDayOfYear())
 			{
 				updateCustomerRootEntity = true;
 			}
@@ -438,7 +436,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
             throw new RuntimeException(e);
         }
 
-        return lastOnline.isPresent() && lastOnline.get().isAfter(convertToDate(LocalDate.now().minus(ONLINE_DELAY_MINUTES)));
+        return lastOnline.isPresent() && lastOnline.get().isAfter( (LocalDate.now().minus(Duration.ofMinutes(ONLINE_DELAY_MINUTES))));
 	}
 	
 	@Override

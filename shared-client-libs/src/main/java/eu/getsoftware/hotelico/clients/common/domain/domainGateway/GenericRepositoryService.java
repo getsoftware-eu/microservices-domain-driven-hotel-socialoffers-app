@@ -1,18 +1,17 @@
 package eu.getsoftware.hotelico.clients.common.domain.domainGateway;
 
 import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
 
 import java.util.Optional;
 
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 public class GenericRepositoryService<T, ID> {
 
     private final GenericRepositoryPort<T, ID> repositoryPort;
 
-//    public GenericService(GenericRepositoryPort<T, ID> repositoryPort) {
-//        this.repositoryPort = repositoryPort;
-//    }
+    public GenericRepositoryService(GenericRepositoryPort<T, ID> repositoryPort) {
+        this.repositoryPort = repositoryPort;
+    }
     
     public T findOrThrow(Long entityId) {
         return repositoryPort.findById(entityId)

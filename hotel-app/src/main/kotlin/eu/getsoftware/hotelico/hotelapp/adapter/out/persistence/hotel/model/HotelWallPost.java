@@ -1,7 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model;
 
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.WallPostDomainEntityId;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.WallPostDomainEntityIdConverter;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelWallPost;
@@ -29,8 +28,8 @@ public class HotelWallPost implements IHotelWallPost, Serializable
 	@GeneratedValue(strategy= GenerationType.IDENTITY)
 	private long id;
 
-//	@Embedded
-	@Convert(converter = WallPostDomainEntityIdConverter.class)
+	@Embedded @Column
+//	@Convert(converter = WallPostDomainEntityIdConverter.class)
 	private WallPostDomainEntityId domainEntityId;
 
 	@Column(name = "active", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_TRUE)

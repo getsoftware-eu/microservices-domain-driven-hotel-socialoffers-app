@@ -79,7 +79,7 @@ The key for a Kafka-message is the 'receiverId' (to improve Kafka-groupId partit
 ### Every bounded context stores its entities in its own DB schema (+ own persistence adapters)
 #### - Example @Table(schema = "userschema")
 
-![aggregate model](/docs/img/aggregate-root.jpg)
+[//]: # (![aggregate model]&#40;/docs/img/aggregate-root.jpg&#41;)
 
 
 

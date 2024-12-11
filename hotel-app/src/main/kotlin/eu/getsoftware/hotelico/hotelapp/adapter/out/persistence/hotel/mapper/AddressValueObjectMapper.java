@@ -1,5 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.mapper;
 
+import eu.getsoftware.hotelico.clients.common.domain.mapper.EntityGenericMapper;
+import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.AddressDBEmbeddable;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.AddressValueObject;
 import org.mapstruct.Mapper;
 

@@ -200,15 +200,15 @@ public class CustomerDTO extends BasicDTO<CustomerDomainEntityId>
     
     /**
      * functional methods, that creates a new instance with custom parameter
-     * @param error
+//     * @param error
      * @return
      */
-    public CustomerDTO withErrorResponse(String error)
-    {
-        CustomerDTO temp = CustomerDTO.builder().build(); //.errorResonse(error).build();
-        //temp.errorResponse = error;
-        return temp;
-    }
+//    public CustomerDTO withErrorResponse(String error)
+//    {
+//        CustomerDTO temp = new CustomerDTO(CustomerDTO.builder()); //.errorResonse(error).build();
+//        //temp.errorResponse = error;
+//        return temp;
+//    }
 
 //    public void setHotelId(long id) {
 //        
@@ -259,6 +259,7 @@ public class CustomerDTO extends BasicDTO<CustomerDomainEntityId>
     public String getPushRegistrationId() {
         return null;
     }
+
 
 //    /**
 //     * CustomerDTO dto = new CustomerBuilder(reuiredParams).setOptional1("user").setOptional2(true).build();

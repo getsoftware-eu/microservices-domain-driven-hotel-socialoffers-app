@@ -4,7 +4,6 @@ import eu.getsoftware.hotelico.clients.api.clients.dto.entity.HotelDTO;
 import eu.getsoftware.hotelico.clients.common.domain.mapper.DtoGenericMapper;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelRootDomainEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 /**
@@ -15,7 +14,7 @@ public interface HotelDtoMapper extends DtoGenericMapper<HotelRootDomainEntity, 
 {
 
 //    @Override
-    @Mapping(target = "creationTime", defaultValue = "LocalDateTime.now().toString()")
+//    @Mapping(target = "creationTime", defaultValue = "LocalDateTime.now().toString()")
     HotelDTO toDto(HotelRootDomainEntity domain);
 
 //    @Mapping(source = "schadenAussenwirkungId", target = "schadenAussenwirkung")

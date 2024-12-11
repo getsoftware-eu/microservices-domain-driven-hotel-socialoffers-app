@@ -5,7 +5,7 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEnt
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties
-import java.util.*
+import java.time.LocalDate
 
 data class HotelActivityDTO(var hotelId: HotelDomainEntityId): BasicDTO<ActivityDomainEntityId>()
 {
@@ -49,9 +49,9 @@ data class HotelActivityDTO(var hotelId: HotelDomainEntityId): BasicDTO<Activity
     
     var senderDomainId: CustomerDomainEntityId? = null
 
-    var validFrom: Date? = null
+    var validFrom: LocalDate? = null
 
-    var validTo: Date? = null
+    var validTo: LocalDate? = null
 
     var title = ""
 

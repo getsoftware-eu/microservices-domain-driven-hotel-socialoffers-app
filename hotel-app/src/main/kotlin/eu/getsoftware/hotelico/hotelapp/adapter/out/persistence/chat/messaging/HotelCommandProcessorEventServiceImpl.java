@@ -1,9 +1,9 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.chat.messaging;
 
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.CheckinDeletedEventPayload;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.CheckinUpdatedEventPayload;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessage;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessagePayload;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.innerEvents.CheckinDeletedEventPayload;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.gateways.HotelGatewayService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.HotelCommandProcessorEventService;
 import org.apache.kafka.clients.consumer.ConsumerRecord;

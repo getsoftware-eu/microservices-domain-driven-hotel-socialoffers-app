@@ -20,6 +20,6 @@ public class MenuDTO extends BasicDTO<MenuDomainEntityId>
 //	}
 	
 	public long getCreationTime() {
-		return (creationTime > 0)? creationTime : getId();
+		return (creationTime > 0)? creationTime : id;
 	}
 	}

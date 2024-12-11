@@ -1,4 +1,6 @@
-apiVersion: apps/v1
+# EU: в одном POD-контейнеры: имеет смысл поднимать дополнительно свой cache(reddis), или связанные-неразрывно-apps (monitoring, auth or anticorruption-app) that scales together.
+
+apiVersion: apps/v1 #eu: other apiVersion for 'Deployment'!!!!! not v1 (cubectl or UI only calls the API..)
 kind: Deployment
 metadata:
   name: hotel-app
@@ -12,12 +14,12 @@ spec:
       labels:
         app: hotel-app #app name
     spec:
-      containers:
+      containers: #eu: list, but here only one container from image!!
         - name: hotel-app
           image: getsoftware-eu/hotelico/hotel-app:latest
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8080 #eu: internal port of a pod???
+            - containerPort: 8080 #eu: others have to send to this port (only  for documentation)! But pod can listen not only this port. 
           env:
             - name: SPRING_PROFILES_ACTIVE
               value: kube #//application-KUBE.properties will be seleced

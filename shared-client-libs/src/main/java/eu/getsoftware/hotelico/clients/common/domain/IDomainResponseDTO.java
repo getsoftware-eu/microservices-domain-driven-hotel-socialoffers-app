@@ -7,6 +7,6 @@ package eu.getsoftware.hotelico.clients.common.domain;
  */
 public interface IDomainResponseDTO
 {
-    long entityId();
+    EntityIdentifier entityId();
 
 }

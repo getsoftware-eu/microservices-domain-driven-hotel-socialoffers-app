@@ -71,7 +71,7 @@ public class HotelDTO extends BasicDTO<HotelDomainEntityId>
 //	}
 	
 	public long getCreationTime() {
-		return (creationTime > 0)? creationTime : getId();
+		return (creationTime > 0)? creationTime : id;
 	}
 	
 	public String getPictureUrl() {

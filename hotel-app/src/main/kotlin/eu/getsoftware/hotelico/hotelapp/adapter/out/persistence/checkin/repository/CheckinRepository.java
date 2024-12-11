@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.repository;
 
+import eu.getsoftware.hotelico.clients.common.domain.EntityIdentifier;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.model.CheckinDBEntity;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface CheckinRepository extends JpaRepository<CheckinDBEntity, Long> {
@@ -193,4 +195,10 @@ public interface CheckinRepository extends JpaRepository<CheckinDBEntity, Long> 
 	Date getLastByCustomerAndHotelId(@Param("customerId") CustomerDomainEntityId customerId, @Param("hotelId") HotelDomainEntityId hotelId);
 
 	HotelDomainEntityId getCustomerHotelDomainId(CustomerDomainEntityId customerId, LocalDate date);
+
+	boolean existsByDomainEntityId(EntityIdentifier domainEntityId);
+
+	Optional<CheckinDBEntity> findByDomainEntityId(EntityIdentifier domainEntityId);
+
+	void deleteByDomainEntityId(EntityIdentifier domainEntityId);
 }

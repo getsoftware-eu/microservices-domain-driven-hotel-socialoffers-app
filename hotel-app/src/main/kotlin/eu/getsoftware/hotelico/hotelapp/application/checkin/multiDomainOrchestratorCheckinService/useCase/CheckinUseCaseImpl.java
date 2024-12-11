@@ -4,9 +4,9 @@ import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
 import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinRequestDTO;
 import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.dto.entity.HotelDTO;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.innerEvents.InnerDomainEventImpl;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.eventConsumeNotification.ChatMessageCommand;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.eventConsumeNotification.SocketNotificationCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.domain.BusinessException;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
@@ -38,6 +38,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -168,7 +169,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		//If checkin exists, 
 		if(!hotelEntity.isVirtual && checkinDateIsValid)
 		{
-			Date lastSameHotelCheckinDate = checkinService.getLastByCustomerAndHotelId(customerDomainEntity.getDomainEntityId(), hotelEntity.getDomainEntityId());
+			LocalDate lastSameHotelCheckinDate = checkinService.getLastByCustomerAndHotelId(customerDomainEntity.getDomainEntityId(), hotelEntity.getDomainEntityId());
 
 			var hotelDto = hotelService.getHotelById(hotelEntity.getDomainEntityId()); //checkinRequestDto.setHotelId(hotelRootEntity.getId()); //eu: NO setters for parameter!!!!
 

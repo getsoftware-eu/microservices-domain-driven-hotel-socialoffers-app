@@ -8,6 +8,7 @@ import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
@@ -103,7 +104,7 @@ public class CustomerDBEntity extends CustomerRootDomainEntity implements Serial
     private Date lastResetPasswordConfirmationTime;
     
     @Column(name = "lastSeenOnline")
-    private Date lastSeenOnline;
+    private LocalDate lastSeenOnline;
     
     @Column(name = "email", nullable = true)
     private String email;

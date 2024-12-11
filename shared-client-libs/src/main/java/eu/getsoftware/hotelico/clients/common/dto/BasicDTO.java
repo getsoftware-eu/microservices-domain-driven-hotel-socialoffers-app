@@ -16,14 +16,14 @@ import java.io.Serializable;
 @NoArgsConstructor
 public abstract class BasicDTO<D extends EntityIdentifier> implements Serializable
 {
-	Long id = 0L;
+	protected Long id = 0L;
 
-	D domainEntityId = null;
+	protected D domainEntityId = null;
 	
 	@NonNull
-	Long sequenceId = null;
+	protected Long sequenceId = null;
 	
-	Boolean active = true;
+	protected Boolean active = true;
 	
 	String dtoType = this.getClass().getSimpleName().toLowerCase();
 	

@@ -36,7 +36,7 @@ public class CheckinKafkaSubscriber {
             
             CheckinDTO checkinDTO = toCheckinDTO(payload).build();
             
-            if(checkinRepository.existsById(checkinDTO.getInitId()))
+            if(checkinRepository.existsByDomainEntityId(checkinDTO.getInitId()))
                 throw new RuntimeException("not found");
 
             CheckinDBEntity entity = modelMapper.map(checkinDTO, CheckinDBEntity.class);
@@ -55,7 +55,7 @@ public class CheckinKafkaSubscriber {
             CheckinDTO checkinDTO = toCheckinDTO(payload).build();
 //            checkinRepository.partialUpdateCheckin(checkinDTO);
 
-             CheckinDBEntity entity = checkinRepository.findById(checkinDTO.getInitId()).orElseThrow(()-> new RuntimeException("not found"));
+             CheckinDBEntity entity = checkinRepository.findByDomainEntityId(checkinDTO.getInitId()).orElseThrow(()-> new RuntimeException("not found"));
              
              applyDtoUpdates(entity, checkinDTO);
              
@@ -74,7 +74,7 @@ public class CheckinKafkaSubscriber {
 
         {
             log.info("Processing event {}", message.getMessageType());
-            checkinRepository.deleteById(payload.getEntityId());
+            checkinRepository.deleteByDomainEntityId(payload.getEntityId());
         }
     }
 

@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.portServiceImpl;
 
 import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.eventConsumeNotification.SocketNotificationCommand;
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
@@ -9,7 +9,6 @@ import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.model.Ch
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.Language;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.domainServiceImpl.CustomerPersistGatewayServiceImpl;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.InnerHotelEvent;
@@ -65,7 +64,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
     
     private final DealRepository dealRepository;
 	
-    private final CustomerPersistGatewayServiceImpl customerPersistGatewayService;
+//    private final CustomerPersistGatewayServiceImpl customerPersistGatewayService;
     
     private final IMessagingProducerService<InnerHotelEvent> messagingService;
 
@@ -201,7 +200,8 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 
 		CustomerDTO dto =  convertMyCustomerToFullDto(customerRepository.saveAndFlush(customerEntity));
 
-        messagingService.sendSocketNotificationCommand(new SocketNotificationCommand(customerDto.getSequenceId(), customerDto.getHotelId(), customerDto.getLastName(), "message" ), InnerHotelEvent.EVENT_REGISTER);
+        SocketNotificationCommand message = new SocketNotificationCommand(customerDto.getSequenceId(), customerDto.getHotelId(), customerDto.getLastName(), "message");
+        messagingService.sendSocketNotificationCommand(message, InnerHotelEvent.EVENT_REGISTER);
 
         //// NOTIFICATE OTHERS!!!!
 

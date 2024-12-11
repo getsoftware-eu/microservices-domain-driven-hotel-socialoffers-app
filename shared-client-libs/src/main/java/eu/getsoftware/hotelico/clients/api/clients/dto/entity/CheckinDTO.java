@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.clients.api.clients.dto.entity;
 
+import eu.getsoftware.hotelico.clients.common.domain.EntityIdentifier;
 import eu.getsoftware.hotelico.clients.common.domain.IDomainResponseDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CheckinDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
@@ -15,7 +16,7 @@ import java.util.Date;
 @Builder
 public class CheckinDTO implements IDomainResponseDTO {
 
-    long initId;
+    CheckinDomainEntityId initId;
     CheckinDomainEntityId entityId;
     CustomerDomainEntityId customerId;
     
@@ -32,7 +33,7 @@ public class CheckinDTO implements IDomainResponseDTO {
 //    }
 
     @Override
-    public long entityId() {
+    public EntityIdentifier entityId() {
         return entityId;
     }
 }

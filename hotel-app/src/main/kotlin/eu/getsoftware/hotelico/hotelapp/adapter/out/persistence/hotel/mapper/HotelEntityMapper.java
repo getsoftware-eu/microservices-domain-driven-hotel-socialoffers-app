@@ -4,7 +4,6 @@ import eu.getsoftware.hotelico.clients.common.domain.mapper.EntityGenericMapper;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.HotelDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelRootDomainEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 /**
@@ -19,8 +18,8 @@ public interface HotelEntityMapper extends EntityGenericMapper<HotelRootDomainEn
     
     // Специальный метод с @Named для частичного маппинга
     @Named("mapWithoutData")
-    @Mapping(target = "email", ignore = true)
-    @Mapping(target = "password", ignore = true)
+//    @Mapping(target = "email", ignore = true)
+//    @Mapping(target = "password", ignore = true)
     HotelRootDomainEntity mapWithoutData(HotelDBEntity entity);
 
 //    @Mapping(source = "addressJson", target = "address", qualifiedByName = "dbToAddress")

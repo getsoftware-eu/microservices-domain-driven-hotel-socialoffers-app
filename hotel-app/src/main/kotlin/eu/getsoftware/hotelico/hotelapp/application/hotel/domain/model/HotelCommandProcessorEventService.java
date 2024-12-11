@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model;
 
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.CheckinDeletedEventPayload;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.CheckinUpdatedEventPayload;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.innerEvents.CheckinDeletedEventPayload;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.gateways.HotelGatewayService;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelRootDomainEntity;

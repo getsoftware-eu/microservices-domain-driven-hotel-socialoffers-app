@@ -2,7 +2,6 @@ package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.model;
 
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityIdConverter;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
@@ -58,8 +57,8 @@ public class HotelDbActivity implements IHotelActivity, Serializable
 	
 //	@ManyToOne
 //	@JoinColumn(name="hotelId")
-//	@Embedded
-	@Convert(converter = HotelDomainEntityIdConverter.class)
+	@Embedded @Column
+//	@Convert(converter = HotelDomainEntityIdConverter.class)
 	private HotelDomainEntityId hotelDomainId;
 
 	@ManyToOne

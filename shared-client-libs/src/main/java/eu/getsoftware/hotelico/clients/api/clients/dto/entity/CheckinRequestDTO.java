@@ -5,7 +5,7 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEnt
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * eu: RequestDTO contains all validation on Parameters (DDD style)
@@ -24,8 +24,8 @@ import java.util.Date;
 public record CheckinRequestDTO(
         @NotNull CustomerDomainEntityId customerId,
         @NotNull HotelDomainEntityId hotelId,
-        Date checkinFrom,
-        Date checkinTo,
+        LocalDate checkinFrom,
+        LocalDate checkinTo,
         @NotNull long requesterId,
         String name
 ) implements IDomainRequestDTO
@@ -38,9 +38,9 @@ public record CheckinRequestDTO(
                 validateBusinessLogic(checkinFrom, checkinTo);
         }
 
-        public void validateBusinessLogic(Date checkinFrom, Date checkinTo) {
+        public void validateBusinessLogic(LocalDate checkinFrom, LocalDate checkinTo) {
                
-                if (checkinTo.after(getMaxDate(MAX_YEAR_OFFSET))) {
+                if (checkinTo.isAfter(getMaxDate(MAX_YEAR_OFFSET))) {
                         throw new IllegalArgumentException("checkin Date is only in next " + MAX_YEAR_OFFSET + " years");
                 }
                 // eu: Pre-Constructor : use here only constructor params!!, fields are not available (checkinFrom, checkinTo)
@@ -55,19 +55,23 @@ public record CheckinRequestDTO(
         }
         
         //only get param from constructor, no field access
-        public boolean checkinToIsInPast(Date checkinTo) {
-                return checkinTo.before(new Date());
+        public boolean checkinToIsInPast(LocalDate checkinTo) {
+                return checkinTo.isBefore( LocalDate.now() );
         }
 
         //only get param from constructor, no field access
-        public boolean checkinDatesAreValid(Date checkinFrom, Date checkinTo) {
-                return checkinFrom.before(checkinTo);
+        public boolean checkinDatesAreValid() {
+                return checkinDatesAreValid(checkinFrom, checkinTo);
+        }  
+        
+        public boolean checkinDatesAreValid(LocalDate checkinFrom, LocalDate checkinTo) {
+                return checkinFrom.isBefore(checkinTo);
         }
         
         @org.jetbrains.annotations.NotNull
-        private static Date getMaxDate(int max_year_offset) {
-                Date maxDate = new Date();
-                maxDate.setYear(new Date().getYear() + max_year_offset);
+        private static LocalDate getMaxDate(int max_year_offset) {
+                LocalDate maxDate = LocalDate.now();
+                maxDate.withYear(LocalDate.now().getYear() + max_year_offset);
                 return maxDate;
         }
 
