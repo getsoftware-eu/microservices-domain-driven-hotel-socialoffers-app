@@ -16,7 +16,7 @@ spec:
     spec:
       containers: #eu: list, but here only one container from image!!
         - name: hotel-app
-          image: getsoftware-eu/hotelico/hotel-app:latest
+          image: eugenfff/hotel-app:1.0.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080 #eu: others have to send to this port (only  for documentation)! But pod can listen not only this port. 
