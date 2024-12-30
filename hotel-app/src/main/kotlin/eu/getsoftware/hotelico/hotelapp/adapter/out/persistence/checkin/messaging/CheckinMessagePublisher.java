@@ -49,7 +49,7 @@ public class CheckinMessagePublisher {
         CustomerDomainEntityId customerEntityId = new CustomerDomainEntityId(String.valueOf(checkinDTO.getCustomerId()));
 
         CheckinUpdatedEventPayload eventPayload = CheckinUpdatedEventPayload.builder()
-                .messageId(checkinDTO.getInitId())
+                .entityId(checkinDTO.getInitId())
                 .status(QUEUED)
                 .build();
         
