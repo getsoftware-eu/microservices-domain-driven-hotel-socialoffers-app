@@ -1,0 +1,4 @@
+# part ob ci/cd build stage
+
+mvn clean package
+docker build -t hotel-app:1.0.0 .
