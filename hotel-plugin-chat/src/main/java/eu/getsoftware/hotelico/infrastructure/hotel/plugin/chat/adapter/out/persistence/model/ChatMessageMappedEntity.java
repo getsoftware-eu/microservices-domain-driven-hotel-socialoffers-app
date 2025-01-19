@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model;
 
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -17,16 +18,20 @@ import java.sql.Timestamp;
 public class ChatMessageMappedEntity implements Serializable
 {
   private static final long serialVersionUID = -5478152926665631989L;
-  
+
   @Id
   private long id;
-  
-  private final String message;
 
   private long initId;
+
+  @NotNull(message = "Sender ID is required")
+  private  CustomerDomainEntityId senderId;
   
-  private final CustomerDomainEntityId senderId;
-  private final CustomerDomainEntityId receiverId;
+  @NotNull(message = "receiverId is required")
+  private CustomerDomainEntityId receiverId;
+
+  @NotNull(message = "message is required")
+  private String message;
   
   private boolean seenByReceiver = false;
   

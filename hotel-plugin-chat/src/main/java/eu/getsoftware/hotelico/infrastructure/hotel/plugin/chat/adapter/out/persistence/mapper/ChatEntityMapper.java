@@ -4,7 +4,6 @@ import eu.getsoftware.hotelico.clients.common.domain.mapper.EntityGenericMapper;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.persistence.model.ChatMessageMappedEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.domain.model.ChatMsgDomainEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
 /**
@@ -19,8 +18,8 @@ public interface ChatEntityMapper extends EntityGenericMapper<ChatMsgDomainEntit
     
     // Специальный метод с @Named для частичного маппинга
     @Named("mapWithoutData")
-    @Mapping(target = "email", ignore = true)
-    @Mapping(target = "password", ignore = true)
+//    @Mapping(target = "email", ignore = true)
+//    @Mapping(target = "password", ignore = true)
     ChatMsgDomainEntity mapWithoutData(ChatMessageMappedEntity entity);
 
 //    @Mapping(source = "addressJson", target = "address", qualifiedByName = "dbToAddress")

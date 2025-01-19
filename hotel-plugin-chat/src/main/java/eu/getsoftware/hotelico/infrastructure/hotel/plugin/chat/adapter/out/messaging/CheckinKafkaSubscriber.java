@@ -26,7 +26,7 @@ public class CheckinKafkaSubscriber {
 
         {
             log.info("Processing event {}", message.getMessageType());
-            CheckinDTO checkin = toCheckin(payload).build();
+            CheckinDTO checkin = toCheckin(payload);
 //            checkinRepository.save(checkin);
         }
     }
@@ -38,7 +38,7 @@ public class CheckinKafkaSubscriber {
 
         {
             log.info("Processing event {}", message.getMessageType());
-            CheckinDTO checkin = toCheckin(payload).build();
+            CheckinDTO checkin = toCheckin(payload);
 //            checkinRepository.partialUpdateCheckin(checkin);
         }
     }
@@ -56,16 +56,18 @@ public class CheckinKafkaSubscriber {
 
     /**
      * Re-create an entity from received Event-Payload
+     *
      * @param payload
      * @return
      */
-    private CheckinDTO.CheckinDTOBuilder toCheckin(CheckinUpdatedEventPayload payload) {
+    private CheckinDTO toCheckin(CheckinUpdatedEventPayload payload) {
         return CheckinDTO.builder()
                 .initId(payload.getEntityId())
                 .checkinFrom(payload.getCheckinFrom())
                 .checkinTo(payload.getCheckinTo())
                 .hotelId(payload.getHotelId())
-                .customerId(payload.getCustomerId());
+                .customerId(payload.getCustomerId())
+                .build();
     }
     
 }
