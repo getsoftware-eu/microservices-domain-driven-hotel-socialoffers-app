@@ -176,19 +176,19 @@ public class MailServiceImpl implements MailService
 	}
 
 	@Override
-	public String getWellcomeMailBody(CustomerDTO customerEntity) {
+	public String getWelcomeMailBody(CustomerDTO customerEntity) {
 		return "";
 	}
 
 //	@Override
-	public String getWellcomeMailBody(CustomerDBEntity customerEntity)
+	public String getWelcomeMailBody(CustomerDBEntity customerEntity)
 	{
 		String mailContent = "";
 		String mailHotelicoContent = "";
 		String mailActivityContent = "";
 		
 		ClassLoader classLoader = getClass().getClassLoader();
-		File mailFile = new File(classLoader.getResource("wellcomeMail.htm").getFile());
+		File mailFile = new File(classLoader.getResource("welcomeMail.htm").getFile());
 		File hotelicoMailFile = new File(classLoader.getResource("hotelicoBlockInMail.htm").getFile());
 		File activityMailFile = new File(classLoader.getResource("activityInMail.htm").getFile());
 		
@@ -279,7 +279,7 @@ public class MailServiceImpl implements MailService
 				mailContent = mailContent.replace("#[hotel.name]", URLDecoder.decode(hotel.getName(), "UTF-8"));
 				mailContent = mailContent.replace("#[hotel.url]", "http://hotelico.de/" + AppConfigProperties.HOST_SUFFIX + "#/app/hotelPreview/" + hotel.getId());
 				mailContent = mailContent.replace("#[hotel.pictureUrl]", "http://hotelico.de/" + hotel.getPictureUrl());
-				mailContent = mailContent.replace("#[hotel.wellcomeMsg]", URLDecoder.decode(hotel.getWellcomeMessage(), "UTF-8"));
+				mailContent = mailContent.replace("#[hotel.welcomeMsg]", URLDecoder.decode(hotel.getWelcomeMessage(), "UTF-8"));
 			}
 			catch (UnsupportedEncodingException e)
 			{

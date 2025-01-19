@@ -486,7 +486,7 @@ public class NotificationUseCaseImpl implements NotificationUseCase<InnerHotelEv
 		
 		if(AppConfigProperties.isEmptyString(mailContent))
 		{
-			mailContent = mailService.getWellcomeMailBody(customerEntity);
+			mailContent = mailService.getWelcomeMailBody(customerEntity);
 		}
 		else
 		{

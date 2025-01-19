@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.infrastructure;
+package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.messaging.consumer;
 
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.HotelUpdateEventMessagePayload;

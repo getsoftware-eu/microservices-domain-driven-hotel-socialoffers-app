@@ -2,7 +2,7 @@
 //
 //import eu.getsoftware.hotelico.clients.api.amqp.application.domain.model.DomainMessage;
 //import eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.message.CheckinAggregatePayload;
-//import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.messaging.service.ChatCheckinProzessManager;
+//import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.messaging.service.ChatCheckinProcessManager;
 //import lombok.RequiredArgsConstructor;
 //import lombok.extern.slf4j.Slf4j;
 //import org.springframework.amqp.rabbit.annotation.RabbitHandler;
@@ -23,9 +23,9 @@
 //    private static final String TYPE = "checkin";
 //
 //    /**
-//     * extra "prozess manager" for checkin-events for Chat-Domain-Microservice
+//     * extra "process manager" for checkin-events for Chat-Domain-Microservice
 //     */
-//    ChatCheckinProzessManager chatCheckinProzessManager;
+//    ChatCheckinProcessManager chatCheckinProcessManager;
 //    
 ////    @DomainMessageHandler("checkin.checkin.created.event")
 //    @RabbitHandler //to consume multiple data type payloads from the same queue
@@ -34,7 +34,7 @@
 //
 //        {
 //            log.info("Processing event {}", message.getMessageType());
-//            chatCheckinProzessManager.createWellcomeChatMessage(payload.getCheckinCustomer(), payload.getHotelId());
+//            chatCheckinProcessManager.createWelcomeChatMessage(payload.getCheckinCustomer(), payload.getHotelId());
 //        }
 //    }
 //
@@ -57,7 +57,7 @@
 //
 //        {
 //            log.info("Processing event {}", message.getMessageType());
-//            chatCheckinProzessManager.createClosingChatMessage(payload.getCheckinCustomer(), payload.getHotelId());
+//            chatCheckinProcessManager.createClosingChatMessage(payload.getCheckinCustomer(), payload.getHotelId());
 //        }
 //    }
 //

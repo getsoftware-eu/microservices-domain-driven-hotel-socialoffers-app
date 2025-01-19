@@ -19,7 +19,7 @@ public class CheckinController {
     private final CheckinUseCase checkinUseCase;
 
     @PostMapping("/register")
-    public CheckinDTO registerUser(@Valid @RequestBody CheckinRequestDTO requestDTO) {
+    public CheckinDTO registerUser(@Valid @RequestBody CheckinRequestDTO requestDTO) throws Throwable {
         return checkinUseCase.createCustomerCheckin(requestDTO);
     }
 }

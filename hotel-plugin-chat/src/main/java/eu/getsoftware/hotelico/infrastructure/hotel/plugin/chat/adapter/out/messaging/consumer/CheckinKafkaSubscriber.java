@@ -1,8 +1,9 @@
-package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.messaging;
+package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.messaging.consumer;
 
 import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.CheckinUpdatedEventPayload;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessage;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.application.port.in.process.ChatCheckinProcessManagerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class CheckinKafkaSubscriber {
 
+    ChatCheckinProcessManagerService chatCheckinProcessManager;
+    
     @KafkaListener(topics = {"checkin.checkin.created.event", 
                              "checkin.checkin.updated.event"}, 
                    groupId = "eu_group_1")
@@ -26,8 +29,9 @@ public class CheckinKafkaSubscriber {
 
         {
             log.info("Processing event {}", message.getMessageType());
-            CheckinDTO checkin = toCheckin(payload);
-//            checkinRepository.save(checkin);
+            CheckinDTO checkinDTO = toCheckin(payload);
+//            checkinRepository.save(checkinDTO);
+            chatCheckinProcessManager.handleCheckinCreated(checkinDTO);
         }
     }
 
@@ -40,6 +44,8 @@ public class CheckinKafkaSubscriber {
             log.info("Processing event {}", message.getMessageType());
             CheckinDTO checkin = toCheckin(payload);
 //            checkinRepository.partialUpdateCheckin(checkin);
+            chatCheckinProcessManager.handleCheckinUpdated(checkin);
+
         }
     }
 
@@ -51,6 +57,8 @@ public class CheckinKafkaSubscriber {
         {
             log.info("Processing event {}", message.getMessageType());
 //            checkinRepository.deleteById(payload.getEntityId());
+            chatCheckinProcessManager.handleCheckinClosed(payload.getEntityId());
+
         }
     }
 

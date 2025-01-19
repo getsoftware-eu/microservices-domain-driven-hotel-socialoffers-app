@@ -27,16 +27,16 @@ public class ChatServiceImpl implements ChatService {
         if(lastMessageFromStaff.isEmpty())
         {
 
-            String wellcomeMsg = "Hi, welcome to our Hotel! Please write me, if you need something";
-            String wellcomeGuestMsg = "Hi, welcome to thr guest view of our Hotel! Please get the hotel-code at the reception - without the hotel-code, you are not listed as a hotel guest, and you can not view the customers in the wall... ";
+            String welcomeMsg = "Hi, welcome to our Hotel! Please write me, if you need something";
+            String welcomeGuestMsg = "Hi, welcome to thr guest view of our Hotel! Please get the hotel-code at the reception - without the hotel-code, you are not listed as a hotel guest, and you can not view the customers in the wall... ";
 
             if("de".equalsIgnoreCase(customerDTO.getPrefferedLanguage()))
             {
-                wellcomeMsg = "Hallo, herzlich willkommen im Hotel! Bitte schreiben Sie mir, wenn Sie etwas brauchen";
-                wellcomeGuestMsg = "Hallo, herzlich willkommen im Hotel Gast-Zugang! Bitte bekommen Sie den Zugang-Kode an der Rezeption. Ohne Hotel-Kode sind ihre Aktivitäten in Hotel beschränkt";
+                welcomeMsg = "Hallo, herzlich willkommen im Hotel! Bitte schreiben Sie mir, wenn Sie etwas brauchen";
+                welcomeGuestMsg = "Hallo, herzlich willkommen im Hotel Gast-Zugang! Bitte bekommen Sie den Zugang-Kode an der Rezeption. Ohne Hotel-Kode sind ihre Aktivitäten in Hotel beschränkt";
             }
 
-            String msg = (isFullCheckin ? wellcomeMsg : wellcomeGuestMsg);
+            String msg = (isFullCheckin ? welcomeMsg : welcomeGuestMsg);
 
             var sender = (staffSender);
             var receiver = (customerDTO);
