@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-stream-topdeal-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-stream-topdeal-app
+  template:
+    metadata:
+      labels:
+        app: kafka-stream-topdeal-app
+    spec:
+      containers:
+        - name: kafka-stream-topdeal-app
+          image: eugenfff/kafka-stream-topdeal-app:1.0.0
+          env:
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: "your-kafka-cluster:9093"
+          ports:
+            - containerPort: 8080
