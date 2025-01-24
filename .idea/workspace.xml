@@ -4,11 +4,65 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="refactoring">
+    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="refactoring kafka stream">
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/in/web/controller/customer/AbstractCustomerController.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/in/web/controller/ChatController.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/repository/ChatUserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/application/domain/model/ChatMsgDomainEntity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kafka-streams-app/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kafka-streams-app/kafka-streams-app.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kafka-streams-app/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kafka-streams-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/KafkaStreamTopDealApp.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kafka-streams-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/config/AggragateModelConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kafka-streams-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/config/KafkaStreamsConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kafka-streams-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/model/Deal.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kafka-streams-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/model/ViewTopDealAggregate.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/kafka-streams-app/src/main/resources/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/in/web/controller/customer/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/in/web/controller/customer/CustomerController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/resources/application-kube.yml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/resources/application-kube.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/resources/log4j2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/ChatApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/ChatApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/in/web/controller/ChatController.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/in/web/controller/ChatMSCommunicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/in/web/controller/ChatMSCommunicationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/messaging/consumer/CheckinKafkaSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/messaging/consumer/CheckinKafkaSubscriber.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/messaging/consumer/KafkaChatEventsConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/messaging/consumer/KafkaChatEventsConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/messaging/consumer/amqp/CheckinRabbitMQQueueSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/messaging/consumer/amqp/CheckinRabbitMQQueueSubscriber.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/messaging/consumer/amqp/RabbitChatEventsConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/messaging/consumer/amqp/RabbitChatEventsConsumer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/mapper/ChatEntityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/mapper/ChatEntityMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/model/ChatMessageMappedEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/model/ChatMessageMappedEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/model/ChatUserMappedEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/model/ChatUserMappedEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/outPortServiceImpl/ChatMSCommunicationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/outPortServiceImpl/ChatMSCommunicationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/outPortServiceImpl/ChatMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/outPortServiceImpl/ChatMessageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/outPortServiceImpl/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/outPortServiceImpl/ChatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/outPortServiceImpl/ChatServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/outPortServiceImpl/ChatServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/repository/ChatMessageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/repository/ChatMessageRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/repository/ChatUserRepository.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/application/domain/model/ChatMsgDomainEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/application/port/in/process/ChatCheckinProcessManagerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/application/port/in/process/ChatCheckinProcessManagerService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/application/port/out/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/application/port/out/ChatService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/application/port/out/IChatMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/application/port/out/IChatMessageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/config/kafka/KafkaConsumerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/config/kafka/KafkaConsumerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/config/kafka/KafkaProducerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/config/kafka/KafkaProducerConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/config/kafka/KafkaTopicConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/config/kafka/KafkaTopicConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/resources/log4j2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-menu/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/resources/log4j2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka-stream-topdeal-app/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka-stream-topdeal-app/kafka-stream-topdeal-app.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka-stream-topdeal-app/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka-stream-topdeal-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/KafkaStreamTopDealApp.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka-stream-topdeal-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/config/AggragateModelConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka-stream-topdeal-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/config/KafkaStreamsConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka-stream-topdeal-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/model/Deal.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka-stream-topdeal-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/model/ViewTopDealAggregate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/kafka-stream-topdeal-app/src/main/resources/application.yml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,7 +70,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="302036" />
+    <option name="totalTimeSeconds" value="287121" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -80,7 +134,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -107,12 +161,9 @@
     "Maven.hotel-app [package].executor": "Run",
     "Maven.hotel-app [validate].executor": "Run",
     "Maven.hotel-plugin-chat [clean].executor": "Run",
-    "Maven.hotel-plugin-chat [deploy].executor": "Run",
     "Maven.hotel-plugin-chat [install].executor": "Run",
-    "Maven.hotel-plugin-chat [package].executor": "Run",
     "Maven.hotel-plugin-menu [clean].executor": "Run",
     "Maven.hotel-plugin-menu [install].executor": "Run",
-    "Maven.hotel-plugin-menu [package].executor": "Run",
     "Maven.hotelservices [clean].executor": "Run",
     "Maven.hotelservices [install].executor": "Run",
     "Maven.hotelservices [test].executor": "Run",
@@ -144,17 +195,17 @@
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "D:/work/projects/GetSoftw/hotelico/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/dto",
-    "last_opened_file_path": "F:/project/struktura-master",
+    "last_opened_file_path": "D:/work/projects/GetSoftw/hotelico/k8s/minikube/services/kafka-streams",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
     "run.configurations.included.in.services": "true",
-    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "spring.configuration.checksum": "2389370ba893e5daeee482193e73d301",
     "vue.rearranger.settings.migration": "true"
   }
@@ -163,19 +214,22 @@
     <option name="notificationShown" value="true" />
   </component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="eu.getsoftware.hotelico.streams.topdeal.config" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\work\projects\GetSoftw\hotelico\hotel-plugin-chat" />
-      <recent name="D:\work\projects\GetSoftw\hotelico" />
+      <recent name="D:\work\projects\GetSoftw\hotelico\k8s\minikube\services\kafka-streams" />
+      <recent name="D:\work\projects\GetSoftw\hotelico\kafka-stream-app\src" />
+      <recent name="D:\work\projects\GetSoftw\hotelico\kafka-streams-app" />
       <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\resources\templates" />
       <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\hotelapp\adapter\out\persistence\hotel" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\hotelapp\adapter\out\persistence\checkin" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\work\projects\GetSoftw\hotelico\hotel-plugin-chat\src\main\resources" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\hotel-plugin-chat\src\main\java\eu\getsoftware\hotelico\infrastructure\hotel\plugin\chat\adapter\out\messaging\consumer\amqp" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\hotel-plugin-chat\src\main\java\eu\getsoftware\hotelico\infrastructure\hotel\plugin\chat\adapter\out\messaging\consumer" />
+      <recent name="D:\work\projects\GetSoftw\hotelico\k8s\minikube\services\kafka-streams\kafka-stream-topdeal" />
+      <recent name="D:\work\projects\GetSoftw\hotelico\kafka-streams-app\src\main\java" />
       <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\resources" />
       <recent name="D:\work\projects\GetSoftw\hotelico\shared-client-libs\src\main\java\eu\getsoftware\hotelico\clients\api\clients\infrastructure\eventConsumeNotification\domainLayerPayload" />
+      <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\k8s\minikube\bootstrap" />
     </key>
     <key name="CreateBuilderDialog.RecentsKey">
       <recent name="eu.getsoftware.hotelico.customer.infrastructure.dto" />
@@ -209,11 +263,11 @@
       <recent name="eu.getsoftware.hotelico.hotelapp.application.hotel.domain.iRepository" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="eu.getsoftware.hotelico.streams.topdeal.model" />
       <recent name="eu.getsoftware.hotelico.hotelapp.application.customer.domain.model" />
       <recent name="eu.getsoftware.hotelico.hotelapp.application.hotel.domain.innerDomainService.domainEvents" />
       <recent name="eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainLayerPayload" />
       <recent name="eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.mapper" />
-      <recent name="eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -329,6 +383,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ChatApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="hotel-service-chat" />
+      <option name="SHORTEN_COMMAND_LINE" value="ARGS_FILE" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="chat.ChatApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ChatApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <module name="hotel-service-chat" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.ChatApplication" />
@@ -383,8 +445,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="KafkaStreamTopDealApp" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="kafka-streams-app" />
+      <option name="SHORTEN_COMMAND_LINE" value="ARGS_FILE" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="eu.getsoftware.hotelico.streams.topdeal.KafkaStreamTopDealApp" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Menu MainApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <module name="hotel-service-menu" />
+      <module name="hotel-plugin-menu" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.MenuApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -404,7 +474,7 @@
       </method>
     </configuration>
     <configuration name="MenuApplication (2)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
-      <module name="hotel-service-menu" />
+      <module name="hotel-plugin-menu" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.MenuApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -473,6 +543,8 @@
       <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
       <item itemvalue="JUnit.CheckinRequestDTOTest.givenCheckinRequestDTO_whenWrongDates_thenError" />
       <item itemvalue="Maven.hotelservices [clean]" />
+      <item itemvalue="Spring Boot.ChatApplication (1)" />
+      <item itemvalue="Spring Boot.KafkaStreamTopDealApp" />
       <item itemvalue="Spring Boot.ChatApplication" />
       <item itemvalue="Spring Boot.NotificationTestApplication (1)" />
       <item itemvalue="Spring Boot.ApiGWApplication (1)" />
@@ -606,15 +678,7 @@
       <workItem from="1733050060842" duration="9784000" />
       <workItem from="1733397492718" duration="1794000" />
       <workItem from="1733838027793" duration="17723000" />
-      <workItem from="1733926488801" duration="1999000" />
-      <workItem from="1733928591318" duration="776000" />
-      <workItem from="1735549683779" duration="14033000" />
-      <workItem from="1736104198855" duration="1397000" />
-      <workItem from="1736428466322" duration="6438000" />
-      <workItem from="1736511553281" duration="980000" />
-      <workItem from="1736513977315" duration="4006000" />
-      <workItem from="1737277612570" duration="3035000" />
-      <workItem from="1737709901726" duration="8384000" />
+      <workItem from="1733926488801" duration="392000" />
     </task>
     <task id="LOCAL-00001" summary="-CHG: Microservice refactoring(Eureka-server)">
       <created>1655287660110</created>
@@ -791,6 +855,86 @@
       <option name="project" value="LOCAL" />
       <updated>1683714777053</updated>
     </task>
+    <task id="LOCAL-00079" summary="Domainentity connect only via EntityId ValueObject + builder in Aggregate!">
+      <option name="closed" value="true" />
+      <created>1730721437020</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1730721437020</updated>
+    </task>
+    <task id="LOCAL-00080" summary="from db to DomainEntity: builder in Aggregate with EntityId as constructor!">
+      <option name="closed" value="true" />
+      <created>1730722689840</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1730722689840</updated>
+    </task>
+    <task id="LOCAL-00081" summary="Kafka replaced rabbitMQ">
+      <option name="closed" value="true" />
+      <created>1731000225009</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1731000225009</updated>
+    </task>
+    <task id="LOCAL-00082" summary="Kafka replaced rabbitMQ">
+      <option name="closed" value="true" />
+      <created>1731010498015</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1731010498016</updated>
+    </task>
+    <task id="LOCAL-00083" summary="Refactoring">
+      <option name="closed" value="true" />
+      <created>1731024909914</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1731024909914</updated>
+    </task>
+    <task id="LOCAL-00084" summary="Event Sourcing">
+      <option name="closed" value="true" />
+      <created>1731082470281</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1731082470282</updated>
+    </task>
+    <task id="LOCAL-00085" summary="Event Sourcing">
+      <option name="closed" value="true" />
+      <created>1731082573007</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1731082573007</updated>
+    </task>
+    <task id="LOCAL-00086" summary="Event Sourcing">
+      <option name="closed" value="true" />
+      <created>1731082833524</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1731082833524</updated>
+    </task>
+    <task id="LOCAL-00087" summary="Refactoring">
+      <option name="closed" value="true" />
+      <created>1731240270391</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1731240270391</updated>
+    </task>
+    <task id="LOCAL-00088" summary="Persist ValueObject without Annotations in Domain Layer">
+      <option name="closed" value="true" />
+      <created>1731279604783</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1731279604783</updated>
+    </task>
     <task id="LOCAL-00089" summary="ValueObject as uuid in Domain layer">
       <option name="closed" value="true" />
       <created>1731282708366</created>
@@ -895,95 +1039,15 @@
       <option name="project" value="LOCAL" />
       <updated>1733921789544</updated>
     </task>
-    <task id="LOCAL-00102" summary="fix domainEntityId">
+    <task id="LOCAL-00102" summary="refactoring kafka stream">
       <option name="closed" value="true" />
-      <created>1733927200688</created>
+      <created>1737738224643</created>
       <option name="number" value="00102" />
       <option name="presentableId" value="LOCAL-00102" />
       <option name="project" value="LOCAL" />
-      <updated>1733927200688</updated>
+      <updated>1737738224643</updated>
     </task>
-    <task id="LOCAL-00103" summary="ADD Dockerfile">
-      <option name="closed" value="true" />
-      <created>1735560958924</created>
-      <option name="number" value="00103" />
-      <option name="presentableId" value="LOCAL-00103" />
-      <option name="project" value="LOCAL" />
-      <updated>1735560958925</updated>
-    </task>
-    <task id="LOCAL-00104" summary="fix id">
-      <option name="closed" value="true" />
-      <created>1735564580132</created>
-      <option name="number" value="00104" />
-      <option name="presentableId" value="LOCAL-00104" />
-      <option name="project" value="LOCAL" />
-      <updated>1735564580132</updated>
-    </task>
-    <task id="LOCAL-00105" summary="fix image">
-      <option name="closed" value="true" />
-      <created>1735566569242</created>
-      <option name="number" value="00105" />
-      <option name="presentableId" value="LOCAL-00105" />
-      <option name="project" value="LOCAL" />
-      <updated>1735566569242</updated>
-    </task>
-    <task id="LOCAL-00106" summary="fix cicd">
-      <option name="closed" value="true" />
-      <created>1736440294886</created>
-      <option name="number" value="00106" />
-      <option name="presentableId" value="LOCAL-00106" />
-      <option name="project" value="LOCAL" />
-      <updated>1736440294886</updated>
-    </task>
-    <task id="LOCAL-00107" summary="fix ci/cd">
-      <option name="closed" value="true" />
-      <created>1736524562885</created>
-      <option name="number" value="00107" />
-      <option name="presentableId" value="LOCAL-00107" />
-      <option name="project" value="LOCAL" />
-      <updated>1736524562885</updated>
-    </task>
-    <task id="LOCAL-00108" summary="fix ci/cd">
-      <option name="closed" value="true" />
-      <created>1736524659452</created>
-      <option name="number" value="00108" />
-      <option name="presentableId" value="LOCAL-00108" />
-      <option name="project" value="LOCAL" />
-      <updated>1736524659452</updated>
-    </task>
-    <task id="LOCAL-00109" summary="refactoring">
-      <option name="closed" value="true" />
-      <created>1737278364692</created>
-      <option name="number" value="00109" />
-      <option name="presentableId" value="LOCAL-00109" />
-      <option name="project" value="LOCAL" />
-      <updated>1737278364692</updated>
-    </task>
-    <task id="LOCAL-00110" summary="refactoring">
-      <option name="closed" value="true" />
-      <created>1737725025537</created>
-      <option name="number" value="00110" />
-      <option name="presentableId" value="LOCAL-00110" />
-      <option name="project" value="LOCAL" />
-      <updated>1737725025537</updated>
-    </task>
-    <task id="LOCAL-00111" summary="refactoring">
-      <option name="closed" value="true" />
-      <created>1737725183203</created>
-      <option name="number" value="00111" />
-      <option name="presentableId" value="LOCAL-00111" />
-      <option name="project" value="LOCAL" />
-      <updated>1737725183203</updated>
-    </task>
-    <task id="LOCAL-00112" summary="refactoring">
-      <option name="closed" value="true" />
-      <created>1737725388634</created>
-      <option name="number" value="00112" />
-      <option name="presentableId" value="LOCAL-00112" />
-      <option name="project" value="LOCAL" />
-      <updated>1737725388634</updated>
-    </task>
-    <option name="localTasksCounter" value="113" />
+    <option name="localTasksCounter" value="103" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1013,6 +1077,11 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <MESSAGE value="DomainLayer rabbitmq Consume Request" />
+    <MESSAGE value="Readme Refactoring" />
+    <MESSAGE value="RabbitMq Listener + shared RabbitQueueConfig" />
+    <MESSAGE value="Checkin EventPublisher and EventSubscriber!" />
+    <MESSAGE value="DDD examples" />
     <MESSAGE value="fix rabbitMq @RabbitHandler for many payloads for one Queue" />
     <MESSAGE value="cleaner checkin UseCase" />
     <MESSAGE value="Domainentity connect only via EntityId ValueObject + builder in Aggregate!" />
@@ -1032,13 +1101,8 @@
     <MESSAGE value="fix sequenceId" />
     <MESSAGE value="fix k8s/minikube" />
     <MESSAGE value="fix domainEntityId" />
-    <MESSAGE value="ADD Dockerfile" />
-    <MESSAGE value="fix id" />
-    <MESSAGE value="fix image" />
-    <MESSAGE value="fix cicd" />
-    <MESSAGE value="fix ci/cd" />
-    <MESSAGE value="refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoring" />
+    <MESSAGE value="refactoring kafka stream" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoring kafka stream" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

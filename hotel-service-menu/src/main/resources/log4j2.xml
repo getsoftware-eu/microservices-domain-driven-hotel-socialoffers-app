@@ -44,7 +44,7 @@
         <Logger name="http.wire-log" level="trace" additivity="false">
             <AppenderRef ref="logbook-appender"/>
         </Logger>
-        <Logger name="de.betterbits.smsbridge" level="info" additivity="false">
+        <Logger name="de.getsoftware.smsbridge" level="info" additivity="false">
             <AppenderRef ref="app-appender"/>
         </Logger>
         <Root level="error">

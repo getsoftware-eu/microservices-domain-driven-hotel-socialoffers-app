@@ -60,6 +60,7 @@ public class CustomerController extends BasicController
     @RequestMapping(value = "/customers/{customerId}/cities", method = RequestMethod.GET)
     public @ResponseBody
     Set<CustomerDTO> getCustomerCities(@PathVariable CustomerDomainEntityId customerId) {
+//        doList()
         return customerService.getCustomerCities(customerId);
     }
     

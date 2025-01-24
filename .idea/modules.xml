@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/common-client-api-libs/common-client-api-libs.iml" filepath="$PROJECT_DIR$/common-client-api-libs/common-client-api-libs.iml" />
-      <module fileurl="file://$PROJECT_DIR$/hotel-plugin-chat/hotel-service-chat.iml" filepath="$PROJECT_DIR$/hotel-plugin-chat/hotel-service-chat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/kafka-stream-topdeal-app/kafka-streams-app.iml" filepath="$PROJECT_DIR$/kafka-stream-topdeal-app/kafka-streams-app.iml" />
     </modules>
   </component>
 </project>
