@@ -55,10 +55,8 @@ public class HotelDbActivity implements IHotelActivity, Serializable
 	@Column(name = "active", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_TRUE)
 	private boolean active = true;
 	
-//	@ManyToOne
-//	@JoinColumn(name="hotelId")
+	@Getter
 	@Embedded @Column  
-//	@Convert(converter = HotelDomainEntityIdConverter.class)
 	public HotelDomainEntityId hotelDomainId;
 	
 	@ManyToOne

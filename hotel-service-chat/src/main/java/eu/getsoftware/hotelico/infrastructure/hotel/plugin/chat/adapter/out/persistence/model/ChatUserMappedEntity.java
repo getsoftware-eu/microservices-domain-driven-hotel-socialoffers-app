@@ -2,7 +2,6 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.chat.adapter.out.per
 
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -10,7 +9,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.io.Serializable;
 
 @Getter @Setter
-@RequiredArgsConstructor
 @Document(collection = "chat_users")
 public class ChatUserMappedEntity implements Serializable
 {
@@ -21,7 +19,11 @@ public class ChatUserMappedEntity implements Serializable
   
 //  @Convert(converter = CustomerDomainEntityId.class)
   //@Embedded @Column(unique = true, nullable = false)
-  private final CustomerDomainEntityId userDomainId;
+  private CustomerDomainEntityId userDomainId;
+
+  public ChatUserMappedEntity(CustomerDomainEntityId userDomainId){
+    this.userDomainId = userDomainId;
+  }
   
   private String firstName;
   
