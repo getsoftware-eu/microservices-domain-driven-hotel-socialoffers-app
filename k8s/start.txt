@@ -1,0 +1,11 @@
+minikube start
+
+kubectl apply -f hotel-app # whole dir
+# kubectl apply -f deployment.yml
+# kubectl apply -f service.yml
+
+kubectl get all
+
+minikube service hotel-app-service # like port-forward to k8s port
+
+minikube service kubernetes-dashboard -n kubernetes-dashboard # browser dashboard

@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: kafka-stream-topdeal-app
+  name: kafka-streams-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kafka-stream-topdeal-app
+      app: kafka-streams-app
   template:
     metadata:
       labels:
-        app: kafka-stream-topdeal-app
+        app: kafka-streams-app
     spec:
       containers:
-        - name: kafka-stream-topdeal-app
-          image: eugenfff/kafka-stream-topdeal-app:1.0.0
+        - name: kafka-streams-app
+          image: eugenfff/kafka-streams-app:1.0.0
           env:
             - name: KAFKA_BOOTSTRAP_SERVERS
               value: "your-kafka-cluster:9093"
