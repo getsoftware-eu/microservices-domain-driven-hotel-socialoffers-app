@@ -22,12 +22,12 @@
     <file url="file://$PROJECT_DIR$/hotel-client/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hotel-client/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hotel-client/target/generated-resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hotel-plugin-chat/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hotel-plugin-chat/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hotel-plugin-chat/target/generated-resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hotel-plugin-menu/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hotel-plugin-menu/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hotel-plugin-menu/target/generated-resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hotel-service-chat/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hotel-service-chat/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hotel-service-chat/target/generated-resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hotel-service-menu/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hotel-service-menu/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hotel-service-menu/target/generated-resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/menu/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/menu/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/menu/target/generated-resources" charset="UTF-8" />
