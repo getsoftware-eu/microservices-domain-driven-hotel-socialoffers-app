@@ -1,23 +1,20 @@
-package eu.getsoftware.hotelico.clients.api.clients.domain.chat;
+package eu.getsoftware.hotelico.clients.api.clients.domain.chat
 
-import java.sql.Timestamp;
+import java.sql.Timestamp
 
-public interface IChatMessageView {
-    boolean isActive();
+interface IChatMessageView {
+    
+    val isActive: Boolean
+    val message: String?
+    val initId: Long
 
-    String getMessage();
+    val timestamp: Timestamp?
 
-    long getInitId();
-
-    Timestamp getTimestamp();
-
-//    CustomerDomainEntityId getSenderId();
-
-    boolean isSeenByReceiver();
-
-    boolean isDelieveredToReceiver();
-
-//    CustomerDomainEntityId getReceiverId();
-
-    String getSpecialChatContent();
+    val isSeenByReceiver: Boolean
+    val isDelieveredToReceiver: Boolean
+    
+    //    CustomerDomainEntityId getSenderId();
+    //    CustomerDomainEntityId getReceiverId();
+    
+    val specialChatContent: String?
 }

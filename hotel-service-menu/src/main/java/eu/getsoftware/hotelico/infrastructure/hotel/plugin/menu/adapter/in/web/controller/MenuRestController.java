@@ -12,7 +12,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/menu")
 @RequiredArgsConstructor
-public class MenuRestController implements IMenuApiController
+/*public*/ class MenuRestController implements IMenuApiController
 {
 	
 //	@RequestMapping(value = "/items", method = RequestMethod.GET) in api interface

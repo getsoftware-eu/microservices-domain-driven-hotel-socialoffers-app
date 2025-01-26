@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class HotelInnerEventListener implements InnerDomainEventsListenerService<InnerHotelEvent> {
+/*public*/ class HotelInnerEventListener implements InnerDomainEventsListenerService<InnerHotelEvent> {
 
     private HotelGatewayService hotelGatewayService;
     

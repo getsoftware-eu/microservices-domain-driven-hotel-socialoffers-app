@@ -45,7 +45,7 @@ import java.util.*;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class NotificationUseCaseImpl implements NotificationUseCase<InnerHotelEvent>
+/*public*/ class NotificationUseCaseImpl implements NotificationUseCase<InnerHotelEvent>
 {
 	private final IHotelService hotelService;
 	

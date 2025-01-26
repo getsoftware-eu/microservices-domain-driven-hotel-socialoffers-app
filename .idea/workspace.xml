@@ -4,65 +4,86 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="refactoring kafka stream">
-      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/in/web/controller/customer/AbstractCustomerController.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/in/web/controller/ChatController.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/repository/ChatUserRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/application/domain/model/ChatMsgDomainEntity.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kafka-streams-app/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kafka-streams-app/kafka-streams-app.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kafka-streams-app/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kafka-streams-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/KafkaStreamTopDealApp.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kafka-streams-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/config/AggragateModelConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kafka-streams-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/config/KafkaStreamsConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kafka-streams-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/model/Deal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kafka-streams-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/model/ViewTopDealAggregate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/kafka-streams-app/src/main/resources/application.yml" afterDir="false" />
+    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="refactoring">
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/ChatApplication.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/in/web/controller/ChatMSCommunicationController.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/messaging/consumer/CheckinKafkaSubscriber.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/messaging/consumer/KafkaChatEventsConsumer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/outPortServiceImpl/ChatDTOServiceImpl.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/outPortServiceImpl/ChatMessageService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/outPortServiceImpl/ChatServiceImpl.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/repository/ChatMessageRepository.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/application/domain/usecase/ChatCheckinUseCaseImpl.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/application/port/in/process/ChatCheckinProcessManagerService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/application/port/in/process/ChatCheckinUseCase.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/application/port/out/ChatDTOService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/application/port/out/ChatService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/application/port/out/IChatMessageService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/config/kafka/KafkaConsumerConfig.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/config/kafka/KafkaProducerConfig.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/config/kafka/KafkaTopicConfig.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/ChatApplication.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/adapter/in/web/controller/ChatController.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/adapter/in/web/controller/ChatMSCommunicationController.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/adapter/out/messaging/consumer/CheckinKafkaSubscriber.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/adapter/out/messaging/consumer/KafkaChatEventsConsumer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/adapter/out/messaging/consumer/amqp/CheckinRabbitMQQueueSubscriber.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/adapter/out/messaging/consumer/amqp/RabbitChatEventsConsumer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/adapter/out/persistence/mapper/ChatEntityMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/adapter/out/persistence/model/ChatMessageMappedEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/adapter/out/persistence/model/ChatUserMappedEntity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/adapter/out/persistence/outPortServiceImpl/ChatDTOServiceImpl.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/adapter/out/persistence/outPortServiceImpl/ChatMSCommunicationServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/adapter/out/persistence/outPortServiceImpl/ChatService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/adapter/out/persistence/outPortServiceImpl/ChatServiceImpl.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/adapter/out/persistence/repository/ChatUserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/application/domain/model/ChatMsgDomainEntity.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/application/domain/usecase/ChatCheckinUseCaseImpl.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/application/port/in/process/ChatCheckinProcessManagerService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/application/port/in/process/ChatCheckinUseCase.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/application/port/out/ChatDTOService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/application/port/out/ChatService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/application/port/out/IChatMessageService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/config/kafka/KafkaConsumerConfig.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/config/kafka/KafkaProducerConfig.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/config/kafka/KafkaTopicConfig.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/domain/chat/IChatMessageView.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/dto/usecase/UserRegisterRequestUseCaseDTO.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/in/web/controller/customer/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/in/web/controller/customer/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/resources/application-kube.yml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/resources/application-kube.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/resources/log4j2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/ChatApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/ChatApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/in/web/controller/ChatController.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/in/web/controller/ChatMSCommunicationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/in/web/controller/ChatMSCommunicationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/messaging/consumer/CheckinKafkaSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/messaging/consumer/CheckinKafkaSubscriber.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/messaging/consumer/KafkaChatEventsConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/messaging/consumer/KafkaChatEventsConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/messaging/consumer/amqp/CheckinRabbitMQQueueSubscriber.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/messaging/consumer/amqp/CheckinRabbitMQQueueSubscriber.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/messaging/consumer/amqp/RabbitChatEventsConsumer.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/messaging/consumer/amqp/RabbitChatEventsConsumer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/mapper/ChatEntityMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/mapper/ChatEntityMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/model/ChatMessageMappedEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/model/ChatMessageMappedEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/model/ChatUserMappedEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/model/ChatUserMappedEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/outPortServiceImpl/ChatMSCommunicationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/outPortServiceImpl/ChatMSCommunicationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/outPortServiceImpl/ChatMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/outPortServiceImpl/ChatMessageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/outPortServiceImpl/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/outPortServiceImpl/ChatService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/outPortServiceImpl/ChatServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/outPortServiceImpl/ChatServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/repository/ChatMessageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/repository/ChatMessageRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/adapter/out/persistence/repository/ChatUserRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/application/domain/model/ChatMsgDomainEntity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/application/port/in/process/ChatCheckinProcessManagerService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/application/port/in/process/ChatCheckinProcessManagerService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/application/port/out/ChatService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/application/port/out/ChatService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/application/port/out/IChatMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/application/port/out/IChatMessageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/config/kafka/KafkaConsumerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/config/kafka/KafkaConsumerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/config/kafka/KafkaProducerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/config/kafka/KafkaProducerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/chat/config/kafka/KafkaTopicConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/config/kafka/KafkaTopicConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/resources/log4j2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-menu/src/main/resources/log4j2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/resources/log4j2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kafka-stream-topdeal-app/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kafka-stream-topdeal-app/kafka-stream-topdeal-app.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kafka-stream-topdeal-app/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kafka-stream-topdeal-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/KafkaStreamTopDealApp.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kafka-stream-topdeal-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/config/AggragateModelConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kafka-stream-topdeal-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/config/KafkaStreamsConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kafka-stream-topdeal-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/model/Deal.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kafka-stream-topdeal-app/src/main/java/eu/getsoftware/hotelico/streams/topdeal/model/ViewTopDealAggregate.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kafka-stream-topdeal-app/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Eugen-TODO.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Eugen-TODO.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/chat/ChatMSComminicationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/chat/ChatMSComminicationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/chat/messaging/HotelCommandProcessorEventServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/chat/messaging/HotelCommandProcessorEventServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/chat/messaging/HotelEventPublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/chat/messaging/HotelEventPublisher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/chat/messaging/HotelInnerEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/chat/messaging/HotelInnerEventListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/chat/messaging/HotelInnerEventPublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/chat/messaging/HotelInnerEventPublisher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/checkin/gateways/CheckinGatewayService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/checkin/gateways/CheckinGatewayService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/checkin/repository/CheckinRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/checkin/repository/CheckinRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/usecase/notification/NotificationUseCaseImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/usecase/notification/NotificationUseCaseImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/usecase/register/HotelRegisterInteractorImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/hotel/domain/usecase/register/HotelRegisterInteractorImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/ChatApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/in/web/controller/ChatController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/in/web/controller/ChatController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/in/web/controller/ChatMSCommunicationController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/messaging/consumer/CheckinKafkaSubscriber.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/messaging/consumer/KafkaChatEventsConsumer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/outPortServiceImpl/ChatMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/adapter/out/persistence/outPortServiceImpl/ChatMessageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/outPortServiceImpl/ChatServiceImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/out/persistence/repository/ChatMessageRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/kotlin/chat/adapter/out/persistence/repository/ChatMessageRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/application/port/in/process/ChatCheckinProcessManagerService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/application/port/out/ChatService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/application/port/out/IChatMessageService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/config/kafka/KafkaConsumerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/config/kafka/KafkaProducerConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/config/kafka/KafkaTopicConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/in/web/controller/MenuController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/in/web/controller/MenuController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/in/web/controller/MenuRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/in/web/controller/MenuRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/out/persistence/repository/MenuOrderRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/out/persistence/repository/MenuOrderRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/adapter/in/web/controller/IChatApiController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/adapter/in/web/controller/IChatApiController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/domain/chat/IChatMessageView.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/dto/entity/CustomerRequestDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/dto/entity/CustomerRequestDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/dto/usecase/UserRegisterRequestUseCaseDTO.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,18 +91,18 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="287121" />
+    <option name="totalTimeSeconds" value="295833" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin Interface" />
-        <option value="Kotlin Class" />
         <option value="Enum" />
         <option value="Interface" />
         <option value="JUnit5 Test Class" />
         <option value="Record" />
         <option value="Class" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -195,7 +216,7 @@
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "D:/work/projects/GetSoftw/hotelico/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/dto",
-    "last_opened_file_path": "D:/work/projects/GetSoftw/hotelico/k8s/minikube/services/kafka-streams",
+    "last_opened_file_path": "D:/work/projects/GetSoftw/hotelico/hotel-service-menu/src/main",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -218,18 +239,18 @@
       <recent name="eu.getsoftware.hotelico.streams.topdeal.config" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\work\projects\GetSoftw\hotelico\hotel-service-menu\src\main" />
       <recent name="D:\work\projects\GetSoftw\hotelico\k8s\minikube\services\kafka-streams" />
       <recent name="D:\work\projects\GetSoftw\hotelico\kafka-stream-app\src" />
       <recent name="D:\work\projects\GetSoftw\hotelico\kafka-streams-app" />
       <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\resources\templates" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\hotelapp\adapter\out\persistence\hotel" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\work\projects\GetSoftw\hotelico\archiv" />
+      <recent name="D:\work\projects\GetSoftw\hotelico\k8s\minikube\services\kafka-streams" />
       <recent name="D:\work\projects\GetSoftw\hotelico\k8s\minikube\services\kafka-streams\kafka-stream-topdeal" />
       <recent name="D:\work\projects\GetSoftw\hotelico\kafka-streams-app\src\main\java" />
       <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\resources" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\shared-client-libs\src\main\java\eu\getsoftware\hotelico\clients\api\clients\infrastructure\eventConsumeNotification\domainLayerPayload" />
-      <recent name="D:\work\projects\GetSoftw\social-hotel-interactions\k8s\minikube\bootstrap" />
     </key>
     <key name="CreateBuilderDialog.RecentsKey">
       <recent name="eu.getsoftware.hotelico.customer.infrastructure.dto" />
@@ -322,12 +343,6 @@
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="hotel-service-chat" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -679,6 +694,9 @@
       <workItem from="1733397492718" duration="1794000" />
       <workItem from="1733838027793" duration="17723000" />
       <workItem from="1733926488801" duration="392000" />
+      <workItem from="1737882597458" duration="444000" />
+      <workItem from="1737883077078" duration="469000" />
+      <workItem from="1737883587065" duration="11703000" />
     </task>
     <task id="LOCAL-00001" summary="-CHG: Microservice refactoring(Eureka-server)">
       <created>1655287660110</created>
@@ -854,22 +872,6 @@
       <option name="presentableId" value="LOCAL-00025" />
       <option name="project" value="LOCAL" />
       <updated>1683714777053</updated>
-    </task>
-    <task id="LOCAL-00079" summary="Domainentity connect only via EntityId ValueObject + builder in Aggregate!">
-      <option name="closed" value="true" />
-      <created>1730721437020</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1730721437020</updated>
-    </task>
-    <task id="LOCAL-00080" summary="from db to DomainEntity: builder in Aggregate with EntityId as constructor!">
-      <option name="closed" value="true" />
-      <created>1730722689840</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1730722689840</updated>
     </task>
     <task id="LOCAL-00081" summary="Kafka replaced rabbitMQ">
       <option name="closed" value="true" />
@@ -1047,7 +1049,23 @@
       <option name="project" value="LOCAL" />
       <updated>1737738224643</updated>
     </task>
-    <option name="localTasksCounter" value="103" />
+    <task id="LOCAL-00103" summary="refactoring kafka stream">
+      <option name="closed" value="true" />
+      <created>1737748441911</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1737748441911</updated>
+    </task>
+    <task id="LOCAL-00104" summary="refactoring">
+      <option name="closed" value="true" />
+      <created>1737748546989</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1737748546989</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1077,7 +1095,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="DomainLayer rabbitmq Consume Request" />
     <MESSAGE value="Readme Refactoring" />
     <MESSAGE value="RabbitMq Listener + shared RabbitQueueConfig" />
     <MESSAGE value="Checkin EventPublisher and EventSubscriber!" />
@@ -1102,7 +1119,8 @@
     <MESSAGE value="fix k8s/minikube" />
     <MESSAGE value="fix domainEntityId" />
     <MESSAGE value="refactoring kafka stream" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoring kafka stream" />
+    <MESSAGE value="refactoring" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoring" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

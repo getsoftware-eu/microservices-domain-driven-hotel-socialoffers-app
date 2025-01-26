@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody
 
 interface IChatApiController {
     @PostMapping("/message")
-    fun postMessage(@RequestBody msgDTO: ChatMsgDTO?): ChatMsgDTO
+    fun postMessage(@RequestBody msgDTO: ChatMsgDTO): ChatMsgDTO
 
     @PostMapping("/customer")
-    fun updateUser(@RequestBody customerDTO: CustomerDTO?): CustomerDTO
+    fun updateUser(@RequestBody customerDTO: CustomerDTO): CustomerDTO
 }

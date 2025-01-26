@@ -10,23 +10,11 @@
         <module name="apigw" />
         <module name="hotel-client" />
         <module name="clients" />
-        <module name="chat" />
         <module name="menu" />
         <module name="eureka-server" />
+        <module name="chat" />
       </profile>
-      <profile name="Annotation profile for hotel-app" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
-        </processorPath>
-        <module name="hotel-app" />
-      </profile>
-      <profile name="Annotation profile for hotel-service-menu" enabled="true">
+      <profile name="Annotation profile for social-hotel-interactions" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -37,20 +25,10 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
         </processorPath>
         <module name="hotel-service-menu" />
-      </profile>
-      <profile name="Annotation profile for shared-client-libs" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct-processor/1.5.5.Final/mapstruct-processor-1.5.5.Final.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
-        </processorPath>
+        <module name="hotel-app" />
         <module name="shared-client-libs" />
       </profile>
-      <profile name="Annotation profile for kafka-stream-topdeal-app" enabled="true">
+      <profile name="Annotation profile for hotel-service-chat" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -59,7 +37,6 @@
           <entry name="$MAVEN_REPOSITORY$/org/mapstruct/mapstruct/1.5.5.Final/mapstruct-1.5.5.Final.jar" />
         </processorPath>
         <module name="hotel-service-chat" />
-        <module name="kafka-streams-app" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -68,6 +45,7 @@
       <module name="common-client-api-libs" target="17" />
       <module name="hotel-plugin-chat" target="17" />
       <module name="hotel-plugin-menu" target="17" />
+      <module name="kafka-streams-app" target="17" />
       <module name="messaging" target="17" />
       <module name="notification" target="17" />
       <module name="notification-rabbitmq" target="17" />

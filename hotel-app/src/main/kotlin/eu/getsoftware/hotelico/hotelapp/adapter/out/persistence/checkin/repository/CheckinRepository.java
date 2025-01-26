@@ -18,12 +18,14 @@ import java.util.Optional;
 @Repository
 public interface CheckinRepository extends JpaRepository<CheckinDBEntity, Long> {
 
-	public final static String FIND_ACTIVE_BY_CUSTOMER_QUERY = "SELECT c " +
-			"FROM CheckinDbEntity c " +
-			"WHERE c.active = true " +
-			"AND c.pk.customer.id = :customerId " +
-			"AND c.validFrom <= :checkDate " +
-			"AND c.validTo >= :checkDate ";	
+	public final static String FIND_ACTIVE_BY_CUSTOMER_QUERY = """
+		SELECT c
+		FROM CheckinDbEntity c
+		WHERE c.active = true
+		AND c.pk.customer.id = :customerId
+		AND c.validFrom <= :checkDate
+		AND c.validTo >= :checkDate
+	""";
 	
 	public final static String FIND_HOTEL_BY_CUSTOMER_QUERY = "SELECT c.pk.hotel.id " +
 			"FROM CheckinDbEntity c " +
