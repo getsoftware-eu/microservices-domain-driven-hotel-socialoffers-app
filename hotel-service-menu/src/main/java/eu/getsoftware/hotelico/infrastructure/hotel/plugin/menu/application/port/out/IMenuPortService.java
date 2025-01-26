@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.iPortService;
+package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.port.out;
 
 import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.clients.dto.entity.menu.MenuItemDTO;
