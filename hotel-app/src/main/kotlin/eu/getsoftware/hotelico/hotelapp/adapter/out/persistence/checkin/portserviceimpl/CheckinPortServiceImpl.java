@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.portServiceImpl;
+package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.portserviceimpl;
 
 import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
 import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinRequestDTO;
@@ -11,6 +11,7 @@ import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDo
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class CheckinPortServiceImpl implements CheckinPortService {
     }
 
     @Override
-    public Date getLastByCustomerAndHotelId(CustomerDomainEntityId id, HotelDomainEntityId id1) {
+    public LocalDate getLastByCustomerAndHotelId(CustomerDomainEntityId id, HotelDomainEntityId id1) {
         return null;
     }
 

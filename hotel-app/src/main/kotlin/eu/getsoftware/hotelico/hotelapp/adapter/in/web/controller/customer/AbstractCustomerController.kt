@@ -25,7 +25,7 @@ abstract class AbstractCustomerController<IAsset, IAssetFormDTO> {
 //            redirectAttrs.addFlashAttribute("error", messageSource.getMessage("common.error", null, Locale.GERMAN))
 //            return "redirect:/$PATH_ITEM_CREATE"
 //        }
-
+            
 //        val asset = assetSaService.save(assetDTO)
 //        setUserMessage("asset.save", redirectAttrs)
 

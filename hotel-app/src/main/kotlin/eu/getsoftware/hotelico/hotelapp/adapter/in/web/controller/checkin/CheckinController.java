@@ -4,7 +4,7 @@ package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller.checkin;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
 import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinRequestDTO;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.port.in.CheckinUseCase;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.port.in.usecase.CheckinUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -29,7 +29,7 @@ public class CheckinController {
     public CheckinDTO registerUser(@Valid @RequestBody CheckinRequestDTO requestDTO) throws Throwable {
 
         MDC.put("userId", "1");
-        log.atInfo().info("Hello structured logging!");
+        log.info("Hello structured logging!");
        
         return checkinUseCase.createCustomerCheckin(requestDTO);
     }

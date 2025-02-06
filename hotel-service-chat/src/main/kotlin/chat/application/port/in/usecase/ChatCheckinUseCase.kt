@@ -1,4 +1,4 @@
-package chat.application.port.`in`.process
+package chat.application.port.`in`.usecase
 
 import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinRequestDTO
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO

@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.in.web.
 import eu.getsoftware.hotelico.clients.api.clients.dto.entity.menu.MenuItemDTO;
 import eu.getsoftware.hotelico.clients.api.clients.dto.entity.menu.MenuOrderDTO;
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
-import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.iPortService.IMenuPortService;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.port.out.IMenuPortService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

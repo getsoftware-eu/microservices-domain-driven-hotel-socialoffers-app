@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.application.checkin.port.in;
+package eu.getsoftware.hotelico.hotelapp.application.checkin.port.in.usecase;
 
 import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
 import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinRequestDTO;

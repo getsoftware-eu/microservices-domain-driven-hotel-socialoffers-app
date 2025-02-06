@@ -10,7 +10,7 @@ import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.pers
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuOrderMappedEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.repository.MenuItemRepository;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.repository.MenuOrderRepository;
-import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.iPortService.IMenuPortService;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.port.out.IMenuPortService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
