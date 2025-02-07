@@ -8,6 +8,7 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEnt
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.port.in.queryservice.CheckinQueryPortService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class CheckinPortServiceImpl implements CheckinPortService {
+public class CheckinPortServiceImpl implements CheckinPortService, CheckinQueryPortService {
 
     @Override
     public List<CheckinRootDomainEntity> getActiveByCustomerId(CustomerDomainEntityId id, Date date) {
