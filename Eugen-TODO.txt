@@ -4,3 +4,6 @@ if(spring-cloud): plugins имеют свой controller (api gateway их на�
 plugins тоже имеют свой aynch service для обращения в central hotel-app?
 подключить reddis для oath tokens (oder cache), или keykloak сам их кэширует
 Controller Intercepter(fill modelView) для каждого microservice или один общий parent controller 'doAction' in common-lib
+
+https://github.com/thombergs/buckpal
+Ctrl + Alt + Shift + K (to Kotlin)

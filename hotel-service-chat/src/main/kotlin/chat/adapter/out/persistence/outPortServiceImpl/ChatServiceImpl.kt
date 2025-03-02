@@ -1,112 +1,91 @@
-package chat.adapter.out.persistence.outPortServiceImpl;
+package chat.adapter.out.persistence.outPortServiceImpl
 
-import chat.adapter.out.persistence.model.ChatMessageMappedEntity;
-import chat.adapter.out.persistence.model.ChatUserMappedEntity;
-import chat.application.port.out.ChatService;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import chat.adapter.out.persistence.model.ChatMessageMappedEntity
+import chat.application.port.out.ChatService
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO
+import org.springframework.stereotype.Service
+import java.sql.Timestamp
 
-import java.sql.Timestamp;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
 @Service
-public class ChatServiceImpl implements ChatService {
-
-    private final ChatMessageService chatService;
-
-    public void sendFirstChatMessageOnDemand(CustomerDTO customerDTO, CustomerDTO staffSender, boolean isFullCheckin) {
-
-        Optional<ChatMessageMappedEntity> lastMessageFromStaff = chatService.getLastMessageByCustomerAndReceiverIds(staffSender.getId(), customerDTO.getId());
+internal class ChatServiceImpl(
+    val chatMessageService: ChatMessageService
+) : ChatService {
+    
+    fun sendFirstChatMessageOnDemand(customerDTO: CustomerDTO, staffSender: CustomerDTO, isFullCheckin: Boolean) {
+        val lastMessageFromStaff: ChatMessageMappedEntity? = chatMessageService.getLastMessageByCustomerAndReceiverIds(staffSender.id, customerDTO.id)
 
         //Send only first staffSender message!    
-        if(lastMessageFromStaff.isEmpty())
-        {
+        if (lastMessageFromStaff==null) {
+            var welcomeMsg = "Hi, welcome to our Hotel! Please write me, if you need something"
+            var welcomeGuestMsg =
+                "Hi, welcome to thr guest view of our Hotel! Please get the hotel-code at the reception - without the hotel-code, you are not listed as a hotel guest, and you can not view the customers in the wall... "
 
-            String welcomeMsg = "Hi, welcome to our Hotel! Please write me, if you need something";
-            String welcomeGuestMsg = "Hi, welcome to thr guest view of our Hotel! Please get the hotel-code at the reception - without the hotel-code, you are not listed as a hotel guest, and you can not view the customers in the wall... ";
-
-            if("de".equalsIgnoreCase(customerDTO.getPrefferedLanguage()))
-            {
-                welcomeMsg = "Hallo, herzlich willkommen im Hotel! Bitte schreiben Sie mir, wenn Sie etwas brauchen";
-                welcomeGuestMsg = "Hallo, herzlich willkommen im Hotel Gast-Zugang! Bitte bekommen Sie den Zugang-Kode an der Rezeption. Ohne Hotel-Kode sind ihre Aktivitäten in Hotel beschränkt";
+            if ("de".equals(customerDTO.prefferedLanguage, ignoreCase = true)) {
+                welcomeMsg = "Hallo, herzlich willkommen im Hotel! Bitte schreiben Sie mir, wenn Sie etwas brauchen"
+                welcomeGuestMsg =
+                    "Hallo, herzlich willkommen im Hotel Gast-Zugang! Bitte bekommen Sie den Zugang-Kode an der Rezeption. Ohne Hotel-Kode sind ihre Aktivitäten in Hotel beschränkt"
             }
 
-            String msg = (isFullCheckin ? welcomeMsg : welcomeGuestMsg);
+            val msg = (if (isFullCheckin) welcomeMsg else welcomeGuestMsg)
 
-            var sender = (staffSender);
-            var receiver = (customerDTO);
-            var initId = (System.currentTimeMillis());
-            var timestamp = (new Timestamp(System.currentTimeMillis()));
+            val sender = (staffSender)
+            val receiver = (customerDTO)
+            val initId = (System.currentTimeMillis())
+            val timestamp = (Timestamp(System.currentTimeMillis()))
 
-            ChatMsgDTO chatMsgDTO = new ChatMsgDTO(initId, msg, sender.getDomainEntityId(), receiver.getDomainEntityId(), true, false, false, 123, null, null, true);
-            
-            chatService.save(chatMsgDTO);
+            val chatMsgDTO = ChatMsgDTO(
+                initId,
+                msg,
+                sender.domainEntityId,
+                receiver.domainEntityId,
+                true,
+                false,
+                false,
+                123,
+                null,
+                null,
+                true
+            )
+
+            chatMessageService.save(chatMsgDTO)
         }
     }
 
-    @Override
-    public ChatMessageMappedEntity convertFromDTO(ChatMsgDTO msgDTO) {
-        return null;
+    override fun addChatMessage(chatMessageDto: ChatMsgDTO): ChatMsgDTO {
+        TODO("Not yet implemented")
     }
 
-    @Override
-    public ChatUserMappedEntity convertFromDTO(CustomerDTO msgDTO) {
-        return null;
+    override fun getMessagesByCustomerId(customerId: Long, receiverId: Int): List<ChatMsgDTO> {
+        return listOf<ChatMsgDTO>()
     }
 
-    @Override
-    public ChatMsgDTO convertToDTO(ChatMessageMappedEntity entity) {
-        return null;
+    override fun getNotHotelChatPartners(customerId: Long, city: String?, hotelId: Long): Set<CustomerDTO> {
+        return setOf<CustomerDTO>()
     }
 
-    @Override
-    public CustomerDTO convertToDTO(ChatUserMappedEntity entity) {
-        return null;
+    override fun getAllContactChatPartners(customerId: Long, city: String?, hotelId: Long): Set<CustomerDTO> {
+        return setOf<CustomerDTO>()
     }
 
-    @Override
-    public ChatMessageMappedEntity createChatMessageFromDTO(ChatMsgDTO msgDTO) {
-        return null;
+    override fun getAllNotChatPartners(
+        customerId: Long,
+        city: String?,
+        hotelId: Long,
+        pageNumber: Int
+    ): Set<CustomerDTO> {
+        return setOf<CustomerDTO>()
     }
 
-    @Override
-    public ChatUserMappedEntity updateCustomerFromDTO(CustomerDTO customerDTO) {
-        return null;
+    override fun markMessageRead(customerId: Long, messageIds: String?) {
     }
 
-	public ChatMsgDTO addChatMessage(ChatMsgDTO chatMessageDto) {
-		return null;
-	}
+    override fun markChatRead(customerId: Long, senderId: Int, maxSeenChatMessageId: Long) {
+    }
 
-	public List<ChatMsgDTO> getMessagesByCustomerId(long customerId, int receiverId) {
-		return List.of();
-	}
+    override fun addUpdateChatMessage(dto: ChatMsgDTO): ChatMsgDTO {
+        TODO("Not yet implemented")
 
-	public Set<CustomerDTO> getNotHotelChatPartners(long customerId, String city, long hotelId) {
-		return Set.of();
-	}
-
-	public Set<CustomerDTO> getAllContactChatPartners(long customerId, String city, long hotelId) {
-		return Set.of();
-	}
-
-	public Set<CustomerDTO> getAllNotChatPartners(long customerId, String city, long hotelId, int pageNumber) {
-		return Set.of();
-	}
-
-	public void markMessageRead(long customerId, String messageIds) {
-	}
-
-	public void markChatRead(long customerId, int senderId, long maxSeenChatMessageId) {
-	}
-
-    @Override
-    public ChatMsgDTO addUpdateChatMessage(ChatMsgDTO dto) {
-        return null;
     }
 }

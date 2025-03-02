@@ -9,7 +9,6 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntity
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -17,28 +16,24 @@ import java.util.List;
  * out port - обслуживает именно меня, можно entity использовать and not only dto usage
  */
 public interface CheckinPortService {
-    
+
+    // Queries
+    CustomerDBEntity getStaffbyHotelId(HotelDomainEntityId hotelId);
+
     List<CheckinRootDomainEntity> getActiveByCustomerId(CustomerDomainEntityId id, Date date);
 
-    LocalDate getLastByCustomerAndHotelId(CustomerDomainEntityId id, HotelDomainEntityId id1);
-
+    // Commands
+    
     void save(CheckinRootDomainEntity CheckinRootDomainEntity);
-
-    List<CustomerDTO> getStaffByHotelId(HotelDomainEntityId hotelId);
-
+    
     CheckinRootDomainEntity createCheckin(CheckinRequestDTO customerRequestDto);
 
     CheckinRootDomainEntity createCheckin(CustomerDTO customer, HotelDTO hotel, boolean isFullCheckin);
-
-    Integer getActiveCountByHotelId(HotelDomainEntityId receiverHotelId, Date date);
-
+    
 //    CheckinDTO getResponseDTO(CheckinRootDomainEntity newCheckin);
 
     void deleteAllImagesAndAttachments(CheckinDTO checkinDTO);
 
     CustomerDTO updateCheckin(CustomerDTO sessionCustomer);
 
-    CustomerDBEntity getStaffbyHotelId(HotelDomainEntityId hotelId);
-
-    List<CustomerDTO> getActiveCustomersByHotelId(HotelDomainEntityId hotelId, Date date);
-}
+    }

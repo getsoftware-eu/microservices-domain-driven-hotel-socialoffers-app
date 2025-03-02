@@ -1,50 +1,49 @@
-package chat.adapter.out.persistence.outPortServiceImpl;
+package chat.adapter.out.persistence.outPortServiceImpl
 
-import chat.adapter.out.persistence.model.ChatMessageMappedEntity;
-import chat.adapter.out.persistence.repository.ChatMessageRepository;
-import chat.application.port.out.IChatMessageService;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
+import chat.adapter.out.persistence.model.ChatMessageMappedEntity
+import chat.adapter.out.persistence.repository.ChatMessageRepository
+import chat.application.port.out.IChatMessageService
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId
+import org.springframework.stereotype.Service
+import java.util.*
 
 @Service
-@RequiredArgsConstructor
-public class ChatMessageService implements IChatMessageService {
-	
-	private final ChatMessageRepository chatMessageRepository;
-	
-	public void saveMessage(ChatMessageMappedEntity message) {
-		chatMessageRepository.save(message);
-	}
-	
-	public List<ChatMessageMappedEntity> getAllMessages() {
-		return chatMessageRepository.findAll();
-	}
-	
-	public Optional<ChatMessageMappedEntity> getLastMessageByCustomerAndReceiverIds(CustomerDomainEntityId customerId, CustomerDomainEntityId receiverId){
-		return chatMessageRepository.getLastMessageByCustomerAndReceiverIds(customerId, receiverId);
-	}
-	
-	public Optional<ChatMessageMappedEntity> getLastChatMessage(CustomerDomainEntityId fromCustomerId, CustomerDomainEntityId toCustomerId)
-	{
-		return chatMessageRepository.getLastMessageByCustomerAndReceiverIds(fromCustomerId, toCustomerId);
-	}
+//@RequiredArgsConstructor
+class ChatMessageService(
+    private val chatMessageRepository: ChatMessageRepository
+) : IChatMessageService {
+    
+    fun saveMessage(message: ChatMessageMappedEntity) {
+        chatMessageRepository.save(message)
+    }
 
-	public void save(ChatMsgDTO chatMsgDTO) {
-		
-	}
+    val allMessages: List<ChatMessageMappedEntity>
+        get() = chatMessageRepository.findAll()
 
-	@Override
-	public Optional<ChatMessageMappedEntity> getLastMessageByCustomerAndReceiverIds(long customerId, long receiverId) {
-		return Optional.empty();
-	}
+    fun getLastMessageByCustomerAndReceiverIds(
+        customerId: CustomerDomainEntityId?,
+        receiverId: CustomerDomainEntityId?
+    ): ChatMessageMappedEntity? {
+        return chatMessageRepository.getLastMessageByCustomerAndReceiverIds(customerId, receiverId)
+    }
 
-	@Override
-	public Optional<ChatMessageMappedEntity> getLastChatMessage(Long fromCustomerId, Long toCustomerId) {
-		return Optional.empty();
-	}
+    fun getLastChatMessage(
+        fromCustomerId: CustomerDomainEntityId?,
+        toCustomerId: CustomerDomainEntityId?
+    ): Optional<ChatMessageMappedEntity> {
+        return chatMessageRepository.getLastMessageByCustomerAndReceiverIds(fromCustomerId, toCustomerId)
+    }
+
+    fun save(chatMsgDTO: ChatMsgDTO?) {
+        //TODO("Not yet implemented")
+    }
+
+    override fun getLastMessageByCustomerAndReceiverIds(customerId: Long, receiverId: Long): ChatMessageMappedEntity? {
+        //TODO("Not yet implemented")
+    }
+
+    override fun getLastChatMessage(fromCustomerId: Long?, toCustomerId: Long?): ChatMessageMappedEntity? {
+        //TODO("Not yet implemented")
+    }
 }

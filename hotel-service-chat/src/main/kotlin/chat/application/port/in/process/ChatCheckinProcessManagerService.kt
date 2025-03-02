@@ -1,9 +1,13 @@
-package chat.application.port.in.process;
+package chat.application.port.`in`.process;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CheckinDomainEntityId;
-import org.springframework.stereotype.Service;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CheckinDomainEntityId
+import org.springframework.stereotype.Service
 
+/**
+ * ProcessManager changes the domain layer 
+ * (from external domain event + local anti-corruption layer)!
+ */
 @Service
 public class ChatCheckinProcessManagerService {
 
@@ -11,15 +15,15 @@ public class ChatCheckinProcessManagerService {
      * ProcessManager changes the domain layer!
      * @param checkinDTO
      */
-    public void handleCheckinUpdated(CheckinDTO checkinDTO){
+    fun handleCheckinUpdated(checkinDTO: CheckinDTO) {
         ;
     } 
     
-    public void handleCheckinCreated(CheckinDTO checkinDTO){
+    fun handleCheckinCreated(checkinDTO: CheckinDTO) {
         ;
     }  
     
-    public void handleCheckinClosed(CheckinDomainEntityId checkinDomainEntityId){
+    fun handleCheckinClosed(checkinDomainEntityId: CheckinDomainEntityId) {
         ;
     }
 }

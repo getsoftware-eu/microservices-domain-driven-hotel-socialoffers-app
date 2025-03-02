@@ -1,5 +1,6 @@
 package chat.adapter.`in`.web.controller;
 
+import chat.application.port.out.ChatDTOService
 import chat.application.port.out.ChatService
 import com.fasterxml.jackson.databind.ObjectMapper
 import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO
@@ -11,17 +12,17 @@ import org.springframework.messaging.handler.annotation.MessageMapping
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 
+private val log = KotlinLogging.logger {}
+
 @Controller
 @RequestMapping("/chat")
 class ChatController(
   private val chatService: ChatService,
+  private val chatDTOService: ChatDTOService,
   private val objectMapper: ObjectMapper
 ) : BasicController()
 {
-  companion object { //static
-    private val logger = KotlinLogging.logger {}
-  }
-  
+
   @GetMapping
   fun viewApplication(): String {
     return "chat";
@@ -32,7 +33,7 @@ class ChatController(
   //who should recieve result of this method
 //  @SendTo("/chattopic/message") //Send to all
   fun sendMessage(chatMessageDto: ChatMsgDTO): ChatMsgDTO {
-    logger.info {
+    log.info { //lambda
         mapOf(
           "event" to "sendMessage",
           "ChatMsgDTO" to chatMessageDto
@@ -43,7 +44,7 @@ class ChatController(
   }
 
   @GetMapping( "/messages/sender/{customerId}/receiver/{receiverId}")
-    @ResponseBody
+  @ResponseBody
   fun getMessagesByCustomerlId(@PathVariable customerId: Long, @PathVariable receiverId: Int):List<ChatMsgDTO> {
     return chatService.getMessagesByCustomerId(customerId, receiverId);
   }
@@ -61,7 +62,7 @@ class ChatController(
   }
 
   @GetMapping("/allNotChatPartners/customer/{customerId}/city/{city}/hotel/{hotelId}/page/{pageNumber}")
-     @ResponseBody
+  @ResponseBody
   fun getAllNotChatPartners(@PathVariable customerId: Long, @PathVariable city: String, @PathVariable hotelId: Long, @PathVariable pageNumber: Int): Set<CustomerDTO> {
    
     var customCity: String? = city
@@ -88,8 +89,7 @@ class ChatController(
      chatService.markChatRead(customerId, senderId, maxSeenChatMessageId);
     return listOf();
   }
-
-
+  
   @GetMapping("/messages/{messageId}")
   // @SendTo("/chattopic/message")
   @ResponseBody 

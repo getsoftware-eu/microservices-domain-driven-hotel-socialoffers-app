@@ -39,10 +39,12 @@ public interface MenuOrderRepository extends JpaRepository<MenuOrderMappedEntity
 			" AND (:checkDateFrom is NULL OR o.validTo >= :checkDateFrom) " +
 			" AND (:checkDateTo is NULL OR o.validFrom <= :checkDateTo) ";
 	
-	public final static String FIND_BY_INIT_ID_QUERY = " SELECT o.id " +
-			" FROM MenuOrder o " +
-			" WHERE o.initId = :initId " +
-			" AND o.active = true";
+	public final static String FIND_BY_INIT_ID_QUERY = """
+			SELECT o.id
+			FROM MenuOrder o
+			WHERE o.initId = :initId
+			   AND o.active = true
+	""";
 	
 	@Query(FIND_BY_CUSTOMER_ID_QUERY)
 	List<MenuOrderMappedEntity> getActiveIdByCustomerId(@Param("customerId") Long customerId, @Param("statusList") List<DealStatus> statusList, @Param("checkDateFrom") Date checkDateFrom, @Param("checkDateTo") Date checkDateTo);		

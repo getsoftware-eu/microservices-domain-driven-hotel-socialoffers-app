@@ -1,40 +1,23 @@
-package chat.application.port.out;
+package chat.application.port.out
 
-import chat.adapter.out.persistence.model.ChatMessageMappedEntity;
-import chat.adapter.out.persistence.model.ChatUserMappedEntity;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
+import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO
+import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO
 
-import java.util.List;
-import java.util.Set;
-
-public interface ChatService {
+interface ChatService {
     
-    ChatMessageMappedEntity convertFromDTO(ChatMsgDTO msgDTO);
-    
-    ChatUserMappedEntity convertFromDTO(CustomerDTO msgDTO);
+    fun addChatMessage(chatMessageDto: ChatMsgDTO): ChatMsgDTO
 
-    ChatMsgDTO convertToDTO(ChatMessageMappedEntity entity);
+    fun getMessagesByCustomerId(customerId: Long, receiverId: Int): List<ChatMsgDTO>
 
-    CustomerDTO convertToDTO(ChatUserMappedEntity entity);
+    fun getNotHotelChatPartners(customerId: Long, city: String?, hotelId: Long): Set<CustomerDTO>
 
-    ChatMessageMappedEntity createChatMessageFromDTO(ChatMsgDTO msgDTO);
-    
-    ChatUserMappedEntity updateCustomerFromDTO(CustomerDTO customerDTO);
+    fun getAllContactChatPartners(customerId: Long, city: String?, hotelId: Long): Set<CustomerDTO>
 
-    ChatMsgDTO addChatMessage(ChatMsgDTO chatMessageDto);
+    fun markMessageRead(customerId: Long, messageIds: String?)
 
-    List<ChatMsgDTO> getMessagesByCustomerId(long customerId, int receiverId);
+    fun getAllNotChatPartners(customerId: Long, city: String?, hotelId: Long, pageNumber: Int): Set<CustomerDTO>
 
-    Set<CustomerDTO> getNotHotelChatPartners(long customerId, String city, long hotelId);
+    fun markChatRead(customerId: Long, senderId: Int, maxSeenChatMessageId: Long)
 
-    Set<CustomerDTO> getAllContactChatPartners(long customerId, String city, long hotelId);
-
-    void markMessageRead(long customerId, String messageIds);
-
-    Set<CustomerDTO> getAllNotChatPartners(long customerId, String city, long hotelId, int pageNumber);
-
-    void markChatRead(long customerId, int senderId, long maxSeenChatMessageId);
-
-    ChatMsgDTO addUpdateChatMessage(ChatMsgDTO dto);
+    fun addUpdateChatMessage(dto: ChatMsgDTO): ChatMsgDTO
 }

@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.application.checkin.port.in;
+package eu.getsoftware.hotelico.hotelapp.application.checkin.port.in.usecase;
 
 import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
 import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinRequestDTO;
@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * In port only DTOs
+ * Commands идут через UseCase. UseCase - содержит бизнес-логику и взаимодействует с репозиториями.
  * <br/>
  * Created by e.fanshil
  * At 03.02.2016 14:04

@@ -5,21 +5,25 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CheckinDomainEnti
 import org.springframework.stereotype.Service;
 
 /**
- * ProcessManager changes the domain layer!
- *
+ * ProcessManager changes the domain layer 
+ * (from external domain event + local anti-corruption layer)!
  */
 @Service
 public class MenuProcessManagerService {
 
-    public void handleCheckinUpdated(CheckinDTO checkinDTO){
+    /**
+     * ProcessManager changes the domain layer!
+     * @param checkinDTO
+     */
+    void handleCheckinUpdated(CheckinDTO checkinDTO) {
         ;
-    } 
-    
-    public void handleCheckinCreated(CheckinDTO checkinDTO){
+    }
+
+    void handleCheckinCreated(CheckinDTO checkinDTO) {
         ;
-    }  
-    
-    public void handleCheckinClosed(CheckinDomainEntityId checkinDomainEntityId){
+    }
+
+    void handleCheckinClosed(CheckinDomainEntityId checkinDomainEntityId) {
         ;
     }
 }

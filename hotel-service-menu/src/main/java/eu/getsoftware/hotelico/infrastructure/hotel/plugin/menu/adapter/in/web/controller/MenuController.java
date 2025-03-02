@@ -15,7 +15,7 @@ import java.util.List;
 @Log4j2
 @Controller
 @RequestMapping("/menu")
-public class MenuController extends BasicController
+/*public*/ class MenuController extends BasicController
 {
 
 //  @Autowired

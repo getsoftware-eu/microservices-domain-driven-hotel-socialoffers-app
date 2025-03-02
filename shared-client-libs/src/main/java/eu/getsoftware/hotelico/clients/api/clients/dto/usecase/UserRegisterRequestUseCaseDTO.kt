@@ -1,63 +1,64 @@
-package eu.getsoftware.hotelico.clients.api.clients.dto.usecase;
+package eu.getsoftware.hotelico.clients.api.clients.dto.usecase
 
-import eu.getsoftware.hotelico.clients.common.domain.IDomainRequestDTO;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-
-import java.time.LocalDateTime;
+import eu.getsoftware.hotelico.clients.common.domain.IDomainRequestDTO
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Size
+import java.time.LocalDateTime
 
 /**
- * 
+ *
  * create Record in adapter package, but dtoInterface in useCase package!!
- * 
+ *
  * REQUEST Representation:
  * every requestDTO has the name of requester and its password???  requester is active-session-user
  * @param name
  * @param password
  */
-public record UserRegisterRequestUseCaseDTO(
+data class UserRegisterRequestUseCaseDTO (
+    @get:JvmName("requesterId")
+    val requesterId: Long,
     
-	long requesterId,
-	
-	@NotBlank(message = "Name cannot be blank")
-	@Size(min = 3, message = "Name must be at least 3 characters long")
-	String name,
+    @NotBlank(message = "Name cannot be blank")
+    @Size(
+        min = 3,
+        message = "Name must be at least 3 characters long"
+    )
+    @get:JvmName("name")
+    val name: String,
+    
+    val email: String?,
+    val username: String,
 
-	@Email(message = "Invalid email format")
-	@NotBlank(message = "Email cannot be blank")
-	String email,
-	
-	String username,
+//    val fullName: String
+//    get() = "$firstName $lastName"
+    
+    @Size(min = 8, message = "{validation.name.size.too_short}") @Size(
+        max = 200,
+        message = "{validation.name.size.too_long}"
+    )
+    val password: String, 
+    val specialFieldForUseCase: String, 
+    val creationTime: LocalDateTime? = LocalDateTime.now()
+) : IDomainRequestDTO {
 
-	@Size(min = 8, message = "{validation.name.size.too_short}")
-	@Size(max = 200, message = "{validation.name.size.too_long}")	
-	String password,
+    private fun validateName(checkName: String) {
+        require(checkName.length >= 3) { "Name must be at least 3 characters long" }
+    }
 
-	String specialFieldForUseCase,
-	
-	LocalDateTime creationTime
-	
-) implements IDomainRequestDTO {
+    private fun validatePassword(checkPassword: String) {
+        require(!checkPassword.equals("checkPassword", ignoreCase = true)) { "Password cannot be 'checkPassword'" }
+    }
 
-	public UserRegisterRequestUseCaseDTO {
-		
-		if (creationTime == null) {
-			creationTime = LocalDateTime.now();
-		}
-		
-		validateName(name);
-		validatePasswort(password);
-	}
+    init {
+        validateName(name)
+        validatePassword(password)
+    }
 
-	private void validateName(String checkName) {
-		if (checkName.length() < 3) {
-			throw new IllegalArgumentException("Name must be at least 3 characters long");
-		}
-	}
-	private void validatePasswort(String checkPassword) {
-		if (checkPassword.equalsIgnoreCase("checkPassword")) {
-			throw new IllegalArgumentException("Password cannot be 'checkPassword'");
-		}
-	}
+    override fun requesterId(): Long {
+        return requesterId
+    }
+
+    override fun name(): String {
+        return name
+    }
 }

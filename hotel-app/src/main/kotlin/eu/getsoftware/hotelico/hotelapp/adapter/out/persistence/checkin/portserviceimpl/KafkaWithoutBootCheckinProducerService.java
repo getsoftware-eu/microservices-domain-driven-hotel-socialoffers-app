@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.portServiceImpl;
+package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.portserviceimpl;
 
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.CheckinUpdatedEventPayload;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessage;

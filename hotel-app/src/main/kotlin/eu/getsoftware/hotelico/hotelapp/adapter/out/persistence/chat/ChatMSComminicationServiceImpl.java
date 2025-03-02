@@ -12,8 +12,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-@Service
-public class ChatMSComminicationServiceImpl implements ChatMSComminicationService {
+@Service //eu: only for injection, but not for public usage as a class
+/*public*/ class ChatMSComminicationServiceImpl implements ChatMSComminicationService {
     @Override
     public List<ChatMsgDTO> getChatMessages() {
         return List.of();

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class HotelRegisterInteractorImpl implements HotelRegisterUseCase {
+/*public*/ class HotelRegisterInteractorImpl implements HotelRegisterUseCase {
 
     private final IHotelService iHotelService;
     private final HotelServiceImpl hotelServiceImpl;
