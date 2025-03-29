@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class HotelInnerEventPublisher implements InnerDomainEventsProducerService<InnerHotelEvent> {
+/*public*/ class HotelInnerEventPublisher implements InnerDomainEventsProducerService<InnerHotelEvent> {
 
     private final ApplicationEventPublisher eventPublisher;
 

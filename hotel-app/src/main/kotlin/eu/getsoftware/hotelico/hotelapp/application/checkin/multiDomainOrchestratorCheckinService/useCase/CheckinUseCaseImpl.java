@@ -22,7 +22,7 @@ import eu.getsoftware.hotelico.hotelapp.application.chat.port.out.IChatService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model.CheckinDomainFactory;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.handler.CreateHotelCheckinHandler;
-import eu.getsoftware.hotelico.hotelapp.application.checkin.port.in.CheckinUseCase;
+import eu.getsoftware.hotelico.hotelapp.application.checkin.port.in.usecase.CheckinUseCase;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.GPSValidationHandler;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
@@ -189,7 +189,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 //					notificationUseCase.notificateAboutEntityEventWebSocket(checkinResponseDto, hotelEvent.getEventCheckin(), "New check-in in your hotel", hotelRootEntity.getId());
 				}
 
-				//sent wellcome message to new fullCheckin customers
+				//sent welcome message to new fullCheckin customers
 				if(!customerDomainEntity.isHotelStaff() && !customerDomainEntity.isAdmin())
 				{
 					CustomerDTO staffSender = this.getStaffbyHotelId(hotelEntity.getDomainEntityId());
@@ -197,7 +197,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 					if (staffSender!=null)
 					{
 						//TODO EUGEN: Check here if I already sent a message to him
-						// ### SEND WELLCOME MESSAGE
+						// ### SEND Welcome MESSAGE
 
 						CustomerDTO customerDTO = customerDtoMapper.toDtoWithHotelInfo(customerDomainEntity, hotelEntity.getDomainEntityId());
 						chatService.sendFirstChatMessageOnDemand(customerDTO, staffSender, isFullCheckin);
@@ -344,13 +344,13 @@ class CheckinUseCaseImpl implements CheckinUseCase
 //				hotel.getStaffIdList().stream().findFirst()
 //				.orElseThrow(() -> new JsonError("HotelStaff is not set for hotel" + newCheckin.getHotelDomainEntityId()));
 
-		ChatMessageCommand wellcomeChatMessageCommand = new ChatMessageCommand(
+		ChatMessageCommand welcomeChatMessageCommand = new ChatMessageCommand(
 				initHotelStaffId,
 				newCheckin.getCustomerDomainEntityId(), 
 				false,
-				newCheckin.getHotelDomainEntityId()+"getWellcomeMessage()");
+				newCheckin.getHotelDomainEntityId()+"getWelcomeMessage()");
 		
-		messagingProducerService.sendChatMessageCommand(wellcomeChatMessageCommand); //UseCase.Primary-flow.step.6
+		messagingProducerService.sendChatMessageCommand(welcomeChatMessageCommand); //UseCase.Primary-flow.step.6
 	}
 
 	private void updateHotelCheckin(CheckinRequestDTO checkinRequestDTO, CustomerRootDomainEntity customerEntity, CheckinRootDomainEntity nextCheckin, boolean isFullCheckin) {

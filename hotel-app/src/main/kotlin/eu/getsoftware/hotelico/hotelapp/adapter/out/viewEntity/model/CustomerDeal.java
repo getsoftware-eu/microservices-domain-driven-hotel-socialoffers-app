@@ -29,6 +29,7 @@ public class CustomerDeal implements ICustomerDeal {
 
 	private CustomerDealId pk = new CustomerDealId();
 	
+	@Getter
 	@Column
 	private String dealCode = "xxx";	
 	

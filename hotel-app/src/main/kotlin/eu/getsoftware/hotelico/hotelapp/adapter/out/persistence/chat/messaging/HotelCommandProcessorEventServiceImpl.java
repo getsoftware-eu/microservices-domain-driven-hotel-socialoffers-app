@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-public class HotelCommandProcessorEventServiceImpl extends HotelCommandProcessorEventService {
+/*public*/ class HotelCommandProcessorEventServiceImpl extends HotelCommandProcessorEventService {
     
     public HotelCommandProcessorEventServiceImpl(HotelGatewayService hotelGatewayService) {
         super(hotelGatewayService);

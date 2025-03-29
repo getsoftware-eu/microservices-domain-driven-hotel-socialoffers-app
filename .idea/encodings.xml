@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding">
-    <file url="file://$PROJECT_DIR$/api-gateway-spring-cloud/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/api-gateway-spring-cloud/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/api-gateway-spring-cloud/target/generated-resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/archiv/api-gateway-spring-cloud/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/archiv/api-gateway-spring-cloud/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/archiv/api-gateway-spring-cloud/target/generated-resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/archiv/eureka-server-spring-cloud/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/archiv/eureka-server-spring-cloud/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/archiv/eureka-server-spring-cloud/target/generated-resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/archiv/rabbitmq-event-listener-microservice/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/archiv/rabbitmq-event-listener-microservice/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/archiv/rabbitmq-event-listener-microservice/target/generated-resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/archiv/rabbitmq-simple-configuration/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/archiv/rabbitmq-simple-configuration/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/archiv/rabbitmq-simple-configuration/target/generated-resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/chat/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/chat/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/chat/target/generated-resources" charset="UTF-8" />
@@ -13,30 +22,24 @@
     <file url="file://$PROJECT_DIR$/common-client-api-libs/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/common-client-api-libs/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/common-client-api-libs/target/generated-resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eureka-server-spring-cloud/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eureka-server-spring-cloud/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/eureka-server-spring-cloud/target/generated-resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hotel-app/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hotel-app/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hotel-app/target/generated-resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hotel-client/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hotel-client/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/hotel-client/target/generated-resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hotel-plugin-chat/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hotel-plugin-chat/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hotel-plugin-chat/target/generated-resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hotel-plugin-menu/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hotel-plugin-menu/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/hotel-plugin-menu/target/generated-resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hotel-service-chat/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hotel-service-chat/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hotel-service-chat/target/generated-resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hotel-service-menu/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hotel-service-menu/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/hotel-service-menu/target/generated-resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/kafka-streams-app/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/kafka-streams-app/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/kafka-streams-app/target/generated-resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/menu/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/menu/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/menu/target/generated-resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/rabbitmq-event-listener-microservice/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/rabbitmq-event-listener-microservice/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/rabbitmq-event-listener-microservice/target/generated-resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/rabbitmq-simple-configuration/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/rabbitmq-simple-configuration/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/rabbitmq-simple-configuration/target/generated-resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/shared-client-libs/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/shared-client-libs/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/shared-client-libs/target/generated-resources" charset="UTF-8" />

@@ -68,8 +68,8 @@ public class HotelDBEntity /*extends HotelRootDomainEntity*/ implements Serializ
     @Column(name = "virtual", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
     private boolean virtual = false;
     
-    @Column(name = "wellcomeMessage", nullable = false)
-    private String wellcomeMessage;
+    @Column(name = "welcomeMessage", nullable = false)
+    private String welcomeMessage;
    
     @Column(name = "description", nullable = true, columnDefinition = "LONGTEXT")
     @JdbcTypeCode(SqlTypes.LONGVARCHAR) // Use LONGVARCHAR for long text fields

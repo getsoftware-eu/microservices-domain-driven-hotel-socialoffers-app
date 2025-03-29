@@ -59,7 +59,7 @@ spring:
   application:
     name: hotel-client
 #entitymanager:
-#  packagesToScan: de.betterbits.smsbridge.model      
+#  packagesToScan: de.getsoftware.smsbridge.model      
 security:
   basic.enabled: false #eugen: not in spring boot 2.x      
 #liquibase.change-log: classpath:/db/changelog/db.changelog-master.xml #boot2: liquibase.change-log: classpath:/db/changelog/db.changelog-master.xml
@@ -115,7 +115,7 @@ spring:
 keycloak:
   enabled: false
   #config.file: classpath:static/backend-keycloak.json
-  realm: Betterbits
+  realm: GetSoftware
   auth_server_url: http://keycloakintern.getSoftware.eu:8080/auth
   #credentials.secret: 5251920c-edb0-4d51-8ddb-48cb9a0136b4
 
@@ -136,7 +136,7 @@ spring:
 keycloak:
   enabled: false
   #config.file: classpath:static/backend-keycloak.json
-  realm: Betterbits
+  realm: GetSoftware
   auth_server_url:
   #credentials.secret: 5251920c-edb0-4d51-8ddb-48cb9a0136b4
 

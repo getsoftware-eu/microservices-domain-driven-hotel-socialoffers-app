@@ -60,6 +60,7 @@ public class CustomerController extends BasicController
     @RequestMapping(value = "/customers/{customerId}/cities", method = RequestMethod.GET)
     public @ResponseBody
     Set<CustomerDTO> getCustomerCities(@PathVariable CustomerDomainEntityId customerId) {
+//        doList()
         return customerService.getCustomerCities(customerId);
     }
     
@@ -247,21 +248,19 @@ public class CustomerController extends BasicController
             result.getTarget();
         }
         
-        if(sessionCustomer!=null && sessionCustomer.getId()>0 && sessionCustomer.getFirstName()==null)
-        {
-            CustomerDTO out = (CustomerDTO) customerService.getById(sessionCustomer.getDomainEntityId(), sessionCustomer.getId()).orElseThrow(()->new RuntimeException("-"));
-			lastMessagesService.setLastFullNotification(out.getDomainEntityId(), null);
-			httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
-        }
-        else if(sessionCustomer!=null && sessionCustomer.getId()>0)
-        {
-            CustomerDTO out = customerService.synchronizeCustomerToDto(sessionCustomer);
-			lastMessagesService.setLastFullNotification(out.getDomainEntityId(), null);
-			httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
-
-            return out;
-        }
+        if (sessionCustomer != null && sessionCustomer.getId() > 0) {
+            CustomerDTO out;
+            if (sessionCustomer.getFirstName() == null) {
+                out = (CustomerDTO) customerService.getById(sessionCustomer.getDomainEntityId(), sessionCustomer.getId())
+                        .orElseThrow(() -> new RuntimeException("-"));
+            } else {
+                out = customerService.synchronizeCustomerToDto(sessionCustomer);
+            }
         
+        lastMessagesService.setLastFullNotification(out.getDomainEntityId(), null);
+        httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
+        return out;
+    }
         return null;
     }
     

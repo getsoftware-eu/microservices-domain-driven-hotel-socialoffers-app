@@ -1,0 +1,26 @@
+# Общие настройки Spring Boot
+spring:
+  application:
+    name: kafka-stream-topdeal-app
+  kafka:
+    streams:
+      application-id: kafka-stream-topdeal-app
+      bootstrap-servers: localhost:9092
+      default-key-serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      default-value-serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      consumer.properties.spring.json.trusted.packages: * #which java package can trust on de-serialization
+
+server.port: 8087
+
+#spring.cloud.stream.kafka.streams.binder.brokers=127.0.0.1
+#spring.cloud.stream.kafka.streams.binder.defaultBrokerPort=9092
+#spring.cloud.stream.kafka.streams.binder.configuration.commit.interval.ms=100
+#spring.cloud.stream.kafka.streams.binder.applicationId=view-order-aggregator
+#spring.cloud.stream.kafka.streams.binder.configuration.default.key.serde=org.apache.kafka.common.serialization.Serdes$StringSerde
+#spring.cloud.stream.kafka.streams.binder.configuration.default.value.serde=org.apache.kafka.common.serialization.Serdes$StringSerde
+
+ 
+
+#spring.cloud.stream.bindings.viewOrderAggregate-in-0.destination=product-view
+#spring.cloud.stream.bindings.viewOrderAggregate-in-1.destination=product-order
+#spring.cloud.stream.bindings.viewOrderAggregate-out-0.destination=aggregate-topic

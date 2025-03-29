@@ -13,7 +13,7 @@ import static eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainE
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class HotelEventPublisher {
+/*public*/ class HotelEventPublisher {
 
     private final KafkaMessagePublisher kafkaMessagePublisher;
 

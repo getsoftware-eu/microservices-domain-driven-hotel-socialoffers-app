@@ -1,0 +1,153 @@
+# for simplicity here are 3 microservices build together, 
+# but actually every microservice should have an own repository
+.testing-and-staging-only: &testing-and-staging-only
+  only:
+    - master
+    - tags
+    - /^fix_.*$/
+    - /^feature_.*$/
+    - /^infra_.*$/
+  tags:
+    - docker
+
+# Этапы пайплайна
+stages:
+  - unit-test #junit
+  - build #local docker image (for e2e tests)
+  - integration-test #with mocks (and real kafka service)
+  - e2e-test #via docker-compose (from local docker image)
+  - deploy #push docker-image on gitHub
+  - clean
+
+unit-tests:
+  stage: unit-test
+  script:
+    - ./mvnw clean test
+  artifacts:
+    when: always
+    paths:
+      - target/surefire-reports/
+    expire_in: 1 week
+
+# Сборка первого микросервиса
+build-microservice-hotel-app:
+  <<: *testing-and-staging-only
+  stage: build
+  variables:
+    SERVICE_NAME: "hotel-app"
+  script:
+    - echo "Building $SERVICE_NAME"
+    - ./mvnw clean package -DskipTests
+    - docker build -t my-app:$CI_COMMIT_REF_SLUG .
+    - mkdir -p .ci_status && touch .ci_status/build_success_hotel-app
+  artifacts:
+    paths:
+      - ./hotel-app/target/*.jar
+      - .ci_status/
+    expire_in: 1 week
+
+# Сборка второго микросервиса
+build-microservice-plugin-chat:
+  <<: *testing-and-staging-only
+  stage: build
+  variables:
+    SERVICE_NAME: "plugin-chat"
+  script:
+    - echo "Building $SERVICE_NAME"
+    - mvn DskipTests clean package -f ./plugin-chat/pom.xml
+    - mkdir -p .ci_status && touch .ci_status/build_success_plugin-chat
+  artifacts:
+    paths:
+      - ./plugin-chat/target/*.jar
+      - .ci_status/
+    expire_in: 1 week
+        
+integration-tests:
+  stage: integration-test
+  services:
+    - name: confluentinc/cp-kafka:latest
+      alias: kafka
+  script:
+    - docker run --rm -d --network host my-app:$CI_COMMIT_REF_SLUG
+    - ./mvnw verify -Pintegration-test        
+        
+health_tests:
+  <<: *testing-and-staging-only
+  stage: e2e-test
+  services:
+    - docker:dind
+  before_script:
+    - echo "Starting Docker Compose tests"
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker-compose -f docker-compose.yml pull
+  script:
+    - docker-compose -f docker-compose.yml up -d
+    - docker-compose -f docker-compose.yml ps
+    - echo "Running integration tests..."
+    - docker-compose -f docker-compose.yml exec -T hotel-app curl -f http://localhost:8080/health
+    - docker-compose -f docker-compose.yml exec -T hotel-chat curl -f http://localhost:8081/health
+    - docker-compose -f docker-compose.yml exec -T hotel-menu curl -f http://localhost:8082/health
+  after_script:
+    - echo "Stopping and cleaning up Docker Compose"
+    - docker-compose -f docker-compose.yml down
+  dependencies:
+    - build-hotel-app
+    - build-plugin-chat
+    - build-plugin-menu
+  artifacts:
+    paths:
+      - docker-compose.logs            
+        
+e2e_tests:
+  <<: *testing-and-staging-only
+  stage: e2e-test
+  image: maven:3.8.7-openjdk-17
+  services:
+    - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+  script:
+    - docker-compose up -d hotel-app hotel-chat kafka1 kafka2 kafka3 
+    - ./mvnw verify -Pe2e-test
+  after_script:
+    - docker-compose down       
+        
+# Публикация Docker-образов для всех микросервисов
+deploy-microservices:
+  <<: *testing-and-staging-only
+  stage: deploy
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - echo "Publishing Docker images"
+
+    # Docker-образ для hotel-app
+    - if [ ! -e .ci_status/build_success_hotel-app ]; then echo "Build for hotel-app must be successful!"; exit 1 ; fi
+    - docker build -t $CI_REGISTRY_IMAGE/hotel-app:$CI_COMMIT_REF_SLUG -f ./hotel-app/Dockerfile ./hotel-app
+    - docker tag hotel-app:$CI_COMMIT_REF_SLUG my-registry/hotel-app:latest
+    - docker push $CI_REGISTRY_IMAGE/hotel-app:$CI_COMMIT_REF_SLUG
+
+    # Docker-образ для plugin-chat
+    - if [ ! -e .ci_status/build_success_plugin-chat ]; then echo "Build for plugin-chat must be successful!"; exit 1 ; fi
+    - docker build -t $CI_REGISTRY_IMAGE/plugin-chat:$CI_COMMIT_REF_SLUG -f ./plugin-chat/Dockerfile ./plugin-chat
+    - docker tag plugin-chat:$CI_COMMIT_REF_SLUG my-registry/plugin-chat:latest
+    - docker push $CI_REGISTRY_IMAGE/plugin-chat:$CI_COMMIT_REF_SLUG
+
+    # Docker-образ для plugin-menu
+    - if [ ! -e .ci_status/build_success_plugin-menu ]; then echo "Build for plugin-menu must be successful!"; exit 1 ; fi
+    - docker build -t $CI_REGISTRY_IMAGE/plugin-menu:$CI_COMMIT_REF_SLUG -f ./plugin-menu/Dockerfile ./plugin-menu
+    - docker tag plugin-menu:$CI_COMMIT_REF_SLUG my-registry/plugin-menu:latest
+    - docker push $CI_REGISTRY_IMAGE/plugin-menu:$CI_COMMIT_REF_SLUG
+
+# Очистка Docker-образов
+clean:
+  stage: clean
+  script:
+    - echo "Cleaning Docker images"
+    - docker system prune -f --volumes
+    - ./mvnw clean
+    - rm -rf target/
+    - docker rmi $CI_REGISTRY_IMAGE/hotel-app:$CI_COMMIT_REF_SLUG || true
+    - docker rmi $CI_REGISTRY_IMAGE/plugin-chat:$CI_COMMIT_REF_SLUG || true
+    - docker rmi $CI_REGISTRY_IMAGE/plugin-menu:$CI_COMMIT_REF_SLUG || true

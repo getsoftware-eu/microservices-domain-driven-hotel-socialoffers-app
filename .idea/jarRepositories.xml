@@ -17,6 +17,11 @@
       <option name="url" value="https://repo.maven.apache.org/maven2" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="https://repo.maven.apache.org/maven2" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="org.springframework.maven.milestone" />
       <option name="name" value="Spring Maven Milestone Repository" />
       <option name="url" value="https://repo.spring.io/milestone" />

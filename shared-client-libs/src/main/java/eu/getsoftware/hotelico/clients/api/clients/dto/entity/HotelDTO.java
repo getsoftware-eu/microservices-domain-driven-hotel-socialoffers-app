@@ -32,7 +32,7 @@ public class HotelDTO extends BasicDTO<HotelDomainEntityId>
 	
 	private final String name = null;
 	
-	private final String wellcomeMessage = null;
+	private final String welcomeMessage = null;
 	
 	private final String description = null;
 	

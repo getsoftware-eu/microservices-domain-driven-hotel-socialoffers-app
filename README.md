@@ -11,6 +11,10 @@ The "Clean" (Layered) Architecture is another way to provide <b>separation of co
 
 ### To achieve this vision, I am refactoring my old 'Hotel-interaction' project, in order to encapsulate domain-data (using Domain-driven Design and Clean Architecture principles as Onion and Hexagonal), which will enable us to create a modular and scalable system that can easily be adapted to future changes and enhancements.
 
+
+## "Hotelico" Cloud (AWS) Architecture
+![AWS](/docs/img/aws.drawio.png)
+
 ![DDD in Hexagon Architecture](/docs/img/adapterMultiDomain.JPG)
 ![Agregates is only one entry to domain entities](/docs/img/diagramm1.png)
 
@@ -68,9 +72,6 @@ The key for a Kafka-message is the 'receiverId' (to improve Kafka-groupId partit
 
 ![event-driven](/docs/img/cca-event-driven.JPG)
 
-
-### "Hotelico" Cloud (AWS) Architecture
-![AWS](/docs/img/aws.drawio.png)
 
 ## Simplified Domain-driven Design:
 ### Interaction via (how to couple bounded contexts):

@@ -1,0 +1,17 @@
+spring:
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: chat_db
+
+
+logging:
+  structured:
+    format.console: ecs # Структурное в формате JSON: Elastic Common Schema (ECS).
+    ecs:
+      service:
+        name: ChatService
+        version: 1
+        environment: Production
+        node-name: Primary

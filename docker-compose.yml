@@ -29,6 +29,34 @@ services:
       - postgres
     restart: unless-stopped
   
+  broker:
+    image: apache/kafka:latest
+    container_name: broker
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller               # The node acts as both broker and controller
+      KAFKA_LISTENERS: PLAINTEXT://localhost:9092,CONTROLLER://localhost:9093  # Ports for broker and controller
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092                  # External listener for clients
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER         # Listener name for inter-controller communication
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT  # Security protocol for listeners
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093    # Quorum voters for the controller in KRaft mode
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1           # Replication factor for the offsets topic
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1   # Replication factor for transaction logs
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1              # Minimum in-sync replicas for transactional logs
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0           # Initial delay before consumer group rebalancing
+      KAFKA_NUM_PARTITIONS: 3                             # Default number of partitions for new topics
+    ports:
+      - "9092:9092"     # Port for Kafka broker
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "./opt/kafka/bin/kafka-broker-api-versions.sh --bootstrap-server localhost:9092 > /dev/null 2>&1",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+  
   zipkin:
     image: openzipkin/zipkin
     container_name: hotel_zipkin
@@ -37,12 +65,41 @@ services:
 #    networks:
 #      - spring
 
+  hotel-app:
+    image: eugenfff/hotel-app:1.0.0
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: broker:9092 #,kafka2:19093,kafka3:19094
+    depends_on:
+      - postgres
+      - broker
+
+  hotel-chat:
+    image: eugenfff/hotel-chat:1.0.0
+    ports:
+      - "8081:8080"  
+    environment:
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: broker:9092 #,kafka2:19093,kafka3:19094
+    depends_on:
+      - broker
+      
+#  hotel-menu:
+#    image: eugenfff/hotel-menu:1.0.0
+#    ports:
+#      - "8082:8080"
+#    environment:
+#      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka1:19092,kafka2:19093,kafka3:19094
+#      depends_on:
+#        - broker
+
 #  rabbitmq:
 #    image: rabbitmq:3.9.11-management-alpine
 #    container_name: rabbitmq
 #    ports:
 #      - "5672:5672"
 #      - "15672:15672"
+
 
 networks:
   postgres:
@@ -51,3 +108,6 @@ networks:
 volumes:
   postgres:
   pgadmin:
+  #kafka1-data:
+  #kafka2-data:
+  #kafka3-data:

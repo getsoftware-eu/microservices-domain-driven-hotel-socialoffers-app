@@ -20,6 +20,6 @@ public interface MailService
 	 * */
 	 void sendPreConfiguredMail(String message);
 	
-	 String getWellcomeMailBody(CustomerDTO customerEntity);
+	 String getWelcomeMailBody(CustomerDTO customerEntity);
 	
 }

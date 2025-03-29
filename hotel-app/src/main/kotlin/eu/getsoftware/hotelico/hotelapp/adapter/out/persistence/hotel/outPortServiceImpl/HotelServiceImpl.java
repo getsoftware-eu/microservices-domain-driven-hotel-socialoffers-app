@@ -1094,9 +1094,9 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
                 hotelRootEntity.setCreationTime(hotelDto.getCreationTime());
             }   
 			
-			if(!AppConfigProperties.isEmptyString(hotelDto.getWellcomeMessage()))
+			if(!AppConfigProperties.isEmptyString(hotelDto.getWelcomeMessage()))
             {
-                hotelRootEntity.setWellcomeMessage(hotelDto.getWellcomeMessage());
+                hotelRootEntity.setWelcomeMessage(hotelDto.getWelcomeMessage());
             }
             
             hotelRepository.saveAndFlush(hotelRootEntity);
