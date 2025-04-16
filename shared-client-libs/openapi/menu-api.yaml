@@ -13,7 +13,6 @@ paths:
     get:
       summary: Get menu items
       operationId: getItems
-      x-interface-name: MenuApi
       responses:
         '200':
           description: List of menu items

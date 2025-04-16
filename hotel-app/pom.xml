@@ -550,8 +550,8 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
-<!--                <version>${kotlin.version}</version> from dependencyManagement: org.springframework.cloud-->
-        
+                <version>${kotlin.version}</version> 
+                <!--from dependencyManagement: org.springframework.cloud-->
                 <configuration>
                     <compilerPlugins>
                         <!-- Or "spring" for the Spring support -->

@@ -4,25 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="refactoring">
-      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/resources/openapi/controller/Customer-api-openapi.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shared-client-libs/openapi/chat-api.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shared-client-libs/openapi/menu-api.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shared-client-libs/openapi/schemas/chat-rest-msg-schema.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shared-client-libs/openapi/schemas/chat-schemas-dto.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shared-client-libs/openapi/schemas/customer-rest-schema.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shared-client-libs/openapi/schemas/customer-schemas-dto.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shared-client-libs/openapi/schemas/menu-rest-schema.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/adapter/in/web/controller/dto/todo.txt" afterDir="false" />
+    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="fix lombok">
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/in/web/controller/ChatMSCommunicationController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/in/web/controller/ChatMSCommunicationController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/in/web/controller/MenuRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/in/web/controller/MenuRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/openapi/menu-api.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/openapi/menu-api.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/shared-client-libs/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/adapter/in/web/controller/IChatApiController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/adapter/in/web/controller/IChatApiController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/adapter/in/web/controller/IMenuApiController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/adapter/in/web/controller/IMenuApiController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/dto/usecase/UserRegisterRequestUseCaseDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/dto/usecase/UserRegisterRequestUseCaseDTO.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +21,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="310570" />
+    <option name="totalTimeSeconds" value="314635" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -99,7 +90,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="DEPENDENCY_CHECKER_PROBLEMS_TAB" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -131,7 +122,13 @@
     "Maven.hotel-plugin-menu [clean].executor": "Run",
     "Maven.hotel-plugin-menu [install].executor": "Run",
     "Maven.hotel-service-chat [clean].executor": "Run",
+    "Maven.hotel-service-chat [compile].executor": "Run",
     "Maven.hotel-service-chat [install].executor": "Run",
+    "Maven.hotel-service-chat [package].executor": "Run",
+    "Maven.hotel-service-chat [validate].executor": "Run",
+    "Maven.hotel-service-menu [clean].executor": "Run",
+    "Maven.hotel-service-menu [compile].executor": "Run",
+    "Maven.hotel-service-menu [install].executor": "Run",
     "Maven.hotelservices [clean].executor": "Run",
     "Maven.hotelservices [install].executor": "Run",
     "Maven.hotelservices [test].executor": "Run",
@@ -648,7 +645,7 @@
       <workItem from="1738851010834" duration="2350000" />
       <workItem from="1741467295627" duration="206000" />
       <workItem from="1744661291293" duration="4849000" />
-      <workItem from="1744833193927" duration="4663000" />
+      <workItem from="1744833193927" duration="8719000" />
     </task>
     <task id="LOCAL-00001" summary="-CHG: Microservice refactoring(Eureka-server)">
       <created>1655287660110</created>
@@ -824,22 +821,6 @@
       <option name="presentableId" value="LOCAL-00025" />
       <option name="project" value="LOCAL" />
       <updated>1683714777053</updated>
-    </task>
-    <task id="LOCAL-00080" summary="from db to DomainEntity: builder in Aggregate with EntityId as constructor!">
-      <option name="closed" value="true" />
-      <created>1730722689840</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1730722689840</updated>
-    </task>
-    <task id="LOCAL-00081" summary="Kafka replaced rabbitMQ">
-      <option name="closed" value="true" />
-      <created>1731000225009</created>
-      <option name="number" value="00081" />
-      <option name="presentableId" value="LOCAL-00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1731000225009</updated>
     </task>
     <task id="LOCAL-00082" summary="Kafka replaced rabbitMQ">
       <option name="closed" value="true" />
@@ -1017,7 +998,23 @@
       <option name="project" value="LOCAL" />
       <updated>1738851156579</updated>
     </task>
-    <option name="localTasksCounter" value="104" />
+    <task id="LOCAL-00104" summary="add openapi for controllers">
+      <option name="closed" value="true" />
+      <created>1744838327923</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1744838327925</updated>
+    </task>
+    <task id="LOCAL-00105" summary="fix lombok">
+      <option name="closed" value="true" />
+      <created>1744840828991</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1744840828991</updated>
+    </task>
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1047,8 +1044,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Readme Refactoring" />
-    <MESSAGE value="RabbitMq Listener + shared RabbitQueueConfig" />
     <MESSAGE value="Checkin EventPublisher and EventSubscriber!" />
     <MESSAGE value="DDD examples" />
     <MESSAGE value="fix rabbitMq @RabbitHandler for many payloads for one Queue" />
@@ -1072,7 +1067,9 @@
     <MESSAGE value="fix domainEntityId" />
     <MESSAGE value="refactoring kafka stream" />
     <MESSAGE value="refactoring" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoring" />
+    <MESSAGE value="add openapi for controllers" />
+    <MESSAGE value="fix lombok" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix lombok" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
