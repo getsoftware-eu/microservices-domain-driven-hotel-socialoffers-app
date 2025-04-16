@@ -1,0 +1,57 @@
+openapi: 3.0.3
+info:
+  title: Chat REST API
+  version: 1.0.0
+  description: API for sending chat messages and updating customer data
+
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+
+paths:
+  /chat/message:
+    post:
+      summary: Send a chat message
+      operationId: postMessage
+      requestBody:
+        description: Message to send
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatMsgRestDTO'
+      responses:
+        '200':
+          description: Message sent successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatMsgRestDTO'
+
+  /chat/customer:
+    post:
+      summary: Update a customer
+      operationId: updateUser
+      
+      requestBody:
+        description: Customer object to update
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRestDTO'
+      responses:
+        '200':
+          description: Customer updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerRestDTO'
+
+components:
+  schemas:
+    ChatMsgRestDTO:
+      $ref: './schemas/chat-rest-msg-schema.yaml#/components/schemas/ChatMsgRestDTO'
+    
+    CustomerRestDTO:
+      $ref: './schemas/customer-rest-schema.yaml#/components/schemas/CustomerRestDTO'

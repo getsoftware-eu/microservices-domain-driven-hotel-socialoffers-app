@@ -1,28 +1,32 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.in.web.controller;
 
-import eu.getsoftware.hotelico.clients.api.adapter.in.web.controller.IMenuApiController;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.menu.MenuDTO;
+import eu.getsoftware.hotelico.clients.openapi.generated.menu.MenuApi;
+import eu.getsoftware.hotelico.clients.openapi.generated.menu.dto.MenuRestDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/menu")
 @RequiredArgsConstructor
-/*public*/ class MenuRestController implements IMenuApiController
+/*public*/ class MenuRestController implements MenuApi //, IMenuApiController
 {
 	
 //	@RequestMapping(value = "/items", method = RequestMethod.GET) in api interface
-	public @ResponseBody List<MenuDTO> getItems() {
-		return getDemoItems();
+  	@ResponseBody
+  	public ResponseEntity<List<MenuRestDTO>> getItems() {
+		  List<MenuRestDTO> demoItems = getDemoItems();
+		  return ResponseEntity.of(Optional.of(demoItems));
 	}
 
-	public List<MenuDTO> getDemoItems()
+	private List<MenuRestDTO> getDemoItems()
 	{
-		MenuDTO dto = MenuDTO.builder().id(123L).build();
+		MenuRestDTO dto = new MenuRestDTO(123L, 456L, 789L);
 		return List.of(dto);
 	}
 	

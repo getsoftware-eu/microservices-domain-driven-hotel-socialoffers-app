@@ -11,33 +11,33 @@ import java.time.LocalDateTime
  *
  * REQUEST Representation:
  * every requestDTO has the name of requester and its password???  requester is active-session-user
- * @param name
+ * @param in_name
  * @param password
  */
 data class UserRegisterRequestUseCaseDTO (
-    @get:JvmName("requesterId")
-    val requesterId: Long,
-    
+//    @get:JvmName("requesterId")
+    val in_requesterId: Long,
+
     @NotBlank(message = "Name cannot be blank")
     @Size(
         min = 3,
         message = "Name must be at least 3 characters long"
     )
-    @get:JvmName("name")
-    val name: String,
-    
+//    @get:JvmName("name")
+    val in_name: String,
+
     val email: String?,
     val username: String,
 
 //    val fullName: String
 //    get() = "$firstName $lastName"
-    
+
     @Size(min = 8, message = "{validation.name.size.too_short}") @Size(
         max = 200,
         message = "{validation.name.size.too_long}"
     )
-    val password: String, 
-    val specialFieldForUseCase: String, 
+    val password: String,
+    val specialFieldForUseCase: String,
     val creationTime: LocalDateTime? = LocalDateTime.now()
 ) : IDomainRequestDTO {
 
@@ -50,15 +50,15 @@ data class UserRegisterRequestUseCaseDTO (
     }
 
     init {
-        validateName(name)
+        validateName(in_name)
         validatePassword(password)
     }
 
     override fun requesterId(): Long {
-        return requesterId
+        return in_requesterId
     }
 
     override fun name(): String {
-        return name
+        return in_name
     }
 }

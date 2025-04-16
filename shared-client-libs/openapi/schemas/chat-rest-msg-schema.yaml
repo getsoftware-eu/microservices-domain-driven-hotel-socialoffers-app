@@ -1,0 +1,41 @@
+components:
+  schemas:
+    ChatMsgRestDTO:
+      type: object
+      properties:
+        initId:
+          type: integer
+          format: int64
+        message:
+          type: string
+        senderDomainId:
+          type: string
+          description: Domain ID of the sender (custom type)
+        receiverDomainId:
+          type: string
+          description: Domain ID of the receiver (custom type)
+        hotelStaff:
+          type: boolean
+        seenByReceiver:
+          type: boolean
+        deliveredToReceiver:
+          type: boolean
+        creationTime:
+          type: integer
+          format: int64
+        timestamp:
+          type: string
+          format: date-time
+        specialContent:
+          type: object
+          additionalProperties:
+            type: string
+        active:
+          type: boolean
+      required:
+        - initId
+        - message
+        - senderDomainId
+        - receiverDomainId
+        - creationTime
+        - active

@@ -5,12 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="refactoring">
-      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/port/in/queryservice/CheckinQueryPortService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/resources/openapi/controller/Customer-api-openapi.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared-client-libs/openapi/chat-api.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared-client-libs/openapi/menu-api.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared-client-libs/openapi/schemas/chat-rest-msg-schema.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared-client-libs/openapi/schemas/chat-schemas-dto.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared-client-libs/openapi/schemas/customer-rest-schema.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared-client-libs/openapi/schemas/customer-schemas-dto.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared-client-libs/openapi/schemas/menu-rest-schema.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/adapter/in/web/controller/dto/todo.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Eugen-TODO.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Eugen-TODO.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/checkin/portserviceimpl/CheckinPortServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/adapter/out/persistence/checkin/portserviceimpl/CheckinPortServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/port/in/usecase/CheckinUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/port/in/usecase/CheckinUseCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/port/out/CheckinPortService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/hotelapp/application/checkin/port/out/CheckinPortService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/in/web/controller/ChatMSCommunicationController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/chat/adapter/in/web/controller/ChatMSCommunicationController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/in/web/controller/MenuRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/java/eu/getsoftware/hotelico/infrastructure/hotel/plugin/menu/adapter/in/web/controller/MenuRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/adapter/in/web/controller/IChatApiController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/adapter/in/web/controller/IChatApiController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/adapter/in/web/controller/IMenuApiController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/adapter/in/web/controller/IMenuApiController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/dto/usecase/UserRegisterRequestUseCaseDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/clients/dto/usecase/UserRegisterRequestUseCaseDTO.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,7 +30,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="303084" />
+    <option name="totalTimeSeconds" value="310570" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -36,7 +48,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="menu_service_java" />
+        <entry key="$PROJECT_DIR$" value="kotlin_chat_service" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -100,69 +112,73 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;JUnit.CheckinRequestDTOTest.givenCheckinRequestDTO_whenWrongDates_thenError.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.apigw [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.common-client-api-libs [deploy].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.common-client-api-libs [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-app [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-app [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-app [deploy].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-app [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-app [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-app [validate].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-plugin-chat [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-plugin-chat [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-plugin-menu [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-plugin-menu [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotelservices [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotelservices [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotelservices [test].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.notification [deploy].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.notification [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.shared-client-libs [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.shared-client-libs [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.shared-client-libs [deploy].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.shared-client-libs [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.shared-client-libs [site].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.shared-client-libs [validate].executor&quot;: &quot;Run&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.Hotel-app MainApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.HotelApplication.executor&quot;: &quot;Run&quot;,
-    &quot;Spring Boot.MainApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.Menu MainApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;kotlin__chat__service&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_directory_selection&quot;: &quot;D:/work/projects/GetSoftw/hotelico/hotel-service-chat/src/main/kotlin/chat/application/port/in&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/work/projects/GetSoftw/hotelico/k8s/minikube/services/kafka-streams&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;2389370ba893e5daeee482193e73d301&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.CheckinRequestDTOTest.givenCheckinRequestDTO_whenWrongDates_thenError.executor": "Run",
+    "Maven.apigw [package].executor": "Run",
+    "Maven.common-client-api-libs [deploy].executor": "Run",
+    "Maven.common-client-api-libs [package].executor": "Run",
+    "Maven.hotel-app [clean].executor": "Run",
+    "Maven.hotel-app [compile].executor": "Run",
+    "Maven.hotel-app [deploy].executor": "Run",
+    "Maven.hotel-app [install].executor": "Run",
+    "Maven.hotel-app [package].executor": "Run",
+    "Maven.hotel-app [validate].executor": "Run",
+    "Maven.hotel-app [verify].executor": "Run",
+    "Maven.hotel-plugin-chat [clean].executor": "Run",
+    "Maven.hotel-plugin-chat [install].executor": "Run",
+    "Maven.hotel-plugin-menu [clean].executor": "Run",
+    "Maven.hotel-plugin-menu [install].executor": "Run",
+    "Maven.hotel-service-chat [clean].executor": "Run",
+    "Maven.hotel-service-chat [install].executor": "Run",
+    "Maven.hotelservices [clean].executor": "Run",
+    "Maven.hotelservices [install].executor": "Run",
+    "Maven.hotelservices [test].executor": "Run",
+    "Maven.notification [deploy].executor": "Run",
+    "Maven.notification [install].executor": "Run",
+    "Maven.shared-client-libs [clean].executor": "Run",
+    "Maven.shared-client-libs [compile].executor": "Run",
+    "Maven.shared-client-libs [deploy].executor": "Run",
+    "Maven.shared-client-libs [install].executor": "Run",
+    "Maven.shared-client-libs [package].executor": "Run",
+    "Maven.shared-client-libs [site].executor": "Run",
+    "Maven.shared-client-libs [validate].executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.Hotel-app MainApplication.executor": "Debug",
+    "Spring Boot.HotelApplication.executor": "Run",
+    "Spring Boot.MainApplication.executor": "Debug",
+    "Spring Boot.Menu MainApplication.executor": "Debug",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "D:/work/projects/GetSoftw/hotelico/hotel-service-chat/src/main/kotlin/chat/application/port/in",
+    "last_opened_file_path": "D:/work/projects/GetSoftw/hotelico/shared-client-libs/openapi",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "preferences.keymap",
+    "spring.configuration.checksum": "2389370ba893e5daeee482193e73d301",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -171,18 +187,18 @@
       <recent name="eu.getsoftware.hotelico.streams.topdeal.config" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\work\projects\GetSoftw\hotelico\shared-client-libs\openapi" />
+      <recent name="D:\work\projects\GetSoftw\hotelico\shared-client-libs" />
+      <recent name="D:\work\projects\GetSoftw\hotelico\hotel-service-chat\src\main\resources\openapi\controller\schemas" />
       <recent name="D:\work\projects\GetSoftw\hotelico\k8s\minikube\services\kafka-streams" />
       <recent name="D:\work\projects\GetSoftw\hotelico\kafka-stream-app\src" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\kafka-streams-app" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\resources\templates" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\hotelapp\adapter\out\persistence\hotel" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="D:\work\projects\GetSoftw\hotelico\hotel-service-menu\src\main\java\eu\getsoftware\hotelico\infrastructure\hotel\plugin\menu\adapter\out\messaging" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\k8s\minikube\services\kafka-streams\kafka-stream-topdeal" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\kafka-streams-app\src\main\java" />
+      <recent name="D:\work\projects\GetSoftw\hotelico\shared-client-libs\openapi\controllers" />
+      <recent name="D:\work\projects\GetSoftw\hotelico\shared-client-libs\openapi" />
+      <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\resources\openapi\controller" />
       <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\resources" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\shared-client-libs\src\main\java\eu\getsoftware\hotelico\clients\api\clients\infrastructure\eventConsumeNotification\domainLayerPayload" />
+      <recent name="D:\work\projects\GetSoftw\hotelico\hotel-service-menu\src\main\java\eu\getsoftware\hotelico\infrastructure\hotel\plugin\menu\adapter\out\messaging" />
     </key>
     <key name="CreateBuilderDialog.RecentsKey">
       <recent name="eu.getsoftware.hotelico.customer.infrastructure.dto" />
@@ -630,6 +646,9 @@
       <workItem from="1738840265238" duration="6394000" />
       <workItem from="1738849779678" duration="1150000" />
       <workItem from="1738851010834" duration="2350000" />
+      <workItem from="1741467295627" duration="206000" />
+      <workItem from="1744661291293" duration="4849000" />
+      <workItem from="1744833193927" duration="4663000" />
     </task>
     <task id="LOCAL-00001" summary="-CHG: Microservice refactoring(Eureka-server)">
       <created>1655287660110</created>

@@ -1,0 +1,189 @@
+openapi: 3.0.3
+info:
+  title: Customer REST API 
+  description: API for managing customers in Hotelico
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+    description: Local server
+paths: #endpoints
+  /customers/customers:
+    get:
+      summary: Get all customers
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerDTO'
+    post:
+      summary: Add a new customer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerDTO'
+      responses:
+        '200':
+          description: Customer successfully added
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDTO'
+  /customers/customers/{customerId}/cities:
+    get:
+      summary: Get cities the customer visited
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of cities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerDTO'
+  /customers/customers/{customerId}/hotel/{hotelId}/addStaff/{addStaff}:
+    get:
+      summary: Get customers by hotel ID
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: hotelId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: addStaff
+          in: path
+          required: true
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: List of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerDTO'
+  /customers/customers/{customerId}/city/{city}:
+    get:
+      summary: Get customers by city
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: city
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of customers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CustomerDTO'
+  /customers/customers/{id}/requesterId/{requesterId}:
+    get:
+      summary: Get customer by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: requesterId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Customer data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDTO'
+    put:
+      summary: Update customer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: requesterId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerDTO'
+      responses:
+        '200':
+          description: Updated customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerDTO'
+    delete:
+      summary: Delete customer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: requesterId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Customer deleted
+components:
+  schemas:
+    CustomerDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        guestAccount:
+          type: boolean
+        city:
+          type: string
+        hotelId:
+          type: integer

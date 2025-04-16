@@ -1,0 +1,25 @@
+openapi: 3.0.3
+info:
+  title: Menu API
+  version: 1.0.0
+  description: API for retrieving menu items
+
+servers:
+  - url: http://localhost:8080
+    description: Local server
+
+paths:
+  /menu/items:
+    get:
+      summary: Get menu items
+      operationId: getItems
+      x-interface-name: MenuApi
+      responses:
+        '200':
+          description: List of menu items
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: './schemas/menu-rest-schema.yaml#/components/schemas/MenuRestDTO'
