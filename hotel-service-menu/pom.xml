@@ -50,6 +50,10 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
             <groupId>eu.getsoftware.hotelico</groupId>
             <artifactId>shared-client-libs</artifactId>
             <version>0.0.1-SNAPSHOT</version>

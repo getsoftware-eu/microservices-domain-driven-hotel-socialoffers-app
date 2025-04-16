@@ -15,15 +15,15 @@ public class MenuProcessManagerService {
      * ProcessManager changes the domain layer!
      * @param checkinDTO
      */
-    void handleCheckinUpdated(CheckinDTO checkinDTO) {
+    public void handleCheckinUpdated(CheckinDTO checkinDTO) {
         ;
     }
 
-    void handleCheckinCreated(CheckinDTO checkinDTO) {
+    public void handleCheckinCreated(CheckinDTO checkinDTO) {
         ;
     }
 
-    void handleCheckinClosed(CheckinDomainEntityId checkinDomainEntityId) {
+    public void handleCheckinClosed(CheckinDomainEntityId checkinDomainEntityId) {
         ;
     }
 }

@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -23,7 +24,7 @@ public class MenuUserMappedEntity implements Serializable
 	private long id;
 	
 	@Column
-	private long userId;
+	private String userId;
 	
 	@Column
 	private String firstName;
@@ -36,10 +37,10 @@ public class MenuUserMappedEntity implements Serializable
 		
 	}
 	
-	public MenuUserMappedEntity(long userId)
+	public MenuUserMappedEntity(CustomerDomainEntityId userId)
 	{
 		this();
-		this.userId = userId;
+		this.userId = userId.uuidValue();
 	}
 	
 	public long getId()

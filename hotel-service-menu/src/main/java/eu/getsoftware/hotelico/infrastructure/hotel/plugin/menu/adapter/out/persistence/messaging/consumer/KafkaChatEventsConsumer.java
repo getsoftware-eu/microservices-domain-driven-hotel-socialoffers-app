@@ -1,10 +1,11 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.messaging.consumer;
 
-import chat.adapter.out.persistence.model.ChatMessageMappedEntity;
-import chat.adapter.out.persistence.model.ChatUserMappedEntity;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.HotelUpdateEventMessagePayload;
 import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessage;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.messaging.service.MenuMessageService;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuUserMappedEntity;
+import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.repository.MenuUserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -16,8 +17,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class KafkaChatEventsConsumer {
 
-    private final MenuMessageService chatMessageService;
-    private final MenuUserRepository chatUserRepository;
+    private final MenuMessageService menuMessageService;
+    private final MenuUserRepository menuUserRepository;
 
     /**
      * Listen for customer system updates from Kafka topic.
@@ -32,21 +33,21 @@ public class KafkaChatEventsConsumer {
         log.info(payload.getMessage());
 
         //TODO ProcessManagerService that updates Domain-Layer from external Event!!!
-        Optional<ChatUserMappedEntity> updatedChatUserOptional = chatUserRepository.findById(payload.getMessageId());
+        Optional<MenuUserMappedEntity> updatedChatUserOptional = menuUserRepository.findById(payload.getMessageId());
 
-        ChatUserMappedEntity entity;
+        MenuUserMappedEntity entity;
 
         if (updatedChatUserOptional.isEmpty()) {
-            entity = new ChatUserMappedEntity(payload.getCustomerDomainId());
+            entity = new MenuUserMappedEntity(payload.getCustomerDomainId());
 //            entity.setFirstName(payload.getSenderName());
         } else {
-            ChatUserMappedEntity updatedChatUser = updatedChatUserOptional.get();
-            entity = chatUserRepository.findByUserId(updatedChatUser.getId());
+            MenuUserMappedEntity updatedChatUser = updatedChatUserOptional.get();
+            entity = menuUserRepository.findByUserId(updatedChatUser.getId());
 
             entity.setFirstName(updatedChatUser.getFirstName());
         }
 
-        ChatUserMappedEntity persistedEntity = chatUserRepository.save(entity);
+        MenuUserMappedEntity persistedEntity = menuUserRepository.save(entity);
     }
 
     /**
@@ -59,11 +60,11 @@ public class KafkaChatEventsConsumer {
         log.info("Consumed {} from topic", chatMessageRequest);
         log.info(chatMessageRequest.customMsg());
 
-        Optional<ChatMessageMappedEntity> chatMsgOpt;
-
-        if (chatMessageRequest.lastMessage()) {
-            chatMsgOpt = chatMessageService.getLastChatMessage(chatMessageRequest.fromCustomerId(), chatMessageRequest.toCustomerId());
-        }
+//        Optional<MenuIOrderMappedEntity> chatMsgOpt;
+//
+//        if (chatMessageRequest.lastMessage()) {
+//            chatMsgOpt = menuMessageService.getLastChatMessage(chatMessageRequest.fromCustomerId(), chatMessageRequest.toCustomerId());
+//        }
 
         // Обработка chatMsgOpt или других данных
     }
