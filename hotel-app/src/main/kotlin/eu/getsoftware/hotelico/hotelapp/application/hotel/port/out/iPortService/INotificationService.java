@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.innerEvents.InnerDomainEvent;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.innerEvents.InnerDomainEvent;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.model.InnerHotelEvent;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;

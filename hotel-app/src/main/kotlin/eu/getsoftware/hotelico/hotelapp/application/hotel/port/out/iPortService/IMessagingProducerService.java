@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService;
 
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.innerEvents.InnerDomainEvent;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.amqpConsumeNotification.ChatMessageCommand;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.innerEvents.InnerDomainEvent;
 
 public interface IMessagingProducerService<E extends InnerDomainEvent> {
 

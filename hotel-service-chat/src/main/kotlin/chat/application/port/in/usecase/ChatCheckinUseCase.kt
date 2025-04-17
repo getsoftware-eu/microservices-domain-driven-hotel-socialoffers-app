@@ -1,11 +1,11 @@
 package chat.application.port.`in`.usecase
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinRequestDTO
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseRequestDTO
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.chat.dto.ChatMsgDTO
 
 interface ChatCheckinUseCase {
 
     @Throws(Throwable::class)
-    fun createCustomerCheckinMsg(checkinRequestDto: CheckinRequestDTO): ChatMsgDTO
+    fun createCustomerCheckinMsg(checkinUseCaseRequestDto: CheckinUseCaseRequestDTO): ChatMsgDTO
 
 }

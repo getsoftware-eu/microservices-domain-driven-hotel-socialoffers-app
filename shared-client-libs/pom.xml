@@ -127,6 +127,24 @@
                 <version>7.8.0</version>
                 <executions>
                     <execution>
+                        <id>generate-checkin-api</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>${project.basedir}/openapi/checkin-api.yaml</inputSpec>
+                            <generatorName>spring</generatorName>
+                            <output>${project.build.directory}/generated-sources/openapi</output>
+                            <apiPackage>eu.getsoftware.hotelico.clients.openapi.generated.checkin</apiPackage>
+                            <modelPackage>eu.getsoftware.hotelico.clients.openapi.generated.checkin.dto</modelPackage>
+                            <interfaceOnly>true</interfaceOnly>
+                            <skipDefaultInterface>true</skipDefaultInterface>
+                            <configOptions>
+                                <useSpringBoot3>true</useSpringBoot3>
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                    <execution>
                         <id>generate-chat-api</id>
                         <goals>
                             <goal>generate</goal>

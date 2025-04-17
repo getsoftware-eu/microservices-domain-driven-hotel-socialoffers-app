@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.port.out;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.menu.MenuItemDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.menu.MenuOrderDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.menu.MenuItemDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.menu.MenuOrderDTO;
 
 import java.util.List;
 

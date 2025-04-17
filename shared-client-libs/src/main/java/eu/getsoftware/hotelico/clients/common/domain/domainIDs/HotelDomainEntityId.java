@@ -23,7 +23,10 @@ public record HotelDomainEntityId(
         }
         return new HotelDomainEntityId(uuid.toString());
     }
-
+    public static HotelDomainEntityId from(@NotEmpty int value) {
+        return from(String.valueOf(value));
+    }
+    
     public static HotelDomainEntityId generate() {
         return new HotelDomainEntityId(UUID.randomUUID().toString());
     }

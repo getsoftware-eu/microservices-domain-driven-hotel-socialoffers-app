@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller.hotel;
 
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.ApiErrorResponse;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.exception.ApiErrorResponse;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.error.HotelNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

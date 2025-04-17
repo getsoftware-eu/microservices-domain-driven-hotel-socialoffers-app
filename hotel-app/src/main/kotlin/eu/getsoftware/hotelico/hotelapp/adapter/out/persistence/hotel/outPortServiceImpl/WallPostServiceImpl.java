@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortServiceImpl;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.HotelDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.HotelDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.IHotelWallPost;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IWallpostService;

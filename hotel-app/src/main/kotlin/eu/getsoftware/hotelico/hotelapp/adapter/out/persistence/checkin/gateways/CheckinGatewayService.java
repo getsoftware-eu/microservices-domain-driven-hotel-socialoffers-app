@@ -7,7 +7,7 @@ import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDo
 import org.springframework.stereotype.Service;
 
 @Service
-/*public*/ class CheckinGatewayService extends GenericRepositoryService<CheckinRootDomainEntity, CheckinDomainEntityId> {
+public class CheckinGatewayService extends GenericRepositoryService<CheckinRootDomainEntity, CheckinDomainEntityId> {
     
     public CheckinGatewayService(CheckinRepositoryAdapter repositoryAdapter) {
         super(repositoryAdapter);

@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller;
 
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.JsonError;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.domain.BusinessException;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.exception.JsonError;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.exception.domain.BusinessException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

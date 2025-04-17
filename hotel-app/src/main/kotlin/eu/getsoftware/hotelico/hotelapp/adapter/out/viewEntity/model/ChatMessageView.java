@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model;
 
-import eu.getsoftware.hotelico.clients.api.clients.domain.chat.IChatMessageView;
+import eu.getsoftware.hotelico.clients.api.application.domain.chat.IChatMessageView;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity;
 import jakarta.persistence.*;

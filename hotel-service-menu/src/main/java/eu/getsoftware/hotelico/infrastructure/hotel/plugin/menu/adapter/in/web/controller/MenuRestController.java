@@ -3,25 +3,25 @@ package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.in.web.
 import eu.getsoftware.hotelico.clients.openapi.generated.menu.MenuApi;
 import eu.getsoftware.hotelico.clients.openapi.generated.menu.dto.MenuRestDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/menu")
 @RequiredArgsConstructor
-/*public*/ class MenuRestController implements MenuApi //, IMenuApiController
+/*public*/ class MenuRestController implements MenuApi
 {
 	
-//	@RequestMapping(value = "/items", method = RequestMethod.GET) in api interface
   	@ResponseBody
   	public ResponseEntity<List<MenuRestDTO>> getItems() {
-		  List<MenuRestDTO> demoItems = getDemoItems();
-		  return ResponseEntity.of(Optional.of(demoItems));
+		  
+	  	List<MenuRestDTO> demoItems = getDemoItems();
+		return new ResponseEntity<>(demoItems, HttpStatus.OK);
 	}
 
 	private List<MenuRestDTO> getDemoItems()

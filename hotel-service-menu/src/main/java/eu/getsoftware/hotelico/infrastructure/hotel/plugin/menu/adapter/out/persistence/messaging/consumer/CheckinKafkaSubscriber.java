@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.messaging.consumer;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.CheckinUpdatedEventPayload;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessage;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.CheckinUpdatedEventPayload;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.domainMessage.DomainMessage;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.application.port.in.process.MenuProcessManagerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +29,7 @@ public class CheckinKafkaSubscriber {
 
         {
             log.info("Processing event {}", message.getMessageType());
-            CheckinDTO checkinDTO = toCheckin(payload);
+            CheckinUseCaseDTO checkinDTO = toCheckin(payload);
 //            checkinRepository.save(checkinDTO);
             menuProcessManager.handleCheckinCreated(checkinDTO);
         }
@@ -42,7 +42,7 @@ public class CheckinKafkaSubscriber {
 
         {
             log.info("Processing event {}", message.getMessageType());
-            CheckinDTO checkin = toCheckin(payload);
+            CheckinUseCaseDTO checkin = toCheckin(payload);
 //            checkinRepository.partialUpdateCheckin(checkin);
             menuProcessManager.handleCheckinUpdated(checkin);
 
@@ -68,8 +68,8 @@ public class CheckinKafkaSubscriber {
      * @param payload
      * @return
      */
-    private CheckinDTO toCheckin(CheckinUpdatedEventPayload payload) {
-        return CheckinDTO.builder()
+    private CheckinUseCaseDTO toCheckin(CheckinUpdatedEventPayload payload) {
+        return CheckinUseCaseDTO.builder()
                 .initId(payload.getEntityId())
                 .checkinFrom(payload.getCheckinFrom())
                 .checkinTo(payload.getCheckinTo())

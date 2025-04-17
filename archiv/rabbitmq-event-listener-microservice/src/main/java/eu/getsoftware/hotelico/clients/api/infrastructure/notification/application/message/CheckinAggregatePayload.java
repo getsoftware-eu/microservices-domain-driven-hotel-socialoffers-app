@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.message;
 
 import eu.getsoftware.hotelico.clients.api.amqp.application.domain.model.DomainMessagePayload;
-import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.application.common.dto.CustomerDTO;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

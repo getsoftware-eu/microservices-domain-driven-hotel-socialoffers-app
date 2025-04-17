@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortServiceImpl;
 
-import eu.getsoftware.hotelico.clients.api.clients.domain.chat.IChatMessageView;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
+import eu.getsoftware.hotelico.clients.api.application.domain.chat.IChatMessageView;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import org.springframework.stereotype.Service;
 

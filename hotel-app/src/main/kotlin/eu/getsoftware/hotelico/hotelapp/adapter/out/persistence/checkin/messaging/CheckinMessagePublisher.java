@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.messaging;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.CheckinUpdatedEventPayload;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessage;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.CheckinUpdatedEventPayload;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.domainMessage.DomainMessage;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.service.messaging.KafkaMessagePublisher;
 import lombok.NonNull;
@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import static eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessagePayloadStatus.QUEUED;
+import static eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.domainMessage.DomainMessagePayloadStatus.QUEUED;
 
 @Slf4j
 @Component
@@ -27,15 +27,15 @@ public class CheckinMessagePublisher {
 
     private DomainCheckinMessageFactory domainCheckinMessageFactory;
 
-    public void publishCheckinCreatedEvent(CheckinDTO checkinDTO){
+    public void publishCheckinCreatedEvent(CheckinUseCaseDTO checkinDTO){
         publishMessage(CHECKIN_CREATED_EVENT_TYPE_NAME, checkinDTO);
     }
     
-    public void publishCheckinUpdatedEvent(CheckinDTO checkinDTO){
+    public void publishCheckinUpdatedEvent(CheckinUseCaseDTO checkinDTO){
         publishMessage(CHECKIN_UPDATED_EVENT_TYPE_NAME, checkinDTO);
     }
 
-    public void publishCheckinDeletedEvent(CheckinDTO checkinDTO){
+    public void publishCheckinDeletedEvent(CheckinUseCaseDTO checkinDTO){
         publishMessage(CHECKIN_DELETED_EVENT_TYPE_NAME, checkinDTO);
     }
 
@@ -44,7 +44,7 @@ public class CheckinMessagePublisher {
      * @param messageType
      * @param checkinDTO
      */
-    private void publishMessage(String messageType, CheckinDTO checkinDTO) {
+    private void publishMessage(String messageType, CheckinUseCaseDTO checkinDTO) {
 
         CustomerDomainEntityId customerEntityId = new CustomerDomainEntityId(String.valueOf(checkinDTO.getCustomerId()));
 

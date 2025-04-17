@@ -1,14 +1,14 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.chat.messaging;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.HotelDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.HotelUpdateEventMessagePayload;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessage;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.HotelDTO;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.HotelUpdateEventMessagePayload;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.domainMessage.DomainMessage;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.service.messaging.KafkaMessagePublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import static eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessagePayloadStatus.QUEUED;
+import static eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.domainMessage.DomainMessagePayloadStatus.QUEUED;
 
 @Component
 @Slf4j

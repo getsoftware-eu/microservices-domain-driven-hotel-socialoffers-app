@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.application.chat.domain.infrastructure;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.viewEntity.model.ChatMessageView;
 import org.springframework.transaction.annotation.Transactional;

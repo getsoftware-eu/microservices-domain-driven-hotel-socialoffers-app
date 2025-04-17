@@ -1,0 +1,40 @@
+openapi: 3.0.3
+info:
+  title: Checkin API
+  version: 1.0.0
+  description: API endpoint for registering a user check-in.
+
+paths:
+  /checkin/register:
+    post:
+      summary: Register a user check-in
+      operationId: registerUser
+      tags:
+        - checkin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckinRequestRestDTO'
+      responses:
+        '200':
+          description: Successful check-in registration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckinResponseRestDTO'
+        '400':
+          description: Validation error
+        '500':
+          description: Internal server error
+
+components:
+  schemas:
+    CheckinRequestRestDTO:
+      $ref: './schemas/checkin-schemas-dto.yaml#/components/schemas/CheckinRequestRestDTO'
+    
+    
+    CheckinResponseRestDTO:
+      $ref: './schemas/checkin-schemas-dto.yaml#/components/schemas/CheckinResponseRestDTO'
+    

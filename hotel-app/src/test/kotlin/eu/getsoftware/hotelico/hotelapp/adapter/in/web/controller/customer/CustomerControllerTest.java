@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller.customer;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
 import jakarta.servlet.http.HttpSession;

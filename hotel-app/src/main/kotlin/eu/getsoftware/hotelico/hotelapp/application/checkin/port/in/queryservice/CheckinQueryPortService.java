@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.checkin.port.in.queryservice;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 

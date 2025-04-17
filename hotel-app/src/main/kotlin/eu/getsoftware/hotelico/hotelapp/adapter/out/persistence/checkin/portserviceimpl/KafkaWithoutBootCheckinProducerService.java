@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.portserviceimpl;
 
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.CheckinUpdatedEventPayload;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessage;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.CheckinUpdatedEventPayload;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.domainMessage.DomainMessage;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CheckinDomainEntityId;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -11,7 +11,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
 
-import static eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessagePayloadStatus.QUEUED;
+import static eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.domainMessage.DomainMessagePayloadStatus.QUEUED;
 
 public class KafkaWithoutBootCheckinProducerService {
     private Producer<String, DomainMessage<?>> producer;

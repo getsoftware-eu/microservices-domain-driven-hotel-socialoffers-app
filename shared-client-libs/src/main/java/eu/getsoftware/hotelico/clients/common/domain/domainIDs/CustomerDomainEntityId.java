@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.clients.common.domain.domainIDs;
 
 import eu.getsoftware.hotelico.clients.common.domain.EntityIdentifier;
+import jakarta.validation.constraints.NotEmpty;
 
 import java.util.UUID;
 
@@ -27,6 +28,9 @@ public record CustomerDomainEntityId(
         this(value.toString());
     } //Eu: additional constructor!!!
 
+    public static CustomerDomainEntityId from(@NotEmpty int value) {
+        return new CustomerDomainEntityId(String.valueOf(value), true);
+    }
 
     @Override
     public String toString() {

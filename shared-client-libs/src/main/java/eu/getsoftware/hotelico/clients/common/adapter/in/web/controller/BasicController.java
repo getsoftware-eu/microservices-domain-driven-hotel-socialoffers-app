@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.clients.common.adapter.in.web.controller;
 
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.JsonError;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.exception.JsonError;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

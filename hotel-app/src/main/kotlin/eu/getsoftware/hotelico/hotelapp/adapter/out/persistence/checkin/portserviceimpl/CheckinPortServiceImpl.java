@@ -1,9 +1,9 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.portserviceimpl;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinRequestDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.HotelDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseRequestDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.HotelDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity;
@@ -40,7 +40,7 @@ public class CheckinPortServiceImpl implements CheckinPortService, CheckinQueryP
     }
 
     @Override
-    public CheckinRootDomainEntity createCheckin(CheckinRequestDTO customerRequestDto) {
+    public CheckinRootDomainEntity createCheckin(CheckinUseCaseRequestDTO customerRequestDto) {
         return null;
     }
 
@@ -55,7 +55,7 @@ public class CheckinPortServiceImpl implements CheckinPortService, CheckinQueryP
     }
 
     @Override
-    public void deleteAllImagesAndAttachments(CheckinDTO checkinDTO) {
+    public void deleteAllImagesAndAttachments(CheckinUseCaseDTO checkinDTO) {
         
     }
 

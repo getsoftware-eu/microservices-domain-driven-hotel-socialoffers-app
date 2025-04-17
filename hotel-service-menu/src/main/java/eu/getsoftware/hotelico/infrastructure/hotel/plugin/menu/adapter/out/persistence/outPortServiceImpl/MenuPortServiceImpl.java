@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.outPortServiceImpl;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.menu.MenuItemDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.menu.MenuOrderDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.menu.MenuItemDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.menu.MenuOrderDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.DealStatus;

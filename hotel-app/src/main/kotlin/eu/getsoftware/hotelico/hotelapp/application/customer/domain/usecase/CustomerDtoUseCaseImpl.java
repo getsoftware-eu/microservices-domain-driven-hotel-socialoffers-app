@@ -1,9 +1,9 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.domain.usecase;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerRequestDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.usecase.CustomerRegisterRequestUseCaseDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.domain.BusinessException;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerRequestDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.usecase.CustomerRegisterRequestUseCaseDTO;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.exception.domain.BusinessException;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.gateways.CustomerGatewayService;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.mapper.CustomerDtoMapper;
 import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.CustomerDomainFactory;

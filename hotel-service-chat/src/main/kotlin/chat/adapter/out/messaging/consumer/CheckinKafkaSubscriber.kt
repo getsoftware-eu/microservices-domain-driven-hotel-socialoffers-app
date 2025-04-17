@@ -1,9 +1,9 @@
 package chat.adapter.out.messaging.consumer
 
 import chat.application.port.`in`.process.ChatCheckinProcessManagerService
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.CheckinUpdatedEventPayload
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessage
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.CheckinUpdatedEventPayload
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.domainMessage.DomainMessage
 import mu.KotlinLogging
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
@@ -28,9 +28,9 @@ internal class CheckinKafkaSubscriber(
 
         run {
             log.info("Processing event {}", message.getMessageType())
-            val checkinDTO: CheckinDTO = toCheckin(payload)
+            val checkinUseCaseDTO: CheckinUseCaseDTO = toCheckin(payload)
             //            checkinRepository.save(checkinDTO);
-            chatCheckinProcessManager.handleCheckinCreated(checkinDTO)
+            chatCheckinProcessManager.handleCheckinCreated(checkinUseCaseDTO)
         }
     }
 
@@ -41,7 +41,7 @@ internal class CheckinKafkaSubscriber(
 
         run {
             log.info("Processing event {}", message.getMessageType())
-            val checkin: CheckinDTO = toCheckin(payload)
+            val checkin: CheckinUseCaseDTO = toCheckin(payload)
             //            checkinRepository.partialUpdateCheckin(checkin);
             chatCheckinProcessManager.handleCheckinUpdated(checkin)
         }
@@ -65,8 +65,8 @@ internal class CheckinKafkaSubscriber(
      * @param payload
      * @return
      */
-    private fun toCheckin(payload: CheckinUpdatedEventPayload): CheckinDTO {
-        return CheckinDTO.builder()
+    private fun toCheckin(payload: CheckinUpdatedEventPayload): CheckinUseCaseDTO {
+        return CheckinUseCaseDTO.builder()
             .initId(payload.entityId)
             .checkinFrom(payload.checkinFrom)
             .checkinTo(payload.checkinTo)

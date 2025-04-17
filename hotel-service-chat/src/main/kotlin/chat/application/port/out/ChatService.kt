@@ -1,7 +1,7 @@
 package chat.application.port.out
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.chat.dto.ChatMsgDTO
 
 interface ChatService {
     

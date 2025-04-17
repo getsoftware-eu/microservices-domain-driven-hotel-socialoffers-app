@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.handler;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinRequestDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.HotelDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseRequestDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.HotelDTO;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.out.CheckinPortService;
 import jakarta.validation.constraints.NotNull;
@@ -16,7 +16,7 @@ public class CreateHotelCheckinHandler {
 
     @NotNull
     @Transactional
-    public CheckinRootDomainEntity handle(CheckinRequestDTO checkinRequestDTO, CustomerDTO customerEntity, HotelDTO hotelRootEntity, boolean isFullCheckin) {
+    public CheckinRootDomainEntity handle(CheckinUseCaseRequestDTO checkinRequestDTO, CustomerDTO customerEntity, HotelDTO hotelRootEntity, boolean isFullCheckin) {
         
         CheckinRootDomainEntity CheckinRootDomainEntity = checkinService.createCheckin(customerEntity, hotelRootEntity, true);
 //        CheckinRootDomainEntity.setCustomer(customerEntity);

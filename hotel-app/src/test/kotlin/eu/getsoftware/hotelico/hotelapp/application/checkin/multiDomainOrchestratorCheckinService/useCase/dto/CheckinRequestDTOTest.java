@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase.dto;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinRequestDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseRequestDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import org.junit.jupiter.api.Test;
@@ -17,7 +17,7 @@ class CheckinRequestDTOTest {
     @Test
     public void givenCheckinRequestDTO_whenWrongDates_thenError(){
         
-        assertThrows(IllegalArgumentException.class, () -> new CheckinRequestDTO(new CustomerDomainEntityId("123"), new HotelDomainEntityId("2"), new Date(), new Date(), 123, "Eugen"));
+        assertThrows(IllegalArgumentException.class, () -> new CheckinUseCaseRequestDTO(new CustomerDomainEntityId("123"), new HotelDomainEntityId("2"), new Date(), new Date(), 123, "Eugen"));
     }
     
 

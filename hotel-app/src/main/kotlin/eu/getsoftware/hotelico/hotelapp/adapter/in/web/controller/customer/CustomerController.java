@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller.customer;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;

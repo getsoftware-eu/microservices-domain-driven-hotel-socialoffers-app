@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.messaging;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.CheckinUpdatedEventPayload;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessage;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.CheckinUpdatedEventPayload;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.domainMessage.DomainMessage;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.model.CheckinDBEntity;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.repository.CheckinRepository;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
@@ -34,7 +34,7 @@ public class CheckinKafkaSubscriber {
         {
             log.info("Processing event {}", message.getMessageType());
             
-            CheckinDTO checkinDTO = toCheckinDTO(payload);//.build();
+            CheckinUseCaseDTO checkinDTO = toCheckinDTO(payload);//.build();
             
             if(checkinRepository.existsByDomainEntityId(checkinDTO.getInitId()))
                 throw new RuntimeException("not found");
@@ -52,7 +52,7 @@ public class CheckinKafkaSubscriber {
 
         {
             log.info("Processing event {}", message.getMessageType());
-            CheckinDTO checkinDTO = toCheckinDTO(payload);//.build();
+            CheckinUseCaseDTO checkinDTO = toCheckinDTO(payload);//.build();
 //            checkinRepository.partialUpdateCheckin(checkinDTO);
 
              CheckinDBEntity entity = checkinRepository.findByDomainEntityId(checkinDTO.getInitId()).orElseThrow(()-> new RuntimeException("not found"));
@@ -63,7 +63,7 @@ public class CheckinKafkaSubscriber {
         }
     }
 
-    private void applyDtoUpdates(CheckinRootDomainEntity entity, CheckinDTO checkin) {
+    private void applyDtoUpdates(CheckinRootDomainEntity entity, CheckinUseCaseDTO checkin) {
         //TODO
     }
 
@@ -84,8 +84,8 @@ public class CheckinKafkaSubscriber {
      * @param payload
      * @return
      */
-    private CheckinDTO toCheckinDTO(CheckinUpdatedEventPayload payload) {
-        return CheckinDTO.builder()
+    private CheckinUseCaseDTO toCheckinDTO(CheckinUpdatedEventPayload payload) {
+        return CheckinUseCaseDTO.builder()
                 .initId(payload.getEntityId())
                 .checkinFrom(payload.getCheckinFrom())
                 .checkinTo(payload.getCheckinTo())

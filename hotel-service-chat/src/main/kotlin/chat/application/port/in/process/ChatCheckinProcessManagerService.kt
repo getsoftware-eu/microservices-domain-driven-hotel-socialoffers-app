@@ -1,6 +1,6 @@
 package chat.application.port.`in`.process;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CheckinDomainEntityId
 import org.springframework.stereotype.Service
 
@@ -13,13 +13,13 @@ public class ChatCheckinProcessManagerService {
 
     /**
      * ProcessManager changes the domain layer!
-     * @param checkinDTO
+     * @param checkinUseCaseDTO
      */
-    fun handleCheckinUpdated(checkinDTO: CheckinDTO) {
+    fun handleCheckinUpdated(checkinUseCaseDTO: CheckinUseCaseDTO) {
         ;
     } 
     
-    fun handleCheckinCreated(checkinDTO: CheckinDTO) {
+    fun handleCheckinCreated(checkinUseCaseDTO: CheckinUseCaseDTO) {
         ;
     }  
     

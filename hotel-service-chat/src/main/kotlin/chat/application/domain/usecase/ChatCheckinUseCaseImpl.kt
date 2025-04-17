@@ -1,12 +1,12 @@
 package chat.application.domain.usecase
 
 import chat.application.port.`in`.process.ChatCheckinUseCase
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinRequestDTO
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseRequestDTO
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.chat.dto.ChatMsgDTO
 
 internal class ChatCheckinUseCaseImpl: ChatCheckinUseCase {
     
-    override fun createCustomerCheckinMsg(checkinRequestDto: CheckinRequestDTO): ChatMsgDTO {
+    override fun createCustomerCheckinMsg(checkinUseCaseRequestDto: CheckinUseCaseRequestDTO): ChatMsgDTO {
         TODO("Not yet implemented")
     }
 }

@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.service.amqp;
 
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.eventConsumeNotification.NotificationEvent;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.eventConsumeNotification.NotificationEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;

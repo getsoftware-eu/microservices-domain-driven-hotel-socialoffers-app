@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.mapper;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.HotelDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.HotelDTO;
 import eu.getsoftware.hotelico.clients.common.domain.mapper.DtoGenericMapper;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelRootDomainEntity;
 import org.mapstruct.Mapper;

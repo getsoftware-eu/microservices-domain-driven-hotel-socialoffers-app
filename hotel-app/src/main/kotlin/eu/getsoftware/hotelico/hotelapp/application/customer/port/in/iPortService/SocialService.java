@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.customer.port.in.iPortService;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 
 import java.util.Optional;
 

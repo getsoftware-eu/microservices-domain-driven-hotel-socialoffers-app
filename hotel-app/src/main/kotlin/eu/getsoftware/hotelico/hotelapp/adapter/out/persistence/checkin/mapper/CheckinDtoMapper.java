@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.checkin.mapper;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -14,7 +14,7 @@ public interface CheckinDtoMapper //extends DtoGenericMapper<CheckinRootDomainEn
 
 //    @Override
 //    @Mapping(target = "creationTime", defaultValue = "LocalDateTime.now().toString()")
-    CheckinDTO toDto(CheckinRootDomainEntity domain);
+    CheckinUseCaseDTO toDto(CheckinRootDomainEntity domain);
 
 //    @Mapping(source = "schadenAussenwirkungId", target = "schadenAussenwirkung")
 //    @Mapping(source = "haufSchadenAussenwirkungId", target = "haufSchadenAussenwirkung")

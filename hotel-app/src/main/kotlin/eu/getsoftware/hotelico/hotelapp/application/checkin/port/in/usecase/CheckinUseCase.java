@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.hotelapp.application.checkin.port.in.usecase;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinRequestDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseRequestDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +18,7 @@ public interface CheckinUseCase
 {
 //	CustomerDTO updateCheckin(CustomerRequestDTO customerDto);
 	
-	CheckinDTO createCustomerCheckin(CheckinRequestDTO customerRequestDto) throws Throwable;
+	CheckinUseCaseDTO createCustomerCheckin(CheckinUseCaseRequestDTO customerRequestDto) throws Throwable;
 	
 //	/**
 //	 * check the current checkin of logging user. It will find the current hotel of user

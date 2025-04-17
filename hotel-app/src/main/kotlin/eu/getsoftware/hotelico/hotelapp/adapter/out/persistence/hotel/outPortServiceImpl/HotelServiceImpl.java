@@ -1,9 +1,9 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.outPortServiceImpl;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.HotelDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.BasicHotelException;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.domain.BusinessException;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.HotelDTO;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.exception.BasicHotelException;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.exception.domain.BusinessException;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.ActivityDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;

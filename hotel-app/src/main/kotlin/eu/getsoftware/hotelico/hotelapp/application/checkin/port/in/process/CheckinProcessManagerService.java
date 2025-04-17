@@ -1,14 +1,14 @@
 package eu.getsoftware.hotelico.hotelapp.application.checkin.port.in.process;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
 
 public class CheckinProcessManagerService {
 
-    void handleCheckinUpdated(CheckinDTO checkinDTO) {
+    void handleCheckinUpdated(CheckinUseCaseDTO checkinDTO) {
         ;
     }
 
-    void handleCheckinCreated(CheckinDTO checkinDTO) {
+    void handleCheckinCreated(CheckinUseCaseDTO checkinDTO) {
         ;
     }
 

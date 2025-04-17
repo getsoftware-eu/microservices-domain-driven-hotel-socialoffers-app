@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.clients.api.infrastructure.notification.adapter.in.web;
 
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.eventConsumeNotification.NotificationEvent;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.eventConsumeNotification.NotificationEvent;
 import eu.getsoftware.hotelico.clients.api.infrastructure.notification.application.service.amqp.MessageProducerWithPersistence;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

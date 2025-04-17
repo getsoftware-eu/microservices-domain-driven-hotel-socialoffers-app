@@ -1,9 +1,9 @@
 package eu.getsoftware.hotelico.hotelapp.application.checkin.port.out;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinRequestDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.HotelDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseRequestDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.HotelDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity;
@@ -26,13 +26,13 @@ public interface CheckinPortService {
     
     void save(CheckinRootDomainEntity CheckinRootDomainEntity);
     
-    CheckinRootDomainEntity createCheckin(CheckinRequestDTO customerRequestDto);
+    CheckinRootDomainEntity createCheckin(CheckinUseCaseRequestDTO customerRequestDto);
 
     CheckinRootDomainEntity createCheckin(CustomerDTO customer, HotelDTO hotel, boolean isFullCheckin);
     
 //    CheckinDTO getResponseDTO(CheckinRootDomainEntity newCheckin);
 
-    void deleteAllImagesAndAttachments(CheckinDTO checkinDTO);
+    void deleteAllImagesAndAttachments(CheckinUseCaseDTO checkinDTO);
 
     CustomerDTO updateCheckin(CustomerDTO sessionCustomer);
 

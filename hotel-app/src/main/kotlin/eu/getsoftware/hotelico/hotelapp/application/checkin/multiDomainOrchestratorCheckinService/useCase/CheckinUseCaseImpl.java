@@ -1,13 +1,13 @@
 package eu.getsoftware.hotelico.hotelapp.application.checkin.multiDomainOrchestratorCheckinService.useCase;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinRequestDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.HotelDTO;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.innerEvents.InnerDomainEventImpl;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.exception.domain.BusinessException;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseRequestDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.HotelDTO;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.amqpConsumeNotification.ChatMessageCommand;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.innerEvents.InnerDomainEventImpl;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.exception.domain.BusinessException;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
@@ -121,7 +121,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 	@Transactional
 	@Override
-	public CheckinDTO createCustomerCheckin(@Validated CheckinRequestDTO customerRequestDto) {
+	public CheckinUseCaseDTO createCustomerCheckin(@Validated CheckinUseCaseRequestDTO customerRequestDto) {
 
 		// UseCase : Primary-flow
 		//eu: error: not validate DTO!!! DTO validates itself!!!! 
@@ -135,7 +135,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		
 		sendInitMessageFromHotelStaffToCustomer(entity); //UseCase.Primary-flow.step.4
 		
-		CheckinDTO checkinResponseDTO = checkinDtoMapper.toDto(entity); //UseCase.Primary-flow.step.5
+		CheckinUseCaseDTO checkinResponseDTO = checkinDtoMapper.toDto(entity); //UseCase.Primary-flow.step.5
 		
 		//eu: error: create no commands to other domains, they receive event and execute own logik!!!
 		sendHotelNewGuestSocketNotificationCommand(checkinResponseDTO);
@@ -145,7 +145,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 
 
-	public CheckinRootDomainEntity createCheckin(CheckinRequestDTO checkinRequestDto) {
+	public CheckinRootDomainEntity createCheckin(CheckinUseCaseRequestDTO checkinRequestDto) {
 
 		CustomerRootDomainEntity customerDomainEntity = customerGatewayService.findOrThrow(checkinRequestDto.customerId());
 //				.orElseThrow(() -> new BusinessException("Customer " + checkinRequestDto.customerId()+ " not found"));
@@ -275,7 +275,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 	 * eu: not manually event, but @Observer repository or Service!!!
 	 * @param checkinResponseDTO
 	 */
-	private void sendHotelNewGuestSocketNotificationCommand(CheckinDTO checkinResponseDTO) {
+	private void sendHotelNewGuestSocketNotificationCommand(CheckinUseCaseDTO checkinResponseDTO) {
 
 		//eu:1 NOT MANUALLY, BUT WITH Service @OBSERVER!!! with DDD Publisher!
 		// checkinMessagePublisher.publishCheckinCreatedEvent(checkinResponseDTO);
@@ -309,7 +309,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 	
 
-	private Optional<HotelRootDomainEntity> getHotelEntityFromCheckinRequest(CheckinRequestDTO checkinRequestDto) {
+	private Optional<HotelRootDomainEntity> getHotelEntityFromCheckinRequest(CheckinUseCaseRequestDTO checkinRequestDto) {
 
 		HotelDomainEntityId virtualHotelId = lastMessagesService.getInitHotelId();
 
@@ -353,7 +353,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		messagingProducerService.sendChatMessageCommand(welcomeChatMessageCommand); //UseCase.Primary-flow.step.6
 	}
 
-	private void updateHotelCheckin(CheckinRequestDTO checkinRequestDTO, CustomerRootDomainEntity customerEntity, CheckinRootDomainEntity nextCheckin, boolean isFullCheckin) {
+	private void updateHotelCheckin(CheckinUseCaseRequestDTO checkinRequestDTO, CustomerRootDomainEntity customerEntity, CheckinRootDomainEntity nextCheckin, boolean isFullCheckin) {
 		//update the values of checkin
 		nextCheckin.setValidFrom(checkinRequestDTO.checkinFrom());
 		nextCheckin.setValidTo(checkinRequestDTO.checkinTo());

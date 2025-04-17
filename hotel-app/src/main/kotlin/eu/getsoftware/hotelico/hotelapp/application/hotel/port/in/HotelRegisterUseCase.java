@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.hotelapp.application.hotel.port.in;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.HotelDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.HotelDTO;
 import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.usecase.register.dto.HotelRegisterRequestDTO;
 
 /**

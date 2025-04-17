@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller.checkin;
 
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinDTO;
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CheckinRequestDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseRequestDTO;
 import eu.getsoftware.hotelico.hotelapp.application.checkin.port.in.usecase.CheckinUseCase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +34,14 @@ class CheckinControllerTest {
         Date toDate = new Date();
         toDate.setMonth(12);
         
-        CheckinDTO mockResponse = CheckinDTO.builder()
+        CheckinUseCaseDTO mockResponse = CheckinUseCaseDTO.builder()
                 .customerId(1)
                 .hotelId(2)
                 .checkinFrom(fromDate)
                 .checkinTo(toDate)
                 .build();
 
-        when(checkinUseCase.createCustomerCheckin(any(CheckinRequestDTO.class)))
+        when(checkinUseCase.createCustomerCheckin(any(CheckinUseCaseRequestDTO.class)))
                 .thenReturn(mockResponse);
 
         mockMvc.perform(post("/users/register")

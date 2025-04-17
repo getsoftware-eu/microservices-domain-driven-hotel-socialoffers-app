@@ -3,8 +3,8 @@ package chat.adapter.`in`.web.controller;
 import chat.application.port.out.ChatDTOService
 import chat.application.port.out.ChatService
 import com.fasterxml.jackson.databind.ObjectMapper
-import eu.getsoftware.hotelico.clients.api.clients.dto.entity.CustomerDTO
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.chat.dto.ChatMsgDTO
 import eu.getsoftware.hotelico.clients.common.adapter.`in`.web.controller.BasicController
 import io.swagger.annotations.ApiOperation
 import mu.KotlinLogging

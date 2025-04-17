@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.messaging.consumer;
 
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.HotelUpdateEventMessagePayload;
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.domainEvents.domainMessage.DomainMessage;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.amqpConsumeNotification.ChatMessageCommand;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.HotelUpdateEventMessagePayload;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.domainMessage.DomainMessage;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.messaging.service.MenuMessageService;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.model.MenuUserMappedEntity;
 import eu.getsoftware.hotelico.infrastructure.hotel.plugin.menu.adapter.out.persistence.repository.MenuUserRepository;

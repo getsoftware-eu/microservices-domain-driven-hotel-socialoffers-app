@@ -2,7 +2,7 @@ package chat.adapter.out.persistence.repository
 
 import chat.adapter.out.persistence.model.ChatMessageMappedEntity
 import chat.adapter.out.persistence.model.ChatUserMappedEntity
-import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.chat.dto.ChatMsgDTO
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.data.mongodb.repository.Query
