@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/common-client-api-libs/common-client-api-libs.iml" filepath="$PROJECT_DIR$/common-client-api-libs/common-client-api-libs.iml" />
       <module fileurl="file://$PROJECT_DIR$/kafka-stream-topdeal-app/kafka-streams-app.iml" filepath="$PROJECT_DIR$/kafka-stream-topdeal-app/kafka-streams-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/security-common/security-common.iml" filepath="$PROJECT_DIR$/security-common/security-common.iml" />
     </modules>
   </component>
 </project>

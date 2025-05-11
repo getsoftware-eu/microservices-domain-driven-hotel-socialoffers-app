@@ -90,11 +90,16 @@
         </plugins>
     </build>
 
-    <dependencies>
+    <dependencies><!-- добавь только специфичные зависимости (если они не в parent) -->
         <dependency>
             <groupId>eu.getsoftware.hotelico</groupId>
             <artifactId>shared-client-libs</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>eu.getsoftware.hotelico</groupId>
+            <artifactId>security-common</artifactId>
         </dependency>
         
         <dependency>
@@ -127,5 +132,9 @@
             <artifactId>kotlin-logging-jvm</artifactId>
             <version>3.0.5</version>
         </dependency>
+
+        <!--     eu:   removed libs in security-common-->
+
+        
     </dependencies>
 </project>

@@ -58,19 +58,49 @@ spring:
     allow-bean-definition-overriding: true
   application:
     name: hotel-client
+  security:
+    oauth2:
+      resourceserver: 
+        jwt:
+          issuer-uri: http://localhost:8080/realms/hotel-socialoffers
+          #issuer-uri заменяет необходимость в KeycloakConfigResolver.
+      client:
+        registration:
+          keycloak:
+            client-id: your-client-id
+            client-secret: <copy client-secret from Keycloak>
+            scope: openid
+            authorization-grant-type: client_credentials
+#            redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
+            provider: keycloak
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/realms/hotel-socialoffers #Realm = hotel-socialoffers
+            user-name-attribute: preferred_username
+
 #entitymanager:
 #  packagesToScan: de.getsoftware.smsbridge.model      
 security:
-  basic.enabled: false #eugen: not in spring boot 2.x      
+  basic.enabled: false #eugen: not in spring boot 2.x  
+
+hotelico:
+  security:
+    keycloak:
+      issuer-uri: http://localhost:8080/realms/hotel-socialoffers
+    
 #liquibase.change-log: classpath:/db/changelog/db.changelog-master.xml #boot2: liquibase.change-log: classpath:/db/changelog/db.changelog-master.xml
 server:
   port: 5000
   error:
     whitelabel.enabled: false
-
-
-
     
+keycloak:
+  auth-server-url: http://localhost:8080
+  realm: hotel-socialoffers
+  resource: hotel-app
+  credentials:
+    secret: YOUR_CLIENT_SECRET
+
 eureka:
   client:
     service-url:

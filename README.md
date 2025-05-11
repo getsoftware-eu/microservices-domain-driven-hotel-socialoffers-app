@@ -39,7 +39,7 @@ The "Clean" (Layered) Architecture is another way to provide <b>separation of co
 2. <b>Adapter</b> layer - Implementation of port-IServices (UserServiceImpl), that was declared in- and will be injected in-INTERACTOR
 
      - <b>in</b> adapters:
-        - specific user request (Controller Adapters)
+        - specific user request (openapi generated Controller Adapters)
     - <b>out</b> adapters:
         - persistence details + mapping (Infrastructure Adapters)
         - Presenter (ViewModel Adapters)

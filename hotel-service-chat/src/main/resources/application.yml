@@ -1,10 +1,34 @@
 spring:
+  application:
+      name: chat-service
   data:
     mongodb:
       host: localhost
       port: 27017
       database: chat_db
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/hotel-socialoffers #common Realm = hotel-socialoffers
+      
+      client:
+        registration:
+          keycloak-client:
+            client-id: hotel-service-chat
+            client-secret: <copy client-secret from Keycloak>
+            authorization-grant-type: client_credentials
+            scope: openid
+            provider: keycloak
+        
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8080/realms/hotel-socialoffers
+hotelico:
+  security:
 
+    keycloak:
+      issuer-uri: http://localhost:8080/realms/hotel-socialoffers
 
 logging:
   structured:
