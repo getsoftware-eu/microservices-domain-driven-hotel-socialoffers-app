@@ -1,7 +1,7 @@
 # Description
 Briefly describe what was done in this pull request and what issues it addresses.
 
-## Type of Changes
+## Type of Changes 
 Please select the type of change:
 - [ ] Bugfix (non-breaking change that fixes an issue)
 - [ ] New Feature (new functionality or feature)
