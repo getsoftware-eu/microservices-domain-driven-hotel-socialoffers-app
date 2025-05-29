@@ -11,7 +11,6 @@ import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component
-import java.util.*
 
 private val log = KotlinLogging.logger {}
 
@@ -45,9 +44,9 @@ internal class KafkaChatEventsConsumer (
             //            entity.setFirstName(payload.getSenderName());
         } else {
             val updatedChatUser = updatedChatUserOptional.get()
-            entity = chatUserRepository.findByUserId(updatedChatUser.id)
+            entity = chatUserRepository.findByUserDomainId(updatedChatUser.getUserDomainId())
 
-            entity.firstName = updatedChatUser.firstName
+            entity.setFirstName(updatedChatUser.getFirstName())
         }
 
         chatUserRepository.save(entity)
@@ -63,7 +62,7 @@ internal class KafkaChatEventsConsumer (
         
         log.info("Consumed from topic: {}", mapOf("event" to "consumeChatMessageNotification", "chatMessageRequest" to chatMessageRequest, "customMsg" to chatMessageRequest.customMsg ))
 
-        val chatMsgOpt: Optional<ChatMessageMappedEntity>? 
+        val chatMsgOpt: ChatMessageMappedEntity? 
 
         if (chatMessageRequest.lastMessage) {
             chatMsgOpt = chatMessageService.getLastChatMessage(

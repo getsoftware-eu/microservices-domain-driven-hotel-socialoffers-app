@@ -28,6 +28,7 @@
         <dependency>
             <groupId>eu.getsoftware.hotelico</groupId>
             <artifactId>security-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         
         <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-cache -->

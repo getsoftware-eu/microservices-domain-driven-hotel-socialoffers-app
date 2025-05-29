@@ -1,3 +1,6 @@
 API-Classes to import to other projcts? To synchronize REST API???
 
+Eu: better not to use Lombok for shared modules!!!
+- all importing modules must use the same version of Lombok 
+
 The client folder is an important part of a microservice system, providing a centralized and unified way for services to communicate with each other.

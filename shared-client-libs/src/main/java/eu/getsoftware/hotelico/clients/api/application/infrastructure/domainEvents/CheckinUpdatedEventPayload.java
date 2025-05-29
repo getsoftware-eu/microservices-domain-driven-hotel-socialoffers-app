@@ -39,4 +39,8 @@ public class CheckinUpdatedEventPayload extends DomainMessagePayload {
     private Date checkinTo;
 
     private DomainMessagePayloadStatus status;
+
+    public CheckinDomainEntityId getEntityId() {
+        return entityId;
+    }
 }

@@ -25,6 +25,8 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+            <!--scope=provided означает: использовать во время компиляции, не включать в jar.-->
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>

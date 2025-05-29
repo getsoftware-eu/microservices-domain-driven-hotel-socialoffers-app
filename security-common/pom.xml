@@ -11,6 +11,7 @@
     </parent>
 
     <artifactId>security-common</artifactId>
+    <version>0.0.1-SNAPSHOT</version> <!-- ← добавь это -->
 
     <dependencies>
         <!-- eu: only here add all security-dependencies, not in paren pom!! 
@@ -33,7 +34,10 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

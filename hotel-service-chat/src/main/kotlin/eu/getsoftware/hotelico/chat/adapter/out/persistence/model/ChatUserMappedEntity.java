@@ -16,7 +16,8 @@ public class ChatUserMappedEntity implements Serializable
   
   @Id
   private long id;
-  
+
+  @Getter
 //  @Convert(converter = CustomerDomainEntityId.class)
   //@Embedded @Column(unique = true, nullable = false)
   private CustomerDomainEntityId userDomainId;
@@ -30,4 +31,16 @@ public class ChatUserMappedEntity implements Serializable
   private String lastName;
   
   private String email;
+  
+  public CustomerDomainEntityId getUserDomainId() {
+    return userDomainId;
+  }
+
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
+
+  public String getFirstName() {
+    return firstName;
+  }
 }

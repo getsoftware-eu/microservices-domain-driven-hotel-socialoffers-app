@@ -241,7 +241,8 @@ public class MenuPortServiceImpl implements IMenuPortService
 
 		if(menuOrders.isEmpty())
 		{
-			menuOrder = menuOrderRepository.getOne(initMenuOrderId);
+			menuOrder = menuOrderRepository.findById(initMenuOrderId)
+				.orElseThrow(() -> new RuntimeException("Menu item not found with id: " + initMenuOrderId));
 		}
 
 		if(!menuOrders.isEmpty())
@@ -338,7 +339,8 @@ public class MenuPortServiceImpl implements IMenuPortService
 
 				int newOrderIndex = Integer.parseInt(split[1]);
 
-                MenuItemMappedEntity menuItem = menuItemRepository.getOne(menuItemId);
+                MenuItemMappedEntity menuItem = menuItemRepository.findById(menuItemId)
+						.orElseThrow(() -> new RuntimeException("Menu item not found with id: " + menuItemId));
 
 				if(menuItem!=null && menuItem.getOrderIndex()!=newOrderIndex)
 				{
@@ -395,7 +397,9 @@ public class MenuPortServiceImpl implements IMenuPortService
 
 		if(menuOrders.isEmpty())
 		{
-			menuOrder = menuOrderRepository.getOne(initMenuOrderId);
+			menuOrder = menuOrderRepository.findById(initMenuOrderId)
+				.orElseThrow(() -> new RuntimeException("Menu item not found with id: " + initMenuOrderId));
+
 		}
 
 		if(!menuOrders.isEmpty())
