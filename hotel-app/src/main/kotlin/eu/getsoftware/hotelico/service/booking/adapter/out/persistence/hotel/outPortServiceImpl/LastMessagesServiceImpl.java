@@ -9,12 +9,12 @@ import eu.getsoftware.hotelico.clients.api.application.infrastructure.chat.dto.C
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.HotelRepository;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.repository.CheckinRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.HotelRepository;
 import eu.getsoftware.hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.LastMessagesService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;

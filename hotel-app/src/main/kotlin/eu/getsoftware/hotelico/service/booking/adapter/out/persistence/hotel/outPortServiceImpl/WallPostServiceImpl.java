@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.ou
 
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.HotelDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.model.IHotelWallPost;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.IWallpostService;
 import lombok.RequiredArgsConstructor;

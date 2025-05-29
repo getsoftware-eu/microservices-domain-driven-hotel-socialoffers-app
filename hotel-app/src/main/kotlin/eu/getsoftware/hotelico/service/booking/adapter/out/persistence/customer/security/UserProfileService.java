@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.security;
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.outPortServiceImpl.FileStore;
 import eu.getsoftware.hotelico.service.booking.config.adapter.s3.BucketName;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.*;
 
-import static org.apache.http.entity.ContentType.*;
+import static org.springframework.http.MediaType.IMAGE_JPEG;
 
 @Service
 public class UserProfileService
@@ -91,12 +91,7 @@ public class UserProfileService
     }
 
     private void isImage(MultipartFile file) {
-        if (!Arrays.asList(
-                IMAGE_JPEG.getMimeType(),
-                IMAGE_PNG.getMimeType(),
-                IMAGE_GIF.getMimeType()).contains(file.getContentType())) {
             throw new IllegalStateException("File must be an image [" + file.getContentType() + "]");
-        }
     }
 
     private void isFileEmpty(MultipartFile file) {

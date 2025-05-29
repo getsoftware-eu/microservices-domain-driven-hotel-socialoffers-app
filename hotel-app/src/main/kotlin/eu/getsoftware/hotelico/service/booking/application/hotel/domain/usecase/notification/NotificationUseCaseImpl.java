@@ -8,9 +8,6 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEnt
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.InnerHotelEvent;
 import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.ChatMessageView;
@@ -19,6 +16,9 @@ import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.Chec
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.IHotelActivity;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import eu.getsoftware.hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.in.NotificationUseCase;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.*;
 import eu.getsoftware.hotelico.service.booking.application.menu.infrastructure.service.MenuMSCommunicationService;
@@ -35,6 +35,7 @@ import org.springframework.web.client.RestTemplate;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.*;
 
 /**
@@ -158,7 +159,7 @@ import java.util.*;
 			}
 			
 			////// HOTEL GUESTS
-			Integer hotelGuestsCount = checkinService.getActiveCountByHotelId(receiverHotelId, new Date());
+			Integer hotelGuestsCount = checkinService.getActiveCountByHotelId(receiverHotelId, LocalDate.now());
 			
 			nextNotification.setHotelGuestsNumber(hotelGuestsCount);
 			
@@ -658,7 +659,7 @@ import java.util.*;
 
 		Set<String> loggedGuestPushIds = new HashSet<>();
 		
-		List<CustomerDTO> allActiveInHotel = checkinService.getActiveCustomersByHotelId(hotelActivity.getHotelId(), new Date());
+		List<CustomerDTO> allActiveInHotel = checkinService.getActiveCustomersByHotelId(hotelActivity.getHotelId(), LocalDate.now());
 		
 		for (CustomerDTO nextActiveCustomerRootEntity : allActiveInHotel)
 		{

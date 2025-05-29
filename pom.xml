@@ -40,6 +40,8 @@
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 
+		<lombok.version>1.18.30</lombok.version>
+
 		<image>eugenfff/${project.artifactId}:${project.version}</image>
 <!--		eugen example for sub modules-->
 <!--			<artifactId>notification</artifactId>-->
@@ -90,11 +92,14 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<dependencies><!-- автоматически будут у всех child modules, если ты их явно не отключишь -
+	<dependencies>
+		
+		<!-- автоматически будут у всех child modules, если ты их явно не отключишь -
  		don't add dependency here : if если они нужны НЕ во ВСЕХ child modules
  		Секция dependencies в дочерних POM используется для подключения библиотек. 
 			Если версия указана в dependencyManagement родительского POM, 
 			в дочерних модулях версию указывать не нужно.-->
+		
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -162,7 +167,7 @@
 				<plugin>
 					<groupId>org.jetbrains.kotlin</groupId>
 					<artifactId>kotlin-maven-plugin</artifactId>
-					                <version>${kotlin.version}</version> <!--from dependencyManagement: org.springframework.cloud
+					<version>${kotlin.version}</version> <!--from dependencyManagement: org.springframework.cloud
 -->
 					<configuration>
 						<compilerPlugins>
@@ -217,6 +222,11 @@
 								<groupId>org.mapstruct</groupId>
 								<artifactId>mapstruct-processor</artifactId>
 								<version>${mapstruct.version}</version> <!-- Use the property here -->
+							</annotationProcessorPath>
+							<annotationProcessorPath>
+								<groupId>org.projectlombok</groupId>
+								<artifactId>lombok</artifactId>
+								<version>${lombok.version}</version> <!-- или используй ту же версию, что в Spring Boot BOM -->
 							</annotationProcessorPath>
 						</annotationProcessorPaths>
 					</configuration>

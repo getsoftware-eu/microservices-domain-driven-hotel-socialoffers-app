@@ -1,5 +1,7 @@
 package eu.getsoftware.hotelico.chat.adapter.out.keycloakRest;
 
+import org.springframework.web.reactive.function.client.WebClient;
+
 public class TestWebClientRest {
     
     private WebClient webClient;

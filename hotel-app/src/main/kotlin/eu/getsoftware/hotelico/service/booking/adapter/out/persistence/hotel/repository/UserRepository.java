@@ -2,7 +2,7 @@ package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.re
 //
 
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.UserEntity;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

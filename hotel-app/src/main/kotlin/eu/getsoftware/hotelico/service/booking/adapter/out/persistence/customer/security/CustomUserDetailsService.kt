@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.security//package eu.getsoftware.hotelico.clients.infrastructure.service.security.impl
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.UserEntity
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.UserRolesRepository
-import eu.getsoftware.hotelico.hotelapp.application.customer.domain.infrastructure.security.CustomUserDetails
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.UserEntity
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.UserRolesRepository
+import eu.getsoftware.hotelico.service.booking.application.customer.domain.infrastructure.security.CustomUserDetails
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService

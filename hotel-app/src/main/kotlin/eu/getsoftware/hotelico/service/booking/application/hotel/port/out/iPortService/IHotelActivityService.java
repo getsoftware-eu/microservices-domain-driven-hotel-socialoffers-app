@@ -2,10 +2,10 @@ package eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPort
 
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.utils.ReorderAction;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

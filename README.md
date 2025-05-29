@@ -1,6 +1,6 @@
 # My Vision of Clean Architecture and Domain-driven Design using microservices and AWS
 
-In this project, I use a <b>Hexagon</b> as a boundary between an application and the outside world. 
+This is my reference project demonstrating <b>Hexagon</b> architecture as a boundary between an application and the outside world. 
 
 Inside the 'hexagon', I use a mix of simplified <b>Domain-Driven Design</b> (DDD) with <b>Clean</b>-Architecture (The 'infrastructure' and 'use case' logic is grouped into separate layers).
 

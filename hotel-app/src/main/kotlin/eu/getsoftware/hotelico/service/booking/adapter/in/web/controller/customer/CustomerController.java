@@ -5,11 +5,10 @@ import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicCon
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinPortService;
 import eu.getsoftware.hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.aspects.NotifyClients;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.INotificationService;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.LastMessagesService;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.LoginHotelicoService;

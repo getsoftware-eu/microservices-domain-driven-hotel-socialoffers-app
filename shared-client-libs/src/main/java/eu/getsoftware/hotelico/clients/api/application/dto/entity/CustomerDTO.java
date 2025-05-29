@@ -215,10 +215,10 @@ public class CustomerDTO extends BasicDTO<CustomerDomainEntityId>
 //        this.hotelId = id;
 //    }
 
-    public void setCheckinFrom(Date validFrom) {
+    public void setCheckinFrom(LocalDate validFrom) {
     }
 
-    public void setCheckinTo(Date validTo) {
+    public void setCheckinTo(LocalDate validTo) {
         
     }
 

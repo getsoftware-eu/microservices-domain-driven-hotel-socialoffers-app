@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.UserRole
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.UserRole
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository

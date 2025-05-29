@@ -2,11 +2,11 @@ package eu.getsoftware.hotelico.service.booking.application.hotel.port.in;
 
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.InnerHotelEvent;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.IHotelActivity;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.WallPostDTO;
 
 import java.util.Map;
 

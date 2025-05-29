@@ -9,24 +9,24 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEnt
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.WallPostDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.*;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.ActivityRepository;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.hotel.repository.HotelRepository;
-import eu.getsoftware.hotelico.hotelapp.application.deal.domain.infrastructure.dto.CustomerDealDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDbActivity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.repository.CheckinRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.HotelDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.HotelWallPost;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.InnerHotelEvent;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.ActivityRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.DealRepository;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.HotelRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.WallPostRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.CustomerDeal;
 import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinPortService;
 import eu.getsoftware.hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
+import eu.getsoftware.hotelico.service.booking.application.deal.domain.infrastructure.dto.CustomerDealDTO;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.ResponseDTO;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.model.customDomainModelImpl.HotelRootDomainEntity;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.IHotelService;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.INotificationService;
@@ -1236,7 +1236,7 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
 
         hotelActivity.setValidFrom(hotelActivityDto.getValidFrom() != null ? hotelActivityDto.getValidFrom() : LocalDate.now());
 
-        hotelActivity.setValidTo(hotelActivityDto.getValidTo() != null && !hotelActivityDto.getLastMinute() ? hotelActivityDto.getValidTo() : hotelActivityDto.getLastMinute() ? AppConfigProperties.convertToDate(LocalDateTime.now().plusDays(1).withHour(4)) : AppConfigProperties.convertToDate(LocalDateTime.now().plusDays(7)));
+        hotelActivity.setValidTo(hotelActivityDto.getValidTo() != null && !hotelActivityDto.getLastMinute() ? hotelActivityDto.getValidTo() : hotelActivityDto.getLastMinute() ? AppConfigProperties.convertToLocalDate(LocalDateTime.now().plusDays(1).withHour(4)) : AppConfigProperties.convertToLocalDate(LocalDateTime.now().plusDays(7)));
 
         hotelActivity.setActive(hotelActivityDto.isActiveBoolean());
         hotelActivity.setLastMinute(hotelActivityDto.getLastMinute());

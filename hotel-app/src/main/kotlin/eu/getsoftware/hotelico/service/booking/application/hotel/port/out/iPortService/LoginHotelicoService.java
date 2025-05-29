@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService;
 
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
@@ -21,7 +21,8 @@ public interface LoginHotelicoService
 	
 	@Transactional CustomerDTO resetPassword(String email, String resetCode);
 	
-	@Transactional ResponseDTO requestPasswordReset(String email);
+	@Transactional
+	ResponseDTO requestPasswordReset(String email);
 	
 	@Transactional
 	void setLogged(long customerId, boolean logged);

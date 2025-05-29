@@ -9,6 +9,7 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntity
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.service.booking.application.checkin.domain.CheckinRootDomainEntity;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -36,4 +37,7 @@ public interface CheckinPortService {
 
     CustomerDTO updateCheckin(CustomerDTO sessionCustomer);
 
-    }
+    List<CustomerDTO> getActiveCustomersByHotelId(HotelDomainEntityId hotelId, LocalDate date);
+
+    Integer getActiveCountByHotelId(HotelDomainEntityId receiverHotelId, LocalDate now);
+}

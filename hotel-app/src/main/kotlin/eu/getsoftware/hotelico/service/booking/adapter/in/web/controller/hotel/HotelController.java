@@ -6,10 +6,10 @@ import eu.getsoftware.hotelico.clients.api.application.infrastructure.exception.
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.ResponseDTO;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.aspects.NotifyClients;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.ResponseDTO;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.IHotelService;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.IWallpostService;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.LastMessagesService;

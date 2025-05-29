@@ -5,6 +5,7 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntity
 import eu.getsoftware.hotelico.service.booking.application.checkin.domain.CheckinRootDomainEntity;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 /**
@@ -20,8 +21,10 @@ public interface CustomerDtoMapper //extends DtoGenericMapper<CustomerRootDomain
 
     CustomerDTO toFullDto(CustomerRootDomainEntity customerDomainEntity);
 
+    @Mapping(target = "domainEntityId", expression = "java(new CustomerDomainEntityId(dto.getDomainEntityId()))")
     CustomerDTO toDtoWithHotelInfo(CustomerRootDomainEntity customerDomainEntity, HotelDomainEntityId domainEntityId);
 
+    @Mapping(target = "domainEntityId", expression = "java(new CustomerDomainEntityId(dto.getDomainEntityId()))")
     CustomerDTO fillDtoWithHotelInfo(CustomerDTO dto, CheckinRootDomainEntity validCheckin);
 
 //    @Mapping(source = "schadenAussenwirkungId", target = "schadenAussenwirkung")

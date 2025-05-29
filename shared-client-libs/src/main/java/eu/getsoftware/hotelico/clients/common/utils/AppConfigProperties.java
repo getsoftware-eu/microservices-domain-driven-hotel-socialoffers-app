@@ -5,6 +5,7 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEnt
 import java.nio.file.Path;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
@@ -260,8 +261,9 @@ public class AppConfigProperties
 	{
 		return String.valueOf(ThreadLocalRandom.current().nextInt(1, 999999));
 	}
-	
-	
-	
-	
+
+
+	public static LocalDate convertToLocalDate(LocalDateTime localDateTime) {
+		return localDateTime.toLocalDate();
+	}
 }

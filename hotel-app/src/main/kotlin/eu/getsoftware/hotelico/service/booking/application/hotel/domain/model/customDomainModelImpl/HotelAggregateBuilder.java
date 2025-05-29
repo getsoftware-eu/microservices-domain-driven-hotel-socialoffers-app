@@ -3,7 +3,6 @@ package eu.getsoftware.hotelico.service.booking.application.hotel.domain.model.c
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.innerEvents.InnerDomainEventRequestDTO;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.innerEvents.InnerDomainEventsProducerService;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.chat.messaging.HotelInnerEventPublisher;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.InnerHotelEvent;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.model.AddressValueObject;
 import org.modelmapper.ModelMapper;
@@ -16,7 +15,7 @@ public class HotelAggregateBuilder
     private HotelRootDomainEntity hotelDomainEntity;
     private InnerDomainEventsProducerService<InnerHotelEvent> innerDomainEventsProducerService;
     private ModelMapper modelMapper;
-    private HotelInnerEventPublisher hotelInnerEventPublisher;
+//    private HotelInnerEventPublisher hotelInnerEventPublisher;
 
     void setHotelDomainAction(HotelDomainEntityId hotelId){
 
@@ -33,7 +32,7 @@ public class HotelAggregateBuilder
 
     void onInnerEvent(InnerDomainEventRequestDTO innerEvent){
 
-        hotelInnerEventPublisher.publishInnerEvent(innerEvent);
+        innerDomainEventsProducerService.publishInnerEvent(innerEvent);
     }
 
     /**

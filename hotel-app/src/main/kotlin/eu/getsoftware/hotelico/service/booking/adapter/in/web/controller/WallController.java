@@ -4,7 +4,7 @@ import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
-import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.dto.WallPostDTO;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.IHotelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

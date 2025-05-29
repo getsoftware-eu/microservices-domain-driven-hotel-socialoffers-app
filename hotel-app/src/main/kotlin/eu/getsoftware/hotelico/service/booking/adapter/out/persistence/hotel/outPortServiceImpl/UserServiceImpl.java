@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.outPortServiceImpl;//package de.hotelico.service.impl;
 
-import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.UserEntity;
-import eu.getsoftware.hotelico.hotelapp.application.customer.common.dto.UserDTO;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.UserEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.UserRepository;
+import eu.getsoftware.hotelico.service.booking.application.customer.common.dto.UserDTO;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.IUserService;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
@@ -41,7 +41,7 @@ public class UserServiceImpl implements IUserService
     }
 
     public UserDTO getById(int userId) {
-        UserEntity dto = userRepository.getOne(userId);
+        UserEntity dto = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
         UserDTO out = dto==null? null : (mapper.map(dto, UserDTO.class));
         return out;
     }
