@@ -1,0 +1,20 @@
+postgresql:
+  auth:
+    username: hotelico_user
+    password: hotelico_pass
+    database: hotelico_db
+  primary:
+    persistence:
+      enabled: true
+      size: 1Gi
+  service:
+    port: 5432  
+    
+keycloak:
+  auth:
+    adminUser: admin
+    adminPassword: admin123
+  service:
+    type: ClusterIP
+  ingress:
+    enabled: false
