@@ -43,4 +43,8 @@ public class WallPostDTO implements BasicDTO<WallPostDomainEntityId> {
     public void setHotelId(HotelDomainEntityId domainEntityId) {
         this.hotelId= domainEntityId;
     }
+
+    public void setSequenceId(long id) {
+        
+    }
 }

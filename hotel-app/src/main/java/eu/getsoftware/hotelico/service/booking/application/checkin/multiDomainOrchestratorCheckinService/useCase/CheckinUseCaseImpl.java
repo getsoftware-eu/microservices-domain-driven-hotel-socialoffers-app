@@ -355,8 +355,8 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 	private void updateHotelCheckin(CheckinUseCaseRequestDTO checkinRequestDTO, CustomerRootDomainEntity customerEntity, CheckinRootDomainEntity nextCheckin, boolean isFullCheckin) {
 		//update the values of checkin
-		nextCheckin.setValidFrom(checkinRequestDTO.checkinFrom());
-		nextCheckin.setValidTo(checkinRequestDTO.checkinTo());
+		nextCheckin.setLvalidFrom(checkinRequestDTO.checkinFrom());
+		nextCheckin.setLvalidTo(checkinRequestDTO.checkinTo());
 //		nextCheckin.setStaffCheckin(customerEntity.isHotelStaff);
 		nextCheckin.setFullCheckin(isFullCheckin);
 		  checkinService.save(nextCheckin);
@@ -372,7 +372,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 //	@Override
 	public CustomerDTO updateOwnDtoCheckinInfo(CustomerDTO dto, CheckinRootDomainEntity validCheckin)
 	{
-		if(dto==null || dto.getId()<=0){
+		if(dto==null || dto.getCustomerConsistencyId()<=0){
 			return  null;
 		}
 		
@@ -392,7 +392,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 				CheckinRootDomainEntity customerCheckin = iterator.next();
 				
 				//If checkin is old, set it not active
-				if(new Date().after(customerCheckin.getValidTo()))
+				if(LocalDate.now().isAfter(customerCheckin.getLvalidTo()))
 				{
 					customerCheckin.setActive(false);
 					checkinService.save(customerCheckin);
@@ -413,12 +413,12 @@ class CheckinUseCaseImpl implements CheckinUseCase
 			//TODO Eugen: checkinCustomerRootEntity.setActive(true)? update entity?
 			//SETTING NEW CHECKIN
 			//checkinCustomerRootEntity.setActive(true);
-			dto.setActive(true);
+//			dto.setActive(true);
 			
 //			dto.setFullCheckin(validCheckin.isFullCheckin());
 			
-			dto.setCheckinFrom(validCheckin.getValidFrom());
-			dto.setCheckinTo(validCheckin.getValidTo());
+			dto.setCheckinFrom(validCheckin.getLvalidFrom());
+			dto.setCheckinTo(validCheckin.getLvalidTo());
 			
 			dto = customerDtoMapper.fillDtoWithHotelInfo(dto, validCheckin);
 		}

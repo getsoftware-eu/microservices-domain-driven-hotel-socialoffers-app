@@ -23,7 +23,7 @@ import static org.hibernate.internal.util.collections.CollectionHelper.listOf;
 //@Builder
 //@AllArgsConstructor
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED) // Для Hibernate или других ORM
+@NoArgsConstructor//(access = AccessLevel.PROTECTED) // Для Hibernate или других ORM
 @Entity
 @Getter @Setter
 @Table(name = "hotel", schema = "hotel")

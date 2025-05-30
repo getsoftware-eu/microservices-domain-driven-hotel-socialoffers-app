@@ -703,7 +703,7 @@ import java.util.*;
 		}
 		else{
 			CustomerNotificationDTO receiverNotification = new CustomerNotificationDTO();
-			receiverNotification.setCustomerEvent(0, 0, event, "new event", 0);
+			receiverNotification.setCustomerEvent(0L, 0L, event, "new event", 0L);
 			receiverNotification.setReceiverId(guestCustomerId.uuidValue());
 			webSocketService.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + guestCustomerId + "", receiverNotification);
 		}

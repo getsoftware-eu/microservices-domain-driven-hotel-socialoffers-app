@@ -2,8 +2,12 @@ package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer
 
 import eu.getsoftware.hotelico.clients.common.domain.mapper.EntityGenericMapper;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDetails;
+import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.ICustomerDetails;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
+import org.mapstruct.AfterMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 
 /**
@@ -22,6 +26,20 @@ public interface CustomerEntityMapper extends EntityGenericMapper<CustomerRootDo
 //    @Mapping(target = "password", ignore = true)
     CustomerRootDomainEntity mapWithoutData(CustomerDBEntity entity);
 
+    @AfterMapping
+    default CustomerDetails toCustomerDetails(@MappingTarget ICustomerDetails customer) {
+        if (customer instanceof CustomerDetails) {
+            return (CustomerDetails) customer;
+        } else {
+            // вручную скопировать поля
+             var temp = new CustomerDetails();
+
+                temp.setBirthday(customer.getBirthday());
+             
+             return temp;
+        }    
+    }
+    
 //    @Mapping(source = "addressJson", target = "address", qualifiedByName = "dbToAddress")
 //    UserRootDomainEntity mapToDomainEntity(UserMappedDBEntity dbEntity);
     

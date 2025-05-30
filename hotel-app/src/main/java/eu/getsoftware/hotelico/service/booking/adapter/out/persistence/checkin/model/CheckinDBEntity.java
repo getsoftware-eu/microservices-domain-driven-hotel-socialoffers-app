@@ -18,7 +18,7 @@ import java.util.Date;
 
 
 @Data
-@NoArgsConstructor(access = AccessLevel.PROTECTED) // Для Hibernate или других ORM
+@NoArgsConstructor//(access = AccessLevel.PROTECTED) // Для Hibernate или других ORM
 @Entity
 @Table(name = "checkin", schema = "hotel")
 //@AssociationOverrides({

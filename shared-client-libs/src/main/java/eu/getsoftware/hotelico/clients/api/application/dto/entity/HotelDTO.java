@@ -3,14 +3,12 @@ package eu.getsoftware.hotelico.clients.api.application.dto.entity;
 import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.With;
+import lombok.*;
 
 @With
 @Getter
 @Setter
+@Builder
 @RequiredArgsConstructor
 public class HotelDTO implements BasicDTO<HotelDomainEntityId>
 {
@@ -92,5 +90,8 @@ public class HotelDTO implements BasicDTO<HotelDomainEntityId>
 	public void withKmFromMe(double kms) {
 		
 	}
-	
+
+	public void setHotelId(long hotelId) {
+		
+	}
 }

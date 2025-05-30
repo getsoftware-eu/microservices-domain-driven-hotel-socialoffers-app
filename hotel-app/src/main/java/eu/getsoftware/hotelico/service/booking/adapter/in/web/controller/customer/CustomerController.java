@@ -80,7 +80,7 @@ public class CustomerController extends BasicController
     // @NotifyClients
     @RequestMapping(value = "/customers/{id}/requesterId/{requesterId}", method = RequestMethod.PUT)
     public @ResponseBody CustomerDTO update(@PathVariable long id, @PathVariable int requesterId, @RequestBody @Valid CustomerDTO customerDTO, HttpSession httpSession) {
-        customerDTO.setId(id);
+//        customerDTO.setId(id);
         CustomerDTO out = customerService.updateCustomer(customerDTO, requesterId);
         
         //update in session
@@ -148,7 +148,7 @@ public class CustomerController extends BasicController
         }
         //set in session
         httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
-        response.addCookie(new Cookie(AppConfigProperties.SESSION_CUSTOMER_ID, out.getId() + ""));
+        response.addCookie(new Cookie(AppConfigProperties.SESSION_CUSTOMER_ID, out.getCustomerConsistencyId() + ""));
 
         return out;
     }
@@ -156,9 +156,8 @@ public class CustomerController extends BasicController
     @NotifyClients
     @RequestMapping(value = "/customers/{id}/requesterId/{requesterId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable long id, @PathVariable int requesterId, HttpSession httpSession) {
-        CustomerDTO task =   CustomerDTO.builder().build();
-        task.setId(id);
+    public void delete(@PathVariable CustomerDomainEntityId id, @PathVariable int requesterId, HttpSession httpSession) {
+        CustomerDTO task =   CustomerDTO.builder().domainEntityId(id).build();
         customerService.deleteCustomer(task);
 
         httpSession.removeAttribute(AppConfigProperties.SESSION_CUSTOMER);
@@ -177,7 +176,7 @@ public class CustomerController extends BasicController
         }
         
         httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
-        response.addCookie(new Cookie(AppConfigProperties.SESSION_CUSTOMER_ID, out.getId() + ""));
+        response.addCookie(new Cookie(AppConfigProperties.SESSION_CUSTOMER_ID, out.getDomainEntityId() + ""));
 
         return out;
     }
@@ -248,10 +247,10 @@ public class CustomerController extends BasicController
             result.getTarget();
         }
         
-        if (sessionCustomer != null && sessionCustomer.getId() > 0) {
+        if (sessionCustomer != null && sessionCustomer.getCustomerConsistencyId() > 0) {
             CustomerDTO out;
             if (sessionCustomer.getFirstName() == null) {
-                out = (CustomerDTO) customerService.getById(sessionCustomer.getDomainEntityId(), sessionCustomer.getId())
+                out = (CustomerDTO) customerService.getById(sessionCustomer.getDomainEntityId(), sessionCustomer.getCustomerConsistencyId())
                         .orElseThrow(() -> new RuntimeException("-"));
             } else {
                 out = customerService.synchronizeCustomerToDto(sessionCustomer);
@@ -278,14 +277,14 @@ public class CustomerController extends BasicController
         if (result.hasErrors()) {
             result.getTarget();
         }
-        if(sessionCustomer!=null && sessionCustomer.getId()>0 && sessionCustomer.getFirstName()==null)
+        if(sessionCustomer!=null && sessionCustomer.getCustomerConsistencyId()>0 && sessionCustomer.getFirstName()==null)
         {
-            CustomerDTO out = (CustomerDTO) customerService.getById(sessionCustomer.getDomainEntityId(), sessionCustomer.getId()).orElseThrow(()->new RuntimeException("-"));
+            CustomerDTO out = (CustomerDTO) customerService.getById(sessionCustomer.getDomainEntityId(), sessionCustomer.getCustomerConsistencyId()).orElseThrow(()->new RuntimeException("-"));
 			lastMessagesService.setLastFullNotification(out.getDomainEntityId(), null);
 			httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
         }
         else 
-        if(sessionCustomer!=null && sessionCustomer.getId()>0)
+        if(sessionCustomer!=null && sessionCustomer.getCustomerConsistencyId()>0)
         {
             //TODO EUGEN? CHECK HIER SYNCHRONOSATION??? UPDATE consistencyId ?????
             sessionCustomer.doLogged(true);
@@ -326,7 +325,7 @@ public class CustomerController extends BasicController
             result.getTarget();
         }
                 
-        if(sessionCustomer!=null && sessionCustomer.getId()>0 && sessionCustomer.getDomainEntityId()==customerDomainId)// && sessionCustomer.getHotelId()>0)
+        if(sessionCustomer!=null && sessionCustomer.getCustomerConsistencyId()>0 && sessionCustomer.getDomainEntityId()==customerDomainId)// && sessionCustomer.getHotelId()>0)
         {
             //TODO Eugen: socket ConnectException: Connection timed out: connect
             customerService.setCustomerPing(sessionCustomer.getDomainEntityId());//, httpSession.getId());

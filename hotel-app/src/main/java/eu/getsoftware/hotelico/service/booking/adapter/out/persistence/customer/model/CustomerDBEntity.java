@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model;
 
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
+import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.ICustomerDetails;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.ICustomerPreferences;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import jakarta.persistence.*;
@@ -19,7 +20,7 @@ import java.util.Set;
  * main data, will be fetched with every query
  */
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED) // Для Hibernate или других ORM
+@NoArgsConstructor//(access = AccessLevel.PROTECTED) // Для Hibernate или других ORM
 @Getter 
 //@Setter(value = AccessLevel.PACKAGE)
 //@Builder(toBuilder = true)
@@ -159,7 +160,15 @@ public class CustomerDBEntity extends CustomerRootDomainEntity implements Serial
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "details_id")
     private CustomerDetails customerDetails;
-
+    
+    public CustomerDetails getCustomerDetails() {
+        return customerDetails;
+    }
+    
+    //TODO for mapper!
+    public void setCustomerDetails(ICustomerDetails icustomerDetails) {
+//        this.customerDetails = customerDetails;
+    }
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "position_id")
@@ -169,6 +178,16 @@ public class CustomerDBEntity extends CustomerRootDomainEntity implements Serial
     @JoinColumn(name = "preferences_id")
     private CustomerPreferences customerPreferences;
 
+    public CustomerPreferences getCustomerPreferences(ICustomerPreferences customerPreferences) {
+        this.customerPreferences = (CustomerPreferences) customerPreferences;
+        return this.customerPreferences;
+    }
+    
+    //TODO for mapper
+    public void setCustomerPreferences(ICustomerPreferences customerPreferences) {
+//        this.customerPreferences = (CustomerPreferences) customerPreferences;
+    }
+    
     public ICustomerPreferences getCustomerPreferences() {
         return customerPreferences;
     }

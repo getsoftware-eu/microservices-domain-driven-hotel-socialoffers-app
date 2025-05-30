@@ -2,6 +2,7 @@ package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.ou
 
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.innerevents.InnerDomainEvent;
+import eu.getsoftware.hotelico.clients.common.domain.EntityIdentifier;
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.InnerHotelEvent;
@@ -38,11 +39,10 @@ public class NotificationServiceImpl implements INotificationService {
 //    }
 
     @Override
-    public void notificateAboutEntityEvent(CustomerDTO dto, InnerDomainEvent event, String eventContent, long entityId) {
+    public void notificateAboutEntityEvent(CustomerDTO dto, InnerDomainEvent event, String eventContent, EntityIdentifier entityId) {
+        CustomerNotificationDTO notification = new CustomerNotificationDTO();
 
-        CustomerNotificationDTO notification = new CustomerNotificationDTO(dto.getSequenceId());
-                
-        webSocketService.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + dto.getSequenceId(), notification);
+        webSocketService.produceSimpWebsocketMessage(AppConfigProperties.SOCKET_NOTIFICATION_TOPIC + dto.getDomainEntityId(), notification);
 
     }
 

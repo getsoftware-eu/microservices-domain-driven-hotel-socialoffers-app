@@ -277,7 +277,7 @@ public class MailServiceImpl implements MailService
 			try
 			{
 				mailContent = mailContent.replace("#[hotel.name]", URLDecoder.decode(hotel.getName(), "UTF-8"));
-				mailContent = mailContent.replace("#[hotel.url]", "http://hotelico.de/" + AppConfigProperties.HOST_SUFFIX + "#/app/hotelPreview/" + hotel.getId());
+				mailContent = mailContent.replace("#[hotel.url]", "http://hotelico.de/" + AppConfigProperties.HOST_SUFFIX + "#/app/hotelPreview/" + hotel.getDomainEntityId());
 				mailContent = mailContent.replace("#[hotel.pictureUrl]", "http://hotelico.de/" + hotel.getPictureUrl());
 				mailContent = mailContent.replace("#[hotel.welcomeMsg]", URLDecoder.decode(hotel.getWelcomeMessage(), "UTF-8"));
 			}

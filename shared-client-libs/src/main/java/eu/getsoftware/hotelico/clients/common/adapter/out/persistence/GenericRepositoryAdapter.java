@@ -16,7 +16,7 @@ public class GenericRepositoryAdapter<T, DBEntity, ID> implements GenericReposit
     private final JpaRepository<DBEntity, Long> repository;
     private final EntityGenericMapper<T, DBEntity> mapper;
 
-    GenericRepositoryAdapter(JpaRepository<DBEntity, Long> repository, EntityGenericMapper<T, DBEntity> mapper){
+    public GenericRepositoryAdapter(JpaRepository<DBEntity, Long> repository, EntityGenericMapper<T, DBEntity> mapper){
         this.repository = repository;
         this.mapper = mapper;
     }

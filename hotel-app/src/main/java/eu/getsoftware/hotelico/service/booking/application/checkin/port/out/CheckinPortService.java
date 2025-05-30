@@ -10,6 +10,7 @@ import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.
 import eu.getsoftware.hotelico.service.booking.application.checkin.domain.CheckinRootDomainEntity;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -40,4 +41,8 @@ public interface CheckinPortService {
     List<CustomerDTO> getActiveCustomersByHotelId(HotelDomainEntityId hotelId, LocalDate date);
 
     Integer getActiveCountByHotelId(HotelDomainEntityId receiverHotelId, LocalDate now);
+
+    LocalDate getLastByCustomerAndHotelId(CustomerDomainEntityId domainEntityId, HotelDomainEntityId domainEntityId1);
+
+    Collection<CustomerDTO> getStaffByHotelId(HotelDomainEntityId hotelId);
 }

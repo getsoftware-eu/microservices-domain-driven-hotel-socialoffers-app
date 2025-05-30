@@ -87,10 +87,10 @@ public class HotelController extends BasicController
     }    
     
     @RequestMapping(value = "/action/{action}/hotelId/{hotelId}/customer/{guestCustomerId}", method = RequestMethod.POST)
-    public CustomerDTO addHotelGuestAction(@PathVariable String action, @PathVariable Long hotelId, @PathVariable long guestCustomerId, @RequestBody CustomerDTO guestDto, final HttpServletResponse response) {
+    public CustomerDTO addHotelGuestAction(@PathVariable String action, @PathVariable Long hotelId, @PathVariable CustomerDomainEntityId guestCustomerId, @RequestBody CustomerDTO guestDto, final HttpServletResponse response) {
 //        response.setHeader("Cache-Control", "no-cache");
         CustomerDTO out = CustomerDTO.builder()
-                .sequenceId(123L)
+                .domainEntityId(guestCustomerId)
                 .build(); //= hotelActivityService.addGuestAction(guestCustomerId, action, hotelId, guestDto);
         return out;
     }   
@@ -133,7 +133,7 @@ public class HotelController extends BasicController
         
         if(hotelId>0)
         {
-            hotelDto.setId(hotelId);
+            hotelDto.setHotelId(hotelId);
             out = hotelService.updateHotel(hotelDto);
         }
         else {

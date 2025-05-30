@@ -25,10 +25,10 @@ public class CheckinRootDomainEntity implements IRootDomainEntity<CheckinDomainE
     protected CheckinDomainEntityId domainEntityId;
 
     @Setter
-    private LocalDate validFrom;
+    private LocalDate lvalidFrom;
     
     @Setter
-    private LocalDate validTo;
+    private LocalDate lvalidTo;
     
     @Setter
     boolean staffCheckin;      

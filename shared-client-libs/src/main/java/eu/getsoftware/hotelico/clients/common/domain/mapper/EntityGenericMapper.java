@@ -5,4 +5,6 @@ public interface EntityGenericMapper<T, DBEntity> {
 
 //    @Mapping(target = "sourceDomainEntityId", source = "domainEntityId")
     DBEntity toDb(T domain);
+
+    
 }

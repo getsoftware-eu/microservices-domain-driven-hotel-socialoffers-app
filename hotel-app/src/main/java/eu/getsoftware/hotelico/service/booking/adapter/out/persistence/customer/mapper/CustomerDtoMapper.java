@@ -21,10 +21,10 @@ public interface CustomerDtoMapper //extends DtoGenericMapper<CustomerRootDomain
 
     CustomerDTO toFullDto(CustomerRootDomainEntity customerDomainEntity);
 
-    @Mapping(target = "domainEntityId", expression = "java(new CustomerDomainEntityId(dto.getDomainEntityId()))")
+    @Mapping(target = "domainEntityId", expression = "java( customerDomainEntity.getDomainEntityId() )")
     CustomerDTO toDtoWithHotelInfo(CustomerRootDomainEntity customerDomainEntity, HotelDomainEntityId domainEntityId);
 
-    @Mapping(target = "domainEntityId", expression = "java(new CustomerDomainEntityId(dto.getDomainEntityId()))")
+    @Mapping(target = "domainEntityId", expression = "java( dto.getDomainEntityId() )")
     CustomerDTO fillDtoWithHotelInfo(CustomerDTO dto, CheckinRootDomainEntity validCheckin);
 
 //    @Mapping(source = "schadenAussenwirkungId", target = "schadenAussenwirkung")

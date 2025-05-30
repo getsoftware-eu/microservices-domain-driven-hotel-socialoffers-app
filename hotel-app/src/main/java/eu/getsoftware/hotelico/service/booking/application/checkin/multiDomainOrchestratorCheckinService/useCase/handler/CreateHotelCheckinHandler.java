@@ -29,8 +29,8 @@ public class CreateHotelCheckinHandler {
         CustomerDTO.builder().build();
 
 
-        CheckinRootDomainEntity.setValidFrom(checkinRequestDTO.checkinFrom());
-        CheckinRootDomainEntity.setValidTo(checkinRequestDTO.checkinTo());
+        CheckinRootDomainEntity.setLvalidFrom(checkinRequestDTO.checkinFrom());
+        CheckinRootDomainEntity.setLvalidTo(checkinRequestDTO.checkinTo());
         checkinService.save(CheckinRootDomainEntity);
         
         return CheckinRootDomainEntity;
