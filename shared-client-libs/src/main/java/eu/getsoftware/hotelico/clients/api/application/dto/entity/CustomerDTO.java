@@ -17,11 +17,10 @@ import java.util.Map;
  */
 @With
 @Getter
+@Builder
 @RequiredArgsConstructor
-public class CustomerDTO implements BasicDTO<CustomerDomainEntityId>
-        
-        //all fields are final!!!
-{
+public class CustomerDTO implements BasicDTO<CustomerDomainEntityId> {
+    
     private final CustomerDomainEntityId domainEntityId;
     private final boolean active = true;
     

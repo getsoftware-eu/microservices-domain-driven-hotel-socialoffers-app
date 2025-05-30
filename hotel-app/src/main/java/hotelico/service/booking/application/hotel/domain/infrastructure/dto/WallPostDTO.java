@@ -6,9 +6,9 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.WallPostDomainEnt
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 @RequiredArgsConstructor
@@ -18,9 +18,11 @@ public class WallPostDTO implements BasicDTO<WallPostDomainEntityId> {
     private final WallPostDomainEntityId domainEntityId;
     private final boolean active = true;
     
-    private HotelDomainEntityId hotelId;
-    private CustomerDomainEntityId senderId;
+    @Setter
+    private final HotelDomainEntityId hotelId;
+    private final CustomerDomainEntityId senderId;
 
+    @Setter
     private String message;
     private String senderName;
     private String sendTimeString;

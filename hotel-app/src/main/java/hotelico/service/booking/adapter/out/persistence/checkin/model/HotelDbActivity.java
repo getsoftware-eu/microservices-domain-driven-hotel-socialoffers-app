@@ -8,6 +8,7 @@ import hotelico.service.booking.application.customer.domain.model.IHotelActivity
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -25,10 +26,19 @@ import java.util.stream.Collectors;
 @Entity
 @Getter @Setter
 @Table(name = "hotel_activity", schema = "hotel")
+//@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // важно для JPA
 public class HotelDbActivity implements IHotelActivity, Serializable
 {
-
 	private static final long serialVersionUID = -3552760230942289778L;
+
+	@Getter 
+	@Embedded @Column
+	private HotelDomainEntityId hotelDomainId;
+
+	public HotelDbActivity(HotelDomainEntityId hotelDomainId) {
+		this.hotelDomainId = hotelDomainId;
+	}
 	
 	@Id
 	@Setter(AccessLevel.PROTECTED)
@@ -55,14 +65,6 @@ public class HotelDbActivity implements IHotelActivity, Serializable
 	@Column(name = "active", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_TRUE)
 	private boolean active = true;
 	
-	@Getter
-	@Embedded @Column  
-	public HotelDomainEntityId hotelDomainId;
-
-	public HotelDomainEntityId getHotelDomainId() {
-		return hotelDomainId;
-	}
-
 	@ManyToOne
 	@JoinColumn(name="senderDomainId")
 	private CustomerDBEntity sender;

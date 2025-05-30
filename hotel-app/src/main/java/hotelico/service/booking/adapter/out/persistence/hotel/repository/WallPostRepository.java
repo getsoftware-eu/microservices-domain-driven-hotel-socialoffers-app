@@ -5,7 +5,7 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntity
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.WallPostDomainEntityId;
 import hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
 import hotelico.service.booking.adapter.out.persistence.hotel.model.HotelWallPost;
-import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.WallPostDTO;
+import hotelico.service.booking.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

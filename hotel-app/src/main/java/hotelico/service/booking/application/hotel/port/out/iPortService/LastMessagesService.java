@@ -4,7 +4,7 @@ import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
-import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
+import hotelico.service.booking.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.awt.geom.Point2D.Double;

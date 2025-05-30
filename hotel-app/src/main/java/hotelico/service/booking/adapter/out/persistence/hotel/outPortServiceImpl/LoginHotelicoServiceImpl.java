@@ -4,13 +4,13 @@ import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
-import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
+import hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
 import hotelico.service.booking.adapter.out.persistence.hotel.model.InnerHotelEvent;
 import hotelico.service.booking.adapter.out.persistence.hotel.repository.DealRepository;
 import hotelico.service.booking.application.checkin.port.out.CheckinPortService;
 import hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
+import hotelico.service.booking.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import hotelico.service.booking.application.hotel.port.out.iPortService.INotificationService;
 import hotelico.service.booking.application.hotel.port.out.iPortService.LastMessagesService;
 import hotelico.service.booking.application.hotel.port.out.iPortService.LoginHotelicoService;
@@ -91,9 +91,9 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 	@Override
 	public void logoutCustomer(CustomerDTO customerDto)
 	{
-		if(customerDto!=null && customerDto.getId()>0)
+		if(customerDto!=null && customerDto.getDomainEntityId()!=null)
 		{
-			CustomerDBEntity logoutCustomerRootEntity =  customerRepository.findById(customerDto.getId()).orElseThrow(()-> new RuntimeException("not found"));
+			CustomerDBEntity logoutCustomerRootEntity =  customerRepository.findByDomainEntityIdAndActive(customerDto.getDomainEntityId(), true).orElseThrow(()-> new RuntimeException("not found"));
 			logoutCustomerRootEntity.doLogout();
 			
 			//eugen: clear seen hotel activities
@@ -279,7 +279,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 			//TODO Eugen: set or just add?
 //			dbCustomer.setSystemMessages(loggingCustomer.getSystemMessages());
 			
-			if(dbCustomer.getId()>0 && dbCustomer.getSystemMessages().containsKey("guestCustomerId"))
+			if(dbCustomer.getDomainEntityId()!=null && dbCustomer.getSystemMessages().containsKey("guestCustomerId"))
 			{
 				CustomerDomainEntityId guestId = new CustomerDomainEntityId(String.valueOf(dbCustomer.getSystemMessages().get("guestCustomerId")));
 				
@@ -287,7 +287,8 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 				
 				if(anonymGuestDealsExists)
 				{
-					CustomerDBEntity customerEntity = customerRepository.getOne(dbCustomer.getId());
+					CustomerDBEntity customerEntity = customerRepository.findByDomainEntityIdAndActive(dbCustomer.getDomainEntityId(), true)
+							.orElseThrow(() -> new RuntimeException("Customer not found"));
 					
 					customerService.relocateGuestDealsToLoggedCustomer(customerEntity, guestId);
 				}

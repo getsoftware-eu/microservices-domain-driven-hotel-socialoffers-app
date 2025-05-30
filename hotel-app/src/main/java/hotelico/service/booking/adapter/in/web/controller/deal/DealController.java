@@ -4,9 +4,9 @@ import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicCon
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.DealAction;
-import eu.getsoftware.hotelico.service.booking.application.deal.domain.infrastructure.dto.CustomerDealDTO;
-import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.ResponseDTO;
+import hotelico.service.booking.application.deal.domain.infrastructure.dto.CustomerDealDTO;
 import hotelico.service.booking.application.hotel.domain.infrastructure.aspects.NotifyClients;
+import hotelico.service.booking.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import hotelico.service.booking.application.hotel.port.out.iPortService.IHotelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -9,24 +9,24 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEnt
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.WallPostDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.*;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.ActivityRepository;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.HotelRepository;
-import eu.getsoftware.hotelico.service.booking.application.deal.domain.infrastructure.dto.CustomerDealDTO;
-import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
-import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.ResponseDTO;
-import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDbActivity;
 import hotelico.service.booking.adapter.out.persistence.checkin.repository.CheckinRepository;
 import hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
+import hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
 import hotelico.service.booking.adapter.out.persistence.hotel.model.HotelDBEntity;
 import hotelico.service.booking.adapter.out.persistence.hotel.model.HotelWallPost;
 import hotelico.service.booking.adapter.out.persistence.hotel.model.InnerHotelEvent;
+import hotelico.service.booking.adapter.out.persistence.hotel.repository.ActivityRepository;
 import hotelico.service.booking.adapter.out.persistence.hotel.repository.DealRepository;
+import hotelico.service.booking.adapter.out.persistence.hotel.repository.HotelRepository;
 import hotelico.service.booking.adapter.out.persistence.hotel.repository.WallPostRepository;
 import hotelico.service.booking.adapter.out.viewEntity.model.CustomerDeal;
 import hotelico.service.booking.application.checkin.port.out.CheckinPortService;
 import hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
+import hotelico.service.booking.application.deal.domain.infrastructure.dto.CustomerDealDTO;
+import hotelico.service.booking.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
+import hotelico.service.booking.application.hotel.domain.infrastructure.dto.ResponseDTO;
+import hotelico.service.booking.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import hotelico.service.booking.application.hotel.domain.model.customDomainModelImpl.HotelRootDomainEntity;
 import hotelico.service.booking.application.hotel.port.out.iPortService.IHotelService;
 import hotelico.service.booking.application.hotel.port.out.iPortService.INotificationService;
@@ -909,10 +909,10 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 			//TODO Eugen: Last Minute!!!!
 			if(hotelActivityDto.getLastMinute())
 			{
-				WallPostDTO checkinNotificationWall = new WallPostDTO(hotelActivity.getHotelDomainId(), hotelActivity.getSender().getDomainEntityId());
+				WallPostDTO checkinNotificationWall = new WallPostDTO(new WallPostDomainEntityId("sdf"), hotelActivity.getHotelDomainId(), hotelActivity.getSender().getDomainEntityId());
 		
-				checkinNotificationWall.getSpecialContent().put("activityId", String.valueOf(hotelActivityDto.getId()));
-				checkinNotificationWall.setSequenceId(System.currentTimeMillis());
+				checkinNotificationWall.getSpecialContent().put("activityId", String.valueOf(hotelActivityDto.getDomainEntityId()));
+//				checkinNotificationWall.setSequenceId(System.currentTimeMillis());
 				checkinNotificationWall.setMessage("New last minute deal:");
 				this.addUpdateWallPost(checkinNotificationWall);
 			}
@@ -1027,10 +1027,10 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
             wallPostDto.setHotelId(customerService.getCustomerHotelId(sender.getDomainEntityId()));
         }
         
-        if(wallPostDto.getCreationTime()<=0)
-        {
-            wallPostDto.setCreationTime(System.currentTimeMillis());
-        }
+//        if(wallPostDto.getCreationTime()<=0)
+//        {
+//            wallPostDto.setCreationTime(System.currentTimeMillis());
+//        }
         
         HotelDBEntity hotelRootEntity = this.getEntityById(wallPostDto.getHotelId()).orElseThrow(()-> new BusinessException("wallpost not found"));
 
