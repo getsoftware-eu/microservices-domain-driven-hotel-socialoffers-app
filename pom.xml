@@ -216,16 +216,18 @@
 						<source>${java.version}</source>
 						<target>${java.version}</target>
 						<annotationProcessorPaths>
-							<annotationProcessorPath>
-								<groupId>org.mapstruct</groupId>
-								<artifactId>mapstruct-processor</artifactId>
-								<version>${mapstruct.version}</version> <!-- Use the property here -->
-							</annotationProcessorPath>
+<!--							eu: erst Lombok, danach Mapstruct (he needs Lombok)-->
 							<annotationProcessorPath>
 								<groupId>org.projectlombok</groupId>
 								<artifactId>lombok</artifactId>
 								<version>${lombok.version}</version> <!-- или используй ту же версию, что в Spring Boot BOM -->
 							</annotationProcessorPath>
+							<annotationProcessorPath>
+								<groupId>org.mapstruct</groupId>
+								<artifactId>mapstruct-processor</artifactId>
+								<version>${mapstruct.version}</version> <!-- Use the property here -->
+							</annotationProcessorPath>
+							
 						</annotationProcessorPaths>
 					</configuration>
 				</plugin>

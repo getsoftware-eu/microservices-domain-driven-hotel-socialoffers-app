@@ -11,12 +11,6 @@
 
     <artifactId>hotel-service-chat</artifactId>
 
-<!--    <properties>-->
-<!--        <maven.compiler.source>17</maven.compiler.source>-->
-<!--        <maven.compiler.target>17</maven.compiler.target>-->
-<!--        <kotlin.version>1.9.24</kotlin.version>-->
-<!--    </properties>-->
-
     <build>
         <plugins>
             <plugin>
