@@ -167,6 +167,26 @@ public class CustomerDBEntity extends CustomerRootDomainEntity implements Serial
     
     //TODO for mapper!
     public void setCustomerDetails(ICustomerDetails icustomerDetails) {
+        
+        if(icustomerDetails instanceof CustomerDetails)
+        {
+            this.customerDetails = (CustomerDetails) icustomerDetails;
+        }
+        else
+        {
+            // вручную скопировать поля
+            this.customerDetails = new CustomerDetails();
+            this.customerDetails.setBirthday(icustomerDetails.getBirthday());
+//            this.customerDetails.setCompany(icustomerDetails.getCompany());
+//            this.customerDetails.setJobTitle(icustomerDetails.getJobTitle());
+            this.customerDetails.setCity(icustomerDetails.getCity());
+//            this.customerDetails.setOriginalCity(icustomerDetails.getOriginalCity());
+//            this.customerDetails.setCountry(icustomerDetails.getCountry());
+//            this.customerDetails.setJobDescriptor(icustomerDetails.getJobDescriptor());
+            this.customerDetails.setProfileImageUrl(icustomerDetails.getProfileImageUrl());
+            this.customerDetails.setProfileImageLink(icustomerDetails.getProfileImageLink().orElse(null));
+        }
+        
 //        this.customerDetails = customerDetails;
     }
 
@@ -184,8 +204,23 @@ public class CustomerDBEntity extends CustomerRootDomainEntity implements Serial
     }
     
     //TODO for mapper
-    public void setCustomerPreferences(ICustomerPreferences customerPreferences) {
-//        this.customerPreferences = (CustomerPreferences) customerPreferences;
+    public void setCustomerPreferences(ICustomerPreferences icustomerPreferences) {
+
+        if(icustomerPreferences instanceof CustomerPreferences)
+        {
+            this.customerPreferences = (CustomerPreferences) icustomerPreferences;
+        }
+        else
+        {
+            // вручную скопировать поля
+            this.customerPreferences = new CustomerPreferences();
+//            this.customerPreferences.setHideCheckinPopup(icustomerPreferences.isHideCheckinPopup());
+//            this.customerPreferences.setHideHotelListPopup(icustomerPreferences.isHideHotelListPopup());
+//            this.customerPreferences.setHideWallPopup(icustomerPreferences.isHideWallPopup());
+//            this.customerPreferences.setHideChromePushPopup(icustomerPreferences.isHideChromePushPopup());
+            this.customerPreferences.setAllowHotelNotification(icustomerPreferences.isAllowHotelNotification());
+            this.customerPreferences.setPrefferedLanguage(icustomerPreferences.getPrefferedLanguage());
+        }
     }
     
     public ICustomerPreferences getCustomerPreferences() {
