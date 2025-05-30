@@ -1,12 +1,12 @@
-package eu.getsoftware.hotelico.service.booking.adapter.in.web.controller.checkin;
+package hotelico.service.booking.adapter.in.web.controller.checkin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseRequestDTO;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
-import hotelico.service.booking.adapter.in.web.controller.checkin.CheckinController;
-import hotelico.service.booking.application.checkin.port.in.usecase.CheckinUseCase;
+import eu.getsoftware.hotelico.service.booking.adapter.in.web.controller.checkin.CheckinController;
+import eu.getsoftware.hotelico.service.booking.application.checkin.port.in.usecase.CheckinUseCase;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;

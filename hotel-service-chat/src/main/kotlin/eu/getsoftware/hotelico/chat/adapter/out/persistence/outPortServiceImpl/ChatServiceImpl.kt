@@ -14,7 +14,7 @@ internal class ChatServiceImpl(
 ) : ChatService {
     
     fun sendFirstChatMessageOnDemand(customerDTO: CustomerDTO, staffSender: CustomerDTO, isFullCheckin: Boolean) {
-        val lastMessageFromStaff: ChatMessageMappedEntity? = chatMessageService.getLastMessageByCustomerAndReceiverIds(staffSender.id, customerDTO.id)
+        val lastMessageFromStaff: ChatMessageMappedEntity? = chatMessageService.getLastMessageByCustomerAndReceiverIds(staffSender.domainEntityId, customerDTO.domainEntityId)
 
         //Send only first staffSender message!    
         if (lastMessageFromStaff==null) {

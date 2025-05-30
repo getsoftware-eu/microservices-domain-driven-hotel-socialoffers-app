@@ -2,8 +2,8 @@ package eu.getsoftware.hotelico.chat.adapter.out.messaging.consumer
 
 import eu.getsoftware.hotelico.chat.application.port.`in`.process.ChatCheckinProcessManagerService
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO
-import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.CheckinUpdatedEventPayload
-import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.domainMessage.DomainMessage
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.CheckinUpdatedEventPayload
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.DomainMessage
 import mu.KotlinLogging
 import org.springframework.kafka.annotation.KafkaListener
 import org.springframework.stereotype.Component

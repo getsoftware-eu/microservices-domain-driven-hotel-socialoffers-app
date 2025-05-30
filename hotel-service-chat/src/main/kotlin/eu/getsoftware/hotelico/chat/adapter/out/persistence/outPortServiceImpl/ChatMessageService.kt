@@ -4,7 +4,7 @@ import eu.getsoftware.hotelico.chat.adapter.out.persistence.model.ChatMessageMap
 import eu.getsoftware.hotelico.chat.adapter.out.persistence.repository.ChatMessageRepository
 import eu.getsoftware.hotelico.chat.application.port.out.IChatMessageService
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.chat.dto.ChatMsgDTO
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId
+import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId
 import org.springframework.stereotype.Service
 
 @Service

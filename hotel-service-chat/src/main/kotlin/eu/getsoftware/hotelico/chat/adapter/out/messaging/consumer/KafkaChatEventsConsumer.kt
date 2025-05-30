@@ -5,8 +5,8 @@ import eu.getsoftware.hotelico.chat.adapter.out.persistence.model.ChatUserMapped
 import eu.getsoftware.hotelico.chat.adapter.out.persistence.outPortServiceImpl.ChatMessageService
 import eu.getsoftware.hotelico.chat.adapter.out.persistence.repository.ChatUserRepository
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.amqpConsumeNotification.ChatMessageCommand
-import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.HotelUpdateEventMessagePayload
-import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.domainMessage.DomainMessage
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.HotelUpdateEventMessagePayload
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.DomainMessage
 import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.ConsumerRecord
 import org.springframework.kafka.annotation.KafkaListener

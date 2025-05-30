@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.service.menu.application.port.in.process;
 
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CheckinDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.ids.CheckinDomainEntityId;
 import org.springframework.stereotype.Service;
 
 /**

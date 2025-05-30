@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.clients.api.application.infrastructure.chat.dto;
 
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 
 import java.sql.Timestamp;
 import java.util.Map;

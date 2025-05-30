@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.chat.adapter.out.persistence.model;
 
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;

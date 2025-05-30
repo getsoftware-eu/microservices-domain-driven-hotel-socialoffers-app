@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.clients.common.adapter.out.persistence;
 
-import eu.getsoftware.hotelico.clients.common.domain.domainGateway.GenericRepositoryPort;
+import eu.getsoftware.hotelico.clients.common.domain.gateways.GenericRepositoryPort;
 import eu.getsoftware.hotelico.clients.common.domain.mapper.EntityGenericMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,26 +1,25 @@
 package eu.getsoftware.hotelico.clients.api.application.dto.entity.menu;
 
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.MenuDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.ids.MenuOrderDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.With;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@With
 @Getter
-@RequiredArgsConstructor
-public class MenuOrderDTO implements BasicDTO<MenuDomainEntityId> {
+public class MenuOrderDTO implements BasicDTO<MenuOrderDomainEntityId> {
 
-    private final MenuDomainEntityId domainEntityId;
-    private boolean active = true;
+    private final MenuOrderDomainEntityId domainEntityId;
+    private final boolean active = true;
 
-    @With
+    public MenuOrderDTO(MenuOrderDomainEntityId domainEntityId) {
+        this.domainEntityId = domainEntityId;
+    }
+    
     private  long hotelId = 0L;
     private  long senderId = 0L;
     private  int itemAmount = 0;
@@ -28,31 +27,31 @@ public class MenuOrderDTO implements BasicDTO<MenuDomainEntityId> {
     private  String firstName = "";
     private  String lastName = "";
     private  String customerComment = "";
-    
-    private final String orderStatus = null;
-    private final double totalPrice = 0.0;
-    private final double totalMoney = 0;
-    private final String orderCode = "";
-    private final String previewPictureUrl = null;
-    private final Date validFrom = null;
-    private final Date validTo = null;
-    private final boolean orderInRoom = false;
-    
-    private final boolean closed = false;
-    private final Timestamp  timestamp = null;
-    private final List<MenuItemDTO> menuItems = new ArrayList<>();
-    
-    private final String timeString = null;
 
-    private final String  getPreviewPictureUrl() {
+    private String orderStatus = null;
+    private double totalPrice = 0.0;
+    private double totalMoney = 0;
+    private String orderCode = "";
+    private String previewPictureUrl = null;
+    private Date validFrom = null;
+    private Date validTo = null;
+    private boolean orderInRoom = false;
+
+    private boolean closed = false;
+    private Timestamp  timestamp = null;
+    private List<MenuItemDTO> menuItems = new ArrayList<>();
+
+    private String timeString = null;
+
+    private String  getPreviewPictureUrl() {
         return previewPictureUrl!=null ? previewPictureUrl: AppConfigProperties.PREVIEW_MENU_NOT_AVAILABLE_URL;
     }
 
 //    void setPreviewPictureUrl(String previewPictureUrl) {
 //        this.previewPictureUrl = previewPictureUrl;
 //    }
-    
-    private final String  getTimeString() {
+
+    private String  getTimeString() {
         return (timestamp != null)? AppConfigProperties.getTimeFormatted(timestamp) : null;
     }
 

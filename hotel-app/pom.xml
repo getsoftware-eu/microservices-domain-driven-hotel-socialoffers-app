@@ -14,8 +14,6 @@
     <properties>
         <aspectj.version>1.7.4</aspectj.version>
         <spring-security-crypto.version>4.0.1.RELEASE</spring-security-crypto.version>
-<!--        <kotlin.version>1.8.20</kotlin.version>-->
-<!--        <kotlin.compiler.jvmTarget>17</kotlin.compiler.jvmTarget>-->
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <testcontainers.version>1.19.0</testcontainers.version>
@@ -286,133 +284,12 @@
             <version>1.2</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-envers -->
-<!--        <dependency>-->
-<!--            <groupId>org.hibernate</groupId>-->
-<!--            <artifactId>hibernate-envers</artifactId>-->
-<!--            <version>${hibernate.version}</version>-->
-<!--        </dependency>-->
-
-        <!--&lt;!&ndash; MySQL &ndash;&gt;-->
-        <!--<dependency>-->
-        <!--<groupId>mysql</groupId>-->
-        <!--<artifactId>mysql-connector-java</artifactId>-->
-        <!--&lt;!&ndash;<version>${mysql.version}</version>&ndash;&gt;-->
-        <!--</dependency>-->
-
-        <!-- Joda-Time -->
-<!--        <dependency>-->
-<!--            <groupId>joda-time</groupId>-->
-<!--            <artifactId>joda-time</artifactId>-->
-<!--            <version>${joda-time.version}</version>-->
-<!--        </dependency>-->
-
-        <!-- To map JodaTime with database type -->
-<!--        <dependency>-->
-<!--            <groupId>org.jadira.usertype</groupId>-->
-<!--            <artifactId>usertype.core</artifactId>-->
-<!--            <version>3.0.0.CR1</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.apache.httpcomponents</groupId>-->
-<!--            <artifactId>httpclient</artifactId>-->
-<!--            <version>4.3.2</version>-->
-<!--        </dependency>-->
-
-        <!--// #### START SPRING SOCIAL V 1-->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.social</groupId>-->
-        <!--<artifactId>spring-social-linkedin</artifactId>-->
-        <!--<version>1.0.1.RELEASE</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.social</groupId>-->
-        <!--<artifactId>spring-social-web</artifactId>-->
-        <!--<version>1.0.3.RELEASE</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.social</groupId>-->
-        <!--<artifactId>spring-social-facebook</artifactId>-->
-        <!--<version>1.1.1.RELEASE</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.social</groupId>-->
-        <!--<artifactId>spring-social-facebook-web</artifactId>-->
-        <!--<version>1.1.1.RELEASE</version>-->
-        <!--</dependency>-->
-
-        <!-- for OAuth 2.0 -->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.security.oauth</groupId>-->
-        <!--<artifactId>spring-security-oauth2</artifactId>-->
-        <!--<version>2.0.7.RELEASE</version>-->
-        <!--</dependency>-->
-
-
-
-        <!--// #### END SPRING SOCIAL V 1-->
-
-
-        <!--// #### START SPRING SOCIAL V 2-->
-        <!--<dependency>-->
-        <!--<groupId>org.springframework.social</groupId>-->
-        <!--<artifactId>spring-social</artifactId>-->
-        <!--<version>1.1.4.RELEASE</version>-->
-        <!--</dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.social</groupId>-->
-<!--            <artifactId>spring-social-web</artifactId>-->
-<!--            <version>1.1.4.RELEASE</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.social</groupId>-->
-<!--            <artifactId>spring-social-facebook</artifactId>-->
-<!--            <version>2.0.3.RELEASE</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.social</groupId>-->
-<!--            <artifactId>spring-social-facebook-web</artifactId>-->
-<!--            <version>2.0.3.RELEASE</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-swagger2</artifactId>-->
-<!--            <version>3.0.0</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-swagger-ui</artifactId>-->
-<!--            <version>3.0.0</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>io.springfox</groupId>-->
-<!--            <artifactId>springfox-boot-starter</artifactId>-->
-<!--            <version>3.0.0</version>-->
-<!--        </dependency>-->
-       
-        <!-- for OAuth 2.0 -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.security.oauth</groupId>-->
-<!--            <artifactId>spring-security-oauth2</artifactId>-->
-<!--            <version>2.0.8.RELEASE</version>-->
-<!--        </dependency>-->
-
-        <!--// #### END SPRING SOCIAL V 2-->
-
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-crypto</artifactId>
             <version>${spring-security-crypto.version}</version>
         </dependency>
-
-
+        
         <!--@crossOrigin ???-->
         <dependency>
             <groupId>com.thetransactioncompany</groupId>
@@ -425,31 +302,18 @@
             <artifactId>commons-io</artifactId>
             <version>2.4</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>commons-fileupload</groupId>-->
-<!--            <artifactId>commons-fileupload</artifactId>-->
-<!--            <version>1.3.1</version> &lt;!&ndash; makesure correct version here &ndash;&gt;-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash; CHat &ndash;&gt;-->
 
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.12</version>
         </dependency>
-
-
+        
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
             <version>4.0.1.RELEASE</version>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>com.fasterxml.jackson.datatype</groupId>-->
-<!--            <artifactId>jackson-datatype-joda</artifactId>-->
-<!--            <version>2.4.0</version>-->
-<!--        </dependency>-->
 
         <dependency>
             <groupId>ro.isdc.wro4j</groupId>
@@ -476,18 +340,6 @@
             <artifactId>javaxt-core</artifactId>
             <version>1.6.2</version>
         </dependency>
-
-<!--        <dependency>-->
-<!--            <groupId>org.jetbrains.kotlin</groupId>-->
-<!--            <artifactId>kotlin-stdlib-jdk8</artifactId>-->
-<!--            <version>${kotlin.version}</version>-->
-<!--        </dependency>-->
-
-<!--        <dependency>-->
-<!--            <groupId>org.jetbrains.kotlin</groupId>-->
-<!--            <artifactId>kotlin-reflect</artifactId>-->
-<!--&lt;!&ndash;            <version>${kotlin.version}</version>&ndash;&gt;-->
-<!--        </dependency>-->
         
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -501,21 +353,11 @@
             <version>1.9.5</version>
         </dependency>
         
-<!--        &lt;!&ndash; Spring Security OAuth2 &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-core</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>eu.getsoftware.hotelico</groupId>-->
-<!--            <artifactId>notification</artifactId>-->
-<!--            <version>0.0.1-SNAPSHOT</version>-->
-<!--            <scope>compile</scope>-->
-<!--        </dependency>-->
+
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
@@ -562,58 +404,11 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
 <!--                    <skip>true</skip>-->
-                    <mainClass>hotelico.service.booking.HotelApplication</mainClass>
+                    <mainClass>eu.getsoftware.hotelico.service.booking.HotelApplication</mainClass>
                     
                 </configuration>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.jetbrains.kotlin</groupId>-->
-<!--                <artifactId>kotlin-maven-plugin</artifactId>-->
-<!--                <version>${kotlin.version}</version> -->
-<!--                &lt;!&ndash;from dependencyManagement: org.springframework.cloud&ndash;&gt;-->
-<!--                <configuration>-->
-<!--                    <compilerPlugins>-->
-<!--                        &lt;!&ndash; Or "spring" for the Spring support &ndash;&gt;-->
-<!--                        &lt;!&ndash;<plugin>all-open</plugin>&ndash;&gt;-->
-<!--                        <plugin>spring</plugin>-->
-<!--&lt;!&ndash;                        <mainClass>eu.getsoftware.hotelico.hotelapp.config.MainApplication</mainClass>&ndash;&gt;-->
-
-<!--                    </compilerPlugins>-->
-<!--        -->
-<!--                </configuration>-->
-<!--        -->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>compile</id>-->
-<!--                        <goals> <goal>compile</goal> </goals>-->
-<!--                        <configuration>-->
-<!--                            <sourceDirs>-->
-<!--                                <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>-->
-<!--                                <sourceDir>${project.basedir}/src/main/java</sourceDir>-->
-<!--                            </sourceDirs>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                    <execution>-->
-<!--                        <id>test-compile</id>-->
-<!--                        <goals> <goal>test-compile</goal> </goals>-->
-<!--                        <configuration>-->
-<!--                            <sourceDirs>-->
-<!--                                <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>-->
-<!--                                <sourceDir>${project.basedir}/src/test/java</sourceDir>-->
-<!--                            </sourceDirs>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--  -->
-<!--                <dependencies>-->
-<!--                    <dependency>-->
-<!--                        <groupId>org.jetbrains.kotlin</groupId>-->
-<!--                        <artifactId>kotlin-maven-allopen</artifactId>-->
-<!--                        <version>${kotlin.version}</version>-->
-<!--                    </dependency>-->
-<!--                </dependencies>-->
-<!--        -->
-<!--            </plugin>-->
+            
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

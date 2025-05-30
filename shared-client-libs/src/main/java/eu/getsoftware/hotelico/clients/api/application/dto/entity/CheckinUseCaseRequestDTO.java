@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.clients.api.application.dto.entity;
 
 import eu.getsoftware.hotelico.clients.common.domain.IDomainRequestDTO;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;

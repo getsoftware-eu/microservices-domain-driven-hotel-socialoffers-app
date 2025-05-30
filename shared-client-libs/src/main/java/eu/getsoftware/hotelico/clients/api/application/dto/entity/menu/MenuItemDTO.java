@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.clients.api.application.dto.entity.menu;
 
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.MenuItemDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.ids.MenuItemDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

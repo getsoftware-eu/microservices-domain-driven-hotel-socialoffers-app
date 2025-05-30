@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.clients.common.utils;
 
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 
 import java.nio.file.Path;
 import java.sql.Timestamp;

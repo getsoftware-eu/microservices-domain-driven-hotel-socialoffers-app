@@ -2,9 +2,9 @@ package eu.getsoftware.hotelico.clients.api.application.dto.entity;
 
 import eu.getsoftware.hotelico.clients.common.domain.EntityIdentifier;
 import eu.getsoftware.hotelico.clients.common.domain.IDomainResponseDTO;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CheckinDomainEntityId;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.ids.CheckinDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;

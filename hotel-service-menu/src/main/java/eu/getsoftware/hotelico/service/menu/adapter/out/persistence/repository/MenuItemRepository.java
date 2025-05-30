@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.service.menu.adapter.out.persistence.repository;
 
+import eu.getsoftware.hotelico.clients.common.domain.ids.MenuItemDomainEntityId;
 import eu.getsoftware.hotelico.service.menu.adapter.out.persistence.model.MenuItemMappedEntity;
 import jakarta.persistence.metamodel.Attribute;
 import org.springframework.data.domain.Pageable;
@@ -92,7 +93,10 @@ public interface MenuItemRepository extends JpaRepository<MenuItemMappedEntity, 
 	public List<MenuItemMappedEntity> getMenuItemsByHotelOrCafeId(@Param("hotelId") Long hotelId, @Param("cafeId") long cafeId);
 	
 	@Query(FIND_BY_INIT_ID_QUERY)
-	 List<MenuItemMappedEntity> getByInitId(@Param("initId") long initId);
+	 List<MenuItemMappedEntity> getByInitId(@Param("initId") long initId);	
+	
+	@Query(FIND_BY_INIT_ID_QUERY)
+	 Optional<MenuItemMappedEntity> getByDomainEntityId(@Param("initId") MenuItemDomainEntityId initId);
 	
 	@Query(FIND_BY_ORDER_ID_AND_ITEM_INIT_ID_QUERY)
     MenuItemMappedEntity findByOrderAndInitId(@Param("initId") long initId, @Param("orderId") long orderId);

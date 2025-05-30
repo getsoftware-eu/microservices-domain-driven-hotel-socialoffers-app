@@ -1,8 +1,8 @@
 package eu.getsoftware.hotelico.service.menu.adapter.out.persistence.messaging.consumer;
 
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
-import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.CheckinUpdatedEventPayload;
-import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainEvents.domainMessage.DomainMessage;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.CheckinUpdatedEventPayload;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.DomainMessage;
 import eu.getsoftware.hotelico.service.menu.application.port.in.process.MenuProcessManagerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

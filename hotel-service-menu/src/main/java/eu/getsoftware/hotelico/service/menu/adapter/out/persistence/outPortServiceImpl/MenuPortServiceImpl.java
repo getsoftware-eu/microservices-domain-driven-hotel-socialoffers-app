@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.service.menu.adapter.out.persistence.outPortServ
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.menu.MenuItemDTO;
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.menu.MenuOrderDTO;
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
 import eu.getsoftware.hotelico.service.menu.adapter.out.persistence.model.MenuItemMappedEntity;
@@ -298,9 +298,9 @@ public class MenuPortServiceImpl implements IMenuPortService
 
         MenuItemMappedEntity menuItem = null;
 
-		if(menuItemDto.getId()>=0 || !menuItems.isEmpty())
+		if(menuItemDto.getSenderId()>=0 || !menuItems.isEmpty())
 		{
-			menuItem = menuItems.isEmpty()? menuItemRepository.findById(menuItemDto.getId()).orElseThrow(()-> new RuntimeException("bla")) : menuItems.get(0);
+			menuItem = menuItems.isEmpty()? menuItemRepository.getByDomainEntityId(menuItemDto.getDomainEntityId()).orElseThrow(()-> new RuntimeException("bla")) : menuItems.get(0);
 		}
 
 		if(menuItem==null)

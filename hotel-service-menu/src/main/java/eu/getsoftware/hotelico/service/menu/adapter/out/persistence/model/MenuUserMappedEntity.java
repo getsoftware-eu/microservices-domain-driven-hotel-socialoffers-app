@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.service.menu.adapter.out.persistence.model;
 
-import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
