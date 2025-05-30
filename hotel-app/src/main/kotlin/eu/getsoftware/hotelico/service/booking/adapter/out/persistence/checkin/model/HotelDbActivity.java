@@ -58,7 +58,11 @@ public class HotelDbActivity implements IHotelActivity, Serializable
 	@Getter
 	@Embedded @Column  
 	public HotelDomainEntityId hotelDomainId;
-	
+
+	public HotelDomainEntityId getHotelDomainId() {
+		return hotelDomainId;
+	}
+
 	@ManyToOne
 	@JoinColumn(name="senderDomainId")
 	private CustomerDBEntity sender;

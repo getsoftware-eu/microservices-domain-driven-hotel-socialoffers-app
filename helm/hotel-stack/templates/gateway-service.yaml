@@ -1,0 +1,13 @@
+# path: k8s/helm/hotel-stack/templates/gateway-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway
+spec:
+  selector:
+    app: gateway
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: {{ .Values.gateway.port }}
+  type: NodePort

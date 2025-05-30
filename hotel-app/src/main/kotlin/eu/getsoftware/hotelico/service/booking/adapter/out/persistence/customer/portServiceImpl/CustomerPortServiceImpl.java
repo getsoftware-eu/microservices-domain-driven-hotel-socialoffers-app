@@ -29,10 +29,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Type;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
-import static eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties.convertToDate;
+import static eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties.convertToLocalDate;
 import static eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.portServiceImpl.OnlineServiceImpl.isCustomerOnline;
 
 @Service
@@ -168,8 +169,8 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 
             if(hotelRootEntity !=null && customerDto.isHotelStaff())
             {
-                customerDto.setCheckinFrom(new Date());
-                customerDto.setCheckinTo(convertToDate(LocalDateTime.now().plusYears(10)));
+                customerDto.setCheckinFrom(LocalDate.now());
+                customerDto.setCheckinTo(convertToLocalDate(LocalDateTime.now().plusYears(10)));
 //                checkinService.createCheckin(CheckinRequestDTO(customerDto.getInitId(), customerDto.getHotelId(), ));
 
                 if (customerDto.getEmail() != null)
@@ -201,7 +202,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 
 		CustomerDTO dto =  convertMyCustomerToFullDto(customerRepository.saveAndFlush(customerEntity));
 
-        SocketNotificationCommand message = new SocketNotificationCommand(customerDto.getSequenceId(), customerDto.getHotelId(), customerDto.getLastName(), "message");
+        SocketNotificationCommand message = new SocketNotificationCommand(customerDto.getDomainEntityId(), customerDto.getHotelDTO().getDomainEntityId(), customerDto.getLastName(), "message");
         messagingService.sendSocketNotificationCommand(message, InnerHotelEvent.EVENT_REGISTER);
 
         //// NOTIFICATE OTHERS!!!!
@@ -757,7 +758,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
     {
         //TODO Eugen: bessere query by active and city
         List<String> allCustomersCities = customerRepository.findNotStaffUniueCities();
-        List<String> allCheckinCustomersCities = checkinRepository.findNotStaffCheckinUniueCities(new Date());
+        List<String> allCheckinCustomersCities = checkinRepository.findNotStaffCheckinUniueCities(LocalDate.now());
 
         Set<String> citiesList = new HashSet<>();
         citiesList.addAll(allCheckinCustomersCities);
@@ -798,7 +799,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
                 HotelDomainEntityId hotelId = getCustomerHotelId(nextCustomerRootEntity.getDomainEntityId());
                 CustomerDTO dto = convertCustomerToDto(nextCustomerRootEntity, hotelId);
 
-//                boolean isPartnerInMyHotelWithFullCheckin = customerHotelId>0 && customerHotelId==dto.getHotelId() && checkinRepository.isFullCheckinForCustomerByHotelId(dto.getId(), dto.getHotelId(), new Date());
+//                boolean isPartnerInMyHotelWithFullCheckin = customerHotelId>0 && customerHotelId==dto.getHotelId() && checkinRepository.isFullCheckinForCustomerByHotelId(dto.getId(), dto.getHotelId(), LocalDate.now());
 //                dto.setInMyHotel(isPartnerInMyHotelWithFullCheckin);
 
                 resultList.add(dto);
@@ -828,10 +829,10 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 //        
 //        if(AppConfigProperties.SHOW_ONLY_FULL_CHECKIN_USERS)
 //        {
-//            checkins = checkinRepository.getActiveFullCheckinByHotelId(hotelId, new Date());
+//            checkins = checkinRepository.getActiveFullCheckinByHotelId(hotelId, LocalDate.now());
 //        }
 //        else {
-//            checkins = checkinRepository.getActiveByHotelId(hotelId, new Date());
+//            checkins = checkinRepository.getActiveByHotelId(hotelId, LocalDate.now());
 //        }
 //        
 //

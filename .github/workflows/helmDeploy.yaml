@@ -1,0 +1,47 @@
+# .github/workflows/helmDeploy.yaml  автоматически разворачивает всё при пуше в main.
+name: Deploy to AWS EKS with Helm
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Helm Deploy to EKS
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository code
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Install kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: latest
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.12.0
+
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER_NAME }}
+
+      - name: Helm lint
+        run: helm lint helm/hotel-stack
+
+      - name: Helm template validate
+        run: helm template helm/hotel-stack
+
+      - name: Deploy Helm chart
+        run: |
+          helm upgrade --install hotel-stack helm/hotel-stack --namespace hotel --create-namespace

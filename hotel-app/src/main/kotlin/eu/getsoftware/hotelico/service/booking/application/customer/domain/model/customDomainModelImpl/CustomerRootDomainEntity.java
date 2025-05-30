@@ -76,15 +76,18 @@ public class CustomerRootDomainEntity implements IRootDomainEntity {
         return password != null && password.length() > 5;
     }
     
-    @Override
-    public void setInitValues(Map<String, String> fieldToValues) {
-        
-    }
-
     public void setAddress(@Validated AddressValueObject address) {
         this.address = address;
     }
 
+    @Override
+    public void setInitValues(Map fieldToValues) {
+        
+    }
+
+    public CustomerDomainEntityId getDomainEntityId() {
+        return domainEntityId;
+    }
 //    public CustomerAggregate getCustomerAggregate(){
 //        return new CustomerAggregate(this);
 //    }

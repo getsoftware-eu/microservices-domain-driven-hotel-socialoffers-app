@@ -47,7 +47,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 @RequiredArgsConstructor
-public class HotelServiceImpl implements IHotelService<HotelDBEntity>
+public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 {
 	private CustomerPortService<CustomerDBEntity> customerService;
 	
@@ -390,9 +390,9 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
 	@Override
     public String getGpsCity(Point2D.Double latLonPoint)
     {
-        List<HotelDBEntity> hotelRootEntities = hotelRepository.findActiveGpsHotels();
+        List<HotelRootDomainEntity> hotelRootEntities = hotelRepository.findActiveGpsHotels();
 
-        for(HotelDBEntity nextHotelRootEntity : hotelRootEntities)
+        for(HotelRootDomainEntity nextHotelRootEntity : hotelRootEntities)
         {
             double kmFrom = this.getDistanceKmToHotel(latLonPoint, nextHotelRootEntity);
 
@@ -406,30 +406,30 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
         return null;
     }
 
-
     @Override
-    public double getDistanceKmToHotel(Point2D.Double from, HotelDBEntity hotelRootEntity)
+    public double getDistanceKmToHotel(Point2D.Double from, HotelRootDomainEntity hotelRootEntity)
     {
-        if(hotelRootEntity.getLatitude()<=-90)
-        {
-            return -1;
-        }
-
-        double earthRadius = 3958.75; // miles (or 6371.0 kilometers)
-        double dLat = Math.toRadians(hotelRootEntity.getLatitude()-from.getX());
-        double dLng = Math.toRadians(hotelRootEntity.getLongitude()-from.getY());
-        double sindLat = Math.sin(dLat / 2);
-        double sindLng = Math.sin(dLng / 2);
-        double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
-                * Math.cos(Math.toRadians(from.getX())) * Math.cos(Math.toRadians(hotelRootEntity.getLatitude()));
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        double dist = earthRadius * c;
-
-        double km = dist /  0.621371192;
-
-        double kmRound = Math.floor(km * 100) / 100;
-        
-        return kmRound;
+//        if(hotelRootEntity.getLatitude()<=-90)
+//        {
+//            return -1;
+//        }
+//
+//        double earthRadius = 3958.75; // miles (or 6371.0 kilometers)
+//        double dLat = Math.toRadians(hotelRootEntity.getLatitude()-from.getX());
+//        double dLng = Math.toRadians(hotelRootEntity.getLongitude()-from.getY());
+//        double sindLat = Math.sin(dLat / 2);
+//        double sindLng = Math.sin(dLng / 2);
+//        double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
+//                * Math.cos(Math.toRadians(from.getX())) * Math.cos(Math.toRadians(hotelRootEntity.getLatitude()));
+//        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+//        double dist = earthRadius * c;
+//
+//        double km = dist /  0.621371192;
+//
+//        double kmRound = Math.floor(km * 100) / 100;
+//        
+//        return kmRound;
+        return 0;
     }
 	
 	@Override
@@ -1155,31 +1155,26 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
         /// update DTO
         return convertActivityToDto(hotelActivity, null);
     }
+    
 
     @Override
-    public Map<Long, String> getNotLoggedGuestPushIdsByHotel(HotelDBEntity hotelRootEntity) {
-        return null;
-    }
+	public Map<Long,String> getNotLoggedGuestPushIdsByHotel(HotelRootDomainEntity hotelRootEntity)
+	{
+		Map<Long, String> guestsToPushId = new HashMap<>();
 
+		if(hotelRootEntity == null)
+		{
+			return guestsToPushId;
+		}
 
-////    @Override
-//	public Map<Long,String> getNotLoggedGuestPushIdsByHotel(HotelDomainEntity hotelRootEntity)
-//	{
-//		Map<Long, String> guestsToPushId = new HashMap<>();
+		//TODO convert string data to own structure
+
+//		String hotelPushIds = hotelRootEntity.getGuestPushIds()!=null?  hotelRootEntity.getGuestPushIds() : "";
 //		
-//		if(hotelRootEntity == null)
-//		{
-//			return guestsToPushId;
-//		}
-//		
-//		//TODO convert string data to own structure
-//		
-////		String hotelPushIds = hotelRootEntity.getGuestPushIds()!=null?  hotelRootEntity.getGuestPushIds() : "";
-////		
-////		splitPushIds(guestsToPushId, hotelPushIds);
-//		
-//		return guestsToPushId;
-//	}
+//		splitPushIds(guestsToPushId, hotelPushIds);
+
+		return guestsToPushId;
+	}
 	
 	/**
 	 * TODO convert string to own data structire
@@ -1617,7 +1612,8 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
 
 		if("addGuestPushId".equalsIgnoreCase(action))
 		{
-			Map<Long, String> getNotLoggedGuestPushIds = getNotLoggedGuestPushIdsByHotel(hotelRootEntity);
+            HotelRootDomainEntity hotelRootDomainEntity = modelMapper.map(hotelRootEntity, HotelRootDomainEntity.class);
+			Map<Long, String> getNotLoggedGuestPushIds = getNotLoggedGuestPushIdsByHotel(hotelRootDomainEntity);
 			
 			if(!guestDto.getSystemMessages().containsKey("guestCustomerId"))
 			{
@@ -1759,9 +1755,10 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
     }
 
     @Override
-    public Optional<HotelDBEntity> findByCurrentHotelAccessCodeAndActive(String hotelCode, boolean active) {
-        return null;
+    public Optional<HotelRootDomainEntity> findByCurrentHotelAccessCodeAndActive(String hotelCode, boolean active) {
+        return Optional.empty();
     }
+
 
     @Override
     public Optional getOne(HotelDomainEntityId hotelId) {
@@ -1769,10 +1766,11 @@ public class HotelServiceImpl implements IHotelService<HotelDBEntity>
     }
 
     @Override
-    public HotelDTO convertToDTO(HotelDBEntity hotelEntity) {
+    public HotelDTO convertToDTO(HotelRootDomainEntity hotelEntity) {
         return null;
     }
 
+     
 
 
     @Override

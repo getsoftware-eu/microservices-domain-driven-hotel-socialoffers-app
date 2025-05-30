@@ -9,6 +9,7 @@ import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.Chec
 import eu.getsoftware.hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.aspects.NotifyClients;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.INotificationService;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.LastMessagesService;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.LoginHotelicoService;

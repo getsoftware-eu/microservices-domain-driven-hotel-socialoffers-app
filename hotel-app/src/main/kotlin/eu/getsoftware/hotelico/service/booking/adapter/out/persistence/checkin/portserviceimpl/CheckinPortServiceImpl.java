@@ -65,6 +65,16 @@ public class CheckinPortServiceImpl implements CheckinPortService, CheckinQueryP
     }
 
     @Override
+    public List<CustomerDTO> getActiveCustomersByHotelId(HotelDomainEntityId hotelId, LocalDate date) {
+        return List.of();
+    }
+
+    @Override
+    public Integer getActiveCountByHotelId(HotelDomainEntityId receiverHotelId, LocalDate now) {
+        return 0;
+    }
+
+    @Override
     public CustomerDBEntity getStaffbyHotelId(HotelDomainEntityId hotelId) {
         return null;
     }

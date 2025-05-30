@@ -27,10 +27,18 @@
 
         <!-- OAuth2 Client (client_credentials) -->
         <dependency>
+            <!-- Иначе Вам пришлось бы вручную парсить и валидировать JWT: получать public key, проверять подпись, парсить claims-->
+
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-client</artifactId>
         </dependency>
 
+<!--        <dependency>-->
+<!--            &lt;!&ndash; Иначе Вам пришлось бы вручную парсить и валидировать JWT: получать public key, проверять подпись, парсить claims&ndash;&gt;-->
+<!--            <groupId>org.springframework.security</groupId>-->
+<!--            <artifactId>spring-security-oauth2-resource-server</artifactId>-->
+<!--        </dependency>-->
+        
         <!-- Web (WebClient без WebFlux) -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -49,11 +57,7 @@
             </dependency>
 
         
-        <dependency>
-            <!-- Иначе Вам пришлось бы вручную парсить и валидировать JWT: получать public key, проверять подпись, парсить claims-->
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-oauth2-resource-server</artifactId>
-        </dependency>
+        
 
 
         <!--        Если твой сервис не управляет пользователями, ролями или клиентами Keycloak напрямую, а просто использует Keycloak как Identity Provider для аутентификации — тогда тебе keycloak-admin-client не нужен.-->

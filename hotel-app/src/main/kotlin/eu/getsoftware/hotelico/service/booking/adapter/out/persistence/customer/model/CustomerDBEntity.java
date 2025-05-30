@@ -183,7 +183,7 @@ public class CustomerDBEntity extends CustomerRootDomainEntity implements Serial
     
     public void updateLastSeenOnline()
     {
-        this.lastSeenOnline = new Date();
+        this.lastSeenOnline = LocalDate.now();
     }
     
     //################### 1:n:1 ###################################

@@ -1,0 +1,18 @@
+# path: helm/hotel-stack/charts/gateway/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "gateway.fullname" . }}
+  labels:
+    app.kubernetes.io/name: {{ include "gateway.name" . }}
+    helm.sh/chart: {{ include "gateway.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 8080
+  selector:
+    app.kubernetes.io/name: {{ include "gateway.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

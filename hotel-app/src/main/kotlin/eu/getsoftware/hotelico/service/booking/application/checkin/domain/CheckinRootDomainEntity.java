@@ -13,7 +13,7 @@ import java.util.Map;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CheckinRootDomainEntity implements IRootDomainEntity {
+public class CheckinRootDomainEntity implements IRootDomainEntity<CheckinDomainEntityId> {
 
     @Setter
     protected HotelDomainEntityId hotelDomainEntityId;
@@ -40,7 +40,7 @@ public class CheckinRootDomainEntity implements IRootDomainEntity {
     boolean active;
 
     @Override
-    public void setInitValues(Map<String, String> fieldToValues) {
+    public void setInitValues(Map fieldToValues) {
         
     }
 

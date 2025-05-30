@@ -1,0 +1,15 @@
+# hotel-stack/charts/kafka/values.yaml
+## Kafka values for Bitnami chart
+replicaCount: 1
+zookeeper:
+  enabled: true
+  replicaCount: 1
+  auth:
+    enabled: false
+auth:
+  clientProtocol: plaintext
+  interBrokerProtocol: plaintext
+externalAccess:
+  enabled: true
+  service:
+    type: NodePort

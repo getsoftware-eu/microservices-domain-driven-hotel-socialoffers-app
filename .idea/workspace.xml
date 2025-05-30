@@ -4,57 +4,59 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="security config">
-      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/config/infrastructure/resolver/MultitenantSecurityConfig.java" afterDir="false" />
+    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="k8s helmchart">
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/hotel-app/Chart.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/hotel-app/templates/deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/hotel-app/templates/service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/hotel-app/values.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/hotel-service-chat/Chart.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/hotel-service-chat/templates/deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/hotel-service-chat/templates/service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/hotel-service-chat/values.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/kafka/Chart.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/kafka/values.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/keycloak/Chart.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/keycloak/values.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/postgresql/Chart.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/postgresql/values.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/spring-cloud-gateway/Chart.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/spring-cloud-gateway/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/spring-cloud-gateway/templates/deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/spring-cloud-gateway/templates/ingress.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/spring-cloud-gateway/templates/service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/charts/spring-cloud-gateway/values.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/templates/gateway-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/templates/gateway-service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/templates/kafka-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/templates/kafka-service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/templates/keycloak-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/templates/keycloak-service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/templates/postgresql-deployment.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/templates/postgresql-service.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/templates/spring-cloud-gateway.yaml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helm/hotel-stack/templates/spring-service-deployments.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helm/hotel-stack/Chart.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/helm/hotel-stack/Chart.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helm/hotel-stack/templates/keycloak.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/helmDeploy.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/helm/hotel-stack/values.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/helm/hotel-stack/values.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-app/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/ActivityController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/ActivityController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/WallController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/WallController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/checkin/CheckinController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/checkin/CheckinController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/customer/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/customer/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/deal/DealController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/deal/DealController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/hotel/HotelController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/hotel/HotelController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/mapper/CustomerDtoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/mapper/CustomerDtoMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/model/UserRole.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/model/UserRole.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/chat/messaging/HotelInnerEventListener.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/chat/messaging/HotelInnerEventListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/checkin/model/HotelDbActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/checkin/model/HotelDbActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/checkin/portserviceimpl/CheckinPortServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/checkin/portserviceimpl/CheckinPortServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/model/CustomerDBEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/model/CustomerDBEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/portServiceImpl/CustomerPortServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/portServiceImpl/CustomerPortServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/portServiceImpl/SocialPortServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/portServiceImpl/SocialPortServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/repository/UserRolesRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/repository/UserRolesRepository.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/security/CustomUserDetailsService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/security/CustomUserDetailsService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/security/UserProfileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/security/UserProfileService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/HotelServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/HotelServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/LastMessagesServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/LastMessagesServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/LoginHotelicoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/LoginHotelicoServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/MailServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/MailServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/NotificationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/NotificationServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/WallPostServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/WallPostServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/microservice/WebSocketNotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/microservice/WebSocketNotificationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/repository/WallPostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/repository/WallPostRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/checkin/port/out/CheckinPortService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/checkin/port/out/CheckinPortService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/customer/domain/infrastructure/security/CustomUserDetails.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/customer/domain/infrastructure/security/CustomUserDetails.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/domain/model/customDomainModelImpl/HotelAggregateBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/domain/model/customDomainModelImpl/HotelAggregateBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/domain/usecase/notification/NotificationUseCaseImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/domain/usecase/notification/NotificationUseCaseImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/in/NotificationUseCase.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/in/NotificationUseCase.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/IDealService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/IDealService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/IHotelActivityService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/IHotelActivityService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/checkin/domain/CheckinRootDomainEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/checkin/domain/CheckinRootDomainEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/customer/domain/model/customDomainModelImpl/CustomerRootDomainEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/customer/domain/model/customDomainModelImpl/CustomerRootDomainEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/IHotelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/IHotelService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/INotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/INotificationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/IUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/IWallpostService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/IWallpostService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/IWebSocketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/IWebSocketService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/LastMessagesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/LastMessagesService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/LoginHotelicoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/LoginHotelicoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/config/infrastructure/keycloak/AuthKeycloakConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/config/infrastructure/keycloak/AuthKeycloakConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/config/infrastructure/resolver/MultitenantKeycloakConfigResolver.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/eu/getsoftware/hotelico/chat/adapter/out/keycloakRest/TestWebClientRest.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/eu/getsoftware/hotelico/chat/adapter/out/keycloakRest/TestWebClientRest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-menu/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-menu/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/config/infrastructure/resolver/MultitenantSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/config/infrastructure/resolver/MultitenantSecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/test/kotlin/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/checkin/CheckinControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/test/kotlin/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/checkin/CheckinControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/eu/getsoftware/hotelico/chat/adapter/out/persistence/outPortServiceImpl/ChatMSCommunicationServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/kotlin/eu/getsoftware/hotelico/chat/adapter/out/persistence/outPortServiceImpl/ChatMSCommunicationServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-menu/src/main/java/eu/getsoftware/hotelico/service/menu/adapter/in/web/controller/MenuRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/java/eu/getsoftware/hotelico/service/menu/adapter/in/web/controller/MenuRestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/security-common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/security-common/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/application/dto/entity/CustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/application/dto/entity/CustomerDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/common/utils/AppConfigProperties.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/common/utils/AppConfigProperties.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +64,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="337379" />
+    <option name="totalTimeSeconds" value="349691" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -144,82 +146,82 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
-    &quot;JUnit.CheckinRequestDTOTest.givenCheckinRequestDTO_whenWrongDates_thenError.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.apigw [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.common-client-api-libs [deploy].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.common-client-api-libs [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-app [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-app [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-app [deploy].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-app [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-app [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-app [validate].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-app [verify].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-plugin-chat [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-plugin-chat [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-plugin-menu [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-plugin-menu [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-service-chat [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-service-chat [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-service-chat [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-service-chat [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-service-chat [validate].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-service-menu [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-service-menu [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotel-service-menu [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotelservices [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotelservices [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotelservices [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.hotelservices [test].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.notification [deploy].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.notification [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.security-common [deploy].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.security-common [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.shared-client-libs [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.shared-client-libs [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.shared-client-libs [deploy].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.shared-client-libs [install].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.shared-client-libs [package].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.shared-client-libs [site].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.shared-client-libs [validate].executor&quot;: &quot;Run&quot;,
-    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
-    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;Spring Boot.Hotel-app MainApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.HotelApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.MainApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;Spring Boot.Menu MainApplication.executor&quot;: &quot;Debug&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary&quot;: &quot;JUnit5&quot;,
-    &quot;com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5&quot;: &quot;&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_directory_selection&quot;: &quot;D:/work/projects/GetSoftw/hotelico/security-common/src&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/work/projects/GetSoftw/my-onion-clean-architecture&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.configurations.included.in.services&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;2389370ba893e5daeee482193e73d301&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "JUnit.CheckinRequestDTOTest.givenCheckinRequestDTO_whenWrongDates_thenError.executor": "Run",
+    "Maven.apigw [package].executor": "Run",
+    "Maven.common-client-api-libs [deploy].executor": "Run",
+    "Maven.common-client-api-libs [package].executor": "Run",
+    "Maven.hotel-app [clean].executor": "Run",
+    "Maven.hotel-app [compile].executor": "Run",
+    "Maven.hotel-app [deploy].executor": "Run",
+    "Maven.hotel-app [install].executor": "Run",
+    "Maven.hotel-app [package].executor": "Run",
+    "Maven.hotel-app [validate].executor": "Run",
+    "Maven.hotel-app [verify].executor": "Run",
+    "Maven.hotel-plugin-chat [clean].executor": "Run",
+    "Maven.hotel-plugin-chat [install].executor": "Run",
+    "Maven.hotel-plugin-menu [clean].executor": "Run",
+    "Maven.hotel-plugin-menu [install].executor": "Run",
+    "Maven.hotel-service-chat [clean].executor": "Run",
+    "Maven.hotel-service-chat [compile].executor": "Run",
+    "Maven.hotel-service-chat [install].executor": "Run",
+    "Maven.hotel-service-chat [package].executor": "Run",
+    "Maven.hotel-service-chat [validate].executor": "Run",
+    "Maven.hotel-service-menu [clean].executor": "Run",
+    "Maven.hotel-service-menu [compile].executor": "Run",
+    "Maven.hotel-service-menu [install].executor": "Run",
+    "Maven.hotelservices [clean].executor": "Run",
+    "Maven.hotelservices [install].executor": "Run",
+    "Maven.hotelservices [package].executor": "Run",
+    "Maven.hotelservices [test].executor": "Run",
+    "Maven.notification [deploy].executor": "Run",
+    "Maven.notification [install].executor": "Run",
+    "Maven.security-common [deploy].executor": "Run",
+    "Maven.security-common [install].executor": "Run",
+    "Maven.shared-client-libs [clean].executor": "Run",
+    "Maven.shared-client-libs [compile].executor": "Run",
+    "Maven.shared-client-libs [deploy].executor": "Run",
+    "Maven.shared-client-libs [install].executor": "Run",
+    "Maven.shared-client-libs [package].executor": "Run",
+    "Maven.shared-client-libs [site].executor": "Run",
+    "Maven.shared-client-libs [validate].executor": "Run",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.Hotel-app MainApplication.executor": "Debug",
+    "Spring Boot.HotelApplication.executor": "Debug",
+    "Spring Boot.MainApplication.executor": "Debug",
+    "Spring Boot.Menu MainApplication.executor": "Debug",
+    "WebServerToolWindowFactoryState": "false",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_directory_selection": "D:/work/projects/GetSoftw/hotelico/security-common/src",
+    "last_opened_file_path": "D:/work/projects/GetSoftw/hotelico/helm/hotel-stack/charts/gateway",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.configurations.included.in.services": "true",
+    "settings.editor.selected.configurable": "reference.projectsettings.compiler.annotationProcessors",
+    "spring.configuration.checksum": "2389370ba893e5daeee482193e73d301",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="ReactorSettings">
     <option name="notificationShown" value="true" />
   </component>
@@ -228,18 +230,18 @@
       <recent name="eu.getsoftware.hotelico.streams.topdeal.config" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\work\projects\GetSoftw\hotelico\helm\hotel-stack\charts\gateway" />
+      <recent name="D:\work\projects\GetSoftw\hotelico\helm\hotel-stack\charts\hotel-app" />
+      <recent name="D:\work\projects\GetSoftw\hotelico\helm\hotel-stack\charts" />
+      <recent name="D:\work\projects\GetSoftw\hotelico\helm\templates" />
       <recent name="D:\work\projects\GetSoftw\hotelico\shared-client-libs\openapi" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\shared-client-libs" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\hotel-service-chat\src\main\resources\openapi\controller\schemas" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\k8s\minikube\services\kafka-streams" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\kafka-stream-app\src" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\work\projects\GetSoftw\hotelico\helm\hotel-stack\charts\kafka" />
+      <recent name="D:\work\projects\GetSoftw\hotelico\helm" />
+      <recent name="D:\work\projects\GetSoftw\hotelico\helm\hotel-stack" />
       <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\kotlin\eu\getsoftware\hotelico\hotelapp\config\infrastructure\keycloak" />
       <recent name="D:\work\projects\GetSoftw\hotelico\shared-client-libs\openapi\controllers" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\shared-client-libs\openapi" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\resources\openapi\controller" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\resources" />
     </key>
     <key name="CreateBuilderDialog.RecentsKey">
       <recent name="eu.getsoftware.hotelico.customer.infrastructure.dto" />
@@ -728,6 +730,9 @@
       <workItem from="1748536569153" duration="3554000" />
       <workItem from="1748546715118" duration="2358000" />
       <workItem from="1748549118294" duration="5310000" />
+      <workItem from="1748554494640" duration="1270000" />
+      <workItem from="1748555819285" duration="11220000" />
+      <workItem from="1748597925789" duration="2384000" />
     </task>
     <task id="LOCAL-00001" summary="-CHG: Microservice refactoring(Eureka-server)">
       <created>1655287660110</created>
@@ -903,22 +908,6 @@
       <option name="presentableId" value="LOCAL-00025" />
       <option name="project" value="LOCAL" />
       <updated>1683714777053</updated>
-    </task>
-    <task id="LOCAL-00088" summary="Persist ValueObject without Annotations in Domain Layer">
-      <option name="closed" value="true" />
-      <created>1731279604783</created>
-      <option name="number" value="00088" />
-      <option name="presentableId" value="LOCAL-00088" />
-      <option name="project" value="LOCAL" />
-      <updated>1731279604783</updated>
-    </task>
-    <task id="LOCAL-00089" summary="ValueObject as uuid in Domain layer">
-      <option name="closed" value="true" />
-      <created>1731282708366</created>
-      <option name="number" value="00089" />
-      <option name="presentableId" value="LOCAL-00089" />
-      <option name="project" value="LOCAL" />
-      <updated>1731282708366</updated>
     </task>
     <task id="LOCAL-00090" summary="DomainEntity as upper class">
       <option name="closed" value="true" />
@@ -1096,7 +1085,23 @@
       <option name="project" value="LOCAL" />
       <updated>1748545093452</updated>
     </task>
-    <option name="localTasksCounter" value="112" />
+    <task id="LOCAL-00112" summary="security config">
+      <option name="closed" value="true" />
+      <created>1748554871900</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1748554871901</updated>
+    </task>
+    <task id="LOCAL-00113" summary="k8s helmchart">
+      <option name="closed" value="true" />
+      <created>1748558451925</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1748558451925</updated>
+    </task>
+    <option name="localTasksCounter" value="114" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1109,7 +1114,7 @@
         <option value="Default.Author" />
         <option value="Default.Date" />
         <option value="Default.Subject" />
-        <option value="Space.CommitStatus" />
+        <option value="GitHub.CommitStatus" />
       </list>
     </option>
   </component>
@@ -1126,7 +1131,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="Domainentity connect only via EntityId ValueObject + builder in Aggregate!" />
     <MESSAGE value="from db to DomainEntity: builder in Aggregate with EntityId as constructor!" />
     <MESSAGE value="Kafka replaced rabbitMQ" />
     <MESSAGE value="Event Sourcing" />
@@ -1151,7 +1155,8 @@
     <MESSAGE value="NEW# central security-common module with KeycloakSecurityConfig" />
     <MESSAGE value="refactoring package structure" />
     <MESSAGE value="security config" />
-    <option name="LAST_COMMIT_MESSAGE" value="security config" />
+    <MESSAGE value="k8s helmchart" />
+    <option name="LAST_COMMIT_MESSAGE" value="k8s helmchart" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1174,6 +1179,15 @@
             <option name="WATCH_EXIT" value="false" />
           </properties>
           <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/HotelServiceImpl.java</url>
+          <line>189</line>
+          <properties class="eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.outPortServiceImpl.HotelServiceImpl" method="getEntityById">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/hotel-app/src/main/kotlin/eu/getsoftware/hotelico/service/booking/application/customer/port/in/CustomerDtoUseCase.java</url>

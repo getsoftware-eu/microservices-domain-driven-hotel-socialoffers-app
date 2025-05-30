@@ -19,6 +19,7 @@ import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastr
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.model.customDomainModelImpl.HotelRootDomainEntity;
 
 import java.awt.geom.Point2D;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -37,7 +38,7 @@ public interface IHotelService<T extends HotelRootDomainEntity>
 
     Map<Long, String> getUnsubscribeGuestPushIds();
 
-    Optional<T> getEntityById(HotelDomainEntityId hotelId);
+    Optional<? extends Serializable> getEntityById(HotelDomainEntityId hotelId);
     Optional<T> getEntityByDomainId(HotelDomainEntityId hotelId);
 
     HotelDTO getHotelById(HotelDomainEntityId hotelId);

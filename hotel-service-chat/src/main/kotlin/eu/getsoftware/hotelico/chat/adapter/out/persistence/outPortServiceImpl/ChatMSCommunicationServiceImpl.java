@@ -364,7 +364,7 @@
 ////					chatPartnerDto = customerService.fillDtoFromCustomer(nextPartner, chatPartnerDto);
 //					CustomerDTO chatPartnerDto = customerService.convertCustomerToDto(nextPartner, partnerHotelId);
 //
-//					boolean isPartnerInMyHotelWithFullCheckin = customerHotelId>0 && customerHotelId==chatPartnerDto.getHotelId() && checkinRepository.isFullCheckinForCustomerByHotelId(chatPartnerDto.getId(), chatPartnerDto.getHotelId(), new Date());
+//					boolean isPartnerInMyHotelWithFullCheckin = customerHotelId>0 && customerHotelId==chatPartnerDto.getHotelId() && checkinRepository.isFullCheckinForCustomerByHotelId(chatPartnerDto.getId(), chatPartnerDto.getHotelId(), LocalDate.now());
 //
 //					chatPartnerDto.setInMyHotel(isPartnerInMyHotelWithFullCheckin);
 //					
@@ -432,7 +432,7 @@
 //					
 //					CustomerDTO chatPartnerDto = customerService.convertCustomerToDto(nextPartner, partnerHotelId);
 //
-//					boolean isPartnerInMyHotelWithFullCheckin = customerHotelId>0 && customerHotelId==chatPartnerDto.getHotelId() && checkinRepository.isFullCheckinForCustomerByHotelId(nextPartner.getId(), partnerHotelId, new Date());
+//					boolean isPartnerInMyHotelWithFullCheckin = customerHotelId>0 && customerHotelId==chatPartnerDto.getHotelId() && checkinRepository.isFullCheckinForCustomerByHotelId(nextPartner.getId(), partnerHotelId, LocalDate.now());
 //
 //					chatPartnerDto.setInMyHotel(isPartnerInMyHotelWithFullCheckin);
 //					

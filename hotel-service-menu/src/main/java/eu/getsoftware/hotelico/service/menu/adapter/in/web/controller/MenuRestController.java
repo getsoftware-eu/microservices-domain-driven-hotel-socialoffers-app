@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.service.menu.adapter.in.web.controller;
 
+//eu: generated openapi DTO
 import eu.getsoftware.hotelico.clients.openapi.generated.menu.MenuApi;
 import eu.getsoftware.hotelico.clients.openapi.generated.menu.dto.MenuRestDTO;
 import lombok.RequiredArgsConstructor;

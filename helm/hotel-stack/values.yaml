@@ -1,20 +1,31 @@
-postgresql:
-  auth:
-    username: hotelico_user
-    password: hotelico_pass
-    database: hotelico_db
-  primary:
-    persistence:
-      enabled: true
-      size: 1Gi
-  service:
-    port: 5432  
-    
 keycloak:
-  auth:
-    adminUser: admin
-    adminPassword: admin123
-  service:
-    type: ClusterIP
-  ingress:
-    enabled: false
+  image: quay.io/keycloak/keycloak:21.1.1
+  adminUser: admin
+  adminPassword: admin
+  hostname: keycloak.local
+
+postgresql:
+  image: postgres:15
+  user: hotel
+  password: hotel
+  db: hotel_db
+
+kafka:
+  image: bitnami/kafka:3.5
+  zookeeperImage: bitnami/zookeeper:3.8
+  replicas: 1
+
+gateway:
+  image: eugenfff/gateway:latest
+  port: 8080
+
+services:
+  - name: chat
+    image: eugenfff/hotel-chat:latest
+    port: 8081
+  - name: booking
+    image: eugenfff/hotel-booking:latest
+    port: 8082
+  - name: menu
+    image: eugenfff/hotel-menu:latest
+    port: 8083

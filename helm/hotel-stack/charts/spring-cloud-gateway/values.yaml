@@ -1,0 +1,51 @@
+# path: hotel-stack/charts/gateway/values.yaml
+
+#Gateway запускается в 1 реплике (replicaCount: 1)
+#  
+#  Используется Docker-образ eugenfff/gateway:latest
+#
+#Сервис доступен внутри кластера на port: 80 → контейнеру targetPort: 8080
+#  
+#  Включен Ingress, хост gateway.localhost, путь перехватывает всё (/?(.*))
+#  
+#  Заданы переменные окружения для профиля k8s и интеграции с Keycloak
+
+replicaCount: 1
+
+image:
+  repository: eugenfff/gateway
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 8080
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/use-regex: "true"
+  hosts:
+    - host: gateway.localhost
+      paths:
+        - path: /?(.*)
+          pathType: Prefix
+  tls: []
+
+env:
+  - name: SPRING_PROFILES_ACTIVE
+    value: k8s
+  - name: KEYCLOAK_ISSUER_URI
+    value: "http://keycloak.keycloak.svc.cluster.local:8080/realms/hotelico"
+  - name: KEYCLOAK_CLIENT_ID
+    value: "gateway"
+  - name: KEYCLOAK_CLIENT_SECRET
+    value: "change-me-if-needed"
+
+resources: {}
+nodeSelector: {}
+tolerations: []
+affinity: {}
