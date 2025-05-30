@@ -19,7 +19,7 @@ public class WallPostDTO implements BasicDTO<WallPostDomainEntityId> {
     private final boolean active = true;
     
     @Setter
-    private final HotelDomainEntityId hotelId;
+    private HotelDomainEntityId hotelId;
     private final CustomerDomainEntityId senderId;
 
     @Setter
@@ -38,5 +38,9 @@ public class WallPostDTO implements BasicDTO<WallPostDomainEntityId> {
     
     public Map<String, String> getSpecialContent() {
         return Collections.unmodifiableMap(specialContent);
+    }
+
+    public void setHotelId(HotelDomainEntityId domainEntityId) {
+        this.hotelId= domainEntityId;
     }
 }

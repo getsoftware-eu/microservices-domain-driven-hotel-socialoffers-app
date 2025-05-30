@@ -80,4 +80,7 @@ public class HotelActivityDTO implements BasicDTO<ActivityDomainEntityId> {
     public String getPreviewPictureUrl() {
         return previewPictureUrl != null ? previewPictureUrl : AppConfigProperties.PREVIEW_ACTIVITY_NOT_AVAILABLE_URL;
     }
+
+    public void setSequenceId(long initId) {
+    }
 }

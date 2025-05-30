@@ -6,36 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="refactoring structure">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/in/web/controller/customer/AbstractCustomerController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/in/web/controller/customer/AbstractCustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/in/web/controller/deal/DealController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/in/web/controller/deal/DealController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/checkin/model/HotelDbActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/checkin/model/HotelDbActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/customer/model/UserEntity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/customer/model/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/customer/model/UserRole.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/customer/model/UserRole.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/customer/portServiceImpl/SocialPortServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/customer/portServiceImpl/SocialPortServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/customer/repository/CustomerRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/customer/repository/CustomerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/customer/repository/UserRolesRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/customer/repository/UserRolesRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/customer/security/CustomUserDetailsService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/customer/security/CustomUserDetailsService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/HotelServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/HotelServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/LoginHotelicoServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/LoginHotelicoServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/microservice/WebSocketNotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/microservice/WebSocketNotificationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/hotel/repository/HotelRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/hotel/repository/HotelRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/hotel/repository/LanguageRepository.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/hotel/repository/LanguageRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/hotel/repository/WallPostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/adapter/out/persistence/hotel/repository/WallPostRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/customer/common/dto/UserDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/customer/common/dto/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/customer/common/enums/UserRoleEnum.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/customer/common/enums/UserRoleEnum.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/customer/domain/infrastructure/security/UserContext.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/customer/domain/infrastructure/security/UserContext.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/deal/domain/infrastructure/dto/CustomerDealDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/deal/domain/infrastructure/dto/CustomerDealDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/domain/infrastructure/dto/CustomerNotificationDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/domain/infrastructure/dto/CustomerNotificationDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/domain/infrastructure/dto/HotelActivityDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/domain/infrastructure/dto/HotelActivityDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/domain/infrastructure/dto/ResponseDTO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/domain/infrastructure/dto/ResponseDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/domain/infrastructure/dto/WallPostDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/domain/infrastructure/dto/WallPostDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/port/out/iPortService/IHotelService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/port/out/iPortService/IHotelService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/port/out/iPortService/INotificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/port/out/iPortService/INotificationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/port/out/iPortService/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/port/out/iPortService/IUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/port/out/iPortService/IWebSocketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/port/out/iPortService/IWebSocketService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/port/out/iPortService/LastMessagesService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/port/out/iPortService/LastMessagesService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/port/out/iPortService/LoginHotelicoService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/hotelico/service/booking/application/hotel/port/out/iPortService/LoginHotelicoService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/application/dto/entity/CustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/application/dto/entity/CustomerDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +16,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="356787" />
+    <option name="totalTimeSeconds" value="357293" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -721,7 +694,7 @@
       <workItem from="1748549118294" duration="5310000" />
       <workItem from="1748554494640" duration="1270000" />
       <workItem from="1748555819285" duration="11220000" />
-      <workItem from="1748597925789" duration="9319000" />
+      <workItem from="1748597925789" duration="9808000" />
     </task>
     <task id="LOCAL-00001" summary="-CHG: Microservice refactoring(Eureka-server)">
       <created>1655287660110</created>
@@ -897,14 +870,6 @@
       <option name="presentableId" value="LOCAL-00025" />
       <option name="project" value="LOCAL" />
       <updated>1683714777053</updated>
-    </task>
-    <task id="LOCAL-00092" summary="Use ValueObject as a Type">
-      <option name="closed" value="true" />
-      <created>1731602523046</created>
-      <option name="number" value="00092" />
-      <option name="presentableId" value="LOCAL-00092" />
-      <option name="project" value="LOCAL" />
-      <updated>1731602523046</updated>
     </task>
     <task id="LOCAL-00093" summary="Use ValueObject as a Jpa Type">
       <option name="closed" value="true" />
@@ -1090,7 +1055,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748605293576</updated>
     </task>
-    <option name="localTasksCounter" value="116" />
+    <task id="LOCAL-00116" summary="refactoring structure">
+      <option name="closed" value="true" />
+      <created>1748607684819</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1748607684820</updated>
+    </task>
+    <option name="localTasksCounter" value="117" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

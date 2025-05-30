@@ -7,8 +7,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	
 	<modules>
-        <module>shared-client-libs</module>
-        <module>security-common</module>
+		<module>security-common</module>
+		<module>shared-client-libs</module>
 		<module>hotel-app</module>
 		<module>hotel-service-chat</module>
 		<module>hotel-service-menu</module>

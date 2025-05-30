@@ -249,7 +249,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 		
         if(activity==null || action==null)
         {
-            return new HotelActivityDTO(activityId);
+            return new HotelActivityDTO(ActivityDomainEntityId.from(String.valueOf(activityId)));
         }
         
         switch (action)
@@ -574,7 +574,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 	@Override
 	public CustomerDealDTO addUpdateDeal(CustomerDomainEntityId guestCustomerId, long activityId, CustomerDealDTO dealDto)
 	{
-        Optional<CustomerDeal>  dealOptional  = getDealByIdOrInitId(dealDto.getHotelDomainId(), dealDto.getInitId());
+        Optional<CustomerDeal>  dealOptional  = getDealByIdOrInitId(dealDto.getHotelDomainId(), 123);
 
         Optional<CustomerDBEntity> sender = customerRepository.findByDomainId(AppConfigProperties.getTryEntityId(guestCustomerId));
         
@@ -904,12 +904,12 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 //				    .orElse(createHotelActivity(hotelActivityDto));
         
         //TODO Eugen: notificate about new/changed activity
-        if(hotelActivityDto.getPublishInWall())
+        if(hotelActivityDto.isPublishInWall())
         {
 			//TODO Eugen: Last Minute!!!!
-			if(hotelActivityDto.getLastMinute())
+			if(hotelActivityDto.isLastMinute())
 			{
-				WallPostDTO checkinNotificationWall = new WallPostDTO(new WallPostDomainEntityId("sdf"), hotelActivity.getHotelDomainId(), hotelActivity.getSender().getDomainEntityId());
+				WallPostDTO checkinNotificationWall = new WallPostDTO(new WallPostDomainEntityId("sdf"),  hotelActivity.getSender().getDomainEntityId());
 		
 				checkinNotificationWall.getSpecialContent().put("activityId", String.valueOf(hotelActivityDto.getDomainEntityId()));
 //				checkinNotificationWall.setSequenceId(System.currentTimeMillis());
@@ -1067,7 +1067,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
     @Override
     public HotelDTO updateHotel(HotelDTO hotelDto) {
         
-		Optional<HotelDBEntity> hotelRootEntityOpt = hotelRepository.findById(hotelDto.getId());
+		Optional<HotelDBEntity> hotelRootEntityOpt = hotelRepository.findByDomainEntityIdAndActive(hotelDto.getDomainEntityId(), true);
 	
 	    HotelDBEntity hotelRootEntity = null;
 	    
@@ -1236,10 +1236,10 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 
         hotelActivity.setValidFrom(hotelActivityDto.getValidFrom() != null ? hotelActivityDto.getValidFrom() : LocalDate.now());
 
-        hotelActivity.setValidTo(hotelActivityDto.getValidTo() != null && !hotelActivityDto.getLastMinute() ? hotelActivityDto.getValidTo() : hotelActivityDto.getLastMinute() ? AppConfigProperties.convertToLocalDate(LocalDateTime.now().plusDays(1).withHour(4)) : AppConfigProperties.convertToLocalDate(LocalDateTime.now().plusDays(7)));
+        hotelActivity.setValidTo(hotelActivityDto.getValidTo() != null && !hotelActivityDto.isLastMinute() ? hotelActivityDto.getValidTo() : hotelActivityDto.isLastMinute() ? AppConfigProperties.convertToLocalDate(LocalDateTime.now().plusDays(1).withHour(4)) : AppConfigProperties.convertToLocalDate(LocalDateTime.now().plusDays(7)));
 
-        hotelActivity.setActive(hotelActivityDto.isActiveBoolean());
-        hotelActivity.setLastMinute(hotelActivityDto.getLastMinute());
+        hotelActivity.setActive(hotelActivityDto.isActive());
+        hotelActivity.setLastMinute(hotelActivityDto.isLastMinute());
          
 
         hotelActivity.setConsistencyId(System.currentTimeMillis());
@@ -1504,25 +1504,25 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
     {
         WallPostDTO dto = modelMapper.map(wallPost, WallPostDTO.class);
 
-        dto.setCreationTime(wallPost.getTimestamp().getTime());
+//        dto.setCreationTime(wallPost.getTimestamp().getTime()); //TODO auto with mapper!!!
 
         CustomerDBEntity sender = wallPost.getSender();
 
-        if(sender!=null)
-        {
-            dto.setSenderName(sender.getFirstName() + (sender.getLastName() != null ? " " + sender.getLastName() : ""));
-
-            dto.setSenderId(sender.getDomainEntityId());
-
-            dto.setHotelStaff(sender.isHotelStaff());
-        }
+//        if(sender!=null) //TODO auto with mapper!!!
+//        {
+//            dto.setSenderName(sender.getFirstName() + (sender.getLastName() != null ? " " + sender.getLastName() : ""));
+//
+//            dto.setSenderId(sender.getDomainEntityId());
+//
+//            dto.setHotelStaff(sender.isHotelStaff());
+//        }
         
-        if(dto.getSequenceId()==0)
-        {
-            dto.setSequenceId(wallPost.getTimestamp().getTime());
-        }
+//        if(dto.getSequenceId()==0)
+//        {
+//            dto.setSequenceId(wallPost.getTimestamp().getTime());
+//        }
 
-        dto.setSendTimeString(wallPost.getTimestamp() != null ? AppConfigProperties.getTimeFormatted(wallPost.getTimestamp()) : null);
+//        dto.setSendTimeString(wallPost.getTimestamp() != null ? AppConfigProperties.getTimeFormatted(wallPost.getTimestamp()) : null);
 
 		dto.setHotelId(wallPost.getHotel().getDomainEntityId());
 		
