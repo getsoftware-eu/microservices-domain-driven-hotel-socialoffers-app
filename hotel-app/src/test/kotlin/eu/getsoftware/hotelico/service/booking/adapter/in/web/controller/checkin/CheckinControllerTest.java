@@ -1,12 +1,19 @@
 package eu.getsoftware.hotelico.service.booking.adapter.in.web.controller.checkin;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseRequestDTO;
-import eu.getsoftware.hotelico.service.booking.application.checkin.port.in.usecase.CheckinUseCase;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
+import hotelico.service.booking.adapter.in.web.controller.checkin.CheckinController;
+import hotelico.service.booking.application.checkin.port.in.usecase.CheckinUseCase;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -18,25 +25,40 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(CheckinController.class)
+@SpringBootTest(classes = {
+        CheckinController.class,
+        CheckinControllerTest.TestConfig.class
+})
+@AutoConfigureMockMvc
 class CheckinControllerTest {
-    
+
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
-    private CheckinUseCase checkinUseCase;
+    @Autowired
+    private ObjectMapper objectMapper; // Автоматически подключается
 
+    @Autowired
+    private CheckinUseCase checkinUseCase;
+    
+    @TestConfiguration
+    static class TestConfig {
+        @Bean
+        public CheckinUseCase checkinUseCase() {
+            return Mockito.mock(CheckinUseCase.class);
+        }
+    }
+    
     @Test
-    void shouldCheckinUser() throws Exception {
+    void shouldCheckinUser() throws Throwable {
 
         Date fromDate = new Date();
         Date toDate = new Date();
         toDate.setMonth(12);
         
         CheckinUseCaseDTO mockResponse = CheckinUseCaseDTO.builder()
-                .customerId(1)
-                .hotelId(2)
+                .customerId(CustomerDomainEntityId.from(1))
+                .hotelId(HotelDomainEntityId.from(2))
                 .checkinFrom(fromDate)
                 .checkinTo(toDate)
                 .build();

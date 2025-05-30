@@ -3,16 +3,11 @@ package eu.getsoftware.hotelico.clients.api.application.dto.entity;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.With;
-import lombok.experimental.SuperBuilder;
-import org.springframework.lang.NonNull;
+import lombok.*;
 
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,17 +17,20 @@ import java.util.Map;
  */
 @With
 @Getter
-@SuperBuilder //eu:  will inherit the builder capabilities from the abstract class, allowing you to set fields from both the abstract class and the subclass.
-public class CustomerDTO extends BasicDTO<CustomerDomainEntityId>
+@RequiredArgsConstructor
+public class CustomerDTO implements BasicDTO<CustomerDomainEntityId>
         
         //all fields are final!!!
 {
-    @NonNull @Setter
+    private final CustomerDomainEntityId domainEntityId;
+    private final boolean active = true;
+    
+    @NonNull
+    @Setter
     private final String firstName = null;
 
     private final String lastName = "";
     
-    private final CustomerDomainEntityId domainEntityId = new CustomerDomainEntityId("");
 
     @NonNull @Setter
     private final String email = null;
@@ -259,7 +257,6 @@ public class CustomerDTO extends BasicDTO<CustomerDomainEntityId>
     public String getPushRegistrationId() {
         return null;
     }
-
 
 //    /**
 //     * CustomerDTO dto = new CustomerBuilder(reuiredParams).setOptional1("user").setOptional2(true).build();

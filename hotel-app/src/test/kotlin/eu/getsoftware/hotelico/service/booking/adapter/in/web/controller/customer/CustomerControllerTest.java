@@ -2,7 +2,8 @@ package eu.getsoftware.hotelico.service.booking.adapter.in.web.controller.custom
 
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import eu.getsoftware.hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
+import hotelico.service.booking.adapter.in.web.controller.customer.CustomerController;
+import hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
 import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

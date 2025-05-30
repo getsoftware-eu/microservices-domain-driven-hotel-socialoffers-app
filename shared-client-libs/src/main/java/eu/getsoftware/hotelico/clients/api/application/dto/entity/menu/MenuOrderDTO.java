@@ -3,10 +3,9 @@ package eu.getsoftware.hotelico.clients.api.application.dto.entity.menu;
 import eu.getsoftware.hotelico.clients.common.domain.domainIDs.MenuDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.With;
-import lombok.experimental.SuperBuilder;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -15,18 +14,20 @@ import java.util.List;
 
 @With
 @Getter
-@SuperBuilder
-@AllArgsConstructor
-public class MenuOrderDTO extends BasicDTO<MenuDomainEntityId> {
-    
+@RequiredArgsConstructor
+public class MenuOrderDTO implements BasicDTO<MenuDomainEntityId> {
+
+    private final MenuDomainEntityId domainEntityId;
+    private boolean active = true;
+
     @With
-    private final long hotelId = 0L;
-    private final long senderId = 0L;
-    private final int itemAmount = 0;
-    private final String orderLocation = "";
-    private final String firstName = "";
-    private final String lastName = "";
-    private final String customerComment = "";
+    private  long hotelId = 0L;
+    private  long senderId = 0L;
+    private  int itemAmount = 0;
+    private  String orderLocation = "";
+    private  String firstName = "";
+    private  String lastName = "";
+    private  String customerComment = "";
     
     private final String orderStatus = null;
     private final double totalPrice = 0.0;

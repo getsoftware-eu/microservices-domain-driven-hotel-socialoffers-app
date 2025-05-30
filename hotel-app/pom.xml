@@ -15,7 +15,7 @@
         <aspectj.version>1.7.4</aspectj.version>
         <spring-security-crypto.version>4.0.1.RELEASE</spring-security-crypto.version>
 <!--        <kotlin.version>1.8.20</kotlin.version>-->
-        <kotlin.compiler.jvmTarget>17</kotlin.compiler.jvmTarget>
+<!--        <kotlin.compiler.jvmTarget>17</kotlin.compiler.jvmTarget>-->
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <testcontainers.version>1.19.0</testcontainers.version>
@@ -477,17 +477,17 @@
             <version>1.6.2</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jdk8</artifactId>
-            <version>${kotlin.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-reflect</artifactId>
+<!--        <dependency>-->
+<!--            <groupId>org.jetbrains.kotlin</groupId>-->
+<!--            <artifactId>kotlin-stdlib-jdk8</artifactId>-->
 <!--            <version>${kotlin.version}</version>-->
-        </dependency>
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.jetbrains.kotlin</groupId>-->
+<!--            <artifactId>kotlin-reflect</artifactId>-->
+<!--&lt;!&ndash;            <version>${kotlin.version}</version>&ndash;&gt;-->
+<!--        </dependency>-->
         
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -562,58 +562,58 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
 <!--                    <skip>true</skip>-->
-                    <mainClass>eu.getsoftware.hotelico.service.booking.HotelApplication</mainClass>
+                    <mainClass>hotelico.service.booking.HotelApplication</mainClass>
                     
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-maven-plugin</artifactId>
-                <version>${kotlin.version}</version> 
-                <!--from dependencyManagement: org.springframework.cloud-->
-                <configuration>
-                    <compilerPlugins>
-                        <!-- Or "spring" for the Spring support -->
-                        <!--<plugin>all-open</plugin>-->
-                        <plugin>spring</plugin>
-<!--                        <mainClass>eu.getsoftware.hotelico.hotelapp.config.MainApplication</mainClass>-->
+<!--            <plugin>-->
+<!--                <groupId>org.jetbrains.kotlin</groupId>-->
+<!--                <artifactId>kotlin-maven-plugin</artifactId>-->
+<!--                <version>${kotlin.version}</version> -->
+<!--                &lt;!&ndash;from dependencyManagement: org.springframework.cloud&ndash;&gt;-->
+<!--                <configuration>-->
+<!--                    <compilerPlugins>-->
+<!--                        &lt;!&ndash; Or "spring" for the Spring support &ndash;&gt;-->
+<!--                        &lt;!&ndash;<plugin>all-open</plugin>&ndash;&gt;-->
+<!--                        <plugin>spring</plugin>-->
+<!--&lt;!&ndash;                        <mainClass>eu.getsoftware.hotelico.hotelapp.config.MainApplication</mainClass>&ndash;&gt;-->
 
-                    </compilerPlugins>
-        
-                </configuration>
-        
-                <executions>
-                    <execution>
-                        <id>compile</id>
-                        <goals> <goal>compile</goal> </goals>
-                        <configuration>
-                            <sourceDirs>
-                                <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
-                                <sourceDir>${project.basedir}/src/main/java</sourceDir>
-                            </sourceDirs>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>test-compile</id>
-                        <goals> <goal>test-compile</goal> </goals>
-                        <configuration>
-                            <sourceDirs>
-                                <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
-                                <sourceDir>${project.basedir}/src/test/java</sourceDir>
-                            </sourceDirs>
-                        </configuration>
-                    </execution>
-                </executions>
-  
-                <dependencies>
-                    <dependency>
-                        <groupId>org.jetbrains.kotlin</groupId>
-                        <artifactId>kotlin-maven-allopen</artifactId>
-                        <version>${kotlin.version}</version>
-                    </dependency>
-                </dependencies>
-        
-            </plugin>
+<!--                    </compilerPlugins>-->
+<!--        -->
+<!--                </configuration>-->
+<!--        -->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>compile</id>-->
+<!--                        <goals> <goal>compile</goal> </goals>-->
+<!--                        <configuration>-->
+<!--                            <sourceDirs>-->
+<!--                                <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>-->
+<!--                                <sourceDir>${project.basedir}/src/main/java</sourceDir>-->
+<!--                            </sourceDirs>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                    <execution>-->
+<!--                        <id>test-compile</id>-->
+<!--                        <goals> <goal>test-compile</goal> </goals>-->
+<!--                        <configuration>-->
+<!--                            <sourceDirs>-->
+<!--                                <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>-->
+<!--                                <sourceDir>${project.basedir}/src/test/java</sourceDir>-->
+<!--                            </sourceDirs>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--  -->
+<!--                <dependencies>-->
+<!--                    <dependency>-->
+<!--                        <groupId>org.jetbrains.kotlin</groupId>-->
+<!--                        <artifactId>kotlin-maven-allopen</artifactId>-->
+<!--                        <version>${kotlin.version}</version>-->
+<!--                    </dependency>-->
+<!--                </dependencies>-->
+<!--        -->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>

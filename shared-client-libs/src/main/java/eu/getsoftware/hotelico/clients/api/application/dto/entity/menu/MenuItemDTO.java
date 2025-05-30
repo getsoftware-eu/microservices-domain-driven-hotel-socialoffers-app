@@ -1,18 +1,24 @@
 package eu.getsoftware.hotelico.clients.api.application.dto.entity.menu;
 
+import eu.getsoftware.hotelico.clients.common.domain.domainIDs.MenuItemDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.With;
 
 import java.sql.Timestamp;
 
 @With
 @Getter
-public class MenuItemDTO extends BasicDTO{
+@RequiredArgsConstructor
+public class MenuItemDTO implements BasicDTO<MenuItemDomainEntityId>{
+
+     private final MenuItemDomainEntityId domainEntityId;
+     private final boolean active = true;
 
      private final long orderId = 0L;
 
-     private final int  orderIndex = 0;
+     private final int orderIndex = 0;
 
      private final long hotelId  = 0L;
      

@@ -4,16 +4,20 @@ import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntity
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.With;
-import lombok.experimental.SuperBuilder;
 
 @With
 @Getter
 @Setter
-@SuperBuilder()
-public class HotelDTO extends BasicDTO<HotelDomainEntityId>
+@RequiredArgsConstructor
+public class HotelDTO implements BasicDTO<HotelDomainEntityId>
 {
+	private final HotelDomainEntityId domainEntityId;
+	
+	private final boolean active = true;
+	
 	private final int rating = 0;
 	
 	private final int activityNumber = 0;
@@ -25,7 +29,7 @@ public class HotelDTO extends BasicDTO<HotelDomainEntityId>
 	private final long consistencyId = 0L;
 	
 //	@Setter(AccessLevel.NONE)
-	private final long creationTime = 0L;
+	private final long creationTime = System.currentTimeMillis();
 	
 	@With
 	private final double kmFromMe = 0.0;
@@ -70,10 +74,6 @@ public class HotelDTO extends BasicDTO<HotelDomainEntityId>
 //		super(initId);
 //	}
 	
-	public long getCreationTime() {
-		return (creationTime > 0)? creationTime : id;
-	}
-	
 	public String getPictureUrl() {
 		return AppConfigProperties.addHostPrefixOnDemand(pictureUrl);
 	}
@@ -92,4 +92,5 @@ public class HotelDTO extends BasicDTO<HotelDomainEntityId>
 	public void withKmFromMe(double kms) {
 		
 	}
+	
 }
