@@ -1,7 +1,6 @@
 package eu.getsoftware.hotelico.service.booking.application.checkin.port.in.queryservice;
 
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
-import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 
 import java.time.LocalDate;
@@ -14,13 +13,16 @@ import java.util.List;
  * TODO Use here not Entity, but as response only Dto or limited ReadOnly Record-Queries from DB
  */
 
-public interface CheckinQueryPortService {
+public interface CheckinInDTOQueryService {
     
     List<CustomerDTO> getStaffByHotelId(HotelDomainEntityId hotelId);
 
+    List<CustomerDTO> getActiveCustomersByHotelId(HotelDomainEntityId hotelId, LocalDate date);
+
     List<CustomerDTO> getActiveCustomersByHotelId(HotelDomainEntityId hotelId, Date date);
 
-    LocalDate getLastByCustomerAndHotelId(CustomerDomainEntityId id, HotelDomainEntityId id1);
-
     Integer getActiveCountByHotelId(HotelDomainEntityId receiverHotelId, Date date);
+
+    //eu: here domainId, no just id!!!
+    CustomerDTO getStaffFirstByHotelId(HotelDomainEntityId hotelId);
 }

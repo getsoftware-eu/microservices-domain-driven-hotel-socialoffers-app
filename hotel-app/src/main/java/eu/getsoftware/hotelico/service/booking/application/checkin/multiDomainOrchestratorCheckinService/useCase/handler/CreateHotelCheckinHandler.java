@@ -4,7 +4,7 @@ import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCase
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.HotelDTO;
 import eu.getsoftware.hotelico.service.booking.application.checkin.domain.CheckinRootDomainEntity;
-import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinPortService;
+import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinOutEntityQueryService;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CreateHotelCheckinHandler {
 
-    private CheckinPortService checkinService;
+    private CheckinOutEntityQueryService checkinService;
 
     @NotNull
     @Transactional

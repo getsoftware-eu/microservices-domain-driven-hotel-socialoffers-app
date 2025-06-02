@@ -9,10 +9,11 @@ import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDBActivity;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.mapper.HotelDtoMapperImpl;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.InnerHotelEvent;
 import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.ChatMessageView;
 import eu.getsoftware.hotelico.service.booking.application.chat.domain.infrastructure.ChatMSComminicationService;
-import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinPortService;
+import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinOutEntityQueryService;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.IHotelActivity;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import eu.getsoftware.hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
@@ -24,7 +25,6 @@ import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortS
 import eu.getsoftware.hotelico.service.booking.application.menu.infrastructure.service.MenuMSCommunicationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -57,14 +57,14 @@ import java.util.*;
 	private final CustomerPortService customerService;	
 	
 	private final MailService mailService;
-	private final CheckinPortService checkinService;
+	private final CheckinOutEntityQueryService checkinService;
 	
 	private final ChatMSComminicationService chatMSComminicationService;
 	
 	private final INotificationService notificationService;
-	
+	private final HotelDtoMapperImpl hotelDtoMapperImpl;
+
 	private IWebSocketService webSocketService;
-	private ModelMapper modelMapper;
 
 	//	@Override
 	public void notificateAboutEntityEventWebSocket(CustomerDTO dto, InnerDomainEvent event, String eventContent, long entityId)
@@ -430,7 +430,7 @@ import java.util.*;
 				HotelDBActivity hotelActivity = (HotelDBActivity) hotelService.getActivityByIdOrInitId(activId, activId).orElseThrow(()->new RuntimeException());
 				
 				//SEND GUEST PUSH!!!
-				this.sendPushToAllNotLoggedInHotel(modelMapper.map(hotelActivity, HotelActivityDTO.class));
+				this.sendPushToAllNotLoggedInHotel(activityDtoMapper.toDto(hotelActivity));
 			}
 		}
 	}

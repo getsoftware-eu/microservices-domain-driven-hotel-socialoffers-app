@@ -13,9 +13,8 @@
 
     <properties>
         <aspectj.version>1.7.4</aspectj.version>
-        <spring-security-crypto.version>4.0.1.RELEASE</spring-security-crypto.version>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+<!--        <maven.compiler.source>17</maven.compiler.source>-->
+<!--        <maven.compiler.target>17</maven.compiler.target>-->
         <testcontainers.version>1.19.0</testcontainers.version>
         <aws.s3.version>2.5.5</aws.s3.version>
     </properties>
@@ -30,12 +29,12 @@
         </dependency>
 
 <!--            eu: DELTE IT-->
-        <dependency>
-            <!-- Иначе Вам пришлось бы вручную парсить и валидировать JWT: получать public key, проверять подпись, парсить claims-->
+<!--        <dependency>-->
+<!--            &lt;!&ndash; Иначе Вам пришлось бы вручную парсить и валидировать JWT: получать public key, проверять подпись, парсить claims&ndash;&gt;-->
 
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-oauth2-client</artifactId>
-        </dependency>
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-oauth2-client</artifactId>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -135,11 +134,6 @@
         </dependency>
         
          <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-undertow</artifactId>
-        </dependency>
-        
-         <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
         </dependency> 
@@ -162,7 +156,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
-            <version>${aws.s3.version}</version>
+<!--            <version>${aws.s3.version}</version>-->
         </dependency>
 
         <dependency>
@@ -218,12 +212,7 @@
             <version>4.6.1</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>com.ninja-squad</groupId>
-            <artifactId>springmockk</artifactId>
-            <version>3.0.1</version>
-            <scope>test</scope>
-        </dependency>
+        
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -243,65 +232,52 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>${aspectj.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjrt</artifactId>
-            <version>${aspectj.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.aspectj</groupId>-->
+<!--            <artifactId>aspectjweaver</artifactId>-->
+<!--            <version>${aspectj.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.aspectj</groupId>-->
+<!--            <artifactId>aspectjrt</artifactId>-->
+<!--            <version>${aspectj.version}</version>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>org.modelmapper</groupId>
-            <artifactId>modelmapper</artifactId>
-            <version>1.1.3</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--            <artifactId>jackson-core</artifactId>-->
+<!--&lt;!&ndash;            <version>from Spring Boot BOM</version>&ndash;&gt;-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-<!--            <version>from Spring Boot BOM</version>-->
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>javax.websocket</groupId>-->
+<!--            <artifactId>javax.websocket-api</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>javax.servlet</groupId>-->
+<!--            <artifactId>javax.servlet-api</artifactId>-->
+<!--            <version>3.1.0</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>javax.servlet</groupId>-->
+<!--            <artifactId>jstl</artifactId>-->
+<!--            <version>1.2</version>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>javax.websocket</groupId>
-            <artifactId>javax.websocket-api</artifactId>
-            <version>1.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jstl</artifactId>
-            <version>1.2</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.security</groupId>-->
+<!--            <artifactId>spring-security-crypto</artifactId>-->
+<!--            <version>${spring-security-crypto.version}</version>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-crypto</artifactId>
-            <version>${spring-security-crypto.version}</version>
-        </dependency>
-        
-        <!--@crossOrigin ???-->
-        <dependency>
-            <groupId>com.thetransactioncompany</groupId>
-            <artifactId>cors-filter</artifactId>
-            <version>2.4</version>
-        </dependency>
-
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.4</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>commons-io</groupId>-->
+<!--            <artifactId>commons-io</artifactId>-->
+<!--            <version>2.4</version>-->
+<!--        </dependency>-->
 
 <!--        <dependency>-->
 <!--            <groupId>org.slf4j</groupId>-->
@@ -313,37 +289,29 @@
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
         
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-            <version>4.0.1.RELEASE</version>
-        </dependency>
+      
 
-        <dependency>
-            <groupId>ro.isdc.wro4j</groupId>
-            <artifactId>wro4j-core</artifactId>
-            <version>1.7.6</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>ro.isdc.wro4j</groupId>-->
+<!--            <artifactId>wro4j-core</artifactId>-->
+<!--            <version>1.7.6</version>-->
+<!--        </dependency>-->
 
         <!-- cache list without nulls -->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>16.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.google.guava</groupId>-->
+<!--            <artifactId>guava</artifactId>-->
+<!--            <version>16.0</version>-->
+<!--        </dependency>-->
 
-        <!-- url rewrite filter in web.xml -->
-        <dependency>
-            <groupId>org.tuckey</groupId>
-            <artifactId>urlrewritefilter</artifactId>
-            <version>4.0.4</version>
-        </dependency>
+<!--        &lt;!&ndash; url rewrite filter in web.xml &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.tuckey</groupId>-->
+<!--            <artifactId>urlrewritefilter</artifactId>-->
+<!--            <version>4.0.4</version>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>javaxt</groupId>
-            <artifactId>javaxt-core</artifactId>
-            <version>1.6.2</version>
-        </dependency>
+        
         
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -373,31 +341,23 @@
             <artifactId>spring-data-rest-webmvc</artifactId>
         </dependency>
         
-        
-        
     </dependencies>
 
 
-    <dependencyManagement> 
-<!--   Управление версиями зависимостей в одном POM:
-Избежание дублирования: Если у вас есть один проект, и в нем много зависимостей, которые требуют одинаковой версии (например, различные Spring Boot стартеры), <dependencyManagement> позволяет указать версии этих зависимостей только один раз. Затем вы можете добавлять эти зависимости в <dependencies> секции без необходимости указывать версию каждый раз.-->
-        <dependencies>
+<!--    <dependencyManagement> -->
+<!--&lt;!&ndash;   Управление версиями зависимостей в одном POM:-->
+<!--Избежание дублирования: Если у вас есть один проект, и в нем много зависимостей, которые требуют одинаковой версии (например, различные Spring Boot стартеры), <dependencyManagement> позволяет указать версии этих зависимостей только один раз. Затем вы можете добавлять эти зависимости в <dependencies> секции без необходимости указывать версию каждый раз.&ndash;&gt;-->
+<!--        <dependencies>-->
+
 <!--            <dependency>-->
-<!--                <groupId>org.keycloak.bom</groupId>-->
-<!--                <artifactId>keycloak-adapter-bom</artifactId>-->
-<!--                <version>${keycloak.version}</version>-->
+<!--                <groupId>org.testcontainers</groupId>-->
+<!--                <artifactId>testcontainers-bom</artifactId>-->
+<!--                <version>${testcontainers.version}</version>-->
 <!--                <type>pom</type>-->
 <!--                <scope>import</scope>-->
 <!--            </dependency>-->
-            <dependency>
-                <groupId>org.testcontainers</groupId>
-                <artifactId>testcontainers-bom</artifactId>
-                <version>${testcontainers.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+<!--        </dependencies>-->
+<!--    </dependencyManagement>-->
     
     <build>
         <plugins>

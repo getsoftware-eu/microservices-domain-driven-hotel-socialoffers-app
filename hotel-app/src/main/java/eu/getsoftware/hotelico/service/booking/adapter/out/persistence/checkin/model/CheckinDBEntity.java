@@ -1,7 +1,6 @@
 package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import com.google.common.collect.ImmutableSet;
 import eu.getsoftware.hotelico.clients.common.domain.ids.CheckinDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
@@ -170,23 +169,9 @@ public class CheckinDBEntity extends CheckinRootDomainEntity implements java.io.
 //		return true;
 //	}
 
-	/**
-	 * eu: entity options!
-	 * @param originalSet
-	 * @param elementToRemove
-	 * @return
-	 * @param <T>
-	 */
+ 
 
-	private static <T> ImmutableSet.Builder<T> remove(ImmutableSet<T> originalSet, T elementToRemove) {
-		ImmutableSet.Builder<T> builder = ImmutableSet.builder();
-		originalSet.forEach(element -> {
-			if (!element.equals(elementToRemove)) {
-				builder.add(element);
-			}
-		});
-		return builder;
-	}
+ 
 
 //	/**
 //	 * @param tag tag to be added to this product

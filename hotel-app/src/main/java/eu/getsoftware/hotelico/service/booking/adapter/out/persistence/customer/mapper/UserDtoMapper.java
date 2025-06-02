@@ -1,26 +1,34 @@
-package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.mapper;
+package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.mapper;
 
-import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.CheckinDBEntity;
+import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.UserEntity;
 import eu.getsoftware.hotelico.service.booking.application.checkin.domain.CheckinRootDomainEntity;
-import org.mapstruct.Builder;
+import eu.getsoftware.hotelico.service.booking.application.customer.common.dto.UserDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 /**
  * unmappedTargetPolicy = ReportingPolicy.IGNORE - eu: не забудешь новый field
  */
-
-@Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true), unmappedTargetPolicy = ReportingPolicy.IGNORE)
-public interface CheckinDtoMapper //extends DtoGenericMapper<CheckinRootDomainEntity, CheckinDTO> 
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+public interface UserDtoMapper //extends DtoGenericMapper<UserEntity, UserClientDTO> 
 {
 
 //    @Override
 //    @Mapping(target = "creationTime", defaultValue = "LocalDateTime.now().toString()")
-    CheckinUseCaseDTO toDto(CheckinRootDomainEntity domain);
-    
-    CheckinDBEntity toEntity(CheckinUseCaseDTO dto);
-    
+    UserDTO toDto(UserEntity domain);
+
+    UserDTO toFullDto(UserEntity customerDomainEntity);
+
+    @Mapping(target = "domainEntityId", expression = "java( customerDomainEntity.getDomainEntityId() )")
+    UserDTO toDtoWithHotelInfo(UserEntity customerDomainEntity, HotelDomainEntityId domainEntityId);
+
+    @Mapping(target = "domainEntityId", expression = "java( dto.getDomainEntityId() )")
+    UserDTO fillDtoWithHotelInfo(UserDTO dto, CheckinRootDomainEntity validCheckin);
+
+    UserEntity toEntity(UserDTO dto);
+
 //    @Mapping(source = "schadenAussenwirkungId", target = "schadenAussenwirkung")
 //    @Mapping(source = "haufSchadenAussenwirkungId", target = "haufSchadenAussenwirkung")
 //    @Mapping(source = "schadenFinanziellId", target = "schadenFinanziell")

@@ -231,20 +231,7 @@
 //	/**
 //	 * {@inheritDoc}
 //	 */
-//	@Override
-//	public boolean deleteAllFiles(final IFileUploadable fileUploadable, final String serverFilesPath)
-//	{
-//		boolean successful = true;
-//		for (final String nextFileName : getFileNamesList(fileUploadable, serverFilesPath))
-//		{
-//			if (!deleteFile(fileUploadable, serverFilesPath, nextFileName))
-//			{
-//				successful = false;
-//			}
-//		}
-//
-//		return successful;
-//	}
+//	
 //
 //
 //

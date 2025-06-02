@@ -1,7 +1,6 @@
 package eu.getsoftware.hotelico.service.booking.application.hotel.domain.model.customDomainModelImpl;
 
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import com.google.common.collect.ImmutableSet;
 import eu.getsoftware.hotelico.clients.common.domain.IRootDomainEntity;
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
@@ -103,23 +102,6 @@ public class HotelRootDomainEntity implements IRootDomainEntity<HotelDomainEntit
 //    @JsonView(HotelPartialUpdateView.class)
 //    private ImmutableSet<String> tags;
 
-//    @Singular
-//    @JsonView(AttributePartialUpdateView.class)
-//    private ImmutableSet<Attribute> attributes;
-
-//    @Singular
-//    @JsonView(ImagePartialUpdateView.class)
-//    private ImmutableSet<Image> images;
-
-    private static <T> ImmutableSet.Builder<T> remove(ImmutableSet<T> originalSet, T elementToRemove) {
-        ImmutableSet.Builder<T> builder = ImmutableSet.builder();
-        originalSet.forEach(element -> {
-            if (!element.equals(elementToRemove)) {
-                builder.add(element);
-            }
-        });
-        return builder;
-    }
 
     public String getCurrentHotelAccessCode() { return null;
     }

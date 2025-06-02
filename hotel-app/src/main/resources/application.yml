@@ -17,14 +17,10 @@ spring:
         format_sql: true
     
 #    generate-ddl: true
-    defer-datasource-initialization: true 
+#    defer-datasource-initialization: true 
   #  zipkin:
 #    base-url: http://localhost:9411
 
-  sql:
-    init:
-      mode: always #eugen, not for production: never
-      platform: postgres
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
     enabled: true
@@ -34,8 +30,8 @@ spring:
       max-file-size: 512MB # Max file size.
       max-request-size: 512MB # Max request size.
   messages.basename: i18n/messages # Configure MessageSource to lookup any validation/error message in internationalized property files
-  kafka:
-    bootstrap-servers: localhost:19092
+#  kafka:
+#    bootstrap-servers: localhost:19092
   social:
     facebook:
       appId: 383626641847356
@@ -61,26 +57,26 @@ spring:
     allow-bean-definition-overriding: true
   application:
     name: hotel-client
-  security:
-    oauth2:
-      resourceserver: 
-        jwt:
-          issuer-uri: http://keycloak:8080/realms/hotel-socialoffers
-          #использовать 'keycloak' (а не 'localhost') как hostname — потому что это внутренняя сеть Docker Compose.
-          #issuer-uri заменяет необходимость в KeycloakConfigResolver.
-      client:
-        registration:
-          keycloak:
-            client-id: your-client-id
-            client-secret: <copy client-secret from Keycloak>
-            scope: openid
-            authorization-grant-type: client_credentials
-#            redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
-            provider: keycloak
-        provider:
-          keycloak:
-            issuer-uri: http://localhost:8080/realms/hotel-socialoffers #Realm = hotel-socialoffers
-            user-name-attribute: preferred_username
+#  security:
+#    oauth2:
+#      resourceserver: 
+#        jwt:
+#          issuer-uri: http://keycloak:8080/realms/hotel-socialoffers
+#          #использовать 'keycloak' (а не 'localhost') как hostname — потому что это внутренняя сеть Docker Compose.
+#          #issuer-uri заменяет необходимость в KeycloakConfigResolver.
+#      client:
+#        registration:
+#          keycloak:
+#            client-id: your-client-id
+#            client-secret: <copy client-secret from Keycloak>
+#            scope: openid
+#            authorization-grant-type: client_credentials
+##            redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
+#            provider: keycloak
+#        provider:
+#          keycloak:
+#            issuer-uri: http://localhost:8080/realms/hotel-socialoffers #Realm = hotel-socialoffers
+#            user-name-attribute: preferred_username
 
 #entitymanager:
 #  packagesToScan: de.getsoftware.smsbridge.model      
@@ -98,17 +94,17 @@ server:
   error:
     whitelabel.enabled: false
     
-keycloak:
-  auth-server-url: http://localhost:8080
-  realm: hotel-socialoffers
-  resource: hotel-app
-  credentials:
-    secret: YOUR_CLIENT_SECRET
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:8761/eureka      
+#keycloak:
+#  auth-server-url: http://localhost:8080
+#  realm: hotel-socialoffers
+#  resource: hotel-app
+#  credentials:
+#    secret: YOUR_CLIENT_SECRET
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka      
 ---
 
 spring:
@@ -132,12 +128,12 @@ logging:
 #      orm: DEBUG
 #      SQL: DEBUG
   
-keycloak:
-  enabled: false
-  #config.file: classpath:static/backend-keycloak.json
-  realm: EugenRealm
-  auth_server_url: http://keycloakintern.getSoftware.eu:8080/auth
-  #credentials.secret: 5251920c-edb0-4d51-8ddb-48cb9a0136b4
+#keycloak:
+#  enabled: false
+#  #config.file: classpath:static/backend-keycloak.json
+#  realm: EugenRealm
+#  auth_server_url: http://keycloakintern.getSoftware.eu:8080/auth
+#  #credentials.secret: 5251920c-edb0-4d51-8ddb-48cb9a0136b4
 
 server:
   port: 8088

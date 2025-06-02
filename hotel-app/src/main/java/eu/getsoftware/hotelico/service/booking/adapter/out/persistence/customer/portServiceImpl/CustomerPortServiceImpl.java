@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.portServiceImpl;
 
+import com.nimbusds.jose.shaded.gson.reflect.TypeToken;
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
@@ -7,6 +8,7 @@ import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.CheckinDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.repository.CheckinRepository;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.mapper.CustomerDtoMapper;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.Language;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
@@ -17,13 +19,11 @@ import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.rep
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.LanguageRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.CustomerDeal;
 import eu.getsoftware.hotelico.service.booking.application.checkin.domain.CheckinRootDomainEntity;
-import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinPortService;
+import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinOutEntityQueryService;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import eu.getsoftware.hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.*;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,8 +40,6 @@ import static eu.getsoftware.hotelico.service.booking.adapter.out.persistence.cu
 @RequiredArgsConstructor
 public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEntity> 
 {
-    private final IHotelService hotelService;
-    
     private final HotelRepository hotelRepository;     
     
     private final INotificationService notificationService;
@@ -56,11 +54,11 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
     
     private final MailService mailService;     
     
-    private final CheckinPortService checkinService; 
+    private final CheckinOutEntityQueryService checkinService; 
         
     private final CheckinRepository checkinRepository; 
     
-    private final ModelMapper modelMapper;
+    private final CustomerDtoMapper customerDtoMapper;
     
     private final DealRepository dealRepository;
 	
@@ -98,7 +96,15 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 
         Type listType = new TypeToken<List<CustomerDTO>>() {}.getType();
 
-        return modelMapper.map(entities, listType);
+        List<CustomerDTO> list = List.of();
+        
+        entities.forEach(customerEntity -> {
+            //Eugen: fill customerDto with hotel info
+            CustomerDTO dto = convertCustomerToDto(customerEntity, new HotelDomainEntityId("-"), true, null);
+             list.add(dto);
+        });
+        
+        return list;
     }
     
     @Override
@@ -155,7 +161,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 //            return customerDto;
         }
 
-        CustomerDBEntity customerEntity = modelMapper.map(customerDto, CustomerDBEntity.class);
+        CustomerDBEntity customerEntity = customerDtoMapper.toEntity(customerDto);
 
         fillCustomerFromDto(customerDto, customerEntity);
 
@@ -509,7 +515,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
      */
     private CustomerDTO convertCustomerToDto(CustomerDBEntity customerEntity, HotelDomainEntityId hotelId, boolean fullSerialization, CheckinDBEntity validCheckin)
     {
-        CustomerDTO dto = modelMapper.map(Objects.requireNonNull(customerEntity), CustomerDTO.class);
+        CustomerDTO dto = customerDtoMapper.toDto(Objects.requireNonNull(customerEntity));
         
         dto = fillDtoProfileInfo(customerEntity, dto, fullSerialization);
 	

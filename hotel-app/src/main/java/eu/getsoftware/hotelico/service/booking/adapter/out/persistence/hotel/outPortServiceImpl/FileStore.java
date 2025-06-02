@@ -6,8 +6,6 @@ import java.io.InputStream;
 import java.util.Map;
 import java.util.Optional;
 
-import static com.google.common.primitives.Longs.toByteArray;
-
 @Service
 public class FileStore
 {
@@ -15,7 +13,7 @@ public class FileStore
     }
 
     public byte[] download(String pathInS3, String key) {
-        return toByteArray(1);
+        return null;
     }
 
 //    private final AmazonS3 s3;

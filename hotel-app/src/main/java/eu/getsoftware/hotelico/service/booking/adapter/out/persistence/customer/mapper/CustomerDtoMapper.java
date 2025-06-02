@@ -2,8 +2,10 @@ package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer
 
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.service.booking.application.checkin.domain.CheckinRootDomainEntity;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
+import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -11,7 +13,7 @@ import org.mapstruct.ReportingPolicy;
 /**
  * unmappedTargetPolicy = ReportingPolicy.IGNORE - eu: не забудешь новый field
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", builder = @Builder(disableBuilder = true), unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CustomerDtoMapper //extends DtoGenericMapper<CustomerRootDomainEntity, UserClientDTO> 
 {
 
@@ -26,6 +28,8 @@ public interface CustomerDtoMapper //extends DtoGenericMapper<CustomerRootDomain
 
     @Mapping(target = "domainEntityId", expression = "java( dto.getDomainEntityId() )")
     CustomerDTO fillDtoWithHotelInfo(CustomerDTO dto, CheckinRootDomainEntity validCheckin);
+
+    CustomerDBEntity toEntity(CustomerDTO dto);
 
 //    @Mapping(source = "schadenAussenwirkungId", target = "schadenAussenwirkung")
 //    @Mapping(source = "haufSchadenAussenwirkungId", target = "haufSchadenAussenwirkung")

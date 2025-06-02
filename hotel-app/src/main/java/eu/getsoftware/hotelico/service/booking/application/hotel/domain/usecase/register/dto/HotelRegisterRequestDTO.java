@@ -3,8 +3,6 @@ package eu.getsoftware.hotelico.service.booking.application.hotel.domain.usecase
 import eu.getsoftware.hotelico.clients.common.domain.IDomainRequestDTO;
 import jakarta.validation.constraints.NotNull;
 
-import java.util.Date;
-
 /**
  * eu: RequestDTO contains all validation on Parameters (DDD style)
  * 
@@ -31,14 +29,6 @@ public record HotelRegisterRequestDTO(
                    throw new IllegalArgumentException("no code.");
                 }
         }
-        
-        @org.jetbrains.annotations.NotNull
-        private static Date getMaxDate(int max_year_offset) {
-                Date maxDate = new Date();
-                maxDate.setYear(new Date().getYear() + max_year_offset);
-                return maxDate;
-        }
-
        
 }
 

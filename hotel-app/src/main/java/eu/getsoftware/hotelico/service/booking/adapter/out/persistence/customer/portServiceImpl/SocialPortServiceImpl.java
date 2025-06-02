@@ -1,10 +1,10 @@
 package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.portServiceImpl;
 
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.mapper.CustomerDtoMapper;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.service.booking.application.customer.port.in.iPortService.SocialService;
-import org.modelmapper.ModelMapper;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -13,14 +13,14 @@ import java.util.Optional;
 
 public class SocialPortServiceImpl implements SocialService {
 
-    private ModelMapper modelMapper;
     private CustomerRepository customerRepository;
+    private CustomerDtoMapper customerDtoMapper;
 
     @Transactional
     @Override
     public CustomerDTO addLinkedInCustomer(CustomerDTO customerDto, String linkedInId){
 
-        CustomerDBEntity customerEntity = modelMapper.map(customerDto, CustomerDBEntity.class);
+        CustomerDBEntity customerEntity = customerDtoMapper.toEntity(customerDto);
 
 //        customerEntity.setLinkedInId(linkedInId);
 //        customerEntity.setLogged(true);
@@ -86,7 +86,7 @@ public class SocialPortServiceImpl implements SocialService {
 
         return customerRepository.findByFacebookIdAndActive(Objects.requireNonNull(facebookId), true)
                 .stream()
-                .findFirst().map(c -> Optional.of(modelMapper.map(c, CustomerDTO.class)))
+                .findFirst().map(c -> Optional.of(customerDtoMapper.toDto(c)))
                 .orElse(Optional.empty());
     }
 }

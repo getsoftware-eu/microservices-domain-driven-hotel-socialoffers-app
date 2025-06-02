@@ -3,12 +3,12 @@ package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.CheckinUpdatedEventPayload;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.DomainMessage;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.mapper.CheckinDtoMapper;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.CheckinDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.repository.CheckinRepository;
 import eu.getsoftware.hotelico.service.booking.application.checkin.domain.CheckinRootDomainEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 public class CheckinKafkaSubscriber {
 
     private final CheckinRepository checkinRepository;
-    private final ModelMapper modelMapper;
+    private final CheckinDtoMapper checkinDtoMapper;
 
     @KafkaListener(topics = {"checkin.checkin.created.event", 
                              "checkin.checkin.updated.event"}, 
@@ -39,7 +39,7 @@ public class CheckinKafkaSubscriber {
             if(checkinRepository.existsByDomainEntityIdValue(checkinDTO.getInitId()))
                 throw new RuntimeException("not found");
 
-            CheckinDBEntity entity = modelMapper.map(checkinDTO, CheckinDBEntity.class);
+            CheckinDBEntity entity = checkinDtoMapper.toEntity(checkinDTO);
             
             checkinRepository.save(entity);
         }

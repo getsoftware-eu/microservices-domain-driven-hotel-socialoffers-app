@@ -8,7 +8,7 @@ import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.InnerHotelEvent;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.DealRepository;
-import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinPortService;
+import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinOutEntityQueryService;
 import eu.getsoftware.hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.INotificationService;
@@ -44,7 +44,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 	private INotificationService notificationService;
 	
 	@Autowired
-	private CheckinPortService checkinService;
+	private CheckinOutEntityQueryService checkinService;
 	
 	@Autowired
 	private CustomerRepository customerRepository;

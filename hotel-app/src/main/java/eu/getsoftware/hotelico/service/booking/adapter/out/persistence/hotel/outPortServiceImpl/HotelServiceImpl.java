@@ -11,8 +11,11 @@ import eu.getsoftware.hotelico.clients.common.domain.ids.WallPostDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.*;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDBActivity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.repository.CheckinRepository;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.mapper.CustomerDtoMapper;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.mapper.HotelDtoMapper;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.mapper.HotelEntityMapper;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.HotelDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.HotelWallPost;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.InnerHotelEvent;
@@ -21,7 +24,7 @@ import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.rep
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.HotelRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.WallPostRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.CustomerDeal;
-import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinPortService;
+import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinOutEntityQueryService;
 import eu.getsoftware.hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.service.booking.application.deal.domain.infrastructure.dto.CustomerDealDTO;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
@@ -32,7 +35,6 @@ import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortS
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.INotificationService;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.LastMessagesService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -53,7 +55,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 	
 	private INotificationService notificationService;	
 	
-	private CheckinPortService checkinService;
+	private CheckinOutEntityQueryService checkinService;
 	
 	private LastMessagesService lastMessagesService;
 	
@@ -69,11 +71,13 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
     
     private CheckinRepository checkinRepository;
 	
-    private ModelMapper modelMapper;
     
     private SimpMessagingTemplate simpMessagingTemplate;
 	
 	private HotelDomainEntityId specialHotelId = new HotelDomainEntityId(999+"");
+    private CustomerDtoMapper customerDtoMapper;
+    private HotelDtoMapper hotelDtoMapper;
+    private HotelEntityMapper hotelEntityMapper;
 
     /**
      * eu: single ENTRY POINT TO CREATE DomainEntityChierarchie!!!!
@@ -138,7 +142,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
                 
                 if(requester!=null && hotelRootEntity.getLatitude()>-90 && requester.getLatitude()>-90)
                 {
-                    var domainroot = modelMapper.map(hotelRootEntity, HotelRootDomainEntity.class);
+                    var domainroot = hotelEntityMapper.toDomain(hotelRootEntity);
                     double kms = getDistanceKmToHotel(new Point2D.Double(requester.getLatitude(), requester.getLongitude()), domainroot);
                     hotelDto.setKmFromMe(kms);
                 }
@@ -176,7 +180,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
                 if(requesterOptional.isPresent() && hotelRootEntity.getLatitude()>-90 && requesterOptional.get().getLatitude()>-90)
                 {
 	                CustomerDBEntity requester = requesterOptional.get();
-                    var root = modelMapper.map(hotelRootEntity, HotelRootDomainEntity.class);
+                    var root = hotelEntityMapper.toDomain(hotelRootEntity);
                     double kms = getDistanceKmToHotel(new Point2D.Double(requester.getLatitude(), requester.getLongitude()), root);
                     hotelDto.withKmFromMe(kms);
                 }
@@ -397,7 +401,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
         for( HotelDBEntity nextHotelRootEntity : hotelRootEntities)
         {
 
-            var domainRoot = modelMapper.map(nextHotelRootEntity, HotelRootDomainEntity.class);
+            var domainRoot = hotelEntityMapper.toDomain(nextHotelRootEntity);
             double kmFrom = this.getDistanceKmToHotel(latLonPoint, domainRoot);
 
             if(kmFrom<100)
@@ -873,8 +877,9 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 				throw new RuntimeException("The Hotel with this e-mail is already registered. Please contact hotelico Admin.");
 			}
 		}
-		
-        HotelDBEntity hotelRootEntity = modelMapper.map(hotelDto, HotelDBEntity.class);
+
+        HotelRootDomainEntity domain = hotelDtoMapper.toDomain(hotelDto);
+        HotelDBEntity hotelRootEntity = hotelEntityMapper.toDb(domain);
 
         hotelRootEntity.setConsistencyId(System.currentTimeMillis());
 
@@ -956,7 +961,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
     {
         HotelDBActivity hotelActivity;// ###### CREATE HOTEL OBJECT 
 
-        hotelActivity = modelMapper.map(hotelActivityDto, HotelDBActivity.class);
+        hotelActivity = hotelActivityMapper.toEntity(hotelActivityDto);
 
         HotelDBEntity hotelRootEntity = null;
         
@@ -1116,7 +1121,8 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
             throw new IllegalArgumentException("HotelRootEntity is null");
         }
 
-        HotelDTO dto = modelMapper.map(hotelRootEntity, HotelDTO.class);
+        HotelRootDomainEntity domain = hotelEntityMapper.toDomain(hotelRootEntity);
+        HotelDTO dto = hotelDtoMapper.toDto(domain);
         
         int activityNumber = 0;
         int customerNumber = 0;
@@ -1132,7 +1138,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 //        dto.setActivityNumber(activityNumber);
 //        dto.setCustomerNumber(customerNumber);
 //        dto.setCreationTime(hotelRootEntity.getCreationTime());
-        var root = modelMapper.map(hotelRootEntity, HotelRootDomainEntity.class);
+        HotelRootDomainEntity root = hotelEntityMapper.toDomain(hotelRootEntity);
 
 		Map<Long, String> anonymeGuests = getNotLoggedGuestPushIdsByHotel(root);
 		
@@ -1277,7 +1283,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 	    HotelWallPost updateWallPost = wallPosts.stream().findFirst().orElseThrow(() -> new ResourceNotFoundException("Wallpost not found with initId=" + wallPostDto.getSequenceId()));
        
         HotelWallPost entity = wallPostRepository.saveAndFlush(updateWallPost);
-        return modelMapper.map(entity, WallPostDTO.class);
+        return wallDtoMapper.toDto(entity);
             //            wallPost.setDescription(hotelDto.getDescription());
             //            wallPost.setName(hotelDto.getName());
             //            wallPost.setEmail(hotelDto.getEmail());
@@ -1398,7 +1404,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
     {
 	    Objects.requireNonNull(hotelActivity);
 
-        HotelActivityDTO activityDto = modelMapper.map(hotelActivity, HotelActivityDTO.class);
+        HotelActivityDTO activityDto = activityMapper.map(hotelActivity, HotelActivityDTO.class);
         
         activityDto.setLikeCounter(hotelActivity.getLikedCustomerDomainEntityIds().size());
         activityDto.setSubscribeCounter(hotelActivity.getSubscribeCustomerDomainEntityIds().size());
@@ -1502,7 +1508,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 
     public WallPostDTO convertWallToDto(HotelWallPost wallPost)
     {
-        WallPostDTO dto = modelMapper.map(wallPost, WallPostDTO.class);
+        WallPostDTO dto = wallMapper.toDto(wallPost);
 
 //        dto.setCreationTime(wallPost.getTimestamp().getTime()); //TODO auto with mapper!!!
 
@@ -1617,7 +1623,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 
 		if("addGuestPushId".equalsIgnoreCase(action))
 		{
-            HotelRootDomainEntity hotelRootDomainEntity = modelMapper.map(hotelRootEntity, HotelRootDomainEntity.class);
+            HotelRootDomainEntity hotelRootDomainEntity = hotelEntityMapper.toDomain(hotelRootEntity);
 			Map<Long, String> getNotLoggedGuestPushIds = getNotLoggedGuestPushIdsByHotel(hotelRootDomainEntity);
 			
 			if(!guestDto.getSystemMessages().containsKey("guestCustomerId"))
@@ -1653,7 +1659,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 		}
 		else if("removeGuestPushId".equalsIgnoreCase(action))
 		{
-            var domainRoot = modelMapper.map(hotelRootEntity, HotelRootDomainEntity.class);
+            var domainRoot = hotelEntityMapper.toDomain(hotelRootEntity);
 			Map<Long, String> getNotLoggedGuestPushIds = getNotLoggedGuestPushIdsByHotel(domainRoot);
 
 			if(!guestDto.getSystemMessages().containsKey("guestCustomerId"))
@@ -1688,7 +1694,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 		else if("unsubscribeHotelActivityNotifications".equalsIgnoreCase(action))
 		{
 			//TODO add pushId or guestId to unsuscribe notification List
-            var root = modelMapper.map(hotelRootEntity, HotelRootDomainEntity.class);
+            var root = hotelEntityMapper.toDomain(hotelRootEntity);
 
             Map<Long, String> getNotLoggedGuestPushIds = getNotLoggedGuestPushIdsByHotel(root);
 			

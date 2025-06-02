@@ -5,7 +5,6 @@ import eu.getsoftware.hotelico.clients.api.application.infrastructure.domaineven
 import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.InnerHotelEvent;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.model.AddressValueObject;
-import org.modelmapper.ModelMapper;
 
 /**
  * All update Facade entry class
@@ -14,7 +13,6 @@ public class HotelAggregateBuilder
 {
     private HotelRootDomainEntity hotelDomainEntity;
     private InnerDomainEventsProducerService<InnerHotelEvent> innerDomainEventsProducerService;
-    private ModelMapper modelMapper;
 //    private HotelInnerEventPublisher hotelInnerEventPublisher;
 
     void setHotelDomainAction(HotelDomainEntityId hotelId){

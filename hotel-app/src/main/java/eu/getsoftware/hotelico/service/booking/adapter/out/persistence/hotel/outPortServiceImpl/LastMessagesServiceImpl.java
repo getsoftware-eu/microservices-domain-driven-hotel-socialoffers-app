@@ -1,9 +1,5 @@
 package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.outPortServiceImpl;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-import com.google.common.collect.Sets;
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.chat.dto.ChatMsgDTO;
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
@@ -19,8 +15,6 @@ import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortS
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
 import java.awt.geom.Point2D.Double;
@@ -81,7 +75,6 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	 * anonymGuests id to GPS point
 	 */
 	private HashMap<CustomerDomainEntityId, Double> guestToGpsPointMap = new HashMap<>();
-	private ModelMapper modelMapper;
 	private ChatService chatService;
 
 
@@ -384,9 +377,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 
 				unreadFromSender.add(nextUnreadChatmessage);
 
-				List<ChatMsgDTO> unreadFromSenderDtos = modelMapper.map(unreadFromSender, new TypeToken<List<ChatMsgDTO>>() {}.getType());
-
-				unreadMessagesForReceiver.put(nextSenderId, unreadFromSenderDtos);
+				unreadMessagesForReceiver.put(nextSenderId, List.of());
 			}
 		}
 		return unreadMessagesForReceiver;
@@ -630,30 +621,6 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	}
 	
 	///###############################################################
-	
-	private LoadingCache<String, UserStats> statsByUser = CacheBuilder.newBuilder().build(new CacheLoader<String, UserStats>() {
-		
-		@Override
-		public UserStats load(String key) throws Exception {
-			return new UserStats();
-		}
-		
-	});
-	
-	public void mark(String username) {
-		statsByUser.getUnchecked(username).mark();
-	}
-	
-	public Set<String> getActiveUsers() {
-		Set<String> active = Sets.newTreeSet();
-		for (String user : statsByUser.asMap().keySet()) {
-			// has the user checked in within the last 5 seconds?
-			if ((System.currentTimeMillis() - statsByUser.getUnchecked(user).lastAccess()) < 5000) {
-				active.add(user);
-			}
-		}
-		return active;
-	}
 	
 	private static class UserStats {
 		

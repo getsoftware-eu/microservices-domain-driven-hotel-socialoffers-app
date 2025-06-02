@@ -1,12 +1,12 @@
 package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.outPortServiceImpl;//package de.hotelico.service.impl;
 
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.mapper.UserDtoMapper;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.UserEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.UserRepository;
 import eu.getsoftware.hotelico.service.booking.application.customer.common.dto.UserDTO;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.IUserService;
 import jakarta.validation.constraints.NotNull;
 import lombok.extern.slf4j.Slf4j;
-import org.modelmapper.ModelMapper;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -21,28 +21,28 @@ import java.util.List;
 public class UserServiceImpl implements IUserService
 {
     private UserRepository userRepository; //eu ask: How to use adapter.repository in serviceImpl??? wo soll serviceImpl???
-    private ModelMapper mapper;
+    private UserDtoMapper userEntityMapper;
 
     UserServiceImpl(
             UserRepository userRepository,
-            ModelMapper mapper
+            UserDtoMapper userEntityMapper
     ){
         this.userRepository = userRepository;
-        this.mapper = mapper;
+        this.userEntityMapper = userEntityMapper;
     }
     
     public List<UserDTO> getUsers() {
         List<UserEntity> list = userRepository.findAll();
         List<UserDTO> out = new ArrayList<UserDTO>();
-        for (UserEntity dto : list) {
-            out.add(mapper.map(dto, UserDTO.class));
+        for (UserEntity nextEntity : list) {
+            out.add(userEntityMapper.toDto(nextEntity));
         }
         return out;
     }
 
     public UserDTO getById(int userId) {
-        UserEntity dto = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
-        UserDTO out = dto==null? null : (mapper.map(dto, UserDTO.class));
+        UserEntity entity = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+        UserDTO out = entity==null? null : (userEntityMapper.toDto(entity));
         return out;
     }
 
@@ -52,10 +52,10 @@ public class UserServiceImpl implements IUserService
     }
 
     public List<UserDTO> getByHotelId(long hotelId) {
-        List<UserEntity> dtoList = userRepository.findByHotelId(hotelId);
+        List<UserEntity> entityList = userRepository.findByHotelId(hotelId);
         List<UserDTO> out = new ArrayList<UserDTO>();
-        for (UserEntity dto : dtoList) {
-            out.add(mapper.map(dto, UserDTO.class));
+        for (UserEntity next : entityList) {
+            out.add(userEntityMapper.toDto(next));
         }
         return out;
     }
@@ -63,9 +63,9 @@ public class UserServiceImpl implements IUserService
     @Transactional
     @Override
     public UserDTO addUser(UserDTO userDto, String password) {
-        UserEntity dto = mapper.map(userDto, UserEntity.class);
+        UserEntity entity = userEntityMapper.toEntity(userDto);
 //        dto.setPassword(password);
-        return mapper.map(userRepository.saveAndFlush(dto), UserDTO.class);
+        return userEntityMapper.toDto(userRepository.saveAndFlush(entity));
     }
 
     @Override
@@ -74,7 +74,7 @@ public class UserServiceImpl implements IUserService
 
 //        if(dto != null && dto.getPassword().equals(password))
         {
-            UserDTO out = (mapper.map(dto, UserDTO.class));
+            UserDTO out = (userEntityMapper.toDto(dto));
             return out;
         }
 //        else
@@ -93,7 +93,7 @@ public class UserServiceImpl implements IUserService
 //            entity.setCompany(userDto.getCompany());
 //            entity.setEmail(userDto.getEmail());
         }
-        return mapper.map(userRepository.saveAndFlush(entity), UserDTO.class);
+        return userEntityMapper.toDto(userRepository.saveAndFlush(entity));
     }
 
     @Transactional

@@ -16,6 +16,8 @@ public interface HotelDtoMapper extends DtoGenericMapper<HotelRootDomainEntity, 
 //    @Override
 //    @Mapping(target = "creationTime", defaultValue = "LocalDateTime.now().toString()")
     HotelDTO toDto(HotelRootDomainEntity domain);
+    
+    HotelRootDomainEntity toDomain(HotelDTO dto);
 
 //    @Mapping(source = "schadenAussenwirkungId", target = "schadenAussenwirkung")
 //    @Mapping(source = "haufSchadenAussenwirkungId", target = "haufSchadenAussenwirkung")
