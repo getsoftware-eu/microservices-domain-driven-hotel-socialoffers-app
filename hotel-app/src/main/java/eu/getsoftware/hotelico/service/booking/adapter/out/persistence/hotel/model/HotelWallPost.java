@@ -59,7 +59,7 @@ public class HotelWallPost implements IHotelWallPost, Serializable
 	private CustomerDBEntity sender;
 
 	@ManyToOne
-	@JoinColumn(name="hotelId")
+	@JoinColumn(name="hotel_id")
 	private HotelDBEntity hotel;
 
 	public HotelWallPost()

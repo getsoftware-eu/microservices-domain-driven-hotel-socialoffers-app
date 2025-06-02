@@ -8,7 +8,7 @@ import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDbActivity;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDBActivity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.InnerHotelEvent;
 import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.ChatMessageView;
 import eu.getsoftware.hotelico.service.booking.application.chat.domain.infrastructure.ChatMSComminicationService;
@@ -427,7 +427,7 @@ import java.util.*;
 			if(sendToUnLogged)
 			{
 				int activId = Integer.parseInt(inviteActivityId);
-				HotelDbActivity hotelActivity = (HotelDbActivity) hotelService.getActivityByIdOrInitId(activId, activId).orElseThrow(()->new RuntimeException());
+				HotelDBActivity hotelActivity = (HotelDBActivity) hotelService.getActivityByIdOrInitId(activId, activId).orElseThrow(()->new RuntimeException());
 				
 				//SEND GUEST PUSH!!!
 				this.sendPushToAllNotLoggedInHotel(modelMapper.map(hotelActivity, HotelActivityDTO.class));

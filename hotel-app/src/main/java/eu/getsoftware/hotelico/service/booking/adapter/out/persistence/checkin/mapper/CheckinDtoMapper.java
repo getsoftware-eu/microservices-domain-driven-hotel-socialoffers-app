@@ -8,6 +8,7 @@ import org.mapstruct.ReportingPolicy;
 /**
  * unmappedTargetPolicy = ReportingPolicy.IGNORE - eu: не забудешь новый field
  */
+
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface CheckinDtoMapper //extends DtoGenericMapper<CheckinRootDomainEntity, CheckinDTO> 
 {

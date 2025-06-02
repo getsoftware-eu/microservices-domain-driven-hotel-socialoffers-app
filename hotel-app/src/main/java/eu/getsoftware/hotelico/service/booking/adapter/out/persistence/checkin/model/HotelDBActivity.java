@@ -8,7 +8,6 @@ import eu.getsoftware.hotelico.service.booking.application.customer.domain.model
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
@@ -25,26 +24,29 @@ import java.util.stream.Collectors;
  */
 @Entity
 @Getter @Setter
-@Table(name = "hotel_activities", schema = "hotel")
+@Table(name = "hotel_activities")
 //@RequiredArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PROTECTED) // важно для JPA
-public class HotelDbActivity implements IHotelActivity, Serializable
+//@NoArgsConstructor//(access = AccessLevel.PROTECTED) // важно для JPA
+public class HotelDBActivity implements IHotelActivity, Serializable
 {
 	private static final long serialVersionUID = -3552760230942289778L;
 
-	@Getter 
-	@Embedded @Column
-	private HotelDomainEntityId hotelDomainId;
-
-	public HotelDbActivity(HotelDomainEntityId hotelDomainId) {
-		this.hotelDomainId = hotelDomainId;
-	}
-	
 	@Id
 	@Setter(AccessLevel.PROTECTED)
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+	
+//	@Embedded 
+	@Column
+	private String hotelDomainIdValue;
 
+	public HotelDomainEntityId getHotelDomainId() {
+		return HotelDomainEntityId.from(hotelDomainIdValue);
+	}
+	public void setHotelDomainId(HotelDomainEntityId hotelDomainId) {
+		this.hotelDomainIdValue = hotelDomainId.uuidValue();
+	}
+	
 	/**
 	 * messageId -> creationTime
 	 * consistencyId -> last update time

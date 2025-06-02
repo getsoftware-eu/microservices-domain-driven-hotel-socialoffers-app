@@ -1,27 +1,30 @@
 spring:
 #  config.activate.on-profile: development
   datasource:
-    # HikariCP
-#    type: com.zaxxer.hikari.HikariDataSource
-#    driver-class-name: com.mysql.jdbc.Driver
-#    hikari.idle-timeout: 10000
     url: jdbc:postgresql://localhost:5432/hotel
+    username: postgres
     password: postgres
-    username: eu_user
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
   jpa:
+    show-sql: true
     hibernate:
-      ddl-auto: create-drop #eugen, not for production: update
+      ddl-auto: create #eugen, not for production: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-    show-sql: true
+    
 #    generate-ddl: true
-    #  naming.implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
-#  zipkin:
+    defer-datasource-initialization: true 
+  #  zipkin:
 #    base-url: http://localhost:9411
-#  rabbitmq:
-#    addresses: localhost:5672
+
+  sql:
+    init:
+      mode: always #eugen, not for production: never
+      platform: postgres
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
     enabled: true
@@ -110,19 +113,25 @@ eureka:
 
 spring:
   config.activate.on-profile: development
-  datasource:
-    url: jdbc:postgresql://localhost:5432/hotel
-    username: postgres
-    password: postgres
-  jpa:
-    show-sql: true
+#  datasource:
+#    url: jdbc:postgresql://localhost:5434/hotel
+#    username: postgres #//eu_user with own roles
+#    password: postgres
+#  jpa:
+#    hibernate:
+#      ddl-auto: create #eugen, not for production: update
   thymeleaf:
     cache: false
 
 logging:
-  level.org.springframework.security: INFO
-  level.org.springframework.boot.actuate.audit.listener.AuditListener: DEBUG
-
+  level:
+    org.springframework:
+      security: INFO
+      boot.actuate.audit.listener.AuditListener: DEBUG
+#    org.hibernate: #eu: test jpa
+#      orm: DEBUG
+#      SQL: DEBUG
+  
 keycloak:
   enabled: false
   #config.file: classpath:static/backend-keycloak.json

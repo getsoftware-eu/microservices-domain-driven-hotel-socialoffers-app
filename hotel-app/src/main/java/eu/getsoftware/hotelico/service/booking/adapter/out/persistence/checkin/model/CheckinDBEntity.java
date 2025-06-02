@@ -41,39 +41,31 @@ public class CheckinDBEntity extends CheckinRootDomainEntity implements java.io.
 
 //	@Embedded
 //	@Convert(converter = CheckinDomainEntityIdConverter.class)
-	@Embedded 
 	@Column(name = "domain_id", length = 50)
 	private String domainEntityIdValue;
 
-	public CheckinDomainEntityId getDomainEntityId() {return CheckinDomainEntityId.from(domainEntityIdValue);};
+	@Override public CheckinDomainEntityId getDomainEntityId() {return CheckinDomainEntityId.from(domainEntityIdValue);};
 	public void setDomainEntityId(CheckinDomainEntityId domainId) {
 		this.domainEntityIdValue = domainId.uuidValue();
 	}
 	
-	@Embedded 
+//	@Embedded 
 	@Column(name = "customer_domain_id", length = 50)
 	private String customerDomainEntityIdValue;
-
-	//	@AttributeOverride(
-//			name = "uuidValue",                            // поле внутри Embedded-типа
-//			column = @Column(name = "customer_domain_id")     // имя столбца в таблице
-//	)
-	public CustomerDomainEntityId getCustomerDomainEntityId() {return new CustomerDomainEntityId(customerDomainEntityIdValue, true);}
-	public void setCustomerDomainEntityId(CustomerDomainEntityId customerDomainId) {
+	
+	@Override public CustomerDomainEntityId getCustomerDomainEntityId() {return new CustomerDomainEntityId(customerDomainEntityIdValue, true);}
+	@Override public void setCustomerDomainEntityId(CustomerDomainEntityId customerDomainId) {
 		this.customerDomainEntityIdValue = customerDomainId.uuidValue();
 	}
+	
 //	@Embedded
 //	@Convert(converter = HotelDomainEntityIdConverter.class)
-	@Embedded 
+//	@Embedded 
 	@Column(name = "hotel_domain_id", length = 50)
 	private String hotelDomainEntityIdValue;
 
-	//	@AttributeOverride(
-//			name = "uuidValue",                            // поле внутри Embedded-типа
-//			column = @Column(name = "hotel_domain_id")     // имя столбца в таблице
-//	)
-	public HotelDomainEntityId getHotelDomainEntityId() {return HotelDomainEntityId.from(hotelDomainEntityIdValue);}
-	public void setHotelDomainEntityId(HotelDomainEntityId hotelDomainId) {
+	@Override public HotelDomainEntityId getHotelDomainEntityId() {return HotelDomainEntityId.from(hotelDomainEntityIdValue);}
+	@Override public void setHotelDomainEntityId(HotelDomainEntityId hotelDomainId) {
 		this.hotelDomainEntityIdValue = hotelDomainId.uuidValue();
 	}
 	

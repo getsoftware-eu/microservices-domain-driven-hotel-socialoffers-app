@@ -9,7 +9,7 @@ import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.WallPostDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.*;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDbActivity;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDBActivity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.repository.CheckinRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
@@ -82,7 +82,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
      */
     public HotelRootDomainEntity recreateDomainEntityFromDBProjection(HotelDomainEntityId hotelEntityId)
     {
-        HotelDBEntity dbProjection = hotelRepository.findByDomainEntityIdAndActive(hotelEntityId, true)
+        HotelDBEntity dbProjection = hotelRepository.findByDomainEntityIdValue(hotelEntityId)
                 .orElseThrow(() -> new RuntimeException("no hotel"));
 
         return HotelRootDomainEntity.builder().domainEntityId(dbProjection.getDomainEntityId())
@@ -190,7 +190,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 
     @Override
     public Optional<HotelDBEntity> getEntityById(HotelDomainEntityId hotelId) {
-        return hotelRepository.findByDomainEntityIdAndActive(hotelId, true);
+        return hotelRepository.findByDomainEntityIdValue(hotelId);
     }
 
     @Override
@@ -245,7 +245,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
         CustomerDBEntity sender = customerRepository.findByDomainId(AppConfigProperties.getTryEntityId(customerId))
 		        .orElseThrow(()-> new ResourceNotFoundException("customer not found with initId=" + customerId));
         
-        HotelDbActivity activity = (HotelDbActivity) this.getActivityByIdOrInitId(activityId, activityId).orElseThrow(()-> new RuntimeException("not found"));
+        HotelDBActivity activity = (HotelDBActivity) this.getActivityByIdOrInitId(activityId, activityId).orElseThrow(()-> new RuntimeException("not found"));
 		
         if(activity==null || action==null)
         {
@@ -314,20 +314,20 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
     }
 	
 	@Override
-    public void reorderActivitiesInHotel(ReorderAction action, HotelDbActivity activity)
+    public void reorderActivitiesInHotel(ReorderAction action, HotelDBActivity activity)
 	{
 		if(activity.getHotelDomainId()==null)
 		{
 			return;
 		}
 		
-		List<HotelDbActivity> hotelActivities = activityRepository.getAllTimesByHotelId(activity.getHotelDomainId());
+		List<HotelDBActivity> hotelActivities = activityRepository.getAllTimesByHotelId(activity.getHotelDomainId());
 		
 		//sort by orderIndex!!!
 		if (hotelActivities.size() > 0) {
-			Collections.sort(hotelActivities, new Comparator<HotelDbActivity>() {
+			Collections.sort(hotelActivities, new Comparator<HotelDBActivity>() {
 				@Override
-				public int compare(final HotelDbActivity object1, final HotelDbActivity object2) {
+				public int compare(final HotelDBActivity object1, final HotelDBActivity object2) {
 					return Integer.compare(object1.getOrderIndex(), object2.getOrderIndex());
 				}
 			} );
@@ -379,7 +379,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 		Collections.swap(hotelActivities, currentActivityIndex, newActivityIndex);
 		
 		//set new orderIndex
-		for (HotelDbActivity nextActivity: hotelActivities)
+		for (HotelDBActivity nextActivity: hotelActivities)
 		{
 			nextActivity.setOrderIndex(hotelActivities.indexOf(nextActivity));
 		}
@@ -517,7 +517,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 	{
         CustomerDealDTO dto = modelMapper.map(deal, CustomerDealDTO.class);
 		
-		HotelDbActivity dealActivity = deal.getActivity();
+		HotelDBActivity dealActivity = deal.getActivity();
 		
 		dto.setActivityId(dealActivity.getId());
         dto.setHotelDomainId(dealActivity.getHotelDomainId());
@@ -588,7 +588,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
         }
         else
         {
-            Optional<HotelDbActivity> activityOptional = getActivityByIdOrInitId((activityId), activityId);
+            Optional<HotelDBActivity> activityOptional = getActivityByIdOrInitId((activityId), activityId);
             
             CustomerDeal newDeal = createDeal(sender.get(), guestCustomerId, activityOptional.get());
             return convertDealToDto(newDeal);
@@ -611,7 +611,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 		
 		CustomerDBEntity sender = customerRepository.findByDomainId(customerEntityId).orElseThrow(()->new RuntimeException("-"));
 
-        Optional<HotelDbActivity> activityOptional = getActivityByIdOrInitId((int)activityId, activityId);
+        Optional<HotelDBActivity> activityOptional = getActivityByIdOrInitId((int)activityId, activityId);
 		
         CustomerDealDTO resultDealDto = null;
         
@@ -797,7 +797,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 
     
 
-    public CustomerDeal createDeal(CustomerDBEntity sender, CustomerDomainEntityId guestCustomerId, HotelDbActivity activity)
+    public CustomerDeal createDeal(CustomerDBEntity sender, CustomerDomainEntityId guestCustomerId, HotelDBActivity activity)
     {
         CustomerDeal newDeal = new CustomerDeal(sender, activity);
 
@@ -817,7 +817,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 		    return generateVirtualHotel();
 	    }
 		
-	    HotelDTO out  = hotelRepository.findByDomainEntityIdAndActive(hotelId, true)
+	    HotelDTO out  = hotelRepository.findByDomainEntityIdValue(hotelId)
 			    .map(h -> convertHotelToDto(h))
 			    .orElseThrow(() -> new ResourceNotFoundException("Hotel not found with hotelId " + hotelId));
         
@@ -839,7 +839,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 	
 	@Override
     public HotelActivityDTO getHotelActivityById(CustomerDomainEntityId requesterId, long activityId) throws Throwable {
-        HotelDbActivity hotelActivity = (HotelDbActivity) getActivityByIdOrInitId(activityId, activityId).orElseThrow(()->new RuntimeException("not found"));
+        HotelDBActivity hotelActivity = (HotelDBActivity) getActivityByIdOrInitId(activityId, activityId).orElseThrow(()->new RuntimeException("not found"));
 
         Optional<CustomerDBEntity> requester = null;
         
@@ -898,7 +898,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
             }
         }
 	
-	    HotelDbActivity hotelActivity = getActivityByIdOrInitId(hotelActivityDto.getDomainEntityId(), hotelActivityDto.getInitId()).orElse(createHotelActivity(hotelActivityDto));
+	    HotelDBActivity hotelActivity = getActivityByIdOrInitId(hotelActivityDto.getDomainEntityId(), hotelActivityDto.getInitId()).orElse(createHotelActivity(hotelActivityDto));
 	    
 //		hotelActivity.map(a -> updateHotelActivity(hotelActivityDto))
 //				    .orElse(createHotelActivity(hotelActivityDto));
@@ -929,7 +929,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
     }
 
 //    @Override
-    public Optional<HotelDbActivity> getActivityByIdOrInitId(ActivityDomainEntityId id, long initId)
+    public Optional<HotelDBActivity> getActivityByIdOrInitId(ActivityDomainEntityId id, long initId)
     {
         if(initId>0)
         {
@@ -952,17 +952,17 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
         return dealRepository.findByHotelId(hotelId);
     }
 
-    private HotelDbActivity createHotelActivity(HotelActivityDTO hotelActivityDto)
+    private HotelDBActivity createHotelActivity(HotelActivityDTO hotelActivityDto)
     {
-        HotelDbActivity hotelActivity;// ###### CREATE HOTEL OBJECT 
+        HotelDBActivity hotelActivity;// ###### CREATE HOTEL OBJECT 
 
-        hotelActivity = modelMapper.map(hotelActivityDto, HotelDbActivity.class);
+        hotelActivity = modelMapper.map(hotelActivityDto, HotelDBActivity.class);
 
         HotelDBEntity hotelRootEntity = null;
         
         if(hotelActivityDto.getHotelId()!=null && hotelActivityDto.getHotelId()!=null)
 		{
-			hotelRootEntity = hotelRepository.findByDomainEntityIdAndActive(hotelActivityDto.getHotelId(), true).orElseThrow();
+			hotelRootEntity = hotelRepository.findByDomainEntityIdValue(hotelActivityDto.getHotelId()).orElseThrow();
 		}
 
         CustomerDBEntity sender = null;
@@ -996,7 +996,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
         return hotelActivity;
     }
 
-    public HotelDbActivity fillActivityFromDto(HotelDbActivity hotelActivity, HotelActivityDTO hotelActivityDto)
+    public HotelDBActivity fillActivityFromDto(HotelDBActivity hotelActivity, HotelActivityDTO hotelActivityDto)
     {
         hotelActivity.setInitId(hotelActivityDto.getInitId());
 
@@ -1067,7 +1067,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
     @Override
     public HotelDTO updateHotel(HotelDTO hotelDto) {
         
-		Optional<HotelDBEntity> hotelRootEntityOpt = hotelRepository.findByDomainEntityIdAndActive(hotelDto.getDomainEntityId(), true);
+		Optional<HotelDBEntity> hotelRootEntityOpt = hotelRepository.findByDomainEntityIdValue(hotelDto.getDomainEntityId());
 	
 	    HotelDBEntity hotelRootEntity = null;
 	    
@@ -1146,9 +1146,9 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
     @Override
     public HotelActivityDTO updateHotelActivity(HotelActivityDTO hotelActivityDto)
     {
-        Optional<HotelDbActivity> hotelActivityOpt = getActivityByIdOrInitId(hotelActivityDto.getDomainEntityId(), hotelActivityDto.getInitId());
+        Optional<HotelDBActivity> hotelActivityOpt = getActivityByIdOrInitId(hotelActivityDto.getDomainEntityId(), hotelActivityDto.getInitId());
 	
-	    HotelDbActivity hotelActivity = null;
+	    HotelDBActivity hotelActivity = null;
 		
 	    if(hotelActivityOpt.isPresent())
         {
@@ -1224,7 +1224,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 		return unsubscribeGuestsToPushId;
 	}
 
-	public HotelDbActivity fillHotelFromDto(HotelActivityDTO hotelActivityDto, HotelDbActivity hotelActivity)
+	public HotelDBActivity fillHotelFromDto(HotelActivityDTO hotelActivityDto, HotelDBActivity hotelActivity)
     {
 //        hotelActivity = modelMapper.map(hotelActivityDto, HotelActivity.class);
         
@@ -1298,7 +1298,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 
         HotelDomainEntityId virtualHotelId = lastMessagesService.getInitHotelId();
        
-        List<HotelDbActivity> list =  new ArrayList<>();
+        List<HotelDBActivity> list =  new ArrayList<>();
 	
 	    CustomerDBEntity requester = null;
 		
@@ -1354,7 +1354,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
                 }
             }
             
-            for (HotelDbActivity hotelActivity : list) {
+            for (HotelDBActivity hotelActivity : list) {
 //                requester.getSeenActivities().add(hotelActivity);
                 
                 HotelActivityDTO activityDto = this.convertActivityToDto(hotelActivity, requester);
@@ -1394,7 +1394,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 	}
 	
     @Override
-    public HotelActivityDTO convertActivityToDto(HotelDbActivity hotelActivity, CustomerDBEntity requester)
+    public HotelActivityDTO convertActivityToDto(HotelDBActivity hotelActivity, CustomerDBEntity requester)
     {
 	    Objects.requireNonNull(hotelActivity);
 
@@ -1459,7 +1459,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
     @Override
     public List<HotelActivityDTO> getHotelActivitiesBySenderAndHotelId(CustomerDomainEntityId senderId, HotelDomainEntityId hotelId)
     {
-        List<HotelDbActivity> list = new ArrayList<>();
+        List<HotelDBActivity> list = new ArrayList<>();
         
         CustomerDBEntity customerEntity = customerService.getEntityById(AppConfigProperties.getTryEntityId(senderId)).orElseThrow(()-> new RuntimeException("not found"));
         
@@ -1472,7 +1472,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
         }
         
         List<HotelActivityDTO> out = new ArrayList<HotelActivityDTO>();
-        for (HotelDbActivity hotelActivity : list) {
+        for (HotelDBActivity hotelActivity : list) {
             
             HotelActivityDTO activityDto = convertActivityToDto(hotelActivity, customerEntity);
             out.add(activityDto);
@@ -1543,11 +1543,11 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
                 {
                     long activityId = Long.parseLong(value);
 	
-	                Optional<HotelDbActivity> activityOpt = getActivityByIdOrInitId(activityId, activityId);
+	                Optional<HotelDBActivity> activityOpt = getActivityByIdOrInitId(activityId, activityId);
                     
                     if(activityOpt.isPresent())
                     {
-	                    HotelDbActivity activity = activityOpt.get();
+	                    HotelDBActivity activity = activityOpt.get();
                         dto.getSpecialContent().put("name", activity.getTitle());
                         dto.getSpecialContent().put("hotelId", activity.getHotelDomainId()+"");
                         dto.getSpecialContent().put("pictureUrl", activity.getPreviewPictureUrl()!=null?activity.getPreviewPictureUrl() : AppConfigProperties.PREVIEW_ACTIVITY_NOT_AVAILABLE_URL );
@@ -1740,7 +1740,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 			return new ResponseDTO("There is no staff rights", true);
 		}
 		
-		HotelDBEntity hotelRootEntity = hotelRepository.findByDomainEntityIdAndActive(hotelId, true).orElseThrow();
+		HotelDBEntity hotelRootEntity = hotelRepository.findByDomainEntityIdValue(hotelId).orElseThrow();
 		
 		hotelRootEntity.setActive(false);
 
@@ -1789,7 +1789,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
             return new ResponseDTO("There is no staff rights", true);
         }
         
-        HotelDbActivity activity = (HotelDbActivity) getActivityByIdOrInitId(activityId, activityId).orElseThrow(()-> new ResourceNotFoundException("activity not found id=" + activityId));
+        HotelDBActivity activity = (HotelDBActivity) getActivityByIdOrInitId(activityId, activityId).orElseThrow(()-> new ResourceNotFoundException("activity not found id=" + activityId));
 
         activity.setActive(false);
         activityRepository.save(activity);

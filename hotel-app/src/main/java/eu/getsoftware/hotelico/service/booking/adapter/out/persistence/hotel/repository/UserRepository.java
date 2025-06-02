@@ -29,7 +29,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 	
 	public List<UserEntity> findByUserName(@Param("userName") String userName);
 	
-	public void deleteByDomainEntityId(@Param("domainEntityId") CustomerDomainEntityId domainEntityId);
+	public void deleteByDomainEntityIdValue(@Param("domainEntityId") CustomerDomainEntityId domainEntityId);
 
 	/**
 	 * Find user by hotelId.

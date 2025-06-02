@@ -3,7 +3,6 @@ package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.mo
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDbActivity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -40,10 +39,19 @@ public class HotelDBEntity /*extends HotelRootDomainEntity*/ implements Serializ
 
 //    @Embedded
 //    @Convert(converter = HotelDomainEntityIdConverter.class)
-    @Embedded @Column(name = "domain_entity_id", length = 50)
-    public HotelDomainEntityId domainEntityId;
+//    @Embedded 
+    @Column(name = "domain_entity_id", length = 50)
+    private String domainEntityIdValue;
 
-//    @Convert(converter = DomainEntityIdConverter.class)
+    public HotelDomainEntityId getDomainEntityId() {
+        return HotelDomainEntityId.from(domainEntityIdValue);
+    }
+
+    public void setDomainEntityId(HotelDomainEntityId domainEntityId) {
+        this.domainEntityIdValue = domainEntityId.uuidValue();
+    }
+
+    //    @Convert(converter = DomainEntityIdConverter.class)
     @Embedded @Column(name = "address", length = 50)
     public AddressDBEmbeddable address;
 
@@ -167,11 +175,6 @@ public class HotelDBEntity /*extends HotelRootDomainEntity*/ implements Serializ
 
 //    @Override
     public Set<HotelWallPost> hotelWallPosts() {
-        return Set.of();
-    }
-
-//    @Override
-    public Set<HotelDbActivity> hotelActivities() {
         return Set.of();
     }
 

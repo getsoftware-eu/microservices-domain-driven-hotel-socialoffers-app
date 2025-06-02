@@ -23,7 +23,7 @@ public interface CustomerRepository extends JpaRepository<CustomerDBEntity, Long
 	String FIND_ALL_ONLINE = "SELECT c " +
 			"FROM Customer c " +
 			"WHERE c.active = TRUE " +
-			"AND c.logged = TRUE " +
+			"AND c.loggedValue = TRUE " +
 			"AND c.lastSeenOnline > :checkDate";
 
 	String FIND_CUSTOMER_CITIES = "SELECT DISTINCT c.city " +

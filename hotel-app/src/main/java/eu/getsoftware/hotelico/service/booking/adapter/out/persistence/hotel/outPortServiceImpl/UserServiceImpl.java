@@ -99,7 +99,7 @@ public class UserServiceImpl implements IUserService
     @Transactional
     @Override
     public void deleteUser(UserDTO userDto) {
-        userRepository.deleteByDomainEntityId(userDto.getDomainEntityId());
+        userRepository.deleteByDomainEntityIdValue(userDto.getDomainEntityId());
     }
 
     @Override

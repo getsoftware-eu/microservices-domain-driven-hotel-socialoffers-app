@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model;
 
+import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.ICustomerDetails;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.ICustomerPreferences;
@@ -44,9 +45,16 @@ public class CustomerDBEntity extends CustomerRootDomainEntity implements Serial
 
 //    @Embedded 
 //    @Convert(converter = CustomerDomainEntityIdConverter.class)
-//    @Column(name = "domain_id", length = 50) //Аннотирует DomainId как ValueObject,  Вам не нужно явно маппить строковое поле DomainId вручную.
-//    public CustomerDomainEntityId getDomainEntityId() {return domainEntityId;} // Ваш Value Object
+    @Column(name = "domain_id", length = 50) //Аннотирует DomainId как ValueObject,  Вам не нужно явно маппить строковое поле DomainId вручную.
+    public String domainEntityIdValue; // Ваш Value Object
 
+    @Override public CustomerDomainEntityId getDomainEntityId() {
+        return new CustomerDomainEntityId(domainEntityIdValue);
+    }    
+    @Override public void setDomainEntityId(CustomerDomainEntityId domainEntityId) {
+        this.domainEntityIdValue = domainEntityId.uuidValue();
+    }
+    
     @Version
     private Long version;
     
@@ -55,10 +63,24 @@ public class CustomerDBEntity extends CustomerRootDomainEntity implements Serial
     private boolean active = true;
     
     @Column(name = "logged", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
-    boolean getLogged() {return logged;};
+    private boolean loggedValue = false;
+    
+    @Override public boolean isLogged() {
+        return loggedValue;
+    }
+    @Override public void setLogged(boolean logged) {
+        this.loggedValue = logged;
+    }
     
     @Column(name = "showAvatar", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_TRUE)
-    private boolean getShowAvatar() {return showAvatar;};
+    private boolean showAvatar = false;
+
+    @Override public boolean isShowAvatar() {
+        return showAvatar;
+    }
+    @Override public void setShowAvatar(boolean showAvatar) {
+        this.showAvatar = showAvatar;
+    }
     
     @Column(name = "guestAccount", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
     private boolean guestAccount = false;

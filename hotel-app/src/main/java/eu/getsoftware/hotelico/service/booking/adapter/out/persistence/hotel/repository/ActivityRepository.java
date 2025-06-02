@@ -5,7 +5,7 @@ package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.re
 import eu.getsoftware.hotelico.clients.common.domain.ids.ActivityDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDbActivity;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDBActivity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,13 +16,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ActivityRepository extends JpaRepository<HotelDbActivity, Long> {
+public interface ActivityRepository extends JpaRepository<HotelDBActivity, Long> {
 
 	/**
 	 * Найти все активные активности по отелю.
 	 */
 	@Query(ActivityQueries.FIND_ALL_BY_HOTEL_QUERY)
-	List<HotelDbActivity> getAllTimesByHotelId(@Param("hotelId") HotelDomainEntityId hotelId);
+	List<HotelDBActivity> getAllTimesByHotelId(@Param("hotelId") HotelDomainEntityId hotelId);
 
 	/**
 	 * Посчитать активные активности по отелю.
@@ -34,7 +34,7 @@ public interface ActivityRepository extends JpaRepository<HotelDbActivity, Long>
 	 * Найти активности, валидные на конкретную дату.
 	 */
 	@Query(ActivityQueries.FIND_TIME_VALID_BY_HOTEL_QUERY)
-	List<HotelDbActivity> getTimeValidByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") LocalDate checkDate);
+	List<HotelDBActivity> getTimeValidByHotelId(@Param("hotelId") HotelDomainEntityId hotelId, @Param("checkDate") LocalDate checkDate);
 
 	/**
 	 * Посчитать количество валидных активностей по дате.
@@ -46,33 +46,33 @@ public interface ActivityRepository extends JpaRepository<HotelDbActivity, Long>
 	 * Найти активности, созданные конкретным пользователем.
 	 */
 	@Query(ActivityQueries.FIND_BY_CREATOR_AND_HOTEL_QUERY)
-	List<HotelDbActivity> getByCreatorAndHotelId(@Param("creatorId") CustomerDomainEntityId creatorId, @Param("hotelId") HotelDomainEntityId hotelId);
+	List<HotelDBActivity> getByCreatorAndHotelId(@Param("creatorId") CustomerDomainEntityId creatorId, @Param("hotelId") HotelDomainEntityId hotelId);
 
 	/**
 	 * Поиск по initId и флагу активности.
 	 */
-	List<HotelDbActivity> findByInitIdAndActive(Long initId, boolean active);
+	List<HotelDBActivity> findByInitIdAndActive(Long initId, boolean active);
 
 	/**
 	 * Найти все активные активности во всех отелях.
 	 */
 	@Query(ActivityQueries.FIND_ALL_ACTIVE_QUERY)
-	List<HotelDbActivity> findAllTimesActive();
+	List<HotelDBActivity> findAllTimesActive();
 
 	/**
 	 * Найти все валидные и активные активности по дате.
 	 */
 	@Query(ActivityQueries.FIND_ALL_TIME_VALID_ACTIVE_QUERY)
-	List<HotelDbActivity> findTimeValidActive(@Param("checkDate") LocalDate checkDate);
+	List<HotelDBActivity> findTimeValidActive(@Param("checkDate") LocalDate checkDate);
 
 	/**
 	 * Метод-заглушка, если понадобится использовать custom реализацию.
 	 */
-	default Optional<HotelDbActivity> findByHotelDomainId(HotelDomainEntityId id) {
+	default Optional<HotelDBActivity> findByHotelDomainIdValue(HotelDomainEntityId id) {
 		return Optional.empty();
 	}
 
-	default Optional<HotelDbActivity> findByDomainId(ActivityDomainEntityId id) {
+	default Optional<HotelDBActivity> findByDomainId(ActivityDomainEntityId id) {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 }

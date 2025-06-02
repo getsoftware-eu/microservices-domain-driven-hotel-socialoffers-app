@@ -57,5 +57,5 @@ CREATE TABLE IF NOT EXISTS order_items (
 -- create schema 'hotel'
 CREATE SCHEMA IF NOT EXISTS hotel;
 
--- create schema 'customer'
-CREATE SCHEMA IF NOT EXISTS customer;
+
+

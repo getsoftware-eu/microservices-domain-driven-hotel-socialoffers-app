@@ -22,29 +22,28 @@ public interface CheckinRepository extends JpaRepository<CheckinDBEntity, Long> 
 		SELECT c
 		FROM CheckinEntity c
 		WHERE c.active = true
-		AND c.customerDomainEntityId = :customerId
+		AND c.customerDomainEntityIdValue = :customerId
 		AND c.validFrom <= :checkDate
 		AND c.validTo >= :checkDate
 	""";
 	
-	public final static String FIND_HOTEL_BY_CUSTOMER_QUERY = "SELECT c.hotelDomainEntityId " +
+	public final static String FIND_HOTEL_BY_CUSTOMER_QUERY = "SELECT c.hotelDomainEntityIdValue " +
 			"FROM CheckinEntity c " +
 			"WHERE c.active = true " +
-			"AND c.customerDomainEntityId = :customerId " +
+			"AND c.customerDomainEntityIdValue = :customerId " +
 			"AND ( :checkDate BETWEEN c.validFrom AND c.validTo ) " +
-			  "OR (c.staffCheckin = TRUE)" +
-			")";	
+			  "OR (c.staffCheckin = TRUE)";	
 	
-	public final static String FIND_STAFF_BY_HOTEL_QUERY = "SELECT c.customerDomainEntityId " +
+	public final static String FIND_STAFF_BY_HOTEL_QUERY = "SELECT c.customerDomainEntityIdValue " +
 			"FROM CheckinEntity c " +
 			"WHERE c.active = true " +
-			"AND c.hotelDomainEntityId.uuidValue = :#{#hotelId.uuidValue} " +
+			"AND c.hotelDomainEntityIdValue = :hotelId " +
 			"AND c.staffCheckin = true ";	
 	
-	public final static String FIND_STAFF_IDS_BY_HOTEL_QUERY = "SELECT c.customerDomainEntityId " +
+	public final static String FIND_STAFF_IDS_BY_HOTEL_QUERY = "SELECT c.customerDomainEntityIdValue " +
 			"FROM CheckinEntity c " +
 			"WHERE c.active = true " +
-			"AND c.hotelDomainEntityId.uuidValue = :#{#hotelId.uuidValue} " +
+			"AND c.hotelDomainEntityIdValue = :hotelId " +
 			"AND c.staffCheckin = true ";	
 	
 //	public final static String FIND_CUSTOMERS_BY_HOTEL_CITY_QUERY = "SELECT c.pk.customer " +
@@ -58,7 +57,7 @@ public interface CheckinRepository extends JpaRepository<CheckinDBEntity, Long> 
 //			"AND ( :checkDate BETWEEN c.validFrom AND c.validTo ) " ;	
 	
 	
-	public final static String FIND_CHECKIN_UNIQUE_CITIES_QUERY = "SELECT DISTINCT c.pk.hotel.city " +
+	public final static String FIND_CHECKIN_UNIQUE_CITIES_QUERY = "SELECT DISTINCT c.hotelDomainEntityIdValue " +
 			"FROM CheckinEntity c " +
 			"WHERE c.active = true " +
 //			"AND c.pk.customer.active = true " +
@@ -68,14 +67,14 @@ public interface CheckinRepository extends JpaRepository<CheckinDBEntity, Long> 
 	public final static String FIND_ACTIVE_BY_HOTEL_QUERY = "SELECT c " +
 			"FROM CheckinEntity c " +
 			"WHERE c.active = true " +
-			"AND c.hotelDomainEntityId.uuidValue = :#{#hotelId.uuidValue} " +
+			"AND c.hotelDomainEntityIdValue = :hotelId " +
 			"AND ( :checkDate BETWEEN c.validFrom AND c.validTo ) " ;
 
 
-	public final static String FIND_ACTIVE_CUSTOMERS_BY_HOTEL_QUERY = "SELECT c.pk.customer " +
+	public final static String FIND_ACTIVE_CUSTOMERS_BY_HOTEL_QUERY = "SELECT c.customerDomainEntityIdValue " +
 			"FROM CheckinEntity c " +
 			"WHERE c.active = true " +
-			"AND c.hotelDomainEntityId.uuidValue = :#{#hotelId.uuidValue} " +	
+			"AND c.hotelDomainEntityIdValue = :hotelId " +	
 //			"AND c.pk.customer.active = true " +
 			"AND ( :checkDate BETWEEN c.validFrom AND c.validTo ) " ;
 
@@ -84,20 +83,20 @@ public interface CheckinRepository extends JpaRepository<CheckinDBEntity, Long> 
 			"FROM CheckinEntity c " +
 			"WHERE c.active = true " +
 			"AND c.fullCheckin = true " +
-			"AND c.hotelDomainEntityId.uuidValue = :#{#hotelId.uuidValue} " +
+			"AND c.hotelDomainEntityIdValue = :hotelId " +
 			"AND ( :checkDate BETWEEN c.validFrom AND c.validTo ) " ;
 		
 	
 	public final static String FIND_LAST_CHECKIN_BY_HOTEL_QUERY = "SELECT max(c.validFrom) " +
 			"FROM CheckinEntity c " +
-			"WHERE c.customerDomainEntityId = :customerId " +
-			"AND c.hotelDomainEntityId.uuidValue = :#{#hotelId.uuidValue} ";	
+			"WHERE c.customerDomainEntityIdValue = :customerId " +
+			"AND c.hotelDomainEntityIdValue = :hotelId ";	
 	
 	public final static String IS_ACTIVE_FULL_CHECKIN_FOR_CUSTOMER_BY_HOTEL_QUERY = "SELECT count(c)>0 " +
 			"FROM CheckinEntity c " +
 			"WHERE c.active = true " +
-			"AND c.hotelDomainEntityId.uuidValue = :#{#hotelId.uuidValue} " +
-			"AND c.customerDomainEntityId = :customerId " +
+			"AND c.hotelDomainEntityIdValue = :hotelId " +
+			"AND c.customerDomainEntityIdValue = :customerId " +
 			"AND (" +
 			  "( " +
 				" c.fullCheckin = true " +
@@ -109,14 +108,14 @@ public interface CheckinRepository extends JpaRepository<CheckinDBEntity, Long> 
 	public final static String COUNT_ACTIVE_BY_HOTEL_QUERY = "SELECT count(c) " +
 			"FROM CheckinEntity c " +
 			"WHERE c.active = true " +
-			"AND c.hotelDomainEntityId.uuidValue = :#{#hotelId.uuidValue} "+
+			"AND c.hotelDomainEntityIdValue = :hotelId "+
 			"AND ( :checkDate BETWEEN c.validFrom AND c.validTo ) ";
 	
 	public final static String COUNT_NOT_STAFF_ACTIVE_BY_HOTEL_QUERY = "SELECT count(c) " +
 			"FROM CheckinEntity c " +
 			"WHERE c.active = true " +
 			"AND c.staffCheckin = false " +
-			"AND c.hotelDomainEntityId.uuidValue = :#{#hotelId.uuidValue} " +
+			"AND c.hotelDomainEntityIdValue = :hotelId " +
 			"AND ( :checkDate BETWEEN c.validFrom AND c.validTo ) ";
 	
 	public final static String COUNT_NOT_STAFF_FULL_CHECKIN_ACTIVE_BY_HOTEL_QUERY = "SELECT count(c) " +
@@ -124,7 +123,7 @@ public interface CheckinRepository extends JpaRepository<CheckinDBEntity, Long> 
 			"WHERE c.active = true " +
 			"AND c.fullCheckin = true " +
 			"AND c.staffCheckin = false " +
-			"AND c.hotelDomainEntityId.uuidValue = :#{#hotelId.uuidValue} " +
+			"AND c.hotelDomainEntityIdValue = :hotelId " +
 			"AND ( :checkDate BETWEEN c.validFrom AND c.validTo ) ";
 
 	/**
@@ -187,15 +186,15 @@ public interface CheckinRepository extends JpaRepository<CheckinDBEntity, Long> 
 	Date getLastByCustomerAndHotelId(@Param("customerId") CustomerDomainEntityId customerId, @Param("hotelId") HotelDomainEntityId hotelId);
 
 	@Query("""
-    	SELECT c.hotelDomainEntityId FROM CheckinEntity c
-    	WHERE c.customerDomainEntityId = :customerId
+    	SELECT c.hotelDomainEntityIdValue FROM CheckinEntity c
+    	WHERE c.hotelDomainEntityIdValue = :customerId
     		AND :checkinDate BETWEEN c.validFrom AND c.validTo
 	""")
 	HotelDomainEntityId getHotelDomainEntityId(CustomerDomainEntityId customerId, LocalDate checkinDate);
 
-	boolean existsByDomainEntityId(EntityIdentifier domainEntityId);
+	boolean existsByDomainEntityIdValue(EntityIdentifier domainEntityId);
 
-	Optional<CheckinDBEntity> findByDomainEntityId(EntityIdentifier domainEntityId);
+	Optional<CheckinDBEntity> findByDomainEntityIdValue(EntityIdentifier domainEntityId);
 
-	void deleteByDomainEntityId(EntityIdentifier domainEntityId);
+	void deleteByDomainEntityIdValue(EntityIdentifier domainEntityId);
 }
