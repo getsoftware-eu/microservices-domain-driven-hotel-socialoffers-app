@@ -1,4 +1,4 @@
-//package eu.getsoftware.hotelico.hotelapp.main.config.adapter;
+//package eu.getsoftware.hotelico.service.booking.main.config.adapter;
 //
 ///*
 // * Copyright 2014 the original author or authors.
@@ -16,9 +16,9 @@
 // * limitations under the License.
 // */
 //
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
-//import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social.SecurityContext;
-//import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social.UserCookieGenerator;
+//import eu.getsoftware.hotelico.service.booking.adapter.out.customer.model.CustomerDBEntity;
+//import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.social.SecurityContext;
+//import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.social.UserCookieGenerator;
 //import jakarta.servlet.http.HttpServletRequest;
 //import jakarta.servlet.http.HttpServletResponse;
 //import org.springframework.social.connect.Connection;

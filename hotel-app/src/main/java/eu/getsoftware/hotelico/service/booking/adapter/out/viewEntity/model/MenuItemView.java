@@ -18,7 +18,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Getter @Setter
-@Table(name = "menu_item")
+@Table(name = "menu_items")
 public class MenuItemView implements Serializable
 {
 

@@ -1,4 +1,4 @@
-//package eu.getsoftware.hotelico.hotelapp.application.checkin.domain.message.event;
+//package eu.getsoftware.hotelico.service.booking.application.checkin.domain.message.event;
 //
 //public class PartialCheckinEvent extends PartialEvent {
 //    private final String userId;

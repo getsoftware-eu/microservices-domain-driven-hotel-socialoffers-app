@@ -14,7 +14,7 @@ import java.util.Set;
  */
 @Entity
 @Getter @Setter
-@Table(name = "interest_customer", schema = "customer")
+@Table(name = "interest_customers", schema = "customer")
 class InterestCustomer implements Serializable
 {
 

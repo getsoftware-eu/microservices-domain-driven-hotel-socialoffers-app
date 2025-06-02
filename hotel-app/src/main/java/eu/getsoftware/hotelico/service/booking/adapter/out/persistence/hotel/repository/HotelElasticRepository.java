@@ -1,7 +1,7 @@
-//package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository;
+//package eu.getsoftware.hotelico.service.booking.adapter.out.hotel.repository;
 //
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelRootEntity;
-//import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.HotelRepositoryExtension;
+//import eu.getsoftware.hotelico.service.booking.adapter.out.hotel.model.HotelRootEntity;
+//import eu.getsoftware.hotelico.service.booking.application.hotel.domain.model.HotelRepositoryExtension;
 //import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 //
 //import java.util.Optional;

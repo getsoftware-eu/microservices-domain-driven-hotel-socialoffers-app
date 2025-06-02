@@ -10,7 +10,8 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "users", schema = "customer")
-@Data
+@Getter
+@Setter
 //eu: удовлетворяешь JPA, и в то же время предотвращаешь прямое создание объекта вне контролируемого контекста.
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor

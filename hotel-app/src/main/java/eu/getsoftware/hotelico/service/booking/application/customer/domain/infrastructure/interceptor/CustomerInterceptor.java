@@ -1,10 +1,10 @@
-//package eu.getsoftware.hotelico.hotelapp.application.customer.domain.infrastructure.interceptor;
+//package eu.getsoftware.hotelico.service.booking.application.customer.domain.infrastructure.interceptor;
 //
 ////import org.springframework.social.linkedin.api.LinkedIn;
 ////import org.springframework.social.linkedin.connect.LinkedInConnectionFactory;
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
-//import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social.SecurityContext;
-//import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social.UserCookieGenerator;
+//import eu.getsoftware.hotelico.service.booking.adapter.out.customer.model.CustomerDBEntity;
+//import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.social.SecurityContext;
+//import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.social.UserCookieGenerator;
 //import jakarta.servlet.http.HttpServletRequest;
 //import jakarta.servlet.http.HttpServletResponse;
 //import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-//package eu.getsoftware.hotelico.hotelapp.application.hotel.common.utils;
+//package eu.getsoftware.hotelico.service.booking.application.hotel.common.utils;
 //
 //
 //

@@ -1,4 +1,4 @@
-//package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository
+//package eu.getsoftware.hotelico.service.booking.adapter.out.hotel.repository
 //
 //import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO
 //import org.assertj.core.api.Assertions.assertThat

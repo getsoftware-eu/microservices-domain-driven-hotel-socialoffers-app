@@ -533,7 +533,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 	{
 		if(!customersToHotelIdMap.containsKey(customerId))
 		{
-			customersToHotelIdMap.put(customerId, checkinRepository.getCustomerHotelDomainId(customerId, LocalDate.now()));
+			customersToHotelIdMap.put(customerId, checkinRepository.getHotelDomainEntityId(customerId, LocalDate.now()));
 		}
 
 		HotelDomainEntityId hotelId = customersToHotelIdMap.get(customerId);

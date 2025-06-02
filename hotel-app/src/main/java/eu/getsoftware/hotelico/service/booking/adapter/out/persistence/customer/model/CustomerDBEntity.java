@@ -26,7 +26,7 @@ import java.util.Set;
 //@Builder(toBuilder = true)
 //@AllArgsConstructor(access = AccessLevel.PACKAGE)
 //@NoArgsConstructor
-@Table(name = "customer", schema = "customer")
+@Table(name = "customers", schema = "customer")
 @DynamicUpdate
 //@Builder
 public class CustomerDBEntity extends CustomerRootDomainEntity implements Serializable

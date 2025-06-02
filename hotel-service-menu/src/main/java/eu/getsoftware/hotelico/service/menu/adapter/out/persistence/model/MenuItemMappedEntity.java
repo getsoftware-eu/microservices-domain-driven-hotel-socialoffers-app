@@ -16,7 +16,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Getter @Setter
-@Table(name = "menu_item")
+@Table(name = "menu_items")
 public class MenuItemMappedEntity implements Serializable
 {
 	private static final long serialVersionUID = -3552760230944489778L;

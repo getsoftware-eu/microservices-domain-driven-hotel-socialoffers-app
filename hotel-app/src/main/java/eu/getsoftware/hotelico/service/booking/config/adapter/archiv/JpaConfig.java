@@ -22,7 +22,7 @@
 // */
 //@Configuration
 //@EnableJpaAuditing
-//@EnableJpaRepositories(basePackages = { "eu.getsoftware.hotelico.hotel.repository" })
+//@EnableJpaRepositories(basePackages = { "eu.getsoftware.hotelico.services.booking.repository" })
 //@EnableTransactionManagement
 //public class JpaConfig
 //{

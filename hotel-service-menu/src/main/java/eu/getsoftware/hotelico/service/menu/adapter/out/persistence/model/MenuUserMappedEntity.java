@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 @Entity
 @Getter @Setter
-@Table(name = "menu_user")
+@Table(name = "menu_users")
 public class MenuUserMappedEntity implements Serializable
 {
 	private static final long serialVersionUID = -3552764230944489778L;

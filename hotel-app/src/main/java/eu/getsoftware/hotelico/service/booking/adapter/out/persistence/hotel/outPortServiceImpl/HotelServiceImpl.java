@@ -131,9 +131,9 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
             
             boolean ignoreDemoHotel = AppConfigProperties.HIDE_DEMO_HOTEL_FROM_HOTEL_LIST && AppConfigProperties.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelRootEntity.getCurrentHotelAccessCode());
             
-            if(hotelRootEntity.isActive() && !hotelRootEntity.isVirtual() && !ignoreDemoHotel && (!citiesList.contains(hotelRootEntity.getCity())))
+            if(hotelRootEntity.isActive() && !hotelRootEntity.isVirtual() && !ignoreDemoHotel && (!citiesList.contains(hotelRootEntity.getAddress().getCity())))
             {
-                citiesList.add(hotelRootEntity.getCity());
+                citiesList.add(hotelRootEntity.getAddress().getCity());
                 HotelDTO hotelDto = convertHotelToDto(hotelRootEntity);
                 
                 if(requester!=null && hotelRootEntity.getLatitude()>-90 && requester.getLatitude()>-90)
@@ -170,7 +170,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
             
             boolean ignoreDemoHotel = AppConfigProperties.HIDE_DEMO_HOTEL_FROM_HOTEL_LIST && AppConfigProperties.HOTEL_DEMO_CODE.equalsIgnoreCase(hotelRootEntity.getCurrentHotelAccessCode());
            
-            if(hotelRootEntity.isActive() && !hotelRootEntity.isVirtual() && !ignoreDemoHotel && (filterCity==null || filterCity.equals(hotelRootEntity.getCity())))
+            if(hotelRootEntity.isActive() && !hotelRootEntity.isVirtual() && !ignoreDemoHotel && (filterCity==null || filterCity.equals(hotelRootEntity.getAddress().getCity())))
             {
                 HotelDTO hotelDto = convertHotelToDto(hotelRootEntity);
                 if(requesterOptional.isPresent() && hotelRootEntity.getLatitude()>-90 && requesterOptional.get().getLatitude()>-90)
@@ -402,7 +402,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 
             if(kmFrom<100)
             {
-                return nextHotelRootEntity.getCity();
+                return nextHotelRootEntity.getAddress().getCity();
             }
 
         }
@@ -1080,8 +1080,8 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
             hotelRootEntity.setName(hotelDto.getName());
             hotelRootEntity.setEmail(hotelDto.getEmail());
             hotelRootEntity.setCurrentHotelAccessCode(hotelDto.getCurrentHotelAccessCode());
-            hotelRootEntity.setCity(hotelDto.getCity());
-            hotelRootEntity.setStreet(hotelDto.getStreet());
+            hotelRootEntity.getAddress().setCity(hotelDto.getCity());
+            hotelRootEntity.getAddress().setStreet(hotelDto.getStreet());
             hotelRootEntity.setHouse(hotelDto.getHouse());
             hotelRootEntity.setPostalCode(hotelDto.getPostalCode());
             hotelRootEntity.setFax(hotelDto.getFax());
@@ -1428,7 +1428,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
         {
             activityDto.setHotelId(hotelRootEntityId);
 //            activityDto.setHotelName(hotelRootEntity.getName());
-//            activityDto.setHotelCity(hotelRootEntity.getCity());
+//            activityDto.setHotelCity(hotelRootEntity.getAddress().getCity());
 
             try
             {

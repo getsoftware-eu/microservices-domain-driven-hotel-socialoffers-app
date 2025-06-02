@@ -1,4 +1,4 @@
-//package eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService;
+//package eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService;
 //
 //
 ///**

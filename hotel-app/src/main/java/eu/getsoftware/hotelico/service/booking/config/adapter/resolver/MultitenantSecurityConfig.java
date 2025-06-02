@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.service.booking.config.infrastructure.resolver;
+package eu.getsoftware.hotelico.service.booking.config.adapter.resolver;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;

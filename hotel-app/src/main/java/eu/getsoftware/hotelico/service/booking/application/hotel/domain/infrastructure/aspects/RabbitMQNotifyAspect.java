@@ -1,4 +1,4 @@
-//package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.aspects;
+//package eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.aspects;
 //
 //import org.aspectj.lang.annotation.After;
 //import org.aspectj.lang.annotation.Aspect;

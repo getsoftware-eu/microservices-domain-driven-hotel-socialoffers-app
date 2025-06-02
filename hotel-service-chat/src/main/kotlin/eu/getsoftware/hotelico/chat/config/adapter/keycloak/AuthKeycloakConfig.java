@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.service.booking.config.infrastructure.keycloak;
+package eu.getsoftware.hotelico.chat.config.adapter.keycloak;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,36 +19,26 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class AuthKeycloakConfig {
 
-    // ========== 1️⃣ SecurityFilterChain ==========
-
+    // Проверяем токены от фронтенда
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(authorize -> authorize
-                .requestMatchers("/sso/login*").permitAll()
-                .requestMatchers("/login*", "/login/*", "/your-multitenant-path/**/login*").hasRole("user")
-                .anyRequest().permitAll()
-            )
-            .oauth2ResourceServer(oauth2 -> oauth2
-                .jwt(jwt -> jwt
-                        .jwtAuthenticationConverter(jwtAuthenticationConverter())
+                .authorizeHttpRequests(authorize -> authorize
+                        .anyRequest().authenticated()
                 )
-            )
-            .csrf(csrf -> csrf.disable()) // Stateless JWT
-            .logout(logout -> logout
-              .logoutSuccessUrl("/")  // После логаута — на главную
-            );
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
+                )
+                .csrf(csrf -> csrf.disable());
 
         return http.build();
     }
 
-    // ========== 2️⃣ JWT decoder ==========
     @Bean
     public JwtDecoder jwtDecoder() {
         return JwtDecoders.fromIssuerLocation("http://localhost:8080/realms/hotel-socialoffers");
     }
 
-    // Конвертер для маппинга ролей из JWT (чтобы добавить префикс ROLE_)
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter authoritiesConverter = new JwtGrantedAuthoritiesConverter();
@@ -60,7 +50,7 @@ public class AuthKeycloakConfig {
         return converter;
     }
 
-    // ========== 3️⃣ OAuth2 Client для client_credentials ==========
+    // WebClient с client_credentials токеном для вызова других микросервисов
     @Bean
     public OAuth2AuthorizedClientManager authorizedClientManager(
             ClientRegistrationRepository clientRegistrationRepository,
@@ -89,7 +79,6 @@ public class AuthKeycloakConfig {
         return new InMemoryOAuth2AuthorizedClientService(clientRegistrationRepository);
     }
 
-    // 3️⃣ WebClient с подстановкой service-token. (если сервис вызывает REST of другой microservice)
     @Bean
     public WebClient webClient(OAuth2AuthorizedClientManager authorizedClientManager) {
         ServletOAuth2AuthorizedClientExchangeFilterFunction oauth2Client =

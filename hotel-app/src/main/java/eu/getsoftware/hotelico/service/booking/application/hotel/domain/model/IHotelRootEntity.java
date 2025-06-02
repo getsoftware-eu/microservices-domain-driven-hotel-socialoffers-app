@@ -1,8 +1,8 @@
-//package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model;
+//package eu.getsoftware.hotelico.service.booking.application.hotel.domain.model;
 //
 //import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 //import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId;
-//import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.IHotelActivity;
+//import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.IHotelActivity;
 //
 //import java.util.Collection;
 //import java.util.Set;

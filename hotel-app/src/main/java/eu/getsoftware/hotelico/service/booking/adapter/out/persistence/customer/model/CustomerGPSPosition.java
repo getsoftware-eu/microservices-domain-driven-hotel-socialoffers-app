@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Entity
 @Getter @Setter
-@Table(name = "customer_gps_position", schema = "customer")
+@Table(name = "customer_gps_positions", schema = "customer")
 class CustomerGPSPosition
 {
 	@Id

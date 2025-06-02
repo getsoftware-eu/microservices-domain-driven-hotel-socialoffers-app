@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 import java.util.UUID;
 
+//@Embeddable
 public record CustomerDomainEntityId(
         String uuidValue
 ) implements EntityIdentifier {
@@ -15,6 +16,7 @@ public record CustomerDomainEntityId(
         }
     }
 
+    
     public CustomerDomainEntityId(String value, Boolean checkParam) { //Eu: additional constructor!!!
         this(value);
 

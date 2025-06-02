@@ -1,13 +1,13 @@
-package eu.getsoftware.hotelico.service.booking.config.infrastructure;
+package eu.getsoftware.hotelico.service.booking.config.adapter;
 
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
-@EnableJpaRepositories(basePackages = { "eu.getsoftware.hotelico.hotelapp.adapter.out" }) //TODO Eugen: all domains as array?
-@EntityScan(basePackages = {"eu.getsoftware.hotelico.hotelapp.adapter.out"}) //TODO Eugen: all domains as array?
-public class InfrastructureConfiguration
+@EnableJpaRepositories(basePackages = { "eu.getsoftware.hotelico.service.booking.adapter.out.persistence" }) //TODO Eugen: all domains as array?
+@EntityScan(basePackages = {"eu.getsoftware.hotelico.service.booking.adapter.out.persistence"}) //TODO Eugen: all domains as array?
+public class AdapterJpaEntityConfiguration
 {
 	
 	//eu: not moving Beans to external folders...

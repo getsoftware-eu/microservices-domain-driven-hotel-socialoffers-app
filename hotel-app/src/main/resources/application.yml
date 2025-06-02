@@ -91,7 +91,7 @@ hotelico:
     
 #liquibase.change-log: classpath:/db/changelog/db.changelog-master.xml #boot2: liquibase.change-log: classpath:/db/changelog/db.changelog-master.xml
 server:
-  port: 5000
+  port: 8088
   error:
     whitelabel.enabled: false
     
@@ -111,8 +111,8 @@ eureka:
 spring:
   config.activate.on-profile: development
   datasource:
-    url: jdbc:postgresql://localhost:5434/hotel
-    username: eu_user
+    url: jdbc:postgresql://localhost:5432/hotel
+    username: postgres
     password: postgres
   jpa:
     show-sql: true
@@ -140,7 +140,7 @@ spring:
     activate:
       on-profile: testing
   datasource:
-    url: jdbc:postgresql://localhost:5434/customer
+    url: jdbc:postgresql://localhost:5432/customer
     username: postgres
     password: postgres
 keycloak:

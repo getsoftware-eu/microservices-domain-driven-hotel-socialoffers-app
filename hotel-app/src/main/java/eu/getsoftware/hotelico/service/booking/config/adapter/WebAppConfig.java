@@ -1,6 +1,6 @@
 package eu.getsoftware.hotelico.service.booking.config.adapter;
 
-//import eu.getsoftware.hotelico.hotelapp.application.customer.domain.infrastructure.interceptor.CustomerInterceptor;
+//import eu.getsoftware.hotelico.service.booking.application.customer.domain.infrastructure.interceptor.CustomerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

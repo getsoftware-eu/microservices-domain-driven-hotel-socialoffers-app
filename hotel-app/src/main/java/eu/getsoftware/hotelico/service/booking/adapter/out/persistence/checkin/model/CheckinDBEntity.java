@@ -3,12 +3,13 @@ package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
 import com.google.common.collect.ImmutableSet;
 import eu.getsoftware.hotelico.clients.common.domain.ids.CheckinDomainEntityId;
+import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
 import eu.getsoftware.hotelico.service.booking.application.checkin.domain.CheckinRootDomainEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
@@ -17,10 +18,11 @@ import java.time.LocalDateTime;
 import java.util.Date;
 
 
-@Data
+@Entity(name = "CheckinEntity")
+@Table(name = "checkins", schema = "hotel")
+@Getter
+@Setter
 @NoArgsConstructor//(access = AccessLevel.PROTECTED) // Для Hibernate или других ORM
-@Entity
-@Table(name = "checkin", schema = "hotel")
 //@AssociationOverrides({
 //		@AssociationOverride(name = "pk.customer",
 //				joinColumns = @JoinColumn(name = "CUSTOMER_ID")),
@@ -39,18 +41,42 @@ public class CheckinDBEntity extends CheckinRootDomainEntity implements java.io.
 
 //	@Embedded
 //	@Convert(converter = CheckinDomainEntityIdConverter.class)
-	@Embedded @Column(name = "domain_id", length = 50)
-	public CheckinDomainEntityId getDomainEntityId() {return domainEntityId;};
-	
-//	@Embedded
-//	@Convert(converter = CustomerDomainEntityIdConverter.class)
-//	public CustomerDomainEntityId getCustomerDomainEntityId() {return customerDomainEntityId;};
+	@Embedded 
+	@Column(name = "domain_id", length = 50)
+	private String domainEntityIdValue;
 
+	public CheckinDomainEntityId getDomainEntityId() {return CheckinDomainEntityId.from(domainEntityIdValue);};
+	public void setDomainEntityId(CheckinDomainEntityId domainId) {
+		this.domainEntityIdValue = domainId.uuidValue();
+	}
+	
+	@Embedded 
+	@Column(name = "customer_domain_id", length = 50)
+	private String customerDomainEntityIdValue;
+
+	//	@AttributeOverride(
+//			name = "uuidValue",                            // поле внутри Embedded-типа
+//			column = @Column(name = "customer_domain_id")     // имя столбца в таблице
+//	)
+	public CustomerDomainEntityId getCustomerDomainEntityId() {return new CustomerDomainEntityId(customerDomainEntityIdValue, true);}
+	public void setCustomerDomainEntityId(CustomerDomainEntityId customerDomainId) {
+		this.customerDomainEntityIdValue = customerDomainId.uuidValue();
+	}
 //	@Embedded
 //	@Convert(converter = HotelDomainEntityIdConverter.class)
-	@Embedded @Column(name = "hotel_domain_id", length = 50)
-	public HotelDomainEntityId getHotelDomainEntityId() {return hotelDomainEntityId;};
+	@Embedded 
+	@Column(name = "hotel_domain_id", length = 50)
+	private String hotelDomainEntityIdValue;
 
+	//	@AttributeOverride(
+//			name = "uuidValue",                            // поле внутри Embedded-типа
+//			column = @Column(name = "hotel_domain_id")     // имя столбца в таблице
+//	)
+	public HotelDomainEntityId getHotelDomainEntityId() {return HotelDomainEntityId.from(hotelDomainEntityIdValue);}
+	public void setHotelDomainEntityId(HotelDomainEntityId hotelDomainId) {
+		this.hotelDomainEntityIdValue = hotelDomainId.uuidValue();
+	}
+	
 	@Version
 	private Long version;
 	

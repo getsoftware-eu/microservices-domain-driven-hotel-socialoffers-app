@@ -1,4 +1,4 @@
-//package eu.getsoftware.hotelico.hotelapp.application.checkin.domain.model;
+//package eu.getsoftware.hotelico.service.booking.application.checkin.domain.model;
 //
 //import eu.getsoftware.hotelico.clients.common.domain.IDomainEntity;
 //import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;

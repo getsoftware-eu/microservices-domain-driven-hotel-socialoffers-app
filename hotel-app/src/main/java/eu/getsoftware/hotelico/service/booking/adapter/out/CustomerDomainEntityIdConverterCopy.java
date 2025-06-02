@@ -1,4 +1,4 @@
-//package eu.getsoftware.hotelico.hotelapp.adapter.out;
+//package eu.getsoftware.hotelico.service.booking.adapter.out;
 //
 //import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
 //import jakarta.persistence.AttributeConverter;

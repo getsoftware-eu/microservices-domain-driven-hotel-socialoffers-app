@@ -1,12 +1,12 @@
-//package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository;
+//package eu.getsoftware.hotelico.service.booking.adapter.out.hotel.repository;
 //
 //import eu.getsoftware.hotelico.clients.common.domain.domainIDs.CustomerDomainEntityId;
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.model.CustomerDBEntity;
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
-//import eu.getsoftware.hotelico.hotelapp.application.checkin.domain.CheckinRootDomainEntity;
-//import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
-//import eu.getsoftware.hotelico.hotelapp.main.MainApplication;
+//import eu.getsoftware.hotelico.service.booking.adapter.out.checkin.repository.CheckinRepository;
+//import eu.getsoftware.hotelico.service.booking.adapter.out.customer.model.CustomerDBEntity;
+//import eu.getsoftware.hotelico.service.booking.adapter.out.customer.repository.CustomerRepository;
+//import eu.getsoftware.hotelico.service.booking.application.checkin.domain.CheckinRootDomainEntity;
+//import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
+//import eu.getsoftware.hotelico.service.booking.main.MainApplication;
 //import jakarta.persistence.PersistenceException;
 //import org.junit.jupiter.api.Disabled;
 //import org.junit.jupiter.api.Test;

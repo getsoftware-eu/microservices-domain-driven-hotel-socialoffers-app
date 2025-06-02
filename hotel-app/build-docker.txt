@@ -2,3 +2,4 @@
 
 mvn clean package -DskipTests
 docker build -t hotel-app:1.0.0 .
+# docker build -t eugenfff/hotel-app:1.0.0 .

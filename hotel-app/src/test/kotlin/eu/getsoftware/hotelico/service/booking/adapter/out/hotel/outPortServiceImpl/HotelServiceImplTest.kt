@@ -1,10 +1,10 @@
-//package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl;
+//package eu.getsoftware.hotelico.service.booking.adapter.out.hotel.outPortServiceImpl;
 //
 //import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO
 //import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelDbEntity
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.HotelRepository
-//import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model.customDomainModelImpl.HotelDomainEntity
+//import eu.getsoftware.hotelico.service.booking.adapter.out.hotel.model.HotelDbEntity
+//import eu.getsoftware.hotelico.service.booking.adapter.out.hotel.repository.HotelRepository
+//import eu.getsoftware.hotelico.service.booking.application.hotel.domain.model.customDomainModelImpl.HotelDomainEntity
 //import io.mockk.every
 //import io.mockk.mockk
 //import io.mockk.verify

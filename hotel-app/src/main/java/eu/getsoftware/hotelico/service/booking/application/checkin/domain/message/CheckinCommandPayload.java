@@ -1,4 +1,4 @@
-//package eu.getsoftware.hotelico.hotelapp.application.checkin.domain.message;
+//package eu.getsoftware.hotelico.service.booking.application.checkin.domain.message;
 //
 ///**
 // * CheckinCommandPayload commandPayload = new CheckinCommandPayload("user123", "booking456");

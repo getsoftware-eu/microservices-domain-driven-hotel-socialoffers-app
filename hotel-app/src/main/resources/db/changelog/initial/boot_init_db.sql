@@ -53,3 +53,9 @@ CREATE TABLE IF NOT EXISTS order_items (
        FOREIGN KEY (order_id) REFERENCES orders(id),
        FOREIGN KEY (product_id) REFERENCES products(id)
 );
+
+-- create schema 'hotel'
+CREATE SCHEMA IF NOT EXISTS hotel;
+
+-- create schema 'customer'
+CREATE SCHEMA IF NOT EXISTS customer;

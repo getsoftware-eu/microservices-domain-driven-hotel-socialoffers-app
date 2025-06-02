@@ -1,12 +1,12 @@
-//package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller;
+//package eu.getsoftware.hotelico.service.booking.adapter.in.web.controller;
 //
 //import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 //import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.customer.repository.CustomerRepository;
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.ActivityRepository;
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.repository.HotelRepository;
-//import eu.getsoftware.hotelico.hotelapp.application.customer.port.out.iPortService.CustomerPortService;
-//import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.FileUploadService;
+//import eu.getsoftware.hotelico.service.booking.adapter.out.customer.repository.CustomerRepository;
+//import eu.getsoftware.hotelico.service.booking.adapter.out.hotel.repository.ActivityRepository;
+//import eu.getsoftware.hotelico.service.booking.adapter.out.hotel.repository.HotelRepository;
+//import eu.getsoftware.hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
+//import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.FileUploadService;
 //import jakarta.servlet.ServletContext;
 //import jakarta.servlet.http.HttpServletResponse;
 //import org.springframework.beans.factory.annotation.Autowired;

@@ -20,7 +20,7 @@ import java.util.Set;
  */
 @Entity
 @Getter @Setter
-@Table(name = "menu_order")
+@Table(name = "menu_orders")
 public class MenuOrderView implements Serializable
 {
 	private static final long serialVersionUID = -3552760230944489778L;

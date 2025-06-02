@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
+//@Embeddable
 public record HotelDomainEntityId(
         String uuidValue
 ) implements EntityIdentifier {

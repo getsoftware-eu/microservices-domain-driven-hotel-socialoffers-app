@@ -1,10 +1,10 @@
-//package eu.getsoftware.hotelico.hotelapp.adapter.`in`.web.controller.hotel
+//package eu.getsoftware.hotelico.service.booking.adapter.`in`.web.controller.hotel
 //
 //import com.ninjasquad.springmockk.MockkBean
 //import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO
 //import eu.getsoftware.hotelico.clients.common.domain.domainIDs.HotelDomainEntityId
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelDbEntity
-//import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IHotelService
+//import eu.getsoftware.hotelico.service.booking.adapter.out.hotel.model.HotelDbEntity
+//import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.IHotelService
 //import io.mockk.every
 //import org.junit.jupiter.api.Disabled
 //import org.junit.jupiter.api.Test

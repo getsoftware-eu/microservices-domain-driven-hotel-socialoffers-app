@@ -16,7 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 @Entity
 @Getter @Setter
-@Table(name = "customer_activity_deal", schema = "deal")
+@Table(name = "customer_activity_deals", schema = "deal")
 //@AssociationOverrides({
 //		@AssociationOverride(name = "pk.customer",
 //				joinColumns = @JoinColumn(name = "CUSTOMER_ID")),

@@ -14,7 +14,7 @@ import java.util.Set;
  */
 @Entity
 @Getter @Setter
-@Table(name = "language", schema = "customer")
+@Table(name = "languages", schema = "customer")
 public class Language  implements Serializable
 {
 

@@ -1,4 +1,4 @@
-//package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel;
+//package eu.getsoftware.hotelico.service.booking.adapter.out.hotel;
 //
 //import jakarta.persistence.*;
 //import jakarta.validation.constraints.NotEmpty;

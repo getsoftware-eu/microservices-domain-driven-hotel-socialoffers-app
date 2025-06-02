@@ -1,10 +1,10 @@
-//package eu.getsoftware.hotelico.hotelapp.application.customer.port.out.IRepository
+//package eu.getsoftware.hotelico.service.booking.application.customer.port.out.IRepository
 //
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository.Companion.CHECK_STAFF_OR_ADMIN_CUSTOMER
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository.Companion.FIND_ALL_ONLINE
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository.Companion.FIND_ANONYM_CUSTOMER
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository.Companion.FIND_CUSTOMER_CITIES
-//import eu.getsoftware.hotelico.hotelapp.application.customer.domain.model.CustomerRootDomainEntity
+//import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository.Companion.CHECK_STAFF_OR_ADMIN_CUSTOMER
+//import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository.Companion.FIND_ALL_ONLINE
+//import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository.Companion.FIND_ANONYM_CUSTOMER
+//import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository.Companion.FIND_CUSTOMER_CITIES
+//import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.CustomerRootDomainEntity
 //import org.springframework.data.domain.Page
 //import org.springframework.data.domain.Pageable
 //import org.springframework.data.jpa.repository.Query

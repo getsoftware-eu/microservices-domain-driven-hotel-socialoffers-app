@@ -1,4 +1,4 @@
-//package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.model;
+//package eu.getsoftware.hotelico.service.booking.adapter.out.checkin.model;
 //
 ///**
 // * Created by Eugen on 16.07.2015.

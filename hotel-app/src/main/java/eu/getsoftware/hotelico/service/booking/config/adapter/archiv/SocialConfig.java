@@ -1,4 +1,4 @@
-//package eu.getsoftware.hotelico.hotelapp.main.config.infrastructure; 
+//package eu.getsoftware.hotelico.service.booking.main.config.infrastructure; 
 ////
 ////import org.springframework.context.annotation.Configuration;
 ////import org.springframework.core.env.Environment;
@@ -50,9 +50,9 @@
 // * limitations under the License.
 // */
 //
-//import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social.SecurityContext;
-//import eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social.SimpleConnectionSignUp;
-//import eu.getsoftware.hotelico.hotelapp.main.config.adapter.SimpleSignInAdapter;
+//import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.social.SecurityContext;
+//import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.social.SimpleConnectionSignUp;
+//import eu.getsoftware.hotelico.service.booking.main.config.adapter.SimpleSignInAdapter;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.context.annotation.Scope;

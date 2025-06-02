@@ -1,4 +1,4 @@
-//package eu.getsoftware.hotelico.hotelapp.adapter.in.web.controller.hotel;
+//package eu.getsoftware.hotelico.service.booking.adapter.in.web.controller.hotel;
 //
 //@Slf4j
 //@Validated

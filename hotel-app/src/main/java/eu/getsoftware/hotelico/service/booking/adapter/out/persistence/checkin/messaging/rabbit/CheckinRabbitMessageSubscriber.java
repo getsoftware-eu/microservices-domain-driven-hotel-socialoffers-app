@@ -1,8 +1,8 @@
-//package eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging.rabbit;
+//package eu.getsoftware.hotelico.service.booking.adapter.out.checkin.messaging.rabbit;
 //
 //import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.domainMessage.DomainMessage;
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.messaging.CheckinMessagePublisher;
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.checkin.repository.CheckinRepository;
+//import eu.getsoftware.hotelico.service.booking.adapter.out.checkin.messaging.CheckinMessagePublisher;
+//import eu.getsoftware.hotelico.service.booking.adapter.out.checkin.repository.CheckinRepository;
 //import eu.getsoftware.hotelico.clients.api.clients.common.dto.CheckinDTO;
 //import lombok.RequiredArgsConstructor;
 //import lombok.extern.slf4j.Slf4j;

@@ -24,9 +24,9 @@ import static org.hibernate.internal.util.collections.CollectionHelper.listOf;
 //@AllArgsConstructor
 
 @NoArgsConstructor//(access = AccessLevel.PROTECTED) // Для Hibernate или других ORM
-@Entity
+@Entity(name = "Hotel") //eu: for cleen HQL query
 @Getter @Setter
-@Table(name = "hotel", schema = "hotel")
+@Table(name = "hotels", schema = "hotel")
 //@RequiredArgsConstructor - eu: NEVER FOR ENTITY
 public class HotelDBEntity /*extends HotelRootDomainEntity*/ implements Serializable
 {
@@ -81,9 +81,6 @@ public class HotelDBEntity /*extends HotelRootDomainEntity*/ implements Serializ
 
     private String info;
 
-    @Column(name = "city", nullable = true)
-    private String city;
-
     @Column(name = "postalCode", nullable = true)
     private String postalCode;    
     
@@ -92,9 +89,6 @@ public class HotelDBEntity /*extends HotelRootDomainEntity*/ implements Serializ
     
     @Column(name = "mapLink", nullable = true)
     private String mapLink;
-
-    @Column(name = "street", nullable = true)
-    private String street;
 
     @Column(name = "house", nullable = true)
     private String house;

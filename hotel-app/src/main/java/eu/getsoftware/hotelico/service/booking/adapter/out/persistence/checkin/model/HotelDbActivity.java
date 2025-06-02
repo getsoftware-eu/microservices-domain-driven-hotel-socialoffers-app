@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  */
 @Entity
 @Getter @Setter
-@Table(name = "hotel_activity", schema = "hotel")
+@Table(name = "hotel_activities", schema = "hotel")
 //@RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // важно для JPA
 public class HotelDbActivity implements IHotelActivity, Serializable

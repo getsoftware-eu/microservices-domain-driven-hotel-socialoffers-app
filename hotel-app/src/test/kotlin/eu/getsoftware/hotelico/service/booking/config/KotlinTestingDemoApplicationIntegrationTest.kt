@@ -1,4 +1,4 @@
-//package eu.getsoftware.hotelico.hotelapp.main;
+//package eu.getsoftware.hotelico.service.booking.main;
 //
 //import eu.getsoftware.hotelico.clients.api.clients.common.dto.HotelDTO
 //import org.junit.jupiter.api.Assertions

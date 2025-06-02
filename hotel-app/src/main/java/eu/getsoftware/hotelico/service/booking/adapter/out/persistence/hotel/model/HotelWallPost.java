@@ -18,7 +18,7 @@ import java.time.LocalDate;
  */
 @Entity
 @Getter @Setter
-@Table(name = "hotel_wallpost", schema = "hotel")
+@Table(name = "hotel_wallposts", schema = "hotel")
 public class HotelWallPost implements IHotelWallPost, Serializable
 {
 	private static final long serialVersionUID = -5478152926665631989L;

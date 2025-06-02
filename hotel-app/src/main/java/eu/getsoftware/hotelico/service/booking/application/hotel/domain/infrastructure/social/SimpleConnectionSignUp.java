@@ -13,7 +13,7 @@
 // * See the License for the specific language governing permissions and
 // * limitations under the License.
 // */
-//package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.infrastructure.social;
+//package eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.social;
 //
 //import org.springframework.social.connect.Connection;
 //import org.springframework.social.connect.ConnectionSignUp;

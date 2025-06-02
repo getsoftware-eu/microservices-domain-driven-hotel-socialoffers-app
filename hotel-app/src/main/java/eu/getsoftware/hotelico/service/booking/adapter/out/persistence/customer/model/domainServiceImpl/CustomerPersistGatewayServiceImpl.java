@@ -1,7 +1,7 @@
-//package eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.domainServiceImpl;
+//package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.domainServiceImpl;
 //
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.model.CustomerDBEntity;
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.persistence.customer.repository.CustomerRepository;
+//import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
+//import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
 //import org.jetbrains.annotations.NotNull;
 //import org.springframework.stereotype.Service;
 //

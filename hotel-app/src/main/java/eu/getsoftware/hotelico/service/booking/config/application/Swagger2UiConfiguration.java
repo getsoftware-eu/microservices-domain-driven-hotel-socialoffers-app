@@ -1,4 +1,4 @@
-//package eu.getsoftware.hotelico.hotelapp.main.config.infrastructure;
+//package eu.getsoftware.hotelico.service.booking.main.config.infrastructure;
 //
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;

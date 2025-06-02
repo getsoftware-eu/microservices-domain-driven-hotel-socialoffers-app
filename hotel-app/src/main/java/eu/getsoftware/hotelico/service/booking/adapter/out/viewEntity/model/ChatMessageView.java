@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Getter @Setter
-@Table(name = "chat_message", schema = "chat")
+@Table(name = "chat_messages", schema = "chat")
 public class ChatMessageView implements IChatMessageView, Serializable
 {
   private static final long serialVersionUID = -5478152926665631989L;

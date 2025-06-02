@@ -1,4 +1,4 @@
-//package eu.getsoftware.hotelico.hotelapp.application.hotel.domain.model;
+//package eu.getsoftware.hotelico.service.booking.application.hotel.domain.model;
 //
 //import java.util.Set;
 //

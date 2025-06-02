@@ -1,12 +1,12 @@
-//package eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.outPortServiceImpl.microservice;
+//package eu.getsoftware.hotelico.service.booking.adapter.out.hotel.outPortServiceImpl.microservice;
 //
 //import eu.getsoftware.hotelico.clients.api.amqp.application.producer.RabbitMQMessageProducer;
 //import eu.getsoftware.hotelico.clients.api.clients.common.dto.CustomerDTO;
 //import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.ChatMessageCommand;
 //import eu.getsoftware.hotelico.clients.api.clients.infrastructure.amqpConsumeNotification.SocketNotificationCommand;
 //import eu.getsoftware.hotelico.clients.api.clients.infrastructure.chat.dto.ChatMsgDTO;
-//import eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent;
-//import eu.getsoftware.hotelico.hotelapp.application.hotel.port.out.iPortService.IMessagingProducerService;
+//import eu.getsoftware.hotelico.service.booking.adapter.out.hotel.model.HotelEvent;
+//import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.IMessagingProducerService;
 //import lombok.AllArgsConstructor;
 //import org.springframework.amqp.core.AmqpTemplate;
 //import org.springframework.amqp.rabbit.AsyncRabbitTemplate;
@@ -14,7 +14,7 @@
 //import org.springframework.core.ParameterizedTypeReference;
 //import org.springframework.stereotype.Service;
 //
-//import static eu.getsoftware.hotelico.hotelapp.adapter.out.hotel.model.HotelEvent.EVENT_CHAT_SEND_MESSAGE;
+//import static eu.getsoftware.hotelico.service.booking.adapter.out.hotel.model.HotelEvent.EVENT_CHAT_SEND_MESSAGE;
 //
 ///**
 // * eu: Producer of asynchron messaging
