@@ -4,13 +4,14 @@ import eu.getsoftware.hotelico.clients.common.domain.mapper.EntityGenericMapper;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.CheckinDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.mapper.AddressValueObjectMapper;
 import eu.getsoftware.hotelico.service.booking.application.checkin.domain.CheckinRootDomainEntity;
+import org.mapstruct.Builder;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
 
 /**
  * unmappedTargetPolicy = ReportingPolicy.IGNORE - eu: не забудешь новый field
  */
-@Mapper(uses = AddressValueObjectMapper.class)
+@Mapper(builder = @Builder(disableBuilder = true), uses = AddressValueObjectMapper.class)
 public interface CheckinEntityMapper extends EntityGenericMapper<CheckinRootDomainEntity, CheckinDBEntity> {
 
     @Override

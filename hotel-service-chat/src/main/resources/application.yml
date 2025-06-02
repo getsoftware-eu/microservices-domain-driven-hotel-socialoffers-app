@@ -39,3 +39,10 @@ logging:
         version: 1
         environment: Production
         node-name: Primary
+        
+---
+
+spring:
+  config:
+    activate:
+      on-profile: development

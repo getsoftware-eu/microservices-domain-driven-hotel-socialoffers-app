@@ -62,7 +62,8 @@ spring:
     oauth2:
       resourceserver: 
         jwt:
-          issuer-uri: http://localhost:8080/realms/hotel-socialoffers
+          issuer-uri: http://keycloak:8080/realms/hotel-socialoffers
+          #использовать 'keycloak' (а не 'localhost') как hostname — потому что это внутренняя сеть Docker Compose.
           #issuer-uri заменяет необходимость в KeycloakConfigResolver.
       client:
         registration:

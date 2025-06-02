@@ -16,7 +16,7 @@ import java.util.Map;
 @NoArgsConstructor
 //@RequiredArgsConstructor
 @AllArgsConstructor
-public class CustomerRootDomainEntity implements IRootDomainEntity {
+public class CustomerRootDomainEntity implements IRootDomainEntity<CustomerDomainEntityId> {
 
     @NonNull //Обязательные параметры должны быть отмечены аннотацией @NonNull, чтобы Lombok автоматически генерировал проверки и исключения, если значение не предоставлено.
     protected CustomerDomainEntityId domainEntityId;

@@ -28,6 +28,7 @@ import java.util.Set;
 //@NoArgsConstructor
 @Table(name = "customer", schema = "customer")
 @DynamicUpdate
+//@Builder
 public class CustomerDBEntity extends CustomerRootDomainEntity implements Serializable
 {
     @Id
