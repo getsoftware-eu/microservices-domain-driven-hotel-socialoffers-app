@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-alpine
 WORKDIR /app
 
 # Schritt 3: Jar-Datei kopieren
-COPY target/hotel-chat-0.0.1-SNAPSHOT.jar app.jar
+COPY target/hotel-service-chat-0.0.1-SNAPSHOT.jar app.jar
 
 # Schritt 4: Anwendung starten
 ENTRYPOINT ["java", "-jar", "app.jar"]

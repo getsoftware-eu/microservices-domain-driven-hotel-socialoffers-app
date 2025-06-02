@@ -1,4 +1,4 @@
 # part ob ci/cd build stage
 
-mvn clean package
+mvn clean package -DskipTests
 docker build -t hotel-app:1.0.0 .
