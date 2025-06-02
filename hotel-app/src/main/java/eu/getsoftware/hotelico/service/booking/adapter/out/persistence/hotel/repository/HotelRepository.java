@@ -17,7 +17,7 @@ public interface HotelRepository extends JpaRepository<HotelDBEntity, Long> {
 //			"WHERE h.active = TRUE " +
 //			"AND h.id = :hotelId";
 
-	String FIND_VIRTUAL_HOTEL_ID_QUERY = "SELECT (h.id) " +
+	String FIND_VIRTUAL_HOTEL_ID_QUERY = "SELECT (h.hotel_id) " +
 			"FROM Hotel h " +
 			"WHERE h.active = TRUE " +
 			"AND h.virtual = TRUE";
@@ -27,12 +27,12 @@ public interface HotelRepository extends JpaRepository<HotelDBEntity, Long> {
 			"WHERE h.active = TRUE " +
 			"AND h.virtual = TRUE";
 
-	String FIND_DEMO_HOTEL_ID_QUERY = "SELECT (h.domainEntityId) " +
+	String FIND_DEMO_HOTEL_ID_QUERY = "SELECT ( h.domainEntityIdValue ) " +
 			"FROM Hotel h " +
 			"WHERE h.active = TRUE " +
 			"AND h.currentHotelAccessCode = 'demo'";
 
-	String FIND_DEMO_HOTEL_DOMAIN_ID_QUERY = "SELECT (h.domainEntityId) " +
+	String FIND_DEMO_HOTEL_DOMAIN_ID_QUERY = "SELECT ( h.domainEntityIdValue ) " +
 			"FROM Hotel h " +
 			"WHERE h.active = TRUE " +
 			"AND h.currentHotelAccessCode = 'demo'";
@@ -47,8 +47,15 @@ public interface HotelRepository extends JpaRepository<HotelDBEntity, Long> {
 	// ---------------------- Methods ----------------------
 
 	Optional<HotelDBEntity> findByCurrentHotelAccessCodeAndActive(String currentHotelAccessCode, boolean active);
-
-	Optional<HotelDBEntity> findByDomainEntityIdAndActive(HotelDomainEntityId domainEntityId, boolean active);
+	
+	String FIND_BY_HOTEL_DOMAIN_ID = """
+			SELECT h 
+			FROM Hotel h 
+			WHERE h.active = TRUE 
+			AND h.domainEntityIdValue = :hotelDomainEntityId 
+			""";
+	@Query(FIND_BY_HOTEL_DOMAIN_ID)
+	Optional<HotelDBEntity> findByDomainEntityIdValue(HotelDomainEntityId hotelDomainEntityId);
 
 //	@Query(FIND_ACTIVITY_NUMBER_BY_HOTEL_QUERY)
 //	int getActivityCounter(@Param("hotelId") int hotelId);
