@@ -1,6 +1,5 @@
 package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.mapper;
 
-import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.UserEntity;
 import eu.getsoftware.hotelico.service.booking.application.checkin.domain.CheckinRootDomainEntity;
 import eu.getsoftware.hotelico.service.booking.application.customer.common.dto.UserDTO;
@@ -21,8 +20,8 @@ public interface UserDtoMapper //extends DtoGenericMapper<UserEntity, UserClient
 
     UserDTO toFullDto(UserEntity customerDomainEntity);
 
-    @Mapping(target = "domainEntityId", expression = "java( customerDomainEntity.getDomainEntityId() )")
-    UserDTO toDtoWithHotelInfo(UserEntity customerDomainEntity, HotelDomainEntityId domainEntityId);
+//    @Mapping(target = "domainEntityId", expression = "java( customerDomainEntity.getDomainEntityId() )")
+//    UserDTO toDtoWithHotelInfo(UserEntity customerDomainEntity, HotelDomainEntityId domainEntityId);
 
     @Mapping(target = "domainEntityId", expression = "java( dto.getDomainEntityId() )")
     UserDTO fillDtoWithHotelInfo(UserDTO dto, CheckinRootDomainEntity validCheckin);
