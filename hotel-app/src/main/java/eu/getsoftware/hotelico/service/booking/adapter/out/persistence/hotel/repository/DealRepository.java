@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.re
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
-import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.CustomerDeal;
+import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.CustomerDealDBEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface DealRepository extends JpaRepository<CustomerDeal, Long> {
+public interface DealRepository extends JpaRepository<CustomerDealDBEntity, Long> {
 
 	public final static String FIND_BY_INIT_ID_QUERY = "SELECT c " +
 			"FROM CustomerDeal c " +
@@ -126,16 +126,16 @@ public interface DealRepository extends JpaRepository<CustomerDeal, Long> {
 	 * Find customer active checkIn.
 	 */
 	@Query(FIND_ACTIVE_BY_CUSTOMER_QUERY)
-	public List<CustomerDeal> getActiveByCustomerId(@Param("customerId") CustomerDomainEntityId customerId, @Param("checkDate") LocalDate checkDate);		
+	public List<CustomerDealDBEntity> getActiveByCustomerId(@Param("customerId") CustomerDomainEntityId customerId, @Param("checkDate") LocalDate checkDate);		
 		
 	@Query(FIND_ACTIVE_BY_GUEST_CUSTOMER_QUERY)
-	public List<CustomerDeal> getActiveByGuestId(@Param("guestCustomerId") CustomerDomainEntityId guestCustomerId, @Param("checkDate") LocalDate checkDate);
+	public List<CustomerDealDBEntity> getActiveByGuestId(@Param("guestCustomerId") CustomerDomainEntityId guestCustomerId, @Param("checkDate") LocalDate checkDate);
 	
 	@Query(COUNT_ACTIVE_BY_GUEST_OR_CUSTOMER_QUERY)
 	public Integer countActiveDealsByCustomerOrGuest(@Param("customerId") CustomerDomainEntityId customerId, @Param("guestCustomerId") CustomerDomainEntityId guestCustomerId, @Param("checkDate") LocalDate checkDate);
 	
 	@Query(FIND_ANONYM_DEALS_FOR_GUEST_ID_QUERY)
-	public List<CustomerDeal> getAnonymDealsByGuestId(@Param("guestCustomerId") CustomerDomainEntityId guestCustomerId);	
+	public List<CustomerDealDBEntity> getAnonymDealsByGuestId(@Param("guestCustomerId") CustomerDomainEntityId guestCustomerId);	
 	
 	
 	@Query(EXIST_ANONYM_BY_GUEST_CUSTOMER_QUERY)
@@ -145,39 +145,39 @@ public interface DealRepository extends JpaRepository<CustomerDeal, Long> {
 	 * Find Deals by customer and activity
 	 */
 	@Query(FIND_ACTIVE_BY_CUSTOMER_AND_ACTIVITY_QUERY)
-	public List<CustomerDeal> getActiveByCustomerAndActivityId(@Param("customerId") CustomerDomainEntityId customerId, @Param("activityId") Long activityId, @Param("statusList") List<DealStatus> statusList, @Param("checkDateFrom") LocalDate checkDateFrom, @Param("checkDateTo") LocalDate checkDateTo);	
+	public List<CustomerDealDBEntity> getActiveByCustomerAndActivityId(@Param("customerId") CustomerDomainEntityId customerId, @Param("activityId") Long activityId, @Param("statusList") List<DealStatus> statusList, @Param("checkDateFrom") LocalDate checkDateFrom, @Param("checkDateTo") LocalDate checkDateTo);	
 		
 	/**
 	 * Find Deals by guestId and activity
 	 */
 	@Query(FIND_ACTIVE_BY_GUEST_CUSTOMER_AND_ACTIVITY_QUERY)
-	public List<CustomerDeal> getActiveByGuestAndActivityId(@Param("guestCustomerId") CustomerDomainEntityId guestCustomerId, @Param("activityId") Long activityId, @Param("statusList") List<DealStatus> statusList, @Param("checkDateFrom") LocalDate checkDateFrom, @Param("checkDateTo") LocalDate checkDateTo);	
+	public List<CustomerDealDBEntity> getActiveByGuestAndActivityId(@Param("guestCustomerId") CustomerDomainEntityId guestCustomerId, @Param("activityId") Long activityId, @Param("statusList") List<DealStatus> statusList, @Param("checkDateFrom") LocalDate checkDateFrom, @Param("checkDateTo") LocalDate checkDateTo);	
 			
 	/**
 	 * Find Deals by customer and whole Hotel
 	 */
 	@Query(FIND_ACTIVE_BY_CUSTOMER_AND_HOTEL_QUERY)
-	public List<CustomerDeal> getActiveByCustomerAndHotelId(@Param("customerId") CustomerDomainEntityId customerId, @Param("hotelDomainId") HotelDomainEntityId hotelId, @Param("statusList") List<DealStatus> statusList, @Param("checkDateFrom") LocalDate checkDateFrom, @Param("checkDateTo") LocalDate checkDateTo);	
+	public List<CustomerDealDBEntity> getActiveByCustomerAndHotelId(@Param("customerId") CustomerDomainEntityId customerId, @Param("hotelDomainId") HotelDomainEntityId hotelId, @Param("statusList") List<DealStatus> statusList, @Param("checkDateFrom") LocalDate checkDateFrom, @Param("checkDateTo") LocalDate checkDateTo);	
 		
 	/**
 	 * Find Deals by customer and whole Hotel
 	 */
 	@Query(FIND_ACTIVE_BY_GUEST_AND_HOTEL_QUERY)
-	public List<CustomerDeal> getActiveByGuestAndHotelId(@Param("guestCustomerId") CustomerDomainEntityId guestCustomerId, @Param("hotelDomainId") HotelDomainEntityId hotelDomainId, @Param("statusList") List<DealStatus> statusList, @Param("checkDateFrom") LocalDate checkDateFrom, @Param("checkDateTo") LocalDate checkDateTo);	
+	public List<CustomerDealDBEntity> getActiveByGuestAndHotelId(@Param("guestCustomerId") CustomerDomainEntityId guestCustomerId, @Param("hotelDomainId") HotelDomainEntityId hotelDomainId, @Param("statusList") List<DealStatus> statusList, @Param("checkDateFrom") LocalDate checkDateFrom, @Param("checkDateTo") LocalDate checkDateTo);	
 		
 	@Query(EXIST_ACTIVE_DEALS_FOR_CUSTOMER_BY_ACTIVITY_QUERY)
 	public boolean countActiveDealsForActivity(@Param("customerId") CustomerDomainEntityId customerId, @Param("activityId") Long activityId, @Param("checkDate") LocalDate checkDate);
 
 	@Query(FIND_ACTIVE_DEALS_BY_ACTIVITY_QUERY)
-	public List<CustomerDeal> getActivityDeals(@Param("activityId") Long activityId, @Param("statusList") List<DealStatus> statusList, @Param("checkDateFrom") LocalDate checkDateFrom, @Param("checkDateTo") LocalDate checkDateTo);
+	public List<CustomerDealDBEntity> getActivityDeals(@Param("activityId") Long activityId, @Param("statusList") List<DealStatus> statusList, @Param("checkDateFrom") LocalDate checkDateFrom, @Param("checkDateTo") LocalDate checkDateTo);
 	
 	@Query(FIND_ACTIVE_DEALS_BY_HOTEL_QUERY)
-	public List<CustomerDeal> getHotelDeals(@Param("hotelId") HotelDomainEntityId hotelId, @Param("statusList") List<DealStatus> statusList, @Param("checkDateFrom") LocalDate checkDateFrom, @Param("checkDateTo") LocalDate checkDateTo);	
+	public List<CustomerDealDBEntity> getHotelDeals(@Param("hotelId") HotelDomainEntityId hotelId, @Param("statusList") List<DealStatus> statusList, @Param("checkDateFrom") LocalDate checkDateFrom, @Param("checkDateTo") LocalDate checkDateTo);	
 	
 	@Query(FIND_BY_INIT_ID_QUERY)
-	List<CustomerDeal> getByInitId(@Param("initId") Long initId);
+	List<CustomerDealDBEntity> getByInitId(@Param("initId") Long initId);
 
-    Optional<CustomerDeal> findByHotelDomainId(HotelDomainEntityId id);
+    Optional<CustomerDealDBEntity> findByHotelDomainId(HotelDomainEntityId id);
 
-    Optional<CustomerDeal> findByHotelId(HotelDomainEntityId id);
+    Optional<CustomerDealDBEntity> findByHotelId(HotelDomainEntityId id);
 }

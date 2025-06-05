@@ -17,7 +17,7 @@ import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.mod
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.DealRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.HotelRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.LanguageRepository;
-import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.CustomerDeal;
+import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.CustomerDealDBEntity;
 import eu.getsoftware.hotelico.service.booking.application.checkin.domain.CheckinRootDomainEntity;
 import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinOutEntityQueryService;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
@@ -422,9 +422,9 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
             return false;
         }
         
-        List<CustomerDeal> anonymGuestDeals = dealRepository.getAnonymDealsByGuestId(guestCustomerId);
+        List<CustomerDealDBEntity> anonymGuestDeals = dealRepository.getAnonymDealsByGuestId(guestCustomerId);
         
-        for (CustomerDeal next: anonymGuestDeals)
+        for (CustomerDealDBEntity next: anonymGuestDeals)
         {
             next.setCustomerId(customerEntity.getDomainEntityId());
 //            next.setGuestCustomerId(0);

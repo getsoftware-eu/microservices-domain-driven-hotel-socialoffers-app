@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.service.booking.application.deal.domain;
 
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDBActivity;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelActivityDBEntity;
 
 public interface ICustomerDeal {
 
@@ -9,9 +9,9 @@ public interface ICustomerDeal {
 
     void setCustomerId(CustomerDomainEntityId customerEntityId);
     
-    HotelDBActivity getActivity();
+    HotelActivityDBEntity getActivity();
 
-    void setActivity(HotelDBActivity activity);
+    void setActivity(HotelActivityDBEntity activity);
     
     void generateCode();
 

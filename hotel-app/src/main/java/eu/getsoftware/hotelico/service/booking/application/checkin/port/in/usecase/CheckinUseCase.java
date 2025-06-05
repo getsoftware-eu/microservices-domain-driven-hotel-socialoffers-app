@@ -15,7 +15,6 @@ import eu.getsoftware.hotelico.service.booking.application.checkin.domain.Checki
  */
 public interface CheckinUseCase
 {
-//	CustomerDTO updateCheckin(CustomerRequestDTO customerDto);
 	
 	CheckinUseCaseDTO createCustomerCheckin(CheckinUseCaseRequestDTO customerRequestDto) throws Throwable;
 	
@@ -28,11 +27,7 @@ public interface CheckinUseCase
 //	CheckinDTO updateOwnDtoCheckinInfo(CheckinRequestDTO dto) throws JsonError;
 
 	public CustomerDTO updateOwnDtoCheckinInfo(CustomerDTO dto, CheckinRootDomainEntity validCheckin);
-
-	CustomerDTO updateCheckin(CustomerDTO sessionCustomer);
-
-	void save(CheckinRootDomainEntity CheckinRootDomainEntity);
-
+	
 	CheckinRootDomainEntity createCheckinFromDto(CheckinUseCaseRequestDTO customerRequestDto);
 
 	CheckinRootDomainEntity createCheckin(CustomerDTO customer, HotelDTO hotel, boolean isFullCheckin);

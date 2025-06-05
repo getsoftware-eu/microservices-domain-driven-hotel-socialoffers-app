@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService;
 
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDealDTO;
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.exception.BasicHotelException;
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
@@ -9,10 +10,9 @@ import eu.getsoftware.hotelico.clients.common.domain.ids.WallPostDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.ActivityAction;
 import eu.getsoftware.hotelico.clients.common.utils.DealAction;
 import eu.getsoftware.hotelico.clients.common.utils.ReorderAction;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDBActivity;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelActivityDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
-import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.CustomerDeal;
-import eu.getsoftware.hotelico.service.booking.application.deal.domain.infrastructure.dto.CustomerDealDTO;
+import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.CustomerDealDBEntity;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.WallPostDTO;
@@ -50,7 +50,7 @@ public interface IHotelService<T extends HotelRootDomainEntity>
 
     HotelActivityDTO addActivityAction(CustomerDomainEntityId customerId, long activityId, ActivityAction action) throws Throwable;
 
-    void reorderActivitiesInHotel(ReorderAction action, HotelDBActivity activity);
+    void reorderActivitiesInHotel(ReorderAction action, HotelActivityDBEntity activity);
 
     String getGpsCity(Point2D.Double latLonPoint);
 
@@ -60,7 +60,7 @@ public interface IHotelService<T extends HotelRootDomainEntity>
 
     HotelDTO addHotel(HotelDTO hotelDto);
 
-    Optional<CustomerDeal> getDealByIdOrInitId(HotelDomainEntityId id, long initId);
+    Optional<CustomerDealDBEntity> getDealByIdOrInitId(HotelDomainEntityId id, long initId);
 
     WallPostDTO addWallPost(WallPostDTO wallPostDto) throws Throwable;
 
@@ -116,5 +116,5 @@ public interface IHotelService<T extends HotelRootDomainEntity>
 
     int getCustomerDealCounter(CustomerDomainEntityId customerId, CustomerDomainEntityId guestId);
 
-    HotelActivityDTO convertActivityToDto(HotelDBActivity activity, CustomerDBEntity sender);
+    HotelActivityDTO convertActivityToDto(HotelActivityDBEntity activity, CustomerDBEntity sender);
 }

@@ -21,6 +21,10 @@ public class UserEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
+//    public UserDomainE getDomainEntityId() {
+//        return this.domainEntityIdValue;
+//    }
 
     @Column(columnDefinition = HibernateUtils.ColumnDefinition.VARCHAR_255_DEFAULT_EMPTY)
     private String keycloakId;

@@ -57,7 +57,7 @@ public class CheckinRepositoryEventHandler {
     @HandleBeforeDelete
     public void deleteImagesAndAttachmentsBeforeCheckinDeletion(CheckinRootDomainEntity checkin){
         CheckinUseCaseDTO checkinDTO = checkinDomainMapper.toResponseDTO(checkin);
-        checkinService.deleteAllImagesAndAttachments(checkinDTO);
+//        checkinService.deleteAllImagesAndAttachments(checkinDTO);
     }
 
     @HandleAfterDelete

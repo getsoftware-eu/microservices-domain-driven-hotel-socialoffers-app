@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model;
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDBActivity;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelActivityDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.service.booking.application.deal.domain.ICustomerDeal;
 import jakarta.persistence.*;
@@ -22,7 +22,7 @@ import java.util.concurrent.ThreadLocalRandom;
 //				joinColumns = @JoinColumn(name = "CUSTOMER_ID")),
 //		@AssociationOverride(name = "pk.activity",
 //				joinColumns = @JoinColumn(name = "ACTIVITY_ID")) })
-public class CustomerDeal implements ICustomerDeal {
+public class CustomerDealDBEntity implements ICustomerDeal {
 	
 	@Column(name = "active", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_TRUE)
 	private boolean active = true;
@@ -65,15 +65,15 @@ public class CustomerDeal implements ICustomerDeal {
 	@Column(name = "validTo", nullable = false, length = 10)
 	private Date validTo;
 	
-	public CustomerDeal() {
+	public CustomerDealDBEntity() {
 	}
 	
-	public CustomerDeal(CustomerDBEntity customerEntity, HotelDBActivity activity, long initId) {
+	public CustomerDealDBEntity(CustomerDBEntity customerEntity, HotelActivityDBEntity activity, long initId) {
 		this(customerEntity, activity);
 		this.initId = initId;
 	}
 	
-	public CustomerDeal(CustomerDBEntity customerEntity, HotelDBActivity activity) {
+	public CustomerDealDBEntity(CustomerDBEntity customerEntity, HotelActivityDBEntity activity) {
 		
 		this();
 		
@@ -111,11 +111,11 @@ public class CustomerDeal implements ICustomerDeal {
 	}
 
 	@Transient
-	public HotelDBActivity getActivity() {
+	public HotelActivityDBEntity getActivity() {
 		return getPk().getActivity();
 	}
 
-	public void setActivity(HotelDBActivity activity) {
+	public void setActivity(HotelActivityDBEntity activity) {
 		getPk().setActivity(activity);
 	}
 
@@ -125,7 +125,7 @@ public class CustomerDeal implements ICustomerDeal {
 		if (o == null || getClass() != o.getClass())
 			return false;
 
-		CustomerDeal that = (CustomerDeal) o;
+		CustomerDealDBEntity that = (CustomerDealDBEntity) o;
 
 		if (getPk() != null ? !getPk().equals(that.getPk())
 							: that.getPk() != null)

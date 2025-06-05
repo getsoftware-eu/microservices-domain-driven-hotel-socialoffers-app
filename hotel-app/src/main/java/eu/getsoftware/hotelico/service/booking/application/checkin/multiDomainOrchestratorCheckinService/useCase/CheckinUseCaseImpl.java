@@ -26,6 +26,7 @@ import eu.getsoftware.hotelico.service.booking.application.checkin.multiDomainOr
 import eu.getsoftware.hotelico.service.booking.application.checkin.port.in.queryservice.CheckinInDTOQueryService;
 import eu.getsoftware.hotelico.service.booking.application.checkin.port.in.usecase.CheckinUseCase;
 import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinOutEntityQueryService;
+import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinOutWriteService;
 import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.GPSValidationHandler;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.model.customDomainModelImpl.HotelRootDomainEntity;
@@ -123,8 +124,9 @@ class CheckinUseCaseImpl implements CheckinUseCase
 	private final HotelDtoMapper hotelDtoMapper;
 	private CheckinGatewayService checkinGatewayService;
 	private CheckinOutEntityQueryService checkinOutEntityQueryService;
+    private CheckinOutWriteService checkinWriteService;
 
-	@Transactional
+    @Transactional
 	@Override
 	public CheckinUseCaseDTO createCustomerCheckin(@Validated CheckinUseCaseRequestDTO customerRequestDto) {
 
@@ -246,7 +248,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 
 //				notificationUseCase.notificateAboutEntityEventWebSocket(checkinResponseDto, hotelEvent.getEventCheckout(), "Checkout from your hotel", nextCheckin.getHotel().getId());
 
-				this.save(nextCheckin);
+				checkinWriteService.save(nextCheckin);
 			}
 
 			var wantedHotelId = checkinRequestDto.hotelId();
@@ -340,7 +342,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		nextCheckin.setLvalidTo(checkinRequestDTO.checkinTo());
 //		nextCheckin.setStaffCheckin(customerEntity.isHotelStaff);
 		nextCheckin.setFullCheckin(isFullCheckin);
-		  this.save(nextCheckin);
+		  checkinWriteService.save(nextCheckin);
 	}
 
 	@Override
@@ -374,7 +376,7 @@ class CheckinUseCaseImpl implements CheckinUseCase
 				if(LocalDate.now().isAfter(customerCheckin.getLvalidTo()))
 				{
 					customerCheckin.setActive(false);
-					this.save(customerCheckin);
+                    checkinWriteService.save(customerCheckin);
 				}
 				else
 				{
@@ -416,15 +418,15 @@ class CheckinUseCaseImpl implements CheckinUseCase
 		return dto;
 	}
 
-	@Override
-	public void save(CheckinRootDomainEntity CheckinRootDomainEntity) {
-
-	}
-
-	@Override
-	public CustomerDTO updateCheckin(CustomerDTO sessionCustomer) {
-		return null;
-	}
+//	@Override
+//	public void save(CheckinRootDomainEntity CheckinRootDomainEntity) {
+//
+//	}
+//
+//	@Override
+//	public CustomerDTO updateCheckin(CustomerDTO sessionCustomer) {
+//		return null;
+//	}
 
 	
 }

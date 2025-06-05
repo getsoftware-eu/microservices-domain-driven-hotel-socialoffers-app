@@ -5,7 +5,7 @@ import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicCon
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinOutEntityQueryService;
+import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinOutWriteService;
 import eu.getsoftware.hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.aspects.NotifyClients;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
@@ -36,7 +36,7 @@ public class CustomerController extends BasicController
 {
     
     private final CustomerPortService customerService;
-    private final CheckinOutEntityQueryService checkinService;
+    private final CheckinOutWriteService checkinOutWriteService;
     private final INotificationService notificationService;
     private final LastMessagesService lastMessagesService;
     private final LoginHotelicoService loginService;
@@ -232,7 +232,7 @@ public class CustomerController extends BasicController
 
         sessionStatus.setComplete();
         
-        CustomerDTO out = checkinService.updateCheckin(sessionCustomer);
+        CustomerDTO out = checkinOutWriteService.updateCheckin(sessionCustomer);
 
         httpSession.setAttribute(AppConfigProperties.SESSION_CUSTOMER, out);
     

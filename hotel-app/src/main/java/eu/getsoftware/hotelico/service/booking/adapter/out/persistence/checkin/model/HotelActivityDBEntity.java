@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Table(name = "hotel_activities")
 //@RequiredArgsConstructor
 //@NoArgsConstructor//(access = AccessLevel.PROTECTED) // важно для JPA
-public class HotelDBActivity implements IHotelActivity, Serializable
+public class HotelActivityDBEntity implements IHotelActivity, Serializable
 {
 	private static final long serialVersionUID = -3552760230942289778L;
 

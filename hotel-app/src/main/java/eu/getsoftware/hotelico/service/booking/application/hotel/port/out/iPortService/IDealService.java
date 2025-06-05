@@ -1,9 +1,9 @@
 package eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService;
 
+import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDealDTO;
 import eu.getsoftware.hotelico.clients.common.utils.DealAction;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDBActivity;
-import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.CustomerDeal;
-import eu.getsoftware.hotelico.service.booking.application.deal.domain.infrastructure.dto.CustomerDealDTO;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelActivityDBEntity;
+import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.CustomerDealDBEntity;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -27,9 +27,9 @@ public interface IDealService {
     int getCustomerDealCounter(long customerId, long guestId);
 
     @Transactional
-    Optional<HotelDBActivity> getActivityByIdOrInitId(long id, long initId);
+    Optional<HotelActivityDBEntity> getActivityByIdOrInitId(long id, long initId);
 
     @Transactional
-    Optional<CustomerDeal> getDealByIdOrInitId(long id, long initId);
+    Optional<CustomerDealDBEntity> getDealByIdOrInitId(long id, long initId);
 
 }

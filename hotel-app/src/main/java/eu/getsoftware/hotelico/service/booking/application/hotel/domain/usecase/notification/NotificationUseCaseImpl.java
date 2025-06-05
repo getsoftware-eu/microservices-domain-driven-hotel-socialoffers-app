@@ -8,18 +8,21 @@ import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDBActivity;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelActivityDBEntity;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.mapper.HotelActivityDtoMapper;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.mapper.HotelActivityEntityMapper;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.mapper.HotelDtoMapperImpl;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.InnerHotelEvent;
 import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.ChatMessageView;
 import eu.getsoftware.hotelico.service.booking.application.chat.domain.infrastructure.ChatMSComminicationService;
-import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinOutEntityQueryService;
+import eu.getsoftware.hotelico.service.booking.application.checkin.port.in.queryservice.CheckinInDTOQueryService;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.IHotelActivity;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import eu.getsoftware.hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.HotelActivityDTO;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.WallPostDTO;
+import eu.getsoftware.hotelico.service.booking.application.hotel.domain.model.customDomainModelImpl.HotelActivityRootDomainEntity;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.in.NotificationUseCase;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.*;
 import eu.getsoftware.hotelico.service.booking.application.menu.infrastructure.service.MenuMSCommunicationService;
@@ -57,7 +60,7 @@ import java.util.*;
 	private final CustomerPortService customerService;	
 	
 	private final MailService mailService;
-	private final CheckinOutEntityQueryService checkinService;
+	private final CheckinInDTOQueryService checkinInService;
 	
 	private final ChatMSComminicationService chatMSComminicationService;
 	
@@ -65,6 +68,8 @@ import java.util.*;
 	private final HotelDtoMapperImpl hotelDtoMapperImpl;
 
 	private IWebSocketService webSocketService;
+	private HotelActivityDtoMapper activityDtoMapper;
+	private HotelActivityEntityMapper activityEntityMapper;
 
 	//	@Override
 	public void notificateAboutEntityEventWebSocket(CustomerDTO dto, InnerDomainEvent event, String eventContent, long entityId)
@@ -159,7 +164,7 @@ import java.util.*;
 			}
 			
 			////// HOTEL GUESTS
-			Integer hotelGuestsCount = checkinService.getActiveCountByHotelId(receiverHotelId, LocalDate.now());
+			Integer hotelGuestsCount = checkinInService.getActiveCountByHotelId(receiverHotelId, new Date());
 			
 			nextNotification.setHotelGuestsNumber(hotelGuestsCount);
 			
@@ -427,10 +432,11 @@ import java.util.*;
 			if(sendToUnLogged)
 			{
 				int activId = Integer.parseInt(inviteActivityId);
-				HotelDBActivity hotelActivity = (HotelDBActivity) hotelService.getActivityByIdOrInitId(activId, activId).orElseThrow(()->new RuntimeException());
+				HotelActivityDBEntity hotelActivity = (HotelActivityDBEntity) hotelService.getActivityByIdOrInitId(activId, activId).orElseThrow(()->new RuntimeException());
 				
 				//SEND GUEST PUSH!!!
-				this.sendPushToAllNotLoggedInHotel(activityDtoMapper.toDto(hotelActivity));
+				HotelActivityRootDomainEntity domain = (activityEntityMapper.toDomain(hotelActivity));
+				this.sendPushToAllNotLoggedInHotel(activityDtoMapper.toDto(domain));
 			}
 		}
 	}
@@ -659,7 +665,7 @@ import java.util.*;
 
 		Set<String> loggedGuestPushIds = new HashSet<>();
 		
-		List<CustomerDTO> allActiveInHotel = checkinService.getActiveCustomersByHotelId(hotelActivity.getHotelId(), LocalDate.now());
+		List<CustomerDTO> allActiveInHotel = checkinInService.getActiveCustomersByHotelId(hotelActivity.getHotelId(), LocalDate.now());
 		
 		for (CustomerDTO nextActiveCustomerRootEntity : allActiveInHotel)
 		{

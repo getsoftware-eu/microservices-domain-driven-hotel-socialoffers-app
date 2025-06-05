@@ -4,7 +4,8 @@ import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCase
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.HotelDTO;
 import eu.getsoftware.hotelico.service.booking.application.checkin.domain.CheckinRootDomainEntity;
-import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinOutEntityQueryService;
+import eu.getsoftware.hotelico.service.booking.application.checkin.port.in.usecase.CheckinUseCase;
+import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinOutWriteService;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,13 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class CreateHotelCheckinHandler {
 
-    private CheckinOutEntityQueryService checkinService;
+    private CheckinUseCase checkinUseCase;
+    private CheckinOutWriteService checkinWriteService;
 
     @NotNull
     @Transactional
     public CheckinRootDomainEntity handle(CheckinUseCaseRequestDTO checkinRequestDTO, CustomerDTO customerEntity, HotelDTO hotelRootEntity, boolean isFullCheckin) {
         
-        CheckinRootDomainEntity CheckinRootDomainEntity = checkinService.createCheckin(customerEntity, hotelRootEntity, true);
+        CheckinRootDomainEntity CheckinRootDomainEntity = checkinUseCase.createCheckin(customerEntity, hotelRootEntity, true);
 //        CheckinRootDomainEntity.setCustomer(customerEntity);
 //        CheckinRootDomainEntity.setHotel(hotelRootEntity);
 
@@ -31,7 +33,7 @@ public class CreateHotelCheckinHandler {
 
         CheckinRootDomainEntity.setLvalidFrom(checkinRequestDTO.checkinFrom());
         CheckinRootDomainEntity.setLvalidTo(checkinRequestDTO.checkinTo());
-        checkinService.save(CheckinRootDomainEntity);
+        checkinWriteService.save(CheckinRootDomainEntity);
         
         return CheckinRootDomainEntity;
     }

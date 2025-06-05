@@ -1,24 +1,25 @@
-// path: hotelico/service/booking/application/deal/domain/infrastructure/dto/CustomerDealDTO.java
+package eu.getsoftware.hotelico.clients.api.application.dto.entity;
 
-package eu.getsoftware.hotelico.service.booking.application.deal.domain.infrastructure.dto;
-
+import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDealDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 import java.util.Date;
 
+/**
+ * DTO lieber immutable - all field are final and no side effects!
+ */
 @Getter
-@Setter
+//@Builder
 @RequiredArgsConstructor
-public class CustomerDealDTO implements BasicDTO<CustomerDomainEntityId> {
-
-    private final CustomerDomainEntityId domainEntityId;
-    private final boolean active;
+public class CustomerDealDTO implements BasicDTO<CustomerDealDomainEntityId> {
+    
+    private final CustomerDealDomainEntityId domainEntityId;
+    private final boolean active = true;
 
     private long activityId = 0L;
     private long consistencyId = 0L;

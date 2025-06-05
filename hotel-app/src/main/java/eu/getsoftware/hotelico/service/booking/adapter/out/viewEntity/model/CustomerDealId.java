@@ -5,7 +5,7 @@ package eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model;
  */
 
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDBActivity;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelActivityDBEntity;
 import eu.getsoftware.hotelico.service.booking.application.deal.domain.ICustomerDealId;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.ManyToOne;
@@ -19,7 +19,7 @@ class CustomerDealId implements ICustomerDealId, Serializable {
 	private CustomerDomainEntityId customerEntityId;
 	
 	@Setter
-	private HotelDBActivity activity;
+	private HotelActivityDBEntity activity;
 
 //	@ManyToOne
 //	@Embedded
@@ -33,7 +33,7 @@ class CustomerDealId implements ICustomerDealId, Serializable {
 	}
 
 	@ManyToOne
-	public HotelDBActivity getActivity() {
+	public HotelActivityDBEntity getActivity() {
 		return activity;
 	}
 

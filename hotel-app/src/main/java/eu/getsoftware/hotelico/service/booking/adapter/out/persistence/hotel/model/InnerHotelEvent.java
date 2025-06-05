@@ -3,10 +3,10 @@ package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.mo
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.innerevents.InnerDomainEvent;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.clients.common.utils.ObjectUtils;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelDBActivity;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelActivityDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.ChatMessageView;
-import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.CustomerDeal;
+import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.CustomerDealDBEntity;
 
 /**
  * <br/>
@@ -23,22 +23,22 @@ public enum InnerHotelEvent implements InnerDomainEvent
 	EVENT_REGISTER("EVENT_REGISTER", CustomerDBEntity.class, null, null, null),
 	EVENT_CHECKOUT("EVENT_CHECKOUT", HotelDBEntity.class, null, null, null),
 	EVENT_LOGIN("EVENT_LOGIN", CustomerDBEntity.class, null, null, null),
-	EVENT_DEAL_NEW_UPDATE("EVENT_DEAL_NEW_UPDATE", CustomerDeal.class, null, null, null),
-	EVENT_MENU_NEW_UPDATE("EVENT_MENU_NEW_UPDATE", CustomerDeal.class, null, null, null),
-	EVENT_ACTIVITY_NEW_LAST_MINUTE("EVENT_ACTIVITY_NEW_LAST_MINUTE", HotelDBActivity.class, "/" + AppConfigProperties.HOST_SUFFIX + "#/app/activityList", "Last Minute Offer", null),
+	EVENT_DEAL_NEW_UPDATE("EVENT_DEAL_NEW_UPDATE", CustomerDealDBEntity.class, null, null, null),
+	EVENT_MENU_NEW_UPDATE("EVENT_MENU_NEW_UPDATE", CustomerDealDBEntity.class, null, null, null),
+	EVENT_ACTIVITY_NEW_LAST_MINUTE("EVENT_ACTIVITY_NEW_LAST_MINUTE", HotelActivityDBEntity.class, "/" + AppConfigProperties.HOST_SUFFIX + "#/app/activityList", "Last Minute Offer", null),
 	EVENT_WALL_NEW_MESSAGE("EVENT_WALL_NEW_MESSAGE", HotelWallPost.class, "/" + AppConfigProperties.HOST_SUFFIX + "#/app/wall", "New Wall Message", AppConfigProperties.PUSH_ICON),
 	EVENT_WALL_SEND_MESSAGE("EVENT_WALL_SEND_MESSAGE", HotelWallPost.class, null, null, null),
 	EVENT_CHAT_NEW_MESSAGE("EVENT_CHAT_NEW_MESSAGE", ChatMessageView.class, "/" + AppConfigProperties.HOST_SUFFIX + "#/app/chat/", "New chat Message", AppConfigProperties.PUSH_ICON),
 	EVENT_CHAT_SEND_MESSAGE("EVENT_CHAT_SEND_MESSAGE", ChatMessageView.class, null, null, null),
 	
 	EVENT_LOGO_CUSTOMER_CHANGE_MESSAGE("EVENT_LOGO_CUSTOMER_CHANGE_MESSAGE", CustomerDBEntity.class, null, null, null),
-	EVENT_LOGO_ACTIVITY_CHANGE_MESSAGE("EVENT_LOGO_ACTIVITY_CHANGE_MESSAGE", HotelDBActivity.class, null, null, null),
+	EVENT_LOGO_ACTIVITY_CHANGE_MESSAGE("EVENT_LOGO_ACTIVITY_CHANGE_MESSAGE", HotelActivityDBEntity.class, null, null, null),
 	EVENT_LOGO_HOTEL_CHANGE_MESSAGE("EVENT_LOGO_HOTEL_CHANGE_MESSAGE", HotelDBEntity.class, null, null, null),
 	
 	EVENT_PING("EVENT_PING", null, null, null, null),
 	EVENT_ONLINE_CUSTOMERS("EVENT_ONLINE_CUSTOMERS", null, null, null, null),
 	
-	EVENT_REMOVE_ACTIVITY("EVENT_REMOVE_ACTIVITY", HotelDBActivity.class, null, null, null);
+	EVENT_REMOVE_ACTIVITY("EVENT_REMOVE_ACTIVITY", HotelActivityDBEntity.class, null, null, null);
 	
 	private String value;
 	private String pushUrl;
