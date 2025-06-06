@@ -72,7 +72,7 @@ public interface ActivityRepository extends JpaRepository<HotelActivityDBEntity,
 		return Optional.empty();
 	}
 
-	default Optional<HotelActivityDBEntity> findByDomainId(ActivityDomainEntityId id) {
+	default Optional<HotelActivityDBEntity> findByDomainEntityIdValue(ActivityDomainEntityId id) {
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
 }

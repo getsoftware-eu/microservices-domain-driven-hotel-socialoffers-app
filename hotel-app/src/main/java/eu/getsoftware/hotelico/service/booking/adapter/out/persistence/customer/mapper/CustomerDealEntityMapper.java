@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.mapper;
 
 import eu.getsoftware.hotelico.clients.common.domain.mapper.EntityGenericMapper;
-import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.CustomerDealDBEntity;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.deal.model.CustomerDealDBEntity;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.customDomainModelImpl.CustomerDealRootDomainEntity;
 import org.mapstruct.Builder;
 import org.mapstruct.Mapper;

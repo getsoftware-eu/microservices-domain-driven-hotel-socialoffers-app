@@ -12,17 +12,19 @@ import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.Language;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.deal.model.CustomerDealDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.HotelDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.InnerHotelEvent;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.DealRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.HotelRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.LanguageRepository;
-import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.CustomerDealDBEntity;
 import eu.getsoftware.hotelico.service.booking.application.checkin.domain.CheckinRootDomainEntity;
 import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinOutEntityQueryService;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import eu.getsoftware.hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
-import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.*;
+import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.IMessagingProducerService;
+import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.INotificationService;
+import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.LastMessagesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,11 +50,9 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 	
 	private LastMessagesService lastMessagesService;	
 	
-    private final LoginHotelicoService loginService;
-	
     private final LanguageRepository languageRepository;
     
-    private final MailService mailService;     
+//    private final MailService mailService;     
     
     private final CheckinOutEntityQueryService checkinService; 
         
@@ -68,7 +68,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 
     public CustomerRootDomainEntity recreateDomainEntityFromDBProjection(CustomerDomainEntityId customerEntityId)
     {
-        CustomerDBEntity dbProjection = customerRepository.findByDomainEntityIdAndActive(customerEntityId, true)
+        CustomerDBEntity dbProjection = customerRepository.findByDomainEntityIdValueAndActive(customerEntityId, true)
                 .orElseThrow(() -> new RuntimeException("no hotel"));
 
         //Eugen: try to use external builder, but have to duplicate only fields, not methods (Lombok @Builder make it possible)
@@ -147,7 +147,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
     
     @Override
     public Optional<CustomerDBEntity> getEntityById(CustomerDomainEntityId customerId) {
-        return customerRepository.findByDomainId(customerId);//.orElseThrow(()->new RuntimeException("not found"));
+        return customerRepository.findByDomainEntityIdValue(customerId);//.orElseThrow(()->new RuntimeException("not found"));
 //        return Optional.of(modelMapper.map(entity, CustomerDTO.class));
     }
 
@@ -181,7 +181,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
 
                 if (customerDto.getEmail() != null)
                 {
-                    mailService.sendMail(customerDto.getEmail(), "HoteliCo staff registration", "You have now a staff account for '" + hotelRootEntity.getName() + "' hotel in Hotelico. Your password is: '" + customerDto.getPassword() + "'. \nYour HoteliCo team.", null);
+//                    mailService.sendMail(customerDto.getEmail(), "HoteliCo staff registration", "You have now a staff account for '" + hotelRootEntity.getName() + "' hotel in Hotelico. Your password is: '" + customerDto.getPassword() + "'. \nYour HoteliCo team.", null);
                 }
 
                 customerEntity.setHotelStaff(true);
@@ -197,7 +197,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
             password = customerDto.getPassword();
         }
 
-        long passwordHash = loginService.getCryptoHash(customerEntity, password);
+//        long passwordHash = loginService.getCryptoHash(customerEntity, password);
 
 //        CustomerAggregate aggregate = customerEntity.getEntityAggregate();
 //
@@ -763,7 +763,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
     public Set<CustomerDTO> getCustomerCities(CustomerDomainEntityId customerId)
     {
         //TODO Eugen: bessere query by active and city
-        List<String> allCustomersCities = customerRepository.findNotStaffUniueCities();
+        List<String> allCustomersCities = customerRepository.findNotStaffUniqueCities();
         List<String> allCheckinCustomersCities = checkinRepository.findNotStaffCheckinUniueCities(LocalDate.now());
 
         Set<String> citiesList = new HashSet<>();

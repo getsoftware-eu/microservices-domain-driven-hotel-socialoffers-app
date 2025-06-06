@@ -37,5 +37,5 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 	@Query(FIND_BY_HOTEL_ID_QUERY)
 	public List<UserEntity> findByHotelId(@Param("hotelId") Long hotelId);
 
-	UserEntity findByDomainId(CustomerDomainEntityId domainEntityId);
+	UserEntity findByDomainEntityIdValue(CustomerDomainEntityId domainEntityId);
 }

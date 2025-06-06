@@ -43,6 +43,7 @@ public class HotelDBEntity /*extends HotelRootDomainEntity*/ implements Serializ
     @Column(name = "domain_entity_id", length = 50)
     private String domainEntityIdValue;
 
+    @Transient
     public HotelDomainEntityId getDomainEntityId() {
         return HotelDomainEntityId.from(domainEntityIdValue);
     }

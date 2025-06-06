@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model;
+package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.deal.model;
 
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
@@ -14,9 +14,13 @@ import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * eu: this example with @Embedded
+ * eu: Customer has @OneToOne with Details
+ */
 @Entity
 @Getter @Setter
-@Table(name = "customer_activity_deals", schema = "deal")
+@Table(name = "customer_activity_deals", schema = "customer")
 //@AssociationOverrides({
 //		@AssociationOverride(name = "pk.customer",
 //				joinColumns = @JoinColumn(name = "CUSTOMER_ID")),
@@ -101,7 +105,7 @@ public class CustomerDealDBEntity implements ICustomerDeal {
 //		return getPk().getCustomerId();
 //	}
 
-	@Override
+	@Override @Transient
 	public CustomerDomainEntityId getCustomerId() {
 		return null;
 	}

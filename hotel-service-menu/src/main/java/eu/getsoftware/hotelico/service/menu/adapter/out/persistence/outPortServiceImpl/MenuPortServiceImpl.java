@@ -300,7 +300,7 @@ public class MenuPortServiceImpl implements IMenuPortService
 
 		if(menuItemDto.getSenderId()>=0 || !menuItems.isEmpty())
 		{
-			menuItem = menuItems.isEmpty()? menuItemRepository.getByDomainEntityId(menuItemDto.getDomainEntityId()).orElseThrow(()-> new RuntimeException("bla")) : menuItems.get(0);
+			menuItem = menuItems.isEmpty()? menuItemRepository.getByDomainEntityIdValue(menuItemDto.getDomainEntityId()).orElseThrow(()-> new RuntimeException("bla")) : menuItems.get(0);
 		}
 
 		if(menuItem==null)

@@ -46,9 +46,11 @@ public class CustomerDBEntity extends CustomerRootDomainEntity implements Serial
 //    @Embedded 
 //    @Convert(converter = CustomerDomainEntityIdConverter.class)
     @Column(name = "domain_id", length = 50) //Аннотирует DomainId как ValueObject,  Вам не нужно явно маппить строковое поле DomainId вручную.
-    public String domainEntityIdValue; // Ваш Value Object
+    private String domainEntityIdValue; // Ваш Value Object
 
-    @Override public CustomerDomainEntityId getDomainEntityId() {
+    @Transient
+    @Override 
+    public CustomerDomainEntityId getDomainEntityId() {
         return new CustomerDomainEntityId(domainEntityIdValue);
     }    
     @Override public void setDomainEntityId(CustomerDomainEntityId domainEntityId) {
@@ -65,7 +67,7 @@ public class CustomerDBEntity extends CustomerRootDomainEntity implements Serial
     @Column(name = "logged", columnDefinition = HibernateUtils.ColumnDefinition.BOOL_DEFAULT_FALSE)
     private boolean loggedValue = false;
     
-    @Override public boolean isLogged() {
+    @Override @Transient public boolean isLogged() {
         return loggedValue;
     }
     @Override public void setLogged(boolean logged) {

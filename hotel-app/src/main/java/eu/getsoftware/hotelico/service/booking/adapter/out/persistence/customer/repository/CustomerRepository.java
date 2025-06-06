@@ -21,30 +21,31 @@ public interface CustomerRepository extends JpaRepository<CustomerDBEntity, Long
 	// ====== JPQL Query Constants ======
 
 	String FIND_ALL_ONLINE = "SELECT c " +
-			"FROM Customer c " +
+			"FROM  CustomerDBEntity c " +
 			"WHERE c.active = TRUE " +
 			"AND c.loggedValue = TRUE " +
 			"AND c.lastSeenOnline > :checkDate";
 
-	String FIND_CUSTOMER_CITIES = "SELECT DISTINCT c.city " +
-			"FROM Customer c " +
+	String FIND_CUSTOMER_CITIES = "SELECT DISTINCT d.city " +
+			"FROM  CustomerDBEntity c " +
+			"JOIN c.customerDetails d " +
 			"WHERE c.active = TRUE " +
 			"AND c.hotelStaff = FALSE " +
-			"AND c.city IS NOT NULL";
+			"AND d.city IS NOT NULL";
 
 	String FIND_ANONYM_CUSTOMER = "SELECT c " +
-			"FROM Customer c " +
+			"FROM  CustomerDBEntity c " +
 			"WHERE c.active = TRUE " +
 			"AND c.email = '[anonym]'";
 
 	String CHECK_STAFF_OR_ADMIN_CUSTOMER = "SELECT CASE WHEN (c.hotelStaff = TRUE OR c.admin = TRUE) THEN true ELSE false END " +
-			"FROM Customer c " +
+			"FROM  CustomerDBEntity c " +
 			"WHERE c.active = TRUE " +
 			"AND c.id = :customerId";
 
 	// ====== Methods ======
 
-	Optional<CustomerDBEntity> findByDomainEntityIdAndActive(CustomerDomainEntityId domainEntityId, boolean active);
+	Optional<CustomerDBEntity> findByDomainEntityIdValueAndActive(CustomerDomainEntityId domainEntityId, boolean active);
 
 	List<CustomerDBEntity> findByEmailAndActive(String email, boolean active);
 
@@ -56,14 +57,14 @@ public interface CustomerRepository extends JpaRepository<CustomerDBEntity, Long
 
 	Page<CustomerDBEntity> findByActive(boolean active, Pageable pageable);
 
-	List<CustomerDBEntity> findByLoggedAndActive(boolean logged, boolean active);
+	List<CustomerDBEntity> findByLoggedValueAndActive(boolean logged, boolean active);
 
 	@Query(FIND_ALL_ONLINE)
 	List<CustomerDBEntity> findAllOnline(@Param("checkDate") Timestamp checkDate);
 
 	List<CustomerDBEntity> findByIdIn(List<Long> ids);
 
-	List<CustomerDBEntity> findByDomainIdIn(List<CustomerDomainEntityId> ids);
+	List<CustomerDBEntity> findByDomainEntityIdValueIn(List<CustomerDomainEntityId> ids);
 
 	// В Kotlin эта сигнатура ошибочна: List<String>, но явно возвращался список Customer
 	List<CustomerDBEntity> findByHotelStaffAndActive(boolean hotelStaff, boolean active);
@@ -75,7 +76,7 @@ public interface CustomerRepository extends JpaRepository<CustomerDBEntity, Long
 	boolean checkStaffOrAdmin(@Param("customerId") CustomerDomainEntityId customerId);
 
 	@Query(FIND_CUSTOMER_CITIES)
-	List<String> findNotStaffUniueCities();
+	List<String> findNotStaffUniqueCities();
 
-	Optional<CustomerDBEntity> findByDomainId(CustomerDomainEntityId customerId);
+	Optional<CustomerDBEntity> findByDomainEntityIdValue(CustomerDomainEntityId customerId);
 }

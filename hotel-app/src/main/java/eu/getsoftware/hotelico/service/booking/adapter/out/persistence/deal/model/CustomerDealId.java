@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model;
+package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.deal.model;
 
 /**
  * Created by Eugen on 16.07.2015.

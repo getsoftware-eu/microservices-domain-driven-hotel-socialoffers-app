@@ -32,7 +32,7 @@ public class GenericRepositoryAdapter<T, DBEntity, ID> implements GenericReposit
     }    
     
     @Override
-    public Optional<T> findByDomainId(ID domainId) {
+    public Optional<T> findByDomainEntityIdValue(ID domainId) {
        return this.findByField("domainId", domainId);
     }
 

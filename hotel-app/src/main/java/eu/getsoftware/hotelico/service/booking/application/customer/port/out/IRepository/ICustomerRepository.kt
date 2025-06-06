@@ -34,7 +34,7 @@
 //
 //    fun findByActive(active: Boolean = true, pageable: Pageable): Page<CustomerRootDomainEntity>
 //
-//    fun findByLoggedAndActive(logged: Boolean = true, active: Boolean = true): List<CustomerRootDomainEntity>
+//    fun findByLoggedValueAndActive(logged: Boolean = true, active: Boolean = true): List<CustomerRootDomainEntity>
 //
 //    @Query(FIND_ALL_ONLINE)
 //    fun findAllOnline(@Param("checkDate") checkDate: Timestamp): List<CustomerRootDomainEntity>

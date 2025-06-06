@@ -84,7 +84,7 @@ public class UserServiceImpl implements IUserService
     @Transactional
     @Override
     public UserDTO updateUser(UserDTO userDto) {
-        UserEntity entity = userRepository.findByDomainId(userDto.getDomainEntityId());
+        UserEntity entity = userRepository.findByDomainEntityIdValue(userDto.getDomainEntityId());
         if(entity!=null)
         {
 //            entity.setHotelId(userDto.getHotelId());

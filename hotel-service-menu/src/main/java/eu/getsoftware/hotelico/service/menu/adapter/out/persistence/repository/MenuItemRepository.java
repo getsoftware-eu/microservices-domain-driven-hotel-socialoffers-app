@@ -96,7 +96,7 @@ public interface MenuItemRepository extends JpaRepository<MenuItemMappedEntity, 
 	 List<MenuItemMappedEntity> getByInitId(@Param("initId") long initId);	
 	
 	@Query(FIND_BY_INIT_ID_QUERY)
-	 Optional<MenuItemMappedEntity> getByDomainEntityId(@Param("initId") MenuItemDomainEntityId initId);
+	 Optional<MenuItemMappedEntity> getByDomainEntityIdValue(@Param("initId") MenuItemDomainEntityId initId);
 	
 	@Query(FIND_BY_ORDER_ID_AND_ITEM_INIT_ID_QUERY)
     MenuItemMappedEntity findByOrderAndInitId(@Param("initId") long initId, @Param("orderId") long orderId);

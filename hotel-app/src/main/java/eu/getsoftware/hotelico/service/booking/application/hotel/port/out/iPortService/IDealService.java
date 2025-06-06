@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPort
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDealDTO;
 import eu.getsoftware.hotelico.clients.common.utils.DealAction;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelActivityDBEntity;
-import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.CustomerDealDBEntity;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.deal.model.CustomerDealDBEntity;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;

@@ -20,7 +20,7 @@ public class GenericRepositoryService<T, ID> {
     
     //eu: экономит бесчисленные .orElseThrow в коде!!! +++
     public T findOrThrow(ID domainId) {
-        return repositoryPort.findByDomainId(domainId)
+        return repositoryPort.findByDomainEntityIdValue(domainId)
                 .orElseThrow(() -> new EntityNotFoundException("Entity not found for ID: " + domainId));
     } 
 

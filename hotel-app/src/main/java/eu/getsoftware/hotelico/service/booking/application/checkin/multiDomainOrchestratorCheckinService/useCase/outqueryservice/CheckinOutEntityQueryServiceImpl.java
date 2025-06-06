@@ -9,7 +9,6 @@ import eu.getsoftware.hotelico.service.booking.application.checkin.domain.Checki
 import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinOutEntityQueryService;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.model.customDomainModelImpl.HotelRootDomainEntity;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.IHotelService;
-import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.LastMessagesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class CheckinOutEntityQueryServiceImpl implements CheckinOutEntityQueryService {
 
-    private final LastMessagesService lastMessagesService;
+//    private final LastMessagesService lastMessagesService;
     private final IHotelService hotelService;
     
     @Override
@@ -37,8 +36,6 @@ public class CheckinOutEntityQueryServiceImpl implements CheckinOutEntityQuerySe
 
 
     public Optional<HotelRootDomainEntity> getHotelEntityFromCheckinRequest(CheckinUseCaseRequestDTO checkinRequestDto) {
-
-        HotelDomainEntityId virtualHotelId = lastMessagesService.getInitHotelId();
 
         String virtualHotelCode = AppConfigProperties.ALLOW_INIT_VIRTUAL_HOTEL ? hotelService.getVirtualHotelCode() : null;
 

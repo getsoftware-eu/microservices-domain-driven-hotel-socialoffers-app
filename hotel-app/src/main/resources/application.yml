@@ -1,7 +1,7 @@
 spring:
 #  config.activate.on-profile: development
   datasource:
-    url: jdbc:postgresql://localhost:5432/hotel
+    url: jdbc:postgresql://localhost:5434/hotel
     username: postgres
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -86,6 +86,7 @@ security:
 hotelico:
   security:
     keycloak:
+      enabled: false
       issuer-uri: http://localhost:8080/realms/hotel-socialoffers
     
 #liquibase.change-log: classpath:/db/changelog/db.changelog-master.xml #boot2: liquibase.change-log: classpath:/db/changelog/db.changelog-master.xml

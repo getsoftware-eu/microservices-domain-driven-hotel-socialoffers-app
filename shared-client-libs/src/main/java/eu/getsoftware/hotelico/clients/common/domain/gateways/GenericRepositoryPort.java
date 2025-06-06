@@ -9,7 +9,7 @@ public interface GenericRepositoryPort<T, ID> {
 
     Optional<T> findById(Long id);
 
-    Optional<T> findByDomainId(ID id);
+    Optional<T> findByDomainEntityIdValue(ID id);
 
     Optional<T> findByField(String fieldName, Object value);
 

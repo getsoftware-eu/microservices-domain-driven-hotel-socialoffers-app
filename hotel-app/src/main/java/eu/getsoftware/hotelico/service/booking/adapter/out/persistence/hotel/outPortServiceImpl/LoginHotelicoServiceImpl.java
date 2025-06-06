@@ -4,12 +4,12 @@ import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.mapper.CustomerDtoMapper;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.InnerHotelEvent;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.DealRepository;
 import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinOutEntityQueryService;
-import eu.getsoftware.hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.ResponseDTO;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.INotificationService;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.LastMessagesService;
@@ -32,7 +32,7 @@ import java.util.Optional;
 public class LoginHotelicoServiceImpl implements LoginHotelicoService
 {
 	@Autowired
-	private CustomerPortService customerService;	
+	private CustomerDtoMapper customerDtoMapper;	
 	
 	@Autowired
 	private LastMessagesService lastMessagesService;
@@ -79,7 +79,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 			
 			//            int hotelId = getCustomerHotelId(customer.getId());
 			
-			CustomerDTO out = customerService.convertMyCustomerToFullDto(customerEntity);
+			CustomerDTO out = customerDtoMapper.toFullDto(customerEntity);
 			
 			//            return updateOwnDtoCheckinInfo(out);
 			return out;
@@ -93,7 +93,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 	{
 		if(customerDto!=null && customerDto.getDomainEntityId()!=null)
 		{
-			CustomerDBEntity logoutCustomerRootEntity =  customerRepository.findByDomainEntityIdAndActive(customerDto.getDomainEntityId(), true).orElseThrow(()-> new RuntimeException("not found"));
+			CustomerDBEntity logoutCustomerRootEntity =  customerRepository.findByDomainEntityIdValueAndActive(customerDto.getDomainEntityId(), true).orElseThrow(()-> new RuntimeException("not found"));
 			logoutCustomerRootEntity.doLogout();
 			
 			//eugen: clear seen hotel activities
@@ -187,17 +187,17 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 		
 		HotelDomainEntityId customerHotelId = null;
 		
-		if(customerEntity !=null)
-		{
-			HotelDomainEntityId hotelIdObj = customerService.getCustomerHotelId(customerEntity.getDomainEntityId()); // checkinRepository.getCustomerHotelId(customer.getId());
-			
-			if(hotelIdObj!=null)
-			{
-				customerHotelId = hotelIdObj;
-			}
-		}
+//		if(customerEntity !=null)
+//		{
+//			HotelDomainEntityId hotelIdObj = (customerEntity.getDomainEntityId()); // checkinRepository.getCustomerHotelId(customer.getId());
+//			
+//			if(hotelIdObj!=null)
+//			{
+//				customerHotelId = hotelIdObj;
+//			}
+//		}
 		
-		CustomerDTO dto = customerService.convertCustomerWithHotelToDto(customerEntity, customerHotelId);
+		CustomerDTO dto = customerDtoMapper.toDtoWithHotelInfo(customerEntity, customerHotelId);
 		
 		return dto;
 	}
@@ -287,10 +287,10 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 				
 				if(anonymGuestDealsExists)
 				{
-					CustomerDBEntity customerEntity = customerRepository.findByDomainEntityIdAndActive(dbCustomer.getDomainEntityId(), true)
+					CustomerDBEntity customerEntity = customerRepository.findByDomainEntityIdValueAndActive(dbCustomer.getDomainEntityId(), true)
 							.orElseThrow(() -> new RuntimeException("Customer not found"));
 					
-					customerService.relocateGuestDealsToLoggedCustomer(customerEntity, guestId);
+//					customerDtoMapper.relocateGuestDealsToLoggedCustomer(customerEntity, guestId);
 				}
 			}
 		}

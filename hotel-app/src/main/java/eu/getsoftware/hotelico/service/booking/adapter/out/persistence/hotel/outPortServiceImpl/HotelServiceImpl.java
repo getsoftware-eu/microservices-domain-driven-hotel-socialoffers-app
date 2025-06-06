@@ -17,6 +17,7 @@ import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.mapper.CustomerDtoMapper;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.deal.model.CustomerDealDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.mapper.*;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.HotelDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.HotelWallPost;
@@ -25,7 +26,6 @@ import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.rep
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.DealRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.HotelRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.WallPostRepository;
-import eu.getsoftware.hotelico.service.booking.adapter.out.viewEntity.model.CustomerDealDBEntity;
 import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinOutEntityQueryService;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.customDomainModelImpl.CustomerDealRootDomainEntity;
 import eu.getsoftware.hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
@@ -257,7 +257,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 
     @Override
     public HotelActivityDTO addActivityAction(CustomerDomainEntityId customerId, long activityId, ActivityAction action) throws Throwable {
-        CustomerDBEntity sender = customerRepository.findByDomainId(AppConfigProperties.getTryEntityId(customerId))
+        CustomerDBEntity sender = customerRepository.findByDomainEntityIdValue(AppConfigProperties.getTryEntityId(customerId))
 		        .orElseThrow(()-> new ResourceNotFoundException("customer not found with initId=" + customerId));
         
         HotelActivityDBEntity activity = (HotelActivityDBEntity) this.getActivityByIdOrInitId(activityId, activityId).orElseThrow(()-> new RuntimeException("not found"));
@@ -469,7 +469,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 //            customerEntityId = (int)customerId;
 //        }
 
-        Optional<CustomerDBEntity> requester = customerRepository.findByDomainId(customerEntityId);
+        Optional<CustomerDBEntity> requester = customerRepository.findByDomainEntityIdValue(customerEntityId);
 		
 		LocalDate filterDateFrom = closed? null: LocalDate.now();
         LocalDate filterDateTo = closed? null: LocalDate.now();
@@ -595,7 +595,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 	{
         Optional<CustomerDealDBEntity>  dealOptional  = getDealByIdOrInitId(dealDto.getHotelDomainId(), 123);
 
-        Optional<CustomerDBEntity> sender = customerRepository.findByDomainId(AppConfigProperties.getTryEntityId(guestCustomerId));
+        Optional<CustomerDBEntity> sender = customerRepository.findByDomainEntityIdValue(AppConfigProperties.getTryEntityId(guestCustomerId));
         
         if(dealOptional.isPresent())
         {
@@ -628,7 +628,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 	{
         CustomerDomainEntityId customerEntityId = AppConfigProperties.getTryEntityId(customerId);
 		
-		CustomerDBEntity sender = customerRepository.findByDomainId(customerEntityId).orElseThrow(()->new RuntimeException("-"));
+		CustomerDBEntity sender = customerRepository.findByDomainEntityIdValue(customerEntityId).orElseThrow(()->new RuntimeException("-"));
 
         Optional<HotelActivityDBEntity> activityOptional = getActivityByIdOrInitId((int)activityId, activityId);
 		
@@ -864,7 +864,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
         
         if(hotelActivity!=null)
         {
-            requester = customerRepository.findByDomainId((requesterId));
+            requester = customerRepository.findByDomainEntityIdValue((requesterId));
         }
         
         HotelActivityDTO activityDto = convertActivityToDto(hotelActivity, requester.get());
@@ -906,7 +906,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
     public HotelActivityDTO addUpdateHotelActivity(CustomerDomainEntityId customerId, HotelActivityDTO hotelActivityDto) throws Throwable {
         if(customerId!=null)
         {
-	        Optional<CustomerDBEntity> creatorOpt = customerRepository.findByDomainId(AppConfigProperties.getTryEntityId(customerId));
+	        Optional<CustomerDBEntity> creatorOpt = customerRepository.findByDomainEntityIdValue(AppConfigProperties.getTryEntityId(customerId));
 
             //Check creator role
             if(creatorOpt.isPresent())
@@ -957,7 +957,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 			        .stream().findFirst();
         }    
         
-        return activityRepository.findByDomainId(id);
+        return activityRepository.findByDomainEntityIdValue(id);
     }
     
     @Override
@@ -1317,7 +1317,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
     @Override
     public List<HotelActivityDTO> getHotelActivitiesByHotelId(CustomerDomainEntityId requesterId, HotelDomainEntityId hotelId)
     {
-        Optional<CustomerDBEntity> requesterOpt = customerRepository.findByDomainId(requesterId);
+        Optional<CustomerDBEntity> requesterOpt = customerRepository.findByDomainEntityIdValue(requesterId);
 
         HotelDomainEntityId virtualHotelId = lastMessagesService.getInitHotelId();
        
@@ -1758,7 +1758,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
     @Override
     public ResponseDTO deleteHotel(HotelDomainEntityId hotelId, CustomerDomainEntityId customerId) {
 		
-		CustomerDBEntity customerEntity = customerRepository.findByDomainEntityIdAndActive(customerId, true).orElseThrow();
+		CustomerDBEntity customerEntity = customerRepository.findByDomainEntityIdValueAndActive(customerId, true).orElseThrow();
 		
 		if(customerEntity ==null || !(customerEntity.isAdmin() || customerEntity.isHotelStaff()))
 		{

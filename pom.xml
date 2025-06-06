@@ -36,11 +36,12 @@
 		<!--		//schould be in bom dependency management automaticly-->
 		<keycloak.version>21.1.1</keycloak.version> 
 		<mapstruct.version>1.5.5.Final</mapstruct.version><!-- not in Spring BOM -->
-		<aws.s3.version>2.5.5</aws.s3.version> 
+		<aws.s3.version>2.5.5</aws.s3.version>
 
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<spring-security-crypto.version>6.4.1</spring-security-crypto.version>
+		<testcontainers.version>1.19.0</testcontainers.version>
 
 		<lombok.version>1.18.30</lombok.version>
 

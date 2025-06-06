@@ -209,7 +209,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 			
 //			if(!nowOnlineCustomerIdx.isEmpty())
 //			{
-//				resultList.addAll(customerRepository.findByDomainIdIn(nowOnlineCustomerIdx));
+//				resultList.addAll(customerRepository.findByDomainEntityIdValueIn(nowOnlineCustomerIdx));
 //			}
 		}
 		
@@ -238,7 +238,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 			return currentConsistencyIdsMap.get(customerId);
 		}
 
-		Optional<CustomerDBEntity> customerEntity = customerRepository.findByDomainId(customerId);
+		Optional<CustomerDBEntity> customerEntity = customerRepository.findByDomainEntityIdValue(customerId);
 		
 		long newConsistencyId = customerEntity.isPresent()? customerEntity.get().getConsistencyId(): -1;
 

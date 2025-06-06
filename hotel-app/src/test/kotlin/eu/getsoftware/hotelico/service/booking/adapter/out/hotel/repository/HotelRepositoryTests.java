@@ -48,7 +48,7 @@
 //        CustomerDomainEntityId customerId = entityManager.persist(customer).getDomainEntityId();
 //        entityManager.persist(checkin);
 //
-//        Optional<CustomerDBEntity> savedCustomer = customerRepository.findByDomainId(customerId);
+//        Optional<CustomerDBEntity> savedCustomer = customerRepository.findByDomainEntityIdValue(customerId);
 //
 //        // then:
 //        assertThat(savedCustomer).isPresent();
