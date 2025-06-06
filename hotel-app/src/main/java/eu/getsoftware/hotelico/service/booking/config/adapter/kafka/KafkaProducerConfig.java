@@ -1,9 +1,10 @@
 package eu.getsoftware.hotelico.service.booking.config.adapter.kafka;
 
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.DomainMessage;
 import org.apache.kafka.clients.producer.ProducerConfig;
-import org.apache.kafka.common.protocol.Message;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
+@ConditionalOnProperty(name = "app.kafka.enabled", havingValue = "true", matchIfMissing = true)
 public class KafkaProducerConfig {
     
     @Value("${spring.kafka.bootstrap-servers}")
@@ -29,7 +31,7 @@ public class KafkaProducerConfig {
     }
     
     @Bean
-    public ProducerFactory<String, Message> producerFactory() {
+    public ProducerFactory<String, DomainMessage> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerConfig());
     }
 
@@ -39,8 +41,8 @@ public class KafkaProducerConfig {
      * @return
      */
     @Bean
-    public KafkaTemplate<String, Message> kafkaTemplate(
-            ProducerFactory<String, Message> producerFactory
+    public KafkaTemplate<String, DomainMessage> kafkaTemplate(
+            ProducerFactory<String, DomainMessage> producerFactory
     ) {
         return new KafkaTemplate<>(producerFactory);
     }

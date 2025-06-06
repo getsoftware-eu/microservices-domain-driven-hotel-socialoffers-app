@@ -30,7 +30,10 @@ public class UserEntity implements Serializable {
     private String keycloakId;
 
     @Column(name = "username", columnDefinition = HibernateUtils.ColumnDefinition.VARCHAR_100_DEFAULT_EMPTY)
-    private String userName;
+    private String userName;    
+    
+    @Column(name = "email", columnDefinition = HibernateUtils.ColumnDefinition.VARCHAR_100_DEFAULT_EMPTY)
+    private String email;
 
     @Column
     @NotNull

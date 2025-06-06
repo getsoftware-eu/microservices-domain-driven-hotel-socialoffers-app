@@ -18,9 +18,9 @@ public interface IUserService
 
     UserDTO updateUser(UserDTO userDto);
 
-    UserDTO getById(int userId);
+    UserDTO getById(long userId);
 
-    List<UserDTO> getByHotelId(int userId);
+    List<UserDTO> getByHotelId(long userId);
 
     @Transactional
     UserDTO checkLogin(String email, String password);

@@ -5,7 +5,6 @@ import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.WallPostDomainEntityId;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.HotelWallPost;
-import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.WallPostDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,7 +17,7 @@ import java.util.List;
 public interface WallPostRepository extends JpaRepository<HotelWallPost, Long> {
 	
 	//Eugen: direct DTO from Repository
-	final static String FIND_MESSAGE_DTO_BY_INIT_ID = "SELECT new eu.getsoftware.hotelico.hotel.infrastructure.dto.HotelWallPostDTO(w.hotelId, w.creationTime, w.timestamp, w.message, w.senderName, w.sendTimeString, w.hotelStaff, w.senderDomainId) " +
+	final static String FIND_MESSAGE_DTO_BY_INIT_ID = "SELECT new eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.WallPostDTO(w.hotelId, w.creationTime, w.timestamp, w.message, w.senderName, w.sendTimeString, w.hotelStaff, w.senderDomainId) " +
 			"FROM HotelWallPost w " +
 			" WHERE w.active = true " +
 			" AND w.initId = :initId " ;
@@ -56,6 +55,6 @@ public interface WallPostRepository extends JpaRepository<HotelWallPost, Long> {
 	
 	@Query(FIND_MESSAGE_BY_SENDER_INIT_ID)
 	List<HotelWallPost> getMessageBySenderAndInitId(@Param("senderDomainId") CustomerDomainEntityId senderId, @Param("initId") WallPostDomainEntityId initId);
-	@Query(FIND_MESSAGE_DTO_BY_INIT_ID)
-	List<WallPostDTO> getMessageDTOByInitId(@Param("initId") WallPostDomainEntityId initId);
+//	@Query(FIND_MESSAGE_DTO_BY_INIT_ID)
+//	List<WallPostDTO> getMessageDTOByInitId(@Param("initId") WallPostDomainEntityId initId);
 }

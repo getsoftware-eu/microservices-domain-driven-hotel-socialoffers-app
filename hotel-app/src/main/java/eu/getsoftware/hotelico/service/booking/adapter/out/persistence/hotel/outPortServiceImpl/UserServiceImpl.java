@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -40,23 +41,19 @@ public class UserServiceImpl implements IUserService
         return out;
     }
 
-    public UserDTO getById(int userId) {
+    public UserDTO getById(long userId) {
         UserEntity entity = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
         UserDTO out = entity==null? null : (userEntityMapper.toDto(entity));
         return out;
     }
 
     @Override
-    public List<UserDTO> getByHotelId(int userId) {
-        return List.of();
-    }
-
     public List<UserDTO> getByHotelId(long hotelId) {
-        List<UserEntity> entityList = userRepository.findByHotelId(hotelId);
+//        List<UserEntity> entityList = userRepository.findByHotelId(hotelId);
         List<UserDTO> out = new ArrayList<UserDTO>();
-        for (UserEntity next : entityList) {
-            out.add(userEntityMapper.toDto(next));
-        }
+//        for (UserEntity next : entityList) {
+//            out.add(userEntityMapper.toDto(next));
+//        }
         return out;
     }
 
@@ -84,8 +81,8 @@ public class UserServiceImpl implements IUserService
     @Transactional
     @Override
     public UserDTO updateUser(UserDTO userDto) {
-        UserEntity entity = userRepository.findByDomainEntityIdValue(userDto.getDomainEntityId());
-        if(entity!=null)
+        Optional<UserEntity> entity = userRepository.findById(userDto.getEntityId());
+        if(entity.isPresent())
         {
 //            entity.setHotelId(userDto.getHotelId());
 //            entity.setFirstName(userDto.getFirstName());
@@ -93,13 +90,13 @@ public class UserServiceImpl implements IUserService
 //            entity.setCompany(userDto.getCompany());
 //            entity.setEmail(userDto.getEmail());
         }
-        return userEntityMapper.toDto(userRepository.saveAndFlush(entity));
+        return userEntityMapper.toDto(userRepository.saveAndFlush(entity.get()));
     }
 
     @Transactional
     @Override
     public void deleteUser(UserDTO userDto) {
-        userRepository.deleteByDomainEntityIdValue(userDto.getDomainEntityId());
+        userRepository.deleteById(userDto.getEntityId());
     }
 
     @Override

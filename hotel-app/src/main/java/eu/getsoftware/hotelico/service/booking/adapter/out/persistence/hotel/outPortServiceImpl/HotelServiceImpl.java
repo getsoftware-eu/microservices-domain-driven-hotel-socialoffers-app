@@ -875,7 +875,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
     @Override
     public WallPostDTO getWallPostById(WallPostDomainEntityId wallPostId)
     {
-        List<WallPostDTO> wallPost = wallPostRepository.getMessageDTOByInitId(wallPostId);
+        List<WallPostDTO> wallPost = new ArrayList<>(); //wallPostRepository.getMessageDTOByInitId(wallPostId);
         return wallPost.stream().findFirst().get();
     }
 

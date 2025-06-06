@@ -23,7 +23,7 @@ public interface UserDtoMapper //extends DtoGenericMapper<UserEntity, UserClient
 //    @Mapping(target = "domainEntityId", expression = "java( customerDomainEntity.getDomainEntityId() )")
 //    UserDTO toDtoWithHotelInfo(UserEntity customerDomainEntity, HotelDomainEntityId domainEntityId);
 
-    @Mapping(target = "domainEntityId", expression = "java( dto.getDomainEntityId() )")
+    @Mapping(target = "entityId", expression = "java( dto.getEntityId() )")
     UserDTO fillDtoWithHotelInfo(UserDTO dto, CheckinRootDomainEntity validCheckin);
 
     UserEntity toEntity(UserDTO dto);

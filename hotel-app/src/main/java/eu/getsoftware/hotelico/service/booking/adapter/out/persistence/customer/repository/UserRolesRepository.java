@@ -14,16 +14,16 @@ public interface UserRolesRepository extends CrudRepository<UserRole, Long> {
 
     String QUERY_ROLE_STRING_BY_USERNAME =
             "SELECT role.role " +
-                    "FROM UserRole role, User user " +
+                    "FROM UserRole role, UserEntity user " +
                     "WHERE user.userName = ?1 " +
-                    "AND role.user_id = user.id " +
+                    "AND role.userId = user.id " +
                     "AND user.enabled = 1";
 
     String QUERY_ROLE_BY_USERNAME =
             "SELECT role " +
-                    "FROM UserRole role, User user " +
-                    "WHERE user.userName = ?1 " +
-                    "AND role.user_id = user.id " +
+                    "FROM UserRole role, UserEntity user " +
+                    "WHERE user.userName = :username " +
+                    "AND role.userId = user.id " +
                     "AND user.enabled = 1";
 
     @Query(QUERY_ROLE_STRING_BY_USERNAME)

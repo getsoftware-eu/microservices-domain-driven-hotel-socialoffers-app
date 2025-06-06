@@ -2,7 +2,6 @@
 
 package eu.getsoftware.hotelico.service.booking.application.customer.common.dto;
 
-import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserDTO {
 
-    private CustomerDomainEntityId domainEntityId;
+    private long entityId;
 
     private String title;
 
