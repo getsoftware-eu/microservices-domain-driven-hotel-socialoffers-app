@@ -6,6 +6,7 @@ import eu.getsoftware.hotelico.clients.common.domain.ids.ActivityDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.model.AddressValueObject;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.model.IHotelWallPost;
+import jakarta.persistence.Transient;
 import lombok.*;
 import org.springframework.validation.annotation.Validated;
 
@@ -114,7 +115,7 @@ public class HotelActivityRootDomainEntity implements IRootDomainEntity<Activity
         
     }
 
-    @Override
+    @Override @Transient
     public ActivityDomainEntityId getDomainEntityId() {
         return domainEntityId;
     }

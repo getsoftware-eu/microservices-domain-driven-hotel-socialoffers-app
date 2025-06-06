@@ -43,7 +43,7 @@ public class CheckinDBEntity extends CheckinRootDomainEntity implements java.io.
 	@Column(name = "domain_id", length = 50)
 	private String domainEntityIdValue;
 
-	@Override public CheckinDomainEntityId getDomainEntityId() {return CheckinDomainEntityId.from(domainEntityIdValue);};
+	@Override @Transient public CheckinDomainEntityId getDomainEntityId() {return CheckinDomainEntityId.from(domainEntityIdValue);};
 	public void setDomainEntityId(CheckinDomainEntityId domainId) {
 		this.domainEntityIdValue = domainId.uuidValue();
 	}
@@ -63,7 +63,7 @@ public class CheckinDBEntity extends CheckinRootDomainEntity implements java.io.
 	@Column(name = "hotel_domain_id", length = 50)
 	private String hotelDomainEntityIdValue;
 
-	@Override public HotelDomainEntityId getHotelDomainEntityId() {return HotelDomainEntityId.from(hotelDomainEntityIdValue);}
+	@Override @Transient public HotelDomainEntityId getHotelDomainEntityId() {return HotelDomainEntityId.from(hotelDomainEntityIdValue);}
 	@Override public void setHotelDomainEntityId(HotelDomainEntityId hotelDomainId) {
 		this.hotelDomainEntityIdValue = hotelDomainId.uuidValue();
 	}

@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.deal.model;
 
+import eu.getsoftware.hotelico.clients.common.domain.ids.ActivityDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.DealStatus;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
@@ -81,8 +82,8 @@ public class CustomerDealDBEntity implements ICustomerDeal {
 		
 		this();
 		
-		setCustomerId(customerEntity.getDomainEntityId());
-		setActivity(activity);
+		setCustomerDomainEntityId(customerEntity.getDomainEntityId());
+		setActivityDomainEntityId(activity.getDomainEntityId());
 		generateCode();
 
 		int validDays = activity.getDealDaysDuration()>0 ? activity.getDealDaysDuration() : 1;
@@ -106,21 +107,21 @@ public class CustomerDealDBEntity implements ICustomerDeal {
 //	}
 
 	@Override @Transient
-	public CustomerDomainEntityId getCustomerId() {
+	public CustomerDomainEntityId getCustomerDomainEntityId() {
 		return null;
 	}
 
-	public void setCustomerId(CustomerDomainEntityId customerEntityId) {
-		getPk().setCustomerId(customerEntityId);
+	public void setCustomerDomainEntityId(CustomerDomainEntityId customerEntityId) {
+		getPk().setCustomerDomainEntityId(customerEntityId);
 	}
 
 	@Transient
-	public HotelActivityDBEntity getActivity() {
-		return getPk().getActivity();
+	public ActivityDomainEntityId getActivityDomainEntityId() {
+		return getPk().getActivityDomainEntityId();
 	}
-
-	public void setActivity(HotelActivityDBEntity activity) {
-		getPk().setActivity(activity);
+	
+	public void setActivityDomainEntityId(ActivityDomainEntityId activity) {
+		getPk().setActivityDomainEntityId(activity);
 	}
 
 	public boolean equals(Object o) {

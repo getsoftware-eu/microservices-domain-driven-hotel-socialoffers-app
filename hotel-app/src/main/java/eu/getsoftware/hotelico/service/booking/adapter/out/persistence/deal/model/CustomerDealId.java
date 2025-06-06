@@ -4,22 +4,27 @@ package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.deal.mod
  * Created by Eugen on 16.07.2015.
  */
 
+import eu.getsoftware.hotelico.clients.common.domain.ids.ActivityDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.HotelActivityDBEntity;
 import eu.getsoftware.hotelico.service.booking.application.deal.domain.ICustomerDealId;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import jakarta.persistence.ManyToOne;
-import lombok.Setter;
+import lombok.Getter;
 
 import java.io.Serializable;
 
 @Embeddable
+@Getter
 class CustomerDealId implements ICustomerDealId, Serializable {
 
-	private CustomerDomainEntityId customerEntityId;
+	@Column
+	private String customerDomainEntityIdValue;
+
+	@Column
+	private String hotelDomainEntityIdValue;
 	
-	@Setter
-	private HotelActivityDBEntity activity;
+	@Column
+	private String activityDomainEntityIdValue;
 
 //	@ManyToOne
 //	@Embedded
@@ -28,13 +33,12 @@ class CustomerDealId implements ICustomerDealId, Serializable {
 //		return customerEntityId;
 //	}
 
-	public void setCustomerId(CustomerDomainEntityId customerEntity) {
-		this.customerEntityId = customerEntity;
+	public void setCustomerDomainEntityId(CustomerDomainEntityId customerEntity) {
+		this.customerDomainEntityIdValue = customerEntity.uuidValue();
 	}
 
-	@ManyToOne
-	public HotelActivityDBEntity getActivity() {
-		return activity;
+	public ActivityDomainEntityId getActivityDomainEntityId() {
+		return ActivityDomainEntityId.from(activityDomainEntityIdValue);
 	}
 
 	public boolean equals(Object o) {
@@ -43,8 +47,8 @@ class CustomerDealId implements ICustomerDealId, Serializable {
 
 		CustomerDealId that = (CustomerDealId) o;
 
-		if (customerEntityId != null ? !customerEntityId.equals(that.customerEntityId) : that.customerEntityId != null) return false;
-		if (activity != null ? !activity.equals(that.activity) : that.activity != null)
+		if (customerDomainEntityIdValue != null ? !customerDomainEntityIdValue.equals(that.customerDomainEntityIdValue) : that.customerDomainEntityIdValue != null) return false;
+		if (activityDomainEntityIdValue != null ? !activityDomainEntityIdValue.equals(that.activityDomainEntityIdValue) : that.activityDomainEntityIdValue != null)
 			return false;
 
 		return true;
@@ -52,9 +56,12 @@ class CustomerDealId implements ICustomerDealId, Serializable {
 
 	public int hashCode() {
 		int result;
-		result = (customerEntityId != null ? customerEntityId.hashCode() : 0);
-		result = 31 * result + (activity != null ? activity.hashCode() : 0);
+		result = (customerDomainEntityIdValue != null ? customerDomainEntityIdValue.hashCode() : 0);
+		result = 31 * result + (activityDomainEntityIdValue != null ? activityDomainEntityIdValue.hashCode() : 0);
 		return result;
 	}
 
+	public void setActivityDomainEntityId(ActivityDomainEntityId activity) {
+		this.activityDomainEntityIdValue = activity.uuidValue();
+	}
 }

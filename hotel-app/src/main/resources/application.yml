@@ -125,6 +125,7 @@ logging:
     org.springframework:
       security: INFO
       boot.actuate.audit.listener.AuditListener: DEBUG
+    org.hibernate.type: TRACE
 #    org.hibernate: #eu: test jpa
 #      orm: DEBUG
 #      SQL: DEBUG

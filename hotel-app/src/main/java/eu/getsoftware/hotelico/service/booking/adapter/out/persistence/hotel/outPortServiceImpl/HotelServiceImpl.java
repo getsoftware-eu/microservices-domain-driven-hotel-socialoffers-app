@@ -535,8 +535,8 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
         
         CustomerDealRootDomainEntity domain = customerDealEntityMapper.toDomain(deal);
         CustomerDealDTO dto = customerDealDtoMapper.toDto(domain);
-		
-		HotelActivityDBEntity dealActivity = deal.getActivity();
+
+        ActivityDomainEntityId dealActivity = deal.getActivityDomainEntityId();
 		
 //		dto.setActivityId(dealActivity.getId());
 //        dto.setHotelDomainId(dealActivity.getHotelDomainId());
@@ -653,7 +653,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
                 if(sender==null && acceptDeal!=null)
                 {
                     CustomerDBEntity anonym = customerService.addGetAnonymCustomer();
-                    acceptDeal.setCustomerId(anonym.getDomainEntityId());
+                    acceptDeal.setCustomerDomainEntityId(anonym.getDomainEntityId());
 //                    acceptDeal.setGuestCustomerId(customerEntityId);
                 }
                 
@@ -741,7 +741,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 				
 				List<CustomerDealDBEntity> editDeals = dealRepository.getByInitId(givenId);
                 
-                if(editDeals.isEmpty() || !editDeals.get(0).getActivity().equals(activityOptional.get()))
+                if(editDeals.isEmpty() || !editDeals.get(0).getActivityDomainEntityId().equals(activityOptional.get()))
                 {
 					List<DealStatus> filterStatusList = DealStatus.getFilterStatusList(false);
 					
@@ -761,7 +761,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
                 {
                     for (CustomerDealDBEntity next: editDeals)
                     {
-                        if(activityOptional.get().equals(next.getActivity()))
+                        if(activityOptional.get().equals(next.getActivityDomainEntityId()))
                         {
                             return convertDealToDto(next);
                         }
@@ -1362,7 +1362,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
         {
 //            requester.getSeenActivities().clear();
             
-            Map<Long, CustomerDealDBEntity> guestActivityToDealMap = new HashMap<>();
+            Map<CustomerDomainEntityId, CustomerDealDBEntity> guestActivityToDealMap = new HashMap<>();
             
             if(requesterOpt.isEmpty() && requesterId!=null)
             {
@@ -1372,7 +1372,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
                 {
                     for (CustomerDealDBEntity next: guestDealsList)
                     {
-                        guestActivityToDealMap.put(next.getActivity().getId(), next);
+                        guestActivityToDealMap.put(next.getCustomerDomainEntityId(), next);
                     }
                 }
             }
@@ -1386,7 +1386,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
                 {
                     CustomerDealDBEntity deal = guestActivityToDealMap.get(hotelActivity.getId());
                     
-                    if(hotelActivity.equals(deal.getActivity()))
+                    if(hotelActivity.equals(deal.getActivityDomainEntityId()))
                     {
                         activityDto.setValidDealId(deal.getInitId());
                     }

@@ -23,7 +23,7 @@ public interface DealRepository extends JpaRepository<CustomerDealDBEntity, Long
 	public final static String FIND_ACTIVE_BY_CUSTOMER_QUERY = "SELECT c " +
 			"FROM CustomerDeal c " +
 			"WHERE c.active = true " +
-			"AND c.pk.customer.id = :customerId " +
+			"AND c.pk.customerIdValue = :customerId " +
 			"AND c.validFrom <= :checkDate " +
 			"AND c.validTo >= :checkDate ";	
 	
@@ -37,7 +37,7 @@ public interface DealRepository extends JpaRepository<CustomerDealDBEntity, Long
 	public final static String COUNT_ACTIVE_BY_GUEST_OR_CUSTOMER_QUERY = "SELECT count(c) " +
 			"FROM CustomerDeal c " +
 			"WHERE c.active = true " +
-			"AND (c.guestCustomerId = :guestCustomerId OR c.pk.customer.id = :customerId)" +
+			"AND (c.guestCustomerId = :guestCustomerId OR c.pk.customerIdValue = :customerId)" +
 			"AND c.validFrom <= :checkDate " +
 			"AND c.validTo >= :checkDate ";	
 	
@@ -56,7 +56,7 @@ public interface DealRepository extends JpaRepository<CustomerDealDBEntity, Long
 	public final static String FIND_ACTIVE_BY_CUSTOMER_AND_ACTIVITY_QUERY = "SELECT c " +
 			"FROM CustomerDeal c " +
 			"WHERE c.active = true " +
-			"AND c.pk.customer.id = :customerId " +
+			"AND c.pk.customerIdValue = :customerId " +
 			"AND c.pk.activity.id = :activityId " +
 			"AND c.status in (:statusList) " +
 			"AND (:checkDateFrom is NULL OR c.validFrom <= :checkDateFrom) " +
@@ -74,8 +74,8 @@ public interface DealRepository extends JpaRepository<CustomerDealDBEntity, Long
 	public final static String FIND_ACTIVE_BY_CUSTOMER_AND_HOTEL_QUERY = "SELECT c " +
 			"FROM CustomerDeal c " +
 			"WHERE c.active = true " +
-			"AND c.pk.customer.id = :customerId " +
-			"AND c.pk.activity.hotel.id = :hotelId " +
+			"AND c.pk.customerIdValue = :customerId " +
+			"AND c.pk.activity.hotelDomainIdValue = :hotelId " +
 			"AND c.status in (:statusList) " +
 			"AND (:checkDateFrom is NULL OR c.validFrom <= :checkDateFrom) " +
 			"AND (:checkDateTo is NULL OR c.validTo >= :checkDateTo) ";
@@ -84,7 +84,7 @@ public interface DealRepository extends JpaRepository<CustomerDealDBEntity, Long
 			"FROM CustomerDeal c " +
 			"WHERE c.active = true " +
 			"AND c.guestCustomerId = :guestCustomerId " +
-			"AND c.pk.activity.hotel.id = :hotelId " +
+			"AND c.pk.activity.hotelDomainIdValue = :hotelId " +
 			"AND c.status in (:statusList) " +
 			"AND (:checkDateFrom is NULL OR c.validFrom <= :checkDateFrom) " +
 			"AND (:checkDateTo is NULL OR c.validTo >= :checkDateTo) ";		
@@ -92,7 +92,7 @@ public interface DealRepository extends JpaRepository<CustomerDealDBEntity, Long
 	public final static String FIND_ACTIVE_DEALS_BY_ACTIVITY_QUERY = "SELECT c " +
 			"FROM CustomerDeal c " +
 			"WHERE c.active = true " +
-//			"AND c.pk.customer.id = :customerId " +
+//			"AND c.pk.customerIdValue = :customerId " +
 			"AND c.pk.activity.id = :activityId " +
 			"AND c.status in (:statusList) " +
 			"AND (:checkDateFrom is NULL OR c.validFrom <= :checkDateFrom) " +
@@ -101,8 +101,8 @@ public interface DealRepository extends JpaRepository<CustomerDealDBEntity, Long
 	public final static String FIND_ACTIVE_DEALS_BY_HOTEL_QUERY = "SELECT c " +
 			"FROM CustomerDeal c " +
 			"WHERE c.active = true " +
-//			"AND c.pk.customer.id = :customerId " +
-			"AND c.pk.activity.hotel.id = :hotelId " +
+//			"AND c.pk.customerIdValue = :customerId " +
+			"AND c.pk.hotelDomainIdValue = :hotelId " +
 			"AND c.status in (:statusList) " +
 			"AND (:checkDateFrom is NULL OR c.validFrom <= :checkDateFrom) " +
 			"AND (:checkDateTo is NULL OR c.validTo >= :checkDateTo) ";	
@@ -110,8 +110,8 @@ public interface DealRepository extends JpaRepository<CustomerDealDBEntity, Long
 	public final static String EXIST_ACTIVE_DEALS_FOR_CUSTOMER_BY_ACTIVITY_QUERY = "SELECT count(c)>0 " +
 			"FROM CustomerDeal c " +
 			"WHERE c.active = true " +
-			"AND c.pk.activity.id = :activityId " +
-			"AND c.pk.customer.id = :customerId " +
+			"AND c.pk.activityIdValue = :activityId " +
+			"AND c.pk.customerIdValue = :customerId " +
 			"AND (" +
 			  "( " +
 //				" c.fullCheckin = true AND" +
@@ -177,7 +177,7 @@ public interface DealRepository extends JpaRepository<CustomerDealDBEntity, Long
 	@Query(FIND_BY_INIT_ID_QUERY)
 	List<CustomerDealDBEntity> getByInitId(@Param("initId") Long initId);
 
-    Optional<CustomerDealDBEntity> findByHotelDomainId(HotelDomainEntityId id);
+    Optional<CustomerDealDBEntity> findByHotelDomainIdValue(HotelDomainEntityId id);
 
     Optional<CustomerDealDBEntity> findByHotelId(HotelDomainEntityId id);
 }

@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model;
 
+import eu.getsoftware.hotelico.clients.common.domain.ids.ActivityDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.HibernateUtils;
@@ -38,8 +39,17 @@ public class HotelActivityDBEntity implements IHotelActivity, Serializable
 	
 //	@Embedded 
 	@Column
+	private String domainEntityIdValue;	
+	
+	@Column
 	private String hotelDomainIdValue;
 
+	@Transient
+	public ActivityDomainEntityId getDomainEntityId() {
+		return ActivityDomainEntityId.from(domainEntityIdValue);
+	}
+
+	@Transient
 	public HotelDomainEntityId getHotelDomainId() {
 		return HotelDomainEntityId.from(hotelDomainIdValue);
 	}
@@ -206,5 +216,4 @@ public class HotelActivityDBEntity implements IHotelActivity, Serializable
 	public String senderId() {
 		return "";
 	}
-
 }

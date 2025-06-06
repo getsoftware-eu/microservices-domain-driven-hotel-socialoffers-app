@@ -426,7 +426,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
         
         for (CustomerDealDBEntity next: anonymGuestDeals)
         {
-            next.setCustomerId(customerEntity.getDomainEntityId());
+            next.setCustomerDomainEntityId(customerEntity.getDomainEntityId());
 //            next.setGuestCustomerId(0);
             dealRepository.saveAndFlush(next);
         }
