@@ -3,6 +3,7 @@ package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.chat.mes
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.HotelDTO;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.HotelUpdateEventMessagePayload;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.DomainMessage;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.HotelDomainEvent;
 import eu.getsoftware.hotelico.service.booking.adapter.out.service.messaging.KafkaMessagePublisher;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,9 +38,11 @@ import static eu.getsoftware.hotelico.clients.api.application.infrastructure.dom
 //                .withAdditionalProperty("data","test")
 //                .build();
 
-        DomainMessage<?> eventMessage = DomainMessage.builder(messageType)
+        DomainMessage<?> eventMessage = HotelDomainEvent.builder()
+                .messageType(messageType)
                 .tenantId(1L)
-                .build(eventPayload);
+                .payload(eventPayload)
+                .build();
 
         String messageKeyForKafkaPartition = String.valueOf(hotelDTO.getDomainEntityId());
         

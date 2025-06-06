@@ -10,11 +10,13 @@ import eu.getsoftware.hotelico.service.booking.application.deal.domain.ICustomer
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 
 @Embeddable
 @Getter
+@Setter
 class CustomerDealId implements ICustomerDealId, Serializable {
 
 	@Column
@@ -35,6 +37,10 @@ class CustomerDealId implements ICustomerDealId, Serializable {
 
 	public void setCustomerDomainEntityId(CustomerDomainEntityId customerEntity) {
 		this.customerDomainEntityIdValue = customerEntity.uuidValue();
+	}
+
+	public void setActivityDomainEntityId(ActivityDomainEntityId activity) {
+		this.activityDomainEntityIdValue = activity.uuidValue();
 	}
 
 	public ActivityDomainEntityId getActivityDomainEntityId() {
@@ -61,7 +67,5 @@ class CustomerDealId implements ICustomerDealId, Serializable {
 		return result;
 	}
 
-	public void setActivityDomainEntityId(ActivityDomainEntityId activity) {
-		this.activityDomainEntityIdValue = activity.uuidValue();
-	}
+	
 }

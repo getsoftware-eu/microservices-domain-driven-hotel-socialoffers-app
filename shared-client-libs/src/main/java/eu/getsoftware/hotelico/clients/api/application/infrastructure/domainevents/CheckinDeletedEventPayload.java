@@ -18,7 +18,7 @@ import lombok.Getter;
 @Builder
 @Getter
 @JsonTypeName("checkin-deleted-event")
-public class CheckinDeletedEventPayload extends DomainMessagePayload {
+public class CheckinDeletedEventPayload implements DomainMessagePayload {
     
     @JsonProperty
     private CheckinDomainEntityId entityId;
@@ -33,4 +33,9 @@ public class CheckinDeletedEventPayload extends DomainMessagePayload {
     private CustomerDomainEntityId customerId;
 
     private DomainMessagePayloadStatus status;
+
+    @Override
+    public String getMessage() {
+        return "";
+    }
 }

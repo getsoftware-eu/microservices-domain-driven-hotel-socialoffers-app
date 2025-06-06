@@ -1,18 +1,17 @@
 package eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage;
 
-import lombok.Getter;
-
 import java.time.Instant;
 
 /**
  * Базовый класс для полезной нагрузки сообщений с общими полями.
  */
-public abstract class DomainMessagePayload {
-    
-    @Getter
-    private final Instant createdAt;
+public interface DomainMessagePayload {
 
-    protected DomainMessagePayload() {
-        this.createdAt = Instant.now();
-    }
+    String getMessage();
+    
+    default Instant getCreatedAt(){
+        return Instant.now();
+    };
+
+    long getMessageId();
 }

@@ -3,8 +3,11 @@ package eu.getsoftware.hotelico.service.booking.application.checkin.multiDomainO
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.service.booking.application.checkin.domain.CheckinRootDomainEntity;
 import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinOutWriteService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class CheckinOutWriteServiceImpl implements CheckinOutWriteService {
+    
     @Override
     public void save(CheckinRootDomainEntity CheckinRootDomainEntity) {
         

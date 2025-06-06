@@ -2,6 +2,7 @@ package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.
 
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.CheckinUpdatedEventPayload;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.CheckinDomainEvent;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.DomainMessage;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.DomainMessagePayload;
 import org.springframework.stereotype.Component;
@@ -18,10 +19,12 @@ public class DomainCheckinMessageFactory {
                 .hotelId(checkinDTO.getHotelId())
                 .build();
                 
-        return DomainMessage.builder(messageType)
+        return CheckinDomainEvent.builder()
+                .messageType(messageType)
                 .tenantId(1L)
                 .timestamp(LocalDateTime.now())
-                .build(payload);
+                .payload(payload)
+                .build();
         
     }
 }

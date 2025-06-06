@@ -969,7 +969,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 		            .stream().findFirst();
         }    
         
-        return dealRepository.findByHotelId(hotelId);
+        return dealRepository.findByPkHotelDomainEntityIdValue(hotelId);
     }
 
     private HotelActivityDBEntity createHotelActivity(HotelActivityDTO hotelActivityDto)

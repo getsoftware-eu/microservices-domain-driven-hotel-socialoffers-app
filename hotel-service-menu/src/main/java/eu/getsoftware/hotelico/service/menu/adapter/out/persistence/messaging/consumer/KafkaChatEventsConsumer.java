@@ -3,6 +3,7 @@ package eu.getsoftware.hotelico.service.menu.adapter.out.persistence.messaging.c
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.amqpConsumeNotification.ChatMessageCommand;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.HotelUpdateEventMessagePayload;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.DomainMessage;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.DomainMessagePayload;
 import eu.getsoftware.hotelico.service.menu.adapter.out.persistence.messaging.service.MenuMessageService;
 import eu.getsoftware.hotelico.service.menu.adapter.out.persistence.model.MenuUserMappedEntity;
 import eu.getsoftware.hotelico.service.menu.adapter.out.persistence.repository.MenuUserRepository;
@@ -28,8 +29,8 @@ public class KafkaChatEventsConsumer {
     public void consumeCustomerUpdateNotification(ConsumerRecord<String, DomainMessage<HotelUpdateEventMessagePayload>> record) {
         DomainMessage<HotelUpdateEventMessagePayload> customerUpdateRequest = record.value();
         log.info("Consumed {} from topic", customerUpdateRequest);
-        
-        HotelUpdateEventMessagePayload payload = customerUpdateRequest.getPayload();
+
+        DomainMessagePayload payload = customerUpdateRequest.getPayload();
         log.info(payload.getMessage());
 
         //TODO ProcessManagerService that updates Domain-Layer from external Event!!!
@@ -37,8 +38,8 @@ public class KafkaChatEventsConsumer {
 
         MenuUserMappedEntity entity;
 
-        if (updatedChatUserOptional.isEmpty()) {
-            entity = new MenuUserMappedEntity(payload.getCustomerDomainId());
+        if (updatedChatUserOptional.isEmpty() && payload instanceof HotelUpdateEventMessagePayload) {
+            entity = new MenuUserMappedEntity(((HotelUpdateEventMessagePayload)payload).getCustomerDomainId());
 //            entity.setFirstName(payload.getSenderName());
         } else {
             MenuUserMappedEntity updatedChatUser = updatedChatUserOptional.get();

@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.portserviceimpl;
 
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.CheckinUpdatedEventPayload;
+import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.CheckinDomainEvent;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.DomainMessage;
 import eu.getsoftware.hotelico.clients.common.domain.ids.CheckinDomainEntityId;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -33,9 +34,11 @@ public class KafkaWithoutBootCheckinProducerService {
                 .status(QUEUED)
                 .build();
 
-        DomainMessage<?> eventMessage = DomainMessage.builder("checkin.checkin.created.event")
+        DomainMessage<?> eventMessage = CheckinDomainEvent.builder()
+                .messageType("checkin.checkin.created.event")
                 .tenantId(1L)
-                .build(eventPayload);
+                .payload(eventPayload)
+                .build();
         
         // Публикация события
 //        CheckinCreatedEvent event = new CheckinCreatedEvent(checkinEntityId);

@@ -30,8 +30,21 @@ spring:
       max-file-size: 512MB # Max file size.
       max-request-size: 512MB # Max request size.
   messages.basename: i18n/messages # Configure MessageSource to lookup any validation/error message in internationalized property files
-#  kafka:
-#    bootstrap-servers: localhost:19092
+  kafka:
+    bootstrap-servers: localhost:19092
+    listener:
+      auto-startup: false
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.support.serializer.JsonSerializer
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.support.serializer.JsonSerializer
+      group-id: hotelico-group
+      properties:
+        spring.json.trusted.packages: eu.getsoftware.hotelico.*
+        spring.json.value.default.type: eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.DomainMessage
+
   social:
     facebook:
       appId: 383626641847356

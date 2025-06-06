@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  */
 @Entity
 @Getter @Setter
-@Table(name = "hotel_activities")
+@Table(name = "hotel_activities", schema = "hotel")
 //@RequiredArgsConstructor
 //@NoArgsConstructor//(access = AccessLevel.PROTECTED) // важно для JPA
 public class HotelActivityDBEntity implements IHotelActivity, Serializable
@@ -42,7 +42,7 @@ public class HotelActivityDBEntity implements IHotelActivity, Serializable
 	private String domainEntityIdValue;	
 	
 	@Column
-	private String hotelDomainIdValue;
+	private String hotelDomainEntityIdValue;
 
 	@Transient
 	public ActivityDomainEntityId getDomainEntityId() {
@@ -51,10 +51,10 @@ public class HotelActivityDBEntity implements IHotelActivity, Serializable
 
 	@Transient
 	public HotelDomainEntityId getHotelDomainId() {
-		return HotelDomainEntityId.from(hotelDomainIdValue);
+		return HotelDomainEntityId.from(hotelDomainEntityIdValue);
 	}
 	public void setHotelDomainId(HotelDomainEntityId hotelDomainId) {
-		this.hotelDomainIdValue = hotelDomainId.uuidValue();
+		this.hotelDomainEntityIdValue = hotelDomainId.uuidValue();
 	}
 	
 	/**

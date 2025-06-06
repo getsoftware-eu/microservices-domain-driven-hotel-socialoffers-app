@@ -17,7 +17,7 @@ import lombok.Getter;
     @Builder
     @Getter
     @JsonTypeName("hotel-update-event")
-    public class HotelUpdateEventMessagePayload extends DomainMessagePayload {
+    public class HotelUpdateEventMessagePayload implements DomainMessagePayload {
 
         @JsonProperty
         private long messageId;        

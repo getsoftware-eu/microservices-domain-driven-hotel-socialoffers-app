@@ -11,7 +11,7 @@ import org.mapstruct.Named;
 /**
  * unmappedTargetPolicy = ReportingPolicy.IGNORE - eu: не забудешь новый field
  */
-@Mapper(uses = AddressValueObjectMapper.class)
+@Mapper(componentModel = "spring", uses = AddressValueObjectMapper.class)
 public interface HotelActivityEntityMapper extends EntityGenericMapper<HotelActivityRootDomainEntity, HotelActivityDBEntity> {
 
     @Override

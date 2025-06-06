@@ -6,31 +6,31 @@ public final class ActivityQueries {
 
     public static final String FIND_ALL_BY_HOTEL_QUERY = "SELECT a " +
             "FROM HotelActivity a " +
-            "WHERE a.hotelDomainIdValue  = :hotelId " +
+            "WHERE a.hotelDomainEntityIdValue  = :hotelId " +
             "AND a.active = TRUE";
 
     public static final String COUNT_ALL_BY_HOTEL_QUERY = "SELECT count(a) " +
             "FROM HotelActivity a " +
-            "WHERE a.hotelDomainIdValue  = :hotelId " +
+            "WHERE a.hotelDomainEntityIdValue  = :hotelId " +
             "AND a.active = TRUE";
 
     public static final String FIND_TIME_VALID_BY_HOTEL_QUERY = "SELECT a " +
             "FROM HotelActivity a " +
-            "WHERE a.hotelDomainIdValue  = :hotelId " +
+            "WHERE a.hotelDomainEntityIdValue  = :hotelId " +
             "AND ( :checkDate BETWEEN a.validFrom AND a.validTo ) " +
             "AND a.active = TRUE " +
             "AND a.hidden = FALSE";
 
     public static final String FIND_TIME_VALID_BY_HOTEL_COUNTER_QUERY = "SELECT count(a) " +
             "FROM HotelActivity a " +
-            "WHERE a.hotelDomainIdValue  = :hotelId " +
+            "WHERE a.hotelDomainEntityIdValue  = :hotelId " +
             "AND ( :checkDate BETWEEN a.validFrom AND a.validTo ) " +
             "AND a.active = TRUE " +
             "AND a.hidden = FALSE";
 
     public static final String FIND_BY_CREATOR_AND_HOTEL_QUERY = "SELECT a " +
             "FROM HotelActivity a " +
-            "WHERE a.hotelDomainIdValue  = :hotelId " +
+            "WHERE a.hotelDomainEntityIdValue  = :hotelId " +
             "AND a.sender.domainEntityIdValue = :creatorId " +
             "AND a.active = TRUE";
 

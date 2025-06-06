@@ -17,101 +17,103 @@ import java.util.Optional;
 public interface DealRepository extends JpaRepository<CustomerDealDBEntity, Long> {
 
 	public final static String FIND_BY_INIT_ID_QUERY = "SELECT c " +
-			"FROM CustomerDeal c " +
+			"FROM  CustomerDealDBEntity c " +
 			"WHERE c.initId = :initId " ;
 	
 	public final static String FIND_ACTIVE_BY_CUSTOMER_QUERY = "SELECT c " +
-			"FROM CustomerDeal c " +
+			"FROM  CustomerDealDBEntity c " +
 			"WHERE c.active = true " +
-			"AND c.pk.customerIdValue = :customerId " +
+			"AND c.pk.customerDomainEntityIdValue = :customerId " +
 			"AND c.validFrom <= :checkDate " +
 			"AND c.validTo >= :checkDate ";	
 	
 	public final static String FIND_ACTIVE_BY_GUEST_CUSTOMER_QUERY = "SELECT c " +
-			"FROM CustomerDeal c " +
+			"FROM  CustomerDealDBEntity c " +
 			"WHERE c.active = true " +
-			"AND c.guestCustomerId = :guestCustomerId " +
+//			// "AND c.guestCustomerId = :guestCustomerId " +
 			"AND c.validFrom <= :checkDate " +
 			"AND c.validTo >= :checkDate ";		
 	
 	public final static String COUNT_ACTIVE_BY_GUEST_OR_CUSTOMER_QUERY = "SELECT count(c) " +
-			"FROM CustomerDeal c " +
+			"FROM  CustomerDealDBEntity c " +
 			"WHERE c.active = true " +
-			"AND (c.guestCustomerId = :guestCustomerId OR c.pk.customerIdValue = :customerId)" +
+//			"AND (c.guestCustomerId = :guestCustomerId OR c.pk.customerDomainEntityIdValue = :customerId)" +
 			"AND c.validFrom <= :checkDate " +
 			"AND c.validTo >= :checkDate ";	
 	
 	public final static String FIND_ANONYM_DEALS_FOR_GUEST_ID_QUERY = "SELECT c " +
-			"FROM CustomerDeal c " +
-			"WHERE c.active = true " +
-			"AND c.guestCustomerId = :guestCustomerId " +
-			"AND c.pk.customer.email = '[anonym]' ";			
+			"FROM  CustomerDealDBEntity c " +
+			"WHERE c.active = true " 
+			// "AND c.guestCustomerId = :guestCustomerId " +
+//			"AND c.pk.customer.email = '[anonym]' "
+			;			
 	
 	public final static String EXIST_ANONYM_BY_GUEST_CUSTOMER_QUERY = "SELECT count(c)>0 " +
-			"FROM CustomerDeal c " +
-			"WHERE c.active = true " +
-			"AND c.guestCustomerId = :guestCustomerId " +
-			"AND c.pk.customer.email = '[anonym]' ";		
+			"FROM  CustomerDealDBEntity c " +
+			"WHERE c.active = true " 
+			// "AND c.guestCustomerId = :guestCustomerId " +
+//			"AND c.pk.customer.email = '[anonym]' "
+			;		
 	
 	public final static String FIND_ACTIVE_BY_CUSTOMER_AND_ACTIVITY_QUERY = "SELECT c " +
-			"FROM CustomerDeal c " +
+			"FROM  CustomerDealDBEntity c " +
 			"WHERE c.active = true " +
-			"AND c.pk.customerIdValue = :customerId " +
-			"AND c.pk.activity.id = :activityId " +
+			"AND c.pk.customerDomainEntityIdValue = :customerId " +
+			"AND c.pk.activityDomainEntityId = :activityId " +
 			"AND c.status in (:statusList) " +
 			"AND (:checkDateFrom is NULL OR c.validFrom <= :checkDateFrom) " +
 			"AND (:checkDateTo is NULL OR c.validTo >= :checkDateTo) ";	
 	
 	public final static String FIND_ACTIVE_BY_GUEST_CUSTOMER_AND_ACTIVITY_QUERY = "SELECT c " +
-			"FROM CustomerDeal c " +
+			"FROM  CustomerDealDBEntity c " +
 			"WHERE c.active = true " +
-			"AND c.guestCustomerId = :guestCustomerId " +
-			"AND c.pk.activity.id = :activityId " +
+			// "AND c.guestCustomerId = :guestCustomerId " +
+			"AND c.pk.activityDomainEntityId = :activityId " +
 			"AND c.status in (:statusList) " +
 			"AND (:checkDateFrom is NULL OR c.validFrom <= :checkDateFrom) " +
 			"AND (:checkDateTo is NULL OR c.validTo >= :checkDateTo) ";
 
 	public final static String FIND_ACTIVE_BY_CUSTOMER_AND_HOTEL_QUERY = "SELECT c " +
-			"FROM CustomerDeal c " +
+			"FROM  CustomerDealDBEntity c " +
 			"WHERE c.active = true " +
-			"AND c.pk.customerIdValue = :customerId " +
-			"AND c.pk.activity.hotelDomainIdValue = :hotelId " +
+			"AND c.pk.customerDomainEntityIdValue = :customerId " +
+			"AND c.pk.hotelDomainEntityIdValue = :hotelId " +
 			"AND c.status in (:statusList) " +
 			"AND (:checkDateFrom is NULL OR c.validFrom <= :checkDateFrom) " +
 			"AND (:checkDateTo is NULL OR c.validTo >= :checkDateTo) ";
 	
 	public final static String FIND_ACTIVE_BY_GUEST_AND_HOTEL_QUERY = "SELECT c " +
-			"FROM CustomerDeal c " +
+			"FROM  CustomerDealDBEntity c " +
 			"WHERE c.active = true " +
-			"AND c.guestCustomerId = :guestCustomerId " +
-			"AND c.pk.activity.hotelDomainIdValue = :hotelId " +
+			// "AND c.guestCustomerId = :guestCustomerId " +
+			"AND c.pk.hotelDomainEntityIdValue = :hotelId " +
 			"AND c.status in (:statusList) " +
 			"AND (:checkDateFrom is NULL OR c.validFrom <= :checkDateFrom) " +
 			"AND (:checkDateTo is NULL OR c.validTo >= :checkDateTo) ";		
 	
 	public final static String FIND_ACTIVE_DEALS_BY_ACTIVITY_QUERY = "SELECT c " +
-			"FROM CustomerDeal c " +
+			"FROM  CustomerDealDBEntity c " +
 			"WHERE c.active = true " +
-//			"AND c.pk.customerIdValue = :customerId " +
-			"AND c.pk.activity.id = :activityId " +
+//			"AND c.pk.customerDomainEntityIdValue = :customerId " +
+			"AND c.pk.activityDomainEntityId = :activityId " +
 			"AND c.status in (:statusList) " +
 			"AND (:checkDateFrom is NULL OR c.validFrom <= :checkDateFrom) " +
 			"AND (:checkDateTo is NULL OR c.validTo >= :checkDateTo) ";
 	
 	public final static String FIND_ACTIVE_DEALS_BY_HOTEL_QUERY = "SELECT c " +
-			"FROM CustomerDeal c " +
+			"FROM  CustomerDealDBEntity c " +
 			"WHERE c.active = true " +
-//			"AND c.pk.customerIdValue = :customerId " +
-			"AND c.pk.hotelDomainIdValue = :hotelId " +
+//			"AND c.pk.customerDomainEntityIdValue = :customerId " +
+			"AND c.pk.hotelDomainEntityIdValue = :hotelId " +
 			"AND c.status in (:statusList) " +
 			"AND (:checkDateFrom is NULL OR c.validFrom <= :checkDateFrom) " +
 			"AND (:checkDateTo is NULL OR c.validTo >= :checkDateTo) ";	
 	
 	public final static String EXIST_ACTIVE_DEALS_FOR_CUSTOMER_BY_ACTIVITY_QUERY = "SELECT count(c)>0 " +
-			"FROM CustomerDeal c " +
+			"FROM  CustomerDealDBEntity c " +
 			"WHERE c.active = true " +
-			"AND c.pk.activityIdValue = :activityId " +
-			"AND c.pk.customerIdValue = :customerId " +
+			"AND c.pk.activityDomainEntityIdValue = :activityId " +
+			"AND c.pk.customerDomainEntityIdValue = :customerId " +
 			"AND (" +
 			  "( " +
 //				" c.fullCheckin = true AND" +
@@ -177,7 +179,5 @@ public interface DealRepository extends JpaRepository<CustomerDealDBEntity, Long
 	@Query(FIND_BY_INIT_ID_QUERY)
 	List<CustomerDealDBEntity> getByInitId(@Param("initId") Long initId);
 
-    Optional<CustomerDealDBEntity> findByHotelDomainIdValue(HotelDomainEntityId id);
-
-    Optional<CustomerDealDBEntity> findByHotelId(HotelDomainEntityId id);
+    Optional<CustomerDealDBEntity> findByPkHotelDomainEntityIdValue(HotelDomainEntityId id);
 }

@@ -1,12 +1,13 @@
 package eu.getsoftware.hotelico.clients.common.domain.ids;
 
 import eu.getsoftware.hotelico.clients.common.domain.EntityIdentifier;
+import jakarta.persistence.Embeddable;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
-//@Embeddable
+@Embeddable //TODO remove it
 public record ActivityDomainEntityId(
         @NotEmpty String uuidValue
 ) implements EntityIdentifier {

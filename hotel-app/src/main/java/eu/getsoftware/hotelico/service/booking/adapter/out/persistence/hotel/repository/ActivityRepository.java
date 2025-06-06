@@ -68,7 +68,7 @@ public interface ActivityRepository extends JpaRepository<HotelActivityDBEntity,
 	/**
 	 * Метод-заглушка, если понадобится использовать custom реализацию.
 	 */
-	default Optional<HotelActivityDBEntity> findByHotelDomainIdValue(HotelDomainEntityId id) {
+	default Optional<HotelActivityDBEntity> findByhotelDomainEntityIdValue(HotelDomainEntityId id) {
 		return Optional.empty();
 	}
 

@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 /**
  * unmappedTargetPolicy = ReportingPolicy.IGNORE - eu: не забудешь новый field
  */
-@Mapper//(componentModel = "spring")
+@Mapper(componentModel = "spring")
 public interface AddressValueObjectMapper extends EntityGenericMapper<AddressValueObject, AddressDBEmbeddable> {
 
     @Override

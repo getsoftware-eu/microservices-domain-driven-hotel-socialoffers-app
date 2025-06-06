@@ -20,7 +20,7 @@ import java.util.Date;
 @Builder
 @Getter
 @JsonTypeName("checkin-updated-event")
-public class CheckinUpdatedEventPayload extends DomainMessagePayload {
+public class CheckinUpdatedEventPayload implements DomainMessagePayload {
     
     @JsonProperty
     private CheckinDomainEntityId entityId;
@@ -40,7 +40,8 @@ public class CheckinUpdatedEventPayload extends DomainMessagePayload {
 
     private DomainMessagePayloadStatus status;
 
-    public CheckinDomainEntityId getEntityId() {
-        return entityId;
+    @Override
+    public String getMessage() {
+        return "";
     }
 }
