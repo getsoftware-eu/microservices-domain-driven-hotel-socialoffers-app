@@ -1,5 +1,6 @@
 CREATE DATABASE hotel;
 CREATE USER eu_user WITH ENCRYPTED PASSWORD 'postgres';
+ALTER DATABASE hotel OWNER TO eu_user;
 GRANT ALL PRIVILEGES ON DATABASE hotel TO eu_user;
 
 -- \connect hotel;

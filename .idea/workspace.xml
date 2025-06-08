@@ -4,18 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="FIX# Kafka">
-      <change afterPath="$PROJECT_DIR$/docker/postges-init/01-init-keycloak.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/docker/postges-init/02-init-hotel.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/resources/application-development.yml" afterDir="false" />
+    <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="FIX# Keycloak">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docker-compose-kafka-3brokers-craft.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-kafka-3brokers-craft.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/hotel/InitGuest.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/hotel/InitGuest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/postges-init/01-init-keycloak.sql" beforeDir="false" afterPath="$PROJECT_DIR$/docker/postgres-init/01-init-keycloak.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker/postges-init/02-init-hotel.sql" beforeDir="false" afterPath="$PROJECT_DIR$/docker/postgres-init/02-init-hotel.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-app/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-service-menu/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/security-common/src/main/java/eu/getsoftware/hotelico/securitycommon/config/KeycloakSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/security-common/src/main/java/eu/getsoftware/hotelico/securitycommon/config/KeycloakSecurityConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,7 +17,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="428481" />
+    <option name="totalTimeSeconds" value="433938" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -199,11 +193,11 @@
       <recent name="D:\work\projects\GetSoftw\hotelico\helm\hotel-stack\charts\gateway" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\work\projects\GetSoftw\hotelico\docker\postgres-init" />
       <recent name="D:\work\projects\GetSoftw\hotelico\docker\postges-init" />
       <recent name="D:\work\projects\GetSoftw\hotelico\docker" />
       <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\java\eu\getsoftware\hotelico\service\booking\config\adapter\archiv" />
       <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\java\eu\getsoftware\hotelico\service\booking\config\adapter" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\java\eu\getsoftware\hotelico\service\booking\config\adapter\kafka" />
     </key>
     <key name="CreateBuilderDialog.RecentsKey">
       <recent name="eu.getsoftware.hotelico.customer.infrastructure.dto" />
@@ -727,7 +721,7 @@
       <workItem from="1749155595249" duration="5611000" />
       <workItem from="1749206288124" duration="21185000" />
       <workItem from="1749324999388" duration="1693000" />
-      <workItem from="1749367262099" duration="7291000" />
+      <workItem from="1749367262099" duration="12818000" />
     </task>
     <task id="LOCAL-00001" summary="-CHG: Microservice refactoring(Eureka-server)">
       <created>1655287660110</created>
@@ -903,14 +897,6 @@
       <option name="presentableId" value="LOCAL-00025" />
       <option name="project" value="LOCAL" />
       <updated>1683714777053</updated>
-    </task>
-    <task id="LOCAL-00111" summary="security config">
-      <option name="closed" value="true" />
-      <created>1748545093452</created>
-      <option name="number" value="00111" />
-      <option name="presentableId" value="LOCAL-00111" />
-      <option name="project" value="LOCAL" />
-      <updated>1748545093452</updated>
     </task>
     <task id="LOCAL-00112" summary="security config">
       <option name="closed" value="true" />
@@ -1096,7 +1082,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749227898278</updated>
     </task>
-    <option name="localTasksCounter" value="135" />
+    <task id="LOCAL-00135" summary="FIX# Keycloak">
+      <option name="closed" value="true" />
+      <created>1749375868925</created>
+      <option name="number" value="00135" />
+      <option name="presentableId" value="LOCAL-00135" />
+      <option name="project" value="LOCAL" />
+      <updated>1749375868925</updated>
+    </task>
+    <option name="localTasksCounter" value="136" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1126,7 +1120,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
-    <MESSAGE value="fix Checkin UseCase" />
     <MESSAGE value="fix innerEvents" />
     <MESSAGE value="fix record validation" />
     <MESSAGE value="fix sequenceId" />
@@ -1151,7 +1144,8 @@
     <MESSAGE value="FIX# query command CQRS Pattern" />
     <MESSAGE value="FIX# customerDeal" />
     <MESSAGE value="FIX# Kafka" />
-    <option name="LAST_COMMIT_MESSAGE" value="FIX# Kafka" />
+    <MESSAGE value="FIX# Keycloak" />
+    <option name="LAST_COMMIT_MESSAGE" value="FIX# Keycloak" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">

@@ -7,8 +7,8 @@ spring:
     import: optional:classpath:application-${spring.profiles.active}.yml
 #  config.activate.on-profile: development
   datasource:
-    url: jdbc:postgresql://localhost:5434/hotel
-    username: postgres
+    url: jdbc:postgresql://localhost:5432/hotel
+    username: eu_user
     password: postgres
     driver-class-name: org.postgresql.Driver
     hikari:
@@ -166,7 +166,7 @@ spring:
       on-profile: testing
   datasource:
     url: jdbc:postgresql://localhost:5432/customer
-    username: postgres
+    username: eu_user
     password: postgres
 keycloak:
   enabled: false
