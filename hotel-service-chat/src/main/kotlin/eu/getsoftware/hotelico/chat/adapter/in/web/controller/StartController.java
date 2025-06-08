@@ -1,4 +1,4 @@
-package eu.getsoftware.hotelico.service.booking.adapter.in.web.controller;
+package eu.getsoftware.hotelico.chat.adapter.in.web.controller;
 
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
 import lombok.RequiredArgsConstructor;

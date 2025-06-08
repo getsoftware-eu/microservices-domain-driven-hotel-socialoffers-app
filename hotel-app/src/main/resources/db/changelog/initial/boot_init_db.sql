@@ -60,5 +60,20 @@ CREATE SCHEMA IF NOT EXISTS hotel;
 -- create schema 'customer'
 CREATE SCHEMA IF NOT EXISTS customer;
 
+-- permissions for 'hotel' SCHEMA to 'eu_user'
+GRANT USAGE, CREATE ON SCHEMA hotel TO eu_user;
+
+-- permissions for 'customer' SCHEMA to 'eu_user'
+GRANT USAGE, CREATE ON SCHEMA customer TO eu_user;
+
+-- limited permissions to guest user
+GRANT USAGE ON SCHEMA hotel TO eu_guest;
+GRANT SELECT ON ALL TABLES IN SCHEMA hotel TO eu_guest;
+
+-- To make new tables in Schema also available to the guest
+ALTER DEFAULT PRIVILEGES IN SCHEMA hotel GRANT SELECT ON TABLES TO eu_guest;
+
+
+
 
 
