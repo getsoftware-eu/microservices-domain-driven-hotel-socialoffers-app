@@ -43,7 +43,7 @@ public class KeycloakSecurityConfig {
 
     // ========== 2️⃣ JWT decoder ==========
 
-    @Value("${hotelico.security.keycloak.issuer-uri}")
+    @Value("${security.oauth2.client.provider.keycloak.issuer-uri}")
     private String issuerUri;
     
     @Bean

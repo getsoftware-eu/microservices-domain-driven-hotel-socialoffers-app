@@ -1,4 +1,10 @@
 spring:
+  application:
+    name: hotel-app
+  profiles:
+    active: development
+  config:
+    import: optional:classpath:application-${spring.profiles.active}.yml
 #  config.activate.on-profile: development
   datasource:
     url: jdbc:postgresql://localhost:5434/hotel
@@ -37,10 +43,10 @@ spring:
       auto-startup: false
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.support.serializer.JsonSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     consumer:
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.support.serializer.JsonSerializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
       group-id: hotelico-group
       properties:
         spring.json.trusted.packages: eu.getsoftware.hotelico.*
@@ -69,39 +75,37 @@ spring:
           starttls.enable: true
   main: #eugen kastil, delete it
     allow-bean-definition-overriding: true
-  application:
-    name: hotel-client
-#  security:
-#    oauth2:
-#      resourceserver: 
-#        jwt:
-#          issuer-uri: http://keycloak:8080/realms/hotel-socialoffers
-#          #использовать 'keycloak' (а не 'localhost') как hostname — потому что это внутренняя сеть Docker Compose.
-#          #issuer-uri заменяет необходимость в KeycloakConfigResolver.
-#      client:
-#        registration:
-#          keycloak:
-#            client-id: your-client-id
-#            client-secret: <copy client-secret from Keycloak>
-#            scope: openid
-#            authorization-grant-type: client_credentials
-##            redirect-uri: "{baseUrl}/login/oauth2/code/keycloak"
-#            provider: keycloak
-#        provider:
-#          keycloak:
-#            issuer-uri: http://localhost:8080/realms/hotel-socialoffers #Realm = hotel-socialoffers
-#            user-name-attribute: preferred_username
+  security:
+    oauth2:
+      resourceserver: 
+        jwt:
+          issuer-uri: http://keycloak:8089/realms/hotel-socialoffers
+          #использовать 'keycloak' (а не 'localhost') как hostname — потому что это внутренняя сеть Docker Compose.
+          #issuer-uri заменяет необходимость в KeycloakConfigResolver.
+      client:
+        registration: 
+          keycloak:
+            client-id: hotel-app
+            client-secret: UtKfssqVcaAnCcgNNULWS1fAPCjtpjMx
+            scope: openid, profile, email
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            provider: keycloak
+        provider:  
+          keycloak:
+            issuer-uri: http://localhost:8089/realms/hotel-socialoffers #Realm = hotel-socialoffers
+            user-name-attribute: preferred_username
 
 #entitymanager:
 #  packagesToScan: de.getsoftware.smsbridge.model      
 security:
   basic.enabled: false #eugen: not in spring boot 2.x  
 
-hotelico:
-  security:
-    keycloak:
-      enabled: false
-      issuer-uri: http://localhost:8080/realms/hotel-socialoffers
+#hotelico:
+#  security:
+#    keycloak:
+#      enabled: false
+#      issuer-uri: http://localhost:8089/realms/hotel-socialoffers
     
 #liquibase.change-log: classpath:/db/changelog/db.changelog-master.xml #boot2: liquibase.change-log: classpath:/db/changelog/db.changelog-master.xml
 server:

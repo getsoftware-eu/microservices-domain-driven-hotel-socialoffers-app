@@ -5,24 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="FIX# Kafka">
+      <change afterPath="$PROJECT_DIR$/docker/postges-init/01-init-keycloak.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker/postges-init/02-init-hotel.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hotel-app/src/main/resources/application-development.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/checkin/messaging/CheckinRepositoryEventHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/checkin/messaging/CheckinRepositoryEventHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/mapper/UserDtoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/mapper/UserDtoMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/model/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/model/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/repository/UserRolesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/repository/UserRolesRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/HotelServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/HotelServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/outPortServiceImpl/UserServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/repository/ActivityQueries.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/repository/ActivityQueries.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/repository/WallPostRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/hotel/repository/WallPostRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/service/messaging/KafkaMessagePublisher.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/service/messaging/KafkaMessagePublisher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/application/customer/common/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/application/customer/common/dto/UserDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/application/hotel/port/out/iPortService/IUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/config/adapter/kafka/KafkaConsumerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/config/adapter/kafka/KafkaConsumerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/config/adapter/kafka/KafkaProducerConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/config/adapter/kafka/KafkaProducerConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/config/adapter/kafka/KafkaTopicConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/config/adapter/kafka/KafkaTopicConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose-kafka-3brokers-craft.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose-kafka-3brokers-craft.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/hotel/InitGuest.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/hotel/InitGuest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-app/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-app/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/mapper/IDomainMapper.kt" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/mapper/IDomainMapper.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-chat/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-chat/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-service-menu/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-service-menu/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security-common/src/main/java/eu/getsoftware/hotelico/securitycommon/config/KeycloakSecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/security-common/src/main/java/eu/getsoftware/hotelico/securitycommon/config/KeycloakSecurityConfig.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,7 +23,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="421678" />
+    <option name="totalTimeSeconds" value="428481" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -114,6 +107,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Docker.docker-compose.yml.keycloak: Compose Deployment.executor": "Run",
     "Downloaded.Files.Path.Enabled": "false",
     "JUnit.CheckinRequestDTOTest.givenCheckinRequestDTO_whenWrongDates_thenError.executor": "Run",
     "Maven.apigw [package].executor": "Run",
@@ -164,6 +158,8 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "Spring Boot.Hotel-app MainApplication.executor": "Debug",
+    "Spring Boot.HotelApplication (1).executor": "Run",
+    "Spring Boot.HotelApplication (2).executor": "Run",
     "Spring Boot.HotelApplication.executor": "Debug",
     "Spring Boot.MainApplication.executor": "Debug",
     "Spring Boot.Menu MainApplication.executor": "Debug",
@@ -173,7 +169,7 @@
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_directory_selection": "D:/work/projects/GetSoftw/hotelico/security-common/src",
-    "last_opened_file_path": "D:/work/projects/GetSoftw/hotelico/hotel-app/target/classes",
+    "last_opened_file_path": "D:/work/projects/GetSoftw/hotelico/docker",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -196,18 +192,18 @@
       <recent name="eu.getsoftware.hotelico.streams.topdeal.config" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\work\projects\GetSoftw\hotelico\docker" />
       <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\target\classes" />
       <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\resources" />
       <recent name="D:\work\projects\GetSoftw\hotelico\hotel-service-menu\src\main\resources" />
       <recent name="D:\work\projects\GetSoftw\hotelico\helm\hotel-stack\charts\gateway" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\helm\hotel-stack\charts\hotel-app" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\work\projects\GetSoftw\hotelico\docker\postges-init" />
+      <recent name="D:\work\projects\GetSoftw\hotelico\docker" />
       <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\java\eu\getsoftware\hotelico\service\booking\config\adapter\archiv" />
       <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\java\eu\getsoftware\hotelico\service\booking\config\adapter" />
       <recent name="D:\work\projects\GetSoftw\hotelico\hotel-app\src\main\java\eu\getsoftware\hotelico\service\booking\config\adapter\kafka" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\helm\hotel-stack\charts\kafka" />
-      <recent name="D:\work\projects\GetSoftw\hotelico\helm" />
     </key>
     <key name="CreateBuilderDialog.RecentsKey">
       <recent name="eu.getsoftware.hotelico.customer.infrastructure.dto" />
@@ -259,7 +255,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.HotelApplication">
+  <component name="RunManager" selected="Spring Boot.HotelApplication (1)">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="WIDTH" value="400" />
       <option name="HEIGHT" value="300" />
@@ -547,17 +543,22 @@
       </deployment>
       <method v="2" />
     </configuration>
-    <configuration name="docker-compose.yml: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true">
+    <configuration name="docker-compose.yml.keycloak: Compose Deployment" type="docker-deploy" factoryName="docker-compose.yml" temporary="true" server-name="Docker">
       <deployment type="docker-compose.yml">
         <settings>
           <option name="envFilePath" value="" />
+          <option name="services">
+            <list>
+              <option value="keycloak" />
+            </list>
+          </option>
           <option name="sourceFilePath" value="docker-compose.yml" />
         </settings>
       </deployment>
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
+      <item itemvalue="Docker.docker-compose.yml.keycloak: Compose Deployment" />
       <item itemvalue="JUnit.CheckinRequestDTOTest.givenCheckinRequestDTO_whenWrongDates_thenError" />
       <item itemvalue="Maven.hotelservices [clean]" />
       <item itemvalue="Spring Boot.HotelApplication (2)" />
@@ -583,11 +584,11 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Docker.docker-compose.yml.keycloak: Compose Deployment" />
         <item itemvalue="Spring Boot.HotelApplication" />
         <item itemvalue="Spring Boot.MenuApplication (1)" />
         <item itemvalue="Spring Boot.EurekaServerApplication (1)" />
         <item itemvalue="JUnit.CheckinRequestDTOTest.givenCheckinRequestDTO_whenWrongDates_thenError" />
-        <item itemvalue="Docker.docker-compose.yml: Compose Deployment" />
       </list>
     </recent_temporary>
   </component>
@@ -724,7 +725,9 @@
       <workItem from="1748859453079" duration="5057000" />
       <workItem from="1748865465188" duration="35103000" />
       <workItem from="1749155595249" duration="5611000" />
-      <workItem from="1749206288124" duration="20631000" />
+      <workItem from="1749206288124" duration="21185000" />
+      <workItem from="1749324999388" duration="1693000" />
+      <workItem from="1749367262099" duration="7291000" />
     </task>
     <task id="LOCAL-00001" summary="-CHG: Microservice refactoring(Eureka-server)">
       <created>1655287660110</created>
@@ -900,14 +903,6 @@
       <option name="presentableId" value="LOCAL-00025" />
       <option name="project" value="LOCAL" />
       <updated>1683714777053</updated>
-    </task>
-    <task id="LOCAL-00110" summary="security config">
-      <option name="closed" value="true" />
-      <created>1747037072493</created>
-      <option name="number" value="00110" />
-      <option name="presentableId" value="LOCAL-00110" />
-      <option name="project" value="LOCAL" />
-      <updated>1747037072494</updated>
     </task>
     <task id="LOCAL-00111" summary="security config">
       <option name="closed" value="true" />
@@ -1093,7 +1088,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749225101632</updated>
     </task>
-    <option name="localTasksCounter" value="134" />
+    <task id="LOCAL-00134" summary="FIX# Kafka">
+      <option name="closed" value="true" />
+      <created>1749227898278</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1749227898278</updated>
+    </task>
+    <option name="localTasksCounter" value="135" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

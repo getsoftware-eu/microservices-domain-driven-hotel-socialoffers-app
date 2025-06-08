@@ -7,7 +7,8 @@ services:
       POSTGRES_PASSWORD: postgres
       PGDATA: /data/postgres
     volumes:
-      - postgres:/data/postgres
+      - postgres_data:/data/postgres
+      - ./docker/postgres-init:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
     networks:
@@ -44,7 +45,7 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1   # Replication factor for transaction logs
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1              # Minimum in-sync replicas for transactional logs
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0           # Initial delay before consumer group rebalancing
-      KAFKA_NUM_PARTITIONS: 3                             # Default number of partitions for new topics
+      KAFKA_NUM_PARTITIONS: 1                             # Default number of partitions for new topics
     ports:
       - "9092:9092"     # Port for Kafka broker
     healthcheck:
@@ -64,17 +65,23 @@ services:
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
-      KC_DB: dev-file
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: keycloak
+    depends_on:
+      - postgres
     ports:
       - "8089:8080"
+
   
-  zipkin:
-    image: openzipkin/zipkin
-    container_name: hotel_zipkin
-    ports:
-      - "9411:9411"
-#    networks:
-#      - spring
+#  zipkin:
+#    image: openzipkin/zipkin
+#    container_name: hotel_zipkin
+#    ports:
+#      - "9411:9411"
+##    networks:
+##      - spring
 
   hotel-app:
     image: eugenfff/hotel-app:1.0.0
@@ -86,14 +93,14 @@ services:
       - postgres
       - broker
 
-  hotel-chat:
-    image: eugenfff/hotel-service-chat:1.0.0
-    ports:
-      - "8081:8080"  
-    environment:
-      SPRING_KAFKA_BOOTSTRAP_SERVERS: broker:9092 #,kafka2:19093,kafka3:19094
-    depends_on:
-      - broker
+#  hotel-chat:
+#    image: eugenfff/hotel-service-chat:1.0.0
+#    ports:
+#      - "8081:8080"  
+#    environment:
+#      SPRING_KAFKA_BOOTSTRAP_SERVERS: broker:9092 #,kafka2:19093,kafka3:19094
+#    depends_on:
+#      - broker
       
 #  hotel-menu:
 #    image: eugenfff/hotel-service-menu:1.0.0
@@ -117,8 +124,8 @@ networks:
     driver: bridge
 
 volumes:
-  postgres:
-  pgadmin:
+  postgres_data:
+#  pgadmin:
   #kafka1-data:
   #kafka2-data:
   #kafka3-data:

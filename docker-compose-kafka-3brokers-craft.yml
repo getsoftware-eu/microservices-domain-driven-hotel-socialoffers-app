@@ -91,3 +91,6 @@ volumes:
   kafka1-data:
   kafka2-data:
   kafka3-data:
+    
+    
+# docker-compose -f docker-compose-kafka-3brokers-craft.yml up -d
