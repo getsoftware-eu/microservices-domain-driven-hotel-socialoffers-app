@@ -31,26 +31,9 @@ public class DomainMessage<T extends DomainMessagePayload> {
 
     private final long messageId;
 
-
     //Поля correlationId и causationId поддерживают отслеживание и отладку в распределенных системах.
     private final long correlationId;
     private final long causationId;
-
-
-//    DomainMessage(String messageType, LocalDateTime timestamp, Long tenantId, T payload, long messageId, long correlationId, long causationId){
-//        this.messageType = messageType;
-//        this.timestamp = timestamp;
-//        this.tenantId = tenantId;
-//        this.payload = payload;
-//        this.messageId = messageId;
-//        this.correlationId = correlationId;
-//        this.causationId = causationId;
-//
-//    }
-
-//    private DomainMessage() {
-//        // needed by Jackson
-//    }
 
     @NotNull
     public T getPayload() {
@@ -60,8 +43,7 @@ public class DomainMessage<T extends DomainMessagePayload> {
     public String getMessageType() {
         return messageType;
     }
-
-
+    
 //    @Override
 //    public String toString() {
 //        return MoreObjects.toStringHelper(this) //
@@ -73,7 +55,6 @@ public class DomainMessage<T extends DomainMessagePayload> {
 //                .toString();
 //    }
     
-
     /**
      * The message consumers might not be interested in all information send out by the message producer.
      * Thus their payload will contain only a sub-set of the attributes send out. The intended usage of this

@@ -29,7 +29,7 @@ public class CheckinKafkaSubscriber {
 
     @KafkaListener(topics = {"checkin.checkin.created.event"}, groupId = "checkin.notification.processor.dev")
     public void createCheckin(DomainMessage<CheckinUpdatedEventPayload> message) {
-        var payload = message.getPayload();
+        CheckinUpdatedEventPayload payload = message.getPayload();
 
         {
             log.info("Processing event {}", message.getMessageType());
@@ -56,7 +56,7 @@ public class CheckinKafkaSubscriber {
     //    @DomainMessageHandler("checkin.checkin.updated.event")
     @KafkaListener(topics = {"checkin.checkin.updated.event"}, groupId = "checkin.notification.processor.dev")
     public void updateCheckin(DomainMessage<CheckinUpdatedEventPayload> message) {
-        var payload = message.getPayload();
+        CheckinUpdatedEventPayload payload = message.getPayload();
 
         {
             log.info("Processing event {}", message.getMessageType());
