@@ -38,12 +38,12 @@ import java.util.concurrent.ConcurrentHashMap;
 
         if(!existsInCache(uniqueMessageId, message))
         {
-            DomainMessagePayload payload = message.getPayload();
+            var payload = message.getPayload();
             
             switch (message.getMessageType()){
                 case "checkin.checkin.created.event" -> {
                     if (payload instanceof CheckinUpdatedEventPayload) 
-                        onCheckinCreatedEvent((CheckinUpdatedEventPayload) payload);
+                        onCheckinCreatedEvent(((CheckinUpdatedEventPayload) payload));
                 }
                 case "checkin.checkin.deleted.event" -> {
                     if (payload instanceof CheckinDeletedEventPayload)

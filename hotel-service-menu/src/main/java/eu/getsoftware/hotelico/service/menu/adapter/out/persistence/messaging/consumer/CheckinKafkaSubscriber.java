@@ -3,7 +3,6 @@ package eu.getsoftware.hotelico.service.menu.adapter.out.persistence.messaging.c
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.CheckinUpdatedEventPayload;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.DomainMessage;
-import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.DomainMessagePayload;
 import eu.getsoftware.hotelico.service.menu.application.port.in.process.MenuProcessManagerService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,17 +25,12 @@ public class CheckinKafkaSubscriber {
 
     @KafkaListener(topics = {"checkin.checkin.created.event"}, groupId = "eu_group_1")
     public void createCheckin(DomainMessage<CheckinUpdatedEventPayload> message) {
-        DomainMessagePayload payload = message.getPayload();
+        var payload = message.getPayload();
 
         {
             log.info("Processing event {}", message.getMessageType());
             
-            if (!(payload instanceof CheckinUpdatedEventPayload)) {
-                log.warn("Received unexpected payload type: {}", payload.getClass().getName());
-                return;
-            }
-            
-            CheckinUseCaseDTO checkinDTO = toCheckin((CheckinUpdatedEventPayload) payload);
+            CheckinUseCaseDTO checkinDTO = toCheckin(payload);
 //            checkinRepository.save(checkinDTO);
             menuProcessManager.handleCheckinCreated(checkinDTO);
         }
@@ -45,32 +39,25 @@ public class CheckinKafkaSubscriber {
     //    @DomainMessageHandler("checkin.checkin.updated.event")
     @KafkaListener(topics = {"checkin.checkin.updated.event"}, groupId = "eu_group_1")
     public void updateCheckin(DomainMessage<CheckinUpdatedEventPayload> message) {
-        DomainMessagePayload payload = message.getPayload();
+        var payload = message.getPayload();
 
-        {
-            log.info("Processing event {}", message.getMessageType());
-
-            if (!(payload instanceof CheckinUpdatedEventPayload)) {
-                log.warn("Received unexpected payload type: {}", payload.getClass().getName());
-                return;
-            }
-            
-            CheckinUseCaseDTO checkin = toCheckin((CheckinUpdatedEventPayload)payload);
+        log.info("Processing event {}", message.getMessageType());
+        
+        CheckinUseCaseDTO checkin = toCheckin(payload);
 //            checkinRepository.partialUpdateCheckin(checkin);
-            menuProcessManager.handleCheckinUpdated(checkin);
+        menuProcessManager.handleCheckinUpdated(checkin);
 
-        }
     }
 
     //    @DomainMessageHandler("checkin.checkin.deleted.event")
     @KafkaListener(topics = {"checkin.checkin.deleted.event"}, groupId = "eu_group_1")
     public void deleteCheckin(DomainMessage<CheckinUpdatedEventPayload> message) {
-        DomainMessagePayload payload = message.getPayload();
+        var payload = message.getPayload();
 
         {
             log.info("Processing event {}", message.getMessageType());
 //            checkinRepository.deleteById(payload.getEntityId());
-            menuProcessManager.handleCheckinClosed(((CheckinUpdatedEventPayload) payload).getEntityId());
+            menuProcessManager.handleCheckinClosed((payload).getEntityId());
 
         }
     }

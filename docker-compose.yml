@@ -116,10 +116,13 @@ services:
     networks:
       - postgres
     depends_on:
-      - postgres
-      - broker
-
-#  hotel-chat:
+        postgres:
+          condition: service_healthy
+        broker:
+          condition: service_started
+      
+      
+      #  hotel-chat:
 #    image: eugenfff/hotel-service-chat:1.0.0
 #    ports:
 #      - "8081:8080"  

@@ -3,7 +3,6 @@ package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.CheckinUpdatedEventPayload;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.DomainMessage;
-import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.DomainMessagePayload;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.mapper.CheckinDtoMapper;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.model.CheckinDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.repository.CheckinRepository;
@@ -30,13 +29,13 @@ public class CheckinKafkaSubscriber {
 
     @KafkaListener(topics = {"checkin.checkin.created.event"}, groupId = "checkin.notification.processor.dev")
     public void createCheckin(DomainMessage<CheckinUpdatedEventPayload> message) {
-        DomainMessagePayload payload = message.getPayload();
+        var payload = message.getPayload();
 
         {
             log.info("Processing event {}", message.getMessageType());
             
             if(payload instanceof CheckinUpdatedEventPayload) {
-                CheckinUpdatedEventPayload checkinPayload = (CheckinUpdatedEventPayload) payload;
+                CheckinUpdatedEventPayload checkinPayload = payload;
                 
                 CheckinUseCaseDTO checkinDTO = toCheckinDTO(checkinPayload);//.build();
                 
@@ -57,11 +56,11 @@ public class CheckinKafkaSubscriber {
     //    @DomainMessageHandler("checkin.checkin.updated.event")
     @KafkaListener(topics = {"checkin.checkin.updated.event"}, groupId = "checkin.notification.processor.dev")
     public void updateCheckin(DomainMessage<CheckinUpdatedEventPayload> message) {
-        DomainMessagePayload payload = message.getPayload();
+        var payload = message.getPayload();
 
         {
             log.info("Processing event {}", message.getMessageType());
-            CheckinUseCaseDTO checkinDTO = toCheckinDTO((CheckinUpdatedEventPayload)payload);//.build();
+            CheckinUseCaseDTO checkinDTO = toCheckinDTO(payload);//.build();
 //            checkinRepository.partialUpdateCheckin(checkinDTO);
 
              CheckinDBEntity entity = checkinRepository.findByDomainEntityIdValue(checkinDTO.getInitId()).orElseThrow(()-> new RuntimeException("not found"));

@@ -2,7 +2,6 @@ package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.
 
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CheckinUseCaseDTO;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.CheckinUpdatedEventPayload;
-import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.CheckinDomainEvent;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.DomainMessage;
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.service.booking.adapter.out.service.messaging.KafkaMessagePublisher;
@@ -62,7 +61,7 @@ public class CheckinMessagePublisher {
 //                .withAdditionalProperty("data","test")
 //                .build();
         
-        DomainMessage<?> eventMessage = CheckinDomainEvent.builder()
+        DomainMessage<?> eventMessage = DomainMessage.builder()
                 .messageType(messageType)
                 .tenantId(1L)
                 .payload(eventPayload)
