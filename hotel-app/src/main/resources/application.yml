@@ -7,7 +7,7 @@ spring:
     import: optional:classpath:application-${spring.profiles.active}.yml
 #  config.activate.on-profile: development
   datasource:
-    url: jdbc:postgresql://localhost:5432/hotel
+    url: jdbc:postgresql://postgres_db:5432/hotel
     username: eu_user
     password: postgres
     driver-class-name: org.postgresql.Driver
@@ -22,7 +22,7 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
     
-#    generate-ddl: true
+    generate-ddl: true
 #    defer-datasource-initialization: true 
   #  zipkin:
 #    base-url: http://localhost:9411
@@ -77,23 +77,26 @@ spring:
     allow-bean-definition-overriding: true
   security:
     oauth2:
-      resourceserver: 
+      resourceserver: #приложение работает как Resource Server: eu: важно keycloak:8089, потому что Spring обращается изнутри Docker.
         jwt:
-          issuer-uri: http://keycloak:8089/realms/hotel-socialoffers
+          issuer-uri: http://keycloak_web:8080/realms/hotel-socialoffers
           #использовать 'keycloak' (а не 'localhost') как hostname — потому что это внутренняя сеть Docker Compose.
           #issuer-uri заменяет необходимость в KeycloakConfigResolver.
       client:
+#        registration.keycloak — это настройки конкретного клиента (твое приложение как OAuth2 клиент).
+#        provider.keycloak — это настройки провайдера (в данном случае Keycloak), откуда Spring подтягивает .well-known/openid-configuration.
         registration: 
           keycloak:
             client-id: hotel-app
-            client-secret: UtKfssqVcaAnCcgNNULWS1fAPCjtpjMx
+            client-secret: yFN0gFvnv2mG9Pb6qlHXBVqAqjozxuo8
             scope: openid, profile, email
             authorization-grant-type: authorization_code
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             provider: keycloak
-        provider:  
+        provider:  # eu: приложение само ходит в Keycloak как OAuth2 Client: для авторизации через браузер
           keycloak:
-            issuer-uri: http://localhost:8089/realms/hotel-socialoffers #Realm = hotel-socialoffers
+            issuer-uri: http://keycloak_web:8080/realms/hotel-socialoffers 
+            #чтобы найти authorization_endpoint, token_endpoint, и т.д.
             user-name-attribute: preferred_username
 
 #entitymanager:
@@ -109,7 +112,7 @@ security:
     
 #liquibase.change-log: classpath:/db/changelog/db.changelog-master.xml #boot2: liquibase.change-log: classpath:/db/changelog/db.changelog-master.xml
 server:
-  port: 8088
+  port: 8080
   error:
     whitelabel.enabled: false
     
@@ -128,13 +131,6 @@ server:
 
 spring:
   config.activate.on-profile: development
-#  datasource:
-#    url: jdbc:postgresql://localhost:5434/hotel
-#    username: postgres #//eu_user with own roles
-#    password: postgres
-#  jpa:
-#    hibernate:
-#      ddl-auto: create #eugen, not for production: update
   thymeleaf:
     cache: false
 
@@ -147,16 +143,9 @@ logging:
 #    org.hibernate: #eu: test jpa
 #      orm: DEBUG
 #      SQL: DEBUG
-  
-#keycloak:
-#  enabled: false
-#  #config.file: classpath:static/backend-keycloak.json
-#  realm: EugenRealm
-#  auth_server_url: http://keycloakintern.getSoftware.eu:8080/auth
-#  #credentials.secret: 5251920c-edb0-4d51-8ddb-48cb9a0136b4
 
-server:
-  port: 8088
+#server:
+#  port: 8080
 
 ---
 
@@ -165,18 +154,34 @@ spring:
     activate:
       on-profile: testing
   datasource:
-    url: jdbc:postgresql://localhost:5432/customer
-    username: eu_user
+    url: jdbc:postgresql://localhost:5434/hotel
+    username: postgres
     password: postgres
-keycloak:
-  enabled: false
-  #config.file: classpath:static/backend-keycloak.json
-  realm: GetSoftware
-  auth_server_url: http://keycloakintern.getSoftware.eu:8080/auth
-  #credentials.secret: 5251920c-edb0-4d51-8ddb-48cb9a0136b4
+  security:
+    oauth2:
+      resourceserver: #приложение работает как Resource Server: eu: важно keycloak:8089, потому что Spring обращается изнутри Docker.
+        jwt:
+          issuer-uri: http://localhost:8089/realms/hotel-socialoffers
+          #использовать 'keycloak' (а не 'localhost') как hostname — потому что это внутренняя сеть Docker Compose.
+          #issuer-uri заменяет необходимость в KeycloakConfigResolver.
+      client:
+        #        registration.keycloak — это настройки конкретного клиента (твое приложение как OAuth2 клиент).
+        #        provider.keycloak — это настройки провайдера (в данном случае Keycloak), откуда Spring подтягивает .well-known/openid-configuration.
+        registration:
+          keycloak:
+            client-id: hotel-app
+            client-secret: yFN0gFvnv2mG9Pb6qlHXBVqAqjozxuo8
+            scope: openid, profile, email
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            provider: keycloak
+        provider: # eu: приложение само ходит в Keycloak как OAuth2 Client: для авторизации через браузер
+          keycloak:
+            issuer-uri: http://localhost:8089/realms/hotel-socialoffers #чтобы найти authorization_endpoint, token_endpoint, и т.д.
+            user-name-attribute: preferred_username
 
 server:
-  port: 8084
+  port: 8088
 
 ---
 
@@ -189,21 +194,8 @@ spring:
     username: hotelico
     password: frankfurt_2015
 
-keycloak:
-  enabled: false
-  #config.file: classpath:static/backend-keycloak.json
-  realm: GetSoftware
-  auth_server_url:
-  #credentials.secret: 5251920c-edb0-4d51-8ddb-48cb9a0136b4
-
 server:
   port: 8080
   
-        
-#jdbc.driverClassName = com.mysql.jdbc.Driver
-#jdbc.url = jdbc:mysql://localhost:3306/hotel
-#jdbc.username = root
-#hibernate.dialect = org.hibernate.dialect.MySQLDialect
-#hibernate.show_sql = false
-#hibernate.format_sql = false
+      
 

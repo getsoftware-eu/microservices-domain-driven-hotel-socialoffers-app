@@ -11,11 +11,10 @@ services:
       - postgres_data:/data/postgres
       - ./docker/postgres-init:/docker-entrypoint-initdb.d
 #      - ./docker/postgres-init/01-init-keycloak.sql:/docker-entrypoint-initdb.d/01-init-keycloak.sql
-
     ports:
       - "5432:5432"
     networks:
-      - postgres
+      - app-network
     restart: unless-stopped
     healthcheck:
       test: [ "CMD", "pg_isready", "-U", "postgres" ]
@@ -35,12 +34,12 @@ services:
 #    ports:
 #      - "5050:80"
 #    networks:
-#      - postgres
+#      - app-network
 #    restart: unless-stopped
   
   broker:
     image: apache/kafka:latest
-    container_name: broker
+    container_name: broker # from https://hub.docker.com/r/apache/kafka
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: broker,controller               # The node acts as both broker and controller
@@ -53,9 +52,11 @@ services:
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1   # Replication factor for transaction logs
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1              # Minimum in-sync replicas for transactional logs
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0           # Initial delay before consumer group rebalancing
-      KAFKA_NUM_PARTITIONS: 1                             # Default number of partitions for new topics
+      KAFKA_NUM_PARTITIONS: 2                             # Default number of partitions for new topics
     ports:
       - "9092:9092"     # Port for Kafka broker
+    networks:
+      - app-network
     healthcheck:
       test:
         [
@@ -87,7 +88,8 @@ services:
       KC_METRICS_ENABLED: true
       KC_HEALTH_ENABLED: true
     networks:
-      - postgres
+      - app-network
+#      - keycloak-network
     depends_on:
       postgres:
         condition: service_healthy
@@ -100,8 +102,8 @@ services:
 #    container_name: hotel_zipkin
 #    ports:
 #      - "9411:9411"
-##    networks:
-##      - spring
+##   networks:
+  #      - app-network
 
   hotel-app:
     image: eugenfff/hotel-app:1.0.0
@@ -113,12 +115,19 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres_db:5432/hotel
       SPRING_DATASOURCE_USERNAME: eu_user
       SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak_web:8080/realms/hotel-socialoffers 
+      #приложение работает как Resource Server
+      SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI: http://keycloak_web:8080/realms/hotel-socialoffers 
+      #приложение само ходит в Keycloak как OAuth2 Client
     networks:
-      - postgres
+      - app-network
+#      - keycloak-network
     depends_on:
         postgres:
           condition: service_healthy
         broker:
+          condition: service_started        
+        keycloak_web:
           condition: service_started
       
       
@@ -130,6 +139,8 @@ services:
 #      SPRING_KAFKA_BOOTSTRAP_SERVERS: broker:9092 #,kafka2:19093,kafka3:19094
 #    depends_on:
 #      - broker
+#        networks:
+#          - app-network
       
 #  hotel-menu:
 #    image: eugenfff/hotel-service-menu:1.0.0
@@ -139,19 +150,15 @@ services:
 #      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka1:19092,kafka2:19093,kafka3:19094
 #      depends_on:
 #        - broker
+#    networks:
+#      - app-network
 
-#  rabbitmq:
-#    image: rabbitmq:3.9.11-management-alpine
-#    container_name: rabbitmq
-#    ports:
-#      - "5672:5672"
-#      - "15672:15672"
-
-
-networks:
-  postgres:
+networks: #Когда использовать несколько networks? if нужно ограничить доступ между сервисами (например, hotel-app не должен видеть adminer)
+  app-network:
     driver: bridge
-
+#  keycloak-network:
+#    driver: bridge
+    
 volumes:
   postgres_data:
 #  pgadmin_data:

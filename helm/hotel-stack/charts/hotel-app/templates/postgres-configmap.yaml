@@ -1,0 +1,12 @@
+# path: helm/hotel-app/templates/postgres-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hotel-postgres-config
+  labels:
+    app: hotel-postgres
+
+data:
+  POSTGRES_DB: hotel
+  POSTGRES_USER: hotel
+  POSTGRES_PASSWORD: hotel

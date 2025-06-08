@@ -1,0 +1,14 @@
+# path: helm/hotel-app/templates/service.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: hotel-app
+spec:
+  selector:
+    app: hotel-app
+  ports:
+    - protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: 8080
+  type: {{ .Values.service.type }}

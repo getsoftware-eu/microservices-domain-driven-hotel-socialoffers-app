@@ -1,0 +1,30 @@
+# path: helm/hotel-app/values.yaml
+
+# Values file for Helm chart
+replicaCount: 1
+
+image:
+  repository: your-registry/hotel-app
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+env:
+  SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db:5432/hotel
+  SPRING_DATASOURCE_USERNAME: hotel
+  SPRING_DATASOURCE_PASSWORD: hotel
+  SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUER_URI: http://keycloak-web:8080/realms/hotel-socialoffers
+  SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_KEYCLOAK_ISSUER_URI: http://keycloak-web:8080/realms/hotel-socialoffers
+  SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENT_ID: hotel-app
+  SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_KEYCLOAK_CLIENT_SECRET: UtKfssqVcaAnCcgNNULWS1fAPCjtpjMx
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 512Mi
+  requests:
+    cpu: 250m
+    memory: 256Mi

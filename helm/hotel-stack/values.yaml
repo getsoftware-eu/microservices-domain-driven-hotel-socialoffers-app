@@ -1,22 +1,33 @@
-keycloak:
-  image: quay.io/keycloak/keycloak:21.1.1
-  adminUser: admin
-  adminPassword: admin
-  hostname: keycloak.local
+image:
+  hotelApp: eugenfff/hotel-app:latest
+  gateway: eugenfff/gateway:latest
+  keycloak: quay.io/keycloak/keycloak:24.0
+  postgres: postgres:16
+  kafka: bitnami/kafka:latest
 
-postgresql:
-  image: postgres:15
-  user: hotel
-  password: hotel
-  db: hotel_db
+keycloak:
+  hostname: keycloak.local
+  realm: hotel-socialoffers
+  admin:
+    user: admin
+    password: admin
+  db:
+    user: keycloak
+    password: keycloak
+    name: keycloak
+
+postgres:
+  db:
+    user: hotel
+    password: hotel
+    name: hotelico
 
 kafka:
-  image: bitnami/kafka:3.5
   zookeeperImage: bitnami/zookeeper:3.8
   replicas: 1
 
 gateway:
-  image: eugenfff/gateway:latest
+#  image: eugenfff/gateway:latest
   port: 8080
 
 services:
