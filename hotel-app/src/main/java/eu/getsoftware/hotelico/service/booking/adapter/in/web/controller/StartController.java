@@ -3,32 +3,30 @@ package eu.getsoftware.hotelico.service.booking.adapter.in.web.controller;
 import eu.getsoftware.hotelico.clients.common.adapter.in.web.controller.BasicController;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.IHotelService;
 import eu.getsoftware.hotelico.service.booking.application.hotel.port.out.iPortService.LastMessagesService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * RESTful webservice
  * REST Methoden with params for service execution
  */
 
-@Controller
+@RestController
 @RequestMapping("/")
-public class StartController  extends BasicController
+@RequiredArgsConstructor
+public class StartController extends BasicController
 {
-    @Autowired
-    private IHotelService hotelService;    
+    private final IHotelService hotelService;    
     
-    @Autowired
-    private LastMessagesService lastMessagesService;
+    private final LastMessagesService lastMessagesService;
     
     /**
      * start.jsp view file
      */
-    @RequestMapping(method = RequestMethod.GET)
-    public String viewUsers(ModelMap model) {
+    @GetMapping
+    public String start() {
 
 //        model.addAttribute("virtualHotelId", lastMessagesService.getInitHotelId());
 //        model.addAttribute("host", AppConfigProperties.HOST);
@@ -37,7 +35,7 @@ public class StartController  extends BasicController
 //        model.addAttribute("demoHotelId", lastMessagesService.getDemoHotelId());
 //        model.addAttribute("demoHotelCode", AppConfigProperties.HOTEL_DEMO_CODE);
         
-        return "start";
+        return "ok";
     }
 
 
