@@ -171,10 +171,10 @@ spring:
         registration:
           keycloak:
             client-id: hotel-app
-            client-secret: yFN0gFvnv2mG9Pb6qlHXBVqAqjozxuo8
+            client-secret: U4kIbIpsDW9ICYyvjbT6gFwbDD1UKp5D
             scope: openid, profile, email
             authorization-grant-type: authorization_code
-            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            redirect-uri: "{baseUrl}/ui/login/oauth2/code/{registrationId}"
             provider: keycloak
         provider: # eu: приложение само ходит в Keycloak как OAuth2 Client: для авторизации через браузер
           keycloak:

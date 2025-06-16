@@ -29,7 +29,7 @@ import java.util.Set;
 
 //@Api(value = "CustomerController") //add to swagger
 @RestController
-@RequestMapping("/customers")
+@RequestMapping("/api/customers")
 //@SessionAttributes(ControllerUtils.SESSION_CUSTOMER)
 @RequiredArgsConstructor
 public class CustomerController extends BasicController

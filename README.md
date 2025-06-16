@@ -40,6 +40,7 @@ The "Clean" (Layered) Architecture is another way to provide <b>separation of co
 
      - <b>in</b> adapters:
         - specific user request (openapi generated Controller Adapters)
+        - OpenApi generated DTO and Rest interfaces! 
     - <b>out</b> adapters:
         - persistence details + mapping (Infrastructure Adapters)
         - Presenter (ViewModel Adapters)

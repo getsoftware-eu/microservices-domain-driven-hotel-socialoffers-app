@@ -1,9 +1,11 @@
 package eu.getsoftware.hotelico.securitycommon.config;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.client.*;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
@@ -22,33 +24,80 @@ import org.springframework.web.reactive.function.client.WebClient;
 @ConditionalOnProperty(prefix = "hotelico.security.keycloak", name = "enabled", havingValue = "true")
 public class KeycloakSecurityConfig {
 
+
+    // Высший приоритет: API -> JWT Access Token only
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Order(1)
+    public SecurityFilterChain apiSecurityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/sso/login*").permitAll()
-                        .requestMatchers("/login*", "/login/*", "/your-multitenant-path/**/login*").hasRole("user")
-                        .anyRequest().permitAll()
-                )
-                .oauth2ResourceServer(oauth2 -> oauth2
-                        .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
-                )
-                .csrf(csrf -> csrf.disable()) // Stateless JWT
-                .logout(logout -> logout
-                        .logoutSuccessUrl("/")  // После логаута — на главную
-                );
+            .securityMatcher("/api/**") // Только для /api/**
+            .authorizeHttpRequests(auth -> auth
+                    .requestMatchers("/api/public/**").permitAll()
+                    .anyRequest().authenticated()
+            )
+            .oauth2ResourceServer(resourceServer ->
+                    resourceServer
+                            .jwt(Customizer.withDefaults())) // только JWT
+            .csrf(csrf -> csrf.disable());
 
         return http.build();
     }
 
+    // <-- Второй по приоритету: UI –> OAuth2 Login + Session
+    @Bean
+    @Order(2)
+    public SecurityFilterChain uiSecurityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .securityMatcher("/ui/**") // Только для /ui/**
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/ui/public/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .oauth2Login(Customizer.withDefaults()) // редиректит на Keycloak
+                .csrf(csrf -> csrf.disable());
+
+        return http.build();
+    }
+
+//    // 🔓 Public
+//    @Bean
+//    @Order(3)
+//    public SecurityFilterChain publicSecurityFilterChain(HttpSecurity http) throws Exception {
+//        http
+//                .authorizeHttpRequests(auth -> auth
+//                        .requestMatchers("/", "/public/**").permitAll()
+//                        .anyRequest().denyAll()
+//                );
+//        return http.build();
+//    }
+//    
+//    @Bean
+//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//        http
+//                .authorizeHttpRequests(authorize -> authorize
+//                        .requestMatchers("/sso/login*").permitAll()
+//                        .requestMatchers("/api/*", "/your-multitenant-path/**/login*").hasRole("user")
+//                        .anyRequest().authenticated()
+//                )
+//                .oauth2ResourceServer(oauth2 -> oauth2
+//                        .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter()))
+//                )
+//                .csrf(csrf -> csrf.disable()) // Stateless JWT
+//                .logout(logout -> logout
+//                        .logoutSuccessUrl("/")  // После логаута — на главную
+//                );
+//
+//        return http.build();
+//    }
+
     // ========== 2️⃣ JWT decoder ==========
 
-    @Value("${security.oauth2.client.provider.keycloak.issuer-uri}")
-    private String issuerUri;
+//    @Value("${security.oauth2.client.provider.keycloak.issuer-uri}")
+//    private String issuerUri;
     
     @Bean
-    public JwtDecoder jwtDecoder() {
-        return JwtDecoders.fromIssuerLocation(issuerUri);
+    public JwtDecoder jwtDecoder(OAuth2ResourceServerProperties properties) {
+        return JwtDecoders.fromIssuerLocation(properties.getJwt().getIssuerUri());
     }
 
     // Конвертер для маппинга ролей из JWT (чтобы добавить префикс ROLE_)
