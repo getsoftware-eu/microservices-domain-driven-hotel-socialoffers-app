@@ -1,9 +1,15 @@
 package eu.getsoftware.hotelico.clients.api.application.dto.entity;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.dto.BasicDTO;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.Setter;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -15,14 +21,31 @@ import java.util.Map;
 /**
  * DTO lieber immutable - all field are final and no side effects!
  */
-@With
+//@With
 @Getter
 @Builder
-@RequiredArgsConstructor
+//@NoArgsConstructor //для Jackson serialization, need empty ровно как JPA
+@JsonIgnoreProperties(ignoreUnknown = true) //для Jackson serialization
 public class CustomerDTO implements BasicDTO<CustomerDomainEntityId> {
-    
+
+    @NonNull
     private final CustomerDomainEntityId domainEntityId;
     private final boolean active = true;
+
+    @JsonCreator //для Jackson serialization
+    public CustomerDTO(@JsonProperty("domainEntityId") CustomerDomainEntityId domainEntityId) {
+        if (domainEntityId == null) {
+            throw new IllegalArgumentException("domainEntityId must not be null");
+        }
+        
+        this.domainEntityId = domainEntityId;
+    }
+
+    // Статическая фабрика
+//    @JsonCreator
+    public static CustomerDTO of(CustomerDomainEntityId id) {
+        return new CustomerDTO(id);
+    }
     
     @NonNull
     @Setter

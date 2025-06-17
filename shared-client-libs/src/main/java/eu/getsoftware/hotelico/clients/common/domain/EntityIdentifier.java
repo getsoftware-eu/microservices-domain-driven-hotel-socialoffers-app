@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.clients.common.domain;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 /**
@@ -8,7 +9,7 @@ import java.util.UUID;
  * такие как Domain Events, Anti-Corruption Layer или API, которые позволят передавать OrderId между контекстами. 
  * Это позволяет избежать зависимости одного контекста от внутренней реализации другого.
  */
-public interface EntityIdentifier {
+public interface EntityIdentifier extends Serializable {
 
     String uuidValue();
     

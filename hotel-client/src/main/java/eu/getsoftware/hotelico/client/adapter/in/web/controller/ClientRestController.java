@@ -28,7 +28,7 @@ public class ClientRestController {
     //Spring WebFlux сам отправит CustomerDTO как JSON, когда Mono завершится.
     public Mono<CustomerDTO> callOneCustomer(@RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient auth) {
         return webClient.get()
-                .uri("http://localhost:8088/api/customers/1")
+                .uri("http://localhost:8088/api/customers/550e8400-e29b-41d4-a716-446655440000")
                 .attributes(ServletOAuth2AuthorizedClientExchangeFilterFunction.oauth2AuthorizedClient(auth)) 
                 //Это нужно для того, чтобы WebClient знал, какой Access_token подставить в Authorization заголовок (например, Bearer <token>).
                 //auth — это объект OAuth2AuthorizedClient, который уже содержит токен.

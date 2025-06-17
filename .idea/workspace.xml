@@ -6,8 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="6bed6a7b-ba6e-4135-bbf1-4d8adc97cc98" name="Changes" comment="FIX# filterChain separate for JWT (resource server) and client (ui login via Keycloak)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hotel-client/src/main/java/eu/getsoftware/hotelico/client/adapter/in/web/controller/ClientRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-client/src/main/java/eu/getsoftware/hotelico/client/adapter/in/web/controller/ClientRestController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hotel-server/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/customer/CustomerController.java" beforeDir="false" afterPath="$PROJECT_DIR$/hotel-server/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/customer/CustomerController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/ids/CustomerDomainEntityId.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/ids/CustomerDomainEntityId.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/application/dto/entity/CustomerDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/api/application/dto/entity/CustomerDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/EntityIdentifier.java" beforeDir="false" afterPath="$PROJECT_DIR$/shared-client-libs/src/main/java/eu/getsoftware/hotelico/clients/common/domain/EntityIdentifier.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,7 +17,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="DarkyenusTimeTracker">
-    <option name="totalTimeSeconds" value="468898" />
+    <option name="totalTimeSeconds" value="472081" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -114,6 +116,7 @@
     "Maven.hotel-app [package].executor": "Run",
     "Maven.hotel-app [validate].executor": "Run",
     "Maven.hotel-app [verify].executor": "Run",
+    "Maven.hotel-client [install].executor": "Run",
     "Maven.hotel-plugin-chat [clean].executor": "Run",
     "Maven.hotel-plugin-chat [install].executor": "Run",
     "Maven.hotel-plugin-menu [clean].executor": "Run",
@@ -258,7 +261,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.Hotel local testing profile">
+  <component name="RunManager" selected="Spring Boot.Client local testing profile">
     <configuration default="true" type="Applet" factoryName="Applet">
       <option name="WIDTH" value="400" />
       <option name="HEIGHT" value="300" />
@@ -770,7 +773,7 @@
       <workItem from="1749367262099" duration="27586000" />
       <workItem from="1750059522218" duration="3088000" />
       <workItem from="1750084815500" duration="12052000" />
-      <workItem from="1750139864990" duration="14935000" />
+      <workItem from="1750139864990" duration="18169000" />
     </task>
     <task id="LOCAL-00001" summary="-CHG: Microservice refactoring(Eureka-server)">
       <created>1655287660110</created>
@@ -946,14 +949,6 @@
       <option name="presentableId" value="LOCAL-00025" />
       <option name="project" value="LOCAL" />
       <updated>1683714777053</updated>
-    </task>
-    <task id="LOCAL-00121" summary="refactoring structure">
-      <option name="closed" value="true" />
-      <created>1748620972932</created>
-      <option name="number" value="00121" />
-      <option name="presentableId" value="LOCAL-00121" />
-      <option name="project" value="LOCAL" />
-      <updated>1748620972932</updated>
     </task>
     <task id="LOCAL-00122" summary="refactoring structure">
       <option name="closed" value="true" />
@@ -1139,7 +1134,15 @@
       <option name="project" value="LOCAL" />
       <updated>1750154282090</updated>
     </task>
-    <option name="localTasksCounter" value="145" />
+    <task id="LOCAL-00145" summary="FIX# filterChain separate for JWT (resource server) and client (ui login via Keycloak)">
+      <option name="closed" value="true" />
+      <created>1750155209345</created>
+      <option name="number" value="00145" />
+      <option name="presentableId" value="LOCAL-00145" />
+      <option name="project" value="LOCAL" />
+      <updated>1750155209345</updated>
+    </task>
+    <option name="localTasksCounter" value="146" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1292,7 +1295,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/hotel-server/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/in/web/controller/customer/CustomerController.java</url>
-          <line>73</line>
+          <line>77</line>
           <properties>
             <option name="lambda-ordinal" value="-1" />
           </properties>
@@ -1302,6 +1305,16 @@
           <url>file://$PROJECT_DIR$/hotel-server/src/main/java/eu/getsoftware/hotelico/service/booking/adapter/out/persistence/customer/portServiceImpl/CustomerPortServiceImpl.java</url>
           <line>89</line>
           <option name="timeStamp" value="24" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/hotel-client/src/main/java/eu/getsoftware/hotelico/client/adapter/in/web/controller/ClientRestController.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/hotel-client/src/main/java/eu/getsoftware/hotelico/client/adapter/in/web/controller/ClientRestController.java</url>
+          <line>29</line>
+          <option name="timeStamp" value="26" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-field">
           <url>file://$PROJECT_DIR$/hotel-server/src/main/java/eu/getsoftware/hotelico/service/booking/application/checkin/multiDomainOrchestratorCheckinService/useCase/CheckinUseCaseImpl.java</url>

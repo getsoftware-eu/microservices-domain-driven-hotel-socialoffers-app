@@ -28,6 +28,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+/**
+ * eu: TODO UUID in openApi as domainId Parameter (not Record)
+ */
+
 //@Api(value = "CustomerController") //add to swagger
 @RestController
 @RequestMapping("/api/customers")
