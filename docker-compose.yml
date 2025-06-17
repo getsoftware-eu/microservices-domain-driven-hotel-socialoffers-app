@@ -105,8 +105,8 @@ services:
 ##   networks:
   #      - app-network
 
-  hotel-app:
-    image: eugenfff/hotel-app:1.0.0
+  hotel-server:
+    image: eugenfff/hotel-server:1.0.0
     ports:
       - "8088:8080"
     environment:
@@ -153,7 +153,7 @@ services:
 #    networks:
 #      - app-network
 
-networks: #Когда использовать несколько networks? if нужно ограничить доступ между сервисами (например, hotel-app не должен видеть adminer)
+networks: #Когда использовать несколько networks? if нужно ограничить доступ между сервисами (например, hotel-server не должен видеть adminer)
   app-network:
     driver: bridge
 #  keycloak-network:

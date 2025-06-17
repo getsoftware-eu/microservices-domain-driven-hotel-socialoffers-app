@@ -3,20 +3,20 @@
 apiVersion: apps/v1 #eu: other apiVersion for 'Deployment'!!!!! not v1 (cubectl or UI only calls the API..)
 kind: Deployment
 metadata:
-  name: hotel-app
+  name: hotel-server
   labels:
-    app: hotel-app
+    app: hotel-server
 spec:
   replicas: 1 #achtung, how much instances for "LoadBalancer"
   template:
     metadata:
-      name: hotel-app
+      name: hotel-server
       labels:
-        app: hotel-app #app name
+        app: hotel-server #app name
     spec:
       containers: #eu: list, but here only one container from image!!
-        - name: hotel-app
-          image: eugenfff/hotel-app:1.0.0
+        - name: hotel-server
+          image: eugenfff/hotel-server:1.0.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 8080 #eu: others have to send to this port (only  for documentation)! But pod can listen not only this port. 
@@ -26,4 +26,4 @@ spec:
       restartPolicy: Always
   selector:
     matchLabels:
-      app: hotel-app
+      app: hotel-server

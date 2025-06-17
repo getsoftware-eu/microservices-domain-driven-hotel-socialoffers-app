@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>hotelservices</artifactId>
+        <groupId>eu.getsoftware.hotelico</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>hotel-server</artifactId>
+    <packaging>jar</packaging>
+
+    <properties>
+        <aspectj.version>1.7.4</aspectj.version>
+<!--        <maven.compiler.source>17</maven.compiler.source>-->
+<!--        <maven.compiler.target>17</maven.compiler.target>-->
+<!--        <testcontainers.version>1.19.0</testcontainers.version>-->
+<!--        <aws.s3.version>2.5.5</aws.s3.version>-->
+    </properties>
+    
+    
+    <dependencies><!-- добавь только специфичные зависимости (если они не в parent) -->
+
+        <dependency>
+            <groupId>eu.getsoftware.hotelico</groupId>
+            <artifactId>security-keycloak-resource-config</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+<!--            eu: DELTE IT-->
+<!--        <dependency>-->
+<!--            &lt;!&ndash; Иначе Вам пришлось бы вручную парсить и валидировать JWT: получать public key, проверять подпись, парсить claims&ndash;&gt;-->
+
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-oauth2-client</artifactId>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>-->
+<!--        </dependency>-->
+        
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-resource-server</artifactId>
+            <version>6.2.1</version>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-oauth2-client</artifactId>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-cache -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-classic</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.apache.logging.log4j</groupId>
+                    <artifactId>log4j-to-slf4j</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.springframework.boot</groupId>-->
+<!--                    <artifactId>spring-boot-starter-logging</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <!-- <version>From Spring BOM</version> -->
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <!-- <version>From Spring BOM</version> -->
+        </dependency>
+        
+        <dependency>
+            <groupId>eu.getsoftware.hotelico</groupId>
+            <artifactId>shared-client-libs</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <!-- disable tomcat dependency in order to use another one (undertow) -->
+<!--                <exclusion>-->
+<!--                    <groupId>org.springframework.boot</groupId>-->
+<!--                    <artifactId>spring-boot-starter-tomcat</artifactId>-->
+<!--                </exclusion>-->
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <!--Exclude the built-in Logback dependency. This is necessary as Spring Boot will pick and use Logback if present in the classpath.-->
+            <exclusions>
+                <exclusion>
+                    <groupId>ch.qos.logback</groupId>
+                    <artifactId>logback-classic</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        
+         <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency> 
+        
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka-test</artifactId>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+<!--            <version>${aws.s3.version}</version>-->
+        </dependency>
+
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>s3</artifactId>
+            <version>${aws.s3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>auth</artifactId>
+            <version>${aws.s3.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>software.amazon.awssdk</groupId>
+            <artifactId>aws-sdk-java</artifactId>
+            <version>${aws.s3.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mapstruct</groupId>
+            <artifactId>mapstruct-processor</artifactId>
+            <version>${mapstruct.version}</version> <!-- not in Spring Bom, but in parent dependencyManagement -->
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    &lt;!&ndash; exclude junit4&ndash;&gt;-->
+<!--                    <groupId>org.junit.vintage</groupId>-->
+<!--                    <artifactId>junit-vintage-engine</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>4.6.1</version>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-log4j2</artifactId>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.aspectj</groupId>-->
+<!--            <artifactId>aspectjweaver</artifactId>-->
+<!--            <version>${aspectj.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.aspectj</groupId>-->
+<!--            <artifactId>aspectjrt</artifactId>-->
+<!--            <version>${aspectj.version}</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--            <artifactId>jackson-core</artifactId>-->
+<!--&lt;!&ndash;            <version>from Spring Boot BOM</version>&ndash;&gt;-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>javax.websocket</groupId>-->
+<!--            <artifactId>javax.websocket-api</artifactId>-->
+<!--            <version>1.0</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>javax.servlet</groupId>-->
+<!--            <artifactId>javax.servlet-api</artifactId>-->
+<!--            <version>3.1.0</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>javax.servlet</groupId>-->
+<!--            <artifactId>jstl</artifactId>-->
+<!--            <version>1.2</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.security</groupId>-->
+<!--            <artifactId>spring-security-crypto</artifactId>-->
+<!--            <version>${spring-security-crypto.version}</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>commons-io</groupId>-->
+<!--            <artifactId>commons-io</artifactId>-->
+<!--            <version>2.4</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.slf4j</groupId>-->
+<!--            <artifactId>slf4j-api</artifactId>-->
+<!--            <version>1.7.12</version>-->
+<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
+        
+      
+
+<!--        <dependency>-->
+<!--            <groupId>ro.isdc.wro4j</groupId>-->
+<!--            <artifactId>wro4j-core</artifactId>-->
+<!--            <version>1.7.6</version>-->
+<!--        </dependency>-->
+
+        <!-- cache list without nulls -->
+<!--        <dependency>-->
+<!--            <groupId>com.google.guava</groupId>-->
+<!--            <artifactId>guava</artifactId>-->
+<!--            <version>16.0</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; url rewrite filter in web.xml &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.tuckey</groupId>-->
+<!--            <artifactId>urlrewritefilter</artifactId>-->
+<!--            <version>4.0.4</version>-->
+<!--        </dependency>-->
+
+        
+        
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-atlas -->
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-registry-atlas</artifactId>
+            <version>1.9.5</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+        </dependency>
+
+        <!-- Spring Data REST to handle repository event handling -->
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-rest-webmvc</artifactId>
+        </dependency>
+        
+    </dependencies>
+
+
+<!--    <dependencyManagement> -->
+<!--&lt;!&ndash;   Управление версиями зависимостей в одном POM:-->
+<!--Избежание дублирования: Если у вас есть один проект, и в нем много зависимостей, которые требуют одинаковой версии (например, различные Spring Boot стартеры), <dependencyManagement> позволяет указать версии этих зависимостей только один раз. Затем вы можете добавлять эти зависимости в <dependencies> секции без необходимости указывать версию каждый раз.&ndash;&gt;-->
+<!--        <dependencies>-->
+
+<!--            <dependency>-->
+<!--                <groupId>org.testcontainers</groupId>-->
+<!--                <artifactId>testcontainers-bom</artifactId>-->
+<!--                <version>${testcontainers.version}</version>-->
+<!--                <type>pom</type>-->
+<!--                <scope>import</scope>-->
+<!--            </dependency>-->
+<!--        </dependencies>-->
+<!--    </dependencyManagement>-->
+    
+    <build>
+        <plugins>
+<!--            parent plugin: maven-compile-plugin is automaticly in parent pom created for all Subs!-->
+<!--            from stackoverflow: parent pluginManagement: added the plugin only in the modules using it (in plugin section).-->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+<!--                    <skip>true</skip>-->
+                    <mainClass>eu.getsoftware.hotelico.service.booking.HotelApplication</mainClass>
+                    
+                </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${compiler.plugin.version}</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <annotationProcessorPaths>
+                        <!--							eu: erst Lombok, danach Mapstruct (he needs Lombok)-->
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.mapstruct</groupId>
+                            <artifactId>mapstruct-processor</artifactId>
+                            <version>${mapstruct.version}</version> <!-- Use the property here -->
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
+            </plugin>
+            
+        </plugins>
+    </build>
+</project>

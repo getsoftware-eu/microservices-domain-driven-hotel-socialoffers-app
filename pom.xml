@@ -7,11 +7,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	
 	<modules>
-		<module>security-common</module>
+		<module>security-keycloak-client-config</module>
+		<module>security-keycloak-resource-config</module>
 		<module>shared-client-libs</module>
-		<module>hotel-app</module>
-		<module>hotel-service-chat</module>
-		<module>hotel-service-menu</module>
+		<module>hotel-server</module>
+		<module>hotel-chat-service</module>
+		<module>hotel-menu-service</module>
+        <module>hotel-client</module>
     </modules>
 	
 	<name>social-hotel-interactions</name>
@@ -361,7 +363,7 @@
 				<configuration>
 					<nodeVersion>v8.1.2</nodeVersion>
 					<npmVersion>5.2.0</npmVersion>
-					<workingDirectory>hotel-app/src/main/frontend</workingDirectory>
+					<workingDirectory>hotel-server/src/main/frontend</workingDirectory>
 				</configuration>
 			</plugin>
 			<!-- /Frontend Plugin -->

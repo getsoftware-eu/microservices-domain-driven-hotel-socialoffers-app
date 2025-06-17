@@ -30,19 +30,19 @@ unit-tests:
     expire_in: 1 week
 
 # Сборка первого микросервиса
-build-microservice-hotel-app:
+build-microservice-hotel-server:
   <<: *testing-and-staging-only
   stage: build
   variables:
-    SERVICE_NAME: "hotel-app"
+    SERVICE_NAME: "hotel-server"
   script:
     - echo "Building $SERVICE_NAME"
     - ./mvnw clean package -DskipTests
-    - docker build -t my-app:$CI_COMMIT_REF_SLUG .
-    - mkdir -p .ci_status && touch .ci_status/build_success_hotel-app
+    - docker build -t my-server:$CI_COMMIT_REF_SLUG .
+    - mkdir -p .ci_status && touch .ci_status/build_success_hotel-server
   artifacts:
     paths:
-      - ./hotel-app/target/*.jar
+      - ./hotel-server/target/*.jar
       - .ci_status/
     expire_in: 1 week
 
@@ -68,7 +68,7 @@ integration-tests:
     - name: confluentinc/cp-kafka:latest
       alias: kafka
   script:
-    - docker run --rm -d --network host my-app:$CI_COMMIT_REF_SLUG
+    - docker run --rm -d --network host my-server:$CI_COMMIT_REF_SLUG
     - ./mvnw verify -Pintegration-test        
         
 health_tests:
@@ -84,14 +84,14 @@ health_tests:
     - docker-compose -f docker-compose.yml up -d
     - docker-compose -f docker-compose.yml ps
     - echo "Running integration tests..."
-    - docker-compose -f docker-compose.yml exec -T hotel-app curl -f http://localhost:8080/health
+    - docker-compose -f docker-compose.yml exec -T hotel-server curl -f http://localhost:8080/health
     - docker-compose -f docker-compose.yml exec -T hotel-chat curl -f http://localhost:8081/health
     - docker-compose -f docker-compose.yml exec -T hotel-menu curl -f http://localhost:8082/health
   after_script:
     - echo "Stopping and cleaning up Docker Compose"
     - docker-compose -f docker-compose.yml down
   dependencies:
-    - build-hotel-app
+    - build-hotel-server
     - build-plugin-chat
     - build-plugin-menu
   artifacts:
@@ -108,7 +108,7 @@ e2e_tests:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
   script:
-    - docker-compose up -d hotel-app hotel-chat kafka1 kafka2 kafka3 
+    - docker-compose up -d hotel-server hotel-chat kafka1 kafka2 kafka3 
     - ./mvnw verify -Pe2e-test
   after_script:
     - docker-compose down       
@@ -122,11 +122,11 @@ deploy-microservices:
   script:
     - echo "Publishing Docker images"
 
-    # Docker-образ для hotel-app
-    - if [ ! -e .ci_status/build_success_hotel-app ]; then echo "Build for hotel-app must be successful!"; exit 1 ; fi
-    - docker build -t $CI_REGISTRY_IMAGE/hotel-app:$CI_COMMIT_REF_SLUG -f ./hotel-app/Dockerfile ./hotel-app
-    - docker tag hotel-app:$CI_COMMIT_REF_SLUG my-registry/hotel-app:latest
-    - docker push $CI_REGISTRY_IMAGE/hotel-app:$CI_COMMIT_REF_SLUG
+    # Docker-образ для hotel-server
+    - if [ ! -e .ci_status/build_success_hotel-server ]; then echo "Build for hotel-server must be successful!"; exit 1 ; fi
+    - docker build -t $CI_REGISTRY_IMAGE/hotel-server:$CI_COMMIT_REF_SLUG -f ./hotel-server/Dockerfile ./hotel-server
+    - docker tag hotel-server:$CI_COMMIT_REF_SLUG my-registry/hotel-server:latest
+    - docker push $CI_REGISTRY_IMAGE/hotel-server:$CI_COMMIT_REF_SLUG
 
     # Docker-образ для plugin-chat
     - if [ ! -e .ci_status/build_success_plugin-chat ]; then echo "Build for plugin-chat must be successful!"; exit 1 ; fi
@@ -148,6 +148,6 @@ clean:
     - docker system prune -f --volumes
     - ./mvnw clean
     - rm -rf target/
-    - docker rmi $CI_REGISTRY_IMAGE/hotel-app:$CI_COMMIT_REF_SLUG || true
+    - docker rmi $CI_REGISTRY_IMAGE/hotel-server:$CI_COMMIT_REF_SLUG || true
     - docker rmi $CI_REGISTRY_IMAGE/plugin-chat:$CI_COMMIT_REF_SLUG || true
     - docker rmi $CI_REGISTRY_IMAGE/plugin-menu:$CI_COMMIT_REF_SLUG || true

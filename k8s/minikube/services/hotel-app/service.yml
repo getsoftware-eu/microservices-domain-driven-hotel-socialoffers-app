@@ -5,7 +5,7 @@ metadata:
   name: hotel-app-service #eu:service
 spec:
   selector:
-    app: hotel-app
+    app: hotel-server
   ports:
     - port: 80 #eu: external port
       targetPort: 8080 #eu: internal port?

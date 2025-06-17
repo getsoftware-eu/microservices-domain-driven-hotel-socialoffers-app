@@ -1,0 +1,71 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <artifactId>hotelservices</artifactId>
+        <groupId>eu.getsoftware.hotelico</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>security-keycloak-client-config</artifactId>
+    <version>0.0.1-SNAPSHOT</version> <!-- ← добавь это -->
+
+<!--    eu: родительский pom.xml может передавать версии зависимостей через <dependencyManagement> — но только если дочерний pom.xml его действительно наследует.-->
+    
+    <dependencies>
+        <!-- eu: only here add all security-dependencies, not in paren pom!! 
+        And add this pom only in services, where it needed!!! -->
+
+        <!-- OAuth2 Resource Server -->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.boot</groupId>-->
+<!--            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>-->
+<!--        </dependency>-->
+
+        <!-- OAuth2 Client (client_credentials) -->
+        <dependency>
+            <!-- Иначе Вам пришлось бы вручную парсить и валидировать JWT: получать public key, проверять подпись, парсить claims-->
+
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+        </dependency>
+
+<!--        <dependency>-->
+<!--            &lt;!&ndash; Иначе Вам пришлось бы вручную парсить и валидировать JWT: получать public key, проверять подпись, парсить claims&ndash;&gt;-->
+<!--            <groupId>org.springframework.security</groupId>-->
+<!--            <artifactId>spring-security-oauth2-resource-server</artifactId>-->
+<!--        </dependency>-->
+        
+        <!-- Web (WebClient без WebFlux) -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+        </dependency>
+
+<!--        Parent POM определяет версию, но не подключает сами библиотеки.-->
+            <dependency>
+                <groupId>org.keycloak</groupId>
+                <artifactId>keycloak-spring-boot-starter</artifactId>
+<!--                <version>parent BOM keycloak</version>-->
+            </dependency>
+
+        
+        
+
+
+        <!--        Если твой сервис не управляет пользователями, ролями или клиентами Keycloak напрямую, а просто использует Keycloak как Identity Provider для аутентификации — тогда тебе keycloak-admin-client не нужен.-->
+<!--            <dependency>-->
+<!--                <groupId>org.keycloak</groupId>-->
+<!--                <artifactId>keycloak-admin-client</artifactId>-->
+<!--            </dependency>-->
+
+    </dependencies>
+
+</project>

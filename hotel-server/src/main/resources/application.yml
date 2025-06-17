@@ -1,0 +1,202 @@
+spring:
+  application:
+    name: hotel-server
+  profiles:
+    active: development
+  config:
+    import: optional:classpath:application-${spring.profiles.active}.yml
+#  config.activate.on-profile: development
+  datasource:
+    url: jdbc:postgresql://postgres_db:5432/hotel
+    username: eu_user
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    show-sql: true
+    
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update #eugen, not for production: update
+    
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+#    defer-datasource-initialization: true 
+  #  zipkin:
+#    base-url: http://localhost:9411
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    enabled: true
+  http: #http: boot1 | #servlet: boot2
+    multipart:
+      location: ${java.io.tmpdir}
+      max-file-size: 512MB # Max file size.
+      max-request-size: 512MB # Max request size.
+  messages.basename: i18n/messages # Configure MessageSource to lookup any validation/error message in internationalized property files
+  kafka:
+    enabled: false
+    bootstrap-servers: localhost:19092
+    listener:
+      auto-startup: false
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      group-id: hotelico-group
+      properties:
+        spring.json.trusted.packages: eu.getsoftware.hotelico.*
+        spring.json.value.default.type: eu.getsoftware.hotelico.clients.api.application.infrastructure.domainevents.domainmessage.DomainMessage
+
+  social:
+    facebook:
+      appId: 383626641847356
+      appSecret: f492cdd7e0d9aee36ce8446c5caa440d
+    linkedIn:
+      clientId: 77rxbh8n0ta2fc
+      clientSecret: aW3L9r9racGYIV5I
+  cache:
+    cache-names: userCache, propertyCache
+    caffeine:
+      spec: maximumSize=500, expireAfterAccess=300s
+  mail:
+    host: smtp.gmail.com #smtp.strato.de
+    port: 587
+    username: eugen.wi83@gmail.com #sergej.neustadt@hotelico.de
+    password: FaRsHuLeGe
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true
+  main: #eugen kastil, delete it
+    allow-bean-definition-overriding: true
+  security:
+    oauth2:
+      resourceserver: #приложение работает как Resource Server: eu: важно keycloak:8089, потому что Spring обращается изнутри Docker.
+        jwt:
+          issuer-uri: http://keycloak_web:8080/realms/hotel-socialoffers
+          #использовать 'keycloak' (а не 'localhost') как hostname — потому что это внутренняя сеть Docker Compose.
+          #issuer-uri заменяет необходимость в KeycloakConfigResolver.
+#      client:
+##        registration.keycloak — это настройки конкретного клиента (твое приложение как OAuth2 клиент).
+##        provider.keycloak — это настройки провайдера (в данном случае Keycloak), откуда Spring подтягивает .well-known/openid-configuration.
+#        registration: 
+#          keycloak:
+#            client-id: hotel-server
+#            client-secret: yFN0gFvnv2mG9Pb6qlHXBVqAqjozxuo8
+#            scope: openid, profile, email
+#            authorization-grant-type: authorization_code
+#            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+#            provider: keycloak
+#        provider:  # eu: приложение само ходит в Keycloak как OAuth2 Client: для авторизации через браузер
+#          keycloak:
+#            issuer-uri: http://keycloak_web:8080/realms/hotel-socialoffers 
+#            #чтобы найти authorization_endpoint, token_endpoint, и т.д.
+#            user-name-attribute: preferred_username
+
+#entitymanager:
+#  packagesToScan: de.getsoftware.smsbridge.model      
+security:
+  basic.enabled: false #eugen: not in spring boot 2.x  
+
+#hotelico:
+#  security:
+#    keycloak:
+#      enabled: false
+#      issuer-uri: http://localhost:8089/realms/hotel-socialoffers
+    
+#liquibase.change-log: classpath:/db/changelog/db.changelog-master.xml #boot2: liquibase.change-log: classpath:/db/changelog/db.changelog-master.xml
+server:
+  port: 8080
+  error:
+    whitelabel.enabled: false
+    
+#keycloak:
+#  auth-server-url: http://localhost:8080
+#  realm: hotel-socialoffers
+#  resource: hotel-server
+#  credentials:
+#    secret: YOUR_CLIENT_SECRET
+#
+#eureka:
+#  client:
+#    service-url:
+#      defaultZone: http://localhost:8761/eureka      
+---
+
+spring:
+  config.activate.on-profile: development
+  thymeleaf:
+    cache: false
+
+logging:
+  level:
+    org.springframework:
+      security: INFO
+      boot.actuate.audit.listener.AuditListener: DEBUG
+    org.hibernate.type: TRACE
+#    org.hibernate: #eu: test jpa
+#      orm: DEBUG
+#      SQL: DEBUG
+
+#server:
+#  port: 8080
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: testing
+  datasource:
+    url: jdbc:postgresql://localhost:5434/hotel
+    username: postgres
+    password: postgres
+  security:
+    oauth2:
+      resourceserver: #приложение работает как Resource Server: eu: важно keycloak:8089, потому что Spring обращается изнутри Docker.
+        jwt:
+          issuer-uri: http://localhost:8089/realms/hotel-socialoffers
+          #использовать 'keycloak' (а не 'localhost') как hostname — потому что это внутренняя сеть Docker Compose.
+          #issuer-uri заменяет необходимость в KeycloakConfigResolver.
+#      client:
+#        #        registration.keycloak — это настройки конкретного клиента (твое приложение как OAuth2 клиент).
+#        #        provider.keycloak — это настройки провайдера (в данном случае Keycloak), откуда Spring подтягивает .well-known/openid-configuration.
+#        registration:
+#          keycloak:
+#            client-id: hotel-server
+#            client-secret: U4kIbIpsDW9ICYyvjbT6gFwbDD1UKp5D
+#            scope: openid, profile, email, roles
+#            authorization-grant-type: authorization_code
+#            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+#            provider: keycloak
+#        provider: # eu: приложение само ходит в Keycloak как OAuth2 Client: для авторизации через браузер
+#          keycloak:
+#            issuer-uri: http://localhost:8089/realms/hotel-socialoffers #чтобы найти authorization_endpoint, token_endpoint, и т.д.
+#            user-name-attribute: preferred_username
+
+server:
+  port: 8088
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: production
+  datasource:
+    url: #EXTERNALIZED
+    username: hotelico
+    password: frankfurt_2015
+
+server:
+  port: 8080
+  
+      
+

@@ -1,0 +1,91 @@
+spring:
+  application:
+    name: hotel-client
+  profiles:
+    active: development
+#  zipkin:
+#    base-url: http://localhost:9411
+  config:
+    import: optional:classpath:application-${spring.profiles.active}.yml
+    #  config.activate.on-profile: development
+  datasource:
+    url: jdbc:postgresql://postgres_db:5432/hotel-client
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    show-sql: true
+
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update #eugen, not for production: update
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  security:
+    oauth2:
+      client:
+        #        registration.keycloak — это настройки конкретного клиента (твое приложение как OAuth2 клиент).
+        #        provider.keycloak — это настройки провайдера (в данном случае Keycloak), откуда Spring подтягивает .well-known/openid-configuration.
+        registration:
+          keycloak: # <== ID регистрации клиента
+            client-id: hotel-client
+            client-secret: jwbRXz4TxTczGV8ChOc3RoBELg4y6gRN
+            scope: openid, profile, email
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            provider: keycloak   # <== обязательно указывает на ID провайдера ниже
+        provider:  # eu: приложение само ходит в Keycloak как OAuth2 Client: для авторизации через браузер
+          keycloak: # <== должен соответствовать `provider` в registration
+            issuer-uri: http://keycloak_web:8080/realms/hotel-socialoffers
+            #чтобы найти authorization_endpoint, token_endpoint, и т.д.
+            user-name-attribute: preferred_username
+server:
+  port: 8083
+
+#eureka:
+---
+
+spring:
+  config:
+    activate:
+      on-profile: testing
+  datasource:
+    url: jdbc:postgresql://localhost:5434/hotel-client
+    username: postgres
+    password: postgres
+  security:
+    oauth2:
+      #      resourceserver: #приложение работает как Resource Server: eu: важно keycloak:8089, потому что Spring обращается изнутри Docker.
+      #        jwt:
+      #          issuer-uri: http://localhost:8089/realms/hotel-socialoffers
+      #          #использовать 'keycloak' (а не 'localhost') как hostname — потому что это внутренняя сеть Docker Compose.
+      #          #issuer-uri заменяет необходимость в KeycloakConfigResolver.
+      client:
+        #        registration.keycloak — это настройки конкретного клиента (твое приложение как OAuth2 клиент).
+        #        provider.keycloak — это настройки провайдера (в данном случае Keycloak), откуда Spring подтягивает .well-known/openid-configuration.
+        registration:
+          keycloak:
+            client-id: hotel-client
+            client-secret: jwbRXz4TxTczGV8ChOc3RoBELg4y6gRN
+            scope: openid, profile, email, roles
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            provider: keycloak
+        provider: # eu: приложение само ходит в Keycloak как OAuth2 Client: для авторизации через браузер
+          keycloak:
+            issuer-uri: http://localhost:8089/realms/hotel-socialoffers #чтобы найти authorization_endpoint, token_endpoint, и т.д.
+            user-name-attribute: preferred_username
+
+server:
+  port: 8083
+---
+
+spring:
+  config:
+    activate:
+      on-profile: development

@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: hotel-menu
+  profiles:
+    active: development
+  zipkin:
+    base-url: http://localhost:9411
+  config:
+    import: optional:classpath:application-${spring.profiles.active}.yml
+    #  config.activate.on-profile: development
+  datasource:
+    url: jdbc:postgresql://postgres_db:5432/hotel-menu
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    show-sql: true
+
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update #eugen, not for production: update
+
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  security:
+    oauth2:
+      resourceserver: #приложение работает как Resource Server: eu: важно keycloak:8089, потому что Spring обращается изнутри Docker.
+        jwt:
+          issuer-uri: http://localhost:8089/realms/hotel-socialoffers
+          #использовать 'keycloak' (а не 'localhost') как hostname — потому что это внутренняя сеть Docker Compose.
+          #issuer-uri заменяет необходимость в KeycloakConfigResolver.
+server:
+  port: 8083
+  
+#eureka:
+#  client:
+#    service-url: 
+#      defaultZone: http://localhost:8761/eureka
+      
+---
+
+spring:
+  config:
+    activate:
+      on-profile: development
