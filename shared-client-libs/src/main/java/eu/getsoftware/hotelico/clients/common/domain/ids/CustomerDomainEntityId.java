@@ -31,7 +31,11 @@ public record CustomerDomainEntityId(
     } //Eu: additional constructor!!!
 
     public static CustomerDomainEntityId from(@NotEmpty int value) {
-        return new CustomerDomainEntityId(String.valueOf(value), true);
+        return new CustomerDomainEntityId(String.valueOf(value), false);
+    }    
+    
+    public static CustomerDomainEntityId from(@NotEmpty UUID value) {
+        return new CustomerDomainEntityId(String.valueOf(value), false);
     }
 
     @Override

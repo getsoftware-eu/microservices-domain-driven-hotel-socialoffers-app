@@ -71,7 +71,8 @@ public class CustomerController extends BasicController
 //        doList()
 
         CustomerDomainEntityId domain = CustomerDomainEntityId.from(customerId);
-        return getCustomers().stream().findAny().orElseGet(() -> CustomerDTO.builder().domainEntityId(domain).build());
+//        return getCustomers().stream().findAny().orElseGet(() -> CustomerDTO.builder().domainEntityId(domain).build());
+        return CustomerDTO.builder().domainEntityId(domain).build();
     }    
     
     @RequestMapping(value = "/{customerId}/cities", method = RequestMethod.GET)
