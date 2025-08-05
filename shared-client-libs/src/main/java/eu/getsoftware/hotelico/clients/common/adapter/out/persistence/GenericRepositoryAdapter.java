@@ -22,15 +22,14 @@ public class GenericRepositoryAdapter<T, DBEntity, ID> implements GenericReposit
     private final EntityGenericMapper<T, DBEntity> mapper;
     private final EntityManager entityManager;
     private final Class<DBEntity> entityClass;
-
-
+    
     public GenericRepositoryAdapter(JpaRepository<DBEntity, Long> repository, EntityGenericMapper<T, DBEntity> mapper, EntityManager entityManager, Class<DBEntity> entityClass){
         this.repository = repository;
         this.mapper = mapper;
         this.entityManager = entityManager;
         this.entityClass = entityClass;
     }
-    
+
     @Override
     @Transactional(readOnly = true)
     public Optional<T> findById(Long id) {
