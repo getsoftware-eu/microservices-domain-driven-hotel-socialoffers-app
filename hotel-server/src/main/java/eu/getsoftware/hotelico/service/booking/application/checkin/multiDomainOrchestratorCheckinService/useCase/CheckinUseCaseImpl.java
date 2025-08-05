@@ -125,31 +125,30 @@ class CheckinUseCaseImpl implements CheckinUseCase
 	private CheckinGatewayService checkinGatewayService;
 	private CheckinOutEntityQueryService checkinOutEntityQueryService;
     private CheckinOutWriteService checkinWriteService;
-
-    @Transactional
+	
 	@Override
+	@Transactional //transaction propogated to adapter layer
 	public CheckinUseCaseDTO createCustomerCheckin(@Validated CheckinUseCaseRequestDTO customerRequestDto) {
 
 		// UseCase : Primary-flow
 		//eu: error: not validate DTO!!! DTO validates itself!!!! 
 		// validateCheckin(customerRequestDto); // UseCase.Primary-flow.step.1
-		
+
 		validateCustomerWithGPSLocationService(customerRequestDto.customerId(), customerRequestDto.hotelId()); //UseCase.Primary-flow.step.2
 
 		CheckinRootDomainEntity entity = createCheckinFromDto(customerRequestDto); //UseCase.Primary-flow.step.3
 
 		userGatewayService.saveToDb(entity);
-		
+
 		sendInitMessageFromHotelStaffToCustomer(entity); //UseCase.Primary-flow.step.4
-		
+
 		CheckinUseCaseDTO checkinResponseDTO = checkinDtoMapper.toDto(entity); //UseCase.Primary-flow.step.5
-		
+
 		//eu: error: create no commands to other domains, they receive event and execute own logik!!!
 		sendHotelNewGuestSocketNotificationCommand(checkinResponseDTO);
-		
+
 		return checkinResponseDTO;
 	}
-
 
 	@Override
 	public CheckinRootDomainEntity createCheckinFromDto(CheckinUseCaseRequestDTO checkinRequestDto) {
