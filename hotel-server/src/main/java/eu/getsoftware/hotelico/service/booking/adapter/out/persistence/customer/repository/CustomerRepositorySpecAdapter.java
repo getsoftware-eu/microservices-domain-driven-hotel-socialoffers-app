@@ -17,11 +17,11 @@ import java.util.Optional;
 @Repository
 public class CustomerRepositorySpecAdapter implements CustomerRepositoryPort {
 
-    private final CustomerRepository customerRepository;
+    private final CustomerJpaRepository customerRepository;
     private final CustomerEntityMapper customerEntityMapper;
     private final CustomerDtoMapper customerDtoMapper;
 
-    public CustomerRepositorySpecAdapter(CustomerRepository customerRepository, CustomerEntityMapper customerEntityMapper, CustomerDtoMapper customerDtoMapper) {
+    public CustomerRepositorySpecAdapter(CustomerJpaRepository customerRepository, CustomerEntityMapper customerEntityMapper, CustomerDtoMapper customerDtoMapper) {
         this.customerRepository = customerRepository;
         this.customerEntityMapper = customerEntityMapper;
         this.customerDtoMapper = customerDtoMapper;
@@ -65,5 +65,14 @@ public class CustomerRepositorySpecAdapter implements CustomerRepositoryPort {
                 .map(customerEntityMapper::toDomain)
                 .map(customerDtoMapper::toDto)
                 .toList();
+    }
+
+    @Override
+    public Optional<CustomerRootDomainEntity> findByName(String name) {
+        List<CustomerDBEntity> projections = customerRepository.findByName(name);
+
+        return projections.stream()
+                .map(customerEntityMapper::toDomain)
+                .findFirst(); 
     }
 }

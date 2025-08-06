@@ -1,7 +1,7 @@
 package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.security;
 
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerJpaRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.outPortServiceImpl.FileStore;
 import eu.getsoftware.hotelico.service.booking.config.adapter.s3.BucketName;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +15,11 @@ import java.util.*;
 public class UserProfileService
 {
 
-    private CustomerRepository customerRepository;
+    private CustomerJpaRepository customerRepository;
     private final FileStore fileStore;
 
     @Autowired
-    public UserProfileService(CustomerRepository customerRepository,
+    public UserProfileService(CustomerJpaRepository customerRepository,
                               FileStore fileStore) {
         this.customerRepository = customerRepository;
         this.fileStore = fileStore;

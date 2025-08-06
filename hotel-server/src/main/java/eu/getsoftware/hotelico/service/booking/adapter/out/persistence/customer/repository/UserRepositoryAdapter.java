@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class UserRepositoryAdapter
         extends GenericRepositoryAdapter<CustomerRootDomainEntity, CustomerDBEntity, CustomerDomainEntityId> {
 
-    public UserRepositoryAdapter(CustomerRepository repository, CustomerEntityMapper mapper, EntityManager entityManager) {
+    public UserRepositoryAdapter(CustomerJpaRepository repository, CustomerEntityMapper mapper, EntityManager entityManager) {
         super(repository, mapper, entityManager, CustomerDBEntity.class);
     }
 }

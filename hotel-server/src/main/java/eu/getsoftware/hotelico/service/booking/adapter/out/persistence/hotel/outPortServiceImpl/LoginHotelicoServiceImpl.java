@@ -6,7 +6,7 @@ import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.mapper.CustomerDtoMapper;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerJpaRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.InnerHotelEvent;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.DealRepository;
 import eu.getsoftware.hotelico.service.booking.application.checkin.port.out.CheckinOutEntityQueryService;
@@ -47,7 +47,7 @@ public class LoginHotelicoServiceImpl implements LoginHotelicoService
 	private CheckinOutEntityQueryService checkinService;
 	
 	@Autowired
-	private CustomerRepository customerRepository;
+	private CustomerJpaRepository customerRepository;
 	
 	@Autowired
 	private DealRepository dealRepository;

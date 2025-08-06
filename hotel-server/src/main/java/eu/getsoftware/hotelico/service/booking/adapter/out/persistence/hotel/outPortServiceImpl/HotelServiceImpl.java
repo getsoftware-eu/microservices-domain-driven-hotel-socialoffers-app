@@ -16,7 +16,7 @@ import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.mapper.CustomerDealEntityMapper;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.mapper.CustomerDtoMapper;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerJpaRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.deal.model.CustomerDealDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.mapper.*;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.HotelDBEntity;
@@ -66,7 +66,7 @@ public class HotelServiceImpl implements IHotelService<HotelRootDomainEntity>
 	
     private final HotelRepository hotelRepository;     
     
-    private CustomerRepository customerRepository;    
+    private CustomerJpaRepository customerRepository;    
     
     private ActivityRepository activityRepository;     
 	

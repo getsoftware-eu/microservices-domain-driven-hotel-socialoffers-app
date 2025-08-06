@@ -11,7 +11,7 @@ import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.r
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.mapper.CustomerDtoMapper;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.Language;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerJpaRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.deal.model.CustomerDealDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.HotelDBEntity;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.model.InnerHotelEvent;
@@ -46,7 +46,7 @@ public class CustomerPortServiceImpl implements CustomerPortService<CustomerDBEn
     
     private final INotificationService notificationService;
     
-    private final CustomerRepository customerRepository;
+    private final CustomerJpaRepository customerRepository;
 	
 	private LastMessagesService lastMessagesService;	
 	

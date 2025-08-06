@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface CustomerRepository extends JpaRepository<CustomerDBEntity, Long>, JpaSpecificationExecutor<CustomerDBEntity> {
+public interface CustomerJpaRepository extends JpaRepository<CustomerDBEntity, Long>, JpaSpecificationExecutor<CustomerDBEntity> {
 
 	// ====== JPQL Query Constants ======
 
@@ -55,6 +55,7 @@ public interface CustomerRepository extends JpaRepository<CustomerDBEntity, Long
 	List<CustomerDBEntity> findByFacebookIdAndActive(String facebookId, boolean active);
 
 	List<CustomerDBEntity> findByActive(boolean active);
+	List<CustomerDBEntity> findByName(String name);
 
 	Page<CustomerDBEntity> findByActive(boolean active, Pageable pageable);
 

@@ -7,7 +7,7 @@ import eu.getsoftware.hotelico.clients.common.domain.ids.HotelDomainEntityId;
 import eu.getsoftware.hotelico.clients.common.utils.AppConfigProperties;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.checkin.repository.CheckinRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerJpaRepository;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.hotel.repository.HotelRepository;
 import eu.getsoftware.hotelico.service.booking.application.customer.port.out.iPortService.CustomerPortService;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.infrastructure.dto.CustomerNotificationDTO;
@@ -47,7 +47,7 @@ public class LastMessagesServiceImpl implements LastMessagesService
 
 	private final HotelRepository hotelRepository;
 	
-	private final CustomerRepository customerRepository;
+	private final CustomerJpaRepository customerRepository;
 	
 	private Map<CustomerDomainEntityId, LocalDate> lastCustomerOnlineMap = new HashMap<>();
 	private Map<CustomerDomainEntityId, Long> currentConsistencyIdsMap = new HashMap<>();

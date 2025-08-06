@@ -3,7 +3,7 @@ package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.mapper.CustomerDtoMapper;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerRepository;
+import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository.CustomerJpaRepository;
 import eu.getsoftware.hotelico.service.booking.application.customer.port.in.iPortService.SocialService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class SocialPortServiceImpl implements SocialService {
 
-    private CustomerRepository customerRepository;
+    private CustomerJpaRepository customerRepository;
     private CustomerDtoMapper customerDtoMapper;
 
     @Transactional
