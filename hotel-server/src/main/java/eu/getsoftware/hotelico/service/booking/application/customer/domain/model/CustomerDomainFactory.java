@@ -1,6 +1,7 @@
 package eu.getsoftware.hotelico.service.booking.application.customer.domain.model;
 
 
+import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import eu.getsoftware.hotelico.service.booking.application.hotel.domain.model.AddressValueObject;
 
@@ -27,5 +28,25 @@ public class CustomerDomainFactory /*implements ICustomerDomainFactory<CustomerR
 //        customer.setInitValues(Map.ofEntries(Map.entry("name", name), Map.entry("password", password)));
         
         return customer;
+    }
+
+    public static CustomerRootDomainEntity createFromData(
+            CustomerDomainEntityId domainId,
+            String firstName,
+            String lastName,
+            String email,
+            boolean active,
+            ICustomerDetails customerDetails,
+            ICustomerPreferences customerPreferences) {
+
+        return CustomerRootDomainEntity.builder()
+                .domainEntityId(domainId)
+                .firstName(firstName)
+                .lastName(lastName)
+                .email(email)
+                .active(active)
+                .customerDetails(customerDetails)
+                .customerPreferences(customerPreferences)
+                .build();
     }
 }

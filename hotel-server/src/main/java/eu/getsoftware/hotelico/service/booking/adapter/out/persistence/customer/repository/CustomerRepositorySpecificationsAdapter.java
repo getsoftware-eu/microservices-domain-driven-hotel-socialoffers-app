@@ -1,15 +1,18 @@
 package eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.repository;
 
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
+import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.mapper.CustomerDtoMapper;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.mapper.CustomerEntityMapper;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.model.CustomerDBEntity;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.CustomerFilters;
+import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import eu.getsoftware.hotelico.service.booking.application.customer.port.in.CustomerRepositoryPort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class CustomerRepositorySpecificationsAdapter implements CustomerRepositoryPort {
@@ -24,6 +27,13 @@ public class CustomerRepositorySpecificationsAdapter implements CustomerReposito
         this.customerDtoMapper = customerDtoMapper;
     }
 
+    @Override
+    public Optional<CustomerRootDomainEntity> findByDomainId(CustomerDomainEntityId domainId) {
+        Optional<CustomerDBEntity> jpaEntity = customerRepository.findByDomainEntityIdValue(domainId/*.uuidValue()*/);
+
+        return jpaEntity.map(customerEntityMapper::toDomain);
+    }
+    
     @Override
     public List<CustomerDTO> findByFilters(CustomerFilters filters) {
         // Создаем пустую спецификацию.
