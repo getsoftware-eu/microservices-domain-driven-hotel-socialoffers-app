@@ -15,13 +15,13 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class CustomerRepositorySpecificationsAdapter implements CustomerRepositoryPort {
+public class CustomerRepositorySpecAdapter implements CustomerRepositoryPort {
 
     private final CustomerRepository customerRepository;
     private final CustomerEntityMapper customerEntityMapper;
     private final CustomerDtoMapper customerDtoMapper;
 
-    public CustomerRepositorySpecificationsAdapter(CustomerRepository customerRepository, CustomerEntityMapper customerEntityMapper, CustomerDtoMapper customerDtoMapper) {
+    public CustomerRepositorySpecAdapter(CustomerRepository customerRepository, CustomerEntityMapper customerEntityMapper, CustomerDtoMapper customerDtoMapper) {
         this.customerRepository = customerRepository;
         this.customerEntityMapper = customerEntityMapper;
         this.customerDtoMapper = customerDtoMapper;
@@ -32,6 +32,13 @@ public class CustomerRepositorySpecificationsAdapter implements CustomerReposito
         Optional<CustomerDBEntity> jpaEntity = customerRepository.findByDomainEntityIdValue(domainId/*.uuidValue()*/);
 
         return jpaEntity.map(customerEntityMapper::toDomain);
+    }
+
+    @Override
+    public CustomerRootDomainEntity save(CustomerRootDomainEntity domainEntity) {
+        CustomerDBEntity jpaEntity = customerEntityMapper.toDb(domainEntity);
+        CustomerDBEntity saved = customerRepository.save(jpaEntity);
+        return customerEntityMapper.toDomain(saved);
     }
     
     @Override

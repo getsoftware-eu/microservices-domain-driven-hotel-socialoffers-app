@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.clients.common.domain.gateways;
 
+import eu.getsoftware.hotelico.clients.common.domain.EntityIdentifier;
 import jakarta.persistence.EntityNotFoundException;
 
 import java.util.Optional;
@@ -8,7 +9,11 @@ import java.util.Optional;
 public class GenericRepositoryService<T, ID> {
 
     private final GenericRepositoryPort<T, ID> repositoryPort;
-
+    
+    public Optional<T> getByDomainId(EntityIdentifier customerId) {
+        return repositoryPort.findByDomainId(customerId);
+    }
+    
     public GenericRepositoryService(GenericRepositoryPort<T, ID> repositoryPort) {
         this.repositoryPort = repositoryPort;
     }

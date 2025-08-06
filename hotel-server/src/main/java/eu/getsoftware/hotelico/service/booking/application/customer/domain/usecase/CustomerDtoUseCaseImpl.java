@@ -4,20 +4,31 @@ import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerDTO;
 import eu.getsoftware.hotelico.clients.api.application.dto.entity.CustomerRequestDTO;
 import eu.getsoftware.hotelico.clients.api.application.dto.usecase.CustomerRegisterRequestUseCaseDTO;
 import eu.getsoftware.hotelico.clients.api.application.infrastructure.exception.domain.BusinessException;
-import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.gateways.CustomerGatewayService;
+import eu.getsoftware.hotelico.clients.common.domain.ids.CustomerDomainEntityId;
 import eu.getsoftware.hotelico.service.booking.adapter.out.persistence.customer.mapper.CustomerDtoMapper;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.CustomerDomainFactory;
 import eu.getsoftware.hotelico.service.booking.application.customer.domain.model.customDomainModelImpl.CustomerRootDomainEntity;
 import eu.getsoftware.hotelico.service.booking.application.customer.port.in.CustomerDtoUseCase;
+import eu.getsoftware.hotelico.service.booking.application.customer.port.in.CustomerRepositoryPort;
+
+import java.util.Optional;
 
 public class CustomerDtoUseCaseImpl implements CustomerDtoUseCase
 {
-	private CustomerGatewayService customerGatewayService;
+	private CustomerRepositoryPort customerRepositoryPort;
 	private CustomerDtoMapper customerDtoMapper;
 
+	@Override
+	public CustomerDTO getCustomerById(CustomerDomainEntityId customerId) {
+		Optional<CustomerRootDomainEntity> customer = customerRepositoryPort.findByDomainId(customerId);
+
+		return customer.map(customerDtoMapper::toDto)
+				.orElseThrow(() -> new BusinessException("Customer not found with id: " + customerId.uuidValue()));
+	}
+	
 	public CustomerDTO registerCustomer(CustomerRegisterRequestUseCaseDTO requestCustomerDto) {
 
-		if (customerGatewayService.findByField("name", requestCustomerDto.name()).isPresent()) {
+		if (customerRepositoryPort.findByName(requestCustomerDto.name()).isPresent()) {
 //			return customerResponseDTOPortPresenter.prepareFailView("Customer with name " + requestCustomerDto.name() + " already exists.");
 			throw new BusinessException("Customer with name " + requestCustomerDto.name() + " already exists.");
 		}
@@ -29,7 +40,7 @@ public class CustomerDtoUseCaseImpl implements CustomerDtoUseCase
 			throw new BusinessException("customer password bot valid");
 			
 		//A3 domain is correct, we can send it to lower layer for persist
-		customerGatewayService.saveToDb(customerDomainEntity);
+		customerRepositoryPort.save(customerDomainEntity);
 
 		return customerDtoMapper.toDto(customerDomainEntity);
 

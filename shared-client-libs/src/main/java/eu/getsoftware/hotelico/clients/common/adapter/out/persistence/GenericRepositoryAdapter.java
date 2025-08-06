@@ -1,5 +1,6 @@
 package eu.getsoftware.hotelico.clients.common.adapter.out.persistence;
 
+import eu.getsoftware.hotelico.clients.common.domain.EntityIdentifier;
 import eu.getsoftware.hotelico.clients.common.domain.gateways.GenericRepositoryPort;
 import eu.getsoftware.hotelico.clients.common.domain.mapper.EntityGenericMapper;
 import jakarta.persistence.EntityManager;
@@ -41,6 +42,11 @@ public class GenericRepositoryAdapter<T, DBEntity, ID> implements GenericReposit
     public Collection<T> findAll() {
         return repository.findAll().stream().map(mapper::toDomain).toList();
     }    
+    
+    @Override
+    public Optional<T> findByDomainId(EntityIdentifier domainId) {
+       return this.findByDomainId(domainId);
+    } 
     
     @Override
     public Optional<T> findByDomainEntityIdValue(ID domainId) {
